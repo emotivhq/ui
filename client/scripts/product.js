@@ -16,6 +16,7 @@ var ProductService = GiftStarterApp.service('ProductService', ['$http',
         function getProduct() {return product;}
 
         function submitLink(url, onSuccess, onFail) {
+            // TODO: This is isn't working on mobile.  Why not?
             $http({
                 method: 'POST', url: '/product', data: {url: url}
             }).success(function(data, status, headers, config) {
@@ -60,6 +61,6 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
 
         $scope.submitLink = function() {ProductService.submitLink($scope.product.link, onSuccess, onFailure);};
 
-        $scope.giftstart = function() {GiftStartService.initiateGiftStart(1);};
+        $scope.giftstart = function() {GiftStartService.initiateGiftStart($scope.product);};
 
 }]);

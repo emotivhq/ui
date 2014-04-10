@@ -10,9 +10,10 @@ class GiftStart():
         # TODO: create ndb class to store GiftStart
         self.product = product
         self.user = user
+        self.id = -1
 
     def jsonify(self):
-        return json.dumps({'product': self.product, 'user': self.user})
+        return json.dumps({'giftstart': {'product': self.product, 'user': self.user, 'id': self.id}})
 
 
 class GiftStartHandler(webapp2.RequestHandler):
@@ -22,6 +23,7 @@ class GiftStartHandler(webapp2.RequestHandler):
         product = data['product']
         user = data['user']
         gs = GiftStart(product, user)
+        gs.id = 1
 
         self.response.write(gs.jsonify())
 
