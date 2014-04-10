@@ -1,0 +1,36 @@
+application: gift-starter
+version: 2
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+# Client urls
+- url: /stylesheets
+  static_dir: client/stylesheets
+- url: /scripts
+  static_dir: client/scripts
+- url: /bower_components
+  static_dir: client/bower_components
+- url: /assets
+  static_dir: client/assets
+- url: /templates/angular
+  static_dir: client/templates/angular
+
+# Catch all other urls
+- url: /product
+  script: product.api
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: "latest"
+- name: jinja2
+  version: "latest"
+- name: lxml
+  version: "latest"
