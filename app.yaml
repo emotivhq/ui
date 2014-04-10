@@ -24,6 +24,8 @@ handlers:
 # Catch all other urls
 - url: /product
   script: product.api
+- url: /giftstart
+  script: giftstart.api
 - url: .*
   script: main.app
 

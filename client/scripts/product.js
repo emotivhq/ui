@@ -60,6 +60,6 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
 
         $scope.submitLink = function() {ProductService.submitLink($scope.product.link, onSuccess, onFailure);};
 
-        $scope.giftstart = function() {GiftStartService.initiateGiftStart();};
+        $scope.giftstart = function() {GiftStartService.initiateGiftStart(1);};
 
 }]);

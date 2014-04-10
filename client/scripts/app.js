@@ -13,8 +13,11 @@ GiftStarterApp.config(['$routeProvider',
         }).when('/product', {
             templateUrl: '/templates/angular/product-link.html',
             controller: 'ProductLinkController'
+        }).when('/giftstart', {
+            templateUrl: '/templates/angular/giftstart.html',
+            controller: 'GiftStartController'
         }).otherwise({
-                redirectTo: '/product'
+            redirectTo: '/product'
         });
     }]);
 

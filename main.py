@@ -16,7 +16,6 @@
 #
 import webapp2
 import jinja2
-import product
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     #loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),

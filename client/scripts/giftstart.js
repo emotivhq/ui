@@ -2,11 +2,12 @@
  * Created by stuart on 4/9/14.
  */
 
-var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http',
-    function() {
+var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location',
+    function($http, $location) {
 
-        function initiateGiftStart() {
-            alert("GIFTSTART BITCHES!");
+        function initiateGiftStart(giftstartId) {
+            $location.path('/giftstart');
+            $location.search('id', giftstartId);
         }
 
         return {
