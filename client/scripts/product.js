@@ -2,8 +2,47 @@
  * Created by stuart on 4/9/14.
  */
 
-var ProductLinkController = GiftStarterApp.controller('ProductLinkController', ['$scope', '$http',
-    function($scope, $http) {
+
+var ProductService = GiftStarterApp.service('ProductService', ['$http',
+    function($http) {
+
+        var product = {
+            link: '',
+            img: 'http://i.imgur.com/oIsgW1S.jpg',
+            title: 'Title',
+            price: '$xxx.xx'
+        };
+
+        function getProduct() {return product;}
+
+        function submitLink(url, onSuccess, onFail) {
+            $http({
+                method: 'POST', url: '/product', data: {url: url}
+            }).success(function(data, status, headers, config) {
+                console.log("Fetched succeeded.");
+                product.link = data.product.link;
+                product.img = data.product.img;
+                product.title = data.product.title;
+                product.price = data.product.price;
+                onSuccess(product);
+            }).error(function(data, status, headers, config) {
+                console.log("Fetched failed!");
+                onFail(data);
+            });
+        }
+
+        return {
+            submitLink: submitLink,
+            getProduct: getProduct
+
+        };
+
+}]);
+
+
+var ProductLinkController = GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
+    'GiftStartService',
+    function($scope, ProductService, GiftStartService) {
 
         $scope.resultShown = false;
         $scope.product = {
@@ -13,28 +52,14 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
             price: '$xxx.xx'
         };
 
-        $scope.submitLink = function() {
-            console.log("Fetching " + $scope.product.link);
-            $http({
-                method: 'POST', url: '/product', data: {url: $scope.product.link}
-            }).success($scope.httpSucceed).error($scope.httpFailed);
-        };
-
-        $scope.giftstart = function() {
-            console.log("GIFTSTART!");
-        };
-
-        $scope.httpSucceed = function(data, status, headers, config) {
-            console.log("Fetched succeeded.");
-            $scope.product.link = data.product.link;
-            $scope.product.img = data.product.img;
-            $scope.product.title = data.product.title;
-            $scope.product.price = data.product.price;
+        function onSuccess(product) {
+            $scope.product = product;
             $scope.resultShown = true;
-        };
+        }
+        function onFailure(reason) {console.log("Product service failed to fetch product.");}
 
-        $scope.httpFailed = function(data, status, headers, config) {
-            console.log("Fetched failed!");
-        };
+        $scope.submitLink = function() {ProductService.submitLink($scope.product.link, onSuccess, onFailure);};
+
+        $scope.giftstart = function() {GiftStartService.initiateGiftStart();};
+
 }]);
-
