@@ -1,0 +1,37 @@
+
+/*  PRODUCT LINK INPUT  */
+.product-link.search.wrapper {
+    margin: 110px auto 50px auto;
+    text-align: center;
+}
+
+/*  PRODUCT RESULT  */
+.product-link.result.wrapper {
+    text-align: center;
+}
+.product-link.result.copy{
+}
+.product-link.result.image {
+    width: 480px;
+    display: inline-block;
+    padding: 20px;
+}
+.product-link.result.details {
+    width: 480px;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+.product-link.result.title {
+    display: block;
+    font-weight: 600;
+    font-size: 150%;
+}
+.product-link.result.price {
+    display: block;
+}
+.product-link.result.submit {
+    display: block;
+    margin: 30px auto;
+}
