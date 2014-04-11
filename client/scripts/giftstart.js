@@ -5,23 +5,23 @@
 var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location',
     function($http, $location) {
 
-        var giftstart = {};
+        var giftStart = {};
 
         function initiateGiftStart(product) {
             $http({method: 'POST', url: '/giftstart',
                 data: {product: product, action: 'new', user:{name: 'test'}}})
                 .success(function (data, status, headers, config){
-                    giftstart = data['giftstart'];
+                    giftStart = data['giftstart'];
                     $location.path('/giftstart');
-                    $location.search('id', giftstart.id);
+                    $location.search('id', giftStart.id);
                     console.log("Successfully created GiftStart:");
-                    console.log(giftstart);
+                    console.log(giftStart);
                 }).error(function (data, status, headers, config){
                     console.log("Failed to make GiftStart.");
             });
         }
 
-        function getGiftStart() {return giftstart;}
+        function getGiftStart() {return giftStart;}
 
         return {
             initiateGiftStart: initiateGiftStart,
