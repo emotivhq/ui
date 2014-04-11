@@ -1,0 +1,28 @@
+
+.giftstart.wrapper {
+    text-align: center;
+}
+.giftstart.product.image {
+    width: 480px;
+    display: inline-block;
+    padding: 20px;
+}
+.giftstart.product.details {
+    width: 480px;
+    padding: 20px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+.giftstart.product.title {
+    display: block;
+    font-weight: 600;
+    font-size: 150%;
+}
+.giftstart.product.price {
+    display: block;
+}
+.giftstart.pitch-in.button {
+    display: block;
+    margin: 30px auto;
+}

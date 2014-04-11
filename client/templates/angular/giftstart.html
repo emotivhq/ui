@@ -1,5 +1,9 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController">
-    <img class="giftstart product image" ng-src="{{giftStart.product.img}}">
+
+    <div class="giftstart product image" gs-overlay>
+        <img class="giftstart product image" ng-src="{{giftStart.product.img}}">
+    </div>
+
     <div class="giftstart product details">
         <span class="giftstart product title" ng-bind="giftStart.product.title"></span><span class="giftstart product price" ng-bind="giftStart.product.price"></span>
     </div>
