@@ -20,7 +20,6 @@ var ProductService = GiftStarterApp.service('ProductService', ['$http',
             $http({
                 method: 'POST', url: '/product', data: {url: url}
             }).success(function(data, status, headers, config) {
-                console.log("Fetched succeeded.");
                 product.link = data.product.link;
                 product.img = data.product.img;
                 product.title = data.product.title;

@@ -34,16 +34,27 @@ class ProductHandler(webapp2.RequestHandler):
 
     @staticmethod
     def fetch_product(url):
-        useragent = "facebookexternalhit/1.0 (+http://www.facebook.com/externalhit_uatext.php)"
+        useragent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
         request = urllib2.Request(url)
         request.add_header('User-Agent', useragent)
         opener = urllib2.build_opener()
-        page = opener.open(request).read()
-
+        result = opener.open(request)
+        page = result.read()
         tree = html.fromstring(page)
+
+        canonical_url = get_element_attr(tree, '//link[@rel="canonical"]', 'href')
+        if len(canonical_url) > 0:
+            request = urllib2.Request(canonical_url[0])
+            request.add_header('User-Agent', useragent)
+            opener = urllib2.build_opener()
+            result = opener.open(request)
+            page = result.read()
+            tree = html.fromstring(page)
+
         title = get_element_attr(tree, '//meta[@property="og:title"]', 'content')[0]
         desc = get_element_attr(tree, '//meta[@property="og:description"]', 'content')[0]
         img = get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0]
+        print("Product Title:\t" + title)
 
         return json.dumps({'product': {
                            'link': url,
