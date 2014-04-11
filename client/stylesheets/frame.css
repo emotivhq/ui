@@ -1,4 +1,13 @@
 
+@font-face {
+    font-family: Blanch;
+    src: url('/assets/fonts/BLANCH.otf');
+}
+@font-face {
+    font-family: BlanchCondensed;
+    src: url('/assets/fonts/BLANCH_CONDENSED.otf');
+}
+
 body {
     margin: 0;
 }
@@ -30,7 +39,7 @@ body * {
 
 /* GENERAL STYLING */
 input, button {
-    font-family: Blanch, sans-serif;
+    font-family: BlanchCondensed, sans-serif;
     font-size: 28px;
     padding: 3px 5px;
 }
