@@ -13,7 +13,11 @@ class GiftStart():
         self.id = -1
 
     def jsonify(self):
-        return json.dumps({'giftstart': {'product': self.product, 'user': self.user, 'id': self.id}})
+        return json.dumps({'giftstart': {'product': self.product, 'user': self.user, 'id': self.id,
+                                         'parts': [[{'bought': False}, {'bought': False}, {'bought': False}, {'bought': False}, {'bought': False}],
+                                                   [{'bought': False}, {'bought': False}, {'bought': False}, {'bought': True}, {'bought': False}],
+                                                   [{'bought': False}, {'bought': False}, {'bought': False}, {'bought': True}, {'bought': True}],
+                                                   [{'bought': False}, {'bought': False}, {'bought': False}, {'bought': False}, {'bought': False}]]}})
 
 
 class GiftStartHandler(webapp2.RequestHandler):
