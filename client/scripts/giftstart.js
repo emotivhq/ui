@@ -12,10 +12,23 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                 data: {product: product, action: 'new', user:{name: 'test'}}})
                 .success(function (data, status, headers, config){
                     giftStart = data['giftstart'];
+                    for (var j = 0; j < giftStart.parts.length; j++) {
+                        for (var i = 0; i < giftStart.parts[j].length; i++) {
+                            giftStart.parts[j][i].toggle = function() {
+                                var x = i;
+                                var y = j;
+                                return function () {
+                                    if (giftStart.parts[y][x].selected) {
+                                        giftStart.parts[y][x].selected = false;
+                                    } else {
+                                        giftStart.parts[y][x].selected = true;
+                                    }
+                                }
+                            }();
+                        }
+                    }
                     $location.path('/giftstart');
                     $location.search('id', giftStart.id);
-                    console.log("Successfully created GiftStart:");
-                    console.log(giftStart);
                 }).error(function (data, status, headers, config){
                     console.log("Failed to make GiftStart.");
             });

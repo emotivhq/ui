@@ -6,6 +6,7 @@ body * {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 /*  HEADER  */
@@ -24,4 +25,17 @@ body * {
 /*  ANGULAR VIEW  */
 #angular-view {
     margin-top: 60px;
+}
+
+/* GENERAL STYLING */
+input, button {
+    font-family: Blanch, sans-serif;
+    font-size: 28px;
+    padding: 3px 5px;
+}
+button {
+    background: #d45;
+    color: #fff;
+    border: solid #d45 2px;
+    cursor: pointer;
 }
