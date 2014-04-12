@@ -36,9 +36,25 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
 
         function getGiftStart() {return giftStart;}
 
+        function updateSelected(parts) {
+            giftStart.parts = parts;
+
+            giftStart.totalSelection = 0;
+            for (var j=0; j < parts.length; j++) {
+                for (var i=0; i < parts[j].length; i++) {
+                    if (parts[j][i].selected) {
+                        giftStart.totalSelection += parts[j][i].value;
+                    }
+                }
+            }
+
+            return giftStart;
+        }
+
         return {
             initiateGiftStart: initiateGiftStart,
-            getGiftStart: getGiftStart
+            getGiftStart: getGiftStart,
+            updateSelected: updateSelected
         };
 
     }]);
@@ -51,5 +67,10 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
         $scope.pitchIn = function() {
             alert("Pitch in!");
         };
+
+        $scope.selectionUpdated = function() {
+            $scope.giftStart = GiftStartService.updateSelected($scope.giftStart.parts);
+            console.log('Updating part selection... ' + $scope.giftStart.totalSelection);
+        }
 
 }]);

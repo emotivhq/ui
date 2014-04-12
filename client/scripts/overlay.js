@@ -20,12 +20,13 @@ var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile) {
             overlayElement.append(rowStr);
 
             for (var i = 0; i < x; i++) {
-                var tdStr = '<td ng-class="{\'part-cell\': true, c'+i+': true, bought: giftstart.parts['+j+']['+i+'].bought, selected: giftstart.parts['+j+']['+i+'].selected}" ng-click="giftstart.parts['+j+']['+i+'].toggle()"></td>';
+                var tdStr = '<td ng-class="{\'part-cell\': true, c'+i+': true, bought: giftstart.parts['+j+']['+i+
+                    '].bought, selected: giftstart.parts['+j+']['+i+'].selected}" ng-click="giftstart.parts['+j+']['+i+
+                    '].toggle()"></td>';
                 angular.element(overlayElement.children()[j]).append($compile(tdStr)(scope));
-
+//                scope.$watch(scope.giftStart.parts[j][i].selected, scope.selectionUpdated);
             }
         }
-
     }
 
     return {
