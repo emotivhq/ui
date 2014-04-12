@@ -29,11 +29,13 @@ def get_element_attr(element, xpath, attr):
 class ProductHandler(webapp2.RequestHandler):
 
     def post(self):
-        url = json.loads(self.request.body)['url']
-        self.response.write(self.fetch_product(url))
+        data = json.loads(self.request.body)
+        self.response.write(self.fetch_product(data))
 
     @staticmethod
-    def fetch_product(url):
+    def fetch_product(data):
+        url = data['url']
+        price = data['price']
         useragent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
         request = urllib2.Request(url)
         request.add_header('User-Agent', useragent)
@@ -54,13 +56,13 @@ class ProductHandler(webapp2.RequestHandler):
         title = get_element_attr(tree, '//meta[@property="og:title"]', 'content')[0]
         desc = get_element_attr(tree, '//meta[@property="og:description"]', 'content')[0]
         img = get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0]
-        print("Product Title:\t" + title)
 
         return json.dumps({'product': {
                            'link': url,
                            'img': img,
                            'title': title,
-                           'price': desc,
+                           'price': price,
+                           'description': desc,
                            }})
 
 api = webapp2.WSGIApplication([('/product', ProductHandler)], debug=True)

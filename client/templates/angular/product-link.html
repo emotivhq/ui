@@ -10,10 +10,12 @@
 
     <div class="product-link result wrapper" ng-show="resultShown">
         <div class="product-link result copy">Is this right?</div>
-        <img class="product-link result image" ng-src="{{product.img}}">
+        <gs-img class="product-link result image" src="product.img" on-load="imageLoaded"></gs-img>
         <div class="product-link result details">
-            <span class="product-link result title" ng-bind="product.title"></span><span class="product-link result price" ng-bind="product.price"></span>
+            <span class="product-link result title" ng-bind="product.title"></span><span class="product-link result price" ng-bind="product.description"></span>
+            <div class="product-link result price">Full, non-sale price:</div>
+            <input type="number" name="product-price" ng-model="product.price"/>
+            <button class="product-link result submit large" ng-click="giftstart()">GiftStart!</button>
         </div>
-        <button class="product-link result submit" ng-click="giftstart()">GiftStart!</button>
     </div>
 </div>

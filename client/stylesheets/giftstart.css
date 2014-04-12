@@ -3,7 +3,8 @@
     text-align: center;
 }
 .giftstart.product.image {
-    width: 480px;
+    max-width: 480px;
+    max-height: 480px;
     display: inline-block;
     padding: 20px;
 }

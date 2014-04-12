@@ -49,3 +49,7 @@ button {
     border: solid #d45 2px;
     cursor: pointer;
 }
+button.large {
+    font-size: 40px;
+    padding: 6px 10px;
+}

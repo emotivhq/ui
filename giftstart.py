@@ -11,7 +11,8 @@ class GiftStart():
         self.product = product
         self.user = user
         self.id = -1
-        self.parts = [[{'bought': False, 'value': 25} for i in range(5)] for j in range(4)]
+        x, y = 5, 4
+        self.parts = [[{'bought': False, 'value': product['price']/x/y} for i in range(x)] for j in range(y)]
         self.parts[2][2]['bought'] = True
         self.parts[2][3]['bought'] = True
         self.parts[3][3]['bought'] = True

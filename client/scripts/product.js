@@ -10,20 +10,24 @@ var ProductService = GiftStarterApp.service('ProductService', ['$http',
             link: '',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
-            price: '$xxx.xx'
+            description: 'Description',
+            price: 400,
+            imageWidth: 0,
+            imageHeight: 0
         };
 
         function getProduct() {return product;}
 
-        function submitLink(url, onSuccess, onFail) {
+        function submitLink(url, price, onSuccess, onFail) {
             // TODO: This is isn't working on mobile.  Why not?
             $http({
-                method: 'POST', url: '/product', data: {url: url}
+                method: 'POST', url: '/product', data: {url: url, price: price}
             }).success(function(data, status, headers, config) {
                 product.link = data.product.link;
                 product.img = data.product.img;
                 product.title = data.product.title;
                 product.price = data.product.price;
+                product.description = data.product.description;
                 onSuccess(product);
             }).error(function(data, status, headers, config) {
                 console.log("Fetched failed!");
@@ -31,14 +35,18 @@ var ProductService = GiftStarterApp.service('ProductService', ['$http',
             });
         }
 
+        function setImageDimensions(x, y) {
+            product.imageHeight = y;
+            product.imageWidth = x;
+        }
+
         return {
             submitLink: submitLink,
-            getProduct: getProduct
-
+            getProduct: getProduct,
+            setImageDimensions: setImageDimensions
         };
 
 }]);
-
 
 var ProductLinkController = GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
     'GiftStartService',
@@ -49,7 +57,9 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
             link: '',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
-            price: '$xxx.xx'
+            price: 400,
+            imageWidth: 0,
+            imageHeight: 0
         };
 
         function onSuccess(product) {
@@ -58,8 +68,35 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
         }
         function onFailure(reason) {console.log("Product service failed to fetch product.");}
 
-        $scope.submitLink = function() {ProductService.submitLink($scope.product.link, onSuccess, onFailure);};
+        $scope.submitLink = function() {ProductService.submitLink($scope.product.link, $scope.product.price, onSuccess, onFailure);};
 
         $scope.giftstart = function() {GiftStartService.initiateGiftStart($scope.product);};
 
+        $scope.imageLoaded = function(element) {
+//            alert("Height: " + element.prop('offsetHeight') + '\nWidth: ' + element.prop('offsetWidth'));
+            $scope.product.imageHeight = element.prop('offsetHeight');
+            $scope.product.imageWidth = element.prop('offsetWidth');
+            ProductService.setImageDimensions($scope.product.imageWidth, $scope.product.imageHeight);
+        };
+
 }]);
+
+var gsImg = GiftStarterApp.directive('gsImg',
+    function($compile) {
+        var template = '';
+        var link = function(scope, element, attrs) {
+            template = '<img ng-src="{{'+attrs.src+'}}" class="'+attrs.class+'"/>';
+            element.append($compile(template)(scope));
+            angular.element(element.children()[0]).on('load',
+                function() {
+                    scope[attrs.onLoad](element);
+            });
+        };
+
+        return {
+            restrict: 'E',
+            link: link
+        }
+
+
+});

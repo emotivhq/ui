@@ -2,15 +2,16 @@
  * Created by stuart on 4/11/14.
  */
 
-var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile) {
+var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, ProductService) {
     function link(scope, element, attrs) {
 
+        console.log(scope.giftStart);
         var overlayElement = angular.element(element.children()[1]);
-        var imageElement =  angular.element(element.children()[0]);
-//        var imageHeight = '500px';//imageElement.prop('offsetHeight');
+        var imageHeight = ProductService.getProduct().imageHeight;
+//        var imageWidth = scope.giftStart.product.imageWidth;
 //        TODO: make this detect image height automatically
-        overlayElement.css('margin-top', '-504px');
-        overlayElement.css('height', '500px');
+        overlayElement.css('margin-top', (-imageHeight - 4 + "px"));
+        overlayElement.css('height', imageHeight + "px");
 
         var x = 5;
         var y = 4;
@@ -22,9 +23,8 @@ var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile) {
             for (var i = 0; i < x; i++) {
                 var tdStr = '<td ng-class="{\'part-cell\': true, c'+i+': true, bought: giftstart.parts['+j+']['+i+
                     '].bought, selected: giftstart.parts['+j+']['+i+'].selected}" ng-click="giftstart.parts['+j+']['+i+
-                    '].toggle()"></td>';
+                    '].toggle()">${{giftstart.parts['+j+']['+i+'].value}}</td>';
                 angular.element(overlayElement.children()[j]).append($compile(tdStr)(scope));
-//                scope.$watch(scope.giftStart.parts[j][i].selected, scope.selectionUpdated);
             }
         }
     }
