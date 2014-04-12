@@ -5,11 +5,8 @@
 var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, ProductService) {
     function link(scope, element, attrs) {
 
-        console.log(scope.giftStart);
         var overlayElement = angular.element(element.children()[1]);
         var imageHeight = ProductService.getProduct().imageHeight;
-//        var imageWidth = scope.giftStart.product.imageWidth;
-//        TODO: make this detect image height automatically
         overlayElement.css('margin-top', (-imageHeight - 4 + "px"));
         overlayElement.css('height', imageHeight + "px");
 

@@ -13,13 +13,17 @@
     padding: 20px;
     display: inline-block;
     vertical-align: top;
-    text-align: left;
 }
 .giftstart.product.title {
-    display: block;
     font-weight: 300;
-    font-size: 200%;
+    font-size: 36px;
     margin-bottom: 20px;
+    text-align: left;
+}
+a.giftstart.product.title {text-decoration: none; color: black;}
+a.giftstart.product.title:hover {text-decoration: underline;}
+.giftstart.product.description {
+    text-align: left;
 }
 .giftstart.product.price {
     display: block;
@@ -27,4 +31,14 @@
 .giftstart.pitch-in.button {
     display: block;
     margin: 30px auto;
+}
+
+.giftstart.contribution, .giftstart.total-price {
+    font-family: Blanch, sans-serif;
+    font-size: 60px;
+}
+.giftstart.price {
+    display:inline-block;
+    font-size: 24px;
+    padding: 20px;
 }
