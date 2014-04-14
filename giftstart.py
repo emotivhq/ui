@@ -11,7 +11,7 @@ class GiftStart():
         self.product = product
         self.user = user
         self.id = -1
-        x, y = 5, 4
+        x, y = 5, 5
         self.parts = [[{'bought': False, 'value': float(product['price'])/x/y} for i in range(x)] for j in range(y)]
         self.parts[2][2]['bought'] = True
         self.parts[2][3]['bought'] = True
@@ -19,7 +19,7 @@ class GiftStart():
 
     def jsonify(self):
         return json.dumps({'giftstart': {'product': self.product, 'user': self.user, 'id': self.id,
-                                         'parts': self.parts}})
+                                         'parts': self.parts, 'totalSelection': 0}})
 
 
 class GiftStartHandler(webapp2.RequestHandler):

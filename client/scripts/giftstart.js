@@ -18,10 +18,12 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                                 var x = i;
                                 var y = j;
                                 return function () {
-                                    if (giftStart.parts[y][x].selected) {
-                                        giftStart.parts[y][x].selected = false;
-                                    } else {
-                                        giftStart.parts[y][x].selected = true;
+                                    if (!giftStart.parts[y][x].bought) {
+                                        if (giftStart.parts[y][x].selected) {
+                                            giftStart.parts[y][x].selected = false;
+                                        } else {
+                                            giftStart.parts[y][x].selected = true;
+                                        }
                                     }
                                 }
                             }();

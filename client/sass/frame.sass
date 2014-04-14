@@ -1,0 +1,23 @@
+@import base.sass
+
+
+/*  HEADER  */
+$header-height: 60px
+$header-margin-bottom: 10px
+
+#header
+  position: fixed
+  top: 0
+  width: 100%
+  background: rgba(255, 255, 255, 0.95)
+  z-index: 1000
+
+#header-logo
+  height: $header-height
+  display: block
+  margin: 0 auto $header-margin-bottom auto
+
+
+/*  ANGULAR VIEW  */
+#angular-view
+  margin-top: $header-height + $header-margin-bottom

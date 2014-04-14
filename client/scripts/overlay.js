@@ -2,16 +2,17 @@
  * Created by stuart on 4/11/14.
  */
 
-var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, ProductService) {
+var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService) {
     function link(scope, element, attrs) {
 
         var overlayElement = angular.element(element.children()[1]);
         var imageHeight = ProductService.getProduct().imageHeight;
         overlayElement.css('margin-top', (-imageHeight - 4 + "px"));
         overlayElement.css('height', imageHeight + "px");
+        var gs = GiftStartService.getGiftStart();
 
-        var x = 5;
-        var y = 4;
+        var x = gs.parts[0].length;
+        var y = gs.parts.length;
 
         for (var j = 0; j < y; j++) {
             var rowStr = '<tr class="part-row '+j+'"></tr>';

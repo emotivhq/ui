@@ -1,0 +1,38 @@
+@font-face
+  font-family: Blanch
+  src: url('/assets/fonts/BLANCH.otf')
+
+@font-face
+  font-family: BlanchCondensed
+  src: url('/assets/fonts/BLANCH_CONDENSED.otf')
+
+$font-accent: 400 28px BlanchCondensed, sans-serif
+$font-accent-large: 400 40px BlanchCondensed, sans-serif
+$font-normal: 300 14px 'Roboto', sans-serif
+$font-normal-large: 300 28px 'Roboto', sans-serif
+
+=box-sizing($sizing)
+  box-sizing: $sizing
+  -moz-box-sizing: $sizing
+  -webkit-box-sizing: $sizing
+
+body
+  margin: 0
+
+body *
+  +box-sizing(border-box)
+  font-family: 'Roboto', sans-serif
+
+input, button
+  font: $font-accent
+  padding: 3px 5px
+
+button
+  background: #d45
+  color: #fff
+  border: solid #d45 2px
+  cursor: pointer
+
+button.large
+  font: $font-accent-large
+  padding: 6px 10px
