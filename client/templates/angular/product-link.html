@@ -1,21 +1,21 @@
 <div class="product-link wrapper" ng-controller="ProductLinkController">
-    <div class="product-link search wrapper">
-        <div class="product-link copy">
+    <div class="search wrapper">
+        <div class="copy">
             Link to the product you'd like to GiftStart:
         </div>
-        <span class="product-link search inputs">
-            <input class="product-link search text-input" type="text" name="product-link" placeholder="Product Link" ng-model="product.link"/><button class="product-link search submit" ng-click="submitLink()">Submit</button>
+        <span class="inputs">
+            <input class="text-input" type="text" name="product-link" placeholder="Product Link" ng-model="product.link"/><button class="submit" ng-click="submitLink()">Submit</button>
         </span>
     </div>
 
-    <div class="product-link result wrapper" ng-show="resultShown">
-        <div class="product-link result copy">Is this right?</div>
-        <gs-img class="product-link result image" src="product.img" on-load="imageLoaded"></gs-img>
-        <div class="product-link result details">
-            <span class="product-link result title" ng-bind="product.title"></span><span class="product-link result price" ng-bind="product.description"></span>
-            <div class="product-link result price">Full, non-sale price:</div>
+    <div class="result wrapper" ng-show="resultShown">
+        <div class="copy">Is this right?</div>
+        <gs-img class="image" src="product.img" on-load="imageLoaded"></gs-img>
+        <div class="details">
+            <span class="title" ng-bind="product.title"></span><span class="description" ng-bind="product.description"></span>
+            <div class="price">Full, non-sale price:</div>
             <input type="number" name="product-price" ng-model="product.price"/>
-            <button class="product-link result submit large" ng-click="giftstart()">GiftStart!</button>
+            <button class="submit large" ng-click="giftstart()">GiftStart!</button>
         </div>
     </div>
 </div>
