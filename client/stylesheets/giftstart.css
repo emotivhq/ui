@@ -1,44 +1,63 @@
+@font-face {
+  font-family: Blanch;
+  src: url("/assets/fonts/BLANCH.otf"); }
+@font-face {
+  font-family: BlanchCondensed;
+  src: url("/assets/fonts/BLANCH_CONDENSED.otf"); }
+body {
+  margin: 0; }
+
+body * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-family: "Roboto", sans-serif; }
+
+input, button {
+  font: 400 28px BlanchCondensed, sans-serif;
+  padding: 3px 5px; }
+
+button {
+  background: #dd4455;
+  color: white;
+  border: solid #dd4455 2px;
+  cursor: pointer; }
+
+button.large {
+  font: 400 40px BlanchCondensed, sans-serif;
+  padding: 6px 10px; }
 
 .giftstart.wrapper {
-    text-align: center;
-}
-.giftstart.product.image {
-    max-width: 480px;
-    max-height: 480px;
-    display: inline-block;
-    padding: 20px;
-}
-.giftstart.product.details {
+  text-align: center; }
+  .giftstart.wrapper .product.details {
     width: 480px;
     padding: 20px;
     display: inline-block;
-    vertical-align: top;
-}
-.giftstart.product.title {
-    font-weight: 300;
-    font-size: 36px;
-    margin-bottom: 20px;
-    text-align: left;
-}
-a.giftstart.product.title {text-decoration: none; color: black;}
-a.giftstart.product.title:hover {text-decoration: underline;}
-.giftstart.product.description {
-    text-align: left;
-}
-.giftstart.product.price {
+    vertical-align: top; }
+    .giftstart.wrapper .product.details a.title {
+      text-decoration: none;
+      color: black; }
+    .giftstart.wrapper .product.details a.title:hover {
+      text-decoration: underline; }
+    .giftstart.wrapper .product.details .image {
+      max-width: 480px;
+      max-height: 480px;
+      display: inline-block;
+      padding: 20px; }
+    .giftstart.wrapper .product.details .title {
+      font-weight: 300;
+      font-size: 36px;
+      margin-bottom: 20px;
+      text-align: left; }
+    .giftstart.wrapper .product.details .description {
+      text-align: left; }
+  .giftstart.wrapper .pitch-in.button {
     display: block;
-}
-.giftstart.pitch-in.button {
-    display: block;
-    margin: 30px auto;
-}
-
-.giftstart.contribution, .giftstart.total-price {
+    margin: 30px auto; }
+  .giftstart.wrapper .contribution, .giftstart.wrapper .total-price {
     font-family: Blanch, sans-serif;
-    font-size: 60px;
-}
-.giftstart.price {
-    display:inline-block;
+    font-size: 60px; }
+  .giftstart.wrapper .price {
+    display: inline-block;
     font-size: 24px;
-    padding: 20px;
-}
+    padding: 20px; }

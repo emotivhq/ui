@@ -5,11 +5,17 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /favicon\.ico
-  static_files: favicon.ico
-  upload: favicon\.ico
+- url: /auth
+  script: user.auth
+- url: /product
+  script: product.api
+- url: /giftstart
+  script: giftstart.api
 
-# Client urls
+# Client static asset urls
+- url: /favicon\.ico
+  static_files: client/assets/favicon.ico
+  upload: client/assets/favicon\.ico
 - url: /stylesheets
   static_dir: client/stylesheets
 - url: /scripts
@@ -22,10 +28,6 @@ handlers:
   static_dir: client/templates/angular
 
 # Catch all other urls
-- url: /product
-  script: product.api
-- url: /giftstart
-  script: giftstart.api
 - url: .*
   script: main.app
 

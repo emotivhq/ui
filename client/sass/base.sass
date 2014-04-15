@@ -1,3 +1,5 @@
+
+// ------------------------- FONTS -------------------------
 @font-face
   font-family: Blanch
   src: url('/assets/fonts/BLANCH.otf')
@@ -10,6 +12,10 @@ $font-accent: 400 28px BlanchCondensed, sans-serif
 $font-accent-large: 400 40px BlanchCondensed, sans-serif
 $font-normal: 300 14px 'Roboto', sans-serif
 $font-normal-large: 300 28px 'Roboto', sans-serif
+
+// ------------------------- COLORS -------------------------
+$primary-color: #d45
+
 
 =box-sizing($sizing)
   box-sizing: $sizing
@@ -28,9 +34,9 @@ input, button
   padding: 3px 5px
 
 button
-  background: #d45
+  background: $primary-color
   color: #fff
-  border: solid #d45 2px
+  border: solid $primary-color 2px
   cursor: pointer
 
 button.large

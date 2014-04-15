@@ -1,0 +1,46 @@
+
+@import base.sass
+
+=no-select()
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+// Product overlay
+gs-overlay.product-overlay
+  display: inline-block
+  margin: 40px
+
+  .overlay
+    width: 100%
+    position: relative
+    border-collapse: collapse
+
+  .image
+    max-width: 480px
+    max-height: 480px
+
+// Part cells
+.part-cell
+  background: rgba(80, 150, 255, 0.3)
+  color: rgba(255, 255, 255, 0.7)
+  border: dashed 1px rgba(255, 255, 255, 0.4)
+  transition: all 0.2s
+  cursor: pointer
+  +no-select
+.part-cell:hover
+  background: rgba(80, 150, 255, 0.2)
+  color: rgba(0, 0, 0, 1)
+  text-shadow: 0 0 8px #fff
+  border: dashed 1px rgba(255, 255, 255, 0.7)
+
+.part-cell.bought
+  opacity: 0
+  cursor: default
+
+.part-cell.selected
+  background: rgba(80, 150, 255, 0.1)
+  color: rgba(255, 255, 255, 0)
