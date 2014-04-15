@@ -1,0 +1,6 @@
+/client/stylesheets/*.css
+/client/client.iml
+
+secret.yaml
+app.iml
+.idea
