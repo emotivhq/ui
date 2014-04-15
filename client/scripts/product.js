@@ -70,7 +70,8 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
 
         $scope.submitLink = function() {ProductService.submitLink($scope.product.link, $scope.product.price, onSuccess, onFailure);};
 
-        $scope.giftstart = function() {GiftStartService.initiateGiftStart($scope.product);};
+        $scope.giftstart = function() {GiftStartService.initiateGiftStart($scope.product.title, $scope.product.description, $scope.product.img, $scope.product.price);};
+        //$scope.product);};
 
         $scope.imageLoaded = function(element) {
 //            alert("Height: " + element.prop('offsetHeight') + '\nWidth: ' + element.prop('offsetWidth'));

@@ -3,11 +3,16 @@ __author__ = 'stuart'
 import webapp2
 import yaml
 import json
-import urlparse
 import urllib2
+from google.appengine.ext import ndb
 
 FB_APP_ID = yaml.load(open('secret.yaml'))['fb_auth']['app_id']
 FB_APP_SECRET = yaml.load(open('secret.yaml'))['fb_auth']['app_secret']
+
+# TODO: make user class scaffolding
+# class User(ndb.model):
+#     email = ndb.StringProperty()
+#     facebook_id = ndb.IntegerProperty()
 
 
 class AuthHandler(webapp2.RequestHandler):

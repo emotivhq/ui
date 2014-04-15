@@ -6,10 +6,12 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
     function(ezfb, $http, $rootScope) {
 
         var loggedIn = false;
+        var uid = -1;
 
         ezfb.getLoginStatus(function(res) {
             if (res.status === 'connected') {
                 loggedIn = true;
+                uid = res.authResponse.userID;
                 $rootScope.$broadcast('login-success');
             }
         });
@@ -19,6 +21,7 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
                 if (res.status === 'connected') {
                     $rootScope.$broadcast('login-success');
                     loggedIn = true;
+                    uid = res.authResponse.userID;
                     getLongTermToken(res.authResponse.accessToken);
                 } else {
                     $rootScope.$broadcast('login-failure');
@@ -53,18 +56,16 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
                     }
                 }
             );
-            ezfb.api("me?fields=email,name",
-                function(response) {
-                    console.log(response);
-                }
-            );
         };
+
+        function getUid() {return uid}
 
         return  {
             login: login,
             logout: logout,
             loginStatus: loggedIn,
-            getFriends: getFriends
+            getFriends: getFriends,
+            getUid: getUid
         }
 
 }]);
@@ -78,7 +79,7 @@ var FriendsController = GiftStarterApp.controller('FriendsController', ['$scope'
             if (FacebookService.loginStatus) {
                 FacebookService.logout();
             } else {
-                FacebookService.login(loginSuccess);
+                FacebookService.login();
             }
         };
 
