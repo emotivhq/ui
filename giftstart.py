@@ -38,7 +38,8 @@ class GiftStart(ndb.Model):
         gs.product_img_height = giftstart['product']['img_height']
         gs.overlay_columns = giftstart['columns']
         gs.overlay_rows = giftstart['rows']
-        gs.overlay_parts = json.dumps(giftstart['parts'])
+        parts = [[{'bought': part['bought'], 'value': part['value']} for part in row] for row in giftstart['parts']]
+        gs.overlay_parts = json.dumps(parts)
         gs.giftstart_id = str(GiftStart.query().count() + 1)
         return gs
 
