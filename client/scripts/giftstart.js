@@ -52,6 +52,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                     img_url: productImgUrl,
                     img_height: imageHeight
                 },
+                totalSelection: 0,
                 parts: parts,
                 rows: rows,
                 columns: columns
@@ -120,6 +121,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                 .success(function (data, status, headers, config){
                     console.log(data);
                     giftStart = data['giftstart'];
+                    giftStart.totalSelection = 0;
                     injectPartToggles(giftStart);
                     $rootScope.$broadcast('giftstart-loaded');
 //                    $location.path('/giftstart');
