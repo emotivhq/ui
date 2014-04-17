@@ -61,9 +61,9 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             return gs;
         }
 
-        function createGiftStart(giftstart) {
+        function createGiftStart() {
             $http({method: 'POST', url: '/giftstart',
-                data: {giftstart: giftstart, action: 'create'}})
+                data: {giftstart: giftStart, action: 'create'}})
                 .success(function (data, status, headers, config){
                     console.log(data);
                     giftStart = data['giftstart'];
@@ -72,7 +72,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
 //                    $location.path('/giftstart');
                     $location.search('gs-id', giftStart.id);
                 }).error(function (data, status, headers, config){
-                    console.log("Failed to make GiftStart.");
+                    console.log("Failed to create GiftStart.");
             });
         }
 
@@ -127,8 +127,22 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
 //                    $location.path('/giftstart');
 //                    $location.search('gs-id', giftStart.id);
                 }).error(function (data, status, headers, config){
-                    console.log("Failed to make GiftStart.");
+                    console.log("Failed to fetch GiftStart.");
             });
+        }
+
+        function updateGiftStart() {
+            $http({method: 'POST', url: '/giftstart',
+                data: {giftstart: giftStart, action: 'update'}})
+                .success(function (data, status, headers, config){
+                    console.log(data);
+                    giftStart = data['giftstart'];
+                    giftStart.totalSelection = 0;
+                    injectPartToggles(giftStart);
+                    $rootScope.$broadcast('giftstart-loaded');
+                }).error(function (data, status, headers, config){
+                    console.log("Failed to update GiftStart.");
+                });
         }
 
         return {
@@ -136,7 +150,8 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             createGiftStart: createGiftStart,
             getGiftStart: getGiftStart,
             updateSelected: updateSelected,
-            fetchGiftStart: fetchGiftStart
+            fetchGiftStart: fetchGiftStart,
+            updateGiftStart: updateGiftStart
         };
 
     }]);
@@ -161,7 +176,27 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
 
 
         $scope.pitchIn = function() {
-            GiftStartService.createGiftStart(GiftStartService.getGiftStart());
+            if (GiftStartService.getGiftStart().gsid) {
+                // GiftStarter exists server-side, just update
+                GiftStartService.updateGiftStart();
+
+                // BEGIN TEMP CODE - convert selected to bought
+                (function selectedToBought(gs) {
+                    for (var j=0; j < gs.parts.length; j++) {
+                        for (var i=0; i < gs.parts[j].length; i++) {
+                            if (gs.parts[j][i].selected) {
+                                gs.parts[j][i].bought = true;
+                                gs.parts[j][i].selected = false;
+                            }
+                        }
+                    }
+                })($scope.giftStart);
+                // END TEMP CODE
+
+            } else {
+                // GiftStarter doesn't exist server-side, create it
+                GiftStartService.createGiftStart();
+            }
             console.log("Pitch in.");
         };
 
