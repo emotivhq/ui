@@ -2,8 +2,8 @@
  * Created by stuart on 4/9/14.
  */
 
-var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location', 'FacebookService',
-    function($http, $location, FacebookService) {
+var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location', 'FacebookService', '$rootScope',
+    function($http, $location, FacebookService, $rootScope) {
 
         var giftStart = {
             title: '',
@@ -11,14 +11,16 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             gift_champion_uid: '',
             product: {
                 price: -1,
-                img_url: ''
+                img_url: '',
+                img_height: -1
             },
             parts: [],
             rows: -1,
             columns: -1
         };
 
-        function initiateGiftStart(title, description, productImgUrl, productPrice) {
+        function initiateGiftStart(title, description, productImgUrl, imageHeight, productPrice) {
+            console.log("initiating giftstart");
             var x = 5, y = 5;
             var tempParts = [];
             for (var j = 0; j < y; j++) {
@@ -31,19 +33,24 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                 }
                 tempParts.push(newParts);
             }
-            giftStart = buildGiftStart(title, description, FacebookService.getUid(), productImgUrl, productPrice, tempParts, y, x);
-            console.log(giftStart);
+            giftStart = buildGiftStart(title, description, FacebookService.getUid(), productImgUrl, imageHeight,
+                productPrice, tempParts, y, x);
             $location.path('/giftstart');
+            setTimeout(function() {
+                $rootScope.$broadcast('giftstart-loaded');
+            }, 100);
         }
 
-        function buildGiftStart(title, description, championUid, productImgUrl, productPrice, parts, rows, columns) {
+        function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, parts, rows,
+                                columns) {
             var gs = {
                 title: title,
                 description: description,
                 gift_champion_uid: championUid,
                 product: {
                     price: productPrice,
-                    img_url: productImgUrl
+                    img_url: productImgUrl,
+                    img_height: imageHeight
                 },
                 parts: parts,
                 rows: rows,
@@ -55,12 +62,14 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
 
         function createGiftStart(giftstart) {
             $http({method: 'POST', url: '/giftstart',
-                data: {giftstart: giftstart, action: 'create', uid: FacebookService.getUid()}})
+                data: {giftstart: giftstart, action: 'create'}})
                 .success(function (data, status, headers, config){
+                    console.log(data);
                     giftStart = data['giftstart'];
                     injectPartToggles(giftStart);
-                    $location.path('/giftstart');
-                    $location.search('id', giftStart.id);
+                    $rootScope.$broadcast('giftstart-loaded');
+//                    $location.path('/giftstart');
+                    $location.search('gs-id', giftStart.id);
                 }).error(function (data, status, headers, config){
                     console.log("Failed to make GiftStart.");
             });
@@ -105,21 +114,53 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             return giftStart;
         }
 
+        function fetchGiftStart(gsid) {
+            $http({method: 'POST', url: '/giftstart',
+                data: {giftstart_id: gsid, action: 'get'}})
+                .success(function (data, status, headers, config){
+                    console.log(data);
+                    giftStart = data['giftstart'];
+                    injectPartToggles(giftStart);
+                    $rootScope.$broadcast('giftstart-loaded');
+//                    $location.path('/giftstart');
+//                    $location.search('gs-id', giftStart.id);
+                }).error(function (data, status, headers, config){
+                    console.log("Failed to make GiftStart.");
+            });
+        }
+
         return {
             initiateGiftStart: initiateGiftStart,
+            createGiftStart: createGiftStart,
             getGiftStart: getGiftStart,
-            updateSelected: updateSelected
+            updateSelected: updateSelected,
+            fetchGiftStart: fetchGiftStart
         };
 
     }]);
 
-var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$scope', 'GiftStartService',
-    function($scope, GiftStartService) {
+var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$scope', 'GiftStartService', '$location',
+    function($scope, GiftStartService, $location) {
 
-        $scope.giftStart = GiftStartService.getGiftStart();
+        console.log($location.search()['gs-id']);
+//        if (GiftStartService.giftStartPresent()) {
+//            console.log("giftstart present.");
+//            $scope.giftStart = GiftStartService.getGiftStart();
+//        }
+        if(typeof($location.search()['gs-id']) === typeof("string")) {
+            console.log("Looks like there's a gs id specified, fetch it");
+            GiftStartService.fetchGiftStart($location.search()['gs-id']);
+        }
+        $scope.$on('giftstart-loaded', function() {
+            console.log("GS event observed, getting giftstart:");
+            $scope.giftStart = GiftStartService.getGiftStart();
+            console.log($scope.giftStart);
+        });
+
 
         $scope.pitchIn = function() {
-            alert("Pitch in!");
+            GiftStartService.createGiftStart(GiftStartService.getGiftStart());
+            console.log("Pitch in.");
         };
 
         $scope.selectionUpdated = function() {
