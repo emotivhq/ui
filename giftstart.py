@@ -28,19 +28,32 @@ class GiftStart(ndb.Model):
         }})
 
     @staticmethod
-    def build(giftstart):
-        gs = GiftStart()
-        gs.gift_champion_uid = giftstart['gift_champion_uid']
-        gs.giftstart_title = giftstart['title']
-        gs.giftstart_description = giftstart['description']
-        gs.product_price = giftstart['product']['price']
-        gs.product_img_url = giftstart['product']['img_url']
-        gs.product_img_height = giftstart['product']['img_height']
-        gs.overlay_columns = giftstart['columns']
-        gs.overlay_rows = giftstart['rows']
+    def populate_giftstart(ndbgs, giftstart):
+        ndbgs.gift_champion_uid = giftstart['gift_champion_uid']
+        ndbgs.giftstart_title = giftstart['title']
+        ndbgs.giftstart_description = giftstart['description']
+        ndbgs.product_price = giftstart['product']['price']
+        ndbgs.product_img_url = giftstart['product']['img_url']
+        ndbgs.product_img_height = giftstart['product']['img_height']
+        ndbgs.overlay_columns = giftstart['columns']
+        ndbgs.overlay_rows = giftstart['rows']
         parts = [[{'bought': part['bought'], 'value': part['value']} for part in row] for row in giftstart['parts']]
-        gs.overlay_parts = json.dumps(parts)
+        ndbgs.overlay_parts = json.dumps(parts)
+        return ndbgs
+
+    @staticmethod
+    def create(giftstart):
+        gs = GiftStart()
+        gs = GiftStart.populate_giftstart(gs, giftstart)
         gs.giftstart_id = str(GiftStart.query().count() + 1)
+        gs.put()
+        return gs
+
+    @staticmethod
+    def update(giftstart):
+        gs = GiftStart.query(GiftStart.giftstart_id == giftstart['gsid']).fetch(1)[0]
+        gs = GiftStart.populate_giftstart(gs, giftstart)
+        gs.put()
         return gs
 
     @staticmethod
@@ -52,23 +65,20 @@ class GiftStart(ndb.Model):
 
 class GiftStartHandler(webapp2.RequestHandler):
 
-    # def get(self):
-    #     data = json.loads(self.request.body)
-    #     action = data['action']
-    #     if action == 'get':
-    #         giftstart_id = data['giftstart_id']
-    #         self.response.write(GiftStart.get_by_id(giftstart_id).jsonify())
-
     def post(self):
         data = json.loads(self.request.body)
         action = data['action']
         print(data)
         if action == 'create':
             giftstart = data['giftstart']
-            gs = GiftStart.build(giftstart)
-            gs.put()
-
+            gs = GiftStart.create(giftstart)
             self.response.write(gs.jsonify())
+
+        elif action == 'update':
+            giftstart = data['giftstart']
+            gs = GiftStart.update(giftstart)
+            self.response.write(gs.jsonify())
+
         elif action == 'get':
             giftstart_id = data['giftstart_id']
             self.response.write(GiftStart.get_by_id(giftstart_id).jsonify())
