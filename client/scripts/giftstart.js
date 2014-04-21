@@ -159,11 +159,6 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
 var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$scope', 'GiftStartService', '$location',
     function($scope, GiftStartService, $location) {
 
-        console.log($location.search()['gs-id']);
-//        if (GiftStartService.giftStartPresent()) {
-//            console.log("giftstart present.");
-//            $scope.giftStart = GiftStartService.getGiftStart();
-//        }
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             console.log("Looks like there's a gs id specified, fetch it");
             GiftStartService.fetchGiftStart($location.search()['gs-id']);
