@@ -5,29 +5,32 @@
 var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
     function(ezfb, $http, $rootScope) {
 
-        var loggedIn = false;
         var uid = -1;
 
         ezfb.getLoginStatus(function(res) {
             if (res.status === 'connected') {
-                loggedIn = true;
                 uid = res.authResponse.userID;
                 $rootScope.$broadcast('login-success');
             }
         });
 
-        var login = function() {
+        function loggedIn(callback) {
+            ezfb.getLoginStatus(function(res) {
+                callback(res.status === 'connected');
+            });
+        }
+
+        function login() {
             ezfb.login(function (res) {
                 if (res.status === 'connected') {
                     $rootScope.$broadcast('login-success');
-                    loggedIn = true;
                     uid = res.authResponse.userID;
                     getLongTermToken(res.authResponse.accessToken);
                 } else {
                     $rootScope.$broadcast('login-failure');
                 }
             }, {scope: 'public_profile,basic_info,email,user_birthday,user_friends,friends_birthday'});
-        };
+        }
 
         function getLongTermToken(token) {
             $http({method: 'POST', url: 'auth',
@@ -44,7 +47,6 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
 
         var logout = function() {
             ezfb.logout(function () {
-                loggedIn = false;
             });
         };
 
@@ -63,7 +65,7 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
         return  {
             login: login,
             logout: logout,
-            loginStatus: loggedIn,
+            loggedIn: loggedIn,
             getFriends: getFriends,
             getUid: getUid
         }

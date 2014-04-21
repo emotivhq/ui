@@ -21,7 +21,6 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
         };
 
         function initiateGiftStart(title, description, productImgUrl, imageHeight, productPrice) {
-            console.log("initiating giftstart");
             var x = 5, y = 5;
             var tempParts = [];
             for (var j = 0; j < y; j++) {
@@ -66,7 +65,6 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             $http({method: 'POST', url: '/giftstart',
                 data: {giftstart: giftStart, action: 'create'}})
                 .success(function (data, status, headers, config){
-                    console.log(data);
                     giftStart = data['giftstart'];
                     injectPartToggles(giftStart);
                     $rootScope.$broadcast('giftstart-loaded');
@@ -124,7 +122,6 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             $http({method: 'POST', url: '/giftstart',
                 data: {giftstart_id: gsid, action: 'get'}})
                 .success(function (data, status, headers, config){
-                    console.log(data);
                     giftStart = data['giftstart'];
                     giftStart.totalSelection = 0;
                     injectPartToggles(giftStart);
@@ -140,7 +137,6 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             $http({method: 'POST', url: '/giftstart',
                 data: {giftstart: giftStart, action: 'update'}})
                 .success(function (data, status, headers, config){
-                    console.log(data);
                     giftStart = data['giftstart'];
                     giftStart.totalSelection = 0;
                     injectPartToggles(giftStart);
@@ -165,13 +161,10 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
     function($scope, GiftStartService, $location, PopoverService) {
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
-            console.log("Looks like there's a gs id specified, fetch it");
             GiftStartService.fetchGiftStart($location.search()['gs-id']);
         }
         $scope.$on('giftstart-loaded', function() {
-            console.log("GS event observed, getting giftstart:");
             $scope.giftStart = GiftStartService.getGiftStart();
-            console.log($scope.giftStart);
         });
 
 
@@ -192,20 +185,19 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
                     }
                 })($scope.giftStart);
 
-                PopoverService.setPopoverFromTemplate('<img src="http://i.imgur.com/CyLddVt.jpg">');
-                PopoverService.showPopover();
                 // END TEMP CODE
+
+                PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
+                PopoverService.showPopover();
 
             } else {
                 // GiftStarter doesn't exist server-side, create it
                 GiftStartService.createGiftStart();
             }
-            console.log("Pitch in.");
         };
 
         $scope.selectionUpdated = function() {
             $scope.giftStart = GiftStartService.updateSelected($scope.giftStart.parts);
-            console.log('Updating part selection... ' + $scope.giftStart.totalSelection);
         }
 
 }]);

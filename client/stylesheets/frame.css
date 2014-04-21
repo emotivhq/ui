@@ -27,6 +27,12 @@ button.large {
   font: 400 40px BlanchCondensed, sans-serif;
   padding: 6px 10px; }
 
+h1.accent.large {
+  font: 400 40px BlanchCondensed, sans-serif; }
+
+p.small {
+  font-size: 11px; }
+
 /*  HEADER  */
 #header {
   position: fixed;
