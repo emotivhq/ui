@@ -24,7 +24,7 @@ var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, Product
                 for (var i = 0; i < x; i++) {
                     var tdStr = '<td ng-class="{\'part-cell\': true, c'+i+': true, bought: giftstart.parts['+j+']['+i+
                         '].bought, selected: giftstart.parts['+j+']['+i+'].selected}" ng-click="giftstart.parts['+j+']['+i+
-                        '].toggle()">${{giftstart.parts['+j+']['+i+'].value}}</td>';
+                        '].toggle()">${{giftstart.parts['+j+']['+i+'].value | number : 2}}</td>';
                     angular.element(overlayElement.children()[j]).append($compile(tdStr)(scope));
                 }
             }

@@ -2,8 +2,9 @@
  * Created by stuart on 4/9/14.
  */
 
-var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location', 'FacebookService', '$rootScope',
-    function($http, $location, FacebookService, $rootScope) {
+var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location', 'FacebookService',
+    '$rootScope', '$filter',
+    function($http, $location, FacebookService, $rootScope, $filter) {
 
         var giftStart = {
             title: '',
@@ -82,6 +83,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                 var tj = j;
                 return function () {
                     if (!giftstart.parts[tj][ti].bought) {
+                        // If selected is none, this will force it into a bool
                         if (giftstart.parts[tj][ti].selected) {
                             giftstart.parts[tj][ti].selected = false;
                         } else {
@@ -111,6 +113,9 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                     }
                 }
             }
+
+            // Limit selected parts to 2 decimal places (cents)
+            giftStart.totalSelection = $filter('number')(giftStart.totalSelection, 2);
 
             return giftStart;
         }
