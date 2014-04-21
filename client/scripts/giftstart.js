@@ -161,8 +161,8 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
 
     }]);
 
-var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$scope', 'GiftStartService', '$location',
-    function($scope, GiftStartService, $location) {
+var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$scope', 'GiftStartService', '$location', 'PopoverService',
+    function($scope, GiftStartService, $location, PopoverService) {
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             console.log("Looks like there's a gs id specified, fetch it");
@@ -191,6 +191,9 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
                         }
                     }
                 })($scope.giftStart);
+
+                PopoverService.setPopoverFromTemplate('<img src="http://i.imgur.com/CyLddVt.jpg">');
+                PopoverService.showPopover();
                 // END TEMP CODE
 
             } else {
