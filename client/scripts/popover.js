@@ -8,7 +8,6 @@ var PopoverService = GiftStarterApp.service('PopoverService', ['$rootScope',
         var template = '';
 
         function setPopoverFromTemplate(newTemplate) {
-            console.log("Setting popover from template...");
             template = newTemplate;
             $rootScope.$broadcast('popover-updated');
         }
