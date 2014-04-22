@@ -2,7 +2,7 @@
  * Created by stuart on 4/7/14.
  */
 
-var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
+GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
     function(ezfb, $http, $rootScope) {
 
         var uid = -1;

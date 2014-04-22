@@ -23,6 +23,7 @@
     "angular": "~1.2.16",
     "angular-route": "~1.2.16",
     "angular-easyfb": "~1.0.0",
-    "angular-mocks": "1.2.16"
+    "angular-mocks": "1.2.16",
+    "angular-payments": "0.1.0"
   }
 }

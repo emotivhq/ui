@@ -2,8 +2,7 @@
  * Created by stuart on 4/9/14.
  */
 
-
-var ProductService = GiftStarterApp.service('ProductService', ['$http',
+GiftStarterApp.service('ProductService', ['$http',
     function($http) {
 
         var product = {
@@ -19,7 +18,6 @@ var ProductService = GiftStarterApp.service('ProductService', ['$http',
         function getProduct() {return product;}
 
         function submitLink(url, price, onSuccess, onFail) {
-            // TODO: This is isn't working on mobile.  Why not?
             $http({
                 method: 'POST', url: '/product', data: {url: url, price: price}
             }).success(function(data, status, headers, config) {
@@ -48,7 +46,7 @@ var ProductService = GiftStarterApp.service('ProductService', ['$http',
 
 }]);
 
-var ProductLinkController = GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
+GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
     'GiftStartService',
     function($scope, ProductService, GiftStartService) {
 
@@ -82,7 +80,7 @@ var ProductLinkController = GiftStarterApp.controller('ProductLinkController', [
 
 }]);
 
-var gsImg = GiftStarterApp.directive('gsImg',
+GiftStarterApp.directive('gsImg',
     function($compile) {
         var template = '';
         var link = function(scope, element, attrs) {

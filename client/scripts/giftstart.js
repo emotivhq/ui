@@ -152,6 +152,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
         }
 
         function saveNote(noteText) {
+            // TODO: This should be added to something sent to the server
             alert("Saved note text:\n" + noteText);
             purchase.note = noteText;
         }
@@ -182,7 +183,7 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
         $scope.pitchIn = function() {
             if (GiftStartService.getGiftStart().gsid) {
                 // GiftStarter exists server-side, just update
-                GiftStartService.updateGiftStart();
+//                GiftStartService.updateGiftStart();
 
                 // BEGIN TEMP CODE - convert selected to bought
                 (function selectedToBought(gs) {

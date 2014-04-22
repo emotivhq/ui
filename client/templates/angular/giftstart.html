@@ -3,8 +3,8 @@
     <gs-overlay class="product-overlay" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
 
     <div class="product details">
-        <div class="price">Total Price: <div>$<span class="giftstart product total-price" ng-bind="giftStart.product.price"></span></div></div>
-        <div class="price">Contribution: <div>$<span class="giftstart product contribution" ng-bind="giftStart.totalSelection"></span></div></div>
+        <div class="price">Total Price: <div>$<span class="giftstart product total-price">{{giftStart.product.price | number : 2}}</span></div></div>
+        <div class="price">Contribution: <div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
         <a ng-href="{{giftStart.product.link}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
         <div class="description" ng-bind="giftStart.description"></div>
         <button class="pitch-in button large" ng-click="pitchIn()">Pitch In!</button>
