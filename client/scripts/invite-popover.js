@@ -7,6 +7,12 @@ GiftStarterApp.controller('InvitePopoverController', [
     function($scope,  FacebookService,  PopoverService) {
 
         $scope.friends = [];
+        $scope.profilePicture = FacebookService.getProfilePictureUrl();
+        $scope.inviteMessage = 'Check out this GiftStarter campaign!';
+
+        function goToNextPopover() {
+            PopoverService.setPopoverFromTemplate('<gs-thanks-popover></gs-thanks-popover>');
+        }
 
         FacebookService.getFriends(function(friends) {
             $scope.friends = friends;
@@ -15,6 +21,12 @@ GiftStarterApp.controller('InvitePopoverController', [
 
         $scope.invite = function() {
             alert("Invite!");
+        };
+
+        $scope.inviteFriends = function() {
+            var selectedFriends = $scope.friends.filter(function(ele) {return ele.selected});
+            FacebookService.inviteFriends(selectedFriends, $scope.inviteMessage);
+            goToNextPopover();
         };
 
         function injectSelectToggles(friends) {
@@ -40,3 +52,12 @@ GiftStarterApp.controller('InvitePopoverController', [
 
 GiftStarterApp.directive('gsInvitePopover',
     function() {return {restrict: 'E', templateUrl: '/templates/angular/invite-popover.html'}});
+
+GiftStarterApp.controller('ThanksPopoverController', [
+            '$scope','PopoverService',
+    function($scope,  PopoverService) {$scope.close = function(){PopoverService.hidePopover()}}
+]);
+
+
+GiftStarterApp.directive('gsThanksPopover',
+    function() {return {restrict: 'E', templateUrl: '/templates/angular/thanks-popover.html'}});

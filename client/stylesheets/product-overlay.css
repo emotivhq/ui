@@ -23,6 +23,9 @@ button {
   border: solid #dd4455 2px;
   cursor: pointer; }
 
+button:active, button:hover, button:focus {
+  background: #ff6677; }
+
 button.large {
   font: 400 40px BlanchCondensed, sans-serif;
   padding: 6px 10px;
@@ -45,7 +48,7 @@ gs-overlay.product-overlay {
     width: 100%;
     position: relative;
     border-collapse: collapse; }
-  gs-overlay.product-overlay .image img {
+  gs-overlay.product-overlay img {
     max-width: 480px;
     max-height: 480px;
     padding: 0; }

@@ -83,13 +83,21 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
 
         function getProfilePictureUrl() {return profilePictureUrl}
 
+        function inviteFriends(friends, message) {
+            console.log("Inviting friends:");
+            console.log(friends);
+            console.log("Invitation message:");
+            console.log(message);
+        }
+
         return  {
             login: login,
             logout: logout,
             loggedIn: loggedIn,
             getFriends: getFriends,
             getUid: getUid,
-            getProfilePictureUrl: getProfilePictureUrl
+            getProfilePictureUrl: getProfilePictureUrl,
+            inviteFriends: inviteFriends
         }
 
 }]);
