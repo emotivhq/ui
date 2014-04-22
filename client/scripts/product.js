@@ -72,8 +72,8 @@ GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
             $scope.product.description, $scope.product.img, $scope.product.imageHeight, $scope.product.price);};
 
         $scope.imageLoaded = function(element) {
-            $scope.product.imageHeight = element.prop('clientHeight');
-            $scope.product.imageWidth = element.prop('clientWidth');
+            $scope.product.imageHeight = angular.element(element.children()[0]).prop('clientHeight');
+            $scope.product.imageWidth = angular.element(element.children()[0]).prop('clientWidth');
             ProductService.setImageDimensions($scope.product.imageWidth, $scope.product.imageHeight);
         };
 

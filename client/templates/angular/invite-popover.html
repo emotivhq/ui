@@ -2,7 +2,7 @@
     <h1 class="accent large">Rally the troops!</h1>
     <p>Invite your friends, so they can help the cause!</p>
     <div class="friend-list">
-        <div class="friend" ng-repeat="friend in friends">
+        <div class="friend" ng-repeat="friend in friends" ng-click="friend.toggle()" ng-class="{selected: friend.selected}">
             <img ng-src="{{friend.picture.data.url}}"/><span>{{friend.name}}</span>
         </div>
     </div>

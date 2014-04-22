@@ -1,0 +1,40 @@
+@import base
+
+.invite-popover
+  padding: 40px 0 40px 0
+  background: $primary-color
+  color: #fff
+
+  .friend-list
+    width: 480px
+    height: 310px
+    overflow-y: scroll
+
+    .friend
+      display: inline-block
+      width: 232px
+      padding: 5px
+      border: dashed 1px $primary-color
+      transition: all 0.2s
+      cursor: default
+
+      img
+        display: inline-block
+        vertical-align: middle
+        +border-radius(50%)
+        width: 50px
+        height: 50px
+
+      span
+        display: inline-block
+        vertical-align: middle
+        text-align: left
+        width: 160px
+        margin-left: 10px
+
+    .friend:hover
+      border: dashed 1px $dash-hovered-color
+
+    .friend.selected
+      border: dashed 1px $dash-color
+      background-color: rgba(255,255, 255, 0.3)
