@@ -46,6 +46,7 @@ class ProductHandler(webapp2.RequestHandler):
 
         canonical_url = get_element_attr(tree, '//link[@rel="canonical"]', 'href')
         if len(canonical_url) > 0:
+            print(canonical_url)
             request = urllib2.Request(canonical_url[0])
             request.add_header('User-Agent', useragent)
             opener = urllib2.build_opener()
