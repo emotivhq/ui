@@ -2,7 +2,7 @@
  * Created by stuart on 4/21/14.
  */
 
-var NotePopoverController = GiftStarterApp.controller('NotePopoverController', [
+GiftStarterApp.controller('NotePopoverController', [
             '$scope','FacebookService','PopoverService','GiftStartService',
     function($scope,  FacebookService,  PopoverService,  GiftStartService) {
 

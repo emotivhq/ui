@@ -25,13 +25,15 @@ button {
 
 button.large {
   font: 400 40px BlanchCondensed, sans-serif;
-  padding: 6px 10px; }
+  padding: 6px 10px;
+  margin-top: 20px; }
 
 button.white-border {
   border-color: white; }
 
 h1.accent.large {
-  font: 400 40px BlanchCondensed, sans-serif; }
+  font: 400 40px BlanchCondensed, sans-serif;
+  margin-top: 0px; }
 
 p.small {
   font-size: 11px; }

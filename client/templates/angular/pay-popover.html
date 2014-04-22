@@ -1,0 +1,26 @@
+<div class="pay-popover" ng-controller="PayPopoverController">
+    <h1 class="accent large">Pitch In!</h1>
+    <form stripe-form="stripeSubmit">
+        <div class="number">
+            <span>Card Number</span>
+            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card"/>
+        </div>
+
+        <div class="cvc">
+            <span>CVC</span>
+            <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc"/>
+        </div>
+
+        <div class="expiry">
+            <span>Expiration Date</span>
+            <input type="text" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM/YYYY"/>
+        </div>
+
+        <div class="zip">
+            <span>ZIP</span>
+            <input type="text" ng-model="address_zip"/>
+        </div>
+
+        <button type="submit" class="large white-border">Pay ${{currentCharge() | number : 2}}</button>
+    </form>
+</div>
