@@ -153,7 +153,6 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
 
         function saveNote(noteText) {
             // TODO: This should be added to something sent to the server
-            alert("Saved note text:\n" + noteText);
             purchase.note = noteText;
         }
 
@@ -199,8 +198,11 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$sc
 
                 // END TEMP CODE
 
-                PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
-                PopoverService.showPopover();
+                // Ensure they have selected more than $0 of the gift to pitch in
+                if (GiftStartService.getGiftStart().totalSelection > 0) {
+                    PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
+                    PopoverService.showPopover();
+                }
 
             } else {
                 // GiftStarter doesn't exist server-side, create it

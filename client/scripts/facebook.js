@@ -6,11 +6,20 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
     function(ezfb, $http, $rootScope) {
 
         var uid = -1;
+        var profilePictureUrl  = '';
 
         ezfb.getLoginStatus(function(res) {
             if (res.status === 'connected') {
                 uid = res.authResponse.userID;
-                $rootScope.$broadcast('login-success');
+
+                // Get user's profile picture for later user
+                ezfb.api("me/picture?type=square&height=150&width=150",
+                    function(response) {
+                        console.log(response);
+                        profilePictureUrl = response.data.url;
+                        $rootScope.$broadcast('login-success');
+                    }
+                );
             }
         });
 
@@ -23,9 +32,16 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
         function login(callback) {
             ezfb.login(function (res) {
                 if (res.status === 'connected') {
-                    $rootScope.$broadcast('login-success');
                     uid = res.authResponse.userID;
                     getLongTermToken(res.authResponse.accessToken);
+
+                    // Get user's profile picture for later user
+                    ezfb.api("me/picture?type=square&height=150&width=150",
+                        function(response) {
+                            profilePictureUrl = response.data.url;
+                            $rootScope.$broadcast('login-success');
+                        }
+                    );
                     if (callback) {
                         callback(res);
                     }
@@ -63,12 +79,9 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
             );
         };
 
-        function getProfilePictureLink(callback) {
-            ezfb.api("me/picture?type=square&height=150&width=150",
-            function(response) {callback(response.data.url)});
-        }
-
         function getUid() {return uid}
+
+        function getProfilePictureUrl() {return profilePictureUrl}
 
         return  {
             login: login,
@@ -76,7 +89,7 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
             loggedIn: loggedIn,
             getFriends: getFriends,
             getUid: getUid,
-            getProfilePictureLink: getProfilePictureLink
+            getProfilePictureUrl: getProfilePictureUrl
         }
 
 }]);

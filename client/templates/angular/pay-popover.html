@@ -3,7 +3,7 @@
     <form stripe-form="stripeSubmit">
         <div class="number">
             <span>Card Number</span>
-            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card"/>
+            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type"/>
         </div>
 
         <div class="cvc">

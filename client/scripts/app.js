@@ -3,7 +3,7 @@
  */
 
 
-var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb']);
+var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb', 'angularPayments']);
 
 GiftStarterApp.config(['$routeProvider',
     function ($routeProvider) {
