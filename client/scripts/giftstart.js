@@ -3,8 +3,8 @@
  */
 
 var GiftStartService = GiftStarterApp.service('GiftStartService', [
-            '$http','$location','FacebookService','$rootScope','$filter',
-    function($http,  $location,  FacebookService,  $rootScope,  $filter) {
+            '$http','$location','FacebookService','$rootScope','$filter','PopoverService',
+    function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService) {
 
         var giftStart = {
             title: '',
@@ -71,11 +71,14 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
             $http({method: 'POST', url: '/giftstart',
                 data: {giftstart: giftStart, action: 'create'}})
                 .success(function (data, status, headers, config){
+                    // TODO: need to save which parts are selected across server giftstart return
+                    var parts = JSON.parse(JSON.stringify(giftStart.parts));
                     giftStart = data['giftstart'];
+                    giftStart.parts = parts;
                     injectPartToggles(giftStart);
                     $rootScope.$broadcast('giftstart-loaded');
 //                    $location.path('/giftstart');
-                    $location.search('gs-id', giftStart.id);
+                    $location.search('gs-id', giftStart.gsid);
                 }).error(function (data, status, headers, config){
                     console.log("Failed to create GiftStart.");
             });
@@ -107,21 +110,19 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
         function getGiftStart() {return giftStart;}
 
         function updateSelected(parts) {
-            giftStart.parts = parts;
+            // TODO: not secure
+            if (parts) {giftStart.parts = parts;}
 
             giftStart.totalSelection = 0;
-            for (var j=0; j < parts.length; j++) {
-                for (var i=0; i < parts[j].length; i++) {
-                    if (parts[j][i].selected) {
-                        giftStart.totalSelection += parts[j][i].value;
+            for (var j=0; j < giftStart.parts.length; j++) {
+                for (var i=0; i < giftStart.parts[j].length; i++) {
+                    if (giftStart.parts[j][i].selected) {
+                        giftStart.totalSelection += giftStart.parts[j][i].value;
                     }
                 }
             }
 
-            // Limit selected parts to 2 decimal places (cents)
-            giftStart.totalSelection = $filter('number')(giftStart.totalSelection, 2);
-
-            return giftStart;
+            return giftStart.totalSelection;
         }
 
         function fetchGiftStart(gsid) {
@@ -140,11 +141,15 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
         }
 
         function updateGiftStart() {
+            var parts = JSON.parse(JSON.stringify(giftStart.parts));
             $http({method: 'POST', url: '/giftstart',
                 data: {giftstart: giftStart, action: 'update'}})
                 .success(function (data, status, headers, config){
+                    // TODO: need to save which parts are selected across server giftstart return
+                    console.log(parts);
                     giftStart = data['giftstart'];
-                    giftStart.totalSelection = 0;
+                    giftStart.parts = parts;
+                    updateSelected();
                     injectPartToggles(giftStart);
                     $rootScope.$broadcast('giftstart-loaded');
                 }).error(function (data, status, headers, config){
@@ -161,6 +166,21 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
             payment.stripeResponse = response;
         }
 
+        function pitchIn() {
+            // Ensure they have selected more than $0 of the gift to pitch in
+            if (giftStart.totalSelection > 0) {
+                PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
+                PopoverService.showPopover();
+            } else {console.log("Nothing selected!")}
+
+            // Update or create, depending on whether it came from the server
+            if (giftStart.gsid) {
+                updateGiftStart();
+            } else {
+                createGiftStart();
+            }
+        }
+
         return {
             initiateGiftStart: initiateGiftStart,
             createGiftStart: createGiftStart,
@@ -169,7 +189,8 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
             fetchGiftStart: fetchGiftStart,
             updateGiftStart: updateGiftStart,
             saveNote: saveNote,
-            attachStripeResponse: attachStripeResponse
+            attachStripeResponse: attachStripeResponse,
+            pitchIn: pitchIn
         };
 
     }]);
@@ -178,47 +199,22 @@ var GiftStartController = GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','PopoverService',
     function($scope,  GiftStartService,  $location,  PopoverService) {
 
+        $scope.totalSelection = 0;
+
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             GiftStartService.fetchGiftStart($location.search()['gs-id']);
         }
-        $scope.$on('giftstart-loaded', function() {
-            $scope.giftStart = GiftStartService.getGiftStart();
-        });
+
+        // Update this giftstart when the service updates it
+        $scope.$on('giftstart-loaded', function() {$scope.giftStart = GiftStartService.getGiftStart()});
+        $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.getGiftStart()});
 
 
-        $scope.pitchIn = function() {
-            if (GiftStartService.getGiftStart().gsid) {
-                // GiftStarter exists server-side, just update
-//                GiftStartService.updateGiftStart();
-
-                // BEGIN TEMP CODE - convert selected to bought
-                (function selectedToBought(gs) {
-                    for (var j=0; j < gs.parts.length; j++) {
-                        for (var i=0; i < gs.parts[j].length; i++) {
-                            if (gs.parts[j][i].selected) {
-                                gs.parts[j][i].bought = true;
-                                gs.parts[j][i].selected = false;
-                            }
-                        }
-                    }
-                })($scope.giftStart);
-
-                // END TEMP CODE
-
-                // Ensure they have selected more than $0 of the gift to pitch in
-                if (GiftStartService.getGiftStart().totalSelection > 0) {
-                    PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
-                    PopoverService.showPopover();
-                }
-
-            } else {
-                // GiftStarter doesn't exist server-side, create it
-                GiftStartService.createGiftStart();
-            }
-        };
+        $scope.pitchIn = function() {GiftStartService.pitchIn()};
 
         $scope.selectionUpdated = function() {
-            $scope.giftStart = GiftStartService.updateSelected($scope.giftStart.parts);
+            $scope.totalSelection = GiftStartService.updateSelected($scope.giftStart.parts);
+            $scope.giftStart = GiftStartService.getGiftStart();
         }
 
 }]);

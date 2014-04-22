@@ -10,7 +10,7 @@ GiftStarterApp.config(['$routeProvider',
         $routeProvider
             .when('/friends', {templateUrl: '/templates/angular/friendtable.html'})
             .when('/product', {templateUrl: '/templates/angular/product-link.html'})
-            .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html'})
+            .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
             .otherwise({redirectTo: '/product'});
     }]);
 
