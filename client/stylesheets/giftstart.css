@@ -27,6 +27,9 @@ button.large {
   font: 400 40px BlanchCondensed, sans-serif;
   padding: 6px 10px; }
 
+button.white-border {
+  border-color: white; }
+
 h1.accent.large {
   font: 400 40px BlanchCondensed, sans-serif; }
 

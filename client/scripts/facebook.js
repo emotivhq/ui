@@ -20,12 +20,15 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
             });
         }
 
-        function login() {
+        function login(callback) {
             ezfb.login(function (res) {
                 if (res.status === 'connected') {
                     $rootScope.$broadcast('login-success');
                     uid = res.authResponse.userID;
                     getLongTermToken(res.authResponse.accessToken);
+                    if (callback) {
+                        callback(res);
+                    }
                 } else {
                     $rootScope.$broadcast('login-failure');
                 }
@@ -60,6 +63,11 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
             );
         };
 
+        function getProfilePictureLink(callback) {
+            ezfb.api("me/picture?type=square&height=150&width=150",
+            function(response) {callback(response.data.url)});
+        }
+
         function getUid() {return uid}
 
         return  {
@@ -67,30 +75,31 @@ var FacebookService = GiftStarterApp.service('FacebookService', ['ezfb', '$http'
             logout: logout,
             loggedIn: loggedIn,
             getFriends: getFriends,
-            getUid: getUid
+            getUid: getUid,
+            getProfilePictureLink: getProfilePictureLink
         }
 
 }]);
 
-
-var FriendsController = GiftStarterApp.controller('FriendsController', ['$scope', 'FacebookService',
-    function($scope, FacebookService) {
-        $scope.friends = [];
-
-        $scope.toggleLogin = function() {
-            if (FacebookService.loginStatus) {
-                FacebookService.logout();
-            } else {
-                FacebookService.login();
-            }
-        };
-
-        $scope.$on('login-success', loginSuccess);
-        function loginSuccess() {FacebookService.getFriends(loadFriends);}
-
-        $scope.$on('login-failure', loginFail);
-        function loginFail() {console.log("Failed to log in.");}
-
-        function loadFriends(friends) {$scope.friends = friends;}
-
-}]);
+//
+//var FriendsController = GiftStarterApp.controller('FriendsController', ['$scope', 'FacebookService',
+//    function($scope, FacebookService) {
+//        $scope.friends = [];
+//
+//        $scope.toggleLogin = function() {
+//            if (FacebookService.loginStatus) {
+//                FacebookService.logout();
+//            } else {
+//                FacebookService.login();
+//            }
+//        };
+//
+//        $scope.$on('login-success', loginSuccess);
+//        function loginSuccess() {FacebookService.getFriends(loadFriends);}
+//
+//        $scope.$on('login-failure', loginFail);
+//        function loginFail() {console.log("Failed to log in.");}
+//
+//        function loadFriends(friends) {$scope.friends = friends;}
+//
+//}]);

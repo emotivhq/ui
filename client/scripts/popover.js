@@ -68,36 +68,3 @@ var gsPopover = GiftStarterApp.directive('gsPopover', ['PopoverService', '$compi
         };
     }
 ]);
-
-var LoginPopoverController = GiftStarterApp.controller('LoginPopoverController', ['$scope', 'FacebookService',
-    function($scope, FacebookService) {
-
-        $scope.loggedIn = false;
-
-        // Check if user is logged in already
-        FacebookService.loggedIn(function (loggedIn) {
-            // If they are, proceed
-            if (loggedIn) {
-                console.log("user is logged in!  Moving on...");
-                $scope.loggedIn = true;
-            }
-        });
-
-        // If they aren't, they'll need to log in
-        $scope.login = function() {
-            if ($scope.loggedIn) {
-                FacebookService.logout();
-                $scope.loggedIn = false;
-                console.log("logging out...");
-            } else {
-                FacebookService.login();
-                $scope.loggedIn = true;
-                console.log("logging in...");
-            }
-        }
-
-    }
-]);
-
-var LoginPopoverDirective = GiftStarterApp.directive('gsLoginPopover',
-    function() {return {restrict: 'E', templateUrl: '/templates/angular/login-popover.html'}});

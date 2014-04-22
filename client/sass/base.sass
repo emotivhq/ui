@@ -16,6 +16,14 @@ $font-normal-large: 300 28px 'Roboto', sans-serif
 // ------------------------- COLORS -------------------------
 $primary-color: #d45
 
+// ----------------------- BOX SIZING -----------------------
+
+=border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  -ms-border-radius: $radius
+  border-radius: $radius
+
 
 =box-sizing($sizing)
   box-sizing: $sizing
@@ -42,6 +50,9 @@ button
 button.large
   font: $font-accent-large
   padding: 6px 10px
+
+button.white-border
+  border-color: white
 
 h1.accent.large
   font: $font-accent-large

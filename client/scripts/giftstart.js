@@ -2,9 +2,9 @@
  * Created by stuart on 4/9/14.
  */
 
-var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$location', 'FacebookService',
-    '$rootScope', '$filter',
-    function($http, $location, FacebookService, $rootScope, $filter) {
+var GiftStartService = GiftStarterApp.service('GiftStartService', [
+            '$http','$location','FacebookService','$rootScope','$filter',
+    function($http,  $location,  FacebookService,  $rootScope,  $filter) {
 
         var giftStart = {
             title: '',
@@ -18,6 +18,11 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
             parts: [],
             rows: -1,
             columns: -1
+        };
+
+        var purchase = {
+            parts: [],
+            note: ''
         };
 
         function initiateGiftStart(title, description, productImgUrl, imageHeight, productPrice) {
@@ -146,13 +151,19 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', ['$http', '$lo
                 });
         }
 
+        function saveNote(noteText) {
+            alert("Saved note text:\n" + noteText);
+            purchase.note = noteText;
+        }
+
         return {
             initiateGiftStart: initiateGiftStart,
             createGiftStart: createGiftStart,
             getGiftStart: getGiftStart,
             updateSelected: updateSelected,
             fetchGiftStart: fetchGiftStart,
-            updateGiftStart: updateGiftStart
+            updateGiftStart: updateGiftStart,
+            saveNote: saveNote
         };
 
     }]);
