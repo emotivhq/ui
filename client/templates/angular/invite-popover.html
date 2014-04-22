@@ -1,0 +1,11 @@
+<div class="invite-popover" ng-controller="InvitePopoverController">
+    <h1 class="accent large">Rally the troops!</h1>
+    <p>Invite your friends, so they can help the cause!</p>
+    <div class="friend-list">
+        <div class="friend" ng-repeat="friend in friends">
+            <img ng-src="{{friend.picture.data.url}}"/><span>{{friend.name}}</span>
+        </div>
+    </div>
+
+    <button type="submit" class="large white-border" ng-click="invite()">Invite!</button>
+</div>

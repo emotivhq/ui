@@ -20,14 +20,16 @@ gs-overlay.product-overlay
     border-collapse: collapse
 
   .image
-    max-width: 480px
-    max-height: 480px
+    img
+      max-width: 480px
+      max-height: 480px
+      padding: 0
 
 // Part cells
 .part-cell
   background: rgba(80, 150, 255, 0.3)
   color: rgba(255, 255, 255, 0.7)
-  border: dashed 1px rgba(255, 255, 255, 0.4)
+  border: dashed 1px $dash-color
   transition: all 0.2s
   cursor: pointer
   +no-select
@@ -35,7 +37,7 @@ gs-overlay.product-overlay
   background: rgba(80, 150, 255, 0.2)
   color: rgba(0, 0, 0, 1)
   text-shadow: 0 0 8px #fff
-  border: dashed 1px rgba(255, 255, 255, 0.7)
+  border: dashed 1px $dash-hovered-color
 
 .part-cell.bought
   opacity: 0

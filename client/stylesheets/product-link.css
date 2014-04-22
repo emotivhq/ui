@@ -11,6 +11,8 @@
       max-height: 480px;
       display: inline-block;
       padding: 20px; }
+      .product-link.wrapper .result.wrapper .image img {
+        padding: 0; }
     .product-link.wrapper .result.wrapper .details {
       width: 480px;
       padding: 20px;

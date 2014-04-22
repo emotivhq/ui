@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', [
-            '$scope','GiftStartService',
-    function($scope,  GiftStartService) {
+            '$scope','GiftStartService','PopoverService',
+    function($scope,  GiftStartService,  PopoverService) {
 
         $scope.gs = GiftStartService.getGiftStart();
 

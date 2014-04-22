@@ -45,9 +45,10 @@ gs-overlay.product-overlay {
     width: 100%;
     position: relative;
     border-collapse: collapse; }
-  gs-overlay.product-overlay .image {
+  gs-overlay.product-overlay .image img {
     max-width: 480px;
-    max-height: 480px; }
+    max-height: 480px;
+    padding: 0; }
 
 .part-cell {
   background: rgba(80, 150, 255, 0.3);
