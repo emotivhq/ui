@@ -16,9 +16,16 @@ GiftStarterApp.controller('PayPopoverController', [
             return $scope.gs.totalSelection;
         };
 
-        $scope.stripeSubmit = function() {
-            alert("Stripe Submit!");
-//            goToNextPopover();
+        $scope.stripeSubmit = function(status, response) {
+            if(response.error) {
+                console.log("Card processing error, payment not made.");
+                console.log(response);
+            } else {
+                // Got stripe token, attach it to the current giftstart payment
+                // TODO: AMOUNT TO BE CHARGED MUST BE CALCULATED ON THE SERVER.
+                GiftStartService.attachStripeResponse(response);
+                goToNextPopover();
+            }
         }
     }
 ]);

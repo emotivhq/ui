@@ -20,9 +20,10 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
             columns: -1
         };
 
-        var purchase = {
+        var payment = {
             parts: [],
-            note: ''
+            note: '',
+            stripeResponse: {}
         };
 
         function initiateGiftStart(title, description, productImgUrl, imageHeight, productPrice) {
@@ -153,7 +154,11 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
 
         function saveNote(noteText) {
             // TODO: This should be added to something sent to the server
-            purchase.note = noteText;
+            payment.note = noteText;
+        }
+
+        function attachStripeResponse(response) {
+            payment.stripeResponse = response;
         }
 
         return {
@@ -163,13 +168,15 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
             updateSelected: updateSelected,
             fetchGiftStart: fetchGiftStart,
             updateGiftStart: updateGiftStart,
-            saveNote: saveNote
+            saveNote: saveNote,
+            attachStripeResponse: attachStripeResponse
         };
 
     }]);
 
-var GiftStartController = GiftStarterApp.controller('GiftStartController', ['$scope', 'GiftStartService', '$location', 'PopoverService',
-    function($scope, GiftStartService, $location, PopoverService) {
+var GiftStartController = GiftStarterApp.controller('GiftStartController', [
+            '$scope','GiftStartService','$location','PopoverService',
+    function($scope,  GiftStartService,  $location,  PopoverService) {
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             GiftStartService.fetchGiftStart($location.search()['gs-id']);
