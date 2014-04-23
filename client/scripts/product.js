@@ -2,7 +2,8 @@
  * Created by stuart on 4/9/14.
  */
 
-GiftStarterApp.service('ProductService', ['$http',
+GiftStarterApp.service('ProductService', [
+            '$http',
     function($http) {
 
         var product = {
@@ -46,9 +47,9 @@ GiftStarterApp.service('ProductService', ['$http',
 
 }]);
 
-GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
-    'GiftStartService',
-    function($scope, ProductService, GiftStartService) {
+GiftStarterApp.controller('ProductLinkController', [
+            '$scope','ProductService','GiftStartService',
+    function($scope,  ProductService,  GiftStartService) {
 
         $scope.resultShown = false;
         $scope.product = {
@@ -68,8 +69,11 @@ GiftStarterApp.controller('ProductLinkController', ['$scope', 'ProductService',
 
         $scope.submitLink = function() {ProductService.submitLink($scope.product.link, $scope.product.price, onSuccess, onFailure);};
 
-        $scope.giftstart = function() {GiftStartService.initiateGiftStart($scope.product.title,
-            $scope.product.description, $scope.product.img, $scope.product.imageHeight, $scope.product.price);};
+        $scope.giftstart = function() {
+            console.log($scope);
+            GiftStartService.initiateGiftStart($scope.product.title, $scope.product.description, $scope.product.img,
+                $scope.product.imageHeight, $scope.product.price);
+        };
 
         $scope.imageLoaded = function(element) {
             $scope.product.imageHeight = angular.element(element.children()[0]).prop('clientHeight');

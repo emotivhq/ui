@@ -2,7 +2,7 @@
  * Created by stuart on 4/9/14.
  */
 
-var GiftStartService = GiftStarterApp.service('GiftStartService', [
+GiftStarterApp.service('GiftStartService', [
             '$http','$location','FacebookService','$rootScope','$filter','PopoverService',
     function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService) {
 
@@ -41,6 +41,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
             }
             giftStart = buildGiftStart(title, description, FacebookService.getUid(), productImgUrl, imageHeight,
                 productPrice, tempParts, y, x);
+            console.log(giftStart);
             $location.path('/giftstart');
             setTimeout(function() {
                 $rootScope.$broadcast('giftstart-loaded');
@@ -195,7 +196,7 @@ var GiftStartService = GiftStarterApp.service('GiftStartService', [
 
     }]);
 
-var GiftStartController = GiftStarterApp.controller('GiftStartController', [
+GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','PopoverService',
     function($scope,  GiftStartService,  $location,  PopoverService) {
 

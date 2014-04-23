@@ -47,12 +47,13 @@ class ProductHandler(webapp2.RequestHandler):
         canonical_url = get_element_attr(tree, '//link[@rel="canonical"]', 'href')
         if len(canonical_url) > 0:
             print(canonical_url)
-            request = urllib2.Request(canonical_url[0])
-            request.add_header('User-Agent', useragent)
-            opener = urllib2.build_opener()
-            result = opener.open(request)
-            page = result.read()
-            tree = html.fromstring(page)
+            if canonical_url[:4] == 'http':
+                request = urllib2.Request(canonical_url[0])
+                request.add_header('User-Agent', useragent)
+                opener = urllib2.build_opener()
+                result = opener.open(request)
+                page = result.read()
+                tree = html.fromstring(page)
 
         title = get_element_attr(tree, '//meta[@property="og:title"]', 'content')[0]
         desc = get_element_attr(tree, '//meta[@property="og:description"]', 'content')[0]
