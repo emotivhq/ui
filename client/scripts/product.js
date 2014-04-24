@@ -11,7 +11,7 @@ GiftStarterApp.service('ProductService', [
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
             description: 'Description',
-            price: 400,
+            price: -1,
             imageWidth: 0,
             imageHeight: 0
         };
@@ -52,11 +52,16 @@ GiftStarterApp.controller('ProductLinkController', [
     function($scope,  ProductService,  GiftStartService) {
 
         $scope.resultShown = false;
+        $scope.priceSet = false;
+        $scope.x = 3;
+        $scope.y = 3;
+        $scope.xySets = [[1, 2], [2, 2], [2, 3], [3, 3], [3, 4], [4, 4], [4, 5], [5, 5], [5, 6], [6, 6]];
+        $scope.selectedXYSet = 3;
         $scope.product = {
             link: '',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
-            price: 400,
+            price: '',
             imageWidth: 0,
             imageHeight: 0
         };
@@ -68,6 +73,22 @@ GiftStarterApp.controller('ProductLinkController', [
         function onFailure(reason) {console.log("Product service failed to fetch product.");}
 
         $scope.submitLink = function() {ProductService.submitLink($scope.product.link, $scope.product.price, onSuccess, onFailure);};
+
+        $scope.moreParts = function() {
+            if ($scope.selectedXYSet < $scope.xySets.length) {
+                $scope.selectedXYSet += 1;
+                $scope.x = $scope.xySets[$scope.selectedXYSet][0];
+                $scope.y = $scope.xySets[$scope.selectedXYSet][1];
+            }
+        };
+
+        $scope.fewerParts = function() {
+            if ($scope.selectedXYSet > 0) {
+                $scope.selectedXYSet -= 1;
+                $scope.x = $scope.xySets[$scope.selectedXYSet][0];
+                $scope.y = $scope.xySets[$scope.selectedXYSet][1];
+            }
+        };
 
         $scope.giftstart = function() {
             console.log($scope);
