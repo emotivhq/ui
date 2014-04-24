@@ -51,6 +51,13 @@ button
   color: #fff
   border: solid $primary-color 2px
   cursor: pointer
+  transition: all 0.2s
+
+button.disabled, button.disabled:hover, button.disabled:focus
+  background: #aaa
+  border-color: #bbb
+  color: #555
+  cursor: default
 
 button:active, button:hover, button:focus
   background: $primary-color-highlight

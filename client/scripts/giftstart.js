@@ -26,8 +26,8 @@ GiftStarterApp.service('GiftStartService', [
             stripeResponse: {}
         };
 
-        function initiateGiftStart(title, description, productImgUrl, imageHeight, productPrice) {
-            var x = 5, y = 5;
+        function initiateGiftStart(title, description, productImgUrl, imageHeight, productPrice, numRows, numCols) {
+            var x = numRows, y = numCols;
             var tempParts = [];
             for (var j = 0; j < y; j++) {
                 var newParts = [];

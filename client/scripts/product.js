@@ -52,7 +52,6 @@ GiftStarterApp.controller('ProductLinkController', [
     function($scope,  ProductService,  GiftStartService) {
 
         $scope.resultShown = false;
-        $scope.priceSet = false;
         $scope.x = 3;
         $scope.y = 3;
         $scope.xySets = [[1, 2], [2, 2], [2, 3], [3, 3], [3, 4], [4, 4], [4, 5], [5, 5], [5, 6], [6, 6]];
@@ -91,9 +90,10 @@ GiftStarterApp.controller('ProductLinkController', [
         };
 
         $scope.giftstart = function() {
-            console.log($scope);
-            GiftStartService.initiateGiftStart($scope.product.title, $scope.product.description, $scope.product.img,
-                $scope.product.imageHeight, $scope.product.price);
+            if ($scope.product.price > 0) {
+                GiftStartService.initiateGiftStart($scope.product.title, $scope.product.description, $scope.product.img,
+                    $scope.product.imageHeight, $scope.product.price, $scope.x, $scope.y);
+            }
         };
 
         $scope.imageLoaded = function(element) {

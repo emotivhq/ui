@@ -29,7 +29,7 @@
                     <span class="description">Cost per part:</span>$<span class="accent large">{{product.price/x/y | number : 2}}</span>
                 </div>
             </div>
-            <button class="submit large" ng-class="{disabled: !priceSet}" ng-click="giftstart()">GiftStart!</button>
+            <button class="submit large" ng-class="{disabled: !(product.price > 0)}" ng-click="giftstart()">GiftStart!</button>
         </div>
     </div>
 </div>
