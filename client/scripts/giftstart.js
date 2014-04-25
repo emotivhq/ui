@@ -40,7 +40,7 @@ GiftStarterApp.service('GiftStartService', [
                 }
                 tempParts.push(newParts);
             }
-            this.giftStart = buildGiftStart(title, description, FacebookService.getUid(), productImgUrl, imageHeight,
+            this.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
                 productPrice, tempParts, y, x);
             console.log(this.giftStart);
             $location.path('/giftstart');
@@ -170,11 +170,11 @@ GiftStarterApp.service('GiftStartService', [
             } else {console.log("Nothing selected!")}
 
             // Update or create, depending on whether it came from the server
-            if (this.giftStart.gsid) {
-                this.updateGiftStart();
-            } else {
-                this.createGiftStart();
-            }
+//            if (this.giftStart.gsid) {
+//                this.updateGiftStart();
+//            } else {
+//                this.createGiftStart();
+//            }
         }
 
     }]);
@@ -184,7 +184,6 @@ GiftStarterApp.controller('GiftStartController', [
     function($scope,  GiftStartService,  $location) {
 
         $scope.giftStart = GiftStartService.giftStart;
-        console.log(GiftStartService);
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             GiftStartService.fetchGiftStart($location.search()['gs-id']);
