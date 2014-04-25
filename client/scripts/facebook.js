@@ -18,6 +18,7 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
 
                 // Get user's profile picture for later user
                 ezfb.api("me/picture?type=square&height=150&width=150", self.loginSuccess);
+                self.getFriends();
             } else {
                 $rootScope.$broadcast('login-failure');
                 self.loggedIn = false;

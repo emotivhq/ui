@@ -6,18 +6,15 @@ GiftStarterApp.controller('InvitePopoverController', [
             '$scope','FacebookService','PopoverService',
     function($scope,  FacebookService,  PopoverService) {
 
-        $scope.friends = [];
-        $scope.profilePicture = FacebookService.getProfilePictureUrl();
+        $scope.friends = FacebookService.friends;
+        $scope.profilePicture = FacebookService.profilePictureUrl;
         $scope.inviteMessage = 'Check out this GiftStarter campaign!';
 
         function goToNextPopover() {
             PopoverService.setPopoverFromTemplate('<gs-thanks-popover></gs-thanks-popover>');
         }
 
-        FacebookService.getFriends(function(friends) {
-            $scope.friends = friends;
-            injectSelectToggles($scope.friends);
-        });
+        injectSelectToggles($scope.friends);
 
         $scope.invite = function() {
             alert("Invite!");
