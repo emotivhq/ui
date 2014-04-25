@@ -169,8 +169,7 @@ GiftStarterApp.service('GiftStartService', [
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
-                PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
-                PopoverService.showPopover();
+                PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
 
             // Update or create, depending on whether it came from the server

@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.controller('NotePopoverController', [
-            '$scope','FacebookService','PopoverService','GiftStartService',
-    function($scope,  FacebookService,  PopoverService,  GiftStartService) {
+            '$scope','FacebookService','PopoverService','GiftStartService','$location',
+    function($scope,  FacebookService,  PopoverService,  GiftStartService,  $location) {
 
         $scope.noteText = '';
         $scope.profilePicture = FacebookService.profilePictureUrl;
@@ -13,7 +13,8 @@ GiftStarterApp.controller('NotePopoverController', [
         if (GiftStartService.giftStart.gsid === null) {GiftStartService.createGiftStart()}
 
         function goToNextPopover() {
-            PopoverService.setPopoverFromTemplate('<gs-pay-popover></gs-pay-popover>');
+//            PopoverService.setPopoverFromTemplate('<gs-pay-popover></gs-pay-popover>');
+            $location.hash('pay');
         }
 
         $scope.submit = function() {

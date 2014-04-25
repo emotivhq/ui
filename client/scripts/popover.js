@@ -2,35 +2,83 @@
  * Created by stuart on 4/21/14.
  */
 
-var PopoverService = GiftStarterApp.service('PopoverService', ['$rootScope',
-    function($rootScope) {
+GiftStarterApp.service('PopoverService', [
+            '$rootScope','$location','$timeout',
+    function($rootScope,  $location,  $timeout) {
 
-        var template = '';
+        this.template = '';
+        this.currentLocation = $location.hash();
+        var self = this;
 
-        function setPopoverFromTemplate(newTemplate) {
-            template = newTemplate;
-            $rootScope.$broadcast('popover-updated');
-        }
-
-        function getCurrentTemplate() {
-            return template;
-        }
-
-        function hidePopover() {$rootScope.$broadcast('popover-hidden')}
-
-        function showPopover() {$rootScope.$broadcast('popover-shown')}
-
-        return {
-            setPopoverFromTemplate: setPopoverFromTemplate,
-            getCurrentTemplate: getCurrentTemplate,
-            hidePopover: hidePopover,
-            showPopover: showPopover
+        this.setPopover = function(popoverName) {
+            console.log("setting popover " + popoverName);
+            if (popoverName === '') {
+                this.hidePopover();
+            } else {
+                $timeout(function() {
+                    self.template = '<gs-' + popoverName + '-popover></gs-' + popoverName + '-popover>';
+                    self.currentLocation = popoverName;
+                    self.showPopover();
+                    $rootScope.$broadcast('popover-updated');
+                });
+            }
         };
+
+        this.setPopoverFromTemplate = function(newTemplate) {
+            this.template = newTemplate;
+            $rootScope.$broadcast('popover-updated');
+        };
+
+        this.getCurrentTemplate = function() {
+            return this.template;
+        };
+
+        this.hidePopover = function() {
+            $timeout(function() {
+                $rootScope.$broadcast('popover-hidden');
+                self.currentLocation = '';
+                $location.hash('');
+                console.log('Hiding popover');
+            });
+        };
+
+        this.showPopover = function() {$rootScope.$broadcast('popover-shown')};
+
+        this.validHashes = ['login', 'note', 'pay', 'invite', 'thanks'];
+        $rootScope.$on('$locationChangeStart', function(event, next, current) {
+            var hash = $location.hash();
+            console.log("hash: " + hash);
+            console.log("currentLocation: " + self.currentLocation);
+            console.log(self.validHashes.indexOf(hash));
+            console.log(self.validHashes.indexOf(self.currentLocation));
+
+            if (self.currentLocation === '') {
+                if (hash == 'login') {
+                    self.setPopover(hash);
+                }
+            } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) + 1)) {
+                self.setPopover(hash);
+            } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) - 1)) {
+                self.setPopover(hash);
+            } else {
+                self.hidePopover();
+            }
+        });
+
+        this.nextPopover = function() {
+            console.log('next popover');
+            if (this.validHashes.indexOf(this.currentLocation) + 1 < this.validHashes.length) {
+                this.setPopover(this.validHashes[this.validHashes.indexOf(this.currentLocation) + 1]);
+            } else {
+                this.hidePopover();
+            }
+
+        }
     }
 ]);
 
 
-var gsPopover = GiftStarterApp.directive('gsPopover', ['PopoverService', '$compile',
+GiftStarterApp.directive('gsPopover', ['PopoverService', '$compile',
     function (PopoverService, $compile) {
         function link(scope, element, attrs) {
 

@@ -7,6 +7,6 @@
         <div class="price">Contribution: <div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
         <a ng-href="{{giftStart.product.link}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
         <div class="description" ng-bind="giftStart.description"></div>
-        <button class="pitch-in button large" ng-click="pitchIn()">Pitch In!</button>
+        <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()">Pitch In!</button>
     </div>
 </div>
