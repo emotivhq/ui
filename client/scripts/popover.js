@@ -60,6 +60,8 @@ GiftStarterApp.service('PopoverService', [
                 self.setPopover(hash);
             } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) - 1)) {
                 self.setPopover(hash);
+            } else if(hash == self.currentLocation) {
+                // Noop
             } else {
                 self.hidePopover();
             }

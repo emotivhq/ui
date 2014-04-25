@@ -13,7 +13,8 @@ GiftStarterApp.service('GiftStartService', [
             product: {
                 price: -1,
                 img_url: '',
-                img_height: -1
+                img_height: -1,
+                url: ''
             },
             parts: [],
             rows: -1,
@@ -28,8 +29,8 @@ GiftStarterApp.service('GiftStartService', [
 
         var self = this;
 
-        this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, numRows,
-                                          numCols) {
+        this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
+                                          numRows, numCols) {
             var x = numRows, y = numCols;
             var tempParts = [];
             for (var j = 0; j < y; j++) {
@@ -43,7 +44,7 @@ GiftStarterApp.service('GiftStartService', [
                 tempParts.push(newParts);
             }
             self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
-                productPrice, tempParts, y, x);
+                productPrice, productUrl, tempParts, y, x);
             console.log(self.giftStart);
             $location.path('/giftstart');
             setTimeout(function() {
@@ -51,8 +52,8 @@ GiftStarterApp.service('GiftStartService', [
             }, 100);
         };
 
-        function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, parts, rows,
-                                columns) {
+        function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, productUrl,
+                                parts, rows, columns) {
             var gs = {
                 title: title,
                 description: description,
@@ -60,7 +61,8 @@ GiftStarterApp.service('GiftStartService', [
                 product: {
                     price: productPrice,
                     img_url: productImgUrl,
-                    img_height: imageHeight
+                    img_height: imageHeight,
+                    url: productUrl
                 },
                 totalSelection: 0,
                 parts: parts,
@@ -84,7 +86,9 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart = data['giftstart'];
             self.giftStart.parts = parts;
             injectPartToggles(self.giftStart);
+            self.updateSelected();
             $rootScope.$broadcast('giftstart-loaded');
+            console.log(self.giftStart);
             $location.search('gs-id', self.giftStart.gsid);
         };
 

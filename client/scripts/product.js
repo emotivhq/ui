@@ -92,7 +92,7 @@ GiftStarterApp.controller('ProductLinkController', [
         $scope.giftstart = function() {
             if ($scope.product.price > 0) {
                 GiftStartService.initiateGiftStart($scope.product.title, $scope.product.description, $scope.product.img,
-                    $scope.product.imageHeight, $scope.product.price, $scope.x, $scope.y);
+                    $scope.product.imageHeight, $scope.product.price, $scope.product.link, $scope.x, $scope.y);
             }
         };
 
