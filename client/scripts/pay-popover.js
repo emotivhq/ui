@@ -6,15 +6,9 @@ GiftStarterApp.controller('PayPopoverController', [
             '$scope','GiftStartService','PopoverService',
     function($scope,  GiftStartService,  PopoverService) {
 
-        $scope.gs = GiftStartService.getGiftStart();
+        $scope.currentCharge = GiftStartService.giftStart.totalSelection;
 
-        function goToNextPopover() {
-            PopoverService.setPopoverFromTemplate('<gs-invite-popover></gs-invite-popover>');
-        }
-
-        $scope.currentCharge = function() {
-            return $scope.gs.totalSelection;
-        };
+        function goToNextPopover() {PopoverService.setPopoverFromTemplate('<gs-invite-popover></gs-invite-popover>')}
 
         $scope.stripeSubmit = function(status, response) {
             if(response.error) {

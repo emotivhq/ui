@@ -10,7 +10,7 @@ GiftStarterApp.controller('NotePopoverController', [
         $scope.profilePicture = FacebookService.profilePictureUrl;
 
         // Now that user is logged in, create giftstart in server
-        GiftStartService.createGiftStart();
+        if (GiftStartService.giftStart.gsid === null) {GiftStartService.createGiftStart()}
 
         function goToNextPopover() {
             PopoverService.setPopoverFromTemplate('<gs-pay-popover></gs-pay-popover>');

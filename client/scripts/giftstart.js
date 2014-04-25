@@ -26,6 +26,8 @@ GiftStarterApp.service('GiftStartService', [
             stripeResponse: {}
         };
 
+        var self = this;
+
         this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, numRows,
                                           numCols) {
             var x = numRows, y = numCols;
@@ -40,9 +42,9 @@ GiftStarterApp.service('GiftStartService', [
                 }
                 tempParts.push(newParts);
             }
-            this.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
+            self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
                 productPrice, tempParts, y, x);
-            console.log(this.giftStart);
+            console.log(self.giftStart);
             $location.path('/giftstart');
             setTimeout(function() {
                 $rootScope.$broadcast('giftstart-loaded');
@@ -78,12 +80,12 @@ GiftStarterApp.service('GiftStartService', [
 
         this.createSuccess = function(data, status, headers, config) {
             // TODO: need to save which parts are selected across server giftstart return
-            var parts = JSON.parse(JSON.stringify(this.giftStart.parts));
-            this.giftStart = data['giftstart'];
-            this.giftStart.parts = parts;
-            injectPartToggles(this.giftStart);
+            var parts = JSON.parse(JSON.stringify(self.giftStart.parts));
+            self.giftStart = data['giftstart'];
+            self.giftStart.parts = parts;
+            injectPartToggles(self.giftStart);
             $rootScope.$broadcast('giftstart-loaded');
-            $location.search('gs-id', giftStart.gsid);
+            $location.search('gs-id', self.giftStart.gsid);
         };
 
         this.createFailure = function(data, status, headers, config) {console.log("Failed to create GiftStart.")};
@@ -112,11 +114,11 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         this.updateSelected = function() {
-            this.giftStart.totalSelection = 0;
-            for (var j=0; j < this.giftStart.parts.length; j++) {
-                for (var i=0; i < this.giftStart.parts[j].length; i++) {
-                    if (this.giftStart.parts[j][i].selected) {
-                        this.giftStart.totalSelection += this.giftStart.parts[j][i].value;
+            self.giftStart.totalSelection = 0;
+            for (var j=0; j < self.giftStart.parts.length; j++) {
+                for (var i=0; i < self.giftStart.parts[j].length; i++) {
+                    if (self.giftStart.parts[j][i].selected) {
+                        self.giftStart.totalSelection += self.giftStart.parts[j][i].value;
                     }
                 }
             }
@@ -130,26 +132,28 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data, status, headers, config) {
-            this.giftStart = data['giftstart'];
-            this.giftStart.totalSelection = 0;
-            injectPartToggles(this.giftStart);
+            console.log(data);
+            self.giftStart = data['giftstart'];
+            self.giftStart.totalSelection = 0;
+            injectPartToggles(self.giftStart);
             $rootScope.$broadcast('giftstart-loaded');
+            $location.search('gs-id', self.giftStart.gsid);
         };
 
         this.updateGiftStart = function() {
             var parts = JSON.parse(JSON.stringify(this.giftStart.parts));
             $http({method: 'POST', url: '/giftstart',
                 data: {giftstart: this.giftStart, action: 'update'}})
-                .success(this.updateSuccess)
+                .success(self.updateSuccess)
                 .error(function (data, status, headers, config){console.log("Failed to update GiftStart.");});
         };
 
         this.updateSuccess = function(data, status, headers, config) {
             // TODO: need to save which parts are selected across server giftstart return
-            this.giftStart = data['giftstart'];
-            this.giftStart.parts = parts;
-            this.updateSelected();
-            injectPartToggles(this.giftStart);
+            self.giftStart = data['giftstart'];
+            self.giftStart.parts = parts;
+            self.updateSelected();
+            injectPartToggles(self.giftStart);
             $rootScope.$broadcast('giftstart-loaded');
         };
 
@@ -159,12 +163,12 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.attachStripeResponse = function(response) {
-            payment.stripeResponse = response;
+            this.payment.stripeResponse = response;
         };
 
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
-            if (this.giftStart.totalSelection > 0) {
+            if (self.giftStart.totalSelection > 0) {
                 PopoverService.setPopoverFromTemplate('<gs-login-popover></gs-login-popover>');
                 PopoverService.showPopover();
             } else {console.log("Nothing selected!")}
@@ -190,8 +194,8 @@ GiftStarterApp.controller('GiftStartController', [
         }
 
         // Update this giftstart when the service updates it
-//        $scope.$on('giftstart-loaded', function() {$scope.giftStart = GiftStartService.getGiftStart()});
-//        $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.getGiftStart()});
+        $scope.$on('giftstart-loaded', function() {$scope.giftStart = GiftStartService.giftStart});
+        $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
 
 
         $scope.pitchIn = function() {GiftStartService.pitchIn()};
