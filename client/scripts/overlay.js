@@ -2,11 +2,11 @@
  * Created by stuart on 4/11/14.
  */
 
-var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService) {
+GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService) {
     function link(scope, element, attrs) {
 
         scope.$on('giftstart-loaded', function() {
-            var gs = GiftStartService.getGiftStart();
+            var gs = GiftStartService.giftStart;
             var overlayElement = angular.element(element.children()[1]);
             var imageHeight = gs.product.img_height;
             overlayElement.css('margin-top', (-imageHeight - 4 + "px"));
@@ -23,8 +23,8 @@ var gsOverlay = GiftStarterApp.directive('gsOverlay', function($compile, Product
 
                 for (var i = 0; i < x; i++) {
                     var tdStr = '<td ng-class="{\'part-cell\': true, c'+i+': true, bought: giftstart.parts['+j+']['+i+
-                        '].bought, selected: giftstart.parts['+j+']['+i+'].selected}" ng-click="giftstart.parts['+j+']['+i+
-                        '].toggle()">${{giftstart.parts['+j+']['+i+'].value | number : 2}}</td>';
+                        '].bought, selected: giftstart.parts['+j+']['+i+'].selected}" ng-click="giftstart.parts['+j+']['
+                        +i+'].toggle()">${{giftstart.parts['+j+']['+i+'].value | number : 2}}</td>';
                     angular.element(overlayElement.children()[j]).append($compile(tdStr)(scope));
                 }
             }
