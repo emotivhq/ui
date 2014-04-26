@@ -45,6 +45,7 @@ GiftStarterApp.service('GiftStartService', [
             }
             self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
                 productPrice, productUrl, tempParts, y, x);
+            console.log("setting path");
             $location.path('/giftstart');
         };
 
