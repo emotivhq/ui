@@ -52,6 +52,7 @@ GiftStarterApp.controller('ProductLinkController', [
     function($scope,  ProductService,  GiftStartService) {
 
         $scope.resultShown = false;
+        $scope.loading = false;
         $scope.x = 3;
         $scope.y = 3;
         $scope.xySets = [[1, 2], [2, 2], [2, 3], [3, 3], [3, 4], [4, 4], [4, 5], [5, 5], [5, 6], [6, 6]];
@@ -66,12 +67,19 @@ GiftStarterApp.controller('ProductLinkController', [
         };
 
         function onSuccess(product) {
+            $scope.loading = false;
             $scope.product = product;
             $scope.resultShown = true;
         }
-        function onFailure(reason) {console.log("Product service failed to fetch product.");}
+        function onFailure(reason) {
+            $scope.loading = false;
+            console.log("Product service failed to fetch product.");
+        }
 
-        $scope.submitLink = function() {ProductService.submitLink($scope.product.link, $scope.product.price, onSuccess, onFailure);};
+        $scope.submitLink = function() {
+            $scope.loading = true;
+            ProductService.submitLink($scope.product.link, $scope.product.price, onSuccess, onFailure);
+        };
 
         $scope.moreParts = function() {
             if ($scope.selectedXYSet < $scope.xySets.length) {

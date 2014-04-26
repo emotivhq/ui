@@ -3,15 +3,10 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', [
-            '$scope','GiftStartService','PopoverService','$location',
-    function($scope,  GiftStartService,  PopoverService,  $location) {
+            '$scope','GiftStartService','PopoverService',
+    function($scope,  GiftStartService,  PopoverService) {
 
         $scope.currentCharge = GiftStartService.giftStart.totalSelection;
-
-        function goToNextPopover() {
-            PopoverService.setPopoverFromTemplate('<gs-invite-popover></gs-invite-popover>');
-            $location.hash('invite');
-        }
 
         $scope.stripeSubmit = function(status, response) {
             if(response.error) {
@@ -21,7 +16,7 @@ GiftStarterApp.controller('PayPopoverController', [
                 // Got stripe token, attach it to the current giftstart payment
                 // TODO: AMOUNT TO BE CHARGED MUST BE CALCULATED ON THE SERVER.
                 GiftStartService.attachStripeResponse(response);
-                goToNextPopover();
+                PopoverService.nextPopover();
             }
         }
     }

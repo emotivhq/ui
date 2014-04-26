@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('GiftStartService', [
-            '$http','$location','FacebookService','$rootScope','$filter','PopoverService',
-    function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService) {
+            '$http','$location','FacebookService','$rootScope','$filter','PopoverService','$timeout',
+    function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService,  $timeout) {
 
         this.giftStart = {
             title: '',
@@ -45,11 +45,10 @@ GiftStarterApp.service('GiftStartService', [
             }
             self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
                 productPrice, productUrl, tempParts, y, x);
-            console.log(self.giftStart);
             $location.path('/giftstart');
-            setTimeout(function() {
+            $timeout(function() {
                 $rootScope.$broadcast('giftstart-loaded');
-            }, 100);
+            }, 200);
         };
 
         function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, productUrl,
@@ -88,7 +87,6 @@ GiftStarterApp.service('GiftStartService', [
             injectPartToggles(self.giftStart);
             self.updateSelected();
             $rootScope.$broadcast('giftstart-loaded');
-            console.log(self.giftStart);
             $location.search('gs-id', self.giftStart.gsid);
         };
 
@@ -136,7 +134,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data, status, headers, config) {
-            console.log(data);
             self.giftStart = data['giftstart'];
             self.giftStart.totalSelection = 0;
             injectPartToggles(self.giftStart);
@@ -175,13 +172,6 @@ GiftStarterApp.service('GiftStartService', [
             if (self.giftStart.totalSelection > 0) {
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
-
-            // Update or create, depending on whether it came from the server
-//            if (this.giftStart.gsid) {
-//                this.updateGiftStart();
-//            } else {
-//                this.createGiftStart();
-//            }
         }
 
     }]);

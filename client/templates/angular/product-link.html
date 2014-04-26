@@ -8,6 +8,10 @@
         </span>
     </div>
 
+    <div class="loading" ng-show="loading">
+        <img src="/assets/loading.gif"/>
+    </div>
+
     <div class="result wrapper" ng-show="resultShown">
         <div class="copy">Is this right?</div>
         <gs-img class="image" src="product.img" on-load="imageLoaded"></gs-img>

@@ -4,25 +4,19 @@
 
 
 GiftStarterApp.controller('LoginPopoverController', [
-            '$scope','FacebookService','PopoverService','$location',
-    function($scope,  FacebookService,  PopoverService,  $location) {
+            '$scope','FacebookService','PopoverService',
+    function($scope,  FacebookService,  PopoverService) {
 
         console.log(FacebookService);
         $scope.loggedIn = FacebookService.loggedIn;
 
-        function goToNextPopover() {
-//            PopoverService.setPopoverFromTemplate('<gs-note-popover></gs-note-popover>');
-            $location.hash('note');
-        }
-
         // Check if user is logged in already
-
-        if (FacebookService.loggedIn) {goToNextPopover()}
+        if (FacebookService.loggedIn) {PopoverService.nextPopover()}
 
         // If they aren't, they'll need to log in
         $scope.login = FacebookService.login;
 
-        $scope.$on('login-success', goToNextPopover);
+        $scope.$on('login-success', PopoverService.nextPopover);
 
 
         // Listen for popover changes or hides, so we can clean up

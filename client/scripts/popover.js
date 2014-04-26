@@ -11,13 +11,13 @@ GiftStarterApp.service('PopoverService', [
         var self = this;
 
         this.setPopover = function(popoverName) {
-            console.log("setting popover " + popoverName);
             if (popoverName === '') {
                 this.hidePopover();
             } else {
                 $timeout(function() {
                     self.template = '<gs-' + popoverName + '-popover></gs-' + popoverName + '-popover>';
                     self.currentLocation = popoverName;
+                    $location.hash(popoverName);
                     self.showPopover();
                     $rootScope.$broadcast('popover-updated');
                 });
@@ -47,13 +47,8 @@ GiftStarterApp.service('PopoverService', [
         this.validHashes = ['login', 'note', 'pay', 'invite', 'thanks'];
         $rootScope.$on('$locationChangeStart', function(event, next, current) {
             var hash = $location.hash();
-            console.log("hash: " + hash);
-            console.log("currentLocation: " + self.currentLocation);
-            console.log(self.validHashes.indexOf(hash));
-            console.log(self.validHashes.indexOf(self.currentLocation));
-
             if (self.currentLocation === '') {
-                if (hash == 'login') {
+                if ((hash == 'login') || (hash == 'note')) {
                     self.setPopover(hash);
                 }
             } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) + 1)) {
@@ -63,12 +58,12 @@ GiftStarterApp.service('PopoverService', [
             } else if(hash == self.currentLocation) {
                 // Noop
             } else {
+                console.log("Wrong hash location");
                 self.hidePopover();
             }
         });
 
         this.nextPopover = function() {
-            console.log('next popover');
             if (this.validHashes.indexOf(this.currentLocation) + 1 < this.validHashes.length) {
                 this.setPopover(this.validHashes[this.validHashes.indexOf(this.currentLocation) + 1]);
             } else {
