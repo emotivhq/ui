@@ -48,7 +48,7 @@ GiftStarterApp.service('GiftStartService', [
             $location.path('/giftstart');
             $timeout(function() {
                 $rootScope.$broadcast('giftstart-loaded');
-            }, 200);
+            }, 400);
         };
 
         function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, productUrl,
