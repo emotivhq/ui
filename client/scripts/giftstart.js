@@ -38,6 +38,7 @@ GiftStarterApp.service('GiftStartService', [
                 for (var i = 0; i < x; i++) {
                     newParts.push({
                         bought: false,
+                        selected: false,
                         value: productPrice/x/y
                     });
                 }
@@ -97,11 +98,8 @@ GiftStarterApp.service('GiftStartService', [
                 return function () {
                     if (!giftstart.parts[tj][ti].bought) {
                         // If selected is none, this will force it into a bool
-                        if (giftstart.parts[tj][ti].selected) {
-                            giftstart.parts[tj][ti].selected = false;
-                        } else {
-                            giftstart.parts[tj][ti].selected = true;
-                        }
+                        giftstart.parts[tj][ti].selected = (giftstart.parts[tj][ti].selected == false);
+                        self.updateSelected();
                     }
                 }
             }
@@ -190,7 +188,5 @@ GiftStarterApp.controller('GiftStartController', [
 
 
         $scope.pitchIn = function() {GiftStartService.pitchIn()};
-
-        $scope.selectionUpdated = function() {GiftStartService.updateSelected()}
 
 }]);
