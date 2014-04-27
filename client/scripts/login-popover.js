@@ -7,7 +7,6 @@ GiftStarterApp.controller('LoginPopoverController', [
             '$scope','FacebookService','PopoverService',
     function($scope,  FacebookService,  PopoverService) {
 
-        console.log(FacebookService);
         $scope.loggedIn = FacebookService.loggedIn;
 
         // Check if user is logged in already

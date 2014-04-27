@@ -46,7 +46,6 @@ GiftStarterApp.service('GiftStartService', [
             }
             self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
                 productPrice, productUrl, tempParts, y, x);
-            console.log("setting path");
             $location.path('/giftstart');
         };
 
@@ -187,6 +186,6 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
 
 
-        $scope.pitchIn = function() {GiftStartService.pitchIn()};
+        $scope.pitchIn = GiftStartService.pitchIn;
 
 }]);

@@ -14,13 +14,11 @@ GiftStarterApp.service('PopoverService', [
             if (popoverName === '') {
                 this.hidePopover();
             } else {
-                $timeout(function() {
-                    self.template = '<gs-' + popoverName + '-popover></gs-' + popoverName + '-popover>';
-                    self.currentLocation = popoverName;
-                    $location.hash(popoverName);
-                    self.showPopover();
-                    $rootScope.$broadcast('popover-updated');
-                });
+                self.template = '<gs-' + popoverName + '-popover></gs-' + popoverName + '-popover>';
+                self.currentLocation = popoverName;
+                $location.hash(popoverName);
+                self.showPopover();
+                $rootScope.$broadcast('popover-updated');
             }
         };
 
@@ -64,12 +62,13 @@ GiftStarterApp.service('PopoverService', [
         });
 
         this.nextPopover = function() {
+            console.log('setting next popover:');
             if (this.validHashes.indexOf(this.currentLocation) + 1 < this.validHashes.length) {
                 this.setPopover(this.validHashes[this.validHashes.indexOf(this.currentLocation) + 1]);
+                console.log(this.validHashes[this.validHashes.indexOf(this.currentLocation) + 1]);
             } else {
                 this.hidePopover();
             }
-
         }
     }
 ]);
