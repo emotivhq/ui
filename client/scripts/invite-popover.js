@@ -27,11 +27,12 @@ GiftStarterApp.controller('InvitePopoverController', [
                 var ti = i;
                 return function () {
                     // If selected is none, this will force it into a bool
-                    friends[ti].selected = (friends[ti].selected == false);
+                    friends[ti].selected = (friends[ti].selected != true);
                 }
             }
 
             for (var i = 0; i < friends.length; i++) {
+                friends[i].selected = false;
                 friends[i].toggle = makeSelectToggle(i);
             }
         }

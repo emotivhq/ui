@@ -30,7 +30,7 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
         };
 
         this.login = function() {
-            ezfb.login(this.loginCallback,
+            ezfb.login(self.loginCallback,
                 {scope: 'public_profile,basic_info,email,user_birthday,user_friends,friends_birthday'});
         };
 

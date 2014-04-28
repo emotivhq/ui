@@ -32,12 +32,10 @@ GiftStarterApp.service('PopoverService', [
         };
 
         this.hidePopover = function() {
-            $timeout(function() {
-                $rootScope.$broadcast('popover-hidden');
-                self.currentLocation = '';
-                $location.hash('');
-                console.log('Hiding popover');
-            });
+            $rootScope.$broadcast('popover-hidden');
+            self.currentLocation = '';
+            $location.hash('');
+            console.log('Hiding popover');
         };
 
         this.showPopover = function() {$rootScope.$broadcast('popover-shown')};
@@ -62,12 +60,10 @@ GiftStarterApp.service('PopoverService', [
         });
 
         this.nextPopover = function() {
-            console.log('setting next popover:');
-            if (this.validHashes.indexOf(this.currentLocation) + 1 < this.validHashes.length) {
-                this.setPopover(this.validHashes[this.validHashes.indexOf(this.currentLocation) + 1]);
-                console.log(this.validHashes[this.validHashes.indexOf(this.currentLocation) + 1]);
+            if (self.validHashes.indexOf(self.currentLocation) + 1 < self.validHashes.length) {
+                self.setPopover(self.validHashes[self.validHashes.indexOf(self.currentLocation) + 1]);
             } else {
-                this.hidePopover();
+                self.hidePopover();
             }
         }
     }
