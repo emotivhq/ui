@@ -8,7 +8,6 @@ var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb', 'angul
 GiftStarterApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
-            .when('/friends', {templateUrl: '/templates/angular/friendtable.html'})
             .when('/product', {templateUrl: '/templates/angular/product-link.html'})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
             .otherwise({redirectTo: '/product'});

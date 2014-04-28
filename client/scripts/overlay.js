@@ -38,6 +38,6 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
         restrict: 'E',
         scope: {giftstart: '='},
         link: link,
-        templateUrl: '/templates/angular/product-overlay.html'
+        templateUrl: '/templates/angular/overlay.html'
     };
 });
