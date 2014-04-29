@@ -22,6 +22,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.payment = {
+            gsid: -1,
             parts: [],
             note: '',
             stripeResponse: {}
@@ -39,6 +40,7 @@ GiftStarterApp.service('GiftStartService', [
                     newParts.push({
                         bought: false,
                         selected: false,
+                        part_id: j*x+i,
                         value: productPrice/x/y
                     });
                 }
@@ -80,6 +82,7 @@ GiftStarterApp.service('GiftStartService', [
         this.createSuccess = function(data, status, headers, config) {
             // TODO: need to save which parts are selected across server giftstart return
             var parts = JSON.parse(JSON.stringify(self.giftStart.parts));
+            console.log(data);
             self.giftStart = data['giftstart'];
             self.giftStart.parts = parts;
             injectPartToggles(self.giftStart);
@@ -129,6 +132,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data, status, headers, config) {
+            console.log(data);
             self.giftStart = data['giftstart'];
             self.giftStart.totalSelection = 0;
             injectPartToggles(self.giftStart);
@@ -155,11 +159,44 @@ GiftStarterApp.service('GiftStartService', [
 
         this.saveNote = function(noteText) {
             // TODO: This should be added to something sent to the server
-            this.payment.note = noteText;
+            self.payment.note = noteText;
         };
 
         this.attachStripeResponse = function(response) {
-            this.payment.stripeResponse = response;
+            self.payment.stripeResponse = response;
+            self.payment.gsid = self.giftStart.gsid;
+            self.payment.parts = [];
+            for (var j=0; j < self.giftStart.parts.length; j++) {
+                for (var i=0; i < self.giftStart.parts[j].length; i++) {
+                    if (self.giftStart.parts[j][i].selected) {
+                        self.payment.parts.push(self.giftStart.parts[j][i].part_id);
+                    }
+                }
+            }
+        };
+
+        this.sendPayment = function() {
+            var data = {payment: self.payment, action: 'pitch-in', uid: FacebookService.uid};
+            console.log(data);
+            $http({method: 'POST', url: '/pay',
+                data: data})
+                .success(self.paymentSuccess)
+                .error(self.paymentFailure);
+        };
+
+        this.paymentSuccess = function(data) {
+            var purchasedParts = data['purchased-parts'];
+            for (var i = 0; i < purchasedParts.length; i++) {
+                var x = purchasedParts[i] % self.giftStart.columns;
+                var y = Math.floor(purchasedParts[i] / self.giftStart.columns);
+                self.giftStart.parts[y][x]['bought'] = true;
+                self.giftStart.parts[y][x]['selected'] = false;
+            }
+            self.updateSelected();
+        };
+
+        this.paymentFailure = function() {
+            console.log("Pitch-in failed!");
         };
 
         this.pitchIn = function() {

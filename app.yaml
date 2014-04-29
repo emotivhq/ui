@@ -11,6 +11,8 @@ handlers:
   script: product.api
 - url: /giftstart
   script: giftstart.api
+- url: /pay
+  script: pay.api
 
 # Client static asset urls
 - url: /favicon\.ico
@@ -38,3 +40,5 @@ libraries:
   version: "latest"
 - name: lxml
   version: "latest"
+- name: ssl
+  version: latest

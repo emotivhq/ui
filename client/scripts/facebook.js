@@ -9,6 +9,7 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
         this.profilePictureUrl  = '';
         this.friends = [];
         this.loggedIn = false;
+        this.isStripeCustomer = false;
         var self = this;
 
         this.loginCallback = function(response) {
@@ -19,6 +20,7 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
                 // Get user's profile picture for later user
                 ezfb.api("me/picture?type=square&height=150&width=150", self.loginSuccess);
                 self.getFriends();
+                self.checkIfStripeCustomer();
             } else {
                 $rootScope.$broadcast('login-failure');
                 self.loggedIn = false;
@@ -71,6 +73,12 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
             console.log(friends);
             console.log("Invitation message:");
             console.log(message);
+        };
+
+        this.checkIfStripeCustomer = function() {
+            $http({method: 'POST', url: '/pay', data: {action: 'is-existing-customer', uid: self.uid}})
+                .success(function(response) {self.isStripeCustomer = response.isStripeCustomer})
+                .error(function() {console.log('Failed to determine if stripe customer.')});
         };
 
         ezfb.getLoginStatus(this.loginCallback);

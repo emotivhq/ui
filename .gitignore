@@ -1,6 +1,8 @@
 /client/stylesheets/*.css
 /client/bower_components/*
 /client/client.iml
+requests/
+stripe/
 
 secret.yaml
 app.iml
