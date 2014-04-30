@@ -46,7 +46,7 @@ class PayHandler(webapp2.RequestHandler):
         pitch_in = PitchIn(uid=data['uid'], gsid=payment['gsid'], note=payment['note'],
                            parts=payment['parts'])
         pitch_in.put_async()
-        giftstart.register_purchased_parts(payment['gsid'], payment['parts'])
+        giftstart.register_purchased_parts(payment['gsid'], payment['parts'], data['uid'])
         self.response.write(json.dumps({'result': 'success', 'purchased-parts': payment['parts']}))
 
     @staticmethod
@@ -59,7 +59,7 @@ class PayHandler(webapp2.RequestHandler):
 
         if pitch_in_count == gs.overlay_rows * gs.overlay_columns:
             # All pieces purchased!  Do something.
-            print("Woah!  Giftstart #%d is funded!")
+            print("Woah!  Giftstart #%d is funded!" % gsid)
 
         return pitch_in_count == gs.overlay_rows * gs.overlay_columns
 

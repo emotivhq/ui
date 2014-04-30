@@ -3,6 +3,8 @@ __author__ = 'stuart'
 import webapp2
 import json
 from google.appengine.ext import ndb
+import cloudstorage
+import facebook
 
 
 class GiftStart(ndb.Model):
@@ -65,14 +67,17 @@ class GiftStart(ndb.Model):
         return result
 
 
-def register_purchased_parts(gsid, purchased_parts):
+def register_purchased_parts(gsid, purchased_parts, uid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
     parts = json.loads(giftstart.overlay_parts)
     for part_id in purchased_parts:
         if part_id < giftstart.overlay_rows*giftstart.overlay_columns:
             parts[int(part_id/giftstart.overlay_rows)][part_id % giftstart.overlay_rows]['bought'] = True
+            parts[int(part_id/giftstart.overlay_rows)][part_id % giftstart.overlay_rows]['img'] = \
+                'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
     giftstart.overlay_parts = json.dumps(parts)
     giftstart.put()
+
 
 
 def get_purchased_parts(gsid):

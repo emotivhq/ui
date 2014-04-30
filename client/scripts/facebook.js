@@ -16,11 +16,13 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
             if (response.status === 'connected') {
                 self.uid = response.authResponse.userID;
                 self.loggedIn = true;
+                console.log(response);
 
                 // Get user's profile picture for later user
                 ezfb.api("me/picture?type=square&height=150&width=150", self.loginSuccess);
                 self.getFriends();
                 self.checkIfStripeCustomer();
+                self.getLongTermToken(response.authResponse.accessToken, response.authResponse.userID);
             } else {
                 $rootScope.$broadcast('login-failure');
                 self.loggedIn = false;
@@ -36,9 +38,10 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
                 {scope: 'public_profile,basic_info,email,user_birthday,user_friends,friends_birthday'});
         };
 
-        this.getLongTermToken = function(token) {
+        this.getLongTermToken = function(token, uid) {
             $http({method: 'POST', url: 'auth',
                 data: {
+                    uid: uid,
                     type: 'facebook',
                     action: 'get-long-term-token',
                     token: token
