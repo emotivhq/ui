@@ -32,6 +32,13 @@ gs-overlay.product-overlay
   transition: all 0.2s
   cursor: pointer
   +no-select
+
+  img.giver
+    display: none
+    max-width: 60%
+    max-height: 60%
+    border-radius: 50%
+
 .part-cell:hover
   background: rgba(80, 150, 255, 0.2)
   color: rgba(0, 0, 0, 1)
@@ -39,8 +46,14 @@ gs-overlay.product-overlay
   border: dashed 1px $dash-hovered-color
 
 .part-cell.bought
-  opacity: 0
+  background: rgba(80, 150, 255, 0)
   cursor: default
+
+  img.giver
+    display: inline-block
+
+  span.price
+    display: none
 
 .part-cell.selected
   background: rgba(80, 150, 255, 0.1)

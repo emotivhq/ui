@@ -79,7 +79,6 @@ def register_purchased_parts(gsid, purchased_parts, uid):
     giftstart.put()
 
 
-
 def get_purchased_parts(gsid):
     return GiftStart.query(gsid).fetch()[0].overlay_parts
 
