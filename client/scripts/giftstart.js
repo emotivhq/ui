@@ -191,6 +191,8 @@ GiftStarterApp.service('GiftStartService', [
                 var y = Math.floor(purchasedParts[i] / self.giftStart.columns);
                 self.giftStart.parts[y][x]['bought'] = true;
                 self.giftStart.parts[y][x]['selected'] = false;
+                self.giftStart.parts[y][x]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
+                    FacebookService.uid + '.jpg';
             }
             self.updateSelected();
         };

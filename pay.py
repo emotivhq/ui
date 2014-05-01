@@ -7,6 +7,7 @@ import giftstart
 from stripedb import StripeCard, StripeCharge, StripeCustomer
 from google.appengine.ext import ndb
 import yaml
+from giftstart import send_email
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['api_key']
 
@@ -45,21 +46,27 @@ class PayHandler(webapp2.RequestHandler):
 
         pitch_in = PitchIn(uid=data['uid'], gsid=payment['gsid'], note=payment['note'],
                            parts=payment['parts'])
-        pitch_in.put_async()
+        pitch_in.put()
         giftstart.register_purchased_parts(payment['gsid'], payment['parts'], data['uid'])
+        self._check_if_giftstart_complete(payment['gsid'])
         self.response.write(json.dumps({'result': 'success', 'purchased-parts': payment['parts']}))
 
     @staticmethod
     def _check_if_giftstart_complete(gsid):
+        # TODO!!! The pitch_in put isn't always reflected yet here
+        # TODO: Need to architect this system right.  Think about it on way to weggie grill
         giftstart_pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+        print(giftstart_pitch_ins)
         gs = giftstart.GiftStart.query(giftstart.GiftStart.gsid == gsid).fetch()[0]
         pitch_in_count = 0
         for pitch_in in giftstart_pitch_ins:
             pitch_in_count += len(pitch_in.parts)
 
-        if pitch_in_count == gs.overlay_rows * gs.overlay_columns:
+        if pitch_in_count >= gs.overlay_rows * gs.overlay_columns:
             # All pieces purchased!  Do something.
             print("Woah!  Giftstart #%d is funded!" % gsid)
+            print("Sending email to Stuart :P")
+            send_email("GiftStart Campaign #%d completed!" % gsid, "Go check it out!", "Stuart at GiftStarter", "stuart@giftstarter.co", "stuart@giftstarter.co")
 
         return pitch_in_count == gs.overlay_rows * gs.overlay_columns
 

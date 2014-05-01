@@ -5,6 +5,7 @@ import json
 from google.appengine.ext import ndb
 import cloudstorage
 import facebook
+from google.appengine.api import mail
 
 
 class GiftStart(ndb.Model):
@@ -72,8 +73,8 @@ def register_purchased_parts(gsid, purchased_parts, uid):
     parts = json.loads(giftstart.overlay_parts)
     for part_id in purchased_parts:
         if part_id < giftstart.overlay_rows*giftstart.overlay_columns:
-            parts[int(part_id/giftstart.overlay_rows)][part_id % giftstart.overlay_rows]['bought'] = True
-            parts[int(part_id/giftstart.overlay_rows)][part_id % giftstart.overlay_rows]['img'] = \
+            parts[int(part_id/giftstart.overlay_columns)][part_id % giftstart.overlay_columns]['bought'] = True
+            parts[int(part_id/giftstart.overlay_columns)][part_id % giftstart.overlay_columns]['img'] = \
                 'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
     giftstart.overlay_parts = json.dumps(parts)
     giftstart.put()
@@ -81,6 +82,26 @@ def register_purchased_parts(gsid, purchased_parts, uid):
 
 def get_purchased_parts(gsid):
     return GiftStart.query(gsid).fetch()[0].overlay_parts
+
+
+# def check_giftstart_status(giftstart):
+#     gs_pitch_ins = PitchIn.query(PitchIn.gsid == giftstart.gsid).fetch()
+#     total_gs_parts = giftstart.overlay_rows * giftstart.overlay_columns
+#     total_pitch_ins = sum([len(pitch_in.parts) for pitch_in in gs_pitch_ins])
+#     if total_gs_parts >= total_pitch_ins:
+#         # WOAH GIFTSTART BOUGHT!
+
+
+def send_email(subject, message, sender_name, sender_email, receivers):
+    if isinstance(receivers, list):
+        for receipient in receivers:
+            email = mail.EmailMessage(sender="%s <%s>" % (sender_name, sender_email), subject=subject, body=message,
+                                      to=receipient)
+            email.send()
+    else:
+        email = mail.EmailMessage(sender="%s <%s>" % (sender_name, sender_email), subject=subject, body=message,
+                                  to=receivers)
+        email.send()
 
 
 class GiftStartHandler(webapp2.RequestHandler):
