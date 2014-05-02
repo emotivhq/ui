@@ -2,8 +2,9 @@
  * Created by stuart on 4/7/14.
  */
 
-GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
-    function(ezfb, $http, $rootScope) {
+GiftStarterApp.service('FacebookService', [
+            'ezfb','$http','$rootScope','$location',
+    function(ezfb,  $http,  $rootScope,  $location) {
 
         this.uid = -1;
         this.profilePictureUrl  = '';
@@ -72,6 +73,14 @@ GiftStarterApp.service('FacebookService', ['ezfb', '$http', '$rootScope',
         };
 
         this.inviteFriends = function(friends, message) {
+            var friendUids = []; // [self.uid.toString()];
+            for (var i = 0; i < friends.length; i++) {friendUids.push(friends[i].id)}
+            ezfb.ui({
+                method: 'send',
+                link: $location.absUrl(),
+                app_id: ezfb.app_id,
+                to: friendUids
+            });
             console.log("Inviting friends:");
             console.log(friends);
             console.log("Invitation message:");

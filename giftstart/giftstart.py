@@ -1,11 +1,11 @@
 __author__ = 'stuart'
 
-import webapp2
 import json
 from google.appengine.ext import ndb
-import cloudstorage
+from pay import PitchIn
 import facebook
-from google.appengine.api import mail
+import emailer
+from user import User
 
 
 class GiftStart(ndb.Model):
@@ -20,6 +20,13 @@ class GiftStart(ndb.Model):
     overlay_columns = ndb.IntegerProperty(required=True)
     overlay_rows = ndb.IntegerProperty(required=True)
     overlay_parts = ndb.JsonProperty(required=True)
+
+    address_name = ndb.StringProperty()
+    address_line_1 = ndb.StringProperty()
+    address_line_2 = ndb.StringProperty()
+    address_city = ndb.StringProperty()
+    address_state = ndb.StringProperty()
+    address_zip = ndb.StringProperty()
 
     def jsonify(self):
         return json.dumps({'giftstart': {
@@ -84,43 +91,29 @@ def get_purchased_parts(gsid):
     return GiftStart.query(gsid).fetch()[0].overlay_parts
 
 
-# def check_giftstart_status(giftstart):
-#     gs_pitch_ins = PitchIn.query(PitchIn.gsid == giftstart.gsid).fetch()
-#     total_gs_parts = giftstart.overlay_rows * giftstart.overlay_columns
-#     total_pitch_ins = sum([len(pitch_in.parts) for pitch_in in gs_pitch_ins])
-#     if total_gs_parts >= total_pitch_ins:
-#         # WOAH GIFTSTART BOUGHT!
+def giftstart_complete(gsid):
+    pass
+    # Check if all parts have been bought
+    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
+    pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    gift_champion = User.query(User.uid == giftstart.gift_champion_uid)
+    num_pitch_ins = sum([len(pitch_in.parts) for pitch_in in pitch_ins])
+    available_parts = giftstart.overlay_rows * giftstart.overlay_columns
 
+    if num_pitch_ins > available_parts:
+        # Something has gone wrong, notify GS
+        emailer.send("GiftStart Error!!!", "Too many parts have been sold for GS#%s!" % giftstart.gsid,
+                   "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
+    if num_pitch_ins >= available_parts:
+        # All parts have been bought!  Send notifications to givers...
+        for pitch_in in pitch_ins:
+            facebook.send_notification(pitch_in.uid, "", "")
 
-def send_email(subject, message, sender_name, sender_email, receivers):
-    if isinstance(receivers, list):
-        for receipient in receivers:
-            email = mail.EmailMessage(sender="%s <%s>" % (sender_name, sender_email), subject=subject, body=message,
-                                      to=receipient)
-            email.send()
-    else:
-        email = mail.EmailMessage(sender="%s <%s>" % (sender_name, sender_email), subject=subject, body=message,
-                                  to=receivers)
-        email.send()
+            # Send email congratulating the gift champion, too!
+            emailer.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
+                       "Stuart at GiftStarter", "stuart@giftstarter.co", [gift_champion.email])
 
+            # And email GiftStarter personnel...
+            emailer.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
+                   "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
 
-class GiftStartHandler(webapp2.RequestHandler):
-
-    def post(self):
-        data = json.loads(self.request.body)
-        action = data['action']
-        if action == 'create':
-            giftstart = data['giftstart']
-            gs = GiftStart.create(giftstart)
-            self.response.write(gs.jsonify())
-
-        elif action == 'update':
-            giftstart = data['giftstart']
-            gs = GiftStart.update(giftstart)
-            self.response.write(gs.jsonify())
-
-        elif action == 'get':
-            giftstart_id = data['giftstart_id']
-            self.response.write(GiftStart.get_by_id(giftstart_id).jsonify())
-
-api = webapp2.WSGIApplication([('/giftstart', GiftStartHandler)], debug=True)

@@ -51,6 +51,8 @@ except ImportError:
 
 # __version__ = version.__version__
 
+from comm import send_notification
+from login import store_extended_key
 
 class GraphAPI(object):
     """A client for the Facebook Graph API.
