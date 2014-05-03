@@ -28,6 +28,9 @@ GiftStarterApp.service('GiftStartService', [
             stripeResponse: {}
         };
 
+        this.lastCheckedMilliseconds = new Date().getTime();
+        this.updateInterval = 3*1000;
+
         var self = this;
 
         this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
@@ -206,6 +209,57 @@ GiftStarterApp.service('GiftStartService', [
             if (self.giftStart.totalSelection > 0) {
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
+        };
+
+        this.syncParts = function(source) {
+            console.log("firing!");
+            function checkForSync() {
+                $http({
+                    method: 'POST',
+                    url: '/giftstart/sync',
+                    data: {action: 'sync', gsid: self.giftStart.gsid, parts: self.giftStart.parts}
+                })
+                    .success(syncCheckCallback)
+                    .error(function() {console.log("Failed to contact part sync service.")})
+            }
+
+            function syncCheckCallback(parts) {
+                if (parts != []) {
+                    // Parts need to be updated!
+                    updateFromParts(parts);
+                }
+            }
+
+            function updateFromParts(parts) {
+                for (var j = 0; j < parts.length; j++) {
+                    for (var i = 0; i < parts[j].length; i++) {
+                        if (self.giftStart.parts[j][i].bought != parts[j][i].bought) {
+                            self.giftStart.parts[j][i].bought = parts[j][i].bought;
+                            if (parts[j][i].bought) {
+                                self.giftStart.parts[j][i].selected = false;
+                                self.giftStart.parts[j][i].img = parts[j][i].img;
+                            }
+                        }
+                    }
+                }
+                self.updateSelected();
+            }
+
+            function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
+
+            if (source == 'pitch-in-hover') {
+                // User hovered pitch-in button, need to update immediately
+                checkForSync();
+                updateLastChecked();
+            } else {
+                // Update every N seconds upon user activity
+                var currentTime = new Date().getTime();
+                if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {
+                    console.log("Checking for sync...");
+                    checkForSync();
+                    updateLastChecked();
+                }
+            }
         }
 
     }]);
@@ -224,6 +278,9 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.$on('giftstart-loaded', function() {$scope.giftStart = GiftStartService.giftStart});
         $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
 
+        // Synchronize parts on mouse activity
+        $scope.mouseActivityCallback = function(source) {GiftStartService.syncParts(source)};
+        $scope.pitchInHoverCallback = function() {GiftStartService.syncParts('pitch-in-hover')};
 
         $scope.pitchIn = GiftStartService.pitchIn;
 

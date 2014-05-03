@@ -1,4 +1,4 @@
-<div class="giftstart wrapper" ng-controller="GiftStartController">
+<div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
     <gs-overlay class="product-overlay" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
 
@@ -7,6 +7,6 @@
         <div class="price">Contribution: <div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
         <a ng-href="{{giftStart.product.url}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
         <div class="description" ng-bind="giftStart.description"></div>
-        <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()">Pitch In!</button>
+        <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
     </div>
 </div>

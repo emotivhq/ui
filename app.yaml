@@ -9,6 +9,8 @@ handlers:
   script: user.auth
 - url: /product
   script: product.api
+- url: /giftstart/sync
+  script: giftstart.sync_api
 - url: /giftstart
   script: giftstart.api
 - url: /pay
