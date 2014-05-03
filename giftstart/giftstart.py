@@ -4,8 +4,8 @@ import json
 from google.appengine.ext import ndb
 from pay import PitchIn
 import facebook
-import emailer
-from user import User
+import gs_email
+from gs_user import User
 
 
 class GiftStart(ndb.Model):
@@ -102,18 +102,18 @@ def giftstart_complete(gsid):
 
     if num_pitch_ins > available_parts:
         # Something has gone wrong, notify GS
-        emailer.send("GiftStart Error!!!", "Too many parts have been sold for GS#%s!" % giftstart.gsid,
-                   "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
+        gs_email.send("GiftStart Error!!!", "Too many parts have been sold for GS#%s!" % giftstart.gsid,
+                      "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
     if num_pitch_ins >= available_parts:
         # All parts have been bought!  Send notifications to givers...
         for pitch_in in pitch_ins:
             facebook.send_notification(pitch_in.uid, "", "")
 
             # Send email congratulating the gift champion, too!
-            emailer.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
-                       "Stuart at GiftStarter", "stuart@giftstarter.co", [gift_champion.email])
+            gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
+                          "Stuart at GiftStarter", "stuart@giftstarter.co", [gift_champion.email])
 
             # And email GiftStarter personnel...
-            emailer.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
-                   "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
+            gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
+                          "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
 

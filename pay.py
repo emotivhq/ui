@@ -7,7 +7,7 @@ import giftstart
 from stripedb import StripeCard, StripeCharge, StripeCustomer
 from google.appengine.ext import ndb
 import yaml
-from giftstart import send_email
+import gs_email
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['api_key']
 
@@ -66,7 +66,7 @@ class PayHandler(webapp2.RequestHandler):
             # All pieces purchased!  Do something.
             print("Woah!  Giftstart #%d is funded!" % gsid)
             print("Sending email to Stuart :P")
-            send_email("GiftStart Campaign #%d completed!" % gsid, "Go check it out!", "Stuart at GiftStarter", "stuart@giftstarter.co", "stuart@giftstarter.co")
+            gs_email.send("GiftStart Campaign #%d completed!" % gsid, "Go check it out!", "Stuart at GiftStarter", "stuart@giftstarter.co", "stuart@giftstarter.co")
 
         return pitch_in_count == gs.overlay_rows * gs.overlay_columns
 

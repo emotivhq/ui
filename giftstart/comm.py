@@ -1,6 +1,6 @@
 __author__ = 'stuart'
 
-from user import User
+from gs_user import User
 from facebook import send_notification
 
 

@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 import facebook
 import cloudstorage
+import requests
 
 
 def cache_user_image(uid, access_token):
@@ -11,9 +12,9 @@ def cache_user_image(uid, access_token):
     _save_picture_to_gcs(uid + '.jpg', 'u/', img)
 
 
-def cache_product_image(img_url):
-    # TODO: implement product image fetch
-    pass
+def cache_product_image(img_url, gsid):
+    img = requests.get(img_url).text
+    _save_picture_to_gcs(gsid + '.jpg', 'p/', img)
 
 
 def _save_picture_to_gcs(filename, folder, data):

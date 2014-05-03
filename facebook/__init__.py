@@ -40,6 +40,7 @@ import base64
 import requests
 import json
 
+
 # Find a query string parser
 try:
     from urllib.parse import parse_qs
@@ -50,9 +51,6 @@ except ImportError:
 
 
 # __version__ = version.__version__
-
-from comm import send_notification
-from login import store_extended_key
 
 class GraphAPI(object):
     """A client for the Facebook Graph API.
@@ -400,3 +398,8 @@ def get_access_token_from_code(code, redirect_uri, app_id, app_secret):
 
 def get_app_access_token(app_id, app_secret):
     return GraphAPI().get_app_access_token(app_id, app_secret)
+
+
+# GiftStarter imports
+from comm import send_notification
+from login import store_extended_key
