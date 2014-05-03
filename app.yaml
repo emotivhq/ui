@@ -6,7 +6,7 @@ threadsafe: yes
 
 handlers:
 - url: /auth
-  script: user.auth
+  script: gs_user.auth
 - url: /product
   script: product.api
 - url: /giftstart/sync

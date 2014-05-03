@@ -85,17 +85,16 @@ def register_purchased_parts(gsid, purchased_parts, uid):
                 'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
     giftstart.overlay_parts = json.dumps(parts)
     giftstart.put()
+    giftstart_complete(giftstart)
 
 
 def get_purchased_parts(gsid):
     return GiftStart.query(gsid).fetch()[0].overlay_parts
 
 
-def giftstart_complete(gsid):
-    pass
+def giftstart_complete(giftstart):
     # Check if all parts have been bought
-    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
-    pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    pitch_ins = PitchIn.query(PitchIn.gsid == giftstart.gsid).fetch()
     gift_champion = User.query(User.uid == giftstart.gift_champion_uid)
     num_pitch_ins = sum([len(pitch_in.parts) for pitch_in in pitch_ins])
     available_parts = giftstart.overlay_rows * giftstart.overlay_columns
