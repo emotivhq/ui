@@ -7,7 +7,6 @@ from stripedb import StripeCard, StripeCharge, StripeCustomer
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 import yaml
-import gs_email
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['api_key']
 

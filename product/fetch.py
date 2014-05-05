@@ -24,23 +24,12 @@ def fetch_product(data):
     headers = {'User-agent': "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"}
     page = requests.get(url, headers=headers).text
 
-    # useragent = "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"
-    # request = urllib2.Request(url)
-    # request.add_header('User-Agent', useragent)
-    # opener = urllib2.build_opener()
-    # result = opener.open(request)
-    # page = result.read()
     tree = html.fromstring(page)
 
     canonical_url = get_element_attr(tree, '//link[@rel="canonical"]', 'href')
     if len(canonical_url) > 0:
         print(canonical_url)
         if canonical_url[:4] == 'http':
-            # request = urllib2.Request(canonical_url[0])
-            # request.add_header('User-Agent', useragent)
-            # opener = urllib2.build_opener()
-            # result = opener.open(request)
-            # page = result.read()
             page = requests.get(canonical_url, headers=headers).text
             tree = html.fromstring(page)
 

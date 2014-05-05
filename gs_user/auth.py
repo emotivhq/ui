@@ -3,7 +3,7 @@ __author__ = 'stuart'
 import webapp2
 import yaml
 import json
-import urllib2
+import urllib2 # TODO: replace urllib2 with requests
 import facebook
 import storage
 
