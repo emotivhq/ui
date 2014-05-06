@@ -1,0 +1,88 @@
+
+<div class="create wrapper" ng-controller="GiftStartCreateController">
+    <div class="image-container">
+        <gs-img class="image" src="selectedImg" on-load="imageLoaded" ng-click="nextImage()"></gs-img>
+        <div><button ng-click="previousImage()"> &lt; </button> Image <button ng-click="nextImage()"> &gt; </button></div>
+    </div>
+
+    <div class="details">
+        <div class="title header">Campaign Title</div>
+        <input class="title" type="text" ng-model="title" placeholder="Title" ng-change="titleDescriptionChanged()"/>
+        <div class="description header">Campaign Description</div>
+        <textarea class="description" ng-model="description" rows="9" placeholder="Why should your friends give?  Excite them!" ng-change="titleDescriptionChanged()"></textarea>
+        <div class="details-container">
+            <div class="price">
+                <span>Non-sale price:</span>
+                <input type="number" min="0" name="product-price" pattern="[0-9]+.[0-9]*" ng-model="price" ng-change="priceChanged()"/>
+            </div>
+            <div class="parts">
+                <span>Divide into</span>
+                <div>
+                    <button ng-click="fewerParts()"> - </button><span>{{x*y}}</span><button ng-click="moreParts()"> + </button>
+                </div>
+                <span>parts</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="shipping-costs-container">
+        <div class="shipping">
+            <h2>Where should we ship it?</h2>
+            <div>
+                <div>Recipient Name</div>
+                <input type="text" ng-model="shippingName" ng-change="shippingChanged()"/>
+            </div>
+            <div>
+                <div>Recipient Address</div>
+                <input type="text" ng-model="shippingAddress" ng-change="shippingChanged()"/>
+            </div>
+            <div class="city">
+                <div>City</div>
+                <input type="text" ng-model="shippingCity" ng-change="shippingChanged()"/>
+            </div>
+            <div class="state">
+                <div>State</div>
+                <input type="text" ng-model="shippingState" ng-change="shippingChanged()"/>
+            </div>
+            <div class="zip">
+                <div>Zip</div>
+                <input type="text" ng-model="shippingZip" ng-change="shippingChanged()"/>
+            </div>
+            <div>
+                <div>Recipient Phone Number</div>
+                <input type="text" ng-model="shippingPhoneNumber" ng-change="shippingChanged()"/>
+            </div>
+        </div>
+
+        <div class="costs">
+            <div class="line-items">
+                <div class="line-item">
+                    <span class="left">Shipping</span><span class="right">${{shipping | number : 2}}</span>
+                </div>
+                <div class="line-item">
+                    <span class="left">Sales tax</span><span class="right">${{salesTax | number : 2}}</span>
+                </div>
+                <div class="line-item">
+                    <span class="left">Service fee</span><span class="right">${{serviceFee | number : 2}}</span>
+                </div>
+                <div class="line-item">
+                    <span class="left">Total price, delivered</span><span class="right">${{totalPrice | number : 2}}</span>
+                </div>
+                <div class="line-item total">
+                    <span class="left">Total per part</span><span class="right">${{totalPrice/x/y | number : 2}}</span>
+                </div>
+            </div>
+            <div class="gc-contact">
+                <h2>How can we reach you?</h2>
+                <div>Phone Number</div>
+                <input type="text" ng-model="gcPhoneNumber" ng-change="contactChanged()"/>
+                <div>Email</div>
+                <input type="text" ng-model="gcEmail" ng-change="contactChanged()"/>
+            </div>
+        </div>
+    </div>
+
+
+    <button class="submit large" ng-class="{disabled: gsInvalid}" ng-click="giftstart()">GiftStart!</button>
+</div>

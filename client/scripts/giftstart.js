@@ -247,17 +247,19 @@ GiftStarterApp.service('GiftStartService', [
 
             function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
 
-            if (source == 'pitch-in-hover') {
-                // User hovered pitch-in button, need to update immediately
-                checkForSync();
-                updateLastChecked();
-            } else {
-                // Update every N seconds upon user activity
-                var currentTime = new Date().getTime();
-                if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {
-                    console.log("Checking for sync...");
+            if (giftStart.gsid) {
+                if (source == 'pitch-in-hover') {
+                    // User hovered pitch-in button, need to update immediately
                     checkForSync();
                     updateLastChecked();
+                } else {
+                    // Update every N seconds upon user activity
+                    var currentTime = new Date().getTime();
+                    if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {
+                        console.log("Checking for sync...");
+                        checkForSync();
+                        updateLastChecked();
+                    }
                 }
             }
         }

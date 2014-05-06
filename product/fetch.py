@@ -17,9 +17,30 @@ def get_element_attr(element, xpath, attr):
     return result
 
 
+def get_all_imgs(tree, siteurl):
+    imgs = filter(lambda img: img[-3:] != 'gif',
+                  filter(lambda img: img != None, get_element_attr(tree, '//img', 'src')))
+    for i in range(len(imgs)):
+        if imgs[i][:4].lower() != 'http':
+            imgs[i] = siteurl + imgs[i]
+
+    return imgs
+
+
+def get_base_url(url):
+    out = ""
+    slash_count = 0
+    for char in url:
+        if char == '/':
+            slash_count += 1
+        out += char
+        if slash_count >= 3:
+            break
+    return out
+
+
 def fetch_product(data):
     url = data['url']
-    price = data['price']
 
     headers = {'User-agent': "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"}
     page = requests.get(url, headers=headers).text
@@ -33,14 +54,9 @@ def fetch_product(data):
             page = requests.get(canonical_url, headers=headers).text
             tree = html.fromstring(page)
 
-    title = get_element_attr(tree, '//meta[@property="og:title"]', 'content')[0]
-    desc = get_element_attr(tree, '//meta[@property="og:description"]', 'content')[0]
-    img = get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0]
+    imgs = [get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0]] + \
+        get_all_imgs(tree, get_base_url(url))
+    print(imgs)
+    print(len(imgs))
 
-    return json.dumps({'product': {
-        'link': url,
-        'img': img,
-        'title': title,
-        'price': price,
-        'description': desc,
-        }})
+    return json.dumps({'product': {'imgs': imgs}})

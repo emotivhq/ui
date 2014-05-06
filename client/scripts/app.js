@@ -8,9 +8,10 @@ var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb', 'angul
 GiftStarterApp.config(['$routeProvider',
     function ($routeProvider) {
         $routeProvider
-            .when('/product', {templateUrl: '/templates/angular/product-link.html'})
+            .when('/home', {templateUrl: '/templates/angular/product-link.html'})
+            .when('/create-giftstart', {templateUrl: '/templates/angular/giftstart-create.html'})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .otherwise({redirectTo: '/product'});
+            .otherwise({redirectTo: '/home'});
     }]);
 
 GiftStarterApp.config(function(ezfbProvider) {

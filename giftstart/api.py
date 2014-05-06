@@ -1,7 +1,7 @@
 __author__ = 'stuart'
 
 import webapp2
-from giftstart import GiftStart, register_purchased_parts
+from giftstart import GiftStart, register_purchased_parts, giftstart_complete
 import json
 
 
@@ -26,5 +26,8 @@ class GiftStartHandler(webapp2.RequestHandler):
 
         elif action == 'register-purchases':
             register_purchased_parts(data['gsid'], data['parts'], data['uid'])
+
+        elif action == 'check-if-complete':
+            giftstart_complete(data['gsid'])
 
 api = webapp2.WSGIApplication([('/giftstart', GiftStartHandler)], debug=True)

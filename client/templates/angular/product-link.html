@@ -4,7 +4,7 @@
             Link to the product you'd like to GiftStart:
         </div>
         <span class="inputs">
-            <input class="text-input" type="text" name="product-link" placeholder="Product Link" ng-model="product.link"/><button class="submit" ng-click="submitLink()">Submit</button>
+            <input class="text-input" type="text" name="product-link" placeholder="Product Link" ng-model="link"/><button class="submit" ng-click="submitLink()">Submit</button>
         </span>
     </div>
 
@@ -12,28 +12,10 @@
         <img src="/assets/loading.gif"/>
     </div>
 
-    <div class="result wrapper" ng-show="resultShown">
-        <div class="copy">Is this right?</div>
-        <gs-img class="image" src="product.img" on-load="imageLoaded"></gs-img>
-        <div class="details">
-            <span class="title" ng-bind="product.title"></span><span class="description" ng-bind="product.description"></span>
-            <div class="details-container">
-                <div class="price">
-                    <span>Non-sale price:</span>
-                    <input type="number" min="0" name="product-price" pattern="[0-9]+.[0-9]*" ng-model="product.price"/>
-                </div>
-                <div class="parts">
-                    <span>Divide into</span>
-                    <div>
-                        <button ng-click="fewerParts()"> - </button><span>{{x*y}}</span><button ng-click="moreParts()"> + </button>
-                    </div>
-                    <span>parts</span>
-                </div>
-                <div class="cost">
-                    <span class="description">Cost per part:</span>$<span class="accent large">{{product.price/x/y | number : 2}}</span>
-                </div>
-            </div>
-            <button class="submit large" ng-class="{disabled: !(product.price > 0)}" ng-click="giftstart()">GiftStart!</button>
+    <div class="failed" ng-show="failed">
+        <img src="/assets/failed.png"/>
+        <div>
+            We couldn't figure out that URL.  Try another?
         </div>
     </div>
 </div>

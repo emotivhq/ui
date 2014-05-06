@@ -1,0 +1,119 @@
+
+$column-width: 400px
+div.create
+  text-align: center
+
+  div.image-container
+    display: inline-block
+
+    gs-img.image
+      height: $column-width
+      width: $column-width
+
+    .image
+      max-height: 100%
+      max-width: 100%
+      display: inline-block
+      padding: 20px
+
+      img
+        padding: 0
+
+  .details
+    width: $column-width
+    padding: 20px
+    display: inline-block
+    vertical-align: top
+    text-align: left
+
+    div.header
+      margin-top: 25px
+      margin-bottom: 5px
+
+    div.price, div.parts
+      display: inline-block
+      vertical-align: top
+      text-align: center
+
+    div.details-container
+      display: block
+      margin: 20px auto 0 auto
+      text-align: center
+
+    div.price
+      margin-top: 20px
+      margin-right: 20px
+
+      input
+        width: 70px
+        display: block
+        margin-left: auto
+        margin-right: auto
+
+    div.parts
+      margin-top: 20px
+      margin-right: 20px
+
+      div
+        display: block
+
+        span
+          padding: 10px
+          display: inline-block
+          width: 40px
+
+    div.cost
+      margin-top: 20px
+
+      span.description
+        display: block
+
+    input
+      width: 100%
+
+    textarea
+      width: 100%
+
+  .price
+    display: block
+
+  .submit
+    display: block
+    margin: 30px auto
+
+div.shipping-costs-container
+
+  div.shipping, div.costs
+    display: inline-block
+    width: $column-width
+    vertical-align: top
+    margin: 0 20px
+
+    div
+      input
+        width: 100%
+
+    .city
+      width: 50%
+      display: inline-block
+
+    .state
+      width: 20%
+      display: inline-block
+
+    .zip
+      width: 28%
+      display: inline-block
+
+    div.gc-contact, div.line-items
+      display: block
+
+      div.line-item
+        text-align: left
+        padding-top: 5px
+
+        .right
+          float: right
+
+      div.line-item.total
+        font-weight: 700
