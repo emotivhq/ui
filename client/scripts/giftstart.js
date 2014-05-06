@@ -87,13 +87,13 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         this.createGiftStart = function() {
-            $http({method: 'POST', url: '/giftstart',
+            $http({method: 'POST', url: '/giftstart/api',
                 data: {giftstart: self.giftStart, action: 'create'}})
                 .success(this.createSuccess)
                 .error(this.createFailure);
         };
 
-        this.createSuccess = function(data, status, headers, config) {
+        this.createSuccess = function(data) {
             // TODO: need to save which parts are selected across server giftstart return
             var parts = JSON.parse(JSON.stringify(self.giftStart.parts));
             console.log(data);
@@ -105,7 +105,7 @@ GiftStarterApp.service('GiftStartService', [
             $location.search('gs-id', self.giftStart.gsid);
         };
 
-        this.createFailure = function(data, status, headers, config) {console.log("Failed to create GiftStart.")};
+        this.createFailure = function() {console.log("Failed to create GiftStart.")};
 
         function injectPartToggles(giftstart) {
             function makePartToggle(i, j) {
@@ -139,36 +139,19 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchGiftStart = function(gsid) {
-            $http({method: 'POST', url: '/giftstart',
+            $http({method: 'POST', url: '/giftstart/api',
                 data: {giftstart_id: gsid, action: 'get'}})
                 .success(this.fetchSuccess)
-                .error(function (data, status, headers, config){console.log("Failed to fetch GiftStart.");});
+                .error(function (){console.log("Failed to fetch GiftStart.");});
         };
 
-        this.fetchSuccess = function(data, status, headers, config) {
+        this.fetchSuccess = function(data) {
             console.log(data);
             self.giftStart = data['giftstart'];
             self.giftStart.totalSelection = 0;
             injectPartToggles(self.giftStart);
             $rootScope.$broadcast('giftstart-loaded');
             $location.search('gs-id', self.giftStart.gsid);
-        };
-
-        this.updateGiftStart = function() {
-            var parts = JSON.parse(JSON.stringify(this.giftStart.parts));
-            $http({method: 'POST', url: '/giftstart',
-                data: {giftstart: this.giftStart, action: 'update'}})
-                .success(self.updateSuccess)
-                .error(function (data, status, headers, config){console.log("Failed to update GiftStart.");});
-        };
-
-        this.updateSuccess = function(data, status, headers, config) {
-            // TODO: need to save which parts are selected across server giftstart return
-            self.giftStart = data['giftstart'];
-            self.giftStart.parts = parts;
-            self.updateSelected();
-            injectPartToggles(self.giftStart);
-            $rootScope.$broadcast('giftstart-loaded');
         };
 
         this.saveNote = function(noteText) {

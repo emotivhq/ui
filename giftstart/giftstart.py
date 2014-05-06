@@ -4,9 +4,9 @@ import json
 from google.appengine.ext import ndb
 from pay import PitchIn
 import gs_email
-from gs_user import User
 from google.appengine.api import taskqueue
 from datetime import datetime, timedelta
+import storage
 
 GIFTSTART_CAMPAIGN_DAYS = 7
 
@@ -82,6 +82,7 @@ class GiftStart(ndb.Model):
         gs_count = GiftStart.query().count()
         gs.gsid = str(gs_count + 1) if gs_count else '1'
         gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
+        gs.product_img_url = storage.cache_product_image(giftstart['product']['img_url'], gs.gsid)
         gs.put()
         return gs
 
@@ -118,7 +119,6 @@ def get_purchased_parts(gsid):
 
 
 def giftstart_complete(gsid):
-    print("Checking if giftstart %s is complete!" % gsid)
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
     # Check if all parts have been bought
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()

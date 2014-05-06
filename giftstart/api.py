@@ -30,4 +30,4 @@ class GiftStartHandler(webapp2.RequestHandler):
         elif action == 'check-if-complete':
             giftstart_complete(data['gsid'])
 
-api = webapp2.WSGIApplication([('/giftstart', GiftStartHandler)], debug=True)
+api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)

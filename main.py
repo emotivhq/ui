@@ -16,6 +16,7 @@
 #
 import webapp2
 import jinja2
+from giftstart import GiftStart
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
@@ -26,7 +27,24 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('frame.html')
+
         self.response.write(template.render())
 
 
+class GiftStartMainHandler(webapp2.RequestHandler):
+    def get(self):
+        template = JINJA_ENVIRONMENT.get_template('frame.html')
+        gsid = self.request.get('gs-id')
+        gs = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
+        render_values = {
+            'page_title': gs.giftstart_title,
+            'page_url': self.request.path_url,
+            'page_description': gs.giftstart_description,
+            'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid)
+        }
+        self.response.write(template.render(render_values))
+
+
 app = webapp2.WSGIApplication([('/', MainHandler)], debug=True)
+app_gs = webapp2.WSGIApplication([('/giftstart', GiftStartMainHandler)], debug=True)
+app_gsc = webapp2.WSGIApplication([('/create-giftstart', MainHandler)], debug=True)

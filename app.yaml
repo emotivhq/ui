@@ -11,7 +11,7 @@ handlers:
   script: product.api
 - url: /giftstart/sync
   script: giftstart.sync_api
-- url: /giftstart
+- url: /giftstart/api
   script: giftstart.api
 - url: /pay
   script: pay.api
@@ -32,6 +32,10 @@ handlers:
   static_dir: client/templates/angular
 
 # Catch all other urls
+- url: /create-giftstart
+  script: main.app_gsc
+- url: /giftstart
+  script: main.app_gs
 - url: .*
   script: main.app
 
