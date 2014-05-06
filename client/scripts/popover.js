@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('PopoverService', [
-            '$rootScope','$location','$timeout',
-    function($rootScope,  $location,  $timeout) {
+            '$rootScope','$location',
+    function($rootScope,  $location) {
 
         this.template = '';
         this.currentLocation = $location.hash();

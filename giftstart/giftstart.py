@@ -14,7 +14,7 @@ GIFTSTART_CAMPAIGN_DAYS = 7
 class GiftStart(ndb.Model):
     gsid = ndb.StringProperty(required=True)
     giftstart_title = ndb.StringProperty(required=True)
-    giftstart_description = ndb.StringProperty(required=True)
+    giftstart_description = ndb.TextProperty(required=True)
     gift_champion_uid = ndb.StringProperty(required=True)
     deadline = ndb.DateTimeProperty(required=True)
 
@@ -53,7 +53,7 @@ class GiftStart(ndb.Model):
         ndbgs.giftstart_description = giftstart['description']
 
         ndbgs.product_url = giftstart['product']['product_url']
-        ndbgs.product_price = int(giftstart['product']['price']*100)
+        ndbgs.product_price = int(giftstart['product']['price'])
         ndbgs.product_img_url = giftstart['product']['img_url']
         ndbgs.product_img_height = giftstart['product']['img_height']
 
@@ -122,7 +122,6 @@ def giftstart_complete(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
     # Check if all parts have been bought
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
-    gift_champion = User.query(User.uid == giftstart.gift_champion_uid)
     num_pitch_ins = sum([len(pitch_in.parts) for pitch_in in pitch_ins])
     available_parts = giftstart.overlay_rows * giftstart.overlay_columns
 
@@ -141,7 +140,7 @@ def giftstart_complete(gsid):
 
         # Send email congratulating the gift champion, too!
         gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
-                      "Stuart at GiftStarter", "stuart@giftstarter.co", [gift_champion.email])
+                      "Stuart at GiftStarter", "stuart@giftstarter.co", [giftstart.gc_email])
 
         # And email GiftStarter personnel...
         gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,

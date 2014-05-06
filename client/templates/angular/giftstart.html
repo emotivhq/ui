@@ -9,4 +9,11 @@
         <div class="description" ng-bind="giftStart.description"></div>
         <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
     </div>
+
+    <div class="comments">
+        <div class="comment" ng-repeat="comment in comments">
+            <img ng-src="{{comment.img}}"/>
+            <div>{{comment.message}}</div>
+        </div>
+    </div>
 </div>

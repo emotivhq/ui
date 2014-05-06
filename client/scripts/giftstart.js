@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('GiftStartService', [
-            '$http','$location','FacebookService','$rootScope','$filter','PopoverService','$timeout',
-    function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService,  $timeout) {
+            '$http','$location','FacebookService','$rootScope','$filter','PopoverService',
+    function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService) {
 
         this.giftStart = {
             title: '',
