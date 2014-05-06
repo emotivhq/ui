@@ -1,12 +1,13 @@
 
 @import base.sass
+@import column
 
 
 .giftstart.wrapper
   text-align: center
 
   .product.details
-    width: 480px
+    width: $column-width
     padding: 20px
     display: inline-block
     vertical-align: top
@@ -17,12 +18,6 @@
     a.title:hover
       text-decoration: underline
 
-    .image
-      max-width: 480px
-      max-height: 480px
-      display: inline-block
-      padding: 20px
-
     .title
       font-weight: 300
       font-size: 36px
@@ -32,9 +27,6 @@
     .description
       text-align: left
 
-    //.price
-      display: block
-
   .pitch-in.button
     display: block
     margin: 30px auto
@@ -43,8 +35,7 @@
     font-family: Blanch, sans-serif
     font-size: 60px
 
-  .price
+  div.price
     display: inline-block
-    font-size: 24px
     padding: 20px
 

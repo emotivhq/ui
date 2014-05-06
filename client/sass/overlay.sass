@@ -1,5 +1,6 @@
 
 @import base.sass
+@import column
 
 =no-select()
   -webkit-touch-callout: none
@@ -20,8 +21,8 @@ gs-overlay.product-overlay
     border-collapse: collapse
 
   img
-    max-width: 480px
-    max-height: 480px
+    max-width: $column-width
+    max-height: $column-width
     padding: 0
 
 // Part cells
@@ -35,6 +36,7 @@ gs-overlay.product-overlay
 
   span.price
     font-size: 14px
+    font: $font-accent
 
   img.giver
     display: none

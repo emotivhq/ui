@@ -1,7 +1,7 @@
 
 <div class="create wrapper" ng-controller="GiftStartCreateController">
     <div class="image-container">
-        <gs-img class="image" src="selectedImg" on-load="imageLoaded" ng-click="nextImage()"></gs-img>
+        <gs-img src="selectedImg" on-load="imageLoaded"></gs-img>
         <div><button ng-click="previousImage()"> &lt; </button> Image <button ng-click="nextImage()"> &gt; </button></div>
     </div>
 
@@ -18,7 +18,7 @@
             <div class="parts">
                 <span>Divide into</span>
                 <div>
-                    <button ng-click="fewerParts()"> - </button><span>{{x*y}}</span><button ng-click="moreParts()"> + </button>
+                    <button ng-class="{disabled: x*y == 2}" ng-click="fewerParts()"> - </button><span>{{x*y}}</span><button ng-class="{disabled: x*y == 36}" ng-click="moreParts()"> + </button>
                 </div>
                 <span>parts</span>
             </div>

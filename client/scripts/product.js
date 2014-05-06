@@ -7,7 +7,7 @@ GiftStarterApp.service('ProductService', [
     function($http) {
 
         this.product = {
-            link: '',
+            product_url: '',
             imgs: [],
             imageWidth: 0,
             imageHeight: 0
@@ -17,7 +17,7 @@ GiftStarterApp.service('ProductService', [
 
         this.submitLink = function(url, onSuccess, onFail) {
             $http({
-                method: 'POST', url: '/product', data: {url: url}
+                method: 'POST', url: '/product', data: {product_url: url}
             }).success(function(data) {
                 self.product.imgs = data.product.imgs;
                 onSuccess(self.product);
@@ -34,11 +34,11 @@ GiftStarterApp.controller('ProductLinkController', [
     function($scope,  ProductService,  $location) {
         $scope.loading = false;
         $scope.failed = false;
-        $scope.link = "";
+        $scope.product_url = "";
 
         function onSuccess(product) {
             $scope.loading = false;
-            ProductService.product.url = $scope.link;
+            ProductService.product.url = $scope.product_url;
             ProductService.product.imgs = product.imgs;
             $location.path("create-giftstart");
         }
@@ -51,7 +51,8 @@ GiftStarterApp.controller('ProductLinkController', [
         $scope.submitLink = function() {
             $scope.loading = true;
             $scope.failed = false;
-            ProductService.submitLink($scope.link, onSuccess, onFailure);
+            ProductService.product.product_url = $scope.product_url;
+            ProductService.submitLink($scope.product_url, onSuccess, onFailure);
         };
 
 }]);

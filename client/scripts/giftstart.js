@@ -14,7 +14,7 @@ GiftStarterApp.service('GiftStartService', [
                 price: -1,
                 img_url: '',
                 img_height: -1,
-                url: ''
+                product_url: ''
             },
             parts: [],
             rows: -1,
@@ -34,7 +34,8 @@ GiftStarterApp.service('GiftStartService', [
         var self = this;
 
         this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
-                                          numRows, numCols) {
+                                          numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+                                          shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
             var x = numRows, y = numCols;
             var tempParts = [];
             for (var j = 0; j < y; j++) {
@@ -50,26 +51,36 @@ GiftStarterApp.service('GiftStartService', [
                 tempParts.push(newParts);
             }
             self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
-                productPrice, productUrl, tempParts, y, x);
+                productPrice, productUrl, tempParts, y, x, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
             $location.path('/giftstart');
         };
 
         function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, productUrl,
-                                parts, rows, columns) {
+                                parts, rows, columns, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+                                shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
             var gs = {
                 title: title,
                 description: description,
                 gift_champion_uid: championUid,
                 product: {
-                    price: productPrice,
+                    price: 100*productPrice,
                     img_url: productImgUrl,
                     img_height: imageHeight,
-                    url: productUrl
+                    product_url: productUrl
                 },
                 totalSelection: 0,
                 parts: parts,
                 rows: rows,
-                columns: columns
+                columns: columns,
+                gc_phone_number: gcPhoneNumber,
+                gc_email: gcEmail,
+                shipping_name: shippingName,
+                shipping_address: shippingAddress,
+                shipping_city: shippingCity,
+                shipping_state: shippingState,
+                shipping_zip: shippingZip,
+                shipping_phone_number: shippingPhoneNumber
             };
             injectPartToggles(gs);
             return gs;
@@ -77,7 +88,7 @@ GiftStarterApp.service('GiftStartService', [
 
         this.createGiftStart = function() {
             $http({method: 'POST', url: '/giftstart',
-                data: {giftstart: this.giftStart, action: 'create'}})
+                data: {giftstart: self.giftStart, action: 'create'}})
                 .success(this.createSuccess)
                 .error(this.createFailure);
         };
@@ -212,7 +223,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.syncParts = function(source) {
-            console.log("firing!");
             function checkForSync() {
                 $http({
                     method: 'POST',
@@ -247,7 +257,7 @@ GiftStarterApp.service('GiftStartService', [
 
             function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
 
-            if (giftStart.gsid) {
+            if (self.giftStart.gsid) {
                 if (source == 'pitch-in-hover') {
                     // User hovered pitch-in button, need to update immediately
                     checkForSync();
@@ -256,7 +266,6 @@ GiftStarterApp.service('GiftStartService', [
                     // Update every N seconds upon user activity
                     var currentTime = new Date().getTime();
                     if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {
-                        console.log("Checking for sync...");
                         checkForSync();
                         updateLastChecked();
                     }

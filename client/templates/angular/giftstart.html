@@ -3,9 +3,9 @@
     <gs-overlay class="product-overlay" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
 
     <div class="product details">
-        <div class="price">Total Price: <div>$<span class="giftstart product total-price">{{giftStart.product.price | number : 2}}</span></div></div>
+        <div class="price">Total Price: <div>$<span class="giftstart product total-price">{{giftStart.product.price/100 | number : 2}}</span></div></div>
         <div class="price">Contribution: <div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
-        <a ng-href="{{giftStart.product.url}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
+        <a ng-href="{{giftStart.product.product_url}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
         <div class="description" ng-bind="giftStart.description"></div>
         <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
     </div>

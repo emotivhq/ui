@@ -1,27 +1,29 @@
+@import column
 
-$column-width: 400px
+
 div.create
   text-align: center
 
   div.image-container
     display: inline-block
 
-    gs-img.image
+    gs-img
       height: $column-width
       width: $column-width
+      margin: 10px 40px 10px 40px
+      display: inline-block
 
     .image
-      max-height: 100%
-      max-width: 100%
+      max-height: $column-width
+      max-width: $column-width
       display: inline-block
-      padding: 20px
 
       img
         padding: 0
 
   .details
     width: $column-width
-    padding: 20px
+    margin: 40px
     display: inline-block
     vertical-align: top
     text-align: left
@@ -31,6 +33,7 @@ div.create
       margin-bottom: 5px
 
     div.price, div.parts
+      margin: 40px
       display: inline-block
       vertical-align: top
       text-align: center
@@ -87,14 +90,14 @@ div.shipping-costs-container
     display: inline-block
     width: $column-width
     vertical-align: top
-    margin: 0 20px
+    margin: 0 40px
 
     div
       input
         width: 100%
 
     .city
-      width: 50%
+      width: 49%
       display: inline-block
 
     .state

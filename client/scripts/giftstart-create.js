@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('GiftStartCreateController', [
-            '$scope','ProductService','GiftStartService',
-    function($scope,  ProductService,  GiftStartService) {
+            '$scope','ProductService','GiftStartService',"$location",
+    function($scope,  ProductService,  GiftStartService,  $location) {
 
         $scope.x = 3;
         $scope.y = 3;
@@ -32,6 +32,11 @@ GiftStarterApp.controller('GiftStartCreateController', [
         $scope.salesTax = 0;
         $scope.serviceFee = 0;
         $scope.totalPrice = 0;
+
+        if (ProductService.product.product_url == "") {
+            // User navigated directly here, direct them to home page
+//            $location.path("home");
+        }
 
         $scope.nextImage = function() {
             $scope.imgIndex = ($scope.imgIndex + 1) % $scope.product.imgs.length;
@@ -60,16 +65,17 @@ GiftStarterApp.controller('GiftStartCreateController', [
         };
 
         $scope.giftstart = function() {
-            if ($scope.product.price > 0) {
+            if (!$scope.gsInvalid) {
                 GiftStartService.initiateGiftStart($scope.title, $scope.description, $scope.selectedImg,
-                    ProductService.product.imageHeight, ProductService.product.price, ProductService.product.link,
-                    $scope.x, $scope.y);
+                    $scope.imageHeight, $scope.totalPrice, $scope.product.product_url, $scope.x, $scope.y,
+                    $scope.gcPhoneNumber, $scope.gcEmail, $scope.shippingName, $scope.shippingAddress,
+                    $scope.shippingCity, $scope.shippingState, $scope.shippingZip, $scope.shippingPhoneNumber);
             }
         };
 
         $scope.imageLoaded = function(element) {
-            ProductService.product.imageWidth = angular.element(element.children()[0]).prop('clientWidth');
-            ProductService.product.imageHeight = angular.element(element.children()[0]).prop('clientHeight');
+            $scope.imageWidth = angular.element(element.children()[0]).prop('clientWidth');
+            $scope.imageHeight = angular.element(element.children()[0]).prop('clientHeight');
         };
 
         $scope.titleDescriptionChanged = function() {
@@ -118,7 +124,7 @@ GiftStarterApp.directive('gsImg',
     function($compile) {
         var template = '';
         var link = function(scope, element, attrs) {
-            template = '<img ng-src="{{'+attrs.src+'}}" class="'+attrs.class+'"/>';
+            template = '<img ng-src="{{'+attrs.src+'}}" class="image '+attrs.class+'"/>';
             element.append($compile(template)(scope));
             angular.element(element.children()[0]).on('load',
                 function() {
