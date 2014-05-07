@@ -53,6 +53,7 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
                 productPrice, productUrl, tempParts, y, x, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
                 shippingCity, shippingState, shippingZip, shippingPhoneNumber);
+            self.updateSelected();
             $location.path('/giftstart');
         };
 
@@ -128,11 +129,14 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         this.updateSelected = function() {
+            self.giftStart.remaining = 0;
             self.giftStart.totalSelection = 0;
             for (var j=0; j < self.giftStart.parts.length; j++) {
                 for (var i=0; i < self.giftStart.parts[j].length; i++) {
                     if (self.giftStart.parts[j][i].selected) {
                         self.giftStart.totalSelection += self.giftStart.parts[j][i].value;
+                    } else if (!self.giftStart.parts[j][i].bought) {
+                        self.giftStart.remaining += self.giftStart.parts[j][i].value;
                     }
                 }
             }
@@ -148,14 +152,25 @@ GiftStarterApp.service('GiftStartService', [
         this.fetchSuccess = function(data) {
             console.log(data);
             self.giftStart = data['giftstart'];
-            self.giftStart.totalSelection = 0;
+            self.updateSelected();
+            self.prepareComments();
             injectPartToggles(self.giftStart);
             $rootScope.$broadcast('giftstart-loaded');
             $location.search('gs-id', self.giftStart.gsid);
         };
 
+        this.prepareComments = function() {
+            for (var i = 0; i < self.giftStart.comments.length; i++) {
+                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                var date = new Date(1000 * self.giftStart.comments[i].timestamp);
+                self.giftStart.comments[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
+                    ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
+                    (date.getHours() >= 12 ? 'PM' : 'AM');
+            }
+        };
+
+
         this.saveNote = function(noteText) {
-            // TODO: This should be added to something sent to the server
             self.payment.note = noteText;
         };
 
@@ -259,17 +274,22 @@ GiftStarterApp.service('GiftStartService', [
     }]);
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location',
-    function($scope,  GiftStartService,  $location) {
+            '$scope','GiftStartService','$location','$interval',
+    function($scope,  GiftStartService,  $location,  $interval) {
 
         $scope.giftStart = GiftStartService.giftStart;
+        $scope.secondsLeft = 0;
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             GiftStartService.fetchGiftStart($location.search()['gs-id']);
         }
 
         // Update this giftstart when the service updates it
-        $scope.$on('giftstart-loaded', function() {$scope.giftStart = GiftStartService.giftStart});
+        $scope.$on('giftstart-loaded', function() {
+            $scope.giftStart = GiftStartService.giftStart;
+            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+            $interval($scope.updateSecondsLeft, 1000);
+        });
         $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
 
         // Synchronize parts on mouse activity
@@ -277,5 +297,21 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchInHoverCallback = function() {GiftStartService.syncParts('pitch-in-hover')};
 
         $scope.pitchIn = GiftStartService.pitchIn;
+
+        $scope.updateSecondsLeft = function() {
+            if ($scope.secondsLeft > 0) {
+                $scope.secondsLeft -= 1;
+
+                var days = Math.floor($scope.secondsLeft / 86400).toFixed(0);
+                var hours = Math.floor(($scope.secondsLeft / 3600) % 24).toFixed(0);
+                var minutes = Math.floor(($scope.secondsLeft / 60) % 60).toFixed(0);
+                var seconds = Math.floor($scope.secondsLeft % 60).toFixed(0);
+
+                $scope.countdown = days + "days, " + hours + " hours" ;//+ ":" + minutes + ":" + seconds;
+            }
+        };
+        $scope.updateSecondsLeft();
+
+
 
 }]);

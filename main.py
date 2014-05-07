@@ -35,14 +35,19 @@ class GiftStartMainHandler(webapp2.RequestHandler):
     def get(self):
         template = JINJA_ENVIRONMENT.get_template('frame.html')
         gsid = self.request.get('gs-id')
-        gs = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
-        render_values = {
-            'page_title': gs.giftstart_title,
-            'page_url': self.request.path_url,
-            'page_description': gs.giftstart_description,
-            'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid)
-        }
-        self.response.write(template.render(render_values))
+        gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
+        if len(gss) > 0:
+            gs = gss[0]
+            render_values = {
+                'page_title': gs.giftstart_title,
+                'page_url': self.request.path_url,
+                'page_description': gs.giftstart_description,
+                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid)
+            }
+            self.response.write(template.render(render_values))
+        else:
+            self.error(404)
+            self.response.write('Error: 404<br>Resource not found!  Go to GiftStarter homepage via <a href="http://giftstarter.co">this link</a>.')
 
 
 app = webapp2.WSGIApplication([('/', MainHandler)], debug=True)

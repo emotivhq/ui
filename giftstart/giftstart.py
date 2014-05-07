@@ -7,6 +7,7 @@ import gs_email
 from google.appengine.api import taskqueue
 from datetime import datetime, timedelta
 import storage
+import comments
 
 GIFTSTART_CAMPAIGN_DAYS = 7
 
@@ -37,13 +38,16 @@ class GiftStart(ndb.Model):
     shipping_zip = ndb.StringProperty(required=True)
     shipping_phone_number = ndb.StringProperty(required=True)
 
+    comments = []
+
     def jsonify(self):
         return json.dumps({'giftstart': {
             'gsid': self.gsid, 'title': self.giftstart_title, 'description': self.giftstart_description,
             'product': {'img_url': self.product_img_url, 'price': self.product_price,
                         'img_height': self.product_img_height},
             'rows': self.overlay_rows, 'columns': self.overlay_columns, 'parts': json.loads(self.overlay_parts),
-            'gift_champion_uid': self.gift_champion_uid, 'deadline': self.deadline.strftime("%s")
+            'gift_champion_uid': self.gift_champion_uid, 'deadline': self.deadline.strftime("%s"),
+            'comments': self.comments if 'comments' in dir(self) else []
         }})
 
     @staticmethod
@@ -97,6 +101,7 @@ class GiftStart(ndb.Model):
     def get_by_id(giftstart_id):
         results = GiftStart.query(GiftStart.gsid == giftstart_id).fetch(1)
         result = results[0] if len(results) > 0 else None
+        result.comments = comments.get_comments(giftstart_id)
         return result
 
 
@@ -110,7 +115,7 @@ def register_purchased_parts(gsid, purchased_parts, uid):
                 'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
     giftstart.overlay_parts = json.dumps(parts)
     giftstart.put()
-    taskqueue.add(url="/giftstart", method="POST", payload=json.dumps({'action': 'check-if-complete', 'gsid': gsid}),
+    taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps({'action': 'check-if-complete', 'gsid': gsid}),
                   countdown=60)
 
 

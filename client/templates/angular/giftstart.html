@@ -1,19 +1,29 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
+    <div class="title block">
+        <a ng-href="{{giftStart.product.product_url}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
+    </div>
+
     <gs-overlay class="product-overlay" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
 
-    <div class="product details">
-        <div class="price">Total Price: <div>$<span class="giftstart product total-price">{{giftStart.product.price/100 | number : 2}}</span></div></div>
-        <div class="price">Contribution: <div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
-        <a ng-href="{{giftStart.product.product_url}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
+    <div class="money block">
+        <div class="price">Remaining:<div>$<span class="giftstart product remaining">{{giftStart.remaining | number : 2}}</span></div></div>
+        <div class="price">Contribution:<div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
+        <div>Time Left:<div class="countdown">{{countdown}}</div></div>
+    </div>
+
+    <div class="description block">
         <div class="description" ng-bind="giftStart.description"></div>
+    </div>
+
+    <div class="pitch-in block">
         <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
     </div>
 
-    <div class="comments">
-        <div class="comment" ng-repeat="comment in comments">
+    <div class="comments block">
+        <div class="comment" ng-repeat="comment in giftStart.comments">
             <img ng-src="{{comment.img}}"/>
-            <div>{{comment.message}}</div>
+            <div>{{comment.message}}<span class="timestamp">{{comment.timestampString}}</span></div>
         </div>
     </div>
 </div>

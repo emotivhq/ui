@@ -2,6 +2,10 @@
 @import base.sass
 @import column
 
+div.block
+  display: inline-block
+  width: $column-width
+  margin: 30px
 
 .giftstart.wrapper
   text-align: center
@@ -31,7 +35,7 @@
     display: block
     margin: 30px auto
 
-  .contribution, .total-price
+  .contribution, .remaining, .countdown
     font-family: Blanch, sans-serif
     font-size: 60px
 
@@ -39,3 +43,59 @@
     display: inline-block
     padding: 20px
 
+  .comments
+    display: inline-block
+    margin: 40px
+    vertical-align: top
+
+    .comment
+      width: $column-width
+      position: relative
+      margin-bottom: 20px
+
+      img
+        height: 100px
+        width: 100px
+        +border-radius(50%)
+        vertical-align: top
+
+      div
+        position: relative
+        margin-left: 10px
+        padding: 10px 14px
+        width: $column-width - 115
+        font-weight: 300
+        text-align: left
+
+        display: inline-block
+        border-radius: 10px
+        border: solid 3px $primary-color
+
+        span.timestamp
+          margin-top: 4px
+          text-align: right
+          font-size: 70%
+          display: block
+          color: #555
+
+      div:before
+        content: ""
+        position: absolute
+
+        top: 30px
+        bottom: auto
+        left: -30px
+        border-style: solid
+        border-width: 15px 30px 15px 0
+        border-color: transparent $primary-color
+
+      div:after
+        content: ""
+        position: absolute
+
+        top: 33px
+        bottom: auto
+        left: -24px
+        border-style: solid
+        border-width: 12px 25px 12px 0
+        border-color: transparent #fff
