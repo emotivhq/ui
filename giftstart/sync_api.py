@@ -10,16 +10,18 @@ def sync_gs_parts(gsid, client_parts):
     :param parts: this version of client's parts
     :return: response string - empty array if no update, array of updated parts if updated
     """
+    # print(client_parts)
 
     # Collapse part lists
     gs = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
-    gs_parts = []
-    map(gs_parts.extend, json.loads(gs.overlay_parts))
+    gs_parts = json.loads(gs.overlay_parts)
+    # print(gs_parts)
 
     parts = []
     map(parts.extend, client_parts)
 
     def is_part_bought(part_id):
+        return parts[part_id]
         for p in parts:
             if p['part_id'] == part_id:
                 return p['bought']

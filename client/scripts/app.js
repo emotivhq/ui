@@ -30,8 +30,6 @@ GiftStarterApp.run(function($http, $templateCache) {
     $http.get('/templates/angular/popover.html', {cache: $templateCache});
     $http.get('/templates/angular/product-link.html', {cache: $templateCache});
     $http.get('/templates/angular/thanks-popover.html', {cache: $templateCache});
-    console.log("templates loaded!");
-
 });
 
 GiftStarterApp.config(function(ezfbProvider) {

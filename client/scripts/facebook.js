@@ -17,7 +17,6 @@ GiftStarterApp.service('FacebookService', [
             if (response.status === 'connected') {
                 self.uid = response.authResponse.userID;
                 self.loggedIn = true;
-                console.log(response);
 
                 // Get user's profile picture for later user
                 ezfb.api("me/picture?type=square&height=150&width=150", self.loginSuccess);

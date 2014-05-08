@@ -126,7 +126,6 @@ GiftStarterApp.service('GiftStartService', [
         this.createSuccess = function(data) {
             // TODO: need to save which parts are selected across server giftstart return
             var parts = JSON.parse(JSON.stringify(self.giftStart.parts));
-            console.log(data);
             self.giftStart = data['giftstart'];
             self.giftStart.parts = parts;
             injectPartToggles(self.giftStart);
@@ -174,7 +173,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data) {
-            console.log(data);
             self.giftStart = data['giftstart'];
             self.updateSelected();
             self.prepareComments();
@@ -211,7 +209,6 @@ GiftStarterApp.service('GiftStartService', [
 
         this.sendPayment = function() {
             var data = {payment: self.payment, action: 'pitch-in', uid: FacebookService.uid};
-            console.log(data);
             $http({method: 'POST', url: '/pay',
                 data: data})
                 .success(self.paymentSuccess)
@@ -310,8 +307,6 @@ GiftStarterApp.controller('GiftStartController', [
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             if (GiftStartService.giftStart.gsid == undefined) {
-                console.log(GiftStartService.giftStart);
-                console.log("fetching giftstart");
                 GiftStartService.fetchGiftStart($location.search()['gs-id']);
             }
         }
@@ -337,7 +332,6 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchIn = GiftStartService.pitchIn;
 
         $scope.updateSecondsLeft = function() {
-            console.log($scope.secondsLeft);
             if ($scope.secondsLeft > 0) {
                 $scope.secondsLeft -= 1;
 
