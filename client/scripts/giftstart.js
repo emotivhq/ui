@@ -35,30 +35,30 @@ GiftStarterApp.service('GiftStartService', [
 
         var self = this;
 
-        this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
-                                          numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                                          shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
-            var x = numRows, y = numCols;
-            var tempParts = [];
-            for (var j = 0; j < y; j++) {
-                var newParts = [];
-                for (var i = 0; i < x; i++) {
-                    newParts.push({
-                        bought: false,
-                        selected: false,
-                        part_id: j*x+i,
-                        value: productPrice/x/y
-                    });
-                }
-                tempParts.push(newParts);
-            }
-            self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
-                productPrice, productUrl, tempParts, y, x, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
-            self.updateSelected();
-            $location.path('/giftstart');
-            self.createGiftStart();
-        };
+//        this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
+//                                          numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+//                                          shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
+//            var x = numRows, y = numCols;
+//            var tempParts = [];
+//            for (var j = 0; j < y; j++) {
+//                var newParts = [];
+//                for (var i = 0; i < x; i++) {
+//                    newParts.push({
+//                        bought: false,
+//                        selected: false,
+//                        part_id: j*x+i,
+//                        value: productPrice/x/y
+//                    });
+//                }
+//                tempParts.push(newParts);
+//            }
+//            self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
+//                productPrice, productUrl, tempParts, y, x, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+//                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
+//            self.updateSelected();
+//            $location.path('/giftstart');
+//            self.createGiftStart();
+//        };
 
         function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, productUrl,
                                 parts, rows, columns, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
@@ -309,6 +309,7 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart = $window.GIFTSTART.giftstart;
             $rootScope.$broadcast('giftstart-loaded');
             self.updateSelected();
+            injectPartToggles(self.giftStart);
         }
 
     }
