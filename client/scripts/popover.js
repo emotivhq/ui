@@ -8,6 +8,7 @@ GiftStarterApp.service('PopoverService', [
 
         this.template = '';
         this.currentLocation = $location.hash();
+        this.giftstartCreateLogin = false;
         var self = this;
 
         this.setPopover = function(popoverName) {

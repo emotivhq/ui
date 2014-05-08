@@ -4,7 +4,7 @@
 
 div.giftstart.wrapper
   margin: 0 auto
-  width: 2*$column-width + 4*$margin-horz
+  //width: 2*$column-width + 4*$margin-horz
 
 div.block
   display: inline-block
@@ -46,6 +46,7 @@ div.block.pitch-in
 
 
   .facebook-send
+    transition: all 0.2s
     display: inline-block
     margin: 20px
     padding: 7px 28px
@@ -75,62 +76,61 @@ div.block.money
 
   div.price
     display: inline-block
-    padding: 20px
+    padding-right: 20px
 
 div.block.comments
-  .comments
-    display: inline-block
-    margin: 40px
-    vertical-align: top
+  display: inline-block
+  margin: 40px
+  vertical-align: top
 
-    .comment
-      width: $column-width
+  .comment
+    width: $column-width
+    position: relative
+    margin-bottom: 20px
+
+    img
+      height: 100px
+      width: 100px
+      +border-radius(50%)
+      vertical-align: top
+
+    div
       position: relative
-      margin-bottom: 20px
+      margin-left: 10px
+      padding: 10px 14px
+      width: $column-width - 115
+      font-weight: 300
+      text-align: left
 
-      img
-        height: 100px
-        width: 100px
-        +border-radius(50%)
-        vertical-align: top
+      display: inline-block
+      border-radius: 10px
+      border: solid 3px $primary-color
 
-      div
-        position: relative
-        margin-left: 10px
-        padding: 10px 14px
-        width: $column-width - 115
-        font-weight: 300
-        text-align: left
+      span.timestamp
+        margin-top: 4px
+        text-align: right
+        font-size: 70%
+        display: block
+        color: #555
 
-        display: inline-block
-        border-radius: 10px
-        border: solid 3px $primary-color
+    div:before
+      content: ""
+      position: absolute
 
-        span.timestamp
-          margin-top: 4px
-          text-align: right
-          font-size: 70%
-          display: block
-          color: #555
+      top: 30px
+      bottom: auto
+      left: -30px
+      border-style: solid
+      border-width: 15px 30px 15px 0
+      border-color: transparent $primary-color
 
-      div:before
-        content: ""
-        position: absolute
+    div:after
+      content: ""
+      position: absolute
 
-        top: 30px
-        bottom: auto
-        left: -30px
-        border-style: solid
-        border-width: 15px 30px 15px 0
-        border-color: transparent $primary-color
-
-      div:after
-        content: ""
-        position: absolute
-
-        top: 33px
-        bottom: auto
-        left: -24px
-        border-style: solid
-        border-width: 12px 25px 12px 0
-        border-color: transparent #fff
+      top: 33px
+      bottom: auto
+      left: -24px
+      border-style: solid
+      border-width: 12px 25px 12px 0
+      border-color: transparent #fff

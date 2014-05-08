@@ -8,14 +8,14 @@ div.create
     display: inline-block
 
     gs-img
-      height: $column-width
-      width: $column-width
-      margin: 10px 40px 10px 40px
+      height: $column-width + 2 * $margin-horz
+      width: $column-width + 2 * $margin-horz
+      margin: $margin-vert 0
       display: inline-block
 
     .image
-      max-height: $column-width
-      max-width: $column-width
+      max-height: $column-width + 2 * $margin-horz
+      max-width: $column-width + 2 * $margin-horz
       display: inline-block
 
       img

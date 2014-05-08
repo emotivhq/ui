@@ -39,6 +39,7 @@ class GiftStartMainHandler(webapp2.RequestHandler):
         if len(gss) > 0:
             gs = gss[0]
             render_values = {
+                'js_insert': 'var GIFTSTART = ' + gs.jsonify() + ';',
                 'page_title': gs.giftstart_title,
                 'page_url': self.request.path_url,
                 'page_description': gs.giftstart_description,
@@ -50,6 +51,6 @@ class GiftStartMainHandler(webapp2.RequestHandler):
             self.response.write('Error: 404<br>Resource not found!  Go to GiftStarter homepage via <a href="http://giftstarter.co">this link</a>.')
 
 
-app = webapp2.WSGIApplication([('/', MainHandler)], debug=True)
 app_gs = webapp2.WSGIApplication([('/giftstart', GiftStartMainHandler)], debug=True)
 app_gsc = webapp2.WSGIApplication([('/create-giftstart', MainHandler)], debug=True)
+app = webapp2.WSGIApplication([('/', MainHandler)], debug=True)

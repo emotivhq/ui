@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('GiftStartCreateController', [
-            '$scope','ProductService','GiftStartService',"$location",
-    function($scope,  ProductService,  GiftStartService,  $location) {
+            '$scope','ProductService','GiftStartService','$location','FacebookService','PopoverService',
+    function($scope,  ProductService,  GiftStartService,  $location,  FacebookService,  PopoverService) {
 
         $scope.x = 3;
         $scope.y = 3;
@@ -35,7 +35,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
 
         if (ProductService.product.product_url == "") {
             // User navigated directly here, direct them to home page
-//            $location.path("home");
+            $location.path("home");
         }
 
         $scope.nextImage = function() {
@@ -66,10 +66,16 @@ GiftStarterApp.controller('GiftStartCreateController', [
 
         $scope.giftstart = function() {
             if (!$scope.gsInvalid) {
-                GiftStartService.initiateGiftStart($scope.title, $scope.description, $scope.selectedImg,
+                GiftStartService.stageGiftStart($scope.title, $scope.description, $scope.selectedImg,
                     $scope.imageHeight, $scope.totalPrice, $scope.product.product_url, $scope.x, $scope.y,
                     $scope.gcPhoneNumber, $scope.gcEmail, $scope.shippingName, $scope.shippingAddress,
                     $scope.shippingCity, $scope.shippingState, $scope.shippingZip, $scope.shippingPhoneNumber);
+                if (FacebookService.loggedIn) {
+                    GiftStartService.fireGiftStartCreate();
+                } else {
+                    PopoverService.giftstartCreateLogin = true;
+                    $location.hash("login");
+                }
             }
         };
 

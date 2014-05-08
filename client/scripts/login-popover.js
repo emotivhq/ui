@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('LoginPopoverController', [
-            '$scope','FacebookService','PopoverService',
-    function($scope,  FacebookService,  PopoverService) {
+            '$scope','FacebookService','PopoverService','GiftStartService',
+    function($scope,  FacebookService,  PopoverService,  GiftStartService) {
 
         $scope.loggedIn = FacebookService.loggedIn;
 
@@ -15,7 +15,16 @@ GiftStarterApp.controller('LoginPopoverController', [
         // If they aren't, they'll need to log in
         $scope.login = FacebookService.login;
 
-        $scope.$on('login-success', PopoverService.nextPopover);
+
+        $scope.$on('login-success', function() {
+            if (PopoverService.giftstartCreateLogin) {
+                PopoverService.giftstartCreateLogin = false;
+                PopoverService.hidePopover();
+                GiftStartService.fireGiftStartCreate();
+            } else {
+                PopoverService.nextPopover();
+            }
+        });
 
 
         // Listen for popover changes or hides, so we can clean up

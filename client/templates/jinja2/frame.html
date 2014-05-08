@@ -4,7 +4,7 @@
     <title>GiftStarter</title>
 
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=550px, user-scalable=no"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <meta property="og:title" content="{{page_title}}" />
     <meta property="og:url" content="{{page_url}}" />
@@ -43,6 +43,10 @@
     <script src="/scripts/note-popover.js"></script>
     <script src="/scripts/pay-popover.js"></script>
     <script src="/scripts/invite-popover.js"></script>
+
+    <script>
+        {{js_insert|safe}}
+    </script>
 
     <script type="text/javascript">
         // This identifies your website in the createToken call below
