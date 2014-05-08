@@ -19,7 +19,7 @@ $primary-color-highlight: #f67
 $dash-color: rgba(255, 255, 255, 0.4)
 $dash-hovered-color: rgba(255, 255, 255, 0.7)
 
-// ----------------------- BOX SIZING -----------------------
+// ------------------------- MIXINS -------------------------
 
 =border-radius($radius)
   -webkit-border-radius: $radius
@@ -37,3 +37,11 @@ $dash-hovered-color: rgba(255, 255, 255, 0.7)
   box-shadow: $color $x $y $radius
   -moze-box-shadow: $color $x $y $radius
   -webkit-box-shadow: $color $x $y $radius
+
+=no-select()
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none

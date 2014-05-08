@@ -72,19 +72,12 @@ GiftStarterApp.service('FacebookService', [
             } else {$rootScope.$broadcast('get-friends-failed')}
         };
 
-        this.inviteFriends = function(friends, message) {
-            var friendUids = []; // [self.uid.toString()];
-            for (var i = 0; i < friends.length; i++) {friendUids.push(friends[i].id)}
+        this.inviteFriends = function() {
             ezfb.ui({
                 method: 'send',
                 link: $location.absUrl(),
-                app_id: ezfb.app_id,
-                to: friendUids
+                app_id: ezfb.app_id
             });
-            console.log("Inviting friends:");
-            console.log(friends);
-            console.log("Invitation message:");
-            console.log(message);
         };
 
         this.checkIfStripeCustomer = function() {

@@ -2,38 +2,72 @@
 @import base.sass
 @import column
 
+div.giftstart.wrapper
+  margin: 0 auto
+  width: 2*$column-width + 4*$margin-horz
+
 div.block
   display: inline-block
   width: $column-width
-  margin: 30px
+  margin: $margin-vert $margin-horz
+  vertical-align: top
 
-.giftstart.wrapper
+div.block.title, div.block.money, div.block.description, div.block.pitch-in
+  float: right
+
+.block.overlay, div.block.comments
+  float: left
+
+div.block.title
+  a.title
+    text-decoration: none
+    color: black
+  a.title:hover
+    text-decoration: underline
+  .title
+    font-weight: 300
+    font-size: 36px
+    text-align: left
+
+div.block.overlay
+  margin: $margin-vert 0
+
+div.block.description
+  text-align: left
+
+
+div.block.pitch-in
   text-align: center
 
-  .product.details
-    width: $column-width
-    padding: 20px
+  .button
     display: inline-block
+    padding: 6px 43px
+    margin: 20px
+
+
+  .facebook-send
+    display: inline-block
+    margin: 20px
+    padding: 7px 28px
+    background-color: #3B5998
     vertical-align: top
+    cursor: pointer
 
-    a.title
-      text-decoration: none
-      color: black
-    a.title:hover
-      text-decoration: underline
+    span
+      color: white
+      display: inline-block
+      font: $font-accent-large
+      margin-left: 10px
+      margin-top: 2px
+      vertical-align: top
+    img
+      width: 40px
+      margin-top: 2px
+  .facebook-send:hover
+    background-color: #5976B3
 
-    .title
-      font-weight: 300
-      font-size: 36px
-      margin-bottom: 20px
-      text-align: left
-
-    .description
-      text-align: left
-
-  .pitch-in.button
-    display: block
-    margin: 30px auto
+div.block.money
+  text-align: center
 
   .contribution, .remaining, .countdown
     font-family: Blanch, sans-serif
@@ -43,6 +77,7 @@ div.block
     display: inline-block
     padding: 20px
 
+div.block.comments
   .comments
     display: inline-block
     margin: 40px

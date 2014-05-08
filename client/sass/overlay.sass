@@ -1,19 +1,10 @@
 
-@import base.sass
+@import base
 @import column
 
-=no-select()
-  -webkit-touch-callout: none
-  -webkit-user-select: none
-  -khtml-user-select: none
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
-
 // Product overlay
-gs-overlay.product-overlay
+gs-overlay
   display: inline-block
-  margin: 40px
 
   .overlay
     width: 100%
@@ -21,12 +12,13 @@ gs-overlay.product-overlay
     border-collapse: collapse
 
   img
-    max-width: $column-width
-    max-height: $column-width
+    max-width: $column-width + 2*$margin-horz
+    max-height: $column-width + 2*$margin-horz
     padding: 0
 
 // Part cells
 .part-cell
+  text-align: center
   background: rgba(80, 150, 255, 0.3)
   color: rgba(255, 255, 255, 0.7)
   border: dashed 1px $dash-color

@@ -274,8 +274,8 @@ GiftStarterApp.service('GiftStartService', [
     }]);
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$interval',
-    function($scope,  GiftStartService,  $location,  $interval) {
+            '$scope','GiftStartService','$location','$interval','FacebookService',
+    function($scope,  GiftStartService,  $location,  $interval,  FacebookService) {
 
         $scope.giftStart = GiftStartService.giftStart;
         $scope.secondsLeft = 0;
@@ -312,6 +312,6 @@ GiftStarterApp.controller('GiftStartController', [
         };
         $scope.updateSecondsLeft();
 
-
+        $scope.facebookSend = function() {FacebookService.inviteFriends()};
 
 }]);
