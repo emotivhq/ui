@@ -6,11 +6,38 @@ div.giftstart.wrapper
   margin: 0 auto
   //width: 2*$column-width + 4*$margin-horz
 
+
 div.block
-  display: inline-block
   width: $column-width
-  margin: $margin-vert $margin-horz
+  display: inline-block
+  padding: $margin-vert $margin-horz
   vertical-align: top
+div.block.overlay
+  width: 1.5*$column-width
+  padding: 0
+
+@media screen and (max-width: 37.5em)
+  div.giftstart.wrapper
+    width: 100% !important
+
+  div.block
+    width: 100% !important
+
+@media screen and (min-width: 37.5em) and (max-width: 64em)
+  div.giftstart.wrapper
+    width: 100% !important
+
+  div.block
+    width: 40% !important
+
+  div.block.overlay
+    width: 60% !important
+    text-align: center
+
+@media screen and (min-width: 64em)
+  div.giftstart.wrapper
+    width: 2.5*$column-width !important
+
 
 div.block.title, div.block.money, div.block.description, div.block.pitch-in
   float: right
@@ -41,18 +68,15 @@ div.block.pitch-in
 
   .button
     display: inline-block
-    padding: 6px 43px
-    margin: 20px
-
+    width: 45%
+    height: 60px
+    float: left
+    vertical-align: top
 
   .facebook-send
-    transition: all 0.2s
-    display: inline-block
-    margin: 20px
-    padding: 7px 28px
+    float: right
+    border-color: #3B5998
     background-color: #3B5998
-    vertical-align: top
-    cursor: pointer
 
     span
       color: white
@@ -65,6 +89,7 @@ div.block.pitch-in
       width: 40px
       margin-top: 2px
   .facebook-send:hover
+    border-color: #5976B3
     background-color: #5976B3
 
 div.block.money

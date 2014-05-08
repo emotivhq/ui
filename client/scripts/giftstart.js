@@ -324,18 +324,25 @@ GiftStarterApp.controller('GiftStartController', [
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             if (GiftStartService.giftStart.gsid == undefined) {
+                console.log(GiftStartService.giftStart);
                 console.log("fetching giftstart");
                 GiftStartService.fetchGiftStart($location.search()['gs-id']);
             }
         }
 
-        // Update this giftstart when the service updates it
-        $scope.$on('giftstart-loaded', function() {
-            $scope.giftStart = GiftStartService.giftStart;
+
+        if (GiftStartService.giftStart.gsid != undefined) {
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
             $interval($scope.updateSecondsLeft, 1000);
-        });
-        $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
+        } else {
+            // Update this giftstart when the service updates it
+            $scope.$on('giftstart-loaded', function() {
+                $scope.giftStart = GiftStartService.giftStart;
+                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+                $interval($scope.updateSecondsLeft, 1000);
+            });
+            $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
+        }
 
         // Synchronize parts on mouse activity
         $scope.mouseActivityCallback = function(source) {GiftStartService.syncParts(source)};
@@ -344,6 +351,7 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchIn = GiftStartService.pitchIn;
 
         $scope.updateSecondsLeft = function() {
+            console.log($scope.secondsLeft);
             if ($scope.secondsLeft > 0) {
                 $scope.secondsLeft -= 1;
 
@@ -352,7 +360,7 @@ GiftStarterApp.controller('GiftStartController', [
                 var minutes = Math.floor(($scope.secondsLeft / 60) % 60).toFixed(0);
                 var seconds = Math.floor($scope.secondsLeft % 60).toFixed(0);
 
-                $scope.countdown = days + "days, " + hours + " hours" ;//+ ":" + minutes + ":" + seconds;
+                $scope.countdown = days + " days, " + hours + " hours" ;//+ ":" + minutes + ":" + seconds;
             }
         };
         $scope.updateSecondsLeft();
