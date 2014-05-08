@@ -22,14 +22,10 @@ def sync_gs_parts(gsid, client_parts):
 
     def is_part_bought(part_id):
         return parts[part_id]
-        for p in parts:
-            if p['part_id'] == part_id:
-                return p['bought']
-        raise ValueError("Part ID %d was not found in client parts!" % part_id)
 
     for part in gs_parts:
         if part['bought']:
-            if ~is_part_bought(int(part['part_id'])):
+            if not is_part_bought(int(part['part_id'])):
                 return gs.overlay_parts
 
     return "[]"

@@ -109,7 +109,7 @@ def register_purchased_parts(gsid, purchased_parts, uid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
     parts = json.loads(giftstart.overlay_parts)
     for part_id in purchased_parts:
-        if part_id < len(giftstart.parts):
+        if part_id < len(giftstart.overlay_parts):
             parts[part_id]['bought'] = True
             parts[part_id]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
     giftstart.overlay_parts = json.dumps(parts)

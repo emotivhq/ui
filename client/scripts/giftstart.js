@@ -200,7 +200,7 @@ GiftStarterApp.service('GiftStartService', [
             self.payment.stripeResponse = response;
             self.payment.gsid = self.giftStart.gsid;
             self.payment.parts = [];
-            for (var i=0; i < self.giftStart.parts[i].length; i++) {
+            for (var i=0; i < self.giftStart.parts.length; i++) {
                 if (self.giftStart.parts[i].selected) {
                     self.payment.parts.push(self.giftStart.parts[i].part_id);
                 }
