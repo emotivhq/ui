@@ -95,17 +95,13 @@ GiftStarterApp.service('GiftStartService', [
                                        shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
             var x = numRows, y = numCols;
             var tempParts = [];
-            for (var j = 0; j < y; j++) {
-                var newParts = [];
-                for (var i = 0; i < x; i++) {
-                    newParts.push({
-                        bought: false,
-                        selected: false,
-                        part_id: j*x+i,
-                        value: productPrice/x/y
-                    });
-                }
-                tempParts.push(newParts);
+            for (var i = 0; i < x*y; i++) {
+                tempParts.push({
+                    bought: false,
+                    selected: false,
+                    part_id: i,
+                    value: productPrice/x/y
+                });
             }
             self.stagedGiftStart = buildGiftStart(title, description, -1, productImgUrl, imageHeight, productPrice,
                 productUrl, tempParts, numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
@@ -142,35 +138,30 @@ GiftStarterApp.service('GiftStartService', [
         this.createFailure = function() {console.log("Failed to create GiftStart.")};
 
         function injectPartToggles(giftstart) {
-            function makePartToggle(i, j) {
+            function makePartToggle(i) {
                 var ti = i;
-                var tj = j;
                 return function () {
-                    if (!giftstart.parts[tj][ti].bought) {
+                    if (!giftstart.parts[ti].bought) {
                         // If selected is none, this will force it into a bool
-                        giftstart.parts[tj][ti].selected = (giftstart.parts[tj][ti].selected == false);
+                        giftstart.parts[ti].selected = (giftstart.parts[ti].selected == false);
                         self.updateSelected();
                     }
                 }
             }
 
-            for (var j = 0; j < giftstart.parts.length; j++) {
-                for (var i = 0; i < giftstart.parts[j].length; i++) {
-                    giftstart.parts[j][i].toggle = makePartToggle(i, j);
-                }
+            for (var i = 0; i < giftstart.parts.length; i++) {
+                giftstart.parts[i].toggle = makePartToggle(i);
             }
         }
 
         this.updateSelected = function() {
             self.giftStart.remaining = 0;
             self.giftStart.totalSelection = 0;
-            for (var j=0; j < self.giftStart.parts.length; j++) {
-                for (var i=0; i < self.giftStart.parts[j].length; i++) {
-                    if (self.giftStart.parts[j][i].selected) {
-                        self.giftStart.totalSelection += self.giftStart.parts[j][i].value;
-                    } else if (!self.giftStart.parts[j][i].bought) {
-                        self.giftStart.remaining += self.giftStart.parts[j][i].value;
-                    }
+            for (var i=0; i < self.giftStart.parts.length; i++) {
+                if (self.giftStart.parts[i].selected) {
+                    self.giftStart.totalSelection += self.giftStart.parts[i].value;
+                } else if (!self.giftStart.parts[i].bought) {
+                    self.giftStart.remaining += self.giftStart.parts[i].value;
                 }
             }
         };
@@ -211,11 +202,9 @@ GiftStarterApp.service('GiftStartService', [
             self.payment.stripeResponse = response;
             self.payment.gsid = self.giftStart.gsid;
             self.payment.parts = [];
-            for (var j=0; j < self.giftStart.parts.length; j++) {
-                for (var i=0; i < self.giftStart.parts[j].length; i++) {
-                    if (self.giftStart.parts[j][i].selected) {
-                        self.payment.parts.push(self.giftStart.parts[j][i].part_id);
-                    }
+            for (var i=0; i < self.giftStart.parts[i].length; i++) {
+                if (self.giftStart.parts[i].selected) {
+                    self.payment.parts.push(self.giftStart.parts[i].part_id);
                 }
             }
         };
@@ -232,11 +221,10 @@ GiftStarterApp.service('GiftStartService', [
         this.paymentSuccess = function(data) {
             var purchasedParts = data['purchased-parts'];
             for (var i = 0; i < purchasedParts.length; i++) {
-                var x = purchasedParts[i] % self.giftStart.columns;
-                var y = Math.floor(purchasedParts[i] / self.giftStart.columns);
-                self.giftStart.parts[y][x]['bought'] = true;
-                self.giftStart.parts[y][x]['selected'] = false;
-                self.giftStart.parts[y][x]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
+                var index = purchasedParts[i] % self.giftStart.columns;
+                self.giftStart.parts[index]['bought'] = true;
+                self.giftStart.parts[index]['selected'] = false;
+                self.giftStart.parts[index]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
                     FacebookService.uid + '.jpg';
             }
             self.updateSelected();
@@ -272,14 +260,12 @@ GiftStarterApp.service('GiftStartService', [
             }
 
             function updateFromParts(parts) {
-                for (var j = 0; j < parts.length; j++) {
-                    for (var i = 0; i < parts[j].length; i++) {
-                        if (self.giftStart.parts[j][i].bought != parts[j][i].bought) {
-                            self.giftStart.parts[j][i].bought = parts[j][i].bought;
-                            if (parts[j][i].bought) {
-                                self.giftStart.parts[j][i].selected = false;
-                                self.giftStart.parts[j][i].img = parts[j][i].img;
-                            }
+                for (var i = 0; i < parts.length; i++) {
+                    if (self.giftStart.parts[i].bought != parts[i].bought) {
+                        self.giftStart.parts[i].bought = parts[i].bought;
+                        if (parts[i].bought) {
+                            self.giftStart.parts[i].selected = false;
+                            self.giftStart.parts[i].img = parts[i].img;
                         }
                     }
                 }

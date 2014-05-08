@@ -74,8 +74,8 @@ class GiftStart(ndb.Model):
         ndbgs.shipping_zip = giftstart['shipping_zip']
         ndbgs.shipping_phone_number = giftstart['shipping_phone_number']
 
-        parts = [[{'bought': part['bought'], 'value': part['value'], 'selected': False, 'part_id': part['part_id']}
-                  for part in row] for row in giftstart['parts']]
+        parts = [{'bought': part['bought'], 'value': part['value'], 'selected': False, 'part_id': part['part_id']}
+                 for part in giftstart['parts']]
         ndbgs.overlay_parts = json.dumps(parts)
         return ndbgs
 
@@ -109,14 +109,13 @@ def register_purchased_parts(gsid, purchased_parts, uid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
     parts = json.loads(giftstart.overlay_parts)
     for part_id in purchased_parts:
-        if part_id < giftstart.overlay_rows*giftstart.overlay_columns:
-            parts[int(part_id/giftstart.overlay_columns)][part_id % giftstart.overlay_columns]['bought'] = True
-            parts[int(part_id/giftstart.overlay_columns)][part_id % giftstart.overlay_columns]['img'] = \
-                'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
+        if part_id < len(giftstart.parts):
+            parts[part_id]['bought'] = True
+            parts[part_id]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
     giftstart.overlay_parts = json.dumps(parts)
     giftstart.put()
-    taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps({'action': 'check-if-complete', 'gsid': gsid}),
-                  countdown=60)
+    taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps({'action': 'check-if-complete',
+                                                                           'gsid': gsid}), countdown=60)
 
 
 def get_purchased_parts(gsid):

@@ -10,8 +10,12 @@ gs-overlay
 
   .overlay
     max-width: 100%
-    position: relative
+    position: absolute
+    height: 100%
+    top: 0
     border-collapse: collapse
+    display: flex
+    flex-wrap: wrap
 
   img
     width: 100%
@@ -25,6 +29,7 @@ gs-overlay
   border: dashed 1px $dash-color
   transition: all 0.2s
   cursor: pointer
+  margin: -0.5px
   +no-select
 
   span.price
