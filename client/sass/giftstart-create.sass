@@ -4,22 +4,26 @@
 div.create
   text-align: center
 
-  div.image-container
+  div.image-selector
     display: inline-block
 
-    gs-img
+    div.image-container
       height: $column-width + 2 * $margin-horz
       width: $column-width + 2 * $margin-horz
-      margin: $margin-vert 0
-      display: inline-block
-
-    .image
-      max-height: $column-width + 2 * $margin-horz
-      max-width: $column-width + 2 * $margin-horz
-      display: inline-block
 
       img
-        padding: 0
+        zoom: 1000
+        display: block
+        margin: auto
+        height: auto
+        max-height: 100%
+        width: auto
+        max-width: 100%
+
+    div
+      span
+        padding: 10px
+        display: inline-block
 
   .details
     width: $column-width

@@ -6,20 +6,7 @@ GiftStarterApp.service('GiftStartService', [
             '$http','$location','FacebookService','$rootScope','$filter','PopoverService','$window',
     function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService,  $window) {
 
-        this.giftStart = {
-            title: '',
-            description: '',
-            gift_champion_uid: '',
-            product: {
-                price: -1,
-                img_url: '',
-                img_height: -1,
-                product_url: ''
-            },
-            parts: [],
-            rows: -1,
-            columns: -1
-        };
+        this.giftStart = {};
 
         this.payment = {
             gsid: -1,
@@ -35,32 +22,7 @@ GiftStarterApp.service('GiftStartService', [
 
         var self = this;
 
-//        this.initiateGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
-//                                          numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-//                                          shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
-//            var x = numRows, y = numCols;
-//            var tempParts = [];
-//            for (var j = 0; j < y; j++) {
-//                var newParts = [];
-//                for (var i = 0; i < x; i++) {
-//                    newParts.push({
-//                        bought: false,
-//                        selected: false,
-//                        part_id: j*x+i,
-//                        value: productPrice/x/y
-//                    });
-//                }
-//                tempParts.push(newParts);
-//            }
-//            self.giftStart = buildGiftStart(title, description, FacebookService.uid, productImgUrl, imageHeight,
-//                productPrice, productUrl, tempParts, y, x, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-//                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
-//            self.updateSelected();
-//            $location.path('/giftstart');
-//            self.createGiftStart();
-//        };
-
-        function buildGiftStart(title, description, championUid, productImgUrl, imageHeight, productPrice, productUrl,
+        function buildGiftStart(title, description, championUid, productImgUrl, productPrice, productUrl,
                                 parts, rows, columns, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
                                 shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
             var gs = {
@@ -70,7 +32,6 @@ GiftStarterApp.service('GiftStartService', [
                 product: {
                     price: 100*productPrice,
                     img_url: productImgUrl,
-                    img_height: imageHeight,
                     product_url: productUrl
                 },
                 totalSelection: 0,
@@ -86,55 +47,8 @@ GiftStarterApp.service('GiftStartService', [
                 shipping_zip: shippingZip,
                 shipping_phone_number: shippingPhoneNumber
             };
-            injectPartToggles(gs);
             return gs;
         }
-
-        this.stageGiftStart = function(title, description, productImgUrl, imageHeight, productPrice, productUrl,
-                                       numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                                       shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
-            var x = numRows, y = numCols;
-            var tempParts = [];
-            for (var i = 0; i < x*y; i++) {
-                tempParts.push({
-                    bought: false,
-                    selected: false,
-                    part_id: i,
-                    value: productPrice/x/y
-                });
-            }
-            self.stagedGiftStart = buildGiftStart(title, description, -1, productImgUrl, imageHeight, productPrice,
-                productUrl, tempParts, numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
-        };
-
-        this.fireGiftStartCreate = function() {
-            self.giftStart = self.stagedGiftStart;
-            self.giftStart.gift_champion_uid = FacebookService.uid;
-            self.updateSelected();
-            $location.path('/giftstart');
-            self.createGiftStart();
-        };
-
-        this.createGiftStart = function() {
-            $http({method: 'POST', url: '/giftstart/api',
-                data: {giftstart: self.giftStart, action: 'create'}})
-                .success(this.createSuccess)
-                .error(this.createFailure);
-        };
-
-        this.createSuccess = function(data) {
-            // TODO: need to save which parts are selected across server giftstart return
-            var parts = JSON.parse(JSON.stringify(self.giftStart.parts));
-            self.giftStart = data['giftstart'];
-            self.giftStart.parts = parts;
-            injectPartToggles(self.giftStart);
-            self.updateSelected();
-            $rootScope.$broadcast('giftstart-loaded');
-            $location.search('gs-id', self.giftStart.gsid);
-        };
-
-        this.createFailure = function() {console.log("Failed to create GiftStart.")};
 
         function injectPartToggles(giftstart) {
             function makePartToggle(i) {
@@ -152,6 +66,46 @@ GiftStarterApp.service('GiftStartService', [
                 giftstart.parts[i].toggle = makePartToggle(i);
             }
         }
+
+        this.stageGiftStart = function(title, description, productImgUrl, productPrice, productUrl,
+                                       numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+                                       shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
+            var x = numRows, y = numCols;
+            var tempParts = [];
+            for (var i = 0; i < x*y; i++) {
+                tempParts.push({
+                    bought: false,
+                    selected: false,
+                    part_id: i,
+                    value: productPrice/x/y
+                });
+            }
+            self.stagedGiftStart = buildGiftStart(title, description, -1, productImgUrl, productPrice,
+                productUrl, tempParts, numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
+                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
+        };
+
+        this.fireGiftStartCreate = function() {
+            self.giftStart = self.stagedGiftStart;
+            self.giftStart.gift_champion_uid = FacebookService.uid;
+            $location.path('/giftstart');
+            self.createGiftStart();
+        };
+
+        this.enableGiftStart = function() {
+            injectPartToggles(self.giftStart);
+            self.updateSelected();
+            self.prepareComments();
+        };
+
+        this.createGiftStart = function() {
+            $http({method: 'POST', url: '/giftstart/api',
+                data: {giftstart: self.giftStart, action: 'create'}})
+                .success(this.fetchSuccess)
+                .error(this.createFailure);
+        };
+
+        this.createFailure = function() {console.log("Failed to create GiftStart.")};
 
         this.updateSelected = function() {
             self.giftStart.remaining = 0;
@@ -174,9 +128,7 @@ GiftStarterApp.service('GiftStartService', [
 
         this.fetchSuccess = function(data) {
             self.giftStart = data['giftstart'];
-            self.updateSelected();
-            self.prepareComments();
-            injectPartToggles(self.giftStart);
+            self.enableGiftStart();
             $rootScope.$broadcast('giftstart-loaded');
             $location.search('gs-id', self.giftStart.gsid);
         };
@@ -191,10 +143,7 @@ GiftStarterApp.service('GiftStartService', [
             }
         };
 
-
-        this.saveNote = function(noteText) {
-            self.payment.note = noteText;
-        };
+        this.saveNote = function(noteText) {self.payment.note = noteText};
 
         this.attachStripeResponse = function(response) {
             self.payment.stripeResponse = response;
@@ -227,9 +176,7 @@ GiftStarterApp.service('GiftStartService', [
             self.updateSelected();
         };
 
-        this.paymentFailure = function() {
-            console.log("Pitch-in failed!");
-        };
+        this.paymentFailure = function() {console.log("Pitch-in failed!")};
 
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
@@ -249,10 +196,13 @@ GiftStarterApp.service('GiftStartService', [
                     .error(function() {console.log("Failed to contact part sync service.")})
             }
 
-            function syncCheckCallback(parts) {
-                if (parts != []) {
+            function syncCheckCallback(data) {
+                console.log(data);
+                if (data.parts != []) {
                     // Parts need to be updated!
-                    updateFromParts(parts);
+                    updateFromParts(data.parts);
+                    self.giftStart.comments = data.comments;
+                    self.prepareComments();
                 }
             }
 
@@ -285,15 +235,13 @@ GiftStarterApp.service('GiftStartService', [
                     }
                 }
             }
-        }
+        };
 
         // Check if giftstart was sent with page on init load
         if ($window.GIFTSTART) {
             self.giftStart = $window.GIFTSTART.giftstart;
             $rootScope.$broadcast('giftstart-loaded');
-            self.updateSelected();
-            self.prepareComments();
-            injectPartToggles(self.giftStart);
+            self.enableGiftStart();
         }
 
     }
@@ -338,8 +286,6 @@ GiftStarterApp.controller('GiftStartController', [
 
                 var days = Math.floor($scope.secondsLeft / 86400).toFixed(0);
                 var hours = Math.floor(($scope.secondsLeft / 3600) % 24).toFixed(0);
-                var minutes = Math.floor(($scope.secondsLeft / 60) % 60).toFixed(0);
-                var seconds = Math.floor($scope.secondsLeft % 60).toFixed(0);
 
                 $scope.countdown = days + " days, " + hours + " hours" ;//+ ":" + minutes + ":" + seconds;
             }

@@ -3,6 +3,7 @@ __author__ = 'stuart'
 import webapp2
 from giftstart import GiftStart
 import json
+from comments import get_comments
 
 
 def sync_gs_parts(gsid, client_parts):
@@ -20,9 +21,9 @@ def sync_gs_parts(gsid, client_parts):
     for part in gs_parts:
         if part['bought']:
             if not is_part_bought(int(part['part_id'])):
-                return gs.overlay_parts
+                return json.dumps({'parts': json.loads(gs.overlay_parts), 'comments': get_comments(gsid)})
 
-    return "[]"
+    return json.dumps({'parts': [], 'comments': []})
 
 
 class GiftStartSyncHandler(webapp2.RequestHandler):

@@ -35,7 +35,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
 
         if (ProductService.product.product_url == "") {
             // User navigated directly here, direct them to home page
-            $location.path("home");
+            $location.path("");
         }
 
         $scope.nextImage = function() {
@@ -67,7 +67,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
         $scope.giftstart = function() {
             if (!$scope.gsInvalid) {
                 GiftStartService.stageGiftStart($scope.title, $scope.description, $scope.selectedImg,
-                    $scope.imageHeight, $scope.totalPrice, $scope.product.product_url, $scope.x, $scope.y,
+                    $scope.totalPrice, $scope.product.product_url, $scope.x, $scope.y,
                     $scope.gcPhoneNumber, $scope.gcEmail, $scope.shippingName, $scope.shippingAddress,
                     $scope.shippingCity, $scope.shippingState, $scope.shippingZip, $scope.shippingPhoneNumber);
                 if (FacebookService.loggedIn) {
@@ -79,27 +79,13 @@ GiftStarterApp.controller('GiftStartCreateController', [
             }
         };
 
-        $scope.imageLoaded = function(element) {
-            $scope.imageWidth = angular.element(element.children()[0]).prop('clientWidth');
-            $scope.imageHeight = angular.element(element.children()[0]).prop('clientHeight');
-        };
-
-        $scope.titleDescriptionChanged = function() {
-            $scope.updateGsValidity();
-        };
-
         $scope.shippingChanged = function() {
             // TODO: calculate this based on... something??
             $scope.shipping = 10;
             $scope.updateGsValidity();
         };
 
-        $scope.contactChanged = function() {
-            $scope.updateGsValidity();
-        };
-
         $scope.priceChanged = function() {
-            console.log("updating costs...");
             $scope.salesTax = 0.098 * $scope.price;
             $scope.serviceFee = 0.05 * $scope.price;
             $scope.totalPrice = $scope.price + $scope.salesTax + $scope.serviceFee + $scope.shipping;
@@ -119,29 +105,8 @@ GiftStarterApp.controller('GiftStartCreateController', [
                 ($scope.shippingZip == '') ||
                 ($scope.shippingPhoneNumber == '') ||
                 ($scope.price <= 0)
-                );
+            );
         }
 
     }
 ]);
-
-
-GiftStarterApp.directive('gsImg',
-    function($compile) {
-        var template = '';
-        var link = function(scope, element, attrs) {
-            template = '<img ng-src="{{'+attrs.src+'}}" class="image '+attrs.class+'"/>';
-            element.append($compile(template)(scope));
-            angular.element(element.children()[0]).on('load',
-                function() {
-                    scope[attrs.onLoad](element);
-                });
-        };
-
-        return {
-            restrict: 'E',
-            link: link
-        }
-
-
-    });

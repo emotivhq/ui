@@ -22,7 +22,6 @@ class GiftStart(ndb.Model):
     product_url = ndb.StringProperty(required=True)
     product_price = ndb.IntegerProperty(required=True)
     product_img_url = ndb.StringProperty(required=True)
-    product_img_height = ndb.IntegerProperty(required=True)
 
     overlay_columns = ndb.IntegerProperty(required=True)
     overlay_rows = ndb.IntegerProperty(required=True)
@@ -41,10 +40,11 @@ class GiftStart(ndb.Model):
     comments = []
 
     def jsonify(self):
+        print(self.comments)
         return json.dumps({'giftstart': {
             'gsid': self.gsid, 'title': self.giftstart_title, 'description': self.giftstart_description,
             'product': {'img_url': self.product_img_url, 'price': self.product_price,
-                        'img_height': self.product_img_height, 'product_url': self.product_url},
+                        'product_url': self.product_url},
             'rows': self.overlay_rows, 'columns': self.overlay_columns, 'parts': json.loads(self.overlay_parts),
             'gift_champion_uid': self.gift_champion_uid, 'deadline': self.deadline.strftime("%s"),
             'comments': self.comments if 'comments' in dir(self) else []
@@ -59,7 +59,6 @@ class GiftStart(ndb.Model):
         ndbgs.product_url = giftstart['product']['product_url']
         ndbgs.product_price = int(giftstart['product']['price'])
         ndbgs.product_img_url = giftstart['product']['img_url']
-        ndbgs.product_img_height = giftstart['product']['img_height']
 
         ndbgs.overlay_columns = giftstart['columns']
         ndbgs.overlay_rows = giftstart['rows']

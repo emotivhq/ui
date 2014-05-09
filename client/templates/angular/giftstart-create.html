@@ -1,15 +1,18 @@
 
 <div class="create wrapper" ng-controller="GiftStartCreateController">
-    <div class="image-container">
-        <gs-img src="selectedImg" on-load="imageLoaded"></gs-img>
-        <div><button ng-click="previousImage()"> &lt; </button> Image <button ng-click="nextImage()"> &gt; </button></div>
+    <div class="image-selector">
+        <div class="image-container">
+            <img ng-src="{{selectedImg}}"/>
+            <!--<gs-img src="selectedImg" on-load="imageLoaded"></gs-img>-->
+        </div>
+        <div><button ng-click="previousImage()"> &lt; </button><span>Image</span><button ng-click="nextImage()"> &gt; </button></div>
     </div>
 
     <div class="details">
         <div class="title header">Campaign Title</div>
-        <input class="title" type="text" ng-model="title" placeholder="Title" ng-change="titleDescriptionChanged()"/>
+        <input class="title" type="text" ng-model="title" placeholder="Title" ng-change="updateGsValidity()"/>
         <div class="description header">Campaign Description</div>
-        <textarea class="description" ng-model="description" rows="9" placeholder="Why should your friends give?  Excite them!" ng-change="titleDescriptionChanged()"></textarea>
+        <textarea class="description" ng-model="description" rows="9" placeholder="Why should your friends give?  Excite them!" ng-change="updateGsValidity()"></textarea>
         <div class="details-container">
             <div class="price">
                 <span>Non-sale price:</span>
@@ -31,19 +34,19 @@
             <h2>Where should we ship it?</h2>
             <div>
                 <div>Recipient Name</div>
-                <input type="text" ng-model="shippingName" ng-change="shippingChanged()"/>
+                <input type="text" ng-model="shippingName" ng-change="updateGsValidity()"/>
             </div>
             <div>
                 <div>Recipient Address</div>
-                <input type="text" ng-model="shippingAddress" ng-change="shippingChanged()"/>
+                <input type="text" ng-model="shippingAddress" ng-change="updateGsValidity()"/>
             </div>
             <div class="city">
                 <div>City</div>
-                <input type="text" ng-model="shippingCity" ng-change="shippingChanged()"/>
+                <input type="text" ng-model="shippingCity" ng-change="updateGsValidity()"/>
             </div>
             <div class="state">
                 <div>State</div>
-                <input type="text" ng-model="shippingState" ng-change="shippingChanged()"/>
+                <input type="text" ng-model="shippingState" ng-change="updateGsValidity()"/>
             </div>
             <div class="zip">
                 <div>Zip</div>
@@ -51,7 +54,7 @@
             </div>
             <div>
                 <div>Recipient Phone Number</div>
-                <input type="text" ng-model="shippingPhoneNumber" ng-change="shippingChanged()"/>
+                <input type="text" ng-model="shippingPhoneNumber" ng-change="updateGsValidity()"/>
             </div>
         </div>
 
@@ -76,9 +79,9 @@
             <div class="gc-contact">
                 <h2>How can we reach you?</h2>
                 <div>Phone Number</div>
-                <input type="text" ng-model="gcPhoneNumber" ng-change="contactChanged()"/>
+                <input type="text" ng-model="gcPhoneNumber" ng-change="updateGsValidity()"/>
                 <div>Email</div>
-                <input type="text" ng-model="gcEmail" ng-change="contactChanged()"/>
+                <input type="text" ng-model="gcEmail" ng-change="updateGsValidity()"/>
             </div>
         </div>
     </div>
