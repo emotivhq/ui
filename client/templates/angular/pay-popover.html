@@ -1,24 +1,19 @@
 <div class="pay-popover" ng-controller="PayPopoverController">
     <h1 class="accent large">Pitch In!</h1>
+    <div class="powered">Powered by <img src="/assets/powered_by_stripe.png"></div>
     <form stripe-form="stripeSubmit">
         <div class="number">
-            <span>Card Number</span>
-            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type"/>
-        </div>
-
-        <div class="cvc">
-            <span>CVC</span>
-            <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc"/>
-        </div>
-
-        <div class="expiry">
-            <span>Expiration Date</span>
-            <input type="text" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM/YYYY"/>
-        </div>
-
-        <div class="zip">
-            <span>ZIP</span>
-            <input type="text" ng-model="address_zip"/>
+            <img src="/assets/cc_icon_card_number.png"/>
+            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number"/>
+        </div><div class="cvc">
+            <img src="/assets/cc_icon_cvc.png"/>
+            <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC"/>
+        </div><div class="expiry">
+            <img src="/assets/cc_icon_expiry.png"/>
+            <input type="text" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY"/>
+        </div><div class="zip">
+            <img src="/assets/cc_icon_zip.png">
+            <input type="text" ng-model="address_zip" maxlength="5" placeholder="ZIP"/>
         </div>
 
         <button type="submit" class="large white-border">Pay ${{currentCharge | number : 2}}</button>

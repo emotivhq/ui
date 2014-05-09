@@ -14,6 +14,8 @@ input, button
   padding: 3px 5px
 
 button
+  height: 60px
+  vertical-align: top
   background: $primary-color
   color: #fff
   border: solid $primary-color 2px
@@ -29,6 +31,41 @@ button.disabled, button.disabled:active, button.disabled:hover, button.disabled:
 button:active, button:hover, button:focus
   background: $primary-color-highlight
   border-color: $primary-color-highlight
+
+button.facebook-send
+  border-color: $facebook-color
+  background-color: $facebook-color
+  span
+    color: white
+    display: inline-block
+    font: $font-accent-large
+    margin-left: 10px
+    margin-top: 2px
+    vertical-align: top
+  img
+    width: 40px
+    margin-top: 2px
+button.facebook-send:hover
+  border-color: $facebook-color-highlight
+  background-color: $facebook-color-highlight
+
+button.email
+  span
+    color: white
+    display: inline-block
+    font: $font-accent-large
+    margin-left: 10px
+    margin-top: 2px
+    vertical-align: top
+  img
+    width: 40px
+    margin-top: 2px
+  border-color: $email-color
+  background-color: $email-color
+button.email:hover
+  border-color: $email-color-highlight
+  background-color: $email-color-highlight
+
 
 button.large
   font: $font-accent-large

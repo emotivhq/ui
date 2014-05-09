@@ -1,23 +1,37 @@
+@import base
 
-gs-popover
+div.popover-wrapper
   position: fixed
   display: none
   width: 100%
-  height: 100%
-  top: 0
+  height: 300%
+  top: -100%
   left: 0
   background: rgba(0, 0, 0, 0.6)
+  transition: all 0.2s
+  text-align: center
   z-index: 10000
+  +justify-content(center)
+  +flex-direction(column)
 
-  .table-row
-    display: table-row
+  div.popover-container
+    display: inline-block
+    margin: 0 auto
+    transition: all 0.2s
+    z-index: 10001
+    padding: 1em
+    background: $primary-color
+    color: #fff
 
-    .table-cell
-      display: table-cell
-      vertical-align: middle
-      text-align: center
-      z-index: 10001
+    a
+      color: #fff
+      font-weight: 700
 
-      .template-container
-        display: inline-block
 
+  @media screen and (min-width: 37.5em)
+    div.popover-container
+      //max-width: 32em
+      padding: 2em
+
+div.popover-wrapper.shown
+  +display-flex()

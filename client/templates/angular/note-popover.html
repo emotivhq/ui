@@ -3,7 +3,9 @@
     <p>Tell them why you're excited to give!</p>
     <div class="note-wrapper">
         <img class="profile-picture" ng-src="{{profilePicture}}">
-        <textarea class="note" ng-model="noteText"></textarea>
+        <div class="note">
+            <textarea ng-model="noteText"></textarea>
+        </div>
     </div>
     <button class="large white-border" ng-click="submit()">Submit!</button>
 </div>
