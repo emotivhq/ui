@@ -4,16 +4,17 @@
 
 div.giftstart.wrapper
   margin: 0 auto
-  //width: 2*$column-width + 4*$margin-horz
-
 
 div.block
   width: $column-width
   display: inline-block
   padding: $margin-vert $margin-horz
   vertical-align: top
-div.block.overlay
+div.block.overlay, div.block.comments
   width: 1.5*$column-width
+  text-align: center
+
+div.block.overlay
   padding: 0
 
 @media screen and (max-width: 37.5em)
@@ -30,9 +31,8 @@ div.block.overlay
   div.block
     width: 40% !important
 
-  div.block.overlay
+  div.block.overlay, div.block.comments
     width: 60% !important
-    text-align: center
 
 @media screen and (min-width: 64em)
   div.giftstart.wrapper
@@ -75,8 +75,8 @@ div.block.pitch-in
 
   .facebook-send
     float: right
-    border-color: #3B5998
-    background-color: #3B5998
+    border-color: $facebook-color
+    background-color: $facebook-color
 
     span
       color: white
@@ -89,8 +89,8 @@ div.block.pitch-in
       width: 40px
       margin-top: 2px
   .facebook-send:hover
-    border-color: #5976B3
-    background-color: #5976B3
+    border-color: $facebook-color-highlight
+    background-color: $facebook-color-highlight
 
 div.block.money
   text-align: center
@@ -99,31 +99,32 @@ div.block.money
     font-family: Blanch, sans-serif
     font-size: 60px
 
+  .danger
+    color: $primary-color
+
   div.price
     display: inline-block
     padding-right: 20px
 
 div.block.comments
   display: inline-block
-  margin: 40px
   vertical-align: top
 
   .comment
-    width: $column-width
     position: relative
     margin-bottom: 20px
 
+
     img
-      height: 100px
-      width: 100px
+      width: 18%
       +border-radius(50%)
       vertical-align: top
 
     div
       position: relative
-      margin-left: 10px
-      padding: 10px 14px
-      width: $column-width - 115
+      width: 78%
+      margin-left: 1%
+      padding: 4% 14px
       font-weight: 300
       text-align: left
 
@@ -142,7 +143,7 @@ div.block.comments
       content: ""
       position: absolute
 
-      top: 30px
+      top: 8% //30px
       bottom: auto
       left: -30px
       border-style: solid
@@ -153,7 +154,7 @@ div.block.comments
       content: ""
       position: absolute
 
-      top: 33px
+      top: 11% //33px
       bottom: auto
       left: -24px
       border-style: solid

@@ -34,6 +34,14 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error': 'No stripe customer for this uid exists'}))
 
     def _pitch_in(self, data):
+        ####
+        import facebook
+        from gs_user import User
+        user = User.query(User.uid == '27213779').fetch()[0]
+        graph = facebook.GraphAPI(user.lt_access_token)
+        graph.put_object('')
+        ####
+
         # Record pitch in to be paid upon campaign success
         payment = data['payment']
 

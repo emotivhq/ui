@@ -44,7 +44,7 @@ class GiftStart(ndb.Model):
         return json.dumps({'giftstart': {
             'gsid': self.gsid, 'title': self.giftstart_title, 'description': self.giftstart_description,
             'product': {'img_url': self.product_img_url, 'price': self.product_price,
-                        'img_height': self.product_img_height},
+                        'img_height': self.product_img_height, 'product_url': self.product_url},
             'rows': self.overlay_rows, 'columns': self.overlay_columns, 'parts': json.loads(self.overlay_parts),
             'gift_champion_uid': self.gift_champion_uid, 'deadline': self.deadline.strftime("%s"),
             'comments': self.comments if 'comments' in dir(self) else []

@@ -11,7 +11,7 @@
     <div class="money block">
         <div class="price">Remaining:<div>$<span class="giftstart product remaining">{{giftStart.remaining | number : 2}}</span></div></div>
         <div class="price">Contribution:<div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
-        <div>Time Left:<div class="countdown">{{countdown}}</div></div>
+        <div>Time Left:<div class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft != 0)}">{{countdown}}</div></div>
     </div>
 
     <div class="description block">

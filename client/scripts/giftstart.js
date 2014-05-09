@@ -292,6 +292,7 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart = $window.GIFTSTART.giftstart;
             $rootScope.$broadcast('giftstart-loaded');
             self.updateSelected();
+            self.prepareComments();
             injectPartToggles(self.giftStart);
         }
 
