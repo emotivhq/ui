@@ -197,8 +197,7 @@ GiftStarterApp.service('GiftStartService', [
             }
 
             function syncCheckCallback(data) {
-                console.log(data);
-                if (data.parts != []) {
+                if (data.parts.length > 0) {
                     // Parts need to be updated!
                     updateFromParts(data.parts);
                     self.giftStart.comments = data.comments;
@@ -253,6 +252,10 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.giftStart = GiftStartService.giftStart;
         $scope.secondsLeft = 0;
+
+        $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
+        $scope.mailBody= "Seriously, it's the bee's knees.\n\nhttp://www.giftstarter.co/giftstart?gs-id="
+            + GiftStartService.giftStart.gsid;
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
             if (GiftStartService.giftStart.gsid == undefined) {

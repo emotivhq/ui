@@ -44,8 +44,14 @@ GiftStarterApp.directive('gsInvitePopover',
     function() {return {restrict: 'E', templateUrl: '/templates/angular/invite-popover.html'}});
 
 GiftStarterApp.controller('ThanksPopoverController', [
-            '$scope','PopoverService',
-    function($scope,  PopoverService) {$scope.close = function(){PopoverService.hidePopover()}}
+            '$scope','PopoverService','GiftStartService',
+    function($scope,  PopoverService,  GiftStartService) {
+        $scope.close = function(){PopoverService.hidePopover()};
+
+        $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
+        $scope.mailBody= "Seriously, it's the bee's knees.\n\nhttp://www.giftstarter.co/giftstart?gs-id="
+            + GiftStartService.giftStart.gsid;
+    }
 ]);
 
 GiftStarterApp.directive('gsThanksPopover',
