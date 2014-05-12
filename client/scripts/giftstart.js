@@ -12,8 +12,12 @@ GiftStarterApp.service('GiftStartService', [
             gsid: -1,
             parts: [],
             note: '',
-            stripeResponse: {}
+            stripeResponse: {},
+            emailAddress: ''
         };
+
+        this.pitchIns = [];
+        this.pitchInsInitialized = false;
 
         this.stagedGiftStart = {};
 
@@ -25,7 +29,7 @@ GiftStarterApp.service('GiftStartService', [
         function buildGiftStart(title, description, championUid, productImgUrl, productPrice, productUrl,
                                 parts, rows, columns, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
                                 shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
-            var gs = {
+            return {
                 title: title,
                 description: description,
                 gift_champion_uid: championUid,
@@ -47,39 +51,45 @@ GiftStarterApp.service('GiftStartService', [
                 shipping_zip: shippingZip,
                 shipping_phone_number: shippingPhoneNumber
             };
-            return gs;
         }
 
-        function injectPartToggles(giftstart) {
-            function makePartToggle(i) {
-                var ti = i;
-                return function () {
-                    if (!giftstart.parts[ti].bought) {
-                        // If selected is none, this will force it into a bool
-                        giftstart.parts[ti].selected = (giftstart.parts[ti].selected == false);
-                        self.updateSelected();
+        function makeParts(numParts, productPrice) {
+            function injectPartToggles(parts) {
+                function makePartToggle(i) {
+                    var ti = i;
+                    return function () {
+                        if (!parts[ti].bought) {
+                            // If selected is none, this will force it into a bool
+                            parts[ti].selected = (parts[ti].selected == false);
+                            self.updateSelected();
+                        }
                     }
+                }
+
+                for (var i = 0; i < parts.length; i++) {
+                    parts[i].toggle = makePartToggle(i);
                 }
             }
 
-            for (var i = 0; i < giftstart.parts.length; i++) {
-                giftstart.parts[i].toggle = makePartToggle(i);
+            var tempParts = [];
+            for (var i = 0; i < numParts; i++) {
+                tempParts.push({
+                    bought: false,
+                    selected: false,
+                    part_id: i,
+                    value: productPrice/numParts
+                });
             }
+
+            injectPartToggles(tempParts);
+
+            return tempParts;
         }
 
         this.stageGiftStart = function(title, description, productImgUrl, productPrice, productUrl,
                                        numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
                                        shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
-            var x = numRows, y = numCols;
-            var tempParts = [];
-            for (var i = 0; i < x*y; i++) {
-                tempParts.push({
-                    bought: false,
-                    selected: false,
-                    part_id: i,
-                    value: productPrice/x/y
-                });
-            }
+            var tempParts = makeParts(numRows * numCols, productPrice);
             self.stagedGiftStart = buildGiftStart(title, description, -1, productImgUrl, productPrice,
                 productUrl, tempParts, numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
                 shippingCity, shippingState, shippingZip, shippingPhoneNumber);
@@ -93,9 +103,10 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
-            injectPartToggles(self.giftStart);
+            self.giftStart.parts = makeParts(self.giftStart.rows * self.giftStart.columns,
+                self.giftStart.product.price);
             self.updateSelected();
-            self.prepareComments();
+            self.syncPitchIns('GiftStartService');
         };
 
         this.createGiftStart = function() {
@@ -121,7 +132,7 @@ GiftStarterApp.service('GiftStartService', [
 
         this.fetchGiftStart = function(gsid) {
             $http({method: 'POST', url: '/giftstart/api',
-                data: {giftstart_id: gsid, action: 'get'}})
+                data: {gsid: gsid, action: 'get'}})
                 .success(this.fetchSuccess)
                 .error(function (){console.log("Failed to fetch GiftStart.");});
         };
@@ -131,16 +142,6 @@ GiftStarterApp.service('GiftStartService', [
             self.enableGiftStart();
             $rootScope.$broadcast('giftstart-loaded');
             $location.search('gs-id', self.giftStart.gsid);
-        };
-
-        this.prepareComments = function() {
-            for (var i = 0; i < self.giftStart.comments.length; i++) {
-                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                var date = new Date(1000 * self.giftStart.comments[i].timestamp);
-                self.giftStart.comments[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
-                    ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
-                    (date.getHours() >= 12 ? 'PM' : 'AM');
-            }
         };
 
         this.saveNote = function(noteText) {self.payment.note = noteText};
@@ -165,14 +166,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.paymentSuccess = function(data) {
-            var purchasedParts = data['purchased-parts'];
-            for (var i = 0; i < purchasedParts.length; i++) {
-                var index = purchasedParts[i] % self.giftStart.columns;
-                self.giftStart.parts[index]['bought'] = true;
-                self.giftStart.parts[index]['selected'] = false;
-                self.giftStart.parts[index]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
-                    FacebookService.uid + '.jpg';
-            }
+            self.syncPitchIns('GiftStartService');
             self.updateSelected();
         };
 
@@ -185,35 +179,54 @@ GiftStarterApp.service('GiftStartService', [
             } else {console.log("Nothing selected!")}
         };
 
-        this.syncParts = function(source) {
+        this.syncPitchIns = function(source) {
             function checkForSync() {
                 $http({
                     method: 'POST',
-                    url: '/giftstart/sync',
-                    data: {action: 'sync', gsid: self.giftStart.gsid, parts: self.giftStart.parts}
+                    url: '/pay',
+                    data: {action: 'get-pitch-ins', gsid: self.giftStart.gsid}
                 })
                     .success(syncCheckCallback)
                     .error(function() {console.log("Failed to contact part sync service.")})
             }
 
-            function syncCheckCallback(data) {
-                if (data.parts.length > 0) {
-                    // Parts need to be updated!
-                    updateFromParts(data.parts);
-                    self.giftStart.comments = data.comments;
-                    self.prepareComments();
-                }
+            function syncCheckCallback(pitchins) {
+                updatePartsFromPitchIns(pitchins);
+                formatPitchIns(pitchins);
+                $rootScope.$broadcast('pitch-ins-updated');
             }
 
-            function updateFromParts(parts) {
-                for (var i = 0; i < parts.length; i++) {
-                    if (self.giftStart.parts[i].bought != parts[i].bought) {
-                        self.giftStart.parts[i].bought = parts[i].bought;
-                        if (parts[i].bought) {
-                            self.giftStart.parts[i].selected = false;
-                            self.giftStart.parts[i].img = parts[i].img;
+            function formatPitchIns(pitchins) {
+                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                console.log(pitchins);
+                var newPitchIns = pitchins;
+                for (var i = 0; i < newPitchIns.length; i++) {
+                    var date = new Date(1000 * pitchins[i].timestamp);
+                    newPitchIns[i].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
+                        pitchins[i].uid + '.jpg';
+                    newPitchIns[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
+                        ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
+                        (date.getHours() >= 12 ? 'PM' : 'AM');
+                }
+                newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
+                self.pitchIns = newPitchIns;
+            }
+
+            function updatePartsFromPitchIns(pitchins) {
+                for (var i = 0; i < pitchins.length; i++) {
+                    for (var j = 0; j < pitchins[i].parts.length; j++) {
+                        var partId = pitchins[i].parts[j];
+                        if (!self.giftStart.parts[partId].bought) {
+                            self.giftStart.parts[partId].bought = true;
+                            self.giftStart.parts[partId].selected = false;
+                            self.giftStart.parts[partId].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
+                                pitchins[i].uid + '.jpg';
                         }
                     }
+                }
+                if (!self.pitchInsInitialized) {
+                    self.pitchInsInitialized = true;
+                    $rootScope.$broadcast('pitch-ins-initialized');
                 }
                 self.updateSelected();
             }
@@ -221,7 +234,7 @@ GiftStarterApp.service('GiftStartService', [
             function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
 
             if (self.giftStart.gsid) {
-                if (source == 'pitch-in-hover') {
+                if (source == 'pitch-in-hover' || source == 'GiftStartService') {
                     // User hovered pitch-in button, need to update immediately
                     checkForSync();
                     updateLastChecked();
@@ -251,6 +264,7 @@ GiftStarterApp.controller('GiftStartController', [
     function($scope,  GiftStartService,  $location,  $interval,  FacebookService) {
 
         $scope.giftStart = GiftStartService.giftStart;
+        $scope.pitchIns = GiftStartService.pitchIns;
         $scope.secondsLeft = 0;
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
@@ -263,6 +277,9 @@ GiftStarterApp.controller('GiftStartController', [
             }
         }
 
+        $scope.$on('pitch-ins-initialized', function() {$scope.pitchInsInitialized = true});
+
+        $scope.$on('pitch-ins-updated', function() {$scope.pitchIns = GiftStartService.pitchIns});
 
         if (GiftStartService.giftStart.gsid != undefined) {
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
@@ -278,8 +295,8 @@ GiftStarterApp.controller('GiftStartController', [
         }
 
         // Synchronize parts on mouse activity
-        $scope.mouseActivityCallback = function(source) {GiftStartService.syncParts(source)};
-        $scope.pitchInHoverCallback = function() {GiftStartService.syncParts('pitch-in-hover')};
+        $scope.mouseActivityCallback = function(source) {GiftStartService.syncPitchIns(source)};
+        $scope.pitchInHoverCallback = function() {GiftStartService.syncPitchIns('pitch-in-hover')};
 
         $scope.pitchIn = GiftStartService.pitchIn;
 

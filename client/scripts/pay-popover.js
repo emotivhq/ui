@@ -14,9 +14,9 @@ GiftStarterApp.controller('PayPopoverController', [
                 console.log(response);
             } else {
                 // Got stripe token, attach it to the current giftstart payment
-                // TODO: AMOUNT TO BE CHARGED MUST BE CALCULATED ON THE SERVER.
                 console.log(response);
                 GiftStartService.attachStripeResponse(response);
+                GiftStartService.payment.emailAddress = $scope.email;
                 GiftStartService.sendPayment();
                 PopoverService.nextPopover();
             }

@@ -79,7 +79,7 @@ describe('Usage Flow', function() {
     });
 
     it('should request the product page from the server', function() {
-        productLinkScope.product.link = 'link';
+        productLinkScope.product.product_url = 'link';
         productLinkScope.product.price = 0.02;
 
         function containsProductDetails(data) {

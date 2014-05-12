@@ -32,7 +32,7 @@ gs-overlay
   transition: all 0.2s
   cursor: pointer
   margin: -0.5px
-  +display-flex()
+  display: none
   +justify-content(center)
   +flex-direction(column)
   +no-select
@@ -72,3 +72,7 @@ gs-overlay
   background-position: center
   background-size: contain
   color: rgba(255, 255, 255, 0)
+
+gs-overlay.initialized
+  .part-cell
+    +display-flex()

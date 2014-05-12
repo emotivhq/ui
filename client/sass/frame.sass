@@ -32,6 +32,11 @@ button:active, button:hover, button:focus
   border-color: $primary-color-highlight
 
 button.facebook-send
+  display: none
+  @media screen and (min-width: 64em)
+    display: inline-block
+    span
+      display: none
   border-color: $facebook-color
   background-color: $facebook-color
   span
@@ -42,7 +47,7 @@ button.facebook-send
     margin-top: 2px
     vertical-align: top
   img
-    width: 40px
+    width: 30px
     margin-top: 2px
 button.facebook-send:hover
   border-color: $facebook-color-highlight
@@ -70,7 +75,7 @@ button.large
   height: 60px
   font: $font-accent-large
   padding: 6px 10px
-  margin-top: 20px
+  margin: 20px 10px 0 10px
 
 button.white-border
   border-color: white

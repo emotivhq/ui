@@ -5,12 +5,12 @@
     </div>
 
     <div class="overlay block">
-        <gs-overlay giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
+        <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
     </div>
 
     <div class="money block">
-        <div class="price">Remaining:<div>$<span class="giftstart product remaining">{{giftStart.remaining | number : 2}}</span></div></div>
-        <div class="price">Contribution:<div>$<span class="giftstart product contribution">{{giftStart.totalSelection | number : 2}}</span></div></div>
+        <div class="price">Remaining:<div>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></div></div>
+        <div class="price">Contribution:<div>$<span class="giftstart product contribution">{{giftStart.totalSelection / 100 | number : 2}}</span></div></div>
         <div>Time Left:<div class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft != 0)}">{{countdown}}</div></div>
     </div>
 
@@ -25,9 +25,9 @@
     </div>
 
     <div class="comments block">
-        <div class="comment" ng-repeat="comment in giftStart.comments">
-            <img ng-src="{{comment.img}}"/>
-            <div>{{comment.message}}<span class="timestamp">{{comment.timestampString}}</span></div>
+        <div class="comment" ng-repeat="pitchIn in pitchIns">
+            <img ng-src="{{pitchIn.img}}"/>
+            <div>{{pitchIn.note}}<span class="timestamp">{{pitchIn.timestampString}}</span></div>
         </div>
     </div>
 </div>

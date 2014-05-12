@@ -5,7 +5,7 @@ from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 from datetime import datetime, timedelta
 import storage
-import comments
+import gs_email
 
 GIFTSTART_CAMPAIGN_DAYS = 7
 
@@ -16,6 +16,7 @@ class GiftStart(ndb.Model):
     giftstart_description = ndb.TextProperty(required=True)
     gift_champion_uid = ndb.StringProperty(required=True)
     deadline = ndb.DateTimeProperty(required=True)
+    giftstart_complete = ndb.BooleanProperty(default=False)
 
     product_url = ndb.StringProperty(required=True)
     product_price = ndb.IntegerProperty(required=True)
@@ -85,36 +86,46 @@ class GiftStart(ndb.Model):
         gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
         gs.product_img_url = storage.cache_product_image(giftstart['product']['img_url'], gs.gsid)
         gs.put()
-        return gs
 
-    @staticmethod
-    def update(giftstart):
-        gs = GiftStart.query(GiftStart.gsid == giftstart['gsid']).fetch(1)[0]
-        gs = GiftStart.populate_giftstart(gs, giftstart)
-        gs.put()
+        gs_email.send("Giftstart #%s created!" % str(gs.gsid),
+                      "Check it: http://giftstarter.co/giftstart?gs-id=%s\n\nJsonified:\n%s"
+                      % (str(gs.gsid), gs.jsonify()),
+                      "giftstartbot", "stuart@giftstarter.co", ["stuart@giftstarter.co"])
         return gs
 
     @staticmethod
     def get_by_id(giftstart_id):
         results = GiftStart.query(GiftStart.gsid == giftstart_id).fetch(1)
         result = results[0] if len(results) > 0 else None
-        result.comments = comments.get_comments(giftstart_id)
         return result
 
 
-def register_purchased_parts(gsid, purchased_parts, uid):
+def giftstart_complete(gsid, pitch_ins):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch()[0]
-    parts = json.loads(giftstart.overlay_parts)
-    for part_id in purchased_parts:
-        if part_id < len(giftstart.overlay_parts):
-            parts[part_id]['bought'] = True
-            parts[part_id]['img'] = 'http://storage.googleapis.com/giftstarter-pictures/u/' + str(uid) + '.jpg'
-    giftstart.overlay_parts = json.dumps(parts)
-    giftstart.put()
-    taskqueue.add(url="/pay", method="POST", payload=json.dumps({'action': 'check-if-complete',
-                                                                 'gsid': gsid}), countdown=60)
+    # # Check if all parts have been bought
+    # pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    num_pitch_ins = sum([len(pitch_in['parts']) for pitch_in in pitch_ins])
+    available_parts = giftstart.overlay_rows * giftstart.overlay_columns
 
+    if num_pitch_ins > available_parts:
+        # Something has gone wrong, notify GS
+        gs_email.send("GiftStart Error!!!", "Too many parts have been sold for GS#%s!" % giftstart.gsid,
+                      "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
+    if num_pitch_ins >= available_parts:
+        # All parts have been bought!  Send notifications to givers...
+        # TODO: woops, only canvas apps can send notifications :/
+        # for pitch_in in pitch_ins:
+        #     user = User.query(User.uid == pitch_in.uid).fetch()[0]
+        #     access_token = user.lt_access_token if user.lt_access_token else user.access_token
+        #     facebook.send_notification(access_token, "GiftStart #%s has been completed! Nice work!" % gsid,
+        #                                "")#"#/giftstart?gs-id=%s" % gsid)
 
-def get_purchased_parts(gsid):
-    return GiftStart.query(gsid).fetch()[0].overlay_parts
+        # Send email congratulating the gift champion, too!
+        gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
+                      "Stuart at GiftStarter", "stuart@giftstarter.co", [giftstart.gc_email])
 
+        # And email GiftStarter personnel...
+        gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
+                      "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
+
+        taskqueue.add(url="/pay", method="POST", payload=json.dumps({'action': 'process-payments', 'gsid': gsid}))

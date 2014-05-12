@@ -33,14 +33,11 @@ class MainHandler(webapp2.RequestHandler):
 
 class GiftStartMainHandler(webapp2.RequestHandler):
     def get(self):
-        from giftstart import comments
-
         template = JINJA_ENVIRONMENT.get_template('frame.html')
         gsid = self.request.get('gs-id')
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
         if len(gss) > 0:
             gs = gss[0]
-            gs.comments = comments.get_comments(gsid)
             render_values = {
                 'js_insert': 'var GIFTSTART = ' + gs.jsonify() + ';',
                 'page_title': gs.giftstart_title,
