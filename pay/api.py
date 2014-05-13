@@ -1,6 +1,5 @@
 __author__ = 'stuart'
 
-
 import webapp2
 from google.appengine.ext import ndb
 import pitchin
@@ -27,7 +26,7 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(pitchin.pitch_in(data)))
 
         elif data['action'] == 'process-payments':
-            process_payments(data['gsid'])
+            process_payments(data['gsid'], data['giftstart_price'], data['num_parts'])
 
         elif data['action'] == 'get-pitch-ins':
             self.response.write(json.dumps(pitchin.get_pitch_in_dicts(data['gsid'])))

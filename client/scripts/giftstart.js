@@ -165,7 +165,7 @@ GiftStarterApp.service('GiftStartService', [
                 .error(self.paymentFailure);
         };
 
-        this.paymentSuccess = function(data) {
+        this.paymentSuccess = function() {
             self.syncPitchIns('GiftStartService');
             self.updateSelected();
         };

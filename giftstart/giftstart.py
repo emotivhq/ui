@@ -128,4 +128,8 @@ def giftstart_complete(gsid, pitch_ins):
         gs_email.send("GiftStart Complete!", "GiftStart #%s has been completed! Nice work!" % giftstart.gsid,
                       "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co", "arry@giftstarter.co"])
 
-        taskqueue.add(url="/pay", method="POST", payload=json.dumps({'action': 'process-payments', 'gsid': gsid}))
+        taskqueue.add(url="/pay", method="POST", payload=json.dumps({
+            'action': 'process-payments',
+            'gsid': gsid, 'num_parts': giftstart.overlay_rows * giftstart.overlay_columns,
+            'giftstart_price': giftstart.product_price
+        }))
