@@ -3,7 +3,7 @@ __author__ = 'stuart'
 import traceback
 from datetime import datetime
 from pitchin import PitchIn
-import gs_email
+import gs_email.comm
 import stripe_utils
 import stripe
 import json
@@ -22,8 +22,9 @@ def process_payments(gsid, giftstart_price, num_parts):
                                                                    pitch_in.uid).fetch(1)[0].stripe_customer_id
             try:
                 charge = stripe.Charge.create(amount=price, currency="usd", customer=stripe_customer_id,
-                                              description="GiftStarter campaign %s parts %s"
-                                                          % (str(gsid), ", ".join([str(p) for p in pitch_in.parts])))
+                                              description="GiftStarter campaign {gsid} parts {parts}"
+                                              .format(gsid=str(gsid), parts=", ".join([str(p) for p
+                                                                                       in pitch_in.parts])))
                 pitch_in.processed = True
                 pitch_in.processed_time = datetime.now()
                 pitch_in.stripe_charge_id = charge['id']
@@ -31,6 +32,7 @@ def process_payments(gsid, giftstart_price, num_parts):
                 pitch_in.put_async()
 
             except:
-                gs_email.send("Stripe Error!", "This error occurred when attempting to charge user %s for GS#%s:\n\n%s"
-                              % (pitch_in.uid, str(gsid), traceback.format_exc()), "errorbot", "stuart@giftstarter.co",
-                              ["stuart@giftstarter.co"])
+                gs_email.comm.send("Stripe Error!", "This error occurred when attempting to charge user {uid} for "
+                                                    "GS#{gsid}:\n\n{error}"
+                                   .format(uid=pitch_in.uid, gsid=str(gsid), error=traceback.format_exc()),
+                                   "errorbot", "stuart@giftstarter.co", ["stuart@giftstarter.co"])

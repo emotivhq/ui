@@ -5,7 +5,7 @@ import yaml
 import json
 import urllib2 # TODO: replace urllib2 with requests
 import facebook
-import storage
+import storage.image_cache
 
 
 FB_APP_ID = yaml.load(open('secret.yaml'))['fb_auth']['app_id']
@@ -30,7 +30,7 @@ class AuthHandler(webapp2.RequestHandler):
                     result[k] = v
 
                 facebook.store_extended_key(data['uid'], data['token'], result['access_token'], result['expires'])
-                storage.cache_user_image(data['uid'], result['access_token'])
+                storage.image_cache.cache_user_image(data['uid'], result['access_token'])
                 self.response.write(json.dumps({'access_token': result['access_token'], 'expires': result['expires']}))
 
 

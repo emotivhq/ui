@@ -16,7 +16,7 @@
 #
 import webapp2
 import jinja2
-from giftstart import GiftStart
+from giftstart.core import GiftStart
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),

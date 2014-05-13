@@ -65,6 +65,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
         };
 
         $scope.giftstart = function() {
+            mixpanel.track("GiftStart staged");
             if (!$scope.gsInvalid) {
                 GiftStartService.stageGiftStart($scope.title, $scope.description, $scope.selectedImg,
                     $scope.totalPrice, $scope.product.product_url, $scope.x, $scope.y,
@@ -106,7 +107,10 @@ GiftStarterApp.controller('GiftStartCreateController', [
                 ($scope.shippingPhoneNumber == '') ||
                 ($scope.price <= 0)
             );
-        }
+        };
 
+        $scope.browserWarning =
+            (navigator.platform === 'iPad' || navigator.platform === 'iPhone' || navigator.platform === 'iPod') &&
+            (navigator.userAgent.indexOf('CriOS') > -1 || navigator.userAgent.indexOf('mercury') > -1);
     }
 ]);

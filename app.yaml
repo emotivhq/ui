@@ -6,15 +6,13 @@ threadsafe: yes
 
 handlers:
 - url: /auth
-  script: gs_user.auth
+  script: gs_user.auth.auth
 - url: /product
-  script: product.api
-- url: /giftstart/sync
-  script: giftstart.sync_api
+  script: product.api.api
 - url: /giftstart/api
-  script: giftstart.api
+  script: giftstart.api.api
 - url: /pay
-  script: pay.api
+  script: pay.api.api
 
 # Client static asset urls
 - url: /favicon\.ico

@@ -20,8 +20,8 @@
 
     <div class="pitch-in block">
         <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
-        <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank"><button class="large email"><img src="/assets/email_icon.png"/><span>Share!</span></button></a>
-        <button class="facebook-send button large" ng-click="facebookSend()"><img src="/assets/facebook_white_icon_256.png"/><span>Share!</span></button>
+        <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');"><button class="large email"><img src="/assets/email_icon.png"/><span>Share!</span></button></a>
+        <button class="facebook-send button large" ng-click="mixpanel.track('FB send in giftstart clicked');facebookSend();"><img src="/assets/facebook_white_icon_256.png"/><span>Share!</span></button>
     </div>
 
     <div class="comments block">

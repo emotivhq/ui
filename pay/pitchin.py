@@ -3,7 +3,7 @@ __author__ = 'stuart'
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 import json
-import gs_user
+import gs_user.core
 import stripe_utils
 
 
@@ -39,7 +39,7 @@ def pitch_in(data):
     # Record pitch in to be paid upon campaign success
     payment = data['payment']
 
-    gs_user.save_email(data['uid'], data['payment']['emailAddress'])
+    gs_user.core.save_email(data['uid'], data['payment']['emailAddress'])
 
     # Check if user is an existing stripe customer
     customer = stripe_utils.get_stripe_customer(data['uid'])

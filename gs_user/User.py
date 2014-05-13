@@ -3,12 +3,6 @@ __author__ = 'stuart'
 from google.appengine.ext import ndb
 
 
-def save_email(uid, email):
-    user = User.query(User.uid == uid).fetch(1)[0]
-    user.email = email
-    user.put()
-
-
 class User(ndb.Model):
     uid = ndb.StringProperty(required=True)
     access_token = ndb.StringProperty(required=True)
@@ -17,4 +11,3 @@ class User(ndb.Model):
     cached_profile_image_url = ndb.StringProperty()
     email = ndb.StringProperty()
     phone_number = ndb.StringProperty()
-

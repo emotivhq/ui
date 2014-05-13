@@ -13,6 +13,7 @@ GiftStarterApp.controller('NotePopoverController', [
         if (!GiftStartService.giftStart.gsid) {GiftStartService.createGiftStart()}
 
         $scope.submit = function() {
+            mixpanel.track("Note submitted");
             GiftStartService.saveNote($scope.noteText);
             PopoverService.nextPopover();
         };

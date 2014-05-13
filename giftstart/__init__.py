@@ -1,4 +1,3 @@
 __author__ = 'stuart'
 
-from giftstart import GiftStart
-from api import api
+from GiftStart import GiftStart

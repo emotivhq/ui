@@ -39,7 +39,7 @@ def get_base_url(url):
     return out
 
 
-def fetch_product(data):
+def product(data):
     url = data['product_url']
 
     headers = {'User-agent': "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"}

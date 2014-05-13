@@ -96,6 +96,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fireGiftStartCreate = function() {
+            mixpanel.track("GiftStart created");
             self.giftStart = self.stagedGiftStart;
             self.giftStart.gift_champion_uid = FacebookService.uid;
             $location.path('/giftstart');
@@ -138,6 +139,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data) {
+            mixpanel.track("GiftStart fetched");
             self.giftStart = data['giftstart'];
             self.enableGiftStart();
             $rootScope.$broadcast('giftstart-loaded');
@@ -175,6 +177,7 @@ GiftStarterApp.service('GiftStartService', [
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
+                mixpanel.track("Pitch in started");
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
         };
