@@ -9,7 +9,8 @@ GiftStarterApp.controller('GiftStartCreateController', [
 
         $scope.x = 3;
         $scope.y = 3;
-        $scope.xySets = [[1, 2], [2, 2], [2, 3], [3, 3], [3, 4], [4, 4], [4, 5], [5, 5], [5, 6], [6, 6]];
+        $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5], [4, 4],
+            [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
         $scope.selectedXYSet = 3;
         $scope.product = ProductService.product;
         $scope.imgIndex = 0;
@@ -26,6 +27,9 @@ GiftStarterApp.controller('GiftStartCreateController', [
         $scope.shippingState = '';
         $scope.shippingZip = '';
         $scope.shippingPhoneNumber = '';
+        $scope.possibleStates = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'ID', 'IL', 'IN',
+            'IA', 'KS', 'KY', 'LA', 'ME', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'MD',
+            'MA', 'MI', 'MN', 'MS', 'MO', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
         $scope.price = 0;
         $scope.shipping = 10;
@@ -87,6 +91,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
         };
 
         $scope.priceChanged = function() {
+            // TODO: calculate sales tax
             $scope.salesTax = 0.098 * $scope.price;
             $scope.serviceFee = 0.05 * $scope.price;
             $scope.totalPrice = $scope.price + $scope.salesTax + $scope.serviceFee + $scope.shipping;
@@ -94,11 +99,13 @@ GiftStarterApp.controller('GiftStartCreateController', [
         };
 
         $scope.updateGsValidity = function() {
+            var emailInvalid = $scope.giftstartForm.$invalid && !$scope.giftstartForm.$pristine;
             $scope.gsInvalid = (
                 ($scope.title == '') ||
                 ($scope.description == '') ||
                 ($scope.gcPhoneNumber == '') ||
                 ($scope.gcEmail == '') ||
+                emailInvalid ||
                 ($scope.shippingName == '') ||
                 ($scope.shippingAddress == '') ||
                 ($scope.shippingCity == '') ||

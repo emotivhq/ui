@@ -49,7 +49,7 @@ GiftStarterApp.controller('ThanksPopoverController', [
         $scope.close = function(){PopoverService.hidePopover()};
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
-        $scope.mailBody= "Seriously, it's the bee's knees.\n\nhttp://www.giftstarter.co/giftstart?gs-id="
+        $scope.mailBody= "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
             + GiftStartService.giftStart.gsid;
     }
 ]);

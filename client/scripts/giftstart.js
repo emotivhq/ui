@@ -58,7 +58,7 @@ GiftStarterApp.service('GiftStartService', [
                 function makePartToggle(i) {
                     var ti = i;
                     return function () {
-                        if (!parts[ti].bought) {
+                        if (!parts[ti].bought && !parts[ti].disabled) {
                             // If selected is none, this will force it into a bool
                             parts[ti].selected = (parts[ti].selected == false);
                             self.updateSelected();
@@ -75,6 +75,7 @@ GiftStarterApp.service('GiftStartService', [
             for (var i = 0; i < numParts; i++) {
                 tempParts.push({
                     bought: false,
+                    disabled: false,
                     selected: false,
                     part_id: i,
                     value: productPrice/numParts
@@ -85,6 +86,11 @@ GiftStarterApp.service('GiftStartService', [
 
             return tempParts;
         }
+
+        this.disableParts = function() {
+            function disablePart(part) {part.disabled = !part.bought;}
+            self.giftStart.parts.map(disablePart);
+        };
 
         this.stageGiftStart = function(title, description, productImgUrl, productPrice, productUrl,
                                        numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
@@ -120,15 +126,12 @@ GiftStarterApp.service('GiftStartService', [
         this.createFailure = function() {console.log("Failed to create GiftStart.")};
 
         this.updateSelected = function() {
-            self.giftStart.remaining = 0;
             self.giftStart.totalSelection = 0;
-            for (var i=0; i < self.giftStart.parts.length; i++) {
-                if (self.giftStart.parts[i].selected) {
-                    self.giftStart.totalSelection += self.giftStart.parts[i].value;
-                } else if (!self.giftStart.parts[i].bought) {
-                    self.giftStart.remaining += self.giftStart.parts[i].value;
-                }
-            }
+            self.giftStart.remaining = 0;
+            self.giftStart.parts.map(function(part) {
+                self.giftStart.totalSelection += part.value * part.selected;
+                self.giftStart.remaining += part.value * !part.selected;
+            });
         };
 
         this.fetchGiftStart = function(gsid) {
@@ -159,7 +162,7 @@ GiftStarterApp.service('GiftStartService', [
             }
         };
 
-        this.sendPayment = function() {
+        this.sendPayment = function(callback) {
             var data = {payment: self.payment, action: 'pitch-in', uid: FacebookService.uid};
             $http({method: 'POST', url: '/pay',
                 data: data})
@@ -170,6 +173,7 @@ GiftStarterApp.service('GiftStartService', [
         this.paymentSuccess = function() {
             self.syncPitchIns('GiftStartService');
             self.updateSelected();
+            $rootScope.$broadcast('payment-success');
         };
 
         this.paymentFailure = function() {console.log("Pitch-in failed!")};
@@ -201,7 +205,6 @@ GiftStarterApp.service('GiftStartService', [
 
             function formatPitchIns(pitchins) {
                 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                console.log(pitchins);
                 var newPitchIns = pitchins;
                 for (var i = 0; i < newPitchIns.length; i++) {
                     var date = new Date(1000 * pitchins[i].timestamp);
@@ -263,15 +266,15 @@ GiftStarterApp.service('GiftStartService', [
 ]);
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$interval','FacebookService',
-    function($scope,  GiftStartService,  $location,  $interval,  FacebookService) {
+            '$scope','GiftStartService','$location','$timeout','FacebookService',
+    function($scope,  GiftStartService,  $location,  $timeout,  FacebookService) {
 
         $scope.giftStart = GiftStartService.giftStart;
         $scope.pitchIns = GiftStartService.pitchIns;
         $scope.secondsLeft = 0;
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
-        $scope.mailBody= "Seriously, it's the bee's knees.\n\nhttp://www.giftstarter.co/giftstart?gs-id="
+        $scope.mailBody= "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
             + GiftStartService.giftStart.gsid;
 
         if(typeof($location.search()['gs-id']) === typeof("string")) {
@@ -286,13 +289,13 @@ GiftStarterApp.controller('GiftStartController', [
 
         if (GiftStartService.giftStart.gsid != undefined) {
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-            $interval($scope.updateSecondsLeft, 1000);
+            $timeout($scope.updateSecondsLeft, 1000);
         } else {
             // Update this giftstart when the service updates it
             $scope.$on('giftstart-loaded', function() {
                 $scope.giftStart = GiftStartService.giftStart;
                 $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-                $interval($scope.updateSecondsLeft, 1000);
+                $timeout($scope.updateSecondsLeft, 1000);
             });
             $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
         }
@@ -311,8 +314,12 @@ GiftStarterApp.controller('GiftStartController', [
                 var hours = Math.floor(($scope.secondsLeft / 3600) % 24).toFixed(0);
 
                 $scope.countdown = days + " days, " + hours + " hours" ;//+ ":" + minutes + ":" + seconds;
+                $timeout($scope.updateSecondsLeft, 1000);
+            } else {
+                GiftStartService.disableParts();
             }
         };
+
         $scope.updateSecondsLeft();
 
         $scope.facebookSend = function() {FacebookService.inviteFriends()};

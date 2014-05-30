@@ -4,7 +4,7 @@
         <div class="image-container">
             <img ng-src="{{selectedImg}}"/>
         </div>
-        <div><button ng-click="previousImage()"> &lt; </button><span>Image</span><button ng-click="nextImage()"> &gt; </button></div>
+        <div><button ng-click="previousImage()"> &lt; </button><span>Image {{imgIndex + 1}} of {{product.imgs.length + 1}}</span><button ng-click="nextImage()"> &gt; </button></div>
     </div>
 
     <div class="details">
@@ -20,7 +20,7 @@
             <div class="parts">
                 <span>Divide into</span>
                 <div>
-                    <button ng-class="{disabled: x*y == 2}" ng-click="fewerParts()"> - </button><span>{{x*y}}</span><button ng-class="{disabled: x*y == 36}" ng-click="moreParts()"> + </button>
+                    <button ng-class="{disabled: x*y == xySets[0][0]*xySets[0][1]}" ng-click="fewerParts()"> - </button><span>{{x*y}}</span><button ng-class="{disabled: x*y == xySets[xySets.length-1][0]*xySets[xySets.length-1][1]}" ng-click="moreParts()"> + </button>
                 </div>
                 <span>parts</span>
             </div>
@@ -28,63 +28,117 @@
 
     </div>
 
-    <div class="shipping-costs-container">
-        <div class="shipping">
-            <h2>Where should we ship it?</h2>
-            <div>
-                <div>Recipient Name</div>
-                <input type="text" ng-model="shippingName" ng-change="updateGsValidity()"/>
+    <form name="giftstartForm" novalidate>
+        <div class="shipping-costs-container">
+            <div class="shipping">
+                <h2>Where should we ship it?</h2>
+                <div>
+                    <div>Recipient Name</div>
+                    <input type="text" ng-model="shippingName" ng-change="updateGsValidity()"/>
+                </div>
+                <div>
+                    <div>Recipient Address</div>
+                    <input type="text" ng-model="shippingAddress" ng-change="updateGsValidity()"/>
+                </div>
+                <div class="city">
+                    <div>City</div>
+                    <input type="text" ng-model="shippingCity" ng-change="updateGsValidity()"/>
+                </div>
+                <div class="state">
+                    <div>State</div>
+                    <!--<input type="text" ng-model="shippingState" ng-change="updateGsValidity()"/>-->
+                    <select ng-model="shippingState" ng-change="updateGsValidity()">
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option>
+                        <option value="AR">AR</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DE">DE</option>
+                        <option value="DC">DC</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="IA">IA</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="ME">ME</option>
+                        <option value="MT">MT</option>
+                        <option value="NE">NE</option>
+                        <option value="NV">NV</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NY">NY</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="MD">MD</option>
+                        <option value="MA">MA</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MS">MS</option>
+                        <option value="MO">MO</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WV">WV</option>
+                        <option value="WI">WI</option>
+                        <option value="WY">WY</option>
+                    </select>
+                </div>
+                <div class="zip">
+                    <div>Zip</div>
+                    <input type="text" ng-model="shippingZip" ng-change="shippingChanged()"/>
+                </div>
+                <div>
+                    <div>Recipient Phone Number</div>
+                    <input type="text" ng-model="shippingPhoneNumber" ng-change="updateGsValidity()"/>
+                </div>
             </div>
-            <div>
-                <div>Recipient Address</div>
-                <input type="text" ng-model="shippingAddress" ng-change="updateGsValidity()"/>
-            </div>
-            <div class="city">
-                <div>City</div>
-                <input type="text" ng-model="shippingCity" ng-change="updateGsValidity()"/>
-            </div>
-            <div class="state">
-                <div>State</div>
-                <input type="text" ng-model="shippingState" ng-change="updateGsValidity()"/>
-            </div>
-            <div class="zip">
-                <div>Zip</div>
-                <input type="text" ng-model="shippingZip" ng-change="shippingChanged()"/>
-            </div>
-            <div>
-                <div>Recipient Phone Number</div>
-                <input type="text" ng-model="shippingPhoneNumber" ng-change="updateGsValidity()"/>
+
+            <div class="costs">
+                <div class="line-items">
+                    <div class="line-item">
+                        <span class="left">Shipping</span><span class="right">${{shipping | number : 2}}</span>
+                    </div>
+                    <div class="line-item">
+                        <span class="left">Sales tax</span><span class="right">${{salesTax | number : 2}}</span>
+                    </div>
+                    <div class="line-item">
+                        <span class="left">Service fee</span><span class="right">${{serviceFee | number : 2}}</span>
+                    </div>
+                    <div class="line-item">
+                        <span class="left">Total price, delivered</span><span class="right">${{totalPrice | number : 2}}</span>
+                    </div>
+                    <div class="line-item total">
+                        <span class="left">Total per part</span><span class="right">${{totalPrice/x/y | number : 2}}</span>
+                    </div>
+                </div>
+                <div class="gc-contact">
+                    <h2>How can we reach you?</h2>
+                    <div>Phone Number</div>
+                    <input type="text" ng-model="gcPhoneNumber" ng-change="updateGsValidity()"/>
+                    <div>Email</div>
+                    <input type="email" ng-class="{invalid: giftstartForm.email.$invalid && !giftstartForm.email.$pristine}" ng-model="gcEmail" ng-change="updateGsValidity()" ng-model-options="{ updateOn: 'blur' }"/>
+                </div>
             </div>
         </div>
 
-        <div class="costs">
-            <div class="line-items">
-                <div class="line-item">
-                    <span class="left">Shipping</span><span class="right">${{shipping | number : 2}}</span>
-                </div>
-                <div class="line-item">
-                    <span class="left">Sales tax</span><span class="right">${{salesTax | number : 2}}</span>
-                </div>
-                <div class="line-item">
-                    <span class="left">Service fee</span><span class="right">${{serviceFee | number : 2}}</span>
-                </div>
-                <div class="line-item">
-                    <span class="left">Total price, delivered</span><span class="right">${{totalPrice | number : 2}}</span>
-                </div>
-                <div class="line-item total">
-                    <span class="left">Total per part</span><span class="right">${{totalPrice/x/y | number : 2}}</span>
-                </div>
-            </div>
-            <div class="gc-contact">
-                <h2>How can we reach you?</h2>
-                <div>Phone Number</div>
-                <input type="text" ng-model="gcPhoneNumber" ng-change="updateGsValidity()"/>
-                <div>Email</div>
-                <input type="text" ng-model="gcEmail" ng-change="updateGsValidity()"/>
-            </div>
-        </div>
-    </div>
+        <button class="submit large" ng-class="{disabled: gsInvalid}" ng-click="giftstart()">GiftStart!</button>
+    </form>
 
-
-    <button class="submit large" ng-class="{disabled: gsInvalid}" ng-click="giftstart()">GiftStart!</button>
 </div>

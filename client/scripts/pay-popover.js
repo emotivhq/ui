@@ -9,6 +9,12 @@ GiftStarterApp.controller('PayPopoverController', [
         $scope.currentCharge = GiftStartService.giftStart.totalSelection;
 
         $scope.stripeSubmit = function(status, response) {
+            // Charge process!
+            // 1. User submits card details in field
+            // 2. Client app sends details to stripe
+            // 3. Stripe validates details and sends response with card id
+            // 4. Client app sends response with card id to server app
+            // 5. Server app attempts to charge card, responds with result (success/fail)
             if(response.error) {
                 mixpanel.track("Payment error");
                 console.log("Card processing error, payment not made.");
@@ -20,9 +26,12 @@ GiftStarterApp.controller('PayPopoverController', [
                 GiftStartService.attachStripeResponse(response);
                 GiftStartService.payment.emailAddress = $scope.email;
                 GiftStartService.sendPayment();
-                PopoverService.nextPopover();
             }
-        }
+        };
+
+        // TODO: Implement error reporting for cards that are rejected!
+        $scope.$on('payment-success', function() {PopoverService.nextPopover()});
+
     }
 ]);
 

@@ -23,10 +23,13 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(self._check_if_customer(data)))
 
         elif data['action'] == 'pitch-in':
-            self.response.write(json.dumps(pitchin.pitch_in(data)))
+            payment = data['payment']
+            result = pitchin.pitch_in(data['uid'], payment['gsid'], payment['parts'], payment['emailAddress'],
+                                      payment['note'], payment['stripeResponse'])
+            self.response.write(json.dumps(result))
 
-        elif data['action'] == 'process-payments':
-            process_payments(data['gsid'], data['giftstart_price'], data['num_parts'])
+        # elif data['action'] == 'process-payments':
+        #     process_payments(data['gsid'], data['giftstart_price'], data['num_parts'])
 
         elif data['action'] == 'get-pitch-ins':
             self.response.write(json.dumps(pitchin.get_pitch_in_dicts(data['gsid'])))

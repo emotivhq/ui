@@ -23,7 +23,8 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
                 var divString = '<div ng-class="{\'part-cell\': true, c'+i+
                     ': true, bought: giftstart.parts['+i+
                     '].bought, selected: giftstart.parts['+i+
-                    '].selected}" ng-click="giftstart.parts['+i+
+                    '].selected, disabled: giftstart.parts['+i+
+                    '].disabled}" ng-click="giftstart.parts['+i+
                     '].toggle()" ' +
                     'style="width: '+width+';height: '+height+';"><span class="price">${{giftstart.parts['+i+
                     '].value / 100 | number : 2}}</span><img class="giver" ng-src="{{giftstart.parts['+i+

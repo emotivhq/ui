@@ -36,11 +36,9 @@ gs-overlay
   +justify-content(center)
   +flex-direction(column)
   +no-select
-
   span.price
     font-size: 14px
     font: $font-accent
-
   img.giver
     display: none
     margin: 0 auto
@@ -55,13 +53,19 @@ gs-overlay
   text-shadow: 0 0 8px #fff
   border: dashed 1px $dash-hovered-color
 
+.part-cell.disabled
+  background: rgba(80, 150, 255, 0)
+  cursor: default
+  img.giver
+    display: none
+  span.price
+    display: none
+
 .part-cell.bought
   background: rgba(80, 150, 255, 0)
   cursor: default
-
   img.giver
     display: inline-block
-
   span.price
     display: none
 
