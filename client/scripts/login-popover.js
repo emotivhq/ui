@@ -18,6 +18,7 @@ GiftStarterApp.controller('LoginPopoverController', [
 
         $scope.$on('login-success', function() {
             mixpanel.track("FB login succeeded");
+            ga('send', 'event', 'fb-login', 'success');
             if (PopoverService.giftstartCreateLogin) {
                 PopoverService.giftstartCreateLogin = false;
                 PopoverService.hidePopover();

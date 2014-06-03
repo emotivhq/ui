@@ -2,8 +2,7 @@ __author__ = 'stuart'
 
 import webapp2
 from google.appengine.ext import ndb
-import pitchin
-from process import process_payments
+import core
 import stripe_utils
 import json
 import yaml
@@ -24,18 +23,18 @@ class PayHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'pitch-in':
             payment = data['payment']
-            result = pitchin.pitch_in(data['uid'], payment['gsid'], payment['parts'], payment['emailAddress'],
-                                      payment['note'], payment['stripeResponse'])
+            result = core.pitch_in(data['uid'], payment['gsid'], payment['parts'], payment['emailAddress'],
+                                   payment['note'], payment['stripeResponse'])
             self.response.write(json.dumps(result))
 
         # elif data['action'] == 'process-payments':
         #     process_payments(data['gsid'], data['giftstart_price'], data['num_parts'])
 
         elif data['action'] == 'get-pitch-ins':
-            self.response.write(json.dumps(pitchin.get_pitch_in_dicts(data['gsid'])))
+            self.response.write(json.dumps(core.get_pitch_in_dicts(data['gsid'])))
 
         elif data['action'] == 'check-if-complete':
-            pitchin.send_check_if_complete(data['gsid'])
+            core.check_if_complete(data['gsid'])
 
     @staticmethod
     def _check_if_customer(data):

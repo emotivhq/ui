@@ -50,6 +50,7 @@ GiftStarterApp.controller('ProductLinkController', [
 
         $scope.submitLink = function() {
             mixpanel.track('Product submitted');
+            ga('send', 'event', 'product', 'submitted');
             $scope.loading = true;
             $scope.failed = false;
             ProductService.product.product_url = $scope.product_url;

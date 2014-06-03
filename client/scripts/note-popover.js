@@ -14,6 +14,7 @@ GiftStarterApp.controller('NotePopoverController', [
 
         $scope.submit = function() {
             mixpanel.track("Note submitted");
+            ga('send', 'event', 'pitch-in', 'note submitted');
             GiftStartService.saveNote($scope.noteText);
             PopoverService.nextPopover();
         };

@@ -70,6 +70,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
 
         $scope.giftstart = function() {
             mixpanel.track("GiftStart staged");
+            ga('send', 'event', 'campaign', 'staged');
             if (!$scope.gsInvalid) {
                 GiftStartService.stageGiftStart($scope.title, $scope.description, $scope.selectedImg,
                     $scope.totalPrice, $scope.product.product_url, $scope.x, $scope.y,

@@ -1,6 +1,7 @@
 __author__ = 'stuart'
 
 import webapp2
+import comm
 from giftstart import GiftStart
 import core
 import json
@@ -19,8 +20,8 @@ class GiftStartHandler(webapp2.RequestHandler):
             giftstart_id = data['gsid']
             self.response.write(GiftStart.get_by_id(giftstart_id).jsonify())
 
-        elif data['action'] == 'check-if-complete':
-            core.giftstart_complete(data['gsid'], data['pitch_ins'])
+        elif data['action'] == 'one-day-warning':
+            comm.send_day_left_warning(data['gsid'])
 
 
 api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)
