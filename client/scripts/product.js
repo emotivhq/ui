@@ -47,7 +47,7 @@ GiftStarterApp.directive('gsProductLink',
                 scope.loading = false;
                 ProductService.product.url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
-                $location.path("create-giftstart");
+                $location.path("shipping-contact");
             }
             function onFailure(reason) {
                 scope.loading = false;

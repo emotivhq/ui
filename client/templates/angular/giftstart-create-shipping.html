@@ -1,0 +1,98 @@
+
+<div class="create wrapper" id="shipping-contact-wrapper" ng-controller="GiftStartCreateShippingController">
+    <img class="nav-bar" src="/assets/status_bar_placeholder.png"/>
+    <div class="block shipping">
+        <h2>Where should we ship it?</h2>
+        <div class="input-group">
+            <label for="recipient-name">Recipient Name</label>
+            <input type="text" id="recipient-name" placeholder="First name Last name">
+        </div>
+        <div class="input-group">
+            <label for="recipient-address">Recipient Address</label>
+            <input type="text" id="recipient-address" placeholder="Street Address">
+            <div>
+                <input type="text" class="city" placeholder="City">
+                <select class="state" ng-model="shippingState">
+                    <option value="AL">AL</option>
+                    <option value="AK">AK</option>
+                    <option value="AZ">AZ</option>
+                    <option value="AR">AR</option>
+                    <option value="CA">CA</option>
+                    <option value="CO">CO</option>
+                    <option value="CT">CT</option>
+                    <option value="DE">DE</option>
+                    <option value="DC">DC</option>
+                    <option value="FL">FL</option>
+                    <option value="GA">GA</option>
+                    <option value="ID">ID</option>
+                    <option value="IL">IL</option>
+                    <option value="IN">IN</option>
+                    <option value="IA">IA</option>
+                    <option value="KS">KS</option>
+                    <option value="KY">KY</option>
+                    <option value="LA">LA</option>
+                    <option value="ME">ME</option>
+                    <option value="MT">MT</option>
+                    <option value="NE">NE</option>
+                    <option value="NV">NV</option>
+                    <option value="NH">NH</option>
+                    <option value="NJ">NJ</option>
+                    <option value="NM">NM</option>
+                    <option value="NY">NY</option>
+                    <option value="NC">NC</option>
+                    <option value="ND">ND</option>
+                    <option value="OH">OH</option>
+                    <option value="OK">OK</option>
+                    <option value="OR">OR</option>
+                    <option value="MD">MD</option>
+                    <option value="MA">MA</option>
+                    <option value="MI">MI</option>
+                    <option value="MN">MN</option>
+                    <option value="MS">MS</option>
+                    <option value="MO">MO</option>
+                    <option value="PA">PA</option>
+                    <option value="RI">RI</option>
+                    <option value="SC">SC</option>
+                    <option value="SD">SD</option>
+                    <option value="TN">TN</option>
+                    <option value="TX">TX</option>
+                    <option value="UT">UT</option>
+                    <option value="VT">VT</option>
+                    <option value="VA">VA</option>
+                    <option value="WA">WA</option>
+                    <option value="WV">WV</option>
+                    <option value="WI">WI</option>
+                    <option value="WY">WY</option>
+                </select>
+                <span><input type="text" class="zip" placeholder="Zip" maxlength="5"></span>
+            </div>
+        </div>
+        <div class="input-group">
+            <label for="recipient-phone">Recipient Phone Number</label>
+            <input type="tel" id="recipient-phone" placeholder="000 000 0000" maxlength="10">
+        </div>
+        <div class="input-group">
+            <label for="recipient-email">Recipient Email</label>
+            <input type="email" id="recipient-email" placeholder="username@mail.com">
+        </div>
+    </div>
+    <div class="block contact">
+        <h2>How can we reach you?</h2>
+        <button ng-click="">Same As Shipping</button>
+        <div class="input-group">
+            <label for="contact-name">Your Name</label>
+            <input type="text" id="contact-name" placeholder="First name Last name">
+        </div>
+        <div class="input-group">
+            <label for="contact-phone">Your Phone Number</label>
+            <input type="tel" id="contact-phone" placeholder="000 000 0000" maxlength="10">
+        </div>
+        <div class="input-group">
+            <label for="contact-email">Your Email</label>
+            <input type="email" id="contact-email" placeholder="username@mail.com">
+        </div>
+        <p>This information will only be requested once from you as the GiftStarter - anyone else you invite to join in on the gift will only need to enter their personal payment information.</p>
+        <p>Don't worry! We promise not to share any of this information with anyone else.  Except for maybe the NSA - we can't do anything about them.</p>
+        <button ng-click="">Next</button>
+    </div>
+</div>

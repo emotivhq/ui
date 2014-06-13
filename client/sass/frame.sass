@@ -12,10 +12,18 @@ body *
 input, button, select
   font: $font-normal
   padding: 0.1em 0.4em
-  +border-radius(0.2em)
+  +border-radius(0.4rem)
 
-input
+input, select
+  padding: 0.5em
   border: 2px solid $border-color
+
+select
+  padding: 0.45em
+
+input:focus, button:focus, select:focus
+  outline: none
+  +box-shadow(#333, 0, 0, 0.1em)
 
 button
   font: $font-accent
@@ -84,15 +92,29 @@ button.large
 button.white-border
   border-color: white
 
-h1.accent.large
-  font: $font-accent-large
+h1
+  font: $font-accent-inline-large
+  color: $primary-color
   margin-top: 0px
+  margin-bottom: 0px
+
+h2
+  color: $primary-color
+  font: $font-accent-large
+  font-size: 2.5em
+  margin-top: 0px
+  margin-bottom: 0px
+
+p
+  font-weight: 300
 
 p.small
   font-size: 11px
 
 span.accent.large
   font: $font-accent-large
+
+
 
 /*  ANGULAR VIEW  */
 #angular-view

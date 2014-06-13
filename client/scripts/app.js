@@ -10,6 +10,8 @@ GiftStarterApp.config([
     function($routeProvider,  $locationProvider) {
         $routeProvider
             .when('/', {templateUrl: '/templates/angular/home.html'})
+            .when('/shipping-contact', {templateUrl: '/templates/angular/giftstart-create-shipping.html'})
+            .when('/campaign-create', {templateUrl: 'templates/angular/giftstart-create-campaign.html'})
             .when('/create-giftstart', {templateUrl: '/templates/angular/giftstart-create.html'})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
             .otherwise({redirectTo: '/'});
