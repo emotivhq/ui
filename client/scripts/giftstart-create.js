@@ -31,8 +31,8 @@ GiftStarterApp.controller('GiftStartCreateController', [
             'IA', 'KS', 'KY', 'LA', 'ME', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'MD',
             'MA', 'MI', 'MN', 'MS', 'MO', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
 
-        $scope.price = 0;
-        $scope.shipping = 10;
+        $scope.price = parseFloat(ProductService.product.price);
+        $scope.shipping = 0.045 * $scope.price;
         $scope.salesTax = 0;
         $scope.serviceFee = 0;
         $scope.totalPrice = 0;
@@ -86,8 +86,7 @@ GiftStarterApp.controller('GiftStartCreateController', [
         };
 
         $scope.shippingChanged = function() {
-            // TODO: calculate this based on... something??
-            $scope.shipping = 10;
+            $scope.shipping = 0.045 * $scope.price;
             $scope.updateGsValidity();
         };
 

@@ -33,7 +33,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response):
     template_values = {'gsid': str(gsid),
                        'receipt_text': "Customer ID:\t\t{uid}\n"
                                        "Charge ID:\t\t{charge_id}\n"
-                                       "Total Charge:\t\t{total_charge}".format(**receipt_values)}
+                                       "Total Charge:\t\t${total_charge}".format(**receipt_values)}
     gs_email.comm.send("Pitch In Received!",
                        "Awesomesauce!  Along with that tender and warm sense of togetherness you got from pitching in "
                        "to GiftStarter campaign #{gsid}, you also get a receipt for your charge!  Isn't that great?\n"

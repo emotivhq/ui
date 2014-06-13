@@ -1,0 +1,57 @@
+@import base
+
+#header
+  background: url('/assets/headerBackground.png')
+  background-size: cover
+  width: 100%
+  z-index: 1000
+
+  /*  HEADER  */
+  $header-height: 9em
+  $header-margin-bottom: 10px
+
+  #header-logo
+    @media screen and (max-width: 37.5em)
+      width: 100%
+    @media screen and (min-width: 37.5em)
+      height: $header-height
+    display: block
+    padding: 2em 2em 0 0
+    margin: 0 auto $header-margin-bottom auto
+
+  div.wrapper
+    margin: 0 auto
+
+    h2
+      margin-top: 0.5em
+      margin-bottom: 1.2em
+      font: $font-accent-inline-large
+      cursor: default
+      @media screen and (max-width: 37.5em)
+        font-size: 2em
+      color: $primary-color
+      text-align: center
+
+    div.nav
+      font: $font-accent
+      color: $primary-color
+      text-align: center
+      padding: 0.7em 0
+
+      span.navitem
+        cursor: pointer
+        font: $font-accent
+        font-weight: 700
+        padding: 0 0.5em
+
+      span.navitem:hover
+        color: $primary-color-highlight
+
+#header
+  div.wrapper.small
+    #header-logo
+      padding: 1em 0 3em 0
+      height: 9em
+
+    div.big-container
+      display: none

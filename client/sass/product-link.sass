@@ -3,13 +3,23 @@
 
 .product-link.wrapper
   /*  PRODUCT LINK INPUT  */
+  text-align: center
+
   input
     font: $font-accent
 
   .search.wrapper
-    margin: 110px auto 20px auto
+    margin: 2em auto 0 auto
     text-align: center
 
+  span.inputs
+    button, input
+      @media screen and (max-width: 37.5em)
+        width: 9em
+
   .loading, div.failed
-    margin-top: 100px
     text-align: center
+    display: inline-block
+    padding: 2em
+    border-radius: 0.5em
+    background: white

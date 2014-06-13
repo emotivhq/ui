@@ -8,10 +8,20 @@
   font-family: BlanchCondensed
   src: url('/assets/fonts/BLANCH_CONDENSED.otf')
 
-$font-accent: 400 28px BlanchCondensed, sans-serif
-$font-accent-large: 400 40px BlanchCondensed, sans-serif
+@font-face
+  font-family: BlanchInline
+  src: url('/assets/fonts/BLANCH_CONDENSED_INLINE.otf')
+
+$accent-font-size: 32px
+$accent-font-size-large: 52px
+$button-font-size-large: 2.5em
+$font-accent: 400 $accent-font-size BlanchCondensed, sans-serif
+$font-accent-large: 400 $accent-font-size-large BlanchCondensed, sans-serif
+$font-button-large: 400 $button-font-size-large BlanchCondensed, sans-serif
+$font-accent-inline: 400 $accent-font-size BlanchInline, sans-serif
+$font-accent-inline-large: 400 $accent-font-size-large BlanchInline, sans-serif
 $font-normal: 300 14px 'Roboto', sans-serif
-$font-normal-large: 300 28px 'Roboto', sans-serif
+$font-normal-large: 300 $accent-font-size 'Roboto', sans-serif
 
 // ------------------------- COLORS -------------------------
 $primary-color: #d45
@@ -24,6 +34,8 @@ $facebook-color: #3B5998
 $facebook-color-highlight: #5577bb
 $dash-color: rgba(255, 255, 255, 0.4)
 $dash-hovered-color: rgba(255, 255, 255, 0.7)
+$border-color: #a3a3a3
+$footer-bg-color: #eaeaea
 
 // ------------------------- MIXINS -------------------------
 

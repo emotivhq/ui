@@ -113,19 +113,19 @@
             <div class="costs">
                 <div class="line-items">
                     <div class="line-item">
-                        <span class="left">Shipping</span><span class="right">${{shipping | number : 2}}</span>
+                        <span class="left">Shipping</span><span class="right">${{shipping/100 | number : 2}}</span>
                     </div>
                     <div class="line-item">
-                        <span class="left">Sales tax</span><span class="right">${{salesTax | number : 2}}</span>
+                        <span class="left">Sales tax</span><span class="right">${{salesTax/100 | number : 2}}</span>
                     </div>
                     <div class="line-item">
-                        <span class="left">Service fee</span><span class="right">${{serviceFee | number : 2}}</span>
+                        <span class="left">Service fee</span><span class="right">${{serviceFee/100 | number : 2}}</span>
                     </div>
                     <div class="line-item">
-                        <span class="left">Total price, delivered</span><span class="right">${{totalPrice | number : 2}}</span>
+                        <span class="left">Total price, delivered</span><span class="right">${{totalPrice/100 | number : 2}}</span>
                     </div>
                     <div class="line-item total">
-                        <span class="left">Total per part</span><span class="right">${{totalPrice/x/y | number : 2}}</span>
+                        <span class="left">Total per part</span><span class="right">${{totalPrice/100/x/y | number : 2}}</span>
                     </div>
                 </div>
                 <div class="gc-contact">

@@ -1,0 +1,87 @@
+@import base
+@import column
+
+$footer-column-width: 37.3em
+$wrapper-padding: 1em
+
+footer
+  background-color: $footer-bg-color
+
+  div.wrapper
+    padding: $wrapper-padding 0
+    margin: 0 auto
+
+    @media screen and (min-width: 75em)
+      width: 75em
+
+    @media screen and (min-width: 37.5em) and (max-width: 75em)
+      width: 37.5em
+
+    @media screen and (max-width: 37.5em)
+      width: 100%
+
+  div.subscribe
+    header
+      h2
+        font: $font-accent-inline-large
+        display: inline-block
+        margin: 0 0.3em 0 0
+      img.social
+        padding: 0.5em
+        height: 56px
+        @media screen and (max-width: 37.5em)
+          padding: 0.1em
+          height: 40px
+          vertical-align: initial
+
+        vertical-align: top
+        margin-left: 0.1em
+        +border-radius(50%)
+    p
+      margin-bottom: 1.5em
+    input.email
+      +border-radius(0.4em)
+      width: 20em
+      @media screen and (max-width: 37.5em)
+        width: 100%
+      padding: 0.6em 1em
+    button
+      @media screen and (max-width: 37.5em)
+        width: 100%
+
+  div.block
+    @media screen and (min-width: 37.5em)
+      width: $footer-column-width
+
+    @media screen and (max-width: 37.5em)
+      width: 100%
+
+    display: inline-block
+    padding: $margin-vert $margin-horz
+    vertical-align: top
+
+  div.block.founders
+    @media screen and (min-width: 75em)
+      padding-top: 4em
+
+    div.founder
+      @media screen and (min-width: 37.5em)
+        width: ($footer-column-width - 2*$margin-horz)/3
+
+      @media screen and (max-width: 37.5em)
+        width: 33%
+
+      text-align: center
+      padding: 0
+      img
+        +border-radius(50%)
+        max-width: 100%
+        max-height: 100%
+        width: auto
+        height: auto
+        padding: 0 1em
+        @media screen and (max-width: 37.5em)
+          padding: 0 0.2em
+      p
+        margin: 0.2em 0 0 0
+        color: #585858
