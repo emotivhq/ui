@@ -2,14 +2,17 @@
 
 
 #shipping-contact-wrapper
+  text-align: center
   overflow: hidden
 
   h2
     display: inline-block
   button
     float: right
-  img
-    max-width: 48em
+  img.progress
+    max-width: 39em
+    @media screen and (max-width: $phone-tablet-boundary)
+      max-width: 90%
     display: block
     margin: 2em auto
 

@@ -8,6 +8,7 @@ class GiftStart(ndb.Model):
     gsid = ndb.StringProperty(required=True)
     giftstart_title = ndb.StringProperty(required=True)
     giftstart_description = ndb.TextProperty(required=True)
+    giftstart_special_notes = ndb.TextProperty()
     gift_champion_uid = ndb.StringProperty(required=True)
     deadline = ndb.DateTimeProperty(required=True)
     giftstart_complete = ndb.BooleanProperty(default=False)

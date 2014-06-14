@@ -24,36 +24,59 @@ GiftStarterApp.service('GiftStartService', [
         this.lastCheckedMilliseconds = new Date().getTime();
         this.updateInterval = 3*1000;
 
+        // Shipping/Contact Info
+        this.shippingName = '';
+        this.shippingAddress = '';
+        this.shippingCity = '';
+        this.shippingState = '';
+        this.shippingZip = '';
+        this.shippingPhoneNumber = '';
+        this.shippingEmail = '';
+        this.gcName = '';
+        this.gcPhoneNumber = '';
+        this.gcEmail = '';
+
+        // Campaign Details
+        this.title = '';
+        this.description = '';
+        this.specialNotes = '';
+        this.productImgUrl = '';
+        this.rows = 3;
+        this.columns = 3;
+        this.productPrice = 0;
+        this.salesTax = 0;
+        this.shipping = 0;
+        this.totalPrice = 0;
+
         var self = this;
 
-        function buildGiftStart(title, description, championUid, productImgUrl, productPrice, productUrl,
-                                parts, rows, columns, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                                shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
+        function buildGiftStart() {
             return {
-                title: title,
-                description: description,
-                gift_champion_uid: championUid,
+                title: self.title,
+                description: self.description,
+                special_notes: self.specialNotes,
+                gift_champion_uid: FacebookService.uid,
                 product: {
-                    price: 100*productPrice,
-                    img_url: productImgUrl,
-                    product_url: productUrl
+                    price: 100*self.productPrice,
+                    img_url: self.productImgUrl,
+                    product_url: self.productUrl
                 },
                 totalSelection: 0,
-                parts: parts,
-                rows: rows,
-                columns: columns,
-                gc_phone_number: gcPhoneNumber,
-                gc_email: gcEmail,
-                shipping_name: shippingName,
-                shipping_address: shippingAddress,
-                shipping_city: shippingCity,
-                shipping_state: shippingState,
-                shipping_zip: shippingZip,
-                shipping_phone_number: shippingPhoneNumber
+                parts: makeParts(self.rows * self.columns, self.totalPrice),
+                rows: self.rows,
+                columns: self.columns,
+                gc_phone_number: self.gcPhoneNumber,
+                gc_email: self.gcEmail,
+                shipping_name: self.shippingName,
+                shipping_address: self.shippingAddress,
+                shipping_city: self.shippingCity,
+                shipping_state: self.shippingState,
+                shipping_zip: self.shippingZip,
+                shipping_phone_number: self.shippingPhoneNumber
             };
         }
 
-        function makeParts(numParts, productPrice) {
+        function makeParts(numParts, totalPrice) {
             function injectPartToggles(parts) {
                 function makePartToggle(i) {
                     var ti = i;
@@ -78,7 +101,7 @@ GiftStarterApp.service('GiftStartService', [
                     disabled: false,
                     selected: false,
                     part_id: i,
-                    value: productPrice/numParts
+                    value: totalPrice/numParts
                 });
             }
 
@@ -92,22 +115,15 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart.parts.map(disablePart);
         };
 
-        this.stageGiftStart = function(title, description, productImgUrl, productPrice, productUrl,
-                                       numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                                       shippingCity, shippingState, shippingZip, shippingPhoneNumber) {
-            var tempParts = makeParts(numRows * numCols, productPrice);
-            self.stagedGiftStart = buildGiftStart(title, description, -1, productImgUrl, productPrice,
-                productUrl, tempParts, numRows, numCols, gcPhoneNumber, gcEmail, shippingName, shippingAddress,
-                shippingCity, shippingState, shippingZip, shippingPhoneNumber);
-        };
-
-        this.fireGiftStartCreate = function() {
+        this.createGiftStart = function() {
             mixpanel.track("GiftStart created");
             ga('send', 'event', 'campaign', 'created');
-            self.giftStart = self.stagedGiftStart;
-            self.giftStart.gift_champion_uid = FacebookService.uid;
+            self.giftStart = buildGiftStart();
             $location.path('/giftstart');
-            self.createGiftStart();
+            $http({method: 'POST', url: '/giftstart/api',
+                data: {giftstart: self.giftStart, action: 'create'}})
+                .success(self.fetchSuccess)
+                .error(self.createFailure);
         };
 
         this.enableGiftStart = function() {
@@ -115,13 +131,6 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.product.price);
             self.updateSelected();
             self.syncPitchIns('GiftStartService');
-        };
-
-        this.createGiftStart = function() {
-            $http({method: 'POST', url: '/giftstart/api',
-                data: {giftstart: self.giftStart, action: 'create'}})
-                .success(this.fetchSuccess)
-                .error(this.createFailure);
         };
 
         this.createFailure = function() {console.log("Failed to create GiftStart.")};

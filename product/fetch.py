@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 import requests
 from lxml import html
+import tax
 
 LAUNCH_PARTNERS = ['http://www.rei.com/', 'http://www.brooksrunning.com/']
 
@@ -95,9 +96,3 @@ def product(data):
         result = {'error': 'Non-launch partner'}
 
     return result
-
-
-def sales_tax_and_shipping(url, address, city, state, zip):
-    page = requests.get(url)
-
-    return {'shipping': 1500, 'sales_tax': 300}

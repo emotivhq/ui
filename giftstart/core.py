@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from GiftStart import GiftStart
 import storage.image_cache
 import gs_email.comm
-import tax
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -16,6 +15,7 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.gift_champion_uid = giftstart['gift_champion_uid']
     ndbgs.giftstart_title = giftstart['title']
     ndbgs.giftstart_description = giftstart['description']
+    ndbgs.giftstart_special_notes = giftstart['special_notes']
 
     ndbgs.product_url = giftstart['product']['product_url']
     ndbgs.product_price = int(giftstart['product']['price'])
@@ -48,10 +48,6 @@ def create(giftstart):
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
     gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()
-
-    print("Looking up tax...")
-    tax.lookup(gs.product_price, gs.shipping_address, gs.shipping_city, gs.shipping_state, gs.shipping_zip)
-    print("Tax lookup complete.")
 
     gs_email.comm.send("Giftstart #{gsid} created!".format(gsid=str(gs.gsid)),
                        "Check it: http://giftstarter.co/giftstart?gs-id={gsid}\n\nJsonified:\n{json}"

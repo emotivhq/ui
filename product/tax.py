@@ -49,11 +49,11 @@ TAX_CLOUD_API_ID = 'E95D360'
 TAX_CLOUD_API_KEY = '80807DAF-22F1-487A-B0B8-3E103C855637'
 
 
-def lookup(price, address, city, state, zipcode):
+def lookup(address, city, state, zipcode):
     request = TAX_CLOUD_SOAP_TEMPLATE.render({
         'api_id': TAX_CLOUD_API_ID,
         'api_key': TAX_CLOUD_API_KEY,
-        'price': float(price)/100,
+        'price': 100,
         'address': address,
         'city': city,
         'state': state,
@@ -62,5 +62,5 @@ def lookup(price, address, city, state, zipcode):
     headers = {"Content-Type": "text/xml; charset=UTF-8"}
 
     response = requests.post(url='https://api.taxcloud.net/1.0/', headers=headers, data=request)
-    tax_amount = int(100*(float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0])))
+    tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
     return tax_amount

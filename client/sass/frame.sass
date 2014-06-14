@@ -9,19 +9,19 @@ body *
 
 // ----------------------- GENERAL STYLING -----------------------
 
-input, button, select
+input, button, select, textarea
   font: $font-normal
   padding: 0.1em 0.4em
   +border-radius(0.4rem)
 
-input, select
+input, select, textarea
   padding: 0.5em
   border: 2px solid $border-color
 
 select
   padding: 0.45em
 
-input:focus, button:focus, select:focus
+input:focus, button:focus, select:focus, textarea:focus
   outline: none
   +box-shadow(#333, 0, 0, 0.1em)
 
@@ -38,7 +38,11 @@ button.disabled, button.disabled:active, button.disabled:hover, button.disabled:
   background: #aaa
   border-color: #aaa
   color: #555
+  +box-shadow(#000, 0, 0, 0)
   cursor: default
+
+button.circle
+  +border-radius(50%)
 
 button:active, button:hover, button:focus
   background: $primary-color-highlight
@@ -114,7 +118,8 @@ p.small
 span.accent.large
   font: $font-accent-large
 
-
+.ng-invalid
+  border-color: red
 
 /*  ANGULAR VIEW  */
 #angular-view

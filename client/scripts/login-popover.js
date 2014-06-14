@@ -22,7 +22,7 @@ GiftStarterApp.controller('LoginPopoverController', [
             if (PopoverService.giftstartCreateLogin) {
                 PopoverService.giftstartCreateLogin = false;
                 PopoverService.hidePopover();
-                GiftStartService.fireGiftStartCreate();
+                GiftStartService.createGiftStart();
             } else {
                 PopoverService.nextPopover();
             }

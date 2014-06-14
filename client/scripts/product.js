@@ -38,10 +38,10 @@ GiftStarterApp.service('ProductService', [
 
 GiftStarterApp.directive('gsProductLink',
     function(ProductService, $location) {
-        function link(scope, element, attrs) {
+        function link(scope) {
             scope.loading = false;
             scope.failed = false;
-            scope.product_url = "";
+            scope.product_url = "http://www.rei.com/product/868340/camelbak-spire-22-lr-hydration-pack-100-fl-oz-womens";
 
             function onSuccess(product) {
                 scope.loading = false;
