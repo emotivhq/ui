@@ -57,7 +57,7 @@ GiftStarterApp.service('GiftStartService', [
                 special_notes: self.specialNotes,
                 gift_champion_uid: FacebookService.uid,
                 product: {
-                    price: 100*self.productPrice,
+                    price: self.productPrice,
                     img_url: self.productImgUrl,
                     product_url: self.productUrl
                 },

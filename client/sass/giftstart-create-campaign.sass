@@ -24,13 +24,18 @@
     margin-top: 1.5em
   button.float-right
     float: right
-  button.next
+  button.next, button.help
     margin-top: 0.5em
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 100%
+  button.circle
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 1.4em
   .money
     font: $font-accent
     margin: 0.1em
   span.parts-control
-    width: 14em
+    width: 12em
     display: inline-block
     text-align: center
     vertical-align: bottom
@@ -50,5 +55,7 @@
     margin-top: 0.5em
   #price
     width: 8em
+  #selected-image
+    max-width: 100%
   img.loading
     height: 2em
