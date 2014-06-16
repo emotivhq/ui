@@ -41,7 +41,7 @@ GiftStarterApp.directive('gsProductLink',
         function link(scope) {
             scope.loading = false;
             scope.failed = false;
-            scope.product_url = "http://www.rei.com/product/868340/camelbak-spire-22-lr-hydration-pack-100-fl-oz-womens";
+            scope.product_url = "";//"http://www.rei.com/product/868340/camelbak-spire-22-lr-hydration-pack-100-fl-oz-womens";
 
             function onSuccess(product) {
                 scope.loading = false;
