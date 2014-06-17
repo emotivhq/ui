@@ -1,27 +1,19 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
-    <div class="title block">
-        <a ng-href="{{giftStart.product.product_url}}" class="title"><div class="title" ng-bind="giftStart.title"></div></a>
+    <div class="description block">
+        <a ng-href="{{giftStart.product.product_url}}" class="title"><h1 class="title">{{giftStart.title}}</h1></a>
+        <div class="description" style="white-space: pre-line;">{{giftStart.description}}</div>
+        <div class="price"><h2>Remaining:</h2><h1>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h1></div><div class="price"><h2>Contribution:</h2><h1>$<span class="giftstart product contribution">{{giftStart.totalSelection / 100 | number : 2}}</span></h1></div>
+        <div><h2>Time Left in Campaign</h2><h1 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft != 0)}">{{countdown}}</h1></div>
     </div>
 
     <div class="overlay block">
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
-    </div>
-
-    <div class="money block">
-        <div class="price">Remaining:<div>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></div></div>
-        <div class="price">Contribution:<div>$<span class="giftstart product contribution">{{giftStart.totalSelection / 100 | number : 2}}</span></div></div>
-        <div>Time Left:<div class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft != 0)}">{{countdown}}</div></div>
-    </div>
-
-    <div class="description block">
-        <div class="description" ng-bind="giftStart.description"></div>
-    </div>
-
-    <div class="pitch-in block">
-        <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
-        <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');"><button class="large email"><img src="/assets/email_icon.png"/><span>Share!</span></button></a>
-        <button class="facebook-send button large" ng-click="mixpanel.track('FB send in giftstart clicked');facebookSend();"><img src="/assets/facebook_white_icon_256.png"/><span>Share!</span></button>
+        <div class="buttons">
+            <button class="pitch-in button large" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
+            <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');"><button class="large email"><img src="/assets/email_icon.png"/><span>Share!</span></button></a>
+            <button class="facebook-send button large" ng-click="mixpanel.track('FB send in giftstart clicked');facebookSend();"><img src="/assets/facebook_white_icon_256.png"/><span>Share!</span></button>
+        </div>
     </div>
 
     <div class="comments block">

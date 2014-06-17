@@ -5,86 +5,56 @@
 div.giftstart.wrapper
   margin: 0 auto
 
+  @media screen and (max-width: $tablet-computer-boundary)
+    width: 100%
+  @media screen and (min-width: $tablet-computer-boundary)
+    width: 2.5*$column-width
+
 div.block
   width: $column-width
   display: inline-block
   padding: $margin-vert $margin-horz
   vertical-align: top
-div.block.overlay, div.block.comments
-  width: 1.5*$column-width
-  text-align: center
 
-div.block.overlay
-  padding: 0
-
-@media screen and (max-width: 37.5em)
-  div.giftstart.wrapper
+  @media screen and (max-width: $phone-tablet-boundary)
     width: 100%
 
-  div.block
-    width: 100%
-
-@media screen and (min-width: 37.5em) and (max-width: 75em)
-  div.giftstart.wrapper
-    width: 100%
-
-  div.block
+  @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
     width: 40%
 
-  div.block.overlay, div.block.comments
+div.block.overlay
+  width: 1.5*$column-width
+  text-align: center
+  padding: 0
+  float: left
+  margin: $margin-vert 0
+
+  @media screen and (max-width: $phone-tablet-boundary)
+    width: 100%
+
+  @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
     width: 60%
 
-@media screen and (min-width: 75em)
-  div.giftstart.wrapper
-    width: 2.5*$column-width
-
-
-div.block.title, div.block.money, div.block.description, div.block.pitch-in
+div.block.description
   float: right
-
-.block.overlay, div.block.comments
-  float: left
-
-div.block.title
   a.title
     text-decoration: none
     color: black
   a.title:hover
     text-decoration: underline
-  .title
+  h1
+    color: black
+  div.description
+    font: $font-normal
+    line-height: 1.5
+    margin-bottom: 2em
+  .description
+    line-height: 1.5
     font-weight: 300
-    font-size: 36px
-    text-align: left
-
-div.block.overlay
-  margin: $margin-vert 0
-
-div.block.description
-  text-align: left
-
-
-div.block.pitch-in
-  padding: 0.75 em
-
-  .button
-    height: 1.5em
-    float: left
-    vertical-align: top
-
-
-div.block.money
-  text-align: center
-
-  .contribution, .remaining, .countdown
-    font-family: Blanch, sans-serif
-    font-size: 60px
-
-  .danger
-    color: $primary-color
-
   div.price
     display: inline-block
-    padding-right: 20px
+    width: 49%
+  div.time
 
 div.block.comments
   display: inline-block
