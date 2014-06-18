@@ -36,6 +36,10 @@ button
   cursor: pointer
   transition: all 0.2s
 
+button.share
+  background: $share-color
+  border-color: $share-color
+
 button.disabled, button.disabled:active, button.disabled:hover, button.disabled:focus
   background: #aaa
   border-color: #aaa
@@ -49,6 +53,10 @@ button.circle
 button:active, button:hover, button:focus
   background: $primary-color-highlight
   border-color: $primary-color-highlight
+
+button.share:active, button.share:hover, button.share:focus
+  background: $share-color-highlight
+  border-color: $share-color-highlight
 
 button.facebook-send
   display: none
@@ -104,13 +112,14 @@ button.white-border
 h1
   font: $font-accent-inline-large
   color: $primary-color
+  font-size: 2.5em
   margin-top: 0px
   margin-bottom: 0px
 
 h2
   color: $primary-color
   font: $font-accent-large
-  font-size: 2.5em
+  font-size: 2em
   margin-top: 0px
   margin-bottom: 0px
 

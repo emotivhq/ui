@@ -5,10 +5,17 @@
 div.giftstart.wrapper
   margin: 0 auto
 
+  button.share
+    width: 4em
+    margin: 0.5em
+  button.pitch-in
+    width: 7em
+    margin: 0.5em
+
   @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
   @media screen and (min-width: $tablet-computer-boundary)
-    width: 2.5*$column-width
+    width: 2*$column-width
 
 div.block
   width: $column-width
@@ -23,7 +30,7 @@ div.block
     width: 40%
 
 div.block.overlay
-  width: 1.5*$column-width
+  width: $column-width
   text-align: center
   padding: 0
   float: left
@@ -51,10 +58,14 @@ div.block.description
   .description
     line-height: 1.5
     font-weight: 300
+
+div.block.price
+  h1
+    color: black
   div.price
     display: inline-block
     width: 49%
-  div.time
+
 
 div.block.comments
   display: inline-block
