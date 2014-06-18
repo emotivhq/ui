@@ -5,14 +5,16 @@ body
 
 body *
   +box-sizing(border-box)
+  font-size: $base-font-size
 
 // ----------------------- GENERAL STYLING -----------------------
 
 p
-  font-family: 'Roboto', sans-serif
+  font: $p-font
+  line-height: 1.5
 
 input, button, select, textarea
-  font: $font-normal
+  font: $p-font
   padding: 0.1em 0.4em
   +border-radius(0.4rem)
 
@@ -28,11 +30,11 @@ input:focus, button:focus, select:focus, textarea:focus
   +box-shadow(#333, 0, 0, 0.1em)
 
 button
-  font: $font-accent
+  font: $button-font
   vertical-align: top
   background: $primary-color
-  color: #fff
   border: solid $primary-color 2px
+  color: #fff
   cursor: pointer
   transition: all 0.2s
 
@@ -58,85 +60,34 @@ button.share:active, button.share:hover, button.share:focus
   background: $share-color-highlight
   border-color: $share-color-highlight
 
-button.facebook-send
-  display: none
-  @media screen and (min-width: 64em)
-    display: inline-block
-    span
-      display: none
-  border-color: $facebook-color
-  background-color: $facebook-color
-  span
-    color: white
-    display: inline-block
-    //font: $font-accent-large
-    font-family: BlanchCondensed
-    margin-left: 10px
-    margin-top: 2px
-    vertical-align: top
-  img
-    width: 30px
-    margin-top: 2px
-button.facebook-send:hover
-  border-color: $facebook-color-highlight
-  background-color: $facebook-color-highlight
-
-button.email
-  span
-    color: white
-    display: inline-block
-    //font: $font-button-large
-    font-family: BlanchCondensed
-    margin-left: 10px
-    margin-top: 2px
-    vertical-align: top
-  img
-    width: 40px
-    margin-top: 2px
-  border-color: $email-color
-  background-color: $email-color
-button.email:hover
-  border-color: $email-color-highlight
-  background-color: $email-color-highlight
-
-
-button.large
-  font: $font-button-large
-  padding: 6px 10px
-  margin: 20px 10px 0 10px
-  height: 1.5em
-
 button.white-border
-  border-color: white
+  border-color: #fff
 
 h1
-  font: $font-accent-inline-large
-  color: $primary-color
-  font-size: 2.5em
+  font: $h1-font
+  color: #000
   margin-top: 0px
   margin-bottom: 0px
 
 h2
+  font: $h2-font
   color: $primary-color
-  font: $font-accent-large
-  font-size: 2em
   margin-top: 0px
   margin-bottom: 0px
 
 p
-  font-weight: 300
+  font: $p-font
 
-p.small
-  font-size: 11px
+//p.small
+//  font-size: 11px
 
-span.accent.large
-  font: $font-accent-large
+//span.accent.large
+//  font: $font-accent-large
 
 .ng-invalid
   border-color: red
 
 /*  ANGULAR VIEW  */
 #angular-view
-  //margin-top: $header-height + $header-margin-bottom
   overflow: auto
   margin-bottom: 2em
