@@ -60,6 +60,11 @@ GiftStarterApp.directive('gsProductLink',
                 mixpanel.track('Product submitted');
                 ga('send', 'event', 'product', 'submitted');
 
+                // Fix urls if they don't start with http://
+                if (scope.product_url.slice(0, 6) !== "http://" || scope.product_url.slice(0, 7) !== "https://") {
+                    scope.product_url = "http://" + scope.product_url;
+                }
+
                 scope.loading = true;
                 scope.failed = false;
                 ProductService.product.product_url = scope.product_url;
