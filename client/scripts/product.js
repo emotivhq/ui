@@ -61,7 +61,8 @@ GiftStarterApp.directive('gsProductLink',
                 ga('send', 'event', 'product', 'submitted');
 
                 // Fix urls if they don't start with http://
-                if (scope.product_url.slice(0, 6) !== "http://" || scope.product_url.slice(0, 7) !== "https://") {
+                if (scope.product_url.slice(0, 7) !== "http://" && scope.product_url.slice(0, 8) !== "https://") {
+                    console.log(scope.product_url.slice(0, 7));
                     scope.product_url = "http://" + scope.product_url;
                 }
 

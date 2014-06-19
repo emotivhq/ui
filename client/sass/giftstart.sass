@@ -73,14 +73,27 @@ div.block.price
 div.block.comments
   display: inline-block
   vertical-align: top
+  width: 100%
+  border: 1px solid #bbb
+  padding: 3%
+  border-radius: 1em
+
+  h1
+    margin-bottom: 0.5em
 
   .comment
     position: relative
-    margin-bottom: 20px
-
+    margin-bottom: 2.5em
+    vertical-align: top
+    display: inline-block
+    width: 100%
+    @media screen and (min-width: $phone-tablet-boundary)
+      width: 45%
+      margin-right: 5%
+      margin-bottom: 1em
 
     img
-      width: 18%
+      width: 16%
       +border-radius(50%)
       vertical-align: top
 
@@ -88,13 +101,15 @@ div.block.comments
       position: relative
       width: 78%
       margin-left: 1%
-      padding: 4% 14px
+      padding: 0 3%
       font-weight: 300
       text-align: left
 
       display: inline-block
       border-radius: 10px
-      border: solid 3px $primary-color
+
+      p
+        margin-top: 0
 
       span.timestamp
         margin-top: 4px
@@ -103,24 +118,24 @@ div.block.comments
         display: block
         color: #555
 
-    div:before
-      content: ""
-      position: absolute
-
-      top: 8% //30px
-      bottom: auto
-      left: -30px
-      border-style: solid
-      border-width: 15px 30px 15px 0
-      border-color: transparent $primary-color
-
-    div:after
-      content: ""
-      position: absolute
-
-      top: 11% //33px
-      bottom: auto
-      left: -24px
-      border-style: solid
-      border-width: 12px 25px 12px 0
-      border-color: transparent #fff
+    //div:before
+    //  content: ""
+    //  position: absolute
+    //
+    //  top: 8% //30px
+    //  bottom: auto
+    //  left: -30px
+    //  border-style: solid
+    //  border-width: 15px 30px 15px 0
+    //  border-color: transparent $primary-color
+    //
+    //div:after
+    //  content: ""
+    //  position: absolute
+    //
+    //  top: 11% //33px
+    //  bottom: auto
+    //  left: -24px
+    //  border-style: solid
+    //  border-width: 12px 25px 12px 0
+    //  border-color: transparent #fff

@@ -1,16 +1,36 @@
 @import base
 @import column
 
-$step-width: 14em
+$step-margin-width: 4em
+$landing-page-padding-horz: 1.5em
+$step-width: (2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
 
 div.landing-page
-  padding: 0.75em 1.5em
+  padding: 0.75em $landing-page-padding-horz
   text-align: center
   margin: 2em auto
+
+  @media screen and (max-width: $phone-tablet-boundary)
+    width: 100%
+  @media screen and (min-width: $phone-tablet-boundary)
+    width: 2 * $column-width
 
   div.copy
     margin-bottom: 2em
     text-align: left
+
+    div
+      display: inline-block
+      vertical-align: top
+      @media screen and (min-width: $phone-tablet-boundary)
+        width: 30em
+        p
+          margin-top: 0
+          margin-bottom: 1.5em
+      @media screen and (max-width: $phone-tablet-boundary)
+        width: 100%
+        p
+          margin: 0
 
     h1
       color: #000
@@ -33,17 +53,18 @@ div.landing-page
         color: #fff
         font: $button-font
         margin-bottom: 0.2em
-      h2
-        font-size: 2em
       img
         width: $step-width
       p
         margin: 0
         text-align: left
 
-  @media screen and (max-width: $phone-tablet-boundary)
-    width: 100%
+    div.step.one
+      margin-left: 0
+    div.step.three
+      margin-right: 0
 
+  @media screen and (max-width: $phone-tablet-boundary)
     div.process
       div.step
         width: 100%
@@ -52,11 +73,10 @@ div.landing-page
           width: 100%
 
   @media screen and (min-width: $phone-tablet-boundary)
-    width: 2 * $column-width
     div.process
       div.step
-        margin-left: 1em
-        margin-right: 1em
+        margin-left: $step-margin-width
+        margin-right: $step-margin-width
 
   div.retailers
     h1

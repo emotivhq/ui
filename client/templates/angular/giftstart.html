@@ -22,9 +22,10 @@
     </div>
 
     <div class="comments block">
+        <h1>Contributors</h1>
         <div class="comment" ng-repeat="pitchIn in pitchIns">
             <img ng-src="{{pitchIn.img}}"/>
-            <div>{{pitchIn.note}}<span class="timestamp">{{pitchIn.timestampString}}</span></div>
+            <div><p>{{pitchIn.note}}</p><span class="timestamp">{{pitchIn.timestampString}}</span></div>
         </div>
     </div>
 </div>

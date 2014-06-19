@@ -140,7 +140,7 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart.remaining = 0;
             self.giftStart.parts.map(function(part) {
                 self.giftStart.totalSelection += part.value * part.selected;
-                self.giftStart.remaining += part.value * !part.selected;
+                self.giftStart.remaining += part.value * !(part.selected || part.bought);
             });
         };
 
