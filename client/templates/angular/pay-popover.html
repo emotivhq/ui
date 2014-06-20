@@ -1,5 +1,5 @@
 <div class="pay-popover" ng-controller="PayPopoverController">
-    <h1 class="accent large">Pitch In!</h1>
+    <h1 class="white">Pitch In!</h1>
     <div class="powered">Powered by <img src="/assets/powered_by_stripe.png"></div>
     <form stripe-form="stripeSubmit">
         <div class="email">
@@ -18,8 +18,8 @@
         </div><div class="zip">
             <img src="/assets/cc_icon_zip.png">
             <input type="text" ng-model="address_zip" maxlength="5" placeholder="ZIP"/>
-        </div><span class="subscribe">
-            <input type="checkbox" id="subscribe-checkbox"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
+        </div><span class="subscribe" ng-hide="userAlreadyAskedToSubscribe">
+            <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
         </span>
 
         <button type="submit" class="large white-border">Pay ${{currentCharge / 100 | number : 2}}</button>

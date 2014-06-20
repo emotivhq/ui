@@ -7,6 +7,8 @@ GiftStarterApp.controller('PayPopoverController', [
     function($scope,  GiftStartService,  PopoverService) {
 
         $scope.currentCharge = GiftStartService.giftStart.totalSelection;
+        $scope.emailSubscribe = false;
+//        $scope.userAlreadyAskedToSubscribe = UserService.userAlreadyAskedToSubscribe;
 
         $scope.stripeSubmit = function(status, response) {
             // Charge process!

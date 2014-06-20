@@ -1,10 +1,10 @@
 <div class="login-popover" ng-controller="ThanksPopoverController">
-    <h1 class="large accent">Awesomesauce!</h1>
+    <h1 class="white">Awesomesauce!</h1>
     <p>Thank you for giving!  Lorme ipsum dolor sit amet.</p>
     <p>Thinking of starting your own campaign?  <a href="/#/product" ng-click="close()">It's easy!</a></p>
     <div class="buttons">
-        <button class="facebook-send button large" ng-click="mixpanel.track('FB send in thanks clicked');facebookSend();"><img src="/assets/facebook_white_icon_256.png"/><span>Share!</span></button>
-        <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in thanks clicked');"><button class="large email"><img src="/assets/email_icon.png"/><span>Share!</span></button></a>
+        <button class="share" ng-click="mixpanel.track('FB send in thanks clicked');facebookSend();">Facebook</button>
+        <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in thanks clicked');"><button class="share">Email</button></a>
         <button class="large white-border" ng-click="close()">Close</button>
     </div>
 </div>

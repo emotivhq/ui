@@ -1,12 +1,12 @@
 <header id="header" ng-controller="HeaderController">
     <div class="wrapper" ng-class="{big: thisRoute == '/', small: thisRoute != '/'}">
-        <img id="header-logo" src="/assets/logo_beta.png"/>
+        <a href="/"><img id="header-logo" src="/assets/logo_beta.png"/></a>
         <div class="big-container">
             <h1>Reinventing Gifting, Together.</h1>
             <gs-product-link></gs-product-link>
-            <div class="nav">
-                <h2 class="login navitem">Login</h2><h2>|</h2><h2 class="faq navitem">FAQ</h2>
-            </div>
+        </div>
+        <div class="nav">
+            <h2 class="login navitem" ng-click="alert('login!');">Login</h2><h2>|</h2><a href="/faq"><h2 class="faq navitem">FAQ</h2></a><h2>|</h2><a href="http://blog.giftstarter.co"><h2 class="blog navitem">Blog</h2></a>
         </div>
     </div>
 </header>
