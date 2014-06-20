@@ -47,10 +47,10 @@ class GiftStartMainHandler(webapp2.RequestHandler):
             }
             self.response.write(template.render(render_values))
         else:
-            self.error(404)
             self.response.write('Error: 404<br>Resource not found!  Go to GiftStarter homepage via <a href="http://giftstarter.co">this link</a>.')
 
 
 app_gs = webapp2.WSGIApplication([('/giftstart', GiftStartMainHandler)], debug=True)
 app_gsc = webapp2.WSGIApplication([('/create-giftstart', MainHandler)], debug=True)
 app = webapp2.WSGIApplication([('/', MainHandler)], debug=True)
+app_faq = webapp2.WSGIApplication([('/faq', MainHandler)], debug=True)

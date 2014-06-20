@@ -14,6 +14,7 @@ GiftStarterApp.config([
             .when('/campaign-create', {templateUrl: 'templates/angular/giftstart-create-campaign.html'})
             .when('/create-giftstart', {templateUrl: '/templates/angular/giftstart-create.html'})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
+            .when('/faq', {templateUrl: '/templates/angular/faq.html'})
             .otherwise({redirectTo: '/'});
 
         $locationProvider.html5Mode(true).hashPrefix('!');

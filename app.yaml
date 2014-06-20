@@ -34,6 +34,8 @@ handlers:
   script: main.app_gsc
 - url: /giftstart
   script: main.app_gs
+- url: /faq
+  script: main.app_faq
 - url: .*
   script: main.app
 
