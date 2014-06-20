@@ -18,8 +18,12 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.giftstart_special_notes = giftstart['special_notes']
 
     ndbgs.product_url = giftstart['product']['product_url']
-    ndbgs.product_price = int(giftstart['product']['price'])
     ndbgs.product_img_url = giftstart['product']['img_url']
+    ndbgs.product_price = int(giftstart['product']['price'])
+    ndbgs.sales_tax = int(giftstart['product']['sales_tax'])
+    ndbgs.shipping = int(giftstart['product']['shipping'])
+    ndbgs.service_fee = int(giftstart['product']['service_fee'])
+    ndbgs.total_price = int(giftstart['product']['total_price'])
 
     ndbgs.overlay_columns = giftstart['columns']
     ndbgs.overlay_rows = giftstart['rows']

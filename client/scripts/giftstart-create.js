@@ -104,7 +104,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
 
         $scope.priceChanged = function() {
             $scope.salesTax = $scope.salesTaxRate * $scope.inputPrice * 100;
-            $scope.serviceFee = 0.05 * $scope.inputPrice * 100;
+            $scope.serviceFee = 0.08 * $scope.inputPrice * 100;
             $scope.shipping = 0.045 * $scope.inputPrice * 100;
             $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax + $scope.serviceFee + $scope.shipping;
         };
@@ -139,6 +139,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 GiftStartService.productPrice = $scope.inputPrice*100;
                 GiftStartService.salesTax = $scope.salesTax;
                 GiftStartService.shipping = $scope.shipping;
+                GiftStartService.serviceFee = $scope.serviceFee;
                 GiftStartService.totalPrice = $scope.totalPrice;
                 GiftStartService.specialNotes = $scope.specialNotes;
 

@@ -46,6 +46,7 @@ GiftStarterApp.service('GiftStartService', [
         this.productPrice = 0;
         this.salesTax = 0;
         this.shipping = 0;
+        this.serviceFee = 0;
         this.totalPrice = 0;
 
         var self = this;
@@ -58,6 +59,10 @@ GiftStarterApp.service('GiftStartService', [
                 gift_champion_uid: FacebookService.uid,
                 product: {
                     price: self.productPrice,
+                    sales_tax: self.salesTax,
+                    shipping: self.shipping,
+                    service_fee: self.serviceFee,
+                    total_price: self.totalPrice,
                     img_url: self.productImgUrl,
                     product_url: self.productUrl
                 },
@@ -128,7 +133,7 @@ GiftStarterApp.service('GiftStartService', [
 
         this.enableGiftStart = function() {
             self.giftStart.parts = makeParts(self.giftStart.rows * self.giftStart.columns,
-                self.giftStart.product.price);
+                self.giftStart.product.total_price);
             self.updateSelected();
             self.syncPitchIns('GiftStartService');
         };
