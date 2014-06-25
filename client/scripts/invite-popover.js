@@ -7,7 +7,7 @@ GiftStarterApp.controller('InvitePopoverController', [
     function($scope,  FacebookService,  PopoverService) {
 
         $scope.friends = FacebookService.friends;
-        $scope.profilePicture = FacebookService.profilePictureUrl;
+        $scope.profilePicture = FacebookService.profileImageUrl;
         $scope.inviteMessage = 'Check out this GiftStarter campaign!';
 
         injectSelectToggles($scope.friends);

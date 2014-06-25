@@ -1,18 +1,23 @@
 application: gift-starter
-version: 5
+version: 6
 runtime: python27
 api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /auth
-  script: gs_user.auth.auth
+# End points
 - url: /product
   script: product.api.api
 - url: /giftstart/api
   script: giftstart.api.api
 - url: /pay
   script: pay.api.api
+- url: /user
+  script: gs_user.api.api
+
+# OAuth
+- url: /oauth-callback/twitter
+  script: social.api.twitter_oauth_callback
 
 # Client static asset urls
 - url: /favicon\.ico

@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('GiftStartService', [
-            '$http','$location','FacebookService','$rootScope','$filter','PopoverService','$window',
-    function($http,  $location,  FacebookService,  $rootScope,  $filter,  PopoverService,  $window) {
+            '$http','$location','UserService','$rootScope','$filter','PopoverService','$window',
+    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window) {
 
         this.giftStart = {};
 
@@ -18,8 +18,6 @@ GiftStarterApp.service('GiftStartService', [
 
         this.pitchIns = [];
         this.pitchInsInitialized = false;
-
-        this.stagedGiftStart = {};
 
         this.lastCheckedMilliseconds = new Date().getTime();
         this.updateInterval = 3*1000;
@@ -56,7 +54,7 @@ GiftStarterApp.service('GiftStartService', [
                 title: self.title,
                 description: self.description,
                 special_notes: self.specialNotes,
-                gift_champion_uid: FacebookService.uid,
+                gift_champion_uid: UserService.uid,
                 product: {
                     price: self.productPrice,
                     sales_tax: self.salesTax,
@@ -179,7 +177,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.sendPayment = function(callback) {
-            var data = {payment: self.payment, action: 'pitch-in', uid: FacebookService.uid};
+            var data = {payment: self.payment, action: 'pitch-in', uid: UserService.uid};
             $http({method: 'POST', url: '/pay',
                 data: data})
                 .success(self.paymentSuccess)
@@ -199,6 +197,7 @@ GiftStarterApp.service('GiftStartService', [
             if (self.giftStart.totalSelection > 0) {
                 mixpanel.track("Pitch in started");
                 ga('send', 'event', 'pitch-in', 'started');
+                PopoverService.contributeLogin = true;
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
         };

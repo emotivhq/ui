@@ -3,11 +3,11 @@
  */
 
 GiftStarterApp.controller('NotePopoverController', [
-            '$scope','FacebookService','PopoverService','GiftStartService',
-    function($scope,  FacebookService,  PopoverService,  GiftStartService) {
+            '$scope','UserService','PopoverService','GiftStartService',
+    function($scope,  UserService,  PopoverService,  GiftStartService) {
 
         $scope.noteText = '';
-        $scope.profilePicture = FacebookService.profilePictureUrl;
+        $scope.profilePicture = UserService.profileImageUrl;
 
         // Now that user is logged in, create giftstart in server
         if (!GiftStartService.giftStart.gsid) {GiftStartService.createGiftStart()}

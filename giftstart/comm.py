@@ -1,10 +1,11 @@
+from social import facebook
+
 __author__ = 'stuart'
 
 from gs_user import User
 from GiftStart import GiftStart
 from pay.PitchIn import PitchIn
 import gs_email
-import facebook
 
 
 def fb_notify_campaign_complete(recipient_uid, gift_receiver_uid, gsid):

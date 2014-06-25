@@ -26,8 +26,10 @@ GiftStarterApp.config([
 
 GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
+    $http.get('/templates/angular/faq.html', {cache: $templateCache});
     $http.get('/templates/angular/giftstart.html', {cache: $templateCache});
-    $http.get('/templates/angular/giftstart-create.html', {cache: $templateCache});
+    $http.get('/templates/angular/giftstart-create-campaign.html', {cache: $templateCache});
+    $http.get('/templates/angular/giftstart-create-shipping.html', {cache: $templateCache});
     $http.get('/templates/angular/invite-popover.html', {cache: $templateCache});
     $http.get('/templates/angular/login-popover.html', {cache: $templateCache});
     $http.get('/templates/angular/note-popover.html', {cache: $templateCache});
@@ -38,8 +40,9 @@ GiftStarterApp.run(function($http, $templateCache) {
     $http.get('/templates/angular/thanks-popover.html', {cache: $templateCache});
 });
 
-GiftStarterApp.config(function(ezfbProvider) {
-    ezfbProvider.setInitParams({
-        appId: '301135316704582'
-    });
-});
+GiftStarterApp.config(
+    function(ezfbProvider, $httpProvider) {
+        ezfbProvider.setInitParams({appId: '301135316704582'});
+        $httpProvider.defaults.useXDomain = true;
+    }
+);

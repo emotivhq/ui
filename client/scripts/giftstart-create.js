@@ -57,8 +57,8 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
 ]);
 
 GiftStarterApp.controller('GiftStartCreateCampaignController', [
-            '$scope','GiftStartService','$location','ProductService','FacebookService','PopoverService','$http',
-    function($scope,  GiftStartService,  $location,  ProductService,  FacebookService,  PopoverService,  $http) {
+            '$scope','GiftStartService','$location','ProductService','UserService','PopoverService','$http',
+    function($scope,  GiftStartService,  $location,  ProductService,  UserService,  PopoverService,  $http) {
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
@@ -143,7 +143,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 GiftStartService.totalPrice = $scope.totalPrice;
                 GiftStartService.specialNotes = $scope.specialNotes;
 
-                if (FacebookService.loggedIn) {
+                if (UserService.loggedIn) {
                     GiftStartService.createGiftStart();
                 } else {
                     PopoverService.giftstartCreateLogin = true;

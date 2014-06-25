@@ -1,14 +1,20 @@
+from social import facebook
+
 __author__ = 'stuart'
 
 import cloudstorage
-import facebook
 import requests
 
 
-def cache_user_image(uid, access_token):
+def cache_facebook_user_image(uid, access_token):
     # Fetch facebook image
     graph = facebook.GraphAPI(access_token)
     img = graph.get_object('me/picture', type='square', height=200, width=200, redirect=1)['data']
+    return _save_picture_to_gcs(uid + '.jpg', 'u/', img)
+
+
+def cache_twitter_user_image(uid, img_url):
+    img = requests.get(img_url).content
     return _save_picture_to_gcs(uid + '.jpg', 'u/', img)
 
 

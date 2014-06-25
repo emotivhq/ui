@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('ProductService', [
-            '$http',
-    function($http) {
+            '$http','TwitterService',
+    function($http,  TwitterService) {
 
         this.product = {
             product_url: '',
