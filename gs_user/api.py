@@ -1,11 +1,9 @@
 __author__ = 'stuart'
 
 import webapp2
-from social import twitter
+from social import twitter, googleplus, facebook
 import json
-from social.facebook.login import get_extended_key
-from . import update_or_create, User
-from datetime import datetime, timedelta
+from . import update_or_create
 
 
 class UserHandler(webapp2.RequestHandler):
@@ -22,27 +20,34 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
-                access_tokens = twitter.submit_verifier(data['oauth_token'], data['verifier'])
-                user = update_or_create('twitter', access_tokens['access_token'], access_tokens['access_secret'])
+                token_set = twitter.submit_verifier(data['oauth_token'], data['verifier'])
+                user = update_or_create('twitter', token_set)
+                if user is not None:
+                    self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
+                                                    'usr_img': user.cached_profile_image_url}))
+
+        elif data['action'] == 'submit-one-time-code':
+            if data['service'] == 'googleplus':
+                token_set = googleplus.submit_code(data['auth_response'])
+                user = update_or_create('googleplus', token_set)
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url}))
 
         elif data['action'] == 'get-long-term-token':
             if data['service'] == 'facebook':
+                token_set = facebook.get_extended_key(data['auth_token'])
                 user = update_or_create('facebook', data['auth_token'])
-                extended_keys = get_extended_key(data['auth_token'])
 
-                expiry = datetime.now() + timedelta(int(extended_keys['expires']) / 86400, int(extended_keys['expires']) % 86400)
-                user.facebook_lt_access_token = extended_keys['access_token']
-                user.facebook_lt_token_expires = expiry
+                user.facebook_token_set = token_set
                 user.put()
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url}))
 
         else:
-            self.response.status_code(400)
+            print(data)
+            self.response.status_int = 400
 
 
 api = webapp2.WSGIApplication([('/user', UserHandler)], debug=True)

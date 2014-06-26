@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('LoginPopoverController', [
-            '$scope','UserService','PopoverService','GiftStartService','TwitterService','FacebookService','$location',
-    function($scope,  UserService,  PopoverService,  GiftStartService,  TwitterService,  FacebookService,  $location) {
+            '$scope','UserService','PopoverService','GiftStartService','TwitterService','FacebookService','$location','GooglePlusService',
+    function($scope,  UserService,  PopoverService,  GiftStartService,  TwitterService,  FacebookService,  $location,  GooglePlusService) {
 
         $scope.loggedIn = UserService.loggedIn;
 
@@ -17,6 +17,7 @@ GiftStarterApp.controller('LoginPopoverController', [
 
         $scope.twitterLogin = TwitterService.login;
 
+        $scope.googleLogin = GooglePlusService.login;
 
         function loginComplete() {
             mixpanel.track("Login succeeded");

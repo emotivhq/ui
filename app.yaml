@@ -53,3 +53,6 @@ libraries:
   version: "latest"
 - name: ssl
   version: latest
+
+env_variables:
+  OAUTHLIB_INSECURE_TRANSPORT: 1

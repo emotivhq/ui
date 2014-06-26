@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 import secret
 import requests
+from core import FacebookTokenSet
 
 
 def get_extended_key(auth_token):
@@ -10,4 +11,5 @@ def get_extended_key(auth_token):
                             "&client_secret=" + secret.APP_SECRET +
                             "&fb_exchange_token=" + auth_token)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
-    return result_dict
+    return FacebookTokenSet().populate(result_dict['access_token'], result_dict['expires_in'],
+                                       result_dict['machine_id'])

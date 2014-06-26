@@ -2,11 +2,13 @@
 import webapp2
 import jinja2
 from giftstart.core import GiftStart
+import os
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
+
 
 
 class MainHandler(webapp2.RequestHandler):

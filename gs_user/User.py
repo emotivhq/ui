@@ -1,6 +1,9 @@
 __author__ = 'stuart'
 
 from google.appengine.ext import ndb
+from social.facebook import FacebookTokenSet
+from social.twitter import TwitterTokenSet
+from social.googleplus import GooglePlusTokenSet
 
 
 class User(ndb.Model):
@@ -8,16 +11,14 @@ class User(ndb.Model):
 
     logged_in_with = ndb.StringProperty(required=True)
 
-    twitter_access_token = ndb.StringProperty()
-    twitter_access_secret = ndb.StringProperty()
+    twitter_uid = ndb.StringProperty()
+    twitter_token_set = ndb.StructuredProperty(TwitterTokenSet)
 
     facebook_uid = ndb.StringProperty()
-    facebook_access_token = ndb.StringProperty()
-    facebook_lt_access_token = ndb.StringProperty()
-    facebook_lt_token_expires = ndb.DateTimeProperty()
+    facebook_token_set = ndb.StructuredProperty(FacebookTokenSet)
 
-    gplus_id = ndb.StringProperty()
-    gplus_access_token = ndb.StringProperty()
+    googleplus_id = ndb.StringProperty()
+    googleplus_token_set = ndb.StructuredProperty(GooglePlusTokenSet)
 
     cached_profile_image_url = ndb.StringProperty()
     email = ndb.StringProperty()

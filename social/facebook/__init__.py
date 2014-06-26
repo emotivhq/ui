@@ -401,4 +401,5 @@ def get_access_token_from_code(code, redirect_uri, app_id, app_secret):
 def get_app_access_token(app_id, app_secret):
     return GraphAPI().get_app_access_token(app_id, app_secret)
 
-from core import get_uid
+from core import get_uid, FacebookTokenSet
+from login import get_extended_key

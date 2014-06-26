@@ -5,12 +5,13 @@ from requests_oauthlib import OAuth1
 import secret
 import json
 from .. import OAuthTokenPair
+from core import TwitterTokenSet
 
 
 def get_auth_url():
     url = 'https://api.twitter.com/oauth/request_token'
     auth = OAuth1(secret.APP_KEY, secret.APP_SECRET,
-                  callback_uri='http://6.gift-starter.appspot.com/oauth-callback/twitter')
+                  callback_uri='https://6-dot-gift-starter.appspot.com/oauth-callback/twitter')
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
 
@@ -31,16 +32,13 @@ def submit_verifier(oauth_token, oauth_verifier):
                   verifier=oauth_verifier)
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
-    access_token = result_dict['oauth_token']
-    access_secret = result_dict['oauth_token_secret']
-    return {'access_token': access_token, 'access_secret': access_secret}
+    return TwitterTokenSet().populate(result_dict['oauth_token'], result_dict['oauth_token_secret'])
 
 
-def is_logged_in(twitter_access_token, twitter_access_secret):
+def is_logged_in(token_set):
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=twitter_access_token,
-                  resource_owner_secret=twitter_access_secret)
+    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=token_set.access_token,
+                  resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth)
-    print(response)
     return response.status_code == 200
 
