@@ -18,31 +18,42 @@ handlers:
 # OAuth
 - url: /oauth-callback/twitter
   script: social.api.twitter_oauth_callback
+  secure: always
 
 # Client static asset urls
 - url: /favicon\.ico
   static_files: client/assets/favicon.ico
   upload: client/assets/favicon\.ico
+  secure: always
 - url: /stylesheets
   static_dir: client/stylesheets
+  secure: always
 - url: /scripts
   static_dir: client/scripts
+  secure: always
 - url: /bower_components
   static_dir: client/bower_components
+  secure: always
 - url: /assets
   static_dir: client/assets
+  secure: always
 - url: /templates/angular
   static_dir: client/templates/angular
+  secure: always
 
 # Catch all other urls
 - url: /create-giftstart
   script: main.app_gsc
+  secure: always
 - url: /giftstart
   script: main.app_gs
+  secure: always
 - url: /faq
   script: main.app_faq
+  secure: always
 - url: .*
   script: main.app
+  secure: always
 
 libraries:
 - name: webapp2

@@ -29,4 +29,4 @@ def _save_picture_to_gcs(filename, folder, data):
     cs_file = cloudstorage.open(file_url, 'w', options={'x-goog-acl': 'public-read'})
     cs_file.write(data)
     cs_file.close()
-    return 'http://storage.googleapis.com' + file_url
+    return 'https://storage.googleapis.com' + file_url

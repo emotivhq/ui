@@ -23,8 +23,7 @@ GiftStarterApp.controller('HeaderController', [
             console.log("Login Status Updated");
             $scope.loggedIn = UserService.loggedIn;
         }
-        console.log($scope.loggedIn);
-        console.log(UserService.loggedIn);
+
         $scope.$on('login-success', updateLogin);
         $scope.$on('logout-success', updateLogin);
     }

@@ -44,7 +44,6 @@ GiftStarterApp.service('GooglePlusService', [
         };
 
         this.logout = function() {
-            console.log("G+ Logging out...");
             gapi.auth.signOut();
             $rootScope.$broadcast('googleplus-logout-success');
         };

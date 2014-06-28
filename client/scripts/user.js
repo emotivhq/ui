@@ -14,7 +14,6 @@ GiftStarterApp.service('UserService', [
         var self = this;
 
         this.registerLogin = function(uid, profileImageUrl, token) {
-            console.log("Login registered.");
             self.uid = uid;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
@@ -27,19 +26,16 @@ GiftStarterApp.service('UserService', [
 
 
         this.logout = function() {
-            console.log("Routing logout request...");
             if (self.loginService === 'facebook') {
                 FacebookService.logout();
             } else if (self.loginService === 'twitter') {
                 TwitterService.logout();
             } else if (self.loginService === 'googleplus') {
-                console.log('to google plus...');
                 GooglePlusService.logout();
             }
         };
 
         this.registerLogout = function() {
-            console.log("Registering logout...");
             self.loggedIn = false;
             self.uid = -1;
             self.profileImageUrl = '';
