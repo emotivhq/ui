@@ -25,7 +25,7 @@ class GooglePlusTokenSet(ndb.Model):
             'refresh_token': self.refresh_token,
             'access_token': self.access_token,
             'token_type': self.token_type,
-            'expires_in': str(int((datetime.now() - self.expires).total_seconds()))
+            'expires_in': str(int((self.expires - datetime.now()).total_seconds()))
         }
 
 
@@ -36,8 +36,11 @@ UID_QRY_URL = 'https://www.googleapis.com/plus/v1/people/me'
 
 
 def _request_with_refresh(url, token_set):
-    oauth = OAuth2Session(secret.CLIENT_ID, token=token_set.to_token(), auto_refresh_url=REFRESH_URL,
-                          auto_refresh_kwargs=REFRESH_EXTRAS, token_updater=token_saver)
+    if token_set.refresh_token:
+        oauth = OAuth2Session(secret.CLIENT_ID, token=token_set.to_token(), auto_refresh_url=REFRESH_URL,
+                              auto_refresh_kwargs=REFRESH_EXTRAS, token_updater=token_saver)
+    else:
+        oauth = OAuth2Session(secret.CLIENT_ID, token=token_set.to_token())
     return oauth.get(url)
 
 

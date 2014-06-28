@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('UserService', [
-            '$http','$rootScope',
-    function($http,  $rootScope) {
+            '$http','$rootScope','$cookieStore','$window','FacebookService','TwitterService','GooglePlusService',
+    function($http,  $rootScope,  $cookieStore,  $window,  FacebookService,  TwitterService,  GooglePlusService) {
         this.uid = -1;
         this.loggedIn = false;
         this.profileImageUrl  = '';
@@ -13,26 +13,40 @@ GiftStarterApp.service('UserService', [
 
         var self = this;
 
-        this.registerLogin = function(uid, profileImageUrl) {
+        this.registerLogin = function(uid, profileImageUrl, token) {
+            console.log("Login registered.");
             self.uid = uid;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
+
+            $cookieStore.put('uid', uid);
+            $cookieStore.put('token', token);
+
             $rootScope.$broadcast('login-success');
         };
 
 
         this.logout = function() {
+            console.log("Routing logout request...");
             if (self.loginService === 'facebook') {
                 FacebookService.logout();
             } else if (self.loginService === 'twitter') {
                 TwitterService.logout();
+            } else if (self.loginService === 'googleplus') {
+                console.log('to google plus...');
+                GooglePlusService.logout();
             }
         };
 
         this.registerLogout = function() {
+            console.log("Registering logout...");
             self.loggedIn = false;
             self.uid = -1;
             self.profileImageUrl = '';
+
+            $cookieStore.remove('uid');
+            $cookieStore.remove('token');
+
             $rootScope.$broadcast('logout-success');
         };
 
@@ -42,6 +56,30 @@ GiftStarterApp.service('UserService', [
                 .error(function() {console.log('Failed to determine if stripe customer.')});
         };
 
+        $rootScope.$on('facebook-login-success', facebookLoggedIn);
+        function facebookLoggedIn () {
+            self.loginService = 'facebook';
+            self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token);
+        }
+        $rootScope.$on('twitter-login-success', twitterLoggedIn);
+        function twitterLoggedIn () {
+            self.loginService = 'twitter';
+            self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token);
+        }
+        $rootScope.$on('googleplus-login-success', googleplusLoggedIn);
+        function googleplusLoggedIn () {
+            self.loginService = 'googleplus';
+            self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token);
+        }
+
+        $rootScope.$on('facebook-logout-success', self.registerLogout);
+        $rootScope.$on('twitter-logout-success', self.registerLogout);
+        $rootScope.$on('googleplus-logout-success', self.registerLogout);
+
+        if ($window.loginDeets) {
+            self.registerLogin.apply(this, $window.loginDeets);
+            self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
+        }
 
     }
 ]);

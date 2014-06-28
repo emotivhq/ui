@@ -4,6 +4,7 @@
 <script src="/bower_components/angular-route/angular-route.min.js"></script>
 <script src="/bower_components/angular-easyfb/angular-easyfb.min.js"></script>
 <script src="/bower_components/angular-payments/lib/angular-payments.min.js"></script>
+<script src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script src="/scripts/app.js"></script>
 <script src="/scripts/header.js"></script>
 <script src="/scripts/user.js"></script>
@@ -36,6 +37,7 @@ mixpanel.init("e62cefc2003d70c2c10c3fdb1fc46917");</script>
         po.type = 'text/javascript';
         po.async = true;
         po.src = 'https://plus.google.com/js/client:plusone.js?onload=start';
+        po.isSignedOut = true;
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(po, s);
     })();

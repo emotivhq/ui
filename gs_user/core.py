@@ -38,8 +38,29 @@ def update_or_create(service, token_set):
         user = User(uid=uid, logged_in_with=service, cached_profile_image_url=img_url)
     else:
         user = users[0]
+        # Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
+        if service == 'googleplus':
+            if token_set.refresh_token is None:
+                return user
 
     setattr(user, service + '_token_set', token_set)
 
     user.put()
     return user
+
+
+token_pointer_map = {
+    'f': lambda user: user.facebook_token_set.access_token,
+    't': lambda user: user.twitter_token_set.access_token,
+    'g': lambda user: user.googleplus_token_set.access_token,
+}
+
+
+def validate(uid, token):
+    result = None
+    user = User.query(User.uid == uid).fetch(1)
+    if user:
+        if token_pointer_map[uid[0]](user[0]) == token:
+            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url, 'token': token}
+
+    return result

@@ -10,6 +10,7 @@ class UserHandler(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
 
+
         if data['action'] == 'is-logged-in':
             if data['service'] == 'twitter':
                 self.response.write(twitter.is_logged_in(data['uid']))
@@ -24,7 +25,8 @@ class UserHandler(webapp2.RequestHandler):
                 user = update_or_create('twitter', token_set)
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
-                                                    'usr_img': user.cached_profile_image_url}))
+                                                    'usr_img': user.cached_profile_image_url,
+                                                    'token': user.twitter_token_set.access_token}))
 
         elif data['action'] == 'submit-one-time-code':
             if data['service'] == 'googleplus':
@@ -32,18 +34,20 @@ class UserHandler(webapp2.RequestHandler):
                 user = update_or_create('googleplus', token_set)
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
-                                                    'usr_img': user.cached_profile_image_url}))
+                                                    'usr_img': user.cached_profile_image_url,
+                                                    'token': user.googleplus_token_set.access_token}))
 
         elif data['action'] == 'get-long-term-token':
             if data['service'] == 'facebook':
                 token_set = facebook.get_extended_key(data['auth_token'])
-                user = update_or_create('facebook', data['auth_token'])
+                user = update_or_create('facebook', token_set)
 
                 user.facebook_token_set = token_set
                 user.put()
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
-                                                    'usr_img': user.cached_profile_image_url}))
+                                                    'usr_img': user.cached_profile_image_url,
+                                                    'token': user.facebook_token_set.access_token}))
 
         else:
             print(data)
