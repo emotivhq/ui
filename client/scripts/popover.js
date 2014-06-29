@@ -36,6 +36,7 @@ GiftStarterApp.service('PopoverService', [
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
             $location.hash('');
+            $rootScope.$apply();
             console.log('Hiding popover');
         };
 

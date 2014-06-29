@@ -58,7 +58,7 @@ def create(giftstart):
                        .format(gsid=str(gs.gsid), json=gs.jsonify()),
                        "giftstartbot", "stuart@giftstarter.co", ["team@giftstarter.co"])
 
-    gs_email.comm.send("GiftStart Campaign Created!", "Hey there!\n\nYou've just created a GiftStarter campaign!  Nice!  The next thing to do is invite the people you'd like to contribute, and ask them to write something special!  Here's the link:\n\nhttp://giftstarter.co/giftstart?gs-id={gsid}\n\nThanks!\nStuart @ GiftStarter".format(gsid=gs.gsid), "Team @ GiftStarer", "stuart@giftstarter.co", gs.gc_email)
+    gs_email.comm.send("GiftStart Campaign Created!", "Hey there!\n\nYou've just created a GiftStarter campaign!  Nice!  The next thing to do is invite the people you'd like to contribute, and ask them to write something special!  Here's the link:\n\nhttp://giftstarter.co/giftstart?gs-id={gsid}\n\nThanks!\nTeam GiftStarter".format(gsid=gs.gsid), "Team GiftStarter", "stuart@giftstarter.co", gs.gc_email)
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),

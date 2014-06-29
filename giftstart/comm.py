@@ -34,3 +34,17 @@ def send_day_left_warning(gsid):
         email_set = set(map(lambda pi: pi.email, pitch_ins))
         for email in email_set:
             gs_email.send(subject, contributor_message, "Stuart at GiftStarter", "stuart@giftstarter.co", email)
+
+
+def send_time_up_notification(gsid):
+    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    pitch_ins = PitchIn.query()
+    if not giftstart.giftstart_complete:
+        subject = 'GiftStarter Campaign Complete!'
+        template = "Congratulations!  Your GiftStarter campaign has completed!  It came short of the goal, " \
+                      "but don't fret - we're sending a giftcard with the raised amount so the lucky recipient can " \
+                      "purchase the rest of the gift themselves, if they like.  They can expect to receive it in " \
+                      "about 7 days!  Here's a link to the completed campaign:\n\n" \
+                      "https://www.giftstarter.co/giftstart?gs-id={gsid}\n\nThanks!\nTeam GiftStarter"
+        message = template.format(gsid=gsid)
+        gs_email.send(subject, message, 'Team GiftStarter', 'team@giftstarter.co', )

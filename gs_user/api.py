@@ -10,7 +10,6 @@ class UserHandler(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
 
-
         if data['action'] == 'is-logged-in':
             if data['service'] == 'twitter':
                 self.response.write(twitter.is_logged_in(data['uid']))
@@ -48,6 +47,11 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'token': user.facebook_token_set.access_token}))
+
+        elif data['action'] == 'team-email-authorize':
+            token_set = googleplus.submit_code(data['auth_response'])
+            user = update_or_create('googleplus', token_set)
+            user.put()
 
         else:
             print(data)

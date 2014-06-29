@@ -23,5 +23,8 @@ class GiftStartHandler(webapp2.RequestHandler):
         elif data['action'] == 'one-day-warning':
             comm.send_day_left_warning(data['gsid'])
 
+        elif data['action'] == 'time-up-check':
+            comm.send_time_up_notification(data['gsid'])
+
 
 api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)

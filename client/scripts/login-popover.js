@@ -22,7 +22,7 @@ GiftStarterApp.controller('LoginPopoverController', [
         function loginComplete() {
             mixpanel.track("Login succeeded");
             ga('send', 'event', 'login', 'success');
-            if ($location.path().search('giftstart-create') != -1) {
+            if ($location.path().search('campaign-create') != -1) {
                 PopoverService.hidePopover();
                 GiftStartService.createGiftStart();
             } else if (($location.path().search('giftstart?') != -1) && PopoverService.contributeLogin) {

@@ -53,6 +53,8 @@ button.disabled, button.disabled:active, button.disabled:hover, button.disabled:
 
 button.circle
   +border-radius(50%)
+  height: 1.2em
+  width: 1.2em
   padding: 0
 
 button:active, button:hover, button:focus
@@ -87,3 +89,7 @@ h2
 #angular-view
   //overflow: auto
   margin-bottom: 2em
+
+//  Disable "Welcome Back!" popup from google
+iframe[src^="https://apis.google.com"]
+  display: none
