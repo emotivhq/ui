@@ -1,10 +1,17 @@
 <div class="login-popover" ng-controller="LoginPopoverController">
-    <h1 class="white">Almost There!</h1>
+    <h1 class="white">Login</h1>
     <!--<p>Log in so they'll know who to thank!</p>-->
-    <div class="facebook-login-button" ng-click="login()">
-        <img src="/assets/active_404_2x.png"/>
+    <div class="block">
+        <p>No need to memorize yet another username and password - you can use any of these networks to create and access your GiftStarter campaigns.</p>
+        <p>And we solemnly swear to never post on your behalf, share your information, or stalk your friends.</p>
     </div>
-    <button class="share" ng-click="twitterLogin()">Twitter</button>
-    <button class="share g-signin" id="google-plus-login" ng-click="googleLogin()">teh googs</button>
-    <p class="small">We will <i>never</i> post anything without your permission.</p>
+    <div class="block">
+        <div class="login-button" ng-click="facebookLogin()"><img class="login-button" src="/assets/login_facebook2.png" /></div>
+        <div class="login-button" ng-click="twitterLogin()"><img class="login-button" src="/assets/login_twitter2.png" /></div>
+        <div class="login-button" ng-click="googleLogin()"><img class="login-button" src="/assets/login_google2.png" /></div>
+    </div>
+    <!--<button class="share" ng-click="twitterLogin()">Twitter</button>-->
+    <!--<button class="share g-signin" id="google-plus-login" ng-click="googleLogin()">teh googs</button>-->
+    <!--<p class="small">We will <i>never</i> post anything without your permission.</p>-->
+    <p class="cancel-button" ng-click="hidePopover()">Cancel</p>
 </div>

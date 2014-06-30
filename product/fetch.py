@@ -41,27 +41,44 @@ def get_base_url(url):
     return out
 
 
-def extract_price(tree, partner):
-    partner_price_patterns = {
-        'http://www.rei.com/': {'normal': '//*[@id="product"]//li[@class="price"]',
-                                'sale': '//*[@id="product"]//li[contains(@class, "salePrice")]'},
-        'http://www.brooksrunning.com/': '',
+def verify_partner(url):
+    partner_domains = {
+        'rei': 'rei.com',
+        'brooksrunning': 'brooksrunning.com/',
+        'filson': 'filson.com/',
+        'amazon': 'amazon.com/',
+        'nordstrom': 'nordstrom.com/',
+        'costco': 'costco.com/'
     }
 
-    if partner == 'http://www.rei.com/':
-        sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
-        print(sale_prices)
-        if sale_prices[0] is not None:
-            price_string = sale_prices[0]
-        else:
-            price_string = get_element_text(tree, partner_price_patterns[partner]['normal'])[0]
-        price = str(int(float(price_string[1:])*100))
+    partner = None
+    for name, domain in partner_domains.items():
+        if domain in url:
+            partner = name
+            break
 
-    elif partner == 'http://www.brooksrunning.com/':
-        price = '1'
+    return partner
 
+
+def extract_price(tree, partner):
+    partner_price_patterns = {
+        'rei': {'normal': '//*[@id="product"]//li[@class="price"]',
+                          'sale': '//*[@id="product"]//li[contains(@class, "salePrice")]'},
+        'brooksrunning': {'normal': '//*[@id="product-content"]//span[@class="price-sales"]',
+                          'sale': '//*[@id="product-content"]//span[@class="price-sales"]'},
+        'filson': {'normal': '//*[@id="prodprice"]', 'sale': '//*[@id="prodprice"]/span[@class="sale"]'},
+        'amazon': {'normal': '//*[@id="priceblock_ourprice"]', 'sale': '//*[@id="priceblock_ourprice"]'},
+        'nordstrom': {'normal': '//*[@id="price"]/table/tbody/tr/td[1]/span',
+                      'sale': '//*[@id="price"]/table/tbody/tr/td[1]/span[2]'},
+        'costco': {'normal': '//*[@id="price"]/div[3]/span[2]', 'sale': '//*[@id="price"]/div[3]/span[2]'},
+    }
+
+    sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
+    if sale_prices[0] is not None:
+        price_string = sale_prices[0].split('$')[1]
     else:
-        price = '-1'
+        price_string = get_element_text(tree, partner_price_patterns[partner]['normal'])[0].split('$')[1]
+    price = str(int(float(price_string.replace(',', ''))*100))
 
     return price
 
@@ -69,13 +86,10 @@ def extract_price(tree, partner):
 def product(data):
 
     url = data['product_url']
-    partner_url_matches = [partner in url for partner in LAUNCH_PARTNERS]
-    if any(partner_url_matches):
-        partner = LAUNCH_PARTNERS[partner_url_matches.index(True)]
-
+    partner = verify_partner(url)
+    if partner is not None:
         headers = {'User-agent': "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"}
         page = requests.get(url, headers=headers).text
-
         tree = html.fromstring(page)
 
         canonical_url = get_element_attr(tree, '//link[@rel="canonical"]', 'href')
@@ -84,13 +98,11 @@ def product(data):
                 page = requests.get(canonical_url, headers=headers).text
                 tree = html.fromstring(page)
 
-        imgs = [get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0]] + \
-            get_all_imgs(tree, get_base_url(url))
-
+        imgs = get_all_imgs(tree, get_base_url(url))
+        imgs.append(get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0])
         price = extract_price(tree, partner)
 
         result = {'product': {'imgs': imgs, 'price': price}}
-        print(result)
 
     else:
         result = {'error': 'Non-launch partner'}

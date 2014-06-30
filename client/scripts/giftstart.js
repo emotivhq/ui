@@ -332,6 +332,7 @@ GiftStarterApp.controller('GiftStartController', [
                 $scope.countdown = days + " days, " + hours + " hours" ;//+ ":" + minutes + ":" + seconds;
                 $timeout($scope.updateSecondsLeft, 1000);
             } else {
+                $scope.countdown = "Campaign Complete";
                 GiftStartService.disableParts();
             }
         };

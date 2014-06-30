@@ -13,11 +13,11 @@ GiftStarterApp.controller('LoginPopoverController', [
         if (UserService.loggedIn) {loginComplete()}
 
         // If they aren't, they'll need to log in
-        $scope.login = FacebookService.login;
-
+        $scope.facebookLogin = FacebookService.login;
         $scope.twitterLogin = TwitterService.login;
-
         $scope.googleLogin = GooglePlusService.login;
+
+        $scope.hidePopover = PopoverService.hidePopover;
 
         function loginComplete() {
             mixpanel.track("Login succeeded");

@@ -18,9 +18,6 @@ BASE_URL = 'https://www.googleapis.com/gmail/v1/users/{uid}/messages/send'.forma
 REFRESH_URL = 'https://accounts.google.com/o/oauth2/token'
 REFRESH_EXTRAS = {'client_id': CLIENT_ID, 'client_secret': CLIENT_SECRET}
 
-TEAM_USER = User.query(User.uid == 'g'+TEAM_EMAIL_UID).fetch(1)[0]
-TEAM_TOKEN_SET = TEAM_USER.googleplus_token_set
-
 
 def _post_with_refresh(url, token_set, data):
     headers = {'Content-Type': 'application/json'}
@@ -39,7 +36,9 @@ def token_saver(token):
 def send_gmail(message):
     params = {'raw': message['raw']}
     str_params = json.dumps(params)
-    response = _post_with_refresh(BASE_URL, TEAM_TOKEN_SET, data=str_params)
+    team_user = User.query(User.uid == 'g'+TEAM_EMAIL_UID).fetch(1)[0]
+    team_token_set = team_user.googleplus_token_set
+    response = _post_with_refresh(BASE_URL, team_token_set, data=str_params)
 
 
 def create_message(sender, to, subject, message_text):

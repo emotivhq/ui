@@ -2,15 +2,15 @@
 // ------------------------- FONTS -------------------------
 @font-face
   font-family: Blanch
-  src: url('/assets/fonts/BLANCH_CAPS.otf')
+  src: url('/assets/fonts/BLANCH_CAPS.otf'), url('/assets/fonts/BLANCH_CAPS.woff')
 
 @font-face
   font-family: BlanchCondensed
-  src: url('/assets/fonts/BLANCH_CONDENSED.otf')
+  src: url('/assets/fonts/BLANCH_CONDENSED.otf'), url('/assets/fonts/BLANCH_CONDENSED.woff')
 
 @font-face
   font-family: BlanchCondensedInline
-  src: url('/assets/fonts/BLANCH_CONDENSED_INLINE.otf')
+  src: url('/assets/fonts/BLANCH_CONDENSED_INLINE.otf'), url('/assets/fonts/BLANCH_CONDENSED_INLINE.woff')
 
 $base-font-size: 14px
 $button-font-size: 2em
@@ -116,4 +116,5 @@ $tablet-computer-boundary: 2*$phone-tablet-boundary
 
 =flex-wrap($value: wrap)
   -webkit-flex-wrap: $value
+  -ms-flex-wrap: $value
   flex-wrap: $value

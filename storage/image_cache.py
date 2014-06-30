@@ -15,7 +15,7 @@ def cache_facebook_user_image(uid, token_set):
 
 def cache_user_image_from_url(uid, img_url):
     img = requests.get(img_url).content
-    return _save_picture_to_gcs(uid + '.jpg', 'u/', img)
+    return _save_picture_to_gcs(uid + img_url[-4:], 'u/', img)
 
 
 def cache_product_image(img_url, gsid):

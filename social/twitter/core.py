@@ -32,6 +32,6 @@ def get_img_url(token_set):
     auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth)
-    img_url = json.loads(response.content)['profile_image_url']
+    img_url = json.loads(response.content)['profile_image_url'].replace("_normal.", ".")
 
     return str(img_url)
