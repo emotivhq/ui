@@ -18,7 +18,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response):
     gs_user.core.save_email(uid, email_address)
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    total_charge = giftstart.product_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns
+    total_charge = giftstart.total_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns
     charge_description_values = {'gsid': gsid, 'parts': str(parts)}
     charge = stripe.Charge.create(amount=total_charge, currency='usd', card=stripe_response['id'],
                                   description="GiftStarter #{gsid} parts {parts}".format(**charge_description_values))
