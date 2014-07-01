@@ -30,6 +30,7 @@ GiftStarterApp.service('FacebookService', [
                     self.uid = data['uid'];
                     self.usr_img = data['usr_img'];
                     self.token = data['token'];
+                    self.subscribed = data['on_mailing_list'];
                     $rootScope.$broadcast('facebook-login-success');
                 })
         };

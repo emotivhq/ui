@@ -24,7 +24,7 @@ class PayHandler(webapp2.RequestHandler):
         elif data['action'] == 'pitch-in':
             payment = data['payment']
             result = core.pitch_in(data['uid'], payment['gsid'], payment['parts'], payment['emailAddress'],
-                                   payment['note'], payment['stripeResponse'])
+                                   payment['note'], payment['stripeResponse'], payment['subscribe'])
             self.response.write(json.dumps(result))
 
         # elif data['action'] == 'process-payments':

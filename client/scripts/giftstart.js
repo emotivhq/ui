@@ -13,7 +13,8 @@ GiftStarterApp.service('GiftStartService', [
             parts: [],
             note: '',
             stripeResponse: {},
-            emailAddress: ''
+            emailAddress: '',
+            subscribe: false
         };
 
         this.pitchIns = [];
@@ -186,8 +187,14 @@ GiftStarterApp.service('GiftStartService', [
             var data = {payment: self.payment, action: 'pitch-in', uid: UserService.uid};
             $http({method: 'POST', url: '/pay',
                 data: data})
-                .success(self.paymentSuccess)
-                .error(self.paymentFailure);
+                .success(function(data) {
+                    self.paymentSuccess(data);
+                    if (callback) {callback(data)}
+                })
+                .error(function(data) {
+                    self.paymentFailure(data);
+                    if (callback) {callback(data)}
+                });
         };
 
         this.paymentSuccess = function() {

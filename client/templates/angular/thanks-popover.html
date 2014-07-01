@@ -5,6 +5,7 @@
     <div class="buttons">
         <button class="share" ng-click="mixpanel.track('FB send in thanks clicked');facebookSend();">Facebook</button>
         <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in thanks clicked');"><button class="share">Email</button></a>
-        <button class="large white-border" ng-click="close()">Close</button>
+        <!--<button class="large white-border" ng-click="close()">Close</button>-->
     </div>
+    <p class="cancel-button" ng-click="hidePopover()">Cancel</p>
 </div>

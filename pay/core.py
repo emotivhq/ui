@@ -14,8 +14,10 @@ def get_pitch_in_dicts(gsid):
     return [pi.ext_dictify() for pi in pitch_ins]
 
 
-def pitch_in(uid, gsid, parts, email_address, note, stripe_response):
+def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_to_mailing_lits):
     gs_user.core.save_email(uid, email_address)
+    if subscribe_to_mailing_lits:
+        gs_user.core.subscribe_to_mailing_list(uid, email=email_address)
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns

@@ -45,9 +45,9 @@ button.share
   border-color: $share-color
 
 button.disabled, button.disabled:active, button.disabled:hover, button.disabled:focus
-  background: #aaa
-  border-color: #aaa
-  color: #555
+  background: $disabled-color
+  border-color: $disabled-color
+  color: $disabled-text-color
   +box-shadow(#000, 0, 0, 0)
   cursor: default
 
@@ -67,6 +67,8 @@ button.share:active, button.share:hover, button.share:focus
 
 button.white-border
   border-color: #fff
+button.white-border.disabled
+  border-color: $disabled-color
 
 h1
   font: $h1-font

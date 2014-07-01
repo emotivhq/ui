@@ -25,6 +25,7 @@ class UserHandler(webapp2.RequestHandler):
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
+                                                    'on_mailing_list': user.subscribed_to_mailing_list,
                                                     'token': user.twitter_token_set.access_token}))
 
         elif data['action'] == 'submit-one-time-code':
@@ -34,6 +35,7 @@ class UserHandler(webapp2.RequestHandler):
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
+                                                    'on_mailing_list': user.subscribed_to_mailing_list,
                                                     'token': user.googleplus_token_set.access_token}))
 
         elif data['action'] == 'get-long-term-token':
@@ -46,6 +48,7 @@ class UserHandler(webapp2.RequestHandler):
                 if user is not None:
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
+                                                    'on_mailing_list': user.subscribed_to_mailing_list,
                                                     'token': user.facebook_token_set.access_token}))
 
         elif data['action'] == 'team-email-authorize':

@@ -22,4 +22,5 @@ class User(ndb.Model):
 
     cached_profile_image_url = ndb.StringProperty()
     email = ndb.StringProperty()
+    subscribed_to_mailing_list = ndb.BooleanProperty(default=False)
     phone_number = ndb.StringProperty()

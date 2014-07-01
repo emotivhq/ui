@@ -9,6 +9,8 @@ GiftStarterApp.controller('NotePopoverController', [
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
 
+        $scope.hidePopover = PopoverService.hidePopover;
+
         // Now that user is logged in, create giftstart in server
         if (!GiftStartService.giftStart.gsid) {GiftStartService.createGiftStart()}
 

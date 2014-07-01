@@ -1,7 +1,7 @@
 <div class="pay-popover" ng-controller="PayPopoverController">
     <h1 class="white">Pitch In!</h1>
     <div class="powered">Powered by <img src="/assets/powered_by_stripe.png"></div>
-    <form stripe-form="stripeSubmit">
+    <form stripe-form="stripeSubmit" name="stripeForm">
         <div class="email">
             <img src="/assets/cc_icon_email.png"/>
             <input type="email" ng-model="email" placeholder="Email Address"/>
@@ -18,10 +18,11 @@
         </div><div class="zip">
             <img src="/assets/cc_icon_zip.png">
             <input type="text" ng-model="address_zip" maxlength="5" placeholder="ZIP"/>
-        </div><span class="subscribe" ng-hide="userAlreadyAskedToSubscribe">
+        </div><span class="subscribe" ng-hide="userOnMailingList">
             <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
         </span>
 
-        <button type="submit" class="large white-border" ng-class="{disabled: pitchingIn}" ng-click="pitchingIn = true;">Pay ${{currentCharge / 100 | number : 2}}</button>
+        <button type="submit" class="large white-border" ng-class="{disabled: pitchingIn}" ng-click="pitchingIn = stripeForm.$valid;">Pay ${{currentCharge / 100 | number : 2}}</button>
     </form>
+    <p class="cancel-button" ng-click="hidePopover()">Cancel</p>
 </div>

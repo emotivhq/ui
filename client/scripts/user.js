@@ -10,13 +10,15 @@ GiftStarterApp.service('UserService', [
         this.profileImageUrl  = '';
         this.isStripeCustomer = false;
         this.loginService = '';
+        this.onMailinList = false;
 
         var self = this;
 
-        this.registerLogin = function(uid, profileImageUrl, token) {
+        this.registerLogin = function(uid, profileImageUrl, token, onMailingList) {
             self.uid = uid;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
+            self.onMailingList = onMailingList;
 
             $cookieStore.put('uid', uid);
             $cookieStore.put('token', token);
@@ -55,17 +57,17 @@ GiftStarterApp.service('UserService', [
         $rootScope.$on('facebook-login-success', facebookLoggedIn);
         function facebookLoggedIn () {
             self.loginService = 'facebook';
-            self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token);
+            self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token, FacebookService.subscribed);
         }
         $rootScope.$on('twitter-login-success', twitterLoggedIn);
         function twitterLoggedIn () {
             self.loginService = 'twitter';
-            self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token);
+            self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token, TwitterService.subscribed);
         }
         $rootScope.$on('googleplus-login-success', googleplusLoggedIn);
         function googleplusLoggedIn () {
             self.loginService = 'googleplus';
-            self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token);
+            self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token, GooglePlusService.subscribed);
         }
 
         $rootScope.$on('facebook-logout-success', self.registerLogout);

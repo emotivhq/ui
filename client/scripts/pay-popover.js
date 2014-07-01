@@ -3,13 +3,15 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', [
-            '$scope','GiftStartService','PopoverService',
-    function($scope,  GiftStartService,  PopoverService) {
+            '$scope','GiftStartService','PopoverService','UserService',
+    function($scope,  GiftStartService,  PopoverService,  UserService) {
 
         $scope.currentCharge = GiftStartService.giftStart.totalSelection;
         $scope.emailSubscribe = false;
         $scope.pitchingIn = false;
-//        $scope.userAlreadyAskedToSubscribe = UserService.userAlreadyAskedToSubscribe;
+        $scope.userOnMailingList = UserService.onMailingList;
+
+        $scope.hidePopover = PopoverService.hidePopover;
 
         $scope.stripeSubmit = function(status, response) {
             // Charge process!
@@ -31,7 +33,8 @@ GiftStarterApp.controller('PayPopoverController', [
                 console.log(response);
                 GiftStartService.attachStripeResponse(response);
                 GiftStartService.payment.emailAddress = $scope.email;
-                GiftStartService.sendPayment();
+                GiftStartService.payment.subscribe = $scope.emailSubscribe;
+                GiftStartService.sendPayment(function (data) {$scope.pitchingIn = false;});
             }
         };
 
