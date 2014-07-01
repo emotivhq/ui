@@ -53,6 +53,9 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
             }
         };
 
+        // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
+        GiftStartService.giftStart.gsid = 0;
+
     }
 ]);
 

@@ -123,6 +123,7 @@ GiftStarterApp.service('GiftStartService', [
             ga('send', 'event', 'campaign', 'created');
             self.giftStart = buildGiftStart();
             $location.path('/giftstart');
+            self.pitchInsInitialized = false;
             $http({method: 'POST', url: '/giftstart/api',
                 data: {giftstart: self.giftStart, action: 'create'}})
                 .success(self.fetchSuccess)
@@ -130,10 +131,15 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
+            console.log("Enabling GiftStart");
             self.giftStart.parts = makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
+            console.log("Updating selected");
             self.updateSelected();
+            console.log("Parts made");
             self.syncPitchIns('GiftStartService');
+            console.log("Current GSID: " + self.giftStart.gsid);
+            console.log("Pitchins synced");
         };
 
         this.createFailure = function() {console.log("Failed to create GiftStart.")};
@@ -150,7 +156,7 @@ GiftStarterApp.service('GiftStartService', [
         this.fetchGiftStart = function(gsid) {
             $http({method: 'POST', url: '/giftstart/api',
                 data: {gsid: gsid, action: 'get'}})
-                .success(this.fetchSuccess)
+                .success(self.fetchSuccess)
                 .error(function (){console.log("Failed to fetch GiftStart.");});
         };
 
@@ -202,65 +208,76 @@ GiftStarterApp.service('GiftStartService', [
             } else {console.log("Nothing selected!")}
         };
 
-        this.syncPitchIns = function(source) {
-            function checkForSync() {
-                $http({
-                    method: 'POST',
-                    url: '/pay',
-                    data: {action: 'get-pitch-ins', gsid: self.giftStart.gsid}
-                })
-                    .success(syncCheckCallback)
-                    .error(function() {console.log("Failed to contact part sync service.")})
-            }
+        function checkForSync() {
+            console.log("check for sync");
+            $http({
+                method: 'POST',
+                url: '/pay',
+                data: {action: 'get-pitch-ins', gsid: self.giftStart.gsid}
+            })
+                .success(syncCheckCallback)
+                .error(function() {console.log("Failed to contact part sync service.")})
+        }
 
-            function syncCheckCallback(pitchins) {
-                updatePartsFromPitchIns(pitchins);
-                formatPitchIns(pitchins);
-                $rootScope.$broadcast('pitch-ins-updated');
-            }
+        function syncCheckCallback(pitchins) {
+            console.log("syncCheckCallback");
+            updatePartsFromPitchIns(pitchins);
+            formatPitchIns(pitchins);
+            $rootScope.$broadcast('pitch-ins-updated');
+        }
 
-            function formatPitchIns(pitchins) {
-                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                var newPitchIns = pitchins;
-                for (var i = 0; i < newPitchIns.length; i++) {
-                    var date = new Date(1000 * pitchins[i].timestamp);
-                    newPitchIns[i].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
-                        pitchins[i].uid + '.jpg';
-                    newPitchIns[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
-                        ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
-                        (date.getHours() >= 12 ? 'PM' : 'AM');
-                }
-                newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
-                self.pitchIns = newPitchIns;
+        function formatPitchIns(pitchins) {
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var newPitchIns = pitchins;
+            for (var i = 0; i < newPitchIns.length; i++) {
+                var date = new Date(1000 * pitchins[i].timestamp);
+                newPitchIns[i].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
+                    pitchins[i].uid + '.jpg';
+                newPitchIns[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
+                    ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
+                    (date.getHours() >= 12 ? 'PM' : 'AM');
             }
+            newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
+            self.pitchIns = newPitchIns;
+        }
 
-            function updatePartsFromPitchIns(pitchins) {
-                for (var i = 0; i < pitchins.length; i++) {
-                    for (var j = 0; j < pitchins[i].parts.length; j++) {
-                        var partId = pitchins[i].parts[j];
-                        if (!self.giftStart.parts[partId].bought) {
-                            self.giftStart.parts[partId].bought = true;
-                            self.giftStart.parts[partId].selected = false;
-                            self.giftStart.parts[partId].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
-                                pitchins[i].uid + '.jpg';
-                        }
+        function updatePartsFromPitchIns(pitchins) {
+            console.log("updatePartsFromPitchIns");
+            for (var i = 0; i < pitchins.length; i++) {
+                for (var j = 0; j < pitchins[i].parts.length; j++) {
+                    var partId = pitchins[i].parts[j];
+                    if (!self.giftStart.parts[partId].bought) {
+                        self.giftStart.parts[partId].bought = true;
+                        self.giftStart.parts[partId].selected = false;
+                        self.giftStart.parts[partId].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
+                            pitchins[i].uid + '.jpg';
                     }
                 }
-                if (!self.pitchInsInitialized) {
-                    self.pitchInsInitialized = true;
-                    $rootScope.$broadcast('pitch-ins-initialized');
-                }
-                self.updateSelected();
             }
+            if (!self.pitchInsInitialized) {
+                console.log("Pitchins initialized!!!!!");
+                self.pitchInsInitialized = true;
+                $rootScope.$broadcast('pitch-ins-initialized');
+            }
+            self.updateSelected();
+        }
 
-            function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
+        function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
 
+        this.syncPitchIns = function(source) {
+            console.log("syncPitchIns");
             if (self.giftStart.gsid) {
+                console.log("if self.giftstart.gsid");
                 if (source == 'pitch-in-hover' || source == 'GiftStartService') {
                     // User hovered pitch-in button, need to update immediately
                     checkForSync();
                     updateLastChecked();
+                } else if (!self.pitchInsInitialized) {
+                    console.log("!self.pitchInsInitialized");
+                    checkForSync();
+                    updateLastChecked();
                 } else {
+                    console.log("else pitch in init");
                     // Update every N seconds upon user activity
                     var currentTime = new Date().getTime();
                     if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {
