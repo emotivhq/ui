@@ -2,7 +2,6 @@ __author__ = 'stuart'
 
 import requests
 from lxml import html
-import tax
 
 LAUNCH_PARTNERS = ['http://www.rei.com/', 'http://www.brooksrunning.com/']
 
@@ -83,6 +82,21 @@ def extract_price(tree, partner):
     return price
 
 
+def rotate_list_left(l, n):
+    n = n % len(l)
+    return l[n-len(l):] + l[:n]
+
+
+DEFAULT_IMAGE = {
+    'rei': -1,
+    'brooksrunning': 2,
+    'filson': 3,
+    'amazon': -1,
+    'nordstrom': 10,
+    'costco': 6
+}
+
+
 def product(data):
 
     url = data['product_url']
@@ -100,6 +114,7 @@ def product(data):
 
         imgs = get_all_imgs(tree, get_base_url(url))
         imgs.append(get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0])
+        imgs = rotate_list_left(imgs, DEFAULT_IMAGE[partner])
         price = extract_price(tree, partner)
 
         result = {'product': {'imgs': imgs, 'price': price}}
