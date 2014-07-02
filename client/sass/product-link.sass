@@ -19,9 +19,13 @@ div.product-link
     input
       padding: 0.4em 0.6em
       width: 16em
-    button, input
+    button
       @media screen and (max-width: $phone-tablet-boundary)
         width: 9em
+    input
+      @media screen and (max-width: $phone-tablet-boundary)
+        margin-right: 0
+        width: 15em
 
   .loading, div.failed
     text-align: center

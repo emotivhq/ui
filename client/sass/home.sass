@@ -10,9 +10,9 @@ div.landing-page
   text-align: center
   margin: 2em auto
 
-  @media screen and (max-width: $phone-tablet-boundary)
+  @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
-  @media screen and (min-width: $phone-tablet-boundary)
+  @media screen and (min-width: $tablet-computer-boundary)
     width: 2 * $column-width
 
   div.copy
@@ -60,11 +60,6 @@ div.landing-page
         margin: 0
         text-align: left
 
-    div.step.one
-      margin-left: 0
-    div.step.three
-      margin-right: 0
-
   @media screen and (max-width: $phone-tablet-boundary)
     div.process
       div.step
@@ -73,11 +68,23 @@ div.landing-page
         img
           width: 100%
 
-  @media screen and (min-width: $phone-tablet-boundary)
+  @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
     div.process
+      div.step
+        margin-left: 3em
+        margin-right: 3em
+
+  div.process
+    @media screen and (min-width: $tablet-computer-boundary)
       div.step
         margin-left: $step-margin-width
         margin-right: $step-margin-width
+
+    @media screen and (min-width: $tablet-computer-boundary)
+      div.step.one
+        margin-left: 0
+      div.step.three
+        margin-right: 0
 
   div.retailers
     h1

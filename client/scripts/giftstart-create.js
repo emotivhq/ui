@@ -147,6 +147,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 GiftStartService.specialNotes = $scope.specialNotes;
 
                 if (UserService.loggedIn) {
+                    scrollTo(0, 0);
                     GiftStartService.createGiftStart();
                 } else {
                     PopoverService.giftstartCreateLogin = true;
