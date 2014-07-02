@@ -23,8 +23,13 @@ div.landing-page
       padding-right: 1em
       display: inline-block
       vertical-align: top
-      @media screen and (min-width: $phone-tablet-boundary)
+      @media screen and (min-width: $tablet-computer-boundary)
         width: 30em
+        p
+          margin-top: 0
+          margin-bottom: 1.5em
+      @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+        width: 49%
         p
           margin-top: 0
           margin-bottom: 1.5em
