@@ -3,12 +3,19 @@
  */
 
 GiftStarterApp.service('GooglePlusService', [
-            '$http','$rootScope',
-    function($http,  $rootScope) {
+            '$http','$rootScope','$window',
+    function($http,  $rootScope,  $window) {
 
         this.uid = -1;
         this.usr_img = '';
         this.token = '';
+
+        this.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
+            '?scope=' + encodeURIComponent('https://www.googleapis.com/auth/plus.login') +
+            '&client_id=' + encodeURIComponent('26242969111.apps.googleusercontent.com') +
+            '&redirect_uri=' + encodeURIComponent('https://6-dot-gift-starter.appspot.com/oauth-callback/googleplus') +
+            '&response_type=' + encodeURIComponent('code') +
+            '&access_type=' + encodeURIComponent('offline');
 
         this.loginRequested = false;
 
@@ -40,12 +47,14 @@ GiftStarterApp.service('GooglePlusService', [
         }
 
         this.login = function() {
-            gapi.auth.signIn({accesstype: 'offline'});
+//            gapi.auth.signIn({accesstype: 'offline'});
+            self.auth_window = $window.open(self.auth_url, 'Twitter Authorization');
+
             self.loginRequested = true;
         };
 
         this.logout = function() {
-            gapi.auth.signOut();
+//            gapi.auth.signOut();
             $rootScope.$broadcast('googleplus-logout-success');
         };
 

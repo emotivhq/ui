@@ -32,7 +32,6 @@ GiftStarterApp.run(function($http, $templateCache) {
     $http.get('/templates/angular/giftstart.html', {cache: $templateCache});
     $http.get('/templates/angular/giftstart-create-campaign.html', {cache: $templateCache});
     $http.get('/templates/angular/giftstart-create-shipping.html', {cache: $templateCache});
-    $http.get('/templates/angular/invite-popover.html', {cache: $templateCache});
     $http.get('/templates/angular/login-popover.html', {cache: $templateCache});
     $http.get('/templates/angular/note-popover.html', {cache: $templateCache});
     $http.get('/templates/angular/pay-popover.html', {cache: $templateCache});

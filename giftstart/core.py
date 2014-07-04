@@ -64,6 +64,10 @@ def create(giftstart):
                   payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),
                   countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
 
+    taskqueue.add(url="/giftstart/api", method="POST",
+                  payload=json.dumps({'action': 'check-if-complete', 'gsid': gs.gsid}),
+                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY))
+
     return gs
 
 

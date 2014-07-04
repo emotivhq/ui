@@ -19,6 +19,9 @@ handlers:
 - url: /oauth-callback/twitter
   script: social.api.twitter_oauth_callback
   secure: always
+- url: /oauth-callback/googleplus
+  script: social.api.googleplus_oauth_callback
+  secure: always
 
 # Client static asset urls
 - url: /favicon\.ico

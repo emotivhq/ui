@@ -1,11 +1,13 @@
 <div class="login-popover" ng-controller="ThanksPopoverController">
     <h1 class="white">Awesomesauce!</h1>
-    <p>Thank you for giving!  Lorme ipsum dolor sit amet.</p>
-    <p>Thinking of starting your own campaign?  <a href="/#/product" ng-click="close()">It's easy!</a></p>
+    <p>Thank you for giving and joining in on a new way to give! We've taken care of the email receipt for you already. If there's anything else we can do to help make this giving experience better, please let us know.</p>
+    <p>We really appreciate you!</p>
+    <p>Thinking of starting your own campaign?  <a href="/" ng-click="hidePopover()">It's easy!</a></p>
+    <p>Want to invite others to join in with you? Use the sharing buttons below!</p>
     <div class="buttons">
         <button class="share" ng-click="mixpanel.track('FB send in thanks clicked');facebookSend();">Facebook</button>
         <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in thanks clicked');"><button class="share">Email</button></a>
         <!--<button class="large white-border" ng-click="close()">Close</button>-->
     </div>
-    <p class="cancel-button" ng-click="hidePopover()">Cancel</p>
+    <div><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

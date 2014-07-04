@@ -1,12 +1,11 @@
 __author__ = 'stuart'
 
-from requests_oauthlib import OAuth2Session, OAuth2
 import requests
 import secret
 import json
 from core import GooglePlusTokenSet
 
-REDIRECT_URI = 'postmessage' #'https://6-dot-gift-starter.appspot.com/oauth-callback/googleplus'
+REDIRECT_URI = 'https://6-dot-gift-starter.appspot.com/oauth-callback/googleplus'
 
 
 def submit_code(auth_response):
@@ -20,6 +19,7 @@ def submit_code(auth_response):
     }
     str_params = '&'.join(['='.join(pair) for pair in params.items()])
     response = requests.post(base_url, data=str_params)
+    print(response.content)
     token = json.loads(response.content)
     refresh_token = None if 'refresh_token' not in token else token['refresh_token']
     return GooglePlusTokenSet().populate(token['access_token'], refresh_token, token['expires_in'], token['token_type'])
