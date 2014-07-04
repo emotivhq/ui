@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('GooglePlusService', [
-            '$http','$rootScope','$window',
-    function($http,  $rootScope,  $window) {
+            '$http','$rootScope','$window','$location',
+    function($http,  $rootScope,  $window,  $location) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -24,12 +24,9 @@ GiftStarterApp.service('GooglePlusService', [
         this.loginCallback = function(authResponse) {
             // Receive access_token, id_token, and one-time code
             // Send one-time code to server
-//            if (authResponse.refresh_token) {
-//                // Ensure this is not the call made by default by google on page load when user is already logged in
             if (self.loginRequested) {
                 submitOneTimeCode(authResponse);
             }
-//            }
         };
 
         function submitOneTimeCode(authResponse) {
@@ -47,15 +44,21 @@ GiftStarterApp.service('GooglePlusService', [
         }
 
         this.login = function() {
-//            gapi.auth.signIn({accesstype: 'offline'});
             self.auth_window = $window.open(self.auth_url, 'Twitter Authorization');
 
             self.loginRequested = true;
         };
 
         this.logout = function() {
-//            gapi.auth.signOut();
             $rootScope.$broadcast('googleplus-logout-success');
+        };
+
+        this.share = function() {
+            mixpanel.track("share campaign googleplus");
+            ga('send', 'event', 'share campaign', 'googleplus');
+            var shareUrl = 'https://plus.google.com/share';
+            var parameters = '?url=' + encodeURIComponent($location.absUrl().split('#')[0]);
+            $window.open(shareUrl + parameters);
         };
 
         window.googlePlusCallback = self.loginCallback;

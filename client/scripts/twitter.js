@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('TwitterService', [
-            '$http','$rootScope','$window',
-    function($http,  $rootScope,  $window) {
+            '$http','$rootScope','$window','$location',
+    function($http,  $rootScope,  $window,  $location) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -28,6 +28,15 @@ GiftStarterApp.service('TwitterService', [
         this.logout = function() {
             // TODO: actually log out...?
             $rootScope.$broadcast('twitter-logout-success');
+        };
+
+        this.share = function() {
+            mixpanel.track("share campaign twitter");
+            ga('send', 'event', 'share campaign', 'twitter');
+            var shareUrl = 'https://twitter.com/share';
+            var parameters = "?url=" + encodeURIComponent($location.absUrl().split('#')[0]) +
+                "&text=Check out this GiftStarter campaign!  It's the bees knees!";
+            $window.open(shareUrl + parameters);
         };
 
         this.submitVerifier = function() {

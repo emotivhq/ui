@@ -49,6 +49,8 @@ GiftStarterApp.service('FacebookService', [
         };
 
         this.inviteFriends = function() {
+            mixpanel.track("share campaign facebook");
+            ga('send', 'event', 'share campaign', 'facebook');
             ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id});
         };
 
