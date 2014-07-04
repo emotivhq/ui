@@ -1,13 +1,15 @@
-<div class="login-popover" ng-controller="ThanksPopoverController">
-    <h1 class="white">Awesomesauce!</h1>
-    <p>Thank you for giving and joining in on a new way to give! We've taken care of the email receipt for you already. If there's anything else we can do to help make this giving experience better, please let us know.</p>
-    <p>We really appreciate you!</p>
-    <p>Thinking of starting your own campaign?  <a href="/" ng-click="hidePopover()">It's easy!</a></p>
-    <p>Want to invite others to join in with you? Use the sharing buttons below!</p>
+<div class="thanks-popover" ng-controller="ThanksPopoverController">
+    <h1 class="white">Success!</h1>
+    <p>Ah, that warm fuzzy feeling is the best, isn't it? Thank you for using GiftStarter as the new way to give! Seriously-we think you're just phenomenal.</p>
+    <p>Give some friends the opportunity to get some warm fuzzies from this campaign, too.</p>
     <div class="buttons">
-        <button class="share" ng-click="mixpanel.track('FB send in thanks clicked');facebookSend();">Facebook</button>
-        <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in thanks clicked');"><button class="share">Email</button></a>
+        <!--<button class="share" ng-click="socialShare()">Facebook</button>-->
+        <!--<a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in thanks clicked');"><button class="share">Email</button></a>-->
         <!--<button class="large white-border" ng-click="close()">Close</button>-->
+        <div class="share-button" ng-click="facebookShare()"><img class="share-button" src="/assets/login_facebook2.png" /></div>
+        <div class="share-button" ng-click="twitterShare()"><img class="share-button" src="/assets/login_twitter2.png" /></div>
+        <div class="share-button" ng-click="googlePlusShare()"><img class="share-button" src="/assets/login_google2.png" /></div>
     </div>
-    <div><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
+    <p>Want to start your own campaign?<br>It's easy – start <a href="/" ng-click="hidePopover()">here.</a></p>
+    <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

@@ -56,16 +56,22 @@ GiftStarterApp.service('UserService', [
 
         $rootScope.$on('facebook-login-success', facebookLoggedIn);
         function facebookLoggedIn () {
+            mixpanel.track("logged in with facebook");
+            ga('send', 'event', 'login success', 'facebook');
             self.loginService = 'facebook';
             self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token, FacebookService.subscribed);
         }
         $rootScope.$on('twitter-login-success', twitterLoggedIn);
         function twitterLoggedIn () {
+            mixpanel.track("logged in with twitter");
+            ga('send', 'event', 'login success', 'twitter');
             self.loginService = 'twitter';
             self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token, TwitterService.subscribed);
         }
         $rootScope.$on('googleplus-login-success', googleplusLoggedIn);
         function googleplusLoggedIn () {
+            mixpanel.track("logged in with googleplus");
+            ga('send', 'event', 'login success', 'googleplus');
             self.loginService = 'googleplus';
             self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token, GooglePlusService.subscribed);
         }
