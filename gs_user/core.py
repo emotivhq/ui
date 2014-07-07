@@ -30,7 +30,9 @@ def subscribe_to_mailing_list(uid, email=None):
     })
     response = requests.post(mailchimp_url, post_data)
     if response.status_code != 200:
-        raise Exception("Failed to subscribe user! Dumping mailchimp response:" + response.content)
+        if json.loads(response.content)['code'] != 214:
+            # Make sure the error is not related to user already being subscribed
+            raise Exception("Failed to subscribe user! Dumping mailchimp response:" + response.content)
 
     user = User.query(User.uid == uid).fetch(1)[0]
     user.subscribed_to_mailing_list = True
