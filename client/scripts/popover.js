@@ -68,6 +68,11 @@ GiftStarterApp.service('PopoverService', [
             } else {
                 self.hidePopover();
             }
+        };
+
+        // Ensure they don't navigate directly to a popover
+        if ($location.hash()) {
+            $location.hash('');
         }
     }
 ]);

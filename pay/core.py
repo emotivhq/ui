@@ -48,9 +48,12 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
 def check_if_complete(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    pitch_in_parts = []
+    for p in pitch_ins:
+        pitch_in_parts += p.parts
 
     if not giftstart.giftstart_complete:
-        if len(pitch_ins) == giftstart.overlay_columns * giftstart.overlay_rows:
+        if len(pitch_in_parts) == giftstart.overlay_columns * giftstart.overlay_rows:
             giftstart.giftstart_complete = True
             giftstart.put()
 
@@ -60,12 +63,13 @@ def check_if_complete(gsid):
                                "Stuart at GiftStarter", "stuart@giftstarter.co", [giftstart.gc_email])
 
             # And email GiftStarter personnel...
-            gs_email.comm.send("GiftStart Complete!",
+            gs_email.comm.send("GiftStart #{gsid} Complete!".format(gsid=giftstart.gsid),
                                "GiftStart #{gsid} has been completed! Nice work!".format(gsid=giftstart.gsid),
-                               "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co",
-                                                                         "arry@giftstarter.co"])
+                               "Team GiftStarter", "team@giftstarter.co", ["stuart@giftstarter.co",
+                                                                           "arry@giftstarter.co",
+                                                                           "christie@giftstarter.co"])
 
-        elif giftstart.deadline > datetime.now():
+        elif giftstart.deadline < datetime.now():
             giftstart.giftstart_complete = True
             giftstart.put()
 
@@ -75,7 +79,7 @@ def check_if_complete(gsid):
                                "Stuart at GiftStarter", "stuart@giftstarter.co", [giftstart.gc_email])
 
             # And email GiftStarter personnel...
-            gs_email.comm.send("GiftStart Complete!",
+            gs_email.comm.send("GiftStart #{gsid} Complete!".format(gsid=giftstart.gsid),
                                "GiftStart #{gsid} has ended, but did not raise the full amount.".format(gsid=giftstart.gsid),
                                "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co",
                                                                          "arry@giftstarter.co"])

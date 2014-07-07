@@ -39,7 +39,7 @@ class GiftStartMainHandler(webapp2.RequestHandler):
             render_values = {
                 'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
                 'page_title': gs.giftstart_title,
-                'page_url': self.request.path_url,
+                'page_url': self.request.path_url + "?gs-id=" + str(gsid),
                 'page_description': gs.giftstart_description,
                 'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid)
             }

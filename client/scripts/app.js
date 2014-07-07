@@ -4,10 +4,10 @@
 
 
 var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies']);
-console.log("ver15");
+console.log("ver21");
 
 GiftStarterApp.config([
-            '$routeProvider','$locationProvider',
+            '$routeProvider','$locationProvider',//'$location',
     function($routeProvider,  $locationProvider) {
         $routeProvider
             .when('/', {templateUrl: '/templates/angular/home.html'})
@@ -23,6 +23,11 @@ GiftStarterApp.config([
 
         mixpanel.track("App loaded");
         ga('send', 'event', 'app', 'loaded');
+
+        // Make sure they aren't navigating directly to a popover
+//        if ($location.hash()) {
+//            $location.hash('');
+//        }
     }
 ]);
 

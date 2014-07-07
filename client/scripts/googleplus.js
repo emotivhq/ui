@@ -25,13 +25,16 @@ GiftStarterApp.service('GooglePlusService', [
             // Receive access_token, id_token, and one-time code
             // Send one-time code to server
             if (self.loginRequested) {
-                submitOneTimeCode(authResponse);
+                self.authResponse = authResponse;
+                self.submitOneTimeCode();
             }
         };
 
-        function submitOneTimeCode(authResponse) {
-            $http({method: 'POST', url: '/user',
-                data: {service: 'googleplus', action: 'submit-one-time-code', auth_response: authResponse}})
+        this.submitOneTimeCode = function() {
+            self.gplus_code_request = {method: 'POST', url: '/user',
+                data: JSON.stringify({service: 'googleplus', action: 'submit-one-time-code',
+                    auth_response: self.authResponse})};
+            $http(self.gplus_code_request)
                 .success(function(data) {
                     self.uid = data['uid'];
                     self.usr_img = data['usr_img'];
@@ -41,11 +44,10 @@ GiftStarterApp.service('GooglePlusService', [
                 })
                 .error(function(data) {console.log(data)});
             self.loginRequested = false;
-        }
+        };
 
         this.login = function() {
-            self.auth_window = $window.open(self.auth_url, 'Twitter Authorization');
-
+            self.auth_window = $window.open(self.auth_url, 'Google Authorization');
             self.loginRequested = true;
         };
 
