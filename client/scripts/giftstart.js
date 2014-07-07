@@ -132,15 +132,10 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
-            console.log("Enabling GiftStart");
             self.giftStart.parts = makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
-            console.log("Updating selected");
             self.updateSelected();
-            console.log("Parts made");
             self.syncPitchIns('GiftStartService');
-            console.log("Current GSID: " + self.giftStart.gsid);
-            console.log("Pitchins synced");
         };
 
         this.createFailure = function() {console.log("Failed to create GiftStart.")};
@@ -216,7 +211,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         function checkForSync() {
-            console.log("check for sync");
             $http({
                 method: 'POST',
                 url: '/pay',
@@ -227,7 +221,6 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         function syncCheckCallback(pitchins) {
-            console.log("syncCheckCallback");
             updatePartsFromPitchIns(pitchins);
             formatPitchIns(pitchins);
             $rootScope.$broadcast('pitch-ins-updated');
@@ -249,7 +242,6 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         function updatePartsFromPitchIns(pitchins) {
-            console.log("updatePartsFromPitchIns");
             for (var i = 0; i < pitchins.length; i++) {
                 for (var j = 0; j < pitchins[i].parts.length; j++) {
                     var partId = pitchins[i].parts[j];
@@ -262,7 +254,6 @@ GiftStarterApp.service('GiftStartService', [
                 }
             }
             if (!self.pitchInsInitialized) {
-                console.log("Pitchins initialized!!!!!");
                 self.pitchInsInitialized = true;
                 $rootScope.$broadcast('pitch-ins-initialized');
             }
@@ -272,19 +263,15 @@ GiftStarterApp.service('GiftStartService', [
         function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
 
         this.syncPitchIns = function(source) {
-            console.log("syncPitchIns");
             if (self.giftStart.gsid) {
-                console.log("if self.giftstart.gsid");
                 if (source == 'pitch-in-hover' || source == 'GiftStartService') {
                     // User hovered pitch-in button, need to update immediately
                     checkForSync();
                     updateLastChecked();
                 } else if (!self.pitchInsInitialized) {
-                    console.log("!self.pitchInsInitialized");
                     checkForSync();
                     updateLastChecked();
                 } else {
-                    console.log("else pitch in init");
                     // Update every N seconds upon user activity
                     var currentTime = new Date().getTime();
                     if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {

@@ -43,7 +43,7 @@ GiftStarterApp.service('PopoverService', [
 
         this.showPopover = function() {$rootScope.$broadcast('popover-shown')};
 
-        this.validHashes = ['thanks', 'login', 'note', 'pay', 'thanks'];
+        this.validHashes = ['login', 'note', 'pay', 'thanks'];
         $rootScope.$on('$locationChangeStart', function(event, next, current) {
             var hash = $location.hash();
             if (self.currentLocation === '') {
