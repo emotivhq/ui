@@ -9,13 +9,14 @@ import requests
 def cache_facebook_user_image(uid, token_set):
     # Fetch facebook image
     graph = facebook.GraphAPI(token_set.access_token)
-    img = graph.get_object('me/picture', type='square', height=200, width=200, redirect=1)['data']
+    img = graph.get_object('me/picture', type='square', height=400, width=400, redirect=1)['data']
     return _save_picture_to_gcs(uid + '.jpg', 'u/', img)
 
 
 def cache_user_image_from_url(uid, img_url):
     img = requests.get(img_url).content
-    return _save_picture_to_gcs(uid + img_url[-4:], 'u/', img)
+    extension = '.' + img_url.split('.')[-1].split('?')[0]
+    return _save_picture_to_gcs(uid + extension, 'u/', img)
 
 
 def cache_product_image(img_url, gsid):

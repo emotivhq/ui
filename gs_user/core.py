@@ -11,6 +11,7 @@ def save_email(uid, email):
     user = User.query(User.uid == uid).fetch(1)[0]
     user.email = email
     user.put()
+    return user
 
 
 def subscribe_to_mailing_list(uid, email=None):

@@ -51,7 +51,7 @@ def get_uid(token_set):
 def get_img_url(token_set):
     response = _request_with_refresh(IMG_QRY_URL, token_set)
     # Strip default image sizing, add our own
-    img_url = json.loads(response.content)['image']['url'].split('?')[0] + '?sz=200'
+    img_url = json.loads(response.content)['image']['url'].split('?')[0] + '?sz=400'
     return img_url
 
 

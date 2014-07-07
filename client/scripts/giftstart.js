@@ -105,7 +105,7 @@ GiftStarterApp.service('GiftStartService', [
                     disabled: false,
                     selected: false,
                     part_id: i,
-                    value: totalPrice/numParts
+                    value: Math.floor(totalPrice/numParts)
                 });
             }
 
@@ -231,8 +231,6 @@ GiftStarterApp.service('GiftStartService', [
             var newPitchIns = pitchins;
             for (var i = 0; i < newPitchIns.length; i++) {
                 var date = new Date(1000 * pitchins[i].timestamp);
-                newPitchIns[i].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
-                    pitchins[i].uid + '.jpg';
                 newPitchIns[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
                     ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
                     (date.getHours() >= 12 ? 'PM' : 'AM');
@@ -248,8 +246,7 @@ GiftStarterApp.service('GiftStartService', [
                     if (!self.giftStart.parts[partId].bought) {
                         self.giftStart.parts[partId].bought = true;
                         self.giftStart.parts[partId].selected = false;
-                        self.giftStart.parts[partId].img = 'http://storage.googleapis.com/giftstarter-pictures/u/' +
-                            pitchins[i].uid + '.jpg';
+                        self.giftStart.parts[partId].img = pitchins[i].img;
                     }
                 }
             }
