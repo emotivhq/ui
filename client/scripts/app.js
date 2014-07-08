@@ -4,7 +4,7 @@
 
 
 var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies']);
-console.log("ver24");
+console.log("ver26");
 
 GiftStarterApp.config([
             '$routeProvider','$locationProvider',//'$location',

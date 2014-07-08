@@ -21,7 +21,8 @@ def cache_user_image_from_url(uid, img_url):
 
 def cache_product_image(img_url, gsid):
     img = requests.get(img_url).content
-    return _save_picture_to_gcs(gsid, 'p/', img)
+    extension = '.' + img_url.split('.')[-1].split('?')[0]
+    return _save_picture_to_gcs(gsid + extension, 'p/', img)
 
 
 def _save_picture_to_gcs(filename, folder, data):

@@ -1,6 +1,12 @@
 @import base
 
-.note-popover
+$note-popover-width: 42em
+
+div.note-popover
+  width: 100%
+  @media screen and (min-width: $note-popover-width)
+    width: $note-popover-width
+
   img.profile-picture
     vertical-align: top
     width: 18%

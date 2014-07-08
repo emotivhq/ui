@@ -17,7 +17,7 @@ def get_pitch_in_dicts(gsid):
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_to_mailing_lits):
     user = gs_user.core.save_email(uid, email_address)
-    usr_img = user.img_url
+    usr_img = user.cached_profile_image_url
 
     if subscribe_to_mailing_lits:
         gs_user.core.subscribe_to_mailing_list(uid, email=email_address)
@@ -25,11 +25,11 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns
     charge_description_values = {'gsid': gsid, 'parts': str(parts)}
-    charge = stripe.Charge.create(amount=total_charge, currency='usd', card=stripe_response['id'], img_url=usr_img,
+    charge = stripe.Charge.create(amount=total_charge, currency='usd', card=stripe_response['id'],
                                   description="GiftStarter #{gsid} parts {parts}".format(**charge_description_values))
 
     pi = PitchIn(uid=uid, gsid=gsid, note=note, parts=parts, stripe_charge_id=charge['id'], email=email_address,
-                 stripe_charge_json=json.dumps(charge), last_four=stripe_response['card']['last4'])
+                 stripe_charge_json=json.dumps(charge), last_four=stripe_response['card']['last4'], img_url=usr_img)
     pi.put()
     taskqueue.add(url="/pay", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': gsid}), countdown=30)

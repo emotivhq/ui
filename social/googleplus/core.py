@@ -45,7 +45,8 @@ def _request_with_refresh(url, token_set):
 
 
 def get_uid(token_set):
-    return json.loads(_request_with_refresh(UID_QRY_URL, token_set).content)['id']
+    response = json.loads(_request_with_refresh(UID_QRY_URL, token_set).content)
+    return response['id']
 
 
 def get_img_url(token_set):

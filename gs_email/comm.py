@@ -39,6 +39,7 @@ def send_gmail(message):
     team_user = User.query(User.uid == 'g'+TEAM_EMAIL_UID).fetch(1)[0]
     team_token_set = team_user.googleplus_token_set
     response = _post_with_refresh(BASE_URL, team_token_set, data=str_params)
+    print(response.content)
 
 
 def create_message(sender, to, subject, message_text):
@@ -57,8 +58,6 @@ def create_message(sender, to, subject, message_text):
     message['to'] = to
     message['from'] = 'team@giftstarter.co'
     message['subject'] = subject
-    print(message.as_string())
-    print(message.as_string())
     return {'raw': base64.b64encode(message.as_string())}
 
 
