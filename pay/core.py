@@ -34,16 +34,14 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
     taskqueue.add(url="/pay", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': gsid}), countdown=30)
 
-    receipt_values = {'uid': uid, 'charge_id': charge['id'], 'total_charge': str(total_charge/100.0)}
-    template_values = {'gsid': str(gsid),
-                       'receipt_text': "Customer ID:\t\t{uid}\n"
-                                       "Charge ID:\t\t{charge_id}\n"
-                                       "Total Charge:\t\t${total_charge}".format(**receipt_values)}
-    gs_email.comm.send("Pitch In Received!",
-                       "Awesomesauce!  Along with that tender and warm sense of togetherness you got from pitching in "
-                       "to GiftStarter campaign #{gsid}, you also get a receipt for your charge!  Isn't that great?\n"
-                       "\n{receipt_text}\n\nThanks!\nTeam GiftStarter".format(**template_values),
-                       "Team GiftStarter", "stuart@giftstarter.co", email_address)
+    email_kwargs = {
+        'campaign_name': giftstart.giftstart_title,
+        'pitchin_charge': '$' + str(total_charge/100.0),
+        'pitchin_id': charge['id'],
+        'pitchin_last_four': stripe_response['card']['last4']
+    }
+    gs_email.comm.send_from_template("Pitch In Received!", "pitch_in_thank_you", email_kwargs,
+                                     "team@giftstarter.co", email_address)
 
     return {'result': 'success', 'purchased-parts': parts}
 
@@ -60,29 +58,30 @@ def check_if_complete(gsid):
             giftstart.giftstart_complete = True
             giftstart.put()
 
-            # Send email congratulating the gift champion, too!
-            gs_email.comm.send("GiftStart Complete!",
-                               "GiftStart #{gsid} has been completed! Nice work!".format(gsid=giftstart.gsid),
-                               "Stuart at GiftStarter", "stuart@giftstarter.co", [giftstart.gc_email])
+            # Send email congratulating the gift champion!
+            email_kwargs = {'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gsid),
+                            'campaign_name': giftstart.giftstart_title}
+            gs_email.comm.send_from_template("GiftStarter Campaign Complete!", "campaign_complete_user_funded",
+                                             email_kwargs, "team@giftstarter.co", [giftstart.gc_email])
 
             # And email GiftStarter personnel...
-            gs_email.comm.send("GiftStart #{gsid} Complete!".format(gsid=giftstart.gsid),
-                               "GiftStart #{gsid} has been completed! Nice work!".format(gsid=giftstart.gsid),
-                               "Team GiftStarter", "team@giftstarter.co", ["stuart@giftstarter.co",
-                                                                           "arry@giftstarter.co",
-                                                                           "christie@giftstarter.co"])
+            email_kwargs = {'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gsid),
+                            'campaign_number': str(gsid)}
+            gs_email.comm.send_from_template("GiftStarter Campaign Complete!", "campaign_complete_team_funded",
+                                             email_kwargs, "team@giftstarter.co", 'team@giftstarter.co')
 
         elif giftstart.deadline < datetime.now():
             giftstart.giftstart_complete = True
             giftstart.put()
 
-            # Send email congratulating the gift champion, too!
-            gs_email.comm.send("GiftStart Complete!",
-                               "GiftStart #{gsid} has ended, but wasn't fully funded.  We'll send a gift card with the raised amount to the recipient.\n\nThanks for being so awesome!\nTeam GiftStarter".format(gsid=giftstart.gsid),
-                               "Stuart at GiftStarter", "stuart@giftstarter.co", [giftstart.gc_email])
+            # Send email congratulating the gift champion!
+            email_kwargs = {'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gsid),
+                            'campaign_name': giftstart.giftstart_title}
+            gs_email.comm.send_from_template("GiftStarter Campaign Complete!", "campaign_complete_user_not_funded",
+                                             email_kwargs, "team@giftstarter.co", [giftstart.gc_email])
 
             # And email GiftStarter personnel...
-            gs_email.comm.send("GiftStart #{gsid} Complete!".format(gsid=giftstart.gsid),
-                               "GiftStart #{gsid} has ended, but did not raise the full amount.".format(gsid=giftstart.gsid),
-                               "Stuart Robot", "stuart@giftstarter.co", ["stuart@giftstarter.co",
-                                                                         "arry@giftstarter.co"])
+            email_kwargs = {'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gsid),
+                            'campaign_number': str(gsid)}
+            gs_email.comm.send_from_template("GiftStarter Campaign Complete!", "campaign_complete_team_not_funded",
+                                             email_kwargs, "team@giftstarter.co", 'team@giftstarter.co')

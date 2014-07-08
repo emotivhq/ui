@@ -53,12 +53,19 @@ def create(giftstart):
     gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()
 
-    gs_email.comm.send("Giftstart #{gsid} created!".format(gsid=str(gs.gsid)),
-                       "Check it: http://giftstarter.co/giftstart?gs-id={gsid}\n\nJsonified:\n{json}"
-                       .format(gsid=str(gs.gsid), json=gs.jsonify()),
-                       "giftstartbot", "stuart@giftstarter.co", ["team@giftstarter.co"])
+    email_kwargs = {
+        'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
+        'campaign_number': str(gs.gsid)
+    }
+    gs_email.comm.send_from_template("Giftstart #{gsid} created!".format(gsid=str(gs.gsid)), "campaign_create_team",
+                                     email_kwargs, "team@giftstarter.co", ["team@giftstarter.co"])
 
-    gs_email.comm.send("GiftStart Campaign Created!", "Hey there!\n\nYou've just created a GiftStarter campaign!  Nice!  The next thing to do is invite the people you'd like to contribute, and ask them to write something special!  Here's the link:\n\nhttp://giftstarter.co/giftstart?gs-id={gsid}\n\nThanks!\nTeam GiftStarter".format(gsid=gs.gsid), "Team GiftStarter", "stuart@giftstarter.co", gs.gc_email)
+    email_kwargs = {
+        'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
+        'campaign_name': str(gs.giftstart_title)
+    }
+    gs_email.comm.send_from_template("GiftStarter Campaign Created!", "campaign_create_user",
+                                     email_kwargs, "team@giftstarter.co", gs.gc_email)
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),
