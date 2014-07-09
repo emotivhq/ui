@@ -8,7 +8,7 @@
     <div class="overlay block">
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
-            <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In!</button>
+            <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
             <h2>Share This Campaign With Friends!</h2>
             <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');">
                 <button class="share"><span>Email</span></button></a>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="price block">
-        <div class="price"><h2>Funded!</h2><h1>$<span class="giftstart product contribution">{{giftStart.totalSelection / 100 | number : 2}}</span></h1></div><div class="price"><h2>Remaining</h2><h1>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h1></div>
+        <div class="price"><h2>Funded!</h2><h1>$<span class="giftstart product contribution">{{giftStart.funded / 100 | number : 2}}</span></h1></div><div class="price"><h2>Remaining</h2><h1>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h1></div>
         <gs-funding-bar></gs-funding-bar>
         <div><h2>Time Left in Campaign</h2><h1 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h1></div>
         <gs-time-left-bar></gs-time-left-bar>

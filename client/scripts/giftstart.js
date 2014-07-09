@@ -66,6 +66,7 @@ GiftStarterApp.service('GiftStartService', [
                     product_url: self.productUrl
                 },
                 totalSelection: 0,
+                funded: 0,
                 parts: makeParts(self.rows * self.columns, self.totalPrice),
                 rows: self.rows,
                 columns: self.columns,
@@ -143,10 +144,13 @@ GiftStarterApp.service('GiftStartService', [
         this.updateSelected = function() {
             self.giftStart.totalSelection = 0;
             self.giftStart.remaining = 0;
+            self.giftStart.funded = 0;
             self.giftStart.parts.map(function(part) {
                 self.giftStart.totalSelection += part.value * part.selected;
                 self.giftStart.remaining += part.value * !(part.selected || part.bought);
+                self.giftStart.funded += part.value * part.bought;
             });
+            $rootScope.$broadcast('selection-changed');
         };
 
         this.fetchGiftStart = function(gsid) {
@@ -321,8 +325,10 @@ GiftStarterApp.controller('GiftStartController', [
         }
 
         $scope.updateFundingBar = function() {
-            $scope.fundingBarProgress =  ((GiftStartService.giftStart.product.total_price -
-                GiftStartService.giftStart.remaining) / GiftStartService.giftStart.product.total_price *
+            $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price *
+                100).toString() + '%';
+            $scope.pitchinBarProgress =  ((GiftStartService.giftStart.funded +
+                GiftStartService.giftStart.totalSelection) / GiftStartService.giftStart.product.total_price *
                 100).toString() + '%';
         };
 
@@ -333,6 +339,10 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.$on('pitch-ins-updated', function() {
             $scope.pitchIns = GiftStartService.pitchIns;
+            $scope.updateFundingBar();
+        });
+
+        $scope.$on('selection-changed', function() {
             $scope.updateFundingBar();
         });
 
