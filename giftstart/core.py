@@ -54,14 +54,14 @@ def create(giftstart):
     gs.put()
 
     email_kwargs = {
-        'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
+        'campaign_link': 'https://www.giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
         'campaign_number': str(gs.gsid)
     }
     gs_email.comm.send_from_template("Giftstart #{gsid} created!".format(gsid=str(gs.gsid)), "campaign_create_team",
                                      email_kwargs, "team@giftstarter.co", ["team@giftstarter.co"])
 
     email_kwargs = {
-        'campaign_link': 'https://giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
+        'campaign_link': 'https://www.giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
         'campaign_name': str(gs.giftstart_title)
     }
     gs_email.comm.send_from_template("GiftStarter Campaign Created!", "campaign_create_user",

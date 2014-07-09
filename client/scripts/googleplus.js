@@ -13,7 +13,7 @@ GiftStarterApp.service('GooglePlusService', [
         this.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
             '?scope=' + encodeURIComponent('https://www.googleapis.com/auth/plus.login') +
             '&client_id=' + encodeURIComponent('26242969111.apps.googleusercontent.com') +
-            '&redirect_uri=' + encodeURIComponent('https://6-dot-gift-starter.appspot.com/oauth-callback/googleplus') +
+            '&redirect_uri=' + encodeURIComponent('https://www.giftstarter.co/oauth-callback/googleplus') +
             '&response_type=' + encodeURIComponent('code') +
             '&access_type=' + encodeURIComponent('offline');
 

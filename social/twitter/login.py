@@ -11,7 +11,7 @@ from core import TwitterTokenSet
 def get_auth_url():
     url = 'https://api.twitter.com/oauth/request_token'
     auth = OAuth1(secret.APP_KEY, secret.APP_SECRET,
-                  callback_uri='https://6-dot-gift-starter.appspot.com/oauth-callback/twitter')
+                  callback_uri='https://www.giftstarter.co/oauth-callback/twitter')
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
 

@@ -5,7 +5,7 @@ import secret
 import json
 from core import GooglePlusTokenSet
 
-REDIRECT_URI = 'https://6-dot-gift-starter.appspot.com/oauth-callback/googleplus'
+REDIRECT_URI = 'https://www.giftstarter.co/oauth-callback/googleplus'
 
 
 def submit_code(auth_response):
