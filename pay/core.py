@@ -12,7 +12,8 @@ from datetime import datetime
 
 def get_pitch_in_dicts(gsid):
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
-    return [pi.ext_dictify() for pi in pitch_ins]
+    pitch_in_dicts = [pi.ext_dictify() for pi in pitch_ins]
+    return pitch_in_dicts
 
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_to_mailing_lits):

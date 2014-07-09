@@ -20,15 +20,16 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
             overlayElement.empty();
 
             for (var i = 0; i < GiftStartService.giftStart.parts.length; i++) {
-                var divString = '<div ng-class="{\'part-cell\': true, c'+i+
-                    ': true, bought: giftstart.parts['+i+
+                var divString = '<div class="part-cell c'+i+
+                    '" ng-class="{bought: giftstart.parts['+i+
                     '].bought, selected: giftstart.parts['+i+
                     '].selected, disabled: giftstart.parts['+i+
                     '].disabled}" ng-click="giftstart.parts['+i+
                     '].toggle()" ' +
-                    'style="width: '+width+';height: '+height+';"><span class="price">${{giftstart.parts['+i+
+                    'style="width: '+width+';height: '+height+
+                    ';"><table><tr><td><span class="price">${{giftstart.parts['+i+
                     '].value / 100 | number : 2}}</span><img class="giver" ng-src="{{giftstart.parts['+i+
-                    '].img}}"/></div>';
+                    '].img}}"/></td></tr></table></div>';
                 overlayElement.append($compile(divString)(scope));
             }
         }

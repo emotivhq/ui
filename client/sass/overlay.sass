@@ -23,63 +23,67 @@ gs-overlay
     padding: 0
 
 
-// Part cells
-.part-cell
-  text-align: center
-  background: rgba(95, 132, 147, 0.5)
-  color: rgba(255, 255, 255, 1)
-  transition: all 0.2s
-  cursor: pointer
-  margin: 1%
-  display: none
-  +justify-content(center)
-  +flex-direction(column)
-  +no-select
-  span.price
-    font-size: 14px
-    font: $button-font
-  img.giver
+  // Part cells
+  .part-cell
+    text-align: center
+    background: rgba(95, 132, 147, 0.5)
+    color: rgba(255, 255, 255, 1)
+    transition: all 0.2s
+    cursor: pointer
+    margin: 1%
     display: none
-    margin: 0 auto
-    max-width: 80%
-    max-height: 80%
-    width: auto
-    height: auto
-    border-radius: 50%
-    +box-shadow(#fff, 0, 0, 10px)
+    +justify-content(center)
+    +flex-direction(column)
+    +no-select
+    span.price
+      font-size: 14px
+      font: $button-font
+    img.giver
+      display: none
+      margin: 0 auto
+      width: 80%
+      border-radius: 50%
+      +box-shadow(#fff, 0, 0, 10px)
 
-.part-cell:hover
-  @media screen and (min-width: $phone-tablet-boundary)
-    background: rgba(95, 132, 147, 0.2)
-    color: rgba(0, 0, 0, 1)
-    text-shadow: 0 0 8px #fff
+    table
+      height: 100%
+      width: 100%
+    td
+      vertical-align: middle
+      text-align: center
 
-.part-cell.disabled
-  background: rgba(80, 150, 255, 0)
-  cursor: default
-  img.giver
-    display: none
-  span.price
-    display: none
+  .part-cell:hover
+    @media screen and (min-width: $phone-tablet-boundary)
+      background: rgba(95, 132, 147, 0.2)
+      color: rgba(0, 0, 0, 1)
+      text-shadow: 0 0 8px #fff
 
-.part-cell.bought
-  background: rgba(80, 150, 255, 0)
-  cursor: default
-  img.giver
-    display: inline-block
-  span.price
-    display: none
+  .part-cell.disabled
+    background: rgba(80, 150, 255, 0)
+    cursor: default
+    img.giver
+      display: none
+    span.price
+      display: none
 
-.part-cell.selected
-  background: rgba(95, 132, 147, 0.1)
-  background-image: url('/assets/you.png')
-  background-repeat: no-repeat
-  background-position: center
-  background-size: contain
-  color: rgba(255, 255, 255, 0)
+  .part-cell.bought
+    background: rgba(80, 150, 255, 0)
+    cursor: default
+    img.giver
+      display: inline-block
+    span.price
+      display: none
 
-.part-cell.selected:hover
-  text-shadow: 0 0 0px rgba(0, 0, 0, 0)
+  .part-cell.selected
+    background: rgba(95, 132, 147, 0.1)
+    background-image: url('/assets/you.png')
+    background-repeat: no-repeat
+    background-position: center
+    background-size: contain
+    color: rgba(255, 255, 255, 0)
+
+  .part-cell.selected:hover
+    text-shadow: 0 0 0px rgba(0, 0, 0, 0)
 
 gs-overlay.initialized
   .part-cell
