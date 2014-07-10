@@ -29,5 +29,6 @@
             <img ng-src="{{pitchIn.img}}"/>
             <div><p>{{pitchIn.note}}</p><span class="timestamp">{{pitchIn.timestampString}}</span></div>
         </div>
+        <p class="no-contributors" ng-hide="pitchIns.length > 0">No contributors yet :'(</p>
     </div>
 </div>
