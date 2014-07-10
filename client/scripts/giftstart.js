@@ -50,7 +50,7 @@ GiftStarterApp.service('GiftStartService', [
 
         var self = this;
 
-        function buildGiftStart() {
+        this.buildGiftStart = function() {
             return {
                 title: self.title,
                 description: self.description,
@@ -67,7 +67,7 @@ GiftStarterApp.service('GiftStartService', [
                 },
                 totalSelection: 0,
                 funded: 0,
-                parts: makeParts(self.rows * self.columns, self.totalPrice),
+                parts: self.makeParts(self.rows * self.columns, self.totalPrice),
                 rows: self.rows,
                 columns: self.columns,
                 gc_phone_number: self.gcPhoneNumber,
@@ -79,9 +79,9 @@ GiftStarterApp.service('GiftStartService', [
                 shipping_zip: self.shippingZip,
                 shipping_phone_number: self.shippingPhoneNumber
             };
-        }
+        };
 
-        function makeParts(numParts, totalPrice) {
+        this.makeParts = function(numParts, totalPrice) {
             function injectPartToggles(parts) {
                 function makePartToggle(i) {
                     var ti = i;
@@ -113,7 +113,7 @@ GiftStarterApp.service('GiftStartService', [
             injectPartToggles(tempParts);
 
             return tempParts;
-        }
+        };
 
         this.disableParts = function() {
             function disablePart(part) {part.disabled = !part.bought;}
@@ -123,7 +123,7 @@ GiftStarterApp.service('GiftStartService', [
         this.createGiftStart = function() {
             mixpanel.track("GiftStart created");
             ga('send', 'event', 'campaign', 'created');
-            self.giftStart = buildGiftStart();
+            self.giftStart = self.buildGiftStart();
             $location.path('/giftstart');
             self.pitchInsInitialized = false;
             $http({method: 'POST', url: '/giftstart/api',
@@ -133,7 +133,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
-            self.giftStart.parts = makeParts(self.giftStart.rows * self.giftStart.columns,
+            self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
             self.updateSelected();
             self.syncPitchIns('GiftStartService');

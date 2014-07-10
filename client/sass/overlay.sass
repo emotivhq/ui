@@ -25,13 +25,14 @@ gs-overlay
 
   // Part cells
   .part-cell
+    +display-flex()
     text-align: center
     background: rgba(95, 132, 147, 0.5)
     color: rgba(255, 255, 255, 1)
     transition: all 0.2s
     cursor: pointer
     margin: 1%
-    display: none
+    opacity: 0
     +justify-content(center)
     +flex-direction(column)
     +no-select
@@ -87,4 +88,4 @@ gs-overlay
 
 gs-overlay.initialized
   .part-cell
-    +display-flex()
+    opacity: 1

@@ -6,7 +6,8 @@
         <label>(Image {{imgIndex + 1}} of {{product.imgs.length + 1}})</label>
         <div><button class="circle" ng-click="previousImage()">&lt;</button><button class="circle" ng-click="nextImage()">&gt;</button></div>
         <div class="image-container">
-            <img id="selected-image" ng-src="{{selectedImg}}"/>
+            <gs-overlay giftstart="giftStart" ng-class="{initialized: pitchInsInitialized}" ng-click="selectionUpdated();"></gs-overlay>
+            <!--<img id="selected-image" ng-src="{{selectedImg}}"/>-->
         </div>
     </div>
     <div class="block details">

@@ -26,7 +26,10 @@ def remember_user(cookies):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         js_insert = remember_user(self.request.cookies)
-        self.response.write(frame_template.render({'js_insert': js_insert}))
+        self.response.write(frame_template.render({
+            'js_insert': js_insert,
+            'image_url': '/assets/logo_square.png',
+        }))
 
 
 class GiftStartMainHandler(webapp2.RequestHandler):
