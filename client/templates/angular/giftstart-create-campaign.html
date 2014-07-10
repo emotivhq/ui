@@ -43,7 +43,7 @@
         <textarea id="special-notes" ng-model="specialNotes" placeholder="&quot;If a grill were a jacket, I'd want it in sage, size medium!&quot;"></textarea>
         </form>
 
-        <button class="float-right next" ng-click="next()" ng-class="{disabled: campaignForm.$invalid}">Next</button>
+        <button class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Next</button>
 
     </div>
 </div>

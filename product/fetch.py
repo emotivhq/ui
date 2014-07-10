@@ -73,10 +73,13 @@ def extract_price(tree, partner):
     }
 
     sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
-    if sale_prices[0] is not None:
+    normal_prices = get_element_text(tree, partner_price_patterns[partner]['normal'])
+    if sale_prices[0] is not None and '$' in sale_prices[0]:
         price_string = sale_prices[0].split('$')[1]
+    elif normal_prices[0] is not None and '$' in normal_prices[0]:
+        price_string = normal_prices[0].split('$')[1]
     else:
-        price_string = get_element_text(tree, partner_price_patterns[partner]['normal'])[0].split('$')[1]
+        price_string = '0'
     price = str(int(float(price_string.replace(',', ''))*100))
 
     return price

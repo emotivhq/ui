@@ -129,7 +129,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         $scope.next = function() {
-            if ($scope.campaignForm.$valid) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
                 mixpanel.track("GiftStart staged");
                 ga('send', 'event', 'campaign', 'staged');
 
