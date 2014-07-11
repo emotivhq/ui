@@ -15,6 +15,8 @@ GiftStarterApp.service('UserService', [
         var self = this;
 
         this.registerLogin = function(uid, profileImageUrl, token, onMailingList) {
+            mixpanel.identify(uid);
+            mixpanel.people.set({'$last_login': new Date()});
             self.uid = uid;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;

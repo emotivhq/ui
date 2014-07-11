@@ -28,7 +28,8 @@ class MainHandler(webapp2.RequestHandler):
         js_insert = remember_user(self.request.cookies)
         self.response.write(frame_template.render({
             'js_insert': js_insert,
-            'image_url': '/assets/logo_square.png',
+            'image_url': self.request.path_url + '/assets/logo_square.png',
+            'page_url': self.request.path_url,
         }))
 
 
@@ -44,7 +45,7 @@ class GiftStartMainHandler(webapp2.RequestHandler):
                 'page_title': gs.giftstart_title,
                 'page_url': self.request.path_url + "?gs-id=" + str(gsid),
                 'page_description': gs.giftstart_description,
-                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid)
+                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg'
             }
             self.response.write(frame_template.render(render_values))
         else:
