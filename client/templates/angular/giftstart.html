@@ -10,9 +10,10 @@
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
             <h2>Share This Campaign With Friends!</h2>
-            <a href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');">
-                <button class="share"><span>Email</span></button></a>
-            <button class="share" ng-click="mixpanel.track('FB send in giftstart clicked');facebookSend();"><span>Facebook</span></button>
+            <a class="share" href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');"><img class="share" src="/assets/share_email.png" /></a>
+            <img class="share" src="/assets/share_facebook.png" ng-click="mixpanel.track('facebook share in giftstart clicked');facebookShare();" />
+            <img class="share" src="/assets/share_twitter.png" ng-click="mixpanel.track('twitter share in giftstart clicked');twitterShare();" />
+            <img class="share" src="/assets/share_google.png" ng-click="mixpanel.track('googleplus share in giftstart clicked');googlePlusShare();" />
         </div>
     </div>
 

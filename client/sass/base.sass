@@ -132,3 +132,10 @@ $tablet-computer-boundary: 2*$phone-tablet-boundary
   -ms-transition: $property $time
   -o-transition: $property $time
   transition: $property $time
+
+=filter-brightness($amount)
+  -webkit-filter: brightness($amount)
+  -moz-filter: brightness($amount)
+  -ms-filter: brightness($amount)
+  -o-filter: brightness($amount)
+  filter: brightness($amount)
