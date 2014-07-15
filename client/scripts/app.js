@@ -16,6 +16,8 @@ GiftStarterApp.config([
             .when('/create-giftstart', {templateUrl: '/templates/angular/giftstart-create.html'})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
             .when('/faq', {templateUrl: '/templates/angular/faq.html'})
+            .when('/terms', {templateUrl: '/templates/angular/terms.html'})
+            .when('/privacy', {templateUrl: '/templates/angular/privacy.html'})
             .when('/team-email-authorize', {templateUrl: '/templates/angular/team_email_authorize.html'})
             .otherwise({redirectTo: '/'});
 

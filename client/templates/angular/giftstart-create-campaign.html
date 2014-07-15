@@ -7,7 +7,6 @@
         <div><button class="circle" ng-click="previousImage()">&lt;</button><button class="circle" ng-click="nextImage()">&gt;</button></div>
         <div class="image-container">
             <gs-overlay giftstart="giftStart" ng-class="{initialized: pitchInsInitialized}" ng-click="selectionUpdated();"></gs-overlay>
-            <!--<img id="selected-image" ng-src="{{selectedImg}}"/>-->
         </div>
     </div>
     <div class="block details">
@@ -21,7 +20,7 @@
         <textarea id="campaign-description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="1000" ng-model="description" required=""></textarea>
 
         <div class="price-block">
-            <h2>Non-Sale Price</h2>
+            <h2>Price</h2>
             <label for="price">Base price of the gift.</label>
             <input type="number" id="price" ng-model="inputPrice" ng-change="priceChanged()" required=""/>
         </div>

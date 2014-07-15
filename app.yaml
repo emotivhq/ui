@@ -1,5 +1,5 @@
 application: gift-starter
-version: 6
+version: 7
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -51,10 +51,7 @@ handlers:
 - url: /giftstart
   script: main.app_gs
   secure: always
-- url: /faq
-  script: main.app_faq
-  secure: always
-- url: .*
+- url: /.*
   script: main.app
   secure: always
 
