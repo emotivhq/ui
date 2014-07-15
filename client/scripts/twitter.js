@@ -35,7 +35,7 @@ GiftStarterApp.service('TwitterService', [
             ga('send', 'event', 'share campaign', 'twitter');
             var shareUrl = 'https://twitter.com/share';
             var parameters = "?url=" + encodeURIComponent($location.absUrl().split('#')[0]) +
-                "&text=Check out this GiftStarter campaign!  It's the bees knees!";
+                "&text=Check out this GiftStarter campaign!  It's the bees knees! #GiftStarter cc @GiftChampion";
             $window.open(shareUrl + parameters);
         };
 
