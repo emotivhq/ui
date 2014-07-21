@@ -17,7 +17,15 @@
 
         <h2>Campaign Description</h2>
         <label for="campaign-description">Make it fun!  Why should your friends join in on this GiftStarter?  Excite them!</label>
-        <textarea id="campaign-description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="1000" ng-model="description" required=""></textarea>
+        <textarea id="campaign-description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
+        <div id="not-long-enough" ng-hide="descriptionLongEnough">
+            <p>Woah there! Looks like your campaign description is a bit short.  We know, brevity is the soul of wit - but how about we add to the story to get people more involved?  Here are a few questions for inspiration:</p>
+            <ul>
+                <li>Why does the recipient deserve this gift?</li>
+                <li>Is there a story behind the gift or why the recipient might need/want it?</li>
+                <li>What is special/awesome/interesting/unique about this product?</li>
+            </ul>
+        </div>
 
         <div class="price-block">
             <h2>Price</h2>

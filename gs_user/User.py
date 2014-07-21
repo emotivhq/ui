@@ -4,10 +4,13 @@ from google.appengine.ext import ndb
 from social.facebook import FacebookTokenSet
 from social.twitter import TwitterTokenSet
 from social.googleplus import GooglePlusTokenSet
+import json
 
 
 class User(ndb.Model):
     uid = ndb.StringProperty(required=True)
+
+    name = ndb.StringProperty()
 
     logged_in_with = ndb.StringProperty(required=True)
 
@@ -24,3 +27,10 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     subscribed_to_mailing_list = ndb.BooleanProperty(default=False)
     phone_number = ndb.StringProperty()
+
+    def jsonify(self):
+        return json.dumps({
+            'uid': self.uid,
+            'name': self.name,
+            'img_url': self.cached_profile_image_url
+        })

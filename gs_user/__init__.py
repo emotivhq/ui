@@ -2,4 +2,4 @@ __author__ = 'stuart'
 
 from User import User
 
-from core import update_or_create, validate
+from user_core import update_or_create, validate

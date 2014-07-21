@@ -3,7 +3,7 @@ __author__ = 'stuart'
 import requests
 import secret
 import json
-from core import GooglePlusTokenSet
+from googleplus_core import GooglePlusTokenSet
 
 REDIRECT_URI = 'https://www.giftstarter.co/oauth-callback/googleplus'
 

@@ -5,7 +5,7 @@ from google.appengine.api import taskqueue
 from datetime import datetime, timedelta
 from GiftStart import GiftStart
 import storage.image_cache
-import gs_email.comm
+import comm
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -53,19 +53,7 @@ def create(giftstart):
     gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()
 
-    email_kwargs = {
-        'campaign_link': 'https://www.giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
-        'campaign_number': str(gs.gsid)
-    }
-    gs_email.comm.send_from_template("Giftstart #{gsid} created!".format(gsid=str(gs.gsid)), "campaign_create_team",
-                                     email_kwargs, "team@giftstarter.co", ["team@giftstarter.co"])
-
-    email_kwargs = {
-        'campaign_link': 'https://www.giftstarter.co/giftstart?gs-id=' + str(gs.gsid),
-        'campaign_name': str(gs.giftstart_title)
-    }
-    gs_email.comm.send_from_template("GiftStarter Campaign Created!", "campaign_create_user",
-                                     email_kwargs, "team@giftstarter.co", gs.gc_email)
+    comm.send_create_notification(gs)
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),
@@ -73,7 +61,7 @@ def create(giftstart):
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'check-if-complete', 'gsid': gs.gsid}),
-                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY))
+                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
 
     return gs
 

@@ -3,10 +3,21 @@ __author__ = 'stuart'
 import webapp2
 from social import twitter, googleplus, facebook
 import json
-from . import update_or_create
+from user_core import update_or_create, get_user
 
 
 class UserHandler(webapp2.RequestHandler):
+    def get(self):
+        uid = self.request.path.split('/')[-1]
+        if uid[0] not in ['f', 'g', 't']:
+            self.response.set_status(400, "Invalid user id")
+        else:
+            user = get_user(uid)
+            if user is None:
+                self.response.set_status(400, "Invalid user id")
+            else:
+                self.response.write(user.jsonify())
+
     def post(self):
         data = json.loads(self.request.body)
 
@@ -61,4 +72,4 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
-api = webapp2.WSGIApplication([('/user', UserHandler)], debug=True)
+api = webapp2.WSGIApplication([('/user/.*', UserHandler)], debug=True)

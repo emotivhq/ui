@@ -2,7 +2,7 @@ __author__ = 'stuart'
 
 import secret
 import requests
-from core import FacebookTokenSet
+from facebook_core import FacebookTokenSet
 
 
 def get_extended_key(auth_token):

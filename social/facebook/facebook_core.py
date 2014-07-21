@@ -17,5 +17,12 @@ class FacebookTokenSet(ndb.Model):
 
 def get_uid(token_set):
     graph = GraphAPI(token_set.access_token)
-    fb_usr = graph.get_object('me')
-    return fb_usr['id']
+    fb_user = graph.get_object('me')
+    return fb_user['id']
+
+
+def get_user_info(user):
+    graph = GraphAPI(user.facebook_token_set.access_token)
+    fb_user = graph.get_object(user.uid[1:])
+    user.name = fb_user['name']
+    return user

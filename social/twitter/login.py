@@ -5,7 +5,7 @@ from requests_oauthlib import OAuth1
 import secret
 import json
 from .. import OAuthTokenPair
-from core import TwitterTokenSet
+from twitter_core import TwitterTokenSet
 
 
 def get_auth_url():

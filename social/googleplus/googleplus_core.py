@@ -5,6 +5,7 @@ import secret
 import json
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
+import requests
 
 
 class GooglePlusTokenSet(ndb.Model):
@@ -58,3 +59,9 @@ def get_img_url(token_set):
 
 def token_saver(token):
     print(token)
+
+
+def get_user_info(user):
+    gplus_user = json.loads(requests.get("https://www.googleapis.com/plus/v1/people/" + user.uid[1:]))
+    user.name = gplus_user['displayName']
+    return user

@@ -33,9 +33,6 @@ class PayHandler(webapp2.RequestHandler):
         elif data['action'] == 'get-pitch-ins':
             self.response.write(json.dumps(core.get_pitch_in_dicts(data['gsid'])))
 
-        elif data['action'] == 'check-if-complete':
-            core.check_if_complete(data['gsid'])
-
     @staticmethod
     def _check_if_customer(data):
         # Check if user has a stripe customer object in the db

@@ -76,8 +76,25 @@ def update_or_create(service, token_set):
 
     setattr(user, service + '_token_set', token_set)
 
+    get_user_info(user)
+
     user.put()
     return user
+
+
+def get_user_info(user):
+    info_map = {'f': lambda u: facebook.get_user_info(u),
+                't': lambda u: twitter.get_user_info(u),
+                'g': lambda u: googleplus.get_user_info(u)}
+    return info_map[user.uid[0]](user)
+
+
+def get_user(uid):
+    users = User.query(User.uid == uid).fetch()
+    if len(users) > 0:
+        return users[0]
+    else:
+        return None
 
 
 token_pointer_map = {

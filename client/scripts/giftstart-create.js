@@ -83,6 +83,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.specialNotes = '';
         $scope.pitchInsInitialized = false;
         $scope.giftStart = GiftStartService.giftStart;
+        $scope.descriptionLongEnough = true;
 
         if (ProductService.product.product_url == "") {
             // User navigated directly here, direct them to home page
@@ -177,6 +178,18 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                     $location.hash("login");
                 }
             }
+        };
+
+        $scope.onDescriptionBlur = function() {
+            var longEnough = $scope.description.length > 400;
+            if (!longEnough && $scope.descriptionLongEnough) {
+                mixpanel.track("description too short displayed");
+                ga('send', 'event', 'campaign-create', 'description too short displayed');
+            } else if (longEnough && !$scope.descriptionLongEnough) {
+                mixpanel.track("description too short hidden");
+                ga('send', 'event', 'campaign-create', 'description too short hidden');
+            }
+            $scope.descriptionLongEnough = longEnough;
         };
 
         $scope.updateGiftStartImage();
