@@ -12,7 +12,7 @@ handlers:
   script: giftstart.api.api
 - url: /pay
   script: pay.api.api
-- url: /user/.*
+- url: /user.*
   script: gs_user.api.api
 
 # OAuth
@@ -51,6 +51,9 @@ handlers:
 - url: /giftstart
   script: main.app_gs
   secure: always
+- url: /admin.*
+  script: google.appengine.ext.admin.application
+  login: admin
 - url: /.*
   script: main.app
   secure: always

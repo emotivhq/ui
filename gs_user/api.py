@@ -72,4 +72,4 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
-api = webapp2.WSGIApplication([('/user/.*', UserHandler)], debug=True)
+api = webapp2.WSGIApplication([('/user.*', UserHandler)], debug=True)
