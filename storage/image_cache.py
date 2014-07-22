@@ -1,7 +1,6 @@
-from social import facebook
-
 __author__ = 'stuart'
 
+from social import facebook
 import cloudstorage
 import requests
 

@@ -2,7 +2,7 @@ __author__ = 'stuart'
 
 from google.appengine.api import taskqueue
 import json
-import gs_user.core
+from gs_user import user_core
 import stripe
 from giftstart import GiftStart
 from PitchIn import PitchIn
@@ -17,11 +17,11 @@ def get_pitch_in_dicts(gsid):
 
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_to_mailing_lits):
-    user = gs_user.core.save_email(uid, email_address)
+    user = user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
 
     if subscribe_to_mailing_lits:
-        gs_user.core.subscribe_to_mailing_list(uid, email=email_address)
+        user_core.subscribe_to_mailing_list(uid, email=email_address)
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns

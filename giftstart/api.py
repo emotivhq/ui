@@ -24,7 +24,7 @@ class GiftStartHandler(webapp2.RequestHandler):
             comm.send_day_left_warning(data['gsid'])
 
         elif data['action'] == 'check-if-complete':
-            comm.send_time_up_notification(data['gsid'])
+            comm.check_if_complete(data['gsid'])
 
 
 api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)
