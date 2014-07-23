@@ -62,6 +62,7 @@ def token_saver(token):
 
 
 def get_user_info(user):
-    gplus_user = json.loads(requests.get("https://www.googleapis.com/plus/v1/people/" + user.uid[1:]))
+    gplus_user = json.loads(requests.get("https://www.googleapis.com/plus/v1/people/" + user.uid[1:]).content)
+    print(gplus_user)
     user.name = gplus_user['displayName']
     return user

@@ -9,7 +9,7 @@ import yaml
 import stripe
 
 
-stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['api_key']
+stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
 
 class PayHandler(webapp2.RequestHandler):
