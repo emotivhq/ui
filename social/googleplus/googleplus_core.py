@@ -1,7 +1,7 @@
 __author__ = 'stuart'
 
 from requests_oauthlib import OAuth2Session
-import secret
+import config
 import json
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
@@ -31,17 +31,17 @@ class GooglePlusTokenSet(ndb.Model):
 
 
 REFRESH_URL = 'https://accounts.google.com/o/oauth2/token'
-REFRESH_EXTRAS = {'client_id': secret.CLIENT_ID, 'client_secret': secret.CLIENT_SECRET}
+REFRESH_EXTRAS = {'client_id': config.CLIENT_ID, 'client_secret': config.CLIENT_SECRET}
 IMG_QRY_URL = 'https://www.googleapis.com/plus/v1/people/me?fields=image'
 UID_QRY_URL = 'https://www.googleapis.com/plus/v1/people/me'
 
 
 def _request_with_refresh(url, token_set):
     if token_set.refresh_token:
-        oauth = OAuth2Session(secret.CLIENT_ID, token=token_set.to_token(), auto_refresh_url=REFRESH_URL,
+        oauth = OAuth2Session(config.CLIENT_ID, token=token_set.to_token(), auto_refresh_url=REFRESH_URL,
                               auto_refresh_kwargs=REFRESH_EXTRAS, token_updater=token_saver)
     else:
-        oauth = OAuth2Session(secret.CLIENT_ID, token=token_set.to_token())
+        oauth = OAuth2Session(config.CLIENT_ID, token=token_set.to_token())
     return oauth.get(url)
 
 

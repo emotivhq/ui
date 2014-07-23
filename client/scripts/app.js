@@ -50,7 +50,7 @@ GiftStarterApp.run(function($http, $templateCache) {
 
 GiftStarterApp.config(
     function(ezfbProvider, $httpProvider) {
-        ezfbProvider.setInitParams({appId: '301135316704582'});
+        ezfbProvider.setInitParams({appId: window.fbAppId});
         $httpProvider.defaults.useXDomain = true;
     }
 );

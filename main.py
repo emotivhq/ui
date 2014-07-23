@@ -3,7 +3,9 @@ import webapp2
 import jinja2
 from giftstart.core import GiftStart
 import gs_user
+import yaml
 
+secrets = yaml.load(open('secret.yaml'))
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
@@ -26,6 +28,8 @@ def remember_user(cookies):
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         js_insert = remember_user(self.request.cookies)
+        js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
+        js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         self.response.write(frame_template.render({
             'js_insert': js_insert,
             'image_url': self.request.path_url + '/assets/logo_square.png',
@@ -36,12 +40,17 @@ class MainHandler(webapp2.RequestHandler):
 class GiftStartMainHandler(webapp2.RequestHandler):
     def get(self):
         js_insert = remember_user(self.request.cookies)
+        js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
+        js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         gsid = self.request.get('gs-id')
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
+
         if len(gss) > 0:
             gs = gss[0]
             render_values = {
                 'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
+                'stripe_publishable_key': secrets['stripe']['app_key'],
+                'fb_app_id': secrets['facebook_auth']['app_id'],
                 'page_title': gs.giftstart_title,
                 'page_url': self.request.path_url + "?gs-id=" + str(gsid),
                 'page_description': gs.giftstart_description,
