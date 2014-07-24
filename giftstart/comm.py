@@ -12,7 +12,7 @@ import json
 
 def send_create_notification(giftstart):
     email_kwargs = {'campaign_link': 'https://www.giftstarter.co/giftstart?gs-id=' + str(giftstart.gsid),
-                    'campaign_number': str(giftstart.gsid)}
+                    'campaign_number': str(giftstart.gsid), 'gc_email': giftstart.gc_email}
     requests.put('http://email.giftstarter.co/send/' + str(uuid.uuid4()).replace("-", ''),
                  data=json.dumps({
                      'subject': "GiftStarter Campaign Created!", 'sender': "team@giftstarter.co",
