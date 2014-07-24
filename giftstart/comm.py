@@ -32,15 +32,15 @@ def send_create_notification(giftstart):
 
 def send_day_left_warning(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    pitch_ins = PitchIn.query()
+    pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     if not giftstart.giftstart_complete:
         email_uuid = str(uuid.uuid4()).replace('-', '')
         subject = "GiftStarter Campaign Ending Soon!"
         gc_template = "Oh noes!  Your campaign only has one day left!  Go back and spread the word to drive it to " \
                       "completion!  Here's the link to it!\n\nhttps://www.giftstarter.co/giftstart?gs-id={gsid}\n\n" \
                       "Thanks!\nTeam GiftStarter"
-        contributor_template = "Oh noes!  Your campaign only has one day left!  Go back and spread the word to drive" \
-                               " it to completion!  Here's the link to " \
+        contributor_template = "Oh noes!  The GiftStarter campaign you gave to only has one day left!  Go back and " \
+                               "spread the word to drive it to completion!  Here's the link to " \
                                "it!\n\nhttps://www.giftstarter.co/giftstart?gs-id={gsid}\n\nThanks!\nTeam GiftStarter"
         gc_message = gc_template.format(gsid=gsid)
         contributor_message = contributor_template.format(gsid=gsid)
