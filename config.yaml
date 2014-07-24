@@ -1,3 +1,4 @@
 
 app_url:              'https://www.dev.giftstarter.co'
 email_url:            'http://email-dev-gift-starter.appspot.com'
+storage_url:          '/giftstarter-pictures/dev/'
