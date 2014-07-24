@@ -32,7 +32,7 @@ def send_create_notification(giftstart):
 
 def send_day_left_warning(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    pitch_ins = PitchIn.query()
+    pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     if not giftstart.giftstart_complete:
         email_uuid = str(uuid.uuid4()).replace('-', '')
         subject = "GiftStarter Campaign Ending Soon!"
