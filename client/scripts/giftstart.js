@@ -72,6 +72,7 @@ GiftStarterApp.service('GiftStartService', [
                 columns: self.columns,
                 gc_phone_number: self.gcPhoneNumber,
                 gc_email: self.gcEmail,
+                gc_name: self.gcName,
                 shipping_name: self.shippingName,
                 shipping_address: self.shippingAddress,
                 shipping_city: self.shippingCity,
