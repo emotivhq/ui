@@ -132,7 +132,7 @@ def product(data):
         imgs.append(get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0])
         imgs = rotate_list_left(imgs, DEFAULT_IMAGE[partner])
         price = extract_price(tree, partner)
-        title = extract_title(tree, partner)
+        title = extract_title(tree, partner)[0]
         logo = "/assets/{partner}.png".format(partner=partner)
 
         result = {'product': {'imgs': imgs, 'price': price, 'title': title, 'logo': logo}}

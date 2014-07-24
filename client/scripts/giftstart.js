@@ -40,6 +40,8 @@ GiftStarterApp.service('GiftStartService', [
         this.description = '';
         this.specialNotes = '';
         this.productImgUrl = '';
+        this.productTitle = '';
+        this.retailerLogo = '';
         this.rows = 3;
         this.columns = 3;
         this.productPrice = 0;
@@ -63,7 +65,9 @@ GiftStarterApp.service('GiftStartService', [
                     service_fee: self.serviceFee,
                     total_price: self.totalPrice,
                     img_url: self.productImgUrl,
-                    product_url: self.productUrl
+                    product_url: self.productUrl,
+                    title: self.productTitle,
+                    retailer_logo: self.retailerLogo
                 },
                 totalSelection: 0,
                 funded: 0,
@@ -125,6 +129,7 @@ GiftStarterApp.service('GiftStartService', [
             mixpanel.track("GiftStart created");
             ga('send', 'event', 'campaign', 'created');
             self.giftStart = self.buildGiftStart();
+            console.log(self.giftStart);
             $location.path('/giftstart');
             self.pitchInsInitialized = false;
             $http({method: 'POST', url: '/giftstart/api',

@@ -20,6 +20,8 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.product_url = giftstart['product']['product_url']
     ndbgs.product_img_url = giftstart['product']['img_url']
     ndbgs.product_price = int(giftstart['product']['price'])
+    ndbgs.product_title = giftstart['product']['title']
+    ndbgs.retailer_logo = giftstart['product']['retailer_logo']
     ndbgs.sales_tax = int(giftstart['product']['sales_tax'])
     ndbgs.shipping = int(giftstart['product']['shipping'])
     ndbgs.service_fee = int(giftstart['product']['service_fee'])
