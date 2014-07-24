@@ -1,3 +1,4 @@
 
-siteUrl:      'https://www.giftstarter.co'
-emailUrl:     'http://email.giftstarter.co'
+siteUrl:              'https://www.giftstarter.co'
+emailUrl:             'http://email.giftstarter.co'
+storage_url:          '/giftstarter-pictures/'
