@@ -1,0 +1,3 @@
+secret.yaml merge=ours
+config.yaml merge=ours
+app.yaml merge=ours
