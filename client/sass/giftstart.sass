@@ -59,25 +59,22 @@ div.block.overlay
     +filter-brightness(1.2)
   img.share:active
     +filter-brightness(1.6)
-  //a.share:after
-  //  content: ""
-  //  position: absolute
-  //  top: 0
-  //  left: 0
-  //  bottom: 0
-  //  right: 0
-  //  background-color: rgba(255, 255, 255, 0)
-  //  z-index: 100
-  //a.share:hover:after
-  //  background-color: rgba(255, 255, 255, 0.3)
 
 div.block.description
   float: right
   a.title
-    text-decoration: none
-    color: black
-  a.title:hover
-    text-decoration: underline
+    img
+      height: 4.5em
+      display: inline-block
+    p
+      vertical-align: top
+      color: #444
+      text-decoration: underline
+      font-size: 1.2em
+      display: inline-block
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
   h1
     color: black
   div.signature
