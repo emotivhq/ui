@@ -87,12 +87,12 @@ def extract_price(tree, partner):
 
 def extract_title(tree, partner):
     partner_title_patterns = {
-        'rei': '',
-        'brooksrunning': '',
-        'filson': '',
-        'amazon': '',
+        'rei': '//*[@id="product"]/h1',
+        'brooksrunning': '//*[@id="pdpMain"]/section[1]/div[1]/h1',
+        'filson': '//*[@id="prodcontent"]/h1',
+        'amazon': '//*[@id="productTitle"]',
         'nordstrom': '//*[@id="product-title"]/h1',
-        'costco': '',
+        'costco': '//*[@id="main_content_wrapper"]/div[2]/div[2]/div[3]/h1',
     }
 
     return get_element_text(tree, partner_title_patterns[partner])
