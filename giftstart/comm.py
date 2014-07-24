@@ -39,8 +39,8 @@ def send_day_left_warning(gsid):
         gc_template = "Oh noes!  Your campaign only has one day left!  Go back and spread the word to drive it to " \
                       "completion!  Here's the link to it!\n\nhttps://www.giftstarter.co/giftstart?gs-id={gsid}\n\n" \
                       "Thanks!\nTeam GiftStarter"
-        contributor_template = "Oh noes!  Your campaign only has one day left!  Go back and spread the word to drive" \
-                               " it to completion!  Here's the link to " \
+        contributor_template = "Oh noes!  The GiftStarter campaign you gave to only has one day left!  Go back and " \
+                               "spread the word to drive it to completion!  Here's the link to " \
                                "it!\n\nhttps://www.giftstarter.co/giftstart?gs-id={gsid}\n\nThanks!\nTeam GiftStarter"
         gc_message = gc_template.format(gsid=gsid)
         contributor_message = contributor_template.format(gsid=gsid)
