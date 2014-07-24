@@ -95,7 +95,7 @@ DEFAULT_IMAGE = {
     'brooksrunning': 2,
     'filson': 3,
     'amazon': -1,
-    'nordstrom': 10,
+    'nordstrom': 9,
     'costco': 6
 }
 
