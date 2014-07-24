@@ -85,6 +85,19 @@ def extract_price(tree, partner):
     return price
 
 
+def extract_title(tree, partner):
+    partner_title_patterns = {
+        'rei': '//*[@id="product"]/h1',
+        'brooksrunning': '//*[@id="pdpMain"]/section[1]/div[1]/h1',
+        'filson': '//*[@id="prodcontent"]/h1',
+        'amazon': '//*[@id="productTitle"]',
+        'nordstrom': '//*[@id="product-title"]/h1',
+        'costco': '//*[@id="main_content_wrapper"]/div[2]/div[2]/div[3]/h1',
+    }
+
+    return get_element_text(tree, partner_title_patterns[partner])
+
+
 def rotate_list_left(l, n):
     n = n % len(l)
     return l[n-len(l):] + l[:n]
@@ -95,7 +108,7 @@ DEFAULT_IMAGE = {
     'brooksrunning': 2,
     'filson': 3,
     'amazon': -1,
-    'nordstrom': 10,
+    'nordstrom': 9,
     'costco': 6
 }
 
@@ -119,8 +132,10 @@ def product(data):
         imgs.append(get_element_attr(tree, '//meta[@property="og:image"]', 'content')[0])
         imgs = rotate_list_left(imgs, DEFAULT_IMAGE[partner])
         price = extract_price(tree, partner)
+        title = extract_title(tree, partner)[0]
+        logo = "/assets/{partner}.png".format(partner=partner)
 
-        result = {'product': {'imgs': imgs, 'price': price}}
+        result = {'product': {'imgs': imgs, 'price': price, 'title': title, 'logo': logo}}
 
     else:
         result = {'error': 'Non-launch partner'}

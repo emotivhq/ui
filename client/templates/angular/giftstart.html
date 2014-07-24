@@ -1,7 +1,9 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
     <div class="description block">
-        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank"><h1 class="title">{{giftStart.title}}</h1></a>
+        <h1 class="title">{{giftStart.title}}</h1>
+        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-show="giftStart.product.retailer_logo"><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/><p class="title">{{giftStart.product.title}}</p></p></a>
+
         <div class="description" style="white-space: pre-line;">{{giftStart.description}}</div>
         <div class="signature">
             <p class="name">{{giftStart.gc_name}}</p>

@@ -160,6 +160,8 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 GiftStartService.title = $scope.title;
                 GiftStartService.description = $scope.description;
                 GiftStartService.productUrl = ProductService.product.url;
+                GiftStartService.productTitle = ProductService.title;
+                GiftStartService.retailerLogo = ProductService.logo;
                 GiftStartService.productImgUrl = $scope.selectedImg;
                 GiftStartService.rows = $scope.y;
                 GiftStartService.columns = $scope.x;

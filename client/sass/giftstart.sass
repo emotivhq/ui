@@ -59,25 +59,23 @@ div.block.overlay
     +filter-brightness(1.2)
   img.share:active
     +filter-brightness(1.6)
-  //a.share:after
-  //  content: ""
-  //  position: absolute
-  //  top: 0
-  //  left: 0
-  //  bottom: 0
-  //  right: 0
-  //  background-color: rgba(255, 255, 255, 0)
-  //  z-index: 100
-  //a.share:hover:after
-  //  background-color: rgba(255, 255, 255, 0.3)
 
 div.block.description
   float: right
   a.title
-    text-decoration: none
-    color: black
-  a.title:hover
-    text-decoration: underline
+    img
+      width: 15%
+      display: inline-block
+    p
+      width: 84%
+      vertical-align: top
+      color: #444
+      text-decoration: underline
+      font-size: 1.2em
+      display: inline-block
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
   h1
     color: black
   div.signature
@@ -159,25 +157,3 @@ div.block.comments
     color: #aaa
     font-size: 1.3em
     text-align: center
-
-//div:before
-    //  content: ""
-    //  position: absolute
-    //
-    //  top: 8% //30px
-    //  bottom: auto
-    //  left: -30px
-    //  border-style: solid
-    //  border-width: 15px 30px 15px 0
-    //  border-color: transparent $primary-color
-    //
-    //div:after
-    //  content: ""
-    //  position: absolute
-    //
-    //  top: 11% //33px
-    //  bottom: auto
-    //  left: -24px
-    //  border-style: solid
-    //  border-width: 12px 25px 12px 0
-    //  border-color: transparent #fff

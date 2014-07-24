@@ -9,6 +9,8 @@ GiftStarterApp.service('ProductService', [
         this.product = {
             product_url: '',
             imgs: [],
+            title: '',
+            logo: '',
             imageWidth: 0,
             imageHeight: 0
         };
@@ -25,6 +27,8 @@ GiftStarterApp.service('ProductService', [
                 } else {
                     self.product.imgs = data.product.imgs;
                     self.product.price = data.product.price;
+                    self.title = data.product.title;
+                    self.logo = data.product.logo;
                     onSuccess(self.product);
                 }
             }).error(function(data) {
