@@ -2,7 +2,7 @@
 
     <div class="description block">
         <h1 class="title">{{giftStart.title}}</h1>
-        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank"><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/><p class="title">{{giftStart.product.title}}</p></p></a>
+        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-show="giftStart.product.retailer_logo"><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/><p class="title">{{giftStart.product.title}}</p></p></a>
 
         <div class="description" style="white-space: pre-line;">{{giftStart.description}}</div>
         <div class="signature">
