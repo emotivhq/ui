@@ -28,7 +28,7 @@
         <h1>Contributors</h1>
         <div class="comment" ng-repeat="pitchIn in pitchIns">
             <img ng-src="{{pitchIn.img}}"/>
-            <div><p>{{pitchIn.note}}</p><span class="timestamp">{{pitchIn.timestampString}}</span></div>
+            <div><p>{{pitchIn.note}}</p><p class="name">{{pitchIn.name}}</p></div>
         </div>
         <p class="no-contributors" ng-hide="pitchIns.length > 0">No contributors yet :'(</p>
     </div>
