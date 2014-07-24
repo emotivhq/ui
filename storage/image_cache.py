@@ -3,6 +3,9 @@ __author__ = 'stuart'
 from social import facebook
 import cloudstorage
 import requests
+import yaml
+
+config = yaml.load(open('config.yaml'))
 
 
 def cache_facebook_user_image(uid, token_set):
@@ -26,7 +29,7 @@ def cache_product_image(img_url, gsid):
 
 def _save_picture_to_gcs(filename, folder, data):
     # Open cloud storage file for writing
-    file_url = '/giftstarter-pictures/' + folder + filename
+    file_url = config['storage_url'] + folder + filename
     cs_file = cloudstorage.open(file_url, 'w', options={'x-goog-acl': 'public-read'})
     cs_file.write(data)
     cs_file.close()

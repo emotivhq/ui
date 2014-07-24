@@ -28,6 +28,7 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.overlay_columns = giftstart['columns']
     ndbgs.overlay_rows = giftstart['rows']
 
+    ndbgs.gc_name = giftstart['gc_name']
     ndbgs.gc_phone_number = giftstart['gc_phone_number']
     ndbgs.gc_email = giftstart['gc_email']
 

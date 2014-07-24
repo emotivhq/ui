@@ -1,6 +1,6 @@
 __author__ = 'stuart'
 
-import secret
+import config
 import requests
 from requests_oauthlib import OAuth1
 import json
@@ -19,7 +19,7 @@ class TwitterTokenSet(ndb.Model):
 
 def get_uid(token_set):
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=token_set.access_token,
+    auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth)
     twitter_uid = json.loads(response.content)['id']
@@ -29,7 +29,7 @@ def get_uid(token_set):
 
 def get_img_url(token_set):
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=token_set.access_token,
+    auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth)
     img_url = json.loads(response.content)['profile_image_url'].replace("_normal.", ".")
@@ -38,9 +38,10 @@ def get_img_url(token_set):
 
 
 def get_user_info(user):
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=user.twitter_token_set.access_token,
+    auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=user.twitter_token_set.access_token,
                   resource_owner_secret=user.twitter_token_set.access_secret)
-    twitter_user = json.loads(requests.get("https://api.twitter.com/1.1/users/show.json?user_id=" + user.uid[1:]),
-                              auth=auth)
+    response = requests.get("https://api.twitter.com/1.1/users/show.json?user_id=" + user.uid[1:],
+                            auth=auth)
+    twitter_user = json.loads(response.content)
     user.name = twitter_user['name']
     return user

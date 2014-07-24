@@ -2,7 +2,7 @@ __author__ = 'stuart'
 
 import requests
 from requests_oauthlib import OAuth1
-import secret
+import config
 import json
 from .. import OAuthTokenPair
 from twitter_core import TwitterTokenSet
@@ -10,8 +10,8 @@ from twitter_core import TwitterTokenSet
 
 def get_auth_url():
     url = 'https://api.twitter.com/oauth/request_token'
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET,
-                  callback_uri='https://www.giftstarter.co/oauth-callback/twitter')
+    auth = OAuth1(config.APP_KEY, config.APP_SECRET,
+                  callback_uri=config.APP_URL + '/oauth-callback/twitter')
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
 
@@ -28,7 +28,7 @@ def get_auth_url():
 def submit_verifier(oauth_token, oauth_verifier):
     url = 'https://api.twitter.com/oauth/access_token'
     oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token == oauth_token).fetch(1)[0].oauth_secret
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=oauth_token, resource_owner_secret=oauth_secret,
+    auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=oauth_token, resource_owner_secret=oauth_secret,
                   verifier=oauth_verifier)
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
@@ -37,7 +37,7 @@ def submit_verifier(oauth_token, oauth_verifier):
 
 def is_logged_in(token_set):
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(secret.APP_KEY, secret.APP_SECRET, resource_owner_key=token_set.access_token,
+    auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth)
     return response.status_code == 200

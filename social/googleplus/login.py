@@ -1,19 +1,19 @@
 __author__ = 'stuart'
 
 import requests
-import secret
+import config
 import json
 from googleplus_core import GooglePlusTokenSet
 
-REDIRECT_URI = 'https://www.giftstarter.co/oauth-callback/googleplus'
+REDIRECT_URI = config.APP_URL + '/oauth-callback/googleplus'
 
 
 def submit_code(auth_response):
     base_url = 'https://accounts.google.com/o/oauth2/token'
     params = {
         'code': auth_response['code'],
-        'client_id': secret.CLIENT_ID,
-        'client_secret': secret.CLIENT_SECRET,
+        'client_id': config.CLIENT_ID,
+        'client_secret': config.CLIENT_SECRET,
         'redirect_uri': REDIRECT_URI,
         'grant_type': 'authorization_code'
     }

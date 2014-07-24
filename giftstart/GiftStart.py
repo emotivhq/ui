@@ -25,6 +25,7 @@ class GiftStart(ndb.Model):
     overlay_rows = ndb.IntegerProperty(required=True)
     overlay_parts = ndb.JsonProperty(required=True)
 
+    gc_name = ndb.StringProperty(required=True)
     gc_phone_number = ndb.StringProperty(required=True)
     gc_email = ndb.StringProperty(required=True)
 
@@ -43,4 +44,5 @@ class GiftStart(ndb.Model):
                         'total_price': self.total_price},
             'rows': self.overlay_rows, 'columns': self.overlay_columns, 'parts': json.loads(self.overlay_parts),
             'gift_champion_uid': self.gift_champion_uid, 'deadline': self.deadline.strftime("%s"),
+            'gc_name': self.gc_name
         }})

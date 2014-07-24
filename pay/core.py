@@ -10,10 +10,23 @@ import uuid
 import requests
 
 
+def add_name_to_pitchin(pitchin):
+    user = user_core.get_user(pitchin['uid'])
+    if user is not None:
+        if user.name is None or user.name is '':
+            user_core.get_user_info(user)
+            user.put()
+        pitchin['name'] = user.name
+    return pitchin
+
+
 def get_pitch_in_dicts(gsid):
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     pitch_in_dicts = [pi.ext_dictify() for pi in pitch_ins]
-    return pitch_in_dicts
+
+    named_pitch_ins = map(add_name_to_pitchin, pitch_in_dicts)
+
+    return named_pitch_ins
 
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_to_mailing_lits):

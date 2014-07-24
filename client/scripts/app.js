@@ -3,7 +3,8 @@
  */
 
 
-var GiftStarterApp = angular.module('GiftStarterApp', ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies']);
+var GiftStarterApp = angular.module('GiftStarterApp',
+    ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch']);
 console.log("ver27");
 
 GiftStarterApp.config([
@@ -50,7 +51,7 @@ GiftStarterApp.run(function($http, $templateCache) {
 
 GiftStarterApp.config(
     function(ezfbProvider, $httpProvider) {
-        ezfbProvider.setInitParams({appId: '301135316704582'});
+        ezfbProvider.setInitParams({appId: window.fbAppId});
         $httpProvider.defaults.useXDomain = true;
     }
 );
