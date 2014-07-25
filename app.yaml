@@ -58,6 +58,10 @@ handlers:
   script: main.app
   secure: always
 
+builtins:
+  - admin_redirect: on
+  - appstats: on
+
 libraries:
 - name: webapp2
   version: "latest"
