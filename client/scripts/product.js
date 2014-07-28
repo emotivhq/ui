@@ -41,19 +41,21 @@ GiftStarterApp.service('ProductService', [
 
 
 GiftStarterApp.directive('gsProductLink',
-    function(ProductService, $location) {
+    function(ProductService, $location, Analytics) {
         function link(scope) {
             scope.loading = false;
             scope.failed = false;
             scope.product_url = "";//"http://www.rei.com/product/868340/camelbak-spire-22-lr-hydration-pack-100-fl-oz-womens";
 
             function onSuccess(product) {
+                Analytics.track('product', 'link submission succeeded');
                 scope.loading = false;
                 ProductService.product.url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
                 $location.path("shipping-contact");
             }
             function onFailure(reason) {
+                Analytics.track('product', 'link submission failed');
                 scope.loading = false;
                 scope.failed = true;
                 console.log("Product service failed to fetch product:");
@@ -61,8 +63,7 @@ GiftStarterApp.directive('gsProductLink',
             }
 
             scope.submitLink = function() {
-                mixpanel.track('Product submitted');
-                ga('send', 'event', 'product', 'submitted');
+                Analytics.track('product', 'link submitted');
 
                 // Fix urls if they don't start with http://
                 if (scope.product_url.slice(0, 7) !== "http://" && scope.product_url.slice(0, 8) !== "https://") {

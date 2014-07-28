@@ -1,7 +1,7 @@
 __author__ = 'stuart'
 
 from google.appengine.api import taskqueue
-import json
+import json, yaml
 from gs_user import user_core
 import stripe
 from giftstart import GiftStart
@@ -9,6 +9,7 @@ from PitchIn import PitchIn
 import uuid
 import requests
 
+config = yaml.load(open('config.yaml'))
 
 def add_name_to_pitchin(pitchin):
     user = user_core.get_user(pitchin['uid'])
@@ -50,12 +51,12 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
 
     email_kwargs = {
         'campaign_name': giftstart.giftstart_title,
-        'campaign_link': 'https://www.giftstarter.co/giftstart?gs-id=' + str(gsid),
+        'campaign_link': config['app_url'] + '/giftstart?gs-id=' + str(gsid),
         'pitchin_charge': '$' + str(total_charge/100.0),
         'pitchin_id': charge['id'],
         'pitchin_last_four': stripe_response['card']['last4']
     }
-    requests.put('http://email.giftstarter.co/send/' + str(uuid.uuid4()).replace("-", ''),
+    requests.put(config['email_url'] + '/send/' + str(uuid.uuid4()).replace("-", ''),
                  data=json.dumps({
                      'subject': "Pitch In Received!", 'sender': "team@giftstarter.co", 'to': [email_address],
                      'template_name': "pitch_in_thank_you", 'template_kwargs': email_kwargs

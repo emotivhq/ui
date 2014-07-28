@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('HeaderController', [
-            '$scope','$location','UserService',
-    function($scope,  $location,  UserService) {
+            '$scope','$location','UserService','Analytics',
+    function($scope,  $location,  UserService,  Analytics) {
         $scope.thisRoute = $location.path().toString();
         $scope.loggedIn = UserService.loggedIn;
 
@@ -15,7 +15,7 @@ GiftStarterApp.controller('HeaderController', [
         $scope.$on('$routeChangeStart', routeChangeListener);
 
         $scope.logout = function() {
-            console.log('Loggin out...');
+            Analytics.track('user', 'logout from header');
             UserService.logout();
         };
 

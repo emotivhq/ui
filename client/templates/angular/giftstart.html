@@ -2,12 +2,12 @@
 
     <div class="description block">
         <h1 class="title">{{giftStart.title}}</h1>
-        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-show="giftStart.product.retailer_logo"><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/><p class="title">{{giftStart.product.title}}</p></p></a>
+        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-click="productLinkClicked();" ng-show="giftStart.product.retailer_logo"><p class="title">{{giftStart.product.title}}</p><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/></p></a>
 
         <div class="description" style="white-space: pre-line;">{{giftStart.description}}</div>
         <div class="signature">
             <p class="name">{{giftStart.gc_name}}</p>
-            <p ng-show="giftStart.gc_name.length > 0">Gift Champion</p>
+            <p ng-show="giftStart.gc_name.length > 0" class="gift-champion">Gift Champion</p>
         </div>
     </div>
 
@@ -16,10 +16,10 @@
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
             <h2>Share This Campaign With Friends!</h2>
-            <a class="share" href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="mixpanel.track('Email share in giftstart clicked');"><img class="share" src="/assets/share_email.png" /></a>
-            <img class="share" src="/assets/share_facebook.png" ng-click="mixpanel.track('facebook share in giftstart clicked');facebookShare();" />
-            <img class="share" src="/assets/share_twitter.png" ng-click="mixpanel.track('twitter share in giftstart clicked');twitterShare();" />
-            <img class="share" src="/assets/share_google.png" ng-click="mixpanel.track('googleplus share in giftstart clicked');googlePlusShare();" />
+            <a class="share" href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="emailShare()"><img class="share" src="/assets/share_email.png" /></a>
+            <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();" />
+            <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
+            <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />
         </div>
     </div>
 

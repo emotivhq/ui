@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('GiftStartService', [
-            '$http','$location','UserService','$rootScope','$filter','PopoverService','$window',
-    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window) {
+            '$http','$location','UserService','$rootScope','$filter','PopoverService','$window','Analytics',
+    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics) {
 
         this.giftStart = {};
 
@@ -94,6 +94,7 @@ GiftStarterApp.service('GiftStartService', [
                         if (!parts[ti].bought && !parts[ti].disabled) {
                             // If selected is none, this will force it into a bool
                             parts[ti].selected = (parts[ti].selected == false);
+                            Analytics.track('campaign', 'overlay part toggled');
                             self.updateSelected();
                         }
                     }
@@ -126,8 +127,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.createGiftStart = function() {
-            mixpanel.track("GiftStart created");
-            ga('send', 'event', 'campaign', 'created');
+            Analytics.track('campaign', 'created');
             self.giftStart = self.buildGiftStart();
             console.log(self.giftStart);
             $location.path('/giftstart');
@@ -139,6 +139,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
+            Analytics.track('campaign', 'campaign enabled');
             self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
             self.updateSelected();
@@ -167,8 +168,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data) {
-            mixpanel.track("GiftStart fetched");
-            ga('send', 'event', 'campaign', 'fetched');
+            Analytics.track('campaign', 'fetched');
             self.giftStart = data['giftstart'];
             self.enableGiftStart();
             $rootScope.$broadcast('giftstart-loaded');
@@ -190,6 +190,9 @@ GiftStarterApp.service('GiftStartService', [
 
         this.sendPayment = function(callback) {
             var data = {payment: self.payment, action: 'pitch-in', uid: UserService.uid};
+            if (self.payment.subscribe) {
+                Analytics.track('pitchin', 'subscribed to mailing list');
+            }
             $http({method: 'POST', url: '/pay',
                 data: data})
                 .success(function(data) {
@@ -213,8 +216,7 @@ GiftStarterApp.service('GiftStartService', [
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
-                mixpanel.track("Pitch in started");
-                ga('send', 'event', 'pitch-in', 'started');
+                Analytics.track('pitchin', 'pitchin button clicked');
                 PopoverService.contributeLogin = true;
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
@@ -301,7 +303,11 @@ GiftStarterApp.service('GiftStartService', [
 
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$timeout','FacebookService','TwitterService','GooglePlusService',
-    function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService) {
+            'Analytics',
+    function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService,
+             Analytics) {
+
+        Analytics.track('campaign', 'controller created');
 
         $scope.giftStart = GiftStartService.giftStart;
         $scope.pitchIns = GiftStartService.pitchIns;
@@ -394,11 +400,28 @@ GiftStarterApp.controller('GiftStartController', [
             }
         };
 
+        $scope.emailShare = function() {
+            Analytics.track('campaign', 'email share from campaign');
+        };
+
         $scope.updateSecondsLeft();
 
-        $scope.facebookShare = FacebookService.inviteFriends;
-        $scope.twitterShare = TwitterService.share;
-        $scope.googlePlusShare = GooglePlusService.share;
+        $scope.facebookShare = function() {
+            Analytics.track('campaign', 'facebook share from campaign');
+            FacebookService.inviteFriends();
+        };
+        $scope.twitterShare = function() {
+            Analytics.track('campaign', 'twitter share from campaign');
+            TwitterService.share;
+        };
+        $scope.googlePlusShare = function() {
+            Analytics.track('campaign', 'googleplus share from campaign');
+            GooglePlusService.share;
+        };
+
+        $scope.productLinkClicked = function() {
+            Analytics.track('campaign', 'product link clicked');
+        };
 
 
 }]);

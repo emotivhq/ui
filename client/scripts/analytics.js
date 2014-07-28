@@ -1,8 +1,14 @@
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+// Analytics Service
+GiftStarterApp.service("Analytics", [
+            "$window",
+    function($window) {
 
-ga('create', 'UA-51616127-2', 'auto');
-ga('require', 'displayfeatures');
-ga('send', 'pageview');
+        this.track = function(service, event) {
+            $window.ga('send', 'event', service, event);
+            $window.mixpanel.track(service + ' - ' + event);
+        };
+
+        this.track('client', 'loaded');
+
+    }
+]);

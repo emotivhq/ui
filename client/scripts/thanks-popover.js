@@ -11,11 +11,20 @@ GiftStarterApp.controller('ThanksPopoverController', [
         $scope.mailBody= "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
             + GiftStartService.giftStart.gsid;
 
-        $scope.facebookShare = FacebookService.inviteFriends;
+        $scope.facebookShare = function() {
+            Analytics.track('client', 'facebook share from thanks');
+            FacebookService.inviteFriends();
+        };
 
-        $scope.twitterShare = TwitterService.share;
+        $scope.twitterShare = function() {
+            Analytics.track('client', 'twitter share from thanks');
+            TwitterService.share();
+        };
 
-        $scope.googlePlusShare = GooglePlusService.share;
+        $scope.googlePlusShare = function() {
+            Analytics.track('client', 'googleplus share from thanks');
+            GooglePlusService.share();
+        };
 
         $scope.hidePopover = PopoverService.hidePopover;
 

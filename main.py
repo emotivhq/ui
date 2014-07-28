@@ -6,6 +6,7 @@ import gs_user
 import yaml
 
 secrets = yaml.load(open('secret.yaml'))
+config = yaml.load(open('config.yaml'))
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
@@ -35,6 +36,8 @@ class MainHandler(webapp2.RequestHandler):
             'js_insert': js_insert,
             'image_url': self.request.path_url + '/assets/logo_square.png',
             'page_url': self.request.path_url,
+            'googleanalytics_key': config['googleanalytics']['key'],
+            'mixpanel_key': config['mixpanel']['key'],
         }))
 
 
@@ -54,7 +57,9 @@ class GiftStartMainHandler(webapp2.RequestHandler):
                 'page_title': gs.giftstart_title,
                 'page_url': self.request.path_url + "?gs-id=" + str(gsid),
                 'page_description': gs.giftstart_description,
-                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg'
+                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg',
+                'googleanalytics_key': config['googleanalytics']['key'],
+                'mixpanel_key': config['mixpanel']['key'],
             }
             self.response.write(frame_template.render(render_values))
         else:
