@@ -6,6 +6,7 @@ import gs_user
 import yaml
 
 secrets = yaml.load(open('secret.yaml'))
+config = yaml.load(open('config.yaml'))
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
@@ -31,6 +32,8 @@ class MainHandler(webapp2.RequestHandler):
         js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
         js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
+        js_insert += "window.MIXPANEL_KEY = '" + config['mixpanel']['key'] + "';"
+        js_insert += "window.GA_KEY = '" + config['googleanalytics']['key'] + "';"
         self.response.write(frame_template.render({
             'js_insert': js_insert,
             'image_url': self.request.path_url + '/assets/logo_square.png',
@@ -44,6 +47,8 @@ class GiftStartMainHandler(webapp2.RequestHandler):
         js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
         js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
+        js_insert += "window.MIXPANEL_KEY = '" + config['mixpanel']['key'] + "';"
+        js_insert += "window.GA_KEY = '" + config['googleanalytics']['key'] + "';"
         gsid = self.request.get('gs-id')
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
 
