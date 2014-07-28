@@ -38,10 +38,13 @@ def get_img_url(token_set):
 
 
 def get_user_info(user):
-    auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=user.twitter_token_set.access_token,
-                  resource_owner_secret=user.twitter_token_set.access_secret)
-    response = requests.get("https://api.twitter.com/1.1/users/show.json?user_id=" + user.uid[1:],
-                            auth=auth)
-    twitter_user = json.loads(response.content)
-    user.name = twitter_user['name']
+    try:
+        auth = OAuth1(config.APP_KEY, config.APP_SECRET, resource_owner_key=user.twitter_token_set.access_token,
+                      resource_owner_secret=user.twitter_token_set.access_secret)
+        response = requests.get("https://api.twitter.com/1.1/users/show.json?user_id=" + user.uid[1:],
+                                auth=auth)
+        twitter_user = json.loads(response.content)
+        user.name = twitter_user['name']
+    except:
+        print("Daaaamn failed to get twitter user info for {uid}.".format(uid=user.uid))
     return user
