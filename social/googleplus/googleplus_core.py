@@ -62,9 +62,11 @@ def token_saver(token):
 
 
 def get_user_info(user):
-    response = _request_with_refresh("https://www.googleapis.com/plus/v1/people/" + user.uid[1:],
-                                     user.googleplus_token_set)
-    gplus_user = json.loads(response.content)
-    print(gplus_user)
-    user.name = gplus_user['displayName']
+    try:
+        response = _request_with_refresh("https://www.googleapis.com/plus/v1/people/" + user.uid[1:],
+                                         user.googleplus_token_set)
+        gplus_user = json.loads(response.content)
+        user.name = gplus_user['displayName']
+    except:
+        print("Daaaamn failed to get google user info for {uid}.".format(uid=user.uid))
     return user

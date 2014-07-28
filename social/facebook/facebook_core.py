@@ -22,7 +22,10 @@ def get_uid(token_set):
 
 
 def get_user_info(user):
-    graph = GraphAPI(user.facebook_token_set.access_token)
-    fb_user = graph.get_object(user.uid[1:])
-    user.name = fb_user['name']
+    try:
+        graph = GraphAPI(user.facebook_token_set.access_token)
+        fb_user = graph.get_object(user.uid[1:])
+        user.name = fb_user['name']
+    except:
+        print("Daaaamn failed to get facebook user info for {uid}.".format(uid=user.uid))
     return user
