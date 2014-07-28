@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.controller('NotePopoverController', [
-            '$scope','UserService','PopoverService','GiftStartService',
-    function($scope,  UserService,  PopoverService,  GiftStartService) {
+            '$scope','UserService','PopoverService','GiftStartService','Analytics',
+    function($scope,  UserService,  PopoverService,  GiftStartService,  Analytics) {
 
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
@@ -15,8 +15,7 @@ GiftStarterApp.controller('NotePopoverController', [
         if (!GiftStartService.giftStart.gsid) {GiftStartService.createGiftStart()}
 
         $scope.submit = function() {
-            mixpanel.track("Note submitted");
-            ga('send', 'event', 'pitch-in', 'note submitted');
+            Analytics.track('pitchin', 'note submitted');
             GiftStartService.saveNote($scope.noteText);
             PopoverService.nextPopover();
         };

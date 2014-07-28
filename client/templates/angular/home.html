@@ -1,4 +1,4 @@
-<div class="landing-page">
+<div class="landing-page" ng-controller="HomeController">
     <div class="copy">
         <h1>What is it and how does it work?</h1>
         <div>
@@ -39,11 +39,11 @@
     </div>
     <div class="retailers">
         <h1>Select Retailers</h1>
-        <a href="http://nordstrom.com" target="_blank"><img id="nordstrom" src="/assets/nordstrom.png"/></a>
-        <a href="http://rei.com" target="_blank"><img id="rei" src="/assets/rei.png"/></a>
-        <a href="http://filson.com" target="_blank"><img id="filson" src="/assets/filson.jpg"/></a>
-        <a href="http://brooksrunning.com" target="_blank"><img id="brooks" src="/assets/brooks.png"/></a>
-        <a href="http://costco.com" target="_blank"><img id="costco" src="/assets/costco.png"/></a>
+        <a href="http://nordstrom.com" target="_blank" ng-click="retailerClicked('nordstrom');"><img id="nordstrom" src="/assets/nordstrom.png"/></a>
+        <a href="http://rei.com" target="_blank" ng-click="retailerClicked('rei');"><img id="rei" src="/assets/rei.png"/></a>
+        <a href="http://filson.com" target="_blank" ng-click="retailerClicked('filson');"><img id="filson" src="/assets/filson.jpg"/></a>
+        <a href="http://brooksrunning.com" target="_blank" ng-click="retailerClicked('brooksrunning');"><img id="brooks" src="/assets/brooks.png"/></a>
+        <a href="http://costco.com" target="_blank" ng-click="retailerClicked('costco');"><img id="costco" src="/assets/costco.png"/></a>
         <p>Don't see the retailer you're looking for?  Let us know at <a href="mailto:team@giftstarter.co">team@giftstarter.co!</a></p>
     </div>
 </div>

@@ -4,7 +4,9 @@
 
 GiftStarterApp.service('UserService', [
             '$http','$rootScope','$cookieStore','$window','FacebookService','TwitterService','GooglePlusService',
-    function($http,  $rootScope,  $cookieStore,  $window,  FacebookService,  TwitterService,  GooglePlusService) {
+            'Analytics',
+    function($http,  $rootScope,  $cookieStore,  $window,  FacebookService,  TwitterService,  GooglePlusService,
+             Analytics) {
         this.uid = -1;
         this.loggedIn = false;
         this.profileImageUrl  = '';
@@ -17,6 +19,7 @@ GiftStarterApp.service('UserService', [
         this.registerLogin = function(uid, profileImageUrl, token, onMailingList) {
             mixpanel.identify(uid);
             mixpanel.people.set({'$last_login': new Date()});
+            Analytics.track('login', uid);
             self.uid = uid;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
@@ -58,22 +61,19 @@ GiftStarterApp.service('UserService', [
 
         $rootScope.$on('facebook-login-success', facebookLoggedIn);
         function facebookLoggedIn () {
-            mixpanel.track("logged in with facebook");
-            ga('send', 'event', 'login success', 'facebook');
+            Analytics.track('user', 'logged in with facebook');
             self.loginService = 'facebook';
             self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token, FacebookService.subscribed);
         }
         $rootScope.$on('twitter-login-success', twitterLoggedIn);
         function twitterLoggedIn () {
-            mixpanel.track("logged in with twitter");
-            ga('send', 'event', 'login success', 'twitter');
+            Analytics.track('user', 'logged in with twitter');
             self.loginService = 'twitter';
             self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token, TwitterService.subscribed);
         }
         $rootScope.$on('googleplus-login-success', googleplusLoggedIn);
         function googleplusLoggedIn () {
-            mixpanel.track("logged in with googleplus");
-            ga('send', 'event', 'login success', 'googleplus');
+            Analytics.track('user', 'logged in with googleplus');
             self.loginService = 'googleplus';
             self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token, GooglePlusService.subscribed);
         }

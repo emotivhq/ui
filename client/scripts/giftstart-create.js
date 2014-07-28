@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('GiftStartCreateShippingController', [
-            '$scope','GiftStartService','$location','ProductService',
-    function($scope,  GiftStartService,  $location,  ProductService) {
+            '$scope','GiftStartService','$location','ProductService','Analytics',
+    function($scope,  GiftStartService,  $location,  ProductService,  Analytics) {
         $scope.shippingName = '';
         $scope.shippingAddress = '';
         $scope.shippingCity = '';
@@ -30,6 +30,7 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
         }
 
         $scope.sameAsShipping = function() {
+            Analytics.track('campaign', 'same as shipping clicked');
             $scope.gcName = $scope.shippingName;
             $scope.gcPhoneNumber = $scope.shippingPhoneNumber;
             $scope.gcEmail = $scope.shippingEmail;
@@ -38,6 +39,7 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
 
         $scope.next = function() {
             if ($scope.shippingForm.$valid) {
+                Analytics.track('campaign', 'shipping/contact information submitted');
                 GiftStartService.shippingName = $scope.shippingName;
                 GiftStartService.shippingAddress = $scope.shippingAddress;
                 GiftStartService.shippingCity = $scope.shippingCity;
@@ -56,7 +58,6 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
         // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
         GiftStartService.giftStart.gsid = 0;
 
-
         GiftStartService.giftStart = GiftStartService.buildGiftStart();
 
     }
@@ -64,7 +65,9 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
 
 GiftStarterApp.controller('GiftStartCreateCampaignController', [
             '$scope','GiftStartService','$location','ProductService','UserService','PopoverService','$http','$timeout',
-    function($scope,  GiftStartService,  $location,  ProductService,  UserService,  PopoverService,  $http,  $timeout) {
+            'Analytics',
+    function($scope,  GiftStartService,  $location,  ProductService,  UserService,  PopoverService,  $http,  $timeout,
+             Analytics) {
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
@@ -95,11 +98,12 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 shipping_city: GiftStartService.shippingCity, shipping_state: GiftStartService.shippingState,
                 shipping_zip: GiftStartService.shippingZip}})
             .success(function(result) {
+                Analytics.track('product', 'tax and shipping fetch success');
                 $scope.salesTaxRate = result.tax;
                 $scope.fetchingTaxRate = false;
                 $scope.priceChanged();
             })
-            .error(function(reason) {console.log(reason)});
+            .error(function(reason) {Analytics.track('product', 'tax and shipping fetch failed');});
 
         $scope.nextImage = function() {
             $scope.imgIndex = ($scope.imgIndex + 1) % $scope.product.imgs.length;
@@ -114,10 +118,12 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         $scope.updateGiftStartImage = function() {
+            Analytics.track('campaign', 'selected image changed');
             GiftStartService.giftStart.product.img_url = $scope.selectedImg;
         };
 
         $scope.priceChanged = function() {
+            Analytics.track('campaign', 'price changed');
             $scope.salesTax = $scope.salesTaxRate * $scope.inputPrice * 100;
             $scope.serviceFee = 0.08 * $scope.inputPrice * 100;
             $scope.shipping = 0.045 * $scope.inputPrice * 100;
@@ -126,6 +132,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         $scope.moreParts = function() {
+            Analytics.track('campaign', 'number of parts changed');
             if ($scope.selectedXYSet < $scope.xySets.length) {
                 $scope.selectedXYSet += 1;
                 $scope.x = $scope.xySets[$scope.selectedXYSet][0];
@@ -135,6 +142,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         $scope.fewerParts = function() {
+            Analytics.track('campaign', 'number of parts changed');
             if ($scope.selectedXYSet > 0) {
                 $scope.selectedXYSet -= 1;
                 $scope.x = $scope.xySets[$scope.selectedXYSet][0];
@@ -154,8 +162,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
 
         $scope.next = function() {
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
-                mixpanel.track("GiftStart staged");
-                ga('send', 'event', 'campaign', 'staged');
+                Analytics.track('campaign', 'campaign submitted');
 
                 GiftStartService.title = $scope.title;
                 GiftStartService.description = $scope.description;
@@ -185,11 +192,9 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.onDescriptionBlur = function() {
             var longEnough = $scope.description.length > 400;
             if (!longEnough && $scope.descriptionLongEnough) {
-                mixpanel.track("description too short displayed");
-                ga('send', 'event', 'campaign-create', 'description too short displayed');
+                Analytics.track('campaign', 'description too short displayed');
             } else if (longEnough && !$scope.descriptionLongEnough) {
-                mixpanel.track("description too short hidden");
-                ga('send', 'event', 'campaign-create', 'description too short hidden');
+                Analytics.track('campaign', 'description too short hidden');
             }
             $scope.descriptionLongEnough = longEnough;
         };

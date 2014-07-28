@@ -8,7 +8,7 @@ GiftStarterApp.service("Analytics", [
             $window.mixpanel.track(service + ' - ' + event);
         };
 
-        this.track('app', 'loaded');
+        this.track('client', 'loaded');
 
     }
 ]);

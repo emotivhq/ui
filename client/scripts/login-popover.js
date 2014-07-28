@@ -4,8 +4,10 @@
 
 
 GiftStarterApp.controller('LoginPopoverController', [
-            '$scope','UserService','PopoverService','GiftStartService','TwitterService','FacebookService','$location','GooglePlusService',
-    function($scope,  UserService,  PopoverService,  GiftStartService,  TwitterService,  FacebookService,  $location,  GooglePlusService) {
+            '$scope','UserService','PopoverService','GiftStartService','TwitterService','FacebookService','$location',
+            'GooglePlusService','Analytics',
+    function($scope,  UserService,  PopoverService,  GiftStartService,  TwitterService,  FacebookService,  $location,
+             GooglePlusService, Analytics) {
 
         $scope.loggedIn = UserService.loggedIn;
 
@@ -13,15 +15,23 @@ GiftStarterApp.controller('LoginPopoverController', [
         if (UserService.loggedIn) {loginComplete()}
 
         // If they aren't, they'll need to log in
-        $scope.facebookLogin = FacebookService.login;
-        $scope.twitterLogin = TwitterService.login;
-        $scope.googleLogin = GooglePlusService.login;
+        $scope.facebookLogin = function() {
+            Analytics.track('user', 'login attempt with facebook');
+            FacebookService.login();
+        };
+        $scope.twitterLogin = function() {
+            Analytics.track('user', 'login attempt with twitter');
+            TwitterService.login();
+        };
+        $scope.googleLogin  = function() {
+            Analytics.track('user', 'login attempt with googleplus');
+            GooglePlusService.login();
+        };
 
         $scope.hidePopover = PopoverService.hidePopover;
 
         function loginComplete() {
-            mixpanel.track("Login succeeded");
-            ga('send', 'event', 'login', 'success');
+            Analytics.track('user', 'login succeeded');
             if ($location.path().search('campaign-create') != -1) {
                 PopoverService.hidePopover();
                 GiftStartService.createGiftStart();

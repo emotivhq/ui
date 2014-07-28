@@ -94,6 +94,7 @@ GiftStarterApp.service('GiftStartService', [
                         if (!parts[ti].bought && !parts[ti].disabled) {
                             // If selected is none, this will force it into a bool
                             parts[ti].selected = (parts[ti].selected == false);
+                            Analytics.track('campaign', 'overlay part toggled');
                             self.updateSelected();
                         }
                     }
@@ -138,6 +139,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
+            Analytics.track('campaign', 'campaign enabled');
             self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
             self.updateSelected();
@@ -188,6 +190,9 @@ GiftStarterApp.service('GiftStartService', [
 
         this.sendPayment = function(callback) {
             var data = {payment: self.payment, action: 'pitch-in', uid: UserService.uid};
+            if (self.payment.subscribe) {
+                Analytics.track('pitchin', 'subscribed to mailing list');
+            }
             $http({method: 'POST', url: '/pay',
                 data: data})
                 .success(function(data) {
@@ -211,7 +216,7 @@ GiftStarterApp.service('GiftStartService', [
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
-                Analytics('pitchin', 'pitchin button clicked');
+                Analytics.track('pitchin', 'pitchin button clicked');
                 PopoverService.contributeLogin = true;
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
@@ -395,11 +400,28 @@ GiftStarterApp.controller('GiftStartController', [
             }
         };
 
+        $scope.emailShare = function() {
+            Analytics.track('campaign', 'email share from campaign');
+        };
+
         $scope.updateSecondsLeft();
 
-        $scope.facebookShare = FacebookService.inviteFriends;
-        $scope.twitterShare = TwitterService.share;
-        $scope.googlePlusShare = GooglePlusService.share;
+        $scope.facebookShare = function() {
+            Analytics.track('campaign', 'facebook share from campaign');
+            FacebookService.inviteFriends();
+        };
+        $scope.twitterShare = function() {
+            Analytics.track('campaign', 'twitter share from campaign');
+            TwitterService.share;
+        };
+        $scope.googlePlusShare = function() {
+            Analytics.track('campaign', 'googleplus share from campaign');
+            GooglePlusService.share;
+        };
+
+        $scope.productLinkClicked = function() {
+            Analytics.track('campaign', 'product link clicked');
+        };
 
 
 }]);

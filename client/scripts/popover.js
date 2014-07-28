@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('PopoverService', [
-            '$rootScope','$location','$timeout',
-    function($rootScope,  $location,  $timeout) {
+            '$rootScope','$location','$timeout','Analytics',
+    function($rootScope,  $location,  $timeout,  Analytics) {
 
         this.template = '';
         this.currentLocation = $location.hash();
@@ -34,14 +34,17 @@ GiftStarterApp.service('PopoverService', [
 
         this.hidePopover = function() {
             $timeout(function() {
+                Analytics.track('client', 'hiding popover');
                 $rootScope.$broadcast('popover-hidden');
                 self.currentLocation = '';
                 $location.hash('');
-                console.log('Hiding popover');
             });
         };
 
-        this.showPopover = function() {$rootScope.$broadcast('popover-shown')};
+        this.showPopover = function() {
+            Analytics.track('client', 'showing popover');
+            $rootScope.$broadcast('popover-shown');
+        };
 
         this.validHashes = ['login', 'note', 'pay', 'thanks'];
         $rootScope.$on('$locationChangeStart', function(event, next, current) {

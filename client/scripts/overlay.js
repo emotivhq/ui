@@ -2,7 +2,7 @@
  * Created by stuart on 4/11/14.
  */
 
-GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService) {
+GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
 
         // If the giftstart is already present, draw grid immediately
@@ -14,7 +14,7 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
         scope.$on('giftstart-loaded', drawGrid);
 
         function drawGrid() {
-            console.log('Drawing overlay...');
+            Analytics.track('campaign', 'overlay drawn');
             var overlayElement = angular.element(element.children()[1]);
             var height  = 1/GiftStartService.giftStart.rows*100 - 2 +'%';
             var width  = 1/GiftStartService.giftStart.columns*100 - 2 +'%';

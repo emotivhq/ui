@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', [
-            '$scope','GiftStartService','PopoverService','UserService',
-    function($scope,  GiftStartService,  PopoverService,  UserService) {
+            '$scope','GiftStartService','PopoverService','UserService','Analytics',
+    function($scope,  GiftStartService,  PopoverService,  UserService,  Analytics) {
 
         $scope.currentCharge = GiftStartService.giftStart.totalSelection;
         $scope.emailSubscribe = false;
@@ -22,14 +22,12 @@ GiftStarterApp.controller('PayPopoverController', [
             // 5. Server app attempts to charge card, responds with result (success/fail)
             if(response.error) {
                 $scope.pitchingIn = false;
-                mixpanel.track("Payment form error");
-                ga('send', 'event', 'pitch-in', 'payment form error');
+                Analytics.track('pitchin', 'payment error');
                 console.log("Card processing error, payment not made.");
                 console.log(response);
             } else {
                 // Got stripe token, attach it to the current giftstart payment
-                mixpanel.track("Sending payment");
-                ga('send', 'event', 'pitch-in', 'sending payment');
+                Analytics.track('pitchin', 'payment submitted');
                 console.log(response);
                 GiftStartService.attachStripeResponse(response);
                 GiftStartService.payment.emailAddress = $scope.email;
@@ -40,8 +38,7 @@ GiftStarterApp.controller('PayPopoverController', [
 
         // TODO: Implement error reporting for cards that are rejected!
         $scope.$on('payment-success', function() {
-            mixpanel.track("Payment succeeded");
-            ga('send', 'event', 'pitch-in', 'payment success');
+            Analytics.track('pitchin', 'payment succeeded');
             PopoverService.nextPopover();
             $scope.pitchingIn = false;
         });
