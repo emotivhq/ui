@@ -7,4 +7,4 @@ googleanalytics:
   key:                'UA-51616127-3'
 
 mixpanel:
-  key:                '2cfdda518bed5ee0bc7e9ad48c8c8f48' #'e62cefc2003d70c2c10c3fdb1fc46917'
+  key:                '2cfdda518bed5ee0bc7e9ad48c8c8f48'

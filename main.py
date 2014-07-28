@@ -32,12 +32,12 @@ class MainHandler(webapp2.RequestHandler):
         js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
         js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
-        js_insert += "window.MIXPANEL_KEY = '" + config['mixpanel']['key'] + "';"
-        js_insert += "window.GA_KEY = '" + config['googleanalytics']['key'] + "';"
         self.response.write(frame_template.render({
             'js_insert': js_insert,
             'image_url': self.request.path_url + '/assets/logo_square.png',
             'page_url': self.request.path_url,
+            'googleanalytics_key': config['googleanalytics']['key'],
+            'mixpanel_key': config['mixpanel']['key'],
         }))
 
 
@@ -47,8 +47,6 @@ class GiftStartMainHandler(webapp2.RequestHandler):
         js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
         js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
-        js_insert += "window.MIXPANEL_KEY = '" + config['mixpanel']['key'] + "';"
-        js_insert += "window.GA_KEY = '" + config['googleanalytics']['key'] + "';"
         gsid = self.request.get('gs-id')
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
 
@@ -59,7 +57,9 @@ class GiftStartMainHandler(webapp2.RequestHandler):
                 'page_title': gs.giftstart_title,
                 'page_url': self.request.path_url + "?gs-id=" + str(gsid),
                 'page_description': gs.giftstart_description,
-                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg'
+                'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg',
+                'googleanalytics_key': config['googleanalytics']['key'],
+                'mixpanel_key': config['mixpanel']['key'],
             }
             self.response.write(frame_template.render(render_values))
         else:

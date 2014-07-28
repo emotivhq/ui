@@ -23,10 +23,6 @@ GiftStarterApp.config([
             .otherwise({redirectTo: '/'});
 
         $locationProvider.html5Mode(true).hashPrefix('!');
-
-        mixpanel.track("App loaded");
-        ga('send', 'event', 'app', 'loaded');
-
     }
 ]);
 
