@@ -44,7 +44,6 @@ class GiftStart(ndb.Model):
                         'sales_tax': self.sales_tax, 'shipping': self.shipping, 'service_fee': self.service_fee,
                         'total_price': self.total_price, 'title': self.product_title,
                         'retailer_logo': self.retailer_logo},
-            'rows': self.overlay_rows, 'columns': self.overlay_columns, 'parts': json.loads(self.overlay_parts),
-            'gift_champion_uid': self.gift_champion_uid, 'deadline': self.deadline.strftime("%s"),
-            'gc_name': self.gc_name
+            'rows': self.overlay_rows, 'columns': self.overlay_columns, 'gift_champion_uid': self.gift_champion_uid,
+            'deadline': self.deadline.strftime("%s"), 'gc_name': self.gc_name
         }})

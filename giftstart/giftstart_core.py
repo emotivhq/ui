@@ -5,7 +5,7 @@ from google.appengine.api import taskqueue
 from datetime import datetime, timedelta
 from GiftStart import GiftStart
 import storage.image_cache
-import comm
+import giftstart_comm
 import os
 
 GIFTSTART_CAMPAIGN_DAYS = 10
@@ -55,7 +55,7 @@ def create(giftstart):
         gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()
 
-    comm.send_create_notification(gs)
+    giftstart_comm.send_create_notification(gs)
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),

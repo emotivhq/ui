@@ -13,7 +13,7 @@ from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
 
 # UUT
-import api
+import giftstart_api
 
 example_giftstart = {
     'gift_champion_uid': '12',
@@ -74,9 +74,17 @@ class GiftstartTestHandler(unittest.TestCase):
             'token': 'x123',
             'giftstart': example_giftstart,
         })
-        response = request.get_response(api.api)
 
-        self.assertEqual(response.status_code, 403, 'Should reject due to invalid user details')
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 403, "Should reject due to invalid user details, expected 403, response "
+                                                    "was " + str(response.status_code))
+
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'GET'
+        request.query_string = 'gs-id=1'
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 404, "Shouldn't have created a campaign, expected 404, response was " +
+                         str(response.status_code))
 
     def test_create_with_valid_user(self):
         request = webapp2.Request.blank('/giftstart/api')
@@ -87,6 +95,53 @@ class GiftstartTestHandler(unittest.TestCase):
             'token': 'x1234',
             'giftstart': example_giftstart,
         })
-        response = request.get_response(api.api)
 
-        self.assertEqual(response.status_code, 200, 'Should accept created campaign')
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                         str(response.status_code))
+
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'GET'
+        request.query_string = 'gs-id=1'
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should have created a campaign, expected 200, response was " +
+                         str(response.status_code))
+
+    def test_create_same_campaign_twice(self):
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'action': 'create',
+            'uid': 'f1234',
+            'token': 'x1234',
+            'giftstart': example_giftstart,
+        })
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                         str(response.status_code))
+
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                         str(response.status_code))
+
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'GET'
+        request.query_string = 'gs-id=1'
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should have created first campaign, expected 200, response was " +
+                         str(response.status_code))
+
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'GET'
+        request.query_string = 'gs-id=2'
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 404, "Shouldn't have created a second campaign, expected 404, response "
+                                                    "was " + str(response.status_code))
+
+    def test_get_nonexistent_campaign(self):
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'GET'
+        request.query_string = 'gs-id=12341234123'
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 404, "Campaign should not exist, expected 404, response was " +
+                         str(response.status_code))
