@@ -175,6 +175,34 @@ GiftStarterApp.service('GiftStartService', [
             $location.search('gs-id', self.giftStart.gsid);
         };
 
+        this.updateTitle = function(newTitle) {
+            Analytics.track('campaign', 'title update sent');
+            data = {action: 'update', uid: UserService.uid, token: UserService.token,
+                giftstart: {gsid: self.giftStart.gsid, title: newTitle}
+            };
+            $http({method: 'PUT', url: '/giftstart/api', data: data})
+                .success(function(response) {
+                    Analytics.track('campaign', 'title update succeeded');
+                    self.giftstart.title = response.title;
+                    $rootScope.$broadcast('giftstart-updated');
+                })
+                .error(function(reason) {Analytics.track('campaign', 'title update failed')});
+        };
+
+        this.updateDescription = function(newDescription) {
+            Analytics.track('campaign', 'description update sent');
+            data = {action: 'update', uid: UserService.uid, token: UserService.token,
+                giftstart: {gsid: self.giftStart.gsid, description: newDescription}
+            };
+            $http({method: 'PUT', url: '/giftstart/api', data: data})
+                .success(function(response) {
+                    Analytics.track('campaign', 'description update succeeded');
+                    self.giftstart.description = response.description;
+                    $rootScope.$broadcast('giftstart-updated');
+                })
+                .error(function(reason) {Analytics.track('campaign', 'description update failed')});
+        };
+
         this.saveNote = function(noteText) {self.payment.note = noteText};
 
         this.attachStripeResponse = function(response) {
