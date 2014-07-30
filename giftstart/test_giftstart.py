@@ -8,6 +8,9 @@ import unittest
 import webapp2
 import json
 from google.appengine.ext import testbed
+from gs_user import User
+from social.facebook import FacebookTokenSet
+from datetime import datetime, timedelta
 
 # UUT
 import api
@@ -50,25 +53,38 @@ class GiftstartTestHandler(unittest.TestCase):
         self.testbed.activate()
         self.testbed.init_datastore_v3_stub()
         self.testbed.init_memcache_stub()
+        self.testbed.init_taskqueue_stub()
+
+        # Insert user
+        user = User()
+        user.uid = 'f1234'
+        user.logged_in_with = 'facebook'
+        user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
+        user.put()
+
+    def tearDown(self):
+        self.testbed.deactivate()
 
     def test_create_with_invalid_user(self):
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'PUT'
         request.body = json.dumps({
+            'action': 'create',
             'uid': 'f123',
             'token': 'x123',
             'giftstart': example_giftstart,
         })
         response = request.get_response(api.api)
 
-        self.assertEqual(response.status_code, 400, 'Should reject due to invalid user details')
+        self.assertEqual(response.status_code, 403, 'Should reject due to invalid user details')
 
     def test_create_with_valid_user(self):
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'PUT'
         request.body = json.dumps({
-            'uid': 'f123',
-            'token': 'x123',
+            'action': 'create',
+            'uid': 'f1234',
+            'token': 'x1234',
             'giftstart': example_giftstart,
         })
         response = request.get_response(api.api)

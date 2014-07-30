@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 from GiftStart import GiftStart
 import storage.image_cache
 import comm
+import os
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -41,9 +42,6 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.shipping_zip = giftstart['shipping_zip']
     ndbgs.shipping_phone_number = giftstart['shipping_phone_number']
 
-    parts = [{'bought': part['bought'], 'value': part['value'], 'selected': False, 'part_id': part['part_id']}
-             for part in giftstart['parts']]
-    ndbgs.overlay_parts = json.dumps(parts)
     return ndbgs
 
 
@@ -53,7 +51,8 @@ def create(giftstart):
     gs_count = GiftStart.query().count()
     gs.gsid = str(gs_count + 1) if gs_count else '1'
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
-    gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
+    if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
+        gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()
 
     comm.send_create_notification(gs)

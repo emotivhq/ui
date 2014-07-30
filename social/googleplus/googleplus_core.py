@@ -5,7 +5,6 @@ import config
 import json
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
-import requests
 
 
 class GooglePlusTokenSet(ndb.Model):

@@ -1,4 +1,6 @@
 
+mode:                 'test'
+
 app_url:              'https://www.dev.giftstarter.co'
 email_url:            'http://email.dev.giftstarter.co'
 storage_url:          '/giftstarter-pictures/dev/'
