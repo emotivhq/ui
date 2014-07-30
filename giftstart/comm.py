@@ -7,9 +7,11 @@ from pay.PitchIn import PitchIn
 import uuid
 import requests
 from datetime import datetime
-import json, yaml
+import json
+import yaml
 
 config = yaml.load(open('config.yaml'))
+team_notification_email = config['team_notification_email']
 
 
 def send_create_notification(giftstart):
@@ -18,7 +20,7 @@ def send_create_notification(giftstart):
     requests.put(config['email_url'] + '/send/' + str(uuid.uuid4()).replace("-", ''),
                  data=json.dumps({
                      'subject': "GiftStarter Campaign Created!", 'sender': "team@giftstarter.co",
-                     'to': ["team@giftstarter.co"], 'template_name': "campaign_create_team",
+                     'to': [team_notification_email], 'template_name': "campaign_create_team",
                      'template_kwargs': email_kwargs
                  }))
 
@@ -92,7 +94,7 @@ def check_if_complete(gsid):
                          data=json.dumps({
                              'subject': "GiftStarter Campaign Complete!",
                              'template_name': "campaign_complete_team_funded", 'template_kwargs': email_kwargs,
-                             'sender': "team@giftstarter.co", 'to': ['team@giftstarter.co']
+                             'sender': "team@giftstarter.co", 'to': [team_notification_email]
                          }))
 
         elif giftstart.deadline < datetime.now():
@@ -118,7 +120,7 @@ def check_if_complete(gsid):
                                  'subject': "GiftStarter Campaign Complete!",
                                  'template_name': "campaign_complete_team_not_funded",
                                  'template_kwargs': email_kwargs, 'sender': "team@giftstarter.co",
-                                 'to': ['team@giftstarter.co']
+                                 'to': [team_notification_email]
                              }))
 
             else:
@@ -133,7 +135,7 @@ def check_if_complete(gsid):
                 requests.put(config['email_url'] + '/send/' + str(uuid.uuid4()).replace("-", ''),
                              data=json.dumps({
                                  'subject': "GiftStarter Campaign Has Ended", 'sender': "team@giftstarter.co",
-                                 'to': ['team@giftstarter.co'],
+                                 'to': [team_notification_email],
                                  'body': "Campaign #" + str(gsid) +
                                          " failed to get any pitch ins, and has ended.  Bummer!"
                              }))
