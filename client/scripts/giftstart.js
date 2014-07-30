@@ -183,7 +183,7 @@ GiftStarterApp.service('GiftStartService', [
             $http({method: 'PUT', url: '/giftstart/api', data: data})
                 .success(function(response) {
                     Analytics.track('campaign', 'title update succeeded');
-                    self.giftstart.title = response.title;
+                    self.giftStart.title = response.giftstart.title;
                     $rootScope.$broadcast('giftstart-updated');
                 })
                 .error(function(reason) {Analytics.track('campaign', 'title update failed')});
@@ -197,7 +197,7 @@ GiftStarterApp.service('GiftStartService', [
             $http({method: 'PUT', url: '/giftstart/api', data: data})
                 .success(function(response) {
                     Analytics.track('campaign', 'description update succeeded');
-                    self.giftstart.description = response.description;
+                    self.giftStart.description = response.giftstart.description;
                     $rootScope.$broadcast('giftstart-updated');
                 })
                 .error(function(reason) {Analytics.track('campaign', 'description update failed')});
@@ -331,15 +331,21 @@ GiftStarterApp.service('GiftStartService', [
 
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$timeout','FacebookService','TwitterService','GooglePlusService',
-            'Analytics',
+            'Analytics','UserService',
     function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService,
-             Analytics) {
+             Analytics,  UserService) {
 
         Analytics.track('campaign', 'controller created');
 
         $scope.giftStart = GiftStartService.giftStart;
         $scope.pitchIns = GiftStartService.pitchIns;
         $scope.secondsLeft = 0;
+
+        $scope.newTitle = $scope.giftStart.title;
+        $scope.newDescription = $scope.giftStart.description;
+        $scope.editingTitle = false;
+        $scope.editingDescription = false;
+        $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
         $scope.mailBody= "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
@@ -363,6 +369,15 @@ GiftStarterApp.controller('GiftStartController', [
                 GiftStartService.fetchGiftStart($location.search()['gs-id']);
             }
         }
+
+        $scope.updateTitle = function() {
+            GiftStartService.updateTitle($scope.newTitle);
+            $scope.editingTitle = false;
+        };
+        $scope.updateDescription = function() {
+            GiftStartService.updateDescription($scope.newDescription);
+            $scope.editingDescription = false;
+        };
 
         $scope.updateFundingBar = function() {
             $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price *
@@ -440,16 +455,23 @@ GiftStarterApp.controller('GiftStartController', [
         };
         $scope.twitterShare = function() {
             Analytics.track('campaign', 'twitter share from campaign');
-            TwitterService.share;
+            TwitterService.share();
         };
         $scope.googlePlusShare = function() {
             Analytics.track('campaign', 'googleplus share from campaign');
-            GooglePlusService.share;
+            GooglePlusService.share();
         };
 
         $scope.productLinkClicked = function() {
             Analytics.track('campaign', 'product link clicked');
         };
+
+        $scope.$on('login-success', function() {
+            $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        });
+        $scope.$on('logout-success', function() {
+            $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        });
 
 
 }]);

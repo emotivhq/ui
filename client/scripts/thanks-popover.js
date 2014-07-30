@@ -3,8 +3,10 @@
  */
 
 GiftStarterApp.controller('ThanksPopoverController', [
-            '$scope','PopoverService','GiftStartService','UserService','FacebookService','TwitterService','GooglePlusService',
-    function($scope,  PopoverService,  GiftStartService,  UserService,  FacebookService,  TwitterService,  GooglePlusService) {
+            '$scope','PopoverService','GiftStartService','UserService','FacebookService','TwitterService',
+            'GooglePlusService','Analytics',
+    function($scope,  PopoverService,  GiftStartService,  UserService,  FacebookService,  TwitterService,
+             GooglePlusService, Analytics) {
         $scope.close = function(){PopoverService.hidePopover()};
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";

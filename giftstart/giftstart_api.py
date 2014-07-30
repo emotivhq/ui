@@ -41,13 +41,13 @@ class GiftStartHandler(webapp2.RequestHandler):
                     self.response.write(campaign.jsonify())
                 else:
                     gs = giftstart_core.create(data['giftstart'])
-                    self.response.write(gs.jsonify)
+                    self.response.write(gs.jsonify())
             elif data['action'] == 'update':
                 campaign = get_campaign_by_id(data['giftstart']['gsid'])
                 if campaign is not None:
                     if campaign.gift_champion_uid == data['uid']:
                         gs = giftstart_core.update(data['giftstart'])
-                        self.response.write(gs.jsonify)
+                        self.response.write(gs.jsonify())
                     else:
                         self.response.set_status(403, 'Invalid user credentials')
                 else:
