@@ -190,3 +190,33 @@ class GiftstartTestHandler(unittest.TestCase):
                          "title should be {description1}, was {description2}"
                          .format(description1=new_giftstart['description'],
                                  description2=response_giftstart['description']))
+
+    def test_update_campaign_disallow(self):
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'action': 'create',
+            'uid': 'f1234',
+            'token': 'x1234',
+            'giftstart': example_giftstart,
+        })
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                         str(response.status_code))
+
+        new_giftstart = {'gsid': '1'}
+        new_giftstart['title'] = 'new title whatup'
+        new_giftstart['description'] = 'new description yeyah'
+        new_giftstart['gift_champion_uid'] = 'f1234'
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'action': 'update',
+            'uid': 'f1234',
+            'token': 'x1235',
+            'giftstart': new_giftstart,
+        })
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 403, "Should reject campaign updates, expected 403, response was " +
+                         str(response.status_code))
+
