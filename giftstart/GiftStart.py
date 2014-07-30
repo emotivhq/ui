@@ -25,7 +25,6 @@ class GiftStart(ndb.Model):
 
     overlay_columns = ndb.IntegerProperty(required=True)
     overlay_rows = ndb.IntegerProperty(required=True)
-    overlay_parts = ndb.JsonProperty(required=True)
 
     gc_name = ndb.StringProperty(required=True)
     gc_phone_number = ndb.StringProperty(required=True)

@@ -5,10 +5,10 @@
 
 describe('Usage Flow', function() {
 
-    var $httpBackend, productLinkScope, $rootScope, productController, $location, giftStartScope, GiftStartService,
+    var $httpBackend, productScope, $rootScope, $location, giftStartScope, GiftStartService,
         giftStartController, FacebookService, loginPopoverScope, loginPopoverController, notePopoverScope,
         notePopoverController, ezfbMock, PopoverService, $controller, payPopoverScope, payPopoverController,
-        invitePopoverScope, invitePopoverController, thanksPopoverScope, thanksPopoverController;
+        invitePopoverScope, invitePopoverController, thanksPopoverScope, thanksPopoverController, ProductService;
 
     beforeEach(module('GiftStarterApp'));
     beforeEach(function() {
@@ -59,11 +59,10 @@ describe('Usage Flow', function() {
         GiftStartService = $injector.get('GiftStartService');
         FacebookService = $injector.get('FacebookService');
         PopoverService = $injector.get('PopoverService');
+        ProductService = $injector.get('ProductService');
         $controller = $injector.get('$controller');
 
         // Mock controller scopes
-        productLinkScope = $rootScope.$new();
-        productController = $controller('ProductLinkController', {'$scope': productLinkScope});
         giftStartScope = $rootScope.$new();
         giftStartController = $controller('GiftStartController', {'$scope': giftStartScope});
         loginPopoverScope = $rootScope.$new();
@@ -79,8 +78,7 @@ describe('Usage Flow', function() {
     });
 
     it('should request the product page from the server', function() {
-        productLinkScope.product.product_url = 'link';
-        productLinkScope.product.price = 0.02;
+        ProductService.submitLink('link');
 
         function containsProductDetails(data) {
             var dataObject = JSON.parse(data);
@@ -89,12 +87,12 @@ describe('Usage Flow', function() {
         $httpBackend.expect('POST', '/product', containsProductDetails)
             .respond(200, {'product': {'link': 'url', 'img': 'img', 'title': 'title', 'price': 'price',
                 'description': 'desc'}});
-        productLinkScope.submitLink();
+        productScope.submitLink();
         $httpBackend.flush();
     });
 
     it('should create a giftstart campaign from a submitted product', function() {
-        productLinkScope.product = {
+        productScope.product = {
             link: 'Link',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
@@ -103,12 +101,12 @@ describe('Usage Flow', function() {
             imageWidth: -1,
             imageHeight: -1
         };
-        productLinkScope.giftstart();
+        productScope.giftstart();
         expect($location.path()).toBe('/giftstart');
     });
 
     it('should properly count selected parts of product', function() {
-        productLinkScope.product = {
+        productScope.product = {
             link: 'Link',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
@@ -117,9 +115,9 @@ describe('Usage Flow', function() {
             imageWidth: -1,
             imageHeight: -1
         };
-        productLinkScope.x = 2;
-        productLinkScope.y = 2;
-        productLinkScope.giftstart();
+        productScope.x = 2;
+        productScope.y = 2;
+        productScope.giftstart();
         expect($location.path()).toBe('/giftstart');
 
         expect(GiftStartService.giftStart.totalSelection).toBe(0);
@@ -134,7 +132,7 @@ describe('Usage Flow', function() {
     });
 
     it('should show the login popover when they pitch in', function() {
-        productLinkScope.product = {
+        productScope.product = {
             link: 'Link',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
@@ -143,9 +141,9 @@ describe('Usage Flow', function() {
             imageWidth: -1,
             imageHeight: -1
         };
-        productLinkScope.x = 2;
-        productLinkScope.y = 2;
-        productLinkScope.giftstart();
+        productScope.x = 2;
+        productScope.y = 2;
+        productScope.giftstart();
         GiftStartService.giftStart.parts[0][0].toggle();
         GiftStartService.giftStart.parts[1][1].toggle();
 
@@ -175,7 +173,7 @@ describe('Usage Flow', function() {
     });
 
     it('should let the user add a special note', function() {
-        productLinkScope.product = {
+        productScope.product = {
             link: 'Link',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
@@ -184,9 +182,9 @@ describe('Usage Flow', function() {
             imageWidth: -1,
             imageHeight: -1
         };
-        productLinkScope.x = 2;
-        productLinkScope.y = 2;
-        productLinkScope.giftstart();
+        productScope.x = 2;
+        productScope.y = 2;
+        productScope.giftstart();
         GiftStartService.giftStart.parts[0][0].toggle();
         GiftStartService.giftStart.parts[1][1].toggle();
 
@@ -223,7 +221,7 @@ describe('Usage Flow', function() {
     });
 
     it('should let the user pay with card', function() {
-        productLinkScope.product = {
+        productScope.product = {
             link: 'Link',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
@@ -232,9 +230,9 @@ describe('Usage Flow', function() {
             imageWidth: -1,
             imageHeight: -1
         };
-        productLinkScope.x = 2;
-        productLinkScope.y = 2;
-        productLinkScope.giftstart();
+        productScope.x = 2;
+        productScope.y = 2;
+        productScope.giftstart();
         GiftStartService.giftStart.parts[0][0].toggle();
         GiftStartService.giftStart.parts[1][1].toggle();
         giftStartScope.pitchIn();
@@ -267,7 +265,7 @@ describe('Usage Flow', function() {
     });
 
     it('should let the user invite friends', function() {
-        productLinkScope.product = {
+        productScope.product = {
             link: 'Link',
             img: 'http://i.imgur.com/oIsgW1S.jpg',
             title: 'Title',
@@ -276,9 +274,9 @@ describe('Usage Flow', function() {
             imageWidth: -1,
             imageHeight: -1
         };
-        productLinkScope.x = 2;
-        productLinkScope.y = 2;
-        productLinkScope.giftstart();
+        productScope.x = 2;
+        productScope.y = 2;
+        productScope.giftstart();
         GiftStartService.giftStart.parts[0][0].toggle();
         GiftStartService.giftStart.parts[1][1].toggle();
         giftStartScope.pitchIn();
