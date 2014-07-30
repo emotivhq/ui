@@ -16,7 +16,7 @@ from datetime import datetime, timedelta
 import giftstart_api
 
 example_giftstart = {
-    'gift_champion_uid': '12',
+    'gift_champion_uid': 'f1234',
     'title': 'test title what up',
     'description': 'for every title there must be an equal and possibly related description.',
     'special_notes': 'make it a race car',
@@ -145,3 +145,48 @@ class GiftstartTestHandler(unittest.TestCase):
         response = request.get_response(giftstart_api.api)
         self.assertEqual(response.status_code, 404, "Campaign should not exist, expected 404, response was " +
                          str(response.status_code))
+
+    def test_update_campaign(self):
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'action': 'create',
+            'uid': 'f1234',
+            'token': 'x1234',
+            'giftstart': example_giftstart,
+        })
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                         str(response.status_code))
+
+        new_giftstart = {'gsid': '1'}
+        new_giftstart['title'] = 'new title whatup'
+        new_giftstart['description'] = 'new description yeyah'
+        new_giftstart['gift_champion_uid'] = 'f1234'
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'action': 'update',
+            'uid': 'f1234',
+            'token': 'x1234',
+            'giftstart': new_giftstart,
+        })
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept campaign updates, expected 200, response was " +
+                         str(response.status_code))
+
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'GET'
+        request.query_string = 'gs-id=1'
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Campaign should still exist, expected 200, response was " +
+                         str(response.status_code))
+        response_giftstart = json.loads(response.body)['giftstart']
+        self.assertEqual(new_giftstart['gsid'], response_giftstart['gsid'], "gsid should be {gsid1}, was {gsid2}"
+                         .format(gsid1=new_giftstart['gsid'], gsid2=response_giftstart['gsid']))
+        self.assertEqual(new_giftstart['title'], response_giftstart['title'], "title should be {title1}, was {title2}"
+                         .format(title1=new_giftstart['title'], title2=response_giftstart['title']))
+        self.assertEqual(new_giftstart['description'], response_giftstart['description'],
+                         "title should be {description1}, was {description2}"
+                         .format(description1=new_giftstart['description'],
+                                 description2=response_giftstart['description']))

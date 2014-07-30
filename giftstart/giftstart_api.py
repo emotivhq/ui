@@ -43,11 +43,15 @@ class GiftStartHandler(webapp2.RequestHandler):
                     gs = giftstart_core.create(data['giftstart'])
                     self.response.write(gs.jsonify)
             elif data['action'] == 'update':
-                if GiftStart.get_by_id(data['gsid']).gift_champion_uid == data['uid']:
-                    gs = giftstart_core.update(data['giftstart'])
-                    self.response.write(gs.jsonify)
+                campaign = get_campaign_by_id(data['giftstart']['gsid'])
+                if campaign is not None:
+                    if campaign.gift_champion_uid == data['uid']:
+                        gs = giftstart_core.update(data['giftstart'])
+                        self.response.write(gs.jsonify)
+                    else:
+                        self.response.set_status(403, 'Invalid user credentials')
                 else:
-                    self.response.set_status(403, 'Invalid user credentials')
+                    self.response.set_status(400, 'Invalid campaign')
             else:
                 self.response.set_status(400, 'Put must create or update campaign.')
         else:
@@ -67,6 +71,12 @@ def does_user_exist(uid, token):
     user_exists = token == token_map[uid[0]](users[0])
     return user_exists
 
+def get_campaign_by_id(gsid):
+    campaigns = GiftStart.query(GiftStart.gsid == gsid).fetch()
+    if len(campaigns) > 0:
+        return campaigns[0]
+    else:
+        return None
 
 def find_campaign(campaign):
     # Returns 0 for nonexistent campaign, returns campaign for existing

@@ -68,6 +68,20 @@ def create(giftstart):
     return gs
 
 
+def update(gs):
+    giftstart = GiftStart.query(GiftStart.gsid == gs['gsid']).fetch(1)[0]
+
+    for k, v in gs.items():
+        if k == 'title':
+            giftstart.giftstart_title = gs['title']
+
+        elif k == 'description':
+            giftstart.giftstart_description = gs['description']
+
+    giftstart.put()
+    return giftstart
+
+
 def get_by_id(giftstart_id):
     results = GiftStart.query(GiftStart.gsid == giftstart_id).fetch(1)
     result = results[0] if len(results) > 0 else None
