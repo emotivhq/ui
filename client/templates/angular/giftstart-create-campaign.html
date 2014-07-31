@@ -29,7 +29,7 @@
 
         <div class="price-block">
             <h2>Price</h2>
-            <label for="price">Base price of the gift.</label>
+            <label>Base price of the gift.<input type="checkbox" id="tooltip-checkbox"/><label for="tooltip-checkbox"><span class="tooltip-icon">?<span class="tooltip">Due to retailer price fluctuation, <a href="/faq?why-raise-for-the-full-price" target="_blank">we must raise for the full product price.</a></span></span></label></label>
             <input type="number" id="price" ng-model="inputPrice" ng-change="priceChanged()" required=""/>
         </div>
 
