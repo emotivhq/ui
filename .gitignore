@@ -6,4 +6,4 @@ stripe/
 
 app.iml
 .idea
-.pyc
+*.pyc
