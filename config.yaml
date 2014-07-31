@@ -1,4 +1,6 @@
 
+team_notification_email:  'team@giftstarter.co'
+
 app_url:             'https://www.giftstarter.co'
 email_url:            'http://email.giftstarter.co'
 storage_url:          '/giftstarter-pictures/'
