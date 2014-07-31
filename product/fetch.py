@@ -61,25 +61,36 @@ def verify_partner(url):
 
 def extract_price(tree, partner):
     partner_price_patterns = {
-        'rei': {'normal': '//*[@id="product"]//li[contains(@class, "originalPrice")]/span',
-                          'sale': '//*[@id="product"]//li[contains(@class, "salePrice")]'},
-        'brooksrunning': {'normal': '//*[@id="product-content"]//span[@class="price-sales"]',
-                          'sale': '//*[@id="product-content"]//span[@class="price-sales"]'},
-        'filson': {'normal': '//*[@id="prodprice"]', 'sale': '//*[@id="prodprice"]/span[@class="sale"]'},
-        'amazon': {'normal': '//*[@id="priceblock_ourprice"]', 'sale': '//*[@id="priceblock_ourprice"]'},
-        'nordstrom': {'normal': '//*[@id="price"]/table/tbody/tr/td[1]/span',
-                      'sale': '//*[@id="price"]/table/tbody/tr/td[1]/span[2]'},
-        'costco': {'normal': '//*[@id="price"]/div[3]/span[2]', 'sale': '//*[@id="price"]/div[3]/span[2]'},
+        'rei': ['//*[@id="product"]//li[contains(@class, "originalPrice")]/span',
+                '//*[@id="product"]//li[contains(@class, "price")]',
+                '//*[@id="product"]//li[contains(@class, "salePrice")]'],
+        'brooksrunning': ['//*[@id="product-content"]//span[@class="price-sales"]',
+                          '//*[@id="product-content"]//span[@class="price-sales"]'],
+        'filson': ['//*[@id="prodprice"]', '//*[@id="prodprice"]/span[@class="sale"]'],
+        'amazon': ['//*[@id="priceblock_ourprice"]', '//*[@id="priceblock_ourprice"]'],
+        'nordstrom': ['//*[@id="price"]//span[contains(@class, "after-sale-price")]',
+                      '//*[@id="price"]/table/tbody/tr/td[contains(@class, "item-price")]/span',
+                      '//*[@id="price"]//span[contains(@class, "sale-price")]',
+                      '//*[@id="price"]/table/tbody/tr/td[1]/span'],
+        'costco': ['//*[@id="price"]/div[3]/span[2]', '//*[@id="price"]/div[3]/span[2]'],
     }
 
-    sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
-    normal_prices = get_element_text(tree, partner_price_patterns[partner]['normal'])
-    if normal_prices[0] is not None and '$' in normal_prices[0]:
-        price_string = normal_prices[0].split('$')[1]
-    elif sale_prices[0] is not None and '$' in sale_prices[0]:
-        price_string = sale_prices[0].split('$')[1]
-    else:
-        price_string = '0'
+    price_string = '0'
+    for xpath in partner_price_patterns[partner]:
+        prices = get_element_text(tree, xpath)
+        if prices[0] is not None and '$' in prices[0]:
+            price_string = prices[0].split('$')[1]
+            break
+
+    # sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
+    # normal_prices = get_element_text(tree, partner_price_patterns[partner]['normal'])
+    # if normal_prices[0] is not None and '$' in normal_prices[0]:
+    #     price_string = normal_prices[0].split('$')[1]
+    # elif sale_prices[0] is not None and '$' in sale_prices[0]:
+    #     price_string = sale_prices[0].split('$')[1]
+    # else:
+    #     price_string = '0'
+
     price = str(int(float(price_string.replace(',', ''))*100))
 
     return price
@@ -108,7 +119,7 @@ DEFAULT_IMAGE = {
     'brooksrunning': 2,
     'filson': 3,
     'amazon': -1,
-    'nordstrom': 9,
+    'nordstrom': 7,
     'costco': 6
 }
 
