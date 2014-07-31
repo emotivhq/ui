@@ -47,6 +47,36 @@
     display: inline-block
     width: 43%
     vertical-align: top
+    span.tooltip-icon
+      position: relative
+      font: $p-font
+      font-weight: 700
+      color: #fff
+      span.tooltip
+        color: #000
+        font-weight: 300
+        position: absolute
+        top: 100%
+        left: 100%
+        padding: 0.7em
+        width: 12em
+        border-radius: 0.7em
+        cursor: default
+        background: #f0f0f0
+    input#tooltip-checkbox
+      display: none
+    input#tooltip-checkbox + label
+      display: inline-block
+      margin-left: 0.3em
+      padding-left: 0.4em
+      padding-right: 0.5em
+      cursor: pointer
+      +border-radius(50%)
+      background: $primary-color
+    input#tooltip-checkbox + label span.tooltip
+      display: none
+    input#tooltip-checkbox:checked + label span.tooltip
+      display: inline-block
   div.total-price-block
     margin-left: 7%
   h2

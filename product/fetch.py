@@ -61,7 +61,7 @@ def verify_partner(url):
 
 def extract_price(tree, partner):
     partner_price_patterns = {
-        'rei': {'normal': '//*[@id="product"]//li[@class="price"]',
+        'rei': {'normal': '//*[@id="product"]//li[contains(@class, "originalPrice")]/span',
                           'sale': '//*[@id="product"]//li[contains(@class, "salePrice")]'},
         'brooksrunning': {'normal': '//*[@id="product-content"]//span[@class="price-sales"]',
                           'sale': '//*[@id="product-content"]//span[@class="price-sales"]'},
@@ -74,10 +74,10 @@ def extract_price(tree, partner):
 
     sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
     normal_prices = get_element_text(tree, partner_price_patterns[partner]['normal'])
-    if sale_prices[0] is not None and '$' in sale_prices[0]:
-        price_string = sale_prices[0].split('$')[1]
-    elif normal_prices[0] is not None and '$' in normal_prices[0]:
+    if normal_prices[0] is not None and '$' in normal_prices[0]:
         price_string = normal_prices[0].split('$')[1]
+    elif sale_prices[0] is not None and '$' in sale_prices[0]:
+        price_string = sale_prices[0].split('$')[1]
     else:
         price_string = '0'
     price = str(int(float(price_string.replace(',', ''))*100))
