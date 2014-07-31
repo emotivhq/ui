@@ -35,7 +35,7 @@ example_giftstart = {
     'rows': 3,
     'gc_name': 'Flombar Omaeliad',
     'gc_phone_number': '1231231234',
-    'gc_email': 'flomae@notreal.com',
+    'gc_email': 'test@giftstarter.co',
     'shipping_name': 'Count Fluffshire',
     'shipping_address': '123 candy palace lane',
     'shipping_city': 'seattle',
