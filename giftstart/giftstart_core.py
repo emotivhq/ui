@@ -5,7 +5,8 @@ from google.appengine.api import taskqueue
 from datetime import datetime, timedelta
 from GiftStart import GiftStart
 import storage.image_cache
-import comm
+import giftstart_comm
+import os
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -41,9 +42,6 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.shipping_zip = giftstart['shipping_zip']
     ndbgs.shipping_phone_number = giftstart['shipping_phone_number']
 
-    parts = [{'bought': part['bought'], 'value': part['value'], 'selected': False, 'part_id': part['part_id']}
-             for part in giftstart['parts']]
-    ndbgs.overlay_parts = json.dumps(parts)
     return ndbgs
 
 
@@ -53,10 +51,11 @@ def create(giftstart):
     gs_count = GiftStart.query().count()
     gs.gsid = str(gs_count + 1) if gs_count else '1'
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
-    gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
+    if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
+        gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()
 
-    comm.send_create_notification(gs)
+    giftstart_comm.send_create_notification(gs)
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),
@@ -67,6 +66,20 @@ def create(giftstart):
                   countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
 
     return gs
+
+
+def update(gs):
+    giftstart = GiftStart.query(GiftStart.gsid == gs['gsid']).fetch(1)[0]
+
+    for k, v in gs.items():
+        if k == 'title':
+            giftstart.giftstart_title = gs['title']
+
+        elif k == 'description':
+            giftstart.giftstart_description = gs['description']
+
+    giftstart.put()
+    return giftstart
 
 
 def get_by_id(giftstart_id):

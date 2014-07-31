@@ -1,7 +1,7 @@
 
 import webapp2
 import jinja2
-from giftstart.core import GiftStart
+from giftstart.giftstart_core import GiftStart
 import gs_user
 import yaml
 

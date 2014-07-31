@@ -21,6 +21,7 @@ GiftStarterApp.service('UserService', [
             mixpanel.people.set({'$last_login': new Date()});
             Analytics.track('login', uid);
             self.uid = uid;
+            self.token = token;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
             self.onMailingList = onMailingList;

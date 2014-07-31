@@ -175,6 +175,34 @@ GiftStarterApp.service('GiftStartService', [
             $location.search('gs-id', self.giftStart.gsid);
         };
 
+        this.updateTitle = function(newTitle) {
+            Analytics.track('campaign', 'title update sent');
+            data = {action: 'update', uid: UserService.uid, token: UserService.token,
+                giftstart: {gsid: self.giftStart.gsid, title: newTitle}
+            };
+            $http({method: 'PUT', url: '/giftstart/api', data: data})
+                .success(function(response) {
+                    Analytics.track('campaign', 'title update succeeded');
+                    self.giftStart.title = response.giftstart.title;
+                    $rootScope.$broadcast('giftstart-updated');
+                })
+                .error(function(reason) {Analytics.track('campaign', 'title update failed')});
+        };
+
+        this.updateDescription = function(newDescription) {
+            Analytics.track('campaign', 'description update sent');
+            data = {action: 'update', uid: UserService.uid, token: UserService.token,
+                giftstart: {gsid: self.giftStart.gsid, description: newDescription}
+            };
+            $http({method: 'PUT', url: '/giftstart/api', data: data})
+                .success(function(response) {
+                    Analytics.track('campaign', 'description update succeeded');
+                    self.giftStart.description = response.giftstart.description;
+                    $rootScope.$broadcast('giftstart-updated');
+                })
+                .error(function(reason) {Analytics.track('campaign', 'description update failed')});
+        };
+
         this.saveNote = function(noteText) {self.payment.note = noteText};
 
         this.attachStripeResponse = function(response) {
@@ -303,15 +331,21 @@ GiftStarterApp.service('GiftStartService', [
 
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$timeout','FacebookService','TwitterService','GooglePlusService',
-            'Analytics',
+            'Analytics','UserService',
     function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService,
-             Analytics) {
+             Analytics,  UserService) {
 
         Analytics.track('campaign', 'controller created');
 
         $scope.giftStart = GiftStartService.giftStart;
         $scope.pitchIns = GiftStartService.pitchIns;
         $scope.secondsLeft = 0;
+
+        $scope.newTitle = $scope.giftStart.title;
+        $scope.newDescription = $scope.giftStart.description;
+        $scope.editingTitle = false;
+        $scope.editingDescription = false;
+        $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
         $scope.mailBody= "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
@@ -335,6 +369,15 @@ GiftStarterApp.controller('GiftStartController', [
                 GiftStartService.fetchGiftStart($location.search()['gs-id']);
             }
         }
+
+        $scope.updateTitle = function() {
+            GiftStartService.updateTitle($scope.newTitle);
+            $scope.editingTitle = false;
+        };
+        $scope.updateDescription = function() {
+            GiftStartService.updateDescription($scope.newDescription);
+            $scope.editingDescription = false;
+        };
 
         $scope.updateFundingBar = function() {
             $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price *
@@ -412,16 +455,23 @@ GiftStarterApp.controller('GiftStartController', [
         };
         $scope.twitterShare = function() {
             Analytics.track('campaign', 'twitter share from campaign');
-            TwitterService.share;
+            TwitterService.share();
         };
         $scope.googlePlusShare = function() {
             Analytics.track('campaign', 'googleplus share from campaign');
-            GooglePlusService.share;
+            GooglePlusService.share();
         };
 
         $scope.productLinkClicked = function() {
             Analytics.track('campaign', 'product link clicked');
         };
+
+        $scope.$on('login-success', function() {
+            $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        });
+        $scope.$on('logout-success', function() {
+            $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        });
 
 
 }]);

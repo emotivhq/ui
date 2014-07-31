@@ -15,6 +15,7 @@ module.exports = function(config) {
             'bower_components/angular-route/angular-route.min.js',
             'bower_components/angular-easyfb/angular-easyfb.min.js',
             'bower_components/angular-payments/lib/angular-payments.min.js',
+            'scripts/app.js',
             'scripts/*.js',
             'test/system/*.spec.js',
             'test/unit/*.spec.js'
