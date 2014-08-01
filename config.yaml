@@ -10,3 +10,6 @@ googleanalytics:
 
 mixpanel:
   key:                    '2cfdda518bed5ee0bc7e9ad48c8c8f48'
+
+prosperent:
+  key:                    '0ea6828d486ddb94138d277e9007790b'
