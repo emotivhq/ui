@@ -11,6 +11,7 @@ import requests
 
 config = yaml.load(open('config.yaml'))
 
+
 def add_name_to_pitchin(pitchin):
     user = user_core.get_user(pitchin['uid'])
     if user is not None:
@@ -22,7 +23,7 @@ def add_name_to_pitchin(pitchin):
 
 
 def get_pitch_in_dicts(gsid):
-    pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch(use_cache=False)
     pitch_in_dicts = [pi.ext_dictify() for pi in pitch_ins]
 
     named_pitch_ins = map(add_name_to_pitchin, pitch_in_dicts)
