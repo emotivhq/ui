@@ -10,6 +10,11 @@ GiftStarterApp.controller('HomeController', [
 
         $scope.retailerClicked = function(retailer) {
             Analytics.track('client', 'reatiler clicked ' + retailer);
-        }
+        };
+
+        $scope.productClicked = function(product) {
+            Analytics.track('client', 'product clicked ' + retailer);
+        };
+
     }
 ]);
