@@ -38,6 +38,14 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
     if subscribe_to_mailing_lits:
         user_core.subscribe_to_mailing_list(uid, email=email_address)
 
+    # Verify that none of these parts have been bought yet
+    pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    bought_parts = {part for pitchin in pitchins for part in pitchin.parts}
+    if any([part in bought_parts for part in parts]):
+        # One or more parts have already been bought, don't let the purchase happen!
+        return {'result': 'failure', 'error': 'One or more requested parts have already been bought.'}
+
+
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns
     charge_description_values = {'gsid': gsid, 'parts': str(parts)}

@@ -37,13 +37,22 @@
             <p>As people pitch in, your GiftStarter page will show the progress.  Once Gifting has completed, the product is shipped to the giftee with a special "Contributor Card."</p>
         </div>
     </div>
+    <div class="example-products">
+        <h1>Sweet Gift Ideas</h1>
+        <div class="example-product" ng-click="productClicked('http://www.rei.com/product/798577/bob-ironman-stroller', 'REI Stroller')"><img src="http://www.rei.com/zoom/ff/6b692569-0156-41a6-bafc-ede1d7c2094b.jpg/440"/><p>BOB Ironman Stroller from REI</p></a></div>
+        <div class="example-product" ng-click="productClicked('http://www.filson.com/products/twill-and-tweed-original-briefcase.70066.html?fromCat=true&fvalsProduct=luggage/briefcases-and-laptop-bags&fmetaProduct=1019/', 'Filson Bag')"><img src="http://www.filson.com/images/products/detail/70066-main-341.jpg"/><p>Twill and Tweed Original Briefcase from Filson</p></a></div>
+        <div class="example-product" ng-click="productClicked('http://www.brooksrunning.com/en_us/brooks-transcend-mens-running-shoes/1101571D908.070.html#start=19', 'Brooks Shoes')"><img src="http://demandware.edgesuite.net/sits_pod21/dw/image/v2/aaev_prd/on/demandware.static/Sites-BrooksRunning-Site/Sites-BrooksCatalog/default/v1407261134588/images/ProductImages/110157/110157_908_a_ZM.jpg?sw=400"/><p>Men's Transcend Running Shoes from Brooks Running</p></a></div>
+        <div class="example-product" ng-click="productClicked('http://www.filson.com/products/fly-fishing-guide-vest.16000.html?fromCat=true&fvalsProduct=mens/fly-fishing&fmetaProduct=1013/', 'Filson Vest')"><img src="http://www.filson.com/images/products/detail/16000-main-300.jpg"/><p>Fly Fishing Guide Vest from Filson</p></a></div>
+        <div class="example-product" ng-click="productClicked('http://www.rei.com/product/718559/marmot-thor-3p-tent', 'REI Tent')"><img src="http://www.rei.com/zoom/oo/616fa00d-a8fb-482d-9320-a405d9496802.jpg/440"/><p>Marmot Thor 3P Tent from REI</p></a></div>
+        <div class="example-product" ng-click="productClicked('http://www.rei.com/product/604989/ortlieb-backroller-classic-panniers-pair', 'REI Bike Bags')"><img src="http://www.rei.com/zoom/rr/a2f3393e-b936-4d3c-bd6a-0ffe364d583b.jpg/440"/><p>Ortlieb Backroller Classic Panniers from REI</p></a></div>
+    </div>
     <div class="retailers">
         <h1>Select Retailers</h1>
-        <a href="http://nordstrom.com" target="_blank" ng-click="retailerClicked('nordstrom');"><img id="nordstrom" src="/assets/nordstrom.png"/></a>
-        <a href="http://rei.com" target="_blank" ng-click="retailerClicked('rei');"><img id="rei" src="/assets/rei.png"/></a>
-        <a href="http://filson.com" target="_blank" ng-click="retailerClicked('filson');"><img id="filson" src="/assets/filson.jpg"/></a>
-        <a href="http://brooksrunning.com" target="_blank" ng-click="retailerClicked('brooksrunning');"><img id="brooks" src="/assets/brooks.png"/></a>
-        <a href="http://costco.com" target="_blank" ng-click="retailerClicked('costco');"><img id="costco" src="/assets/costco.png"/></a>
+        <img id="nordstrom" src="/assets/nordstrom.png" ng-click="retailerClick('http://nordstrom.com', 'nordstrom');"/>
+        <img id="rei" src="/assets/rei.png" ng-click="retailerClick('http://rei.com', 'rei');"/>
+        <img id="filson" src="/assets/filson.jpg" ng-click="retailerClick('http://filson.com', 'filson');"/>
+        <img id="brooks" src="/assets/brooks.png" ng-click="retailerClick('http://brooksrunning.com', 'brooksrunning');"/>
+        <img id="costco" src="/assets/costco.png" ng-click="retailerClick('http://costco.com', 'costco');"/>
         <p>Don't see the retailer you're looking for?  Let us know at <a href="mailto:team@giftstarter.co">team@giftstarter.co!</a></p>
     </div>
 </div>
