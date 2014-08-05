@@ -25,6 +25,15 @@
         mixpanel.init('{{mixpanel_key}}');
     </script>
 
+    <script type="text/javascript">
+        var _prosperent = {
+            'campaign_id': '{{prosperent_key}}',
+            'platform': 'other'
+        };
+    </script>
+    <script type="text/javascript" src="https://prosperent.com/js/prosperent.js">
+    </script>
+
     <script>
         {{js_insert|safe}}
     </script>
