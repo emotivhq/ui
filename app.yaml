@@ -14,6 +14,8 @@ handlers:
   script: pay.api.api
 - url: /user.*
   script: gs_user.api.api
+- url: /reports
+  script: reports.handler
 
 # OAuth
 - url: /oauth-callback/twitter
