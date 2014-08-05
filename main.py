@@ -38,7 +38,6 @@ class MainHandler(webapp2.RequestHandler):
             'page_url': self.request.path_url,
             'googleanalytics_key': config['googleanalytics']['key'],
             'mixpanel_key': config['mixpanel']['key'],
-            'prosperent_key': config['prosperent']['key'],
         }))
 
 
@@ -61,7 +60,6 @@ class GiftStartMainHandler(webapp2.RequestHandler):
                 'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg',
                 'googleanalytics_key': config['googleanalytics']['key'],
                 'mixpanel_key': config['mixpanel']['key'],
-                'prosperent_key': config['prosperent']['key'],
             }
             self.response.write(frame_template.render(render_values))
         else:
