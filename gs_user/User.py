@@ -9,6 +9,7 @@ import json
 
 class User(ndb.Model):
     uid = ndb.StringProperty(required=True)
+    timestamp = ndb.DateTimeProperty(auto_now=True)
 
     name = ndb.StringProperty()
 
