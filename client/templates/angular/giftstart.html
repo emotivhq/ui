@@ -21,7 +21,7 @@
     </div>
 
     <div class="overlay block">
-        <input id="campaign-image-input" type="file" ng-show="editMode"/>
+        <div ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file"/></div>
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
