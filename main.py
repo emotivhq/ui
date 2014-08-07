@@ -15,12 +15,13 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
 
 
-def remember_user(cookies):
+def remember_user(cookies, path):
     js_insert = ''
     if 'uid' in cookies:
         # Strip url encoded double quotes
-        args = [val.replace('%22', '') for val in [cookies['uid'], cookies['token']]]
-        user_deets = gs_user.validate(*args)
+        uid = cookies['uid'].replace('%22', '')
+        token = cookies['token'].replace('%22', '')
+        user_deets = gs_user.validate(uid, token, path)
         if user_deets:
             js_insert = "window.loginDeets = ['{uid}', '{img_url}', '{token}'];".format(**user_deets)
     return js_insert
@@ -28,7 +29,7 @@ def remember_user(cookies):
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        js_insert = remember_user(self.request.cookies)
+        js_insert = remember_user(self.request.cookies, self.request.path + '?' + self.request.query_string)
         js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
         js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
@@ -43,7 +44,7 @@ class MainHandler(webapp2.RequestHandler):
 
 class GiftStartMainHandler(webapp2.RequestHandler):
     def get(self):
-        js_insert = remember_user(self.request.cookies)
+        js_insert = remember_user(self.request.cookies, self.request.path + '?' + self.request.query_string)
         js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
         js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
         js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"

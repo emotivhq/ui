@@ -4,6 +4,7 @@ import webapp2
 from social import twitter, googleplus, facebook
 import json
 from user_core import update_or_create, get_user
+from UserLogin import UserLogin
 
 
 class UserHandler(webapp2.RequestHandler):
@@ -34,6 +35,7 @@ class UserHandler(webapp2.RequestHandler):
                 token_set = twitter.submit_verifier(data['oauth_token'], data['verifier'])
                 user = update_or_create('twitter', token_set)
                 if user is not None:
+                    UserLogin.register_login(user.uid, data['location'])
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'on_mailing_list': user.subscribed_to_mailing_list,
@@ -44,6 +46,7 @@ class UserHandler(webapp2.RequestHandler):
                 token_set = googleplus.submit_code(data['auth_response'])
                 user = update_or_create('googleplus', token_set)
                 if user is not None:
+                    UserLogin.register_login(user.uid, data['location'])
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'on_mailing_list': user.subscribed_to_mailing_list,
@@ -57,6 +60,7 @@ class UserHandler(webapp2.RequestHandler):
                 user.facebook_token_set = token_set
                 user.put()
                 if user is not None:
+                    UserLogin.register_login(user.uid, data['location'])
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'on_mailing_list': user.subscribed_to_mailing_list,
