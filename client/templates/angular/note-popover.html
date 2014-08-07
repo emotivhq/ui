@@ -4,7 +4,7 @@
     <div class="note-wrapper">
         <img class="profile-picture" ng-src="{{profilePicture}}">
         <div class="note">
-            <textarea ng-model="noteText"></textarea>
+            <textarea ng-model="noteText" maxlength="500"></textarea>
         </div>
     </div>
     <button class="large white-border" ng-click="submit()">Submit!</button>
