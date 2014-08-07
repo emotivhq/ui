@@ -241,6 +241,25 @@ GiftStarterApp.service('GiftStartService', [
 
         this.paymentFailure = function() {console.log("Pitch-in failed!")};
 
+        this.updateCampaign = function(newTitle, newDescription, newImage) {
+            var data = {action: 'update', gsid: self.giftStart.gsid};
+            if (newTitle || newDescription || newImage) {
+                if (newTitle) {
+                    data.title = newTitle;
+                }
+                if (newDescription) {
+                    data.description = newDescription;
+                }
+                if (newImage) {
+                    data.image = newImage;
+                }
+            }
+
+            $http({method: 'PUT', url: '/giftstart/api', data: data})
+                .success()
+                .error(function() {console.log('Failed to update campaign.')})
+        };
+
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
@@ -370,15 +389,6 @@ GiftStarterApp.controller('GiftStartController', [
             }
         }
 
-        $scope.updateTitle = function() {
-            GiftStartService.updateTitle($scope.newTitle);
-            $scope.editingTitle = false;
-        };
-        $scope.updateDescription = function() {
-            GiftStartService.updateDescription($scope.newDescription);
-            $scope.editingDescription = false;
-        };
-
         $scope.updateFundingBar = function() {
             $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price *
                 100).toString() + '%';
@@ -473,5 +483,33 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
         });
 
+        var imageInput = angular.element(document.getElementById('campaign-image-input'));
+        $scope.uploadImage = function() {
+            var maxImageSize = 2*1024*1024; // 2 MB
+            var acceptableFileTypes = ['image/jpeg', 'image/png'];
+            if (imageInput[0].files[0]) {
+                if (imageInput[0].files[0].size > maxImageSize) {
+                    alert("Oops!  Images must be smaller than 2 MB.");
+                } else if (acceptableFileTypes.indexOf(imageInput[0].files[0].type) == -1) {
+                    alert("Oops!  Only jpeg and png images are allowed!  You chose a " + imageInput[0].files[0].type + ".");
+                } else {
+                    $scope.newImage = imageInput[0].files[0];
+                }
+            }
+        };
+        imageInput.bind('change', $scope.uploadImage);
+
+        $scope.updateCampaign = function() {
+            GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage);
+        };
+
+//        $scope.updateTitle = function() {
+//            GiftStartService.updateTitle($scope.newTitle);
+//            $scope.editingTitle = false;
+//        };
+//        $scope.updateDescription = function() {
+//            GiftStartService.updateDescription($scope.newDescription);
+//            $scope.editingDescription = false;
+//        };
 
 }]);
