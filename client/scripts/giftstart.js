@@ -242,16 +242,16 @@ GiftStarterApp.service('GiftStartService', [
         this.paymentFailure = function() {console.log("Pitch-in failed!")};
 
         this.updateCampaign = function(newTitle, newDescription, newImage) {
-            var data = {action: 'update', gsid: self.giftStart.gsid, uid: UserService.uid, token: UserService.token};
+            var data = {action: 'update', giftstart: {gsid: self.giftStart.gsid}, uid: UserService.uid, token: UserService.token};
             if (newTitle || newDescription || newImage) {
                 if (newTitle) {
-                    data.title = newTitle;
+                    data.giftstart.title = newTitle;
                 }
                 if (newDescription) {
-                    data.description = newDescription;
+                    data.giftstart.description = newDescription;
                 }
                 if (newImage) {
-                    data.image = newImage;
+                    data.giftstart.image = newImage;
                 }
             }
             Analytics.track('campaign', 'campaign update sent');
@@ -497,7 +497,7 @@ GiftStarterApp.controller('GiftStartController', [
         });
 
         var imageInput = angular.element(document.getElementById('campaign-image-input'));
-        $scope.uploadImage = function() {
+        $scope.updateImage = function() {
             var maxImageSize = 2*1024*1024; // 2 MB
             var acceptableFileTypes = ['image/jpeg', 'image/png'];
             if (imageInput[0].files[0]) {
@@ -506,11 +506,15 @@ GiftStarterApp.controller('GiftStartController', [
                 } else if (acceptableFileTypes.indexOf(imageInput[0].files[0].type) == -1) {
                     alert("Oops!  Only jpeg and png images are allowed!  You chose a " + imageInput[0].files[0].type + ".");
                 } else {
-                    $scope.newImage = imageInput[0].files[0];
+                    var reader = new FileReader();
+                    reader.readAsText(imageInput[0].files[0], "UTF-8");
+                    reader.onload = function (evt) {
+                        $scope.newImage = evt.target.result;
+                    }
                 }
             }
         };
-        imageInput.bind('change', $scope.uploadImage);
+        imageInput.bind('change', $scope.updateImage);
 
         $scope.updateCampaign = function() {
             GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage);
