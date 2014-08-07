@@ -5,6 +5,7 @@
         <img class="profile-picture" ng-src="{{profilePicture}}">
         <div class="note">
             <textarea ng-model="noteText" maxlength="500"></textarea>
+            <p class="chars-left" ng-show="noteText.length > 140" ng-class="{warning: (noteText.length > 450)}">{{500 - noteText.length}}</p>
         </div>
     </div>
     <button class="large white-border" ng-click="submit()">Submit!</button>
