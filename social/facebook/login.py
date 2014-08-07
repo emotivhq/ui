@@ -14,4 +14,3 @@ def get_extended_key(auth_token):
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
     return FacebookTokenSet().populate(result_dict['access_token'], result_dict['expires'])
 
-# def logout():

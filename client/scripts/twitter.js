@@ -41,7 +41,8 @@ GiftStarterApp.service('TwitterService', [
 
         this.submitVerifier = function() {
             $http({method: 'POST', url: '/user', data: {action: 'submit-verifier', service: 'twitter',
-                verifier: self.verfier, oauth_token: self.oauth_token}})
+                verifier: self.verfier, oauth_token: self.oauth_token,
+                location: $location.path() + $window.location.search}})
                 .success(function(data) {
                     self.uid = data['uid'];
                     self.usr_img = data['usr_img'];
