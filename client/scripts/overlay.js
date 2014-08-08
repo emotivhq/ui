@@ -18,6 +18,9 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
             var overlayElement = angular.element(element.children()[1]);
             var height  = 1/GiftStartService.giftStart.rows*100 - 2 +'%';
             var width  = 1/GiftStartService.giftStart.columns*100 - 2 +'%';
+            // Calculate max widths for bought part user images
+            var maxheight  = 1/GiftStartService.giftStart.rows*100 - 4 +'%';
+            var maxwidth  = 1/GiftStartService.giftStart.columns*100 - 4 +'%';
             overlayElement.empty();
 
             for (var i = 0; i < GiftStartService.giftStart.parts.length; i++) {
@@ -29,7 +32,8 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
                     '].toggle()" ' +
                     'style="width: '+width+';height: '+height+
                     ';"><table><tr><td><span class="price">${{giftstart.parts['+i+
-                    '].value / 100 | number : 2}}</span><img class="giver" ng-src="{{giftstart.parts['+i+
+                    '].value / 100 | number : 2}}</span><img class="giver" style="max-width:' +
+                    maxwidth + ';max-height:' + maxheight + ';" ng-src="{{giftstart.parts['+i+
                     '].img}}"/></td></tr></table></div>';
                 overlayElement.append($compile(divString)(scope));
             }
