@@ -78,6 +78,11 @@ def update(gs):
         elif k == 'description':
             giftstart.giftstart_description = gs['description']
 
+        elif k == 'image':
+            print(v['data'][:10])
+            giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(v['data'], v['filename'],
+                                                                                      gs['gsid'])
+
     giftstart.put()
     return giftstart
 

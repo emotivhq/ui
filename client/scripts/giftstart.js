@@ -251,6 +251,7 @@ GiftStarterApp.service('GiftStartService', [
                     data.giftstart.description = newDescription;
                 }
                 if (newImage) {
+                    console.log(newImage);
                     data.giftstart.image = newImage;
                 }
             }
@@ -507,10 +508,13 @@ GiftStarterApp.controller('GiftStartController', [
                     alert("Oops!  Only jpeg and png images are allowed!  You chose a " + imageInput[0].files[0].type + ".");
                 } else {
                     var reader = new FileReader();
-                    reader.readAsText(imageInput[0].files[0], "UTF-8");
-                    reader.onload = function (evt) {
-                        $scope.newImage = evt.target.result;
-                    }
+                    reader.onload = function (event) {
+                        window.MIMG = event.target.result;
+                        window.MIMG2 = reader.result;
+                        var img_data = event.target.result;
+                        $scope.newImage = {data: img_data, filename: imageInput[0].files[0].name};
+                    };
+                    reader.readAsText(imageInput[0].files[0], 'ascii');
                 }
             }
         };
@@ -518,6 +522,7 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.updateCampaign = function() {
             GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage);
+            $scope.editMode = false;
         };
 
 //        $scope.updateTitle = function() {
