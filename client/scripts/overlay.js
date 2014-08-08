@@ -13,9 +13,12 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
         // Listen for late loads of giftstart
         scope.$on('giftstart-loaded', drawGrid);
 
+
         function drawGrid() {
             Analytics.track('campaign', 'overlay drawn');
             var overlayElement = angular.element(element.children()[1]);
+            scope.$on('hide-overlay', function() {overlayElement.css('opacity', '0');});
+            scope.$on('show-overlay', function() {overlayElement.css('opacity', '1');});
             var height  = 1/GiftStartService.giftStart.rows*100 - 2 +'%';
             var width  = 1/GiftStartService.giftStart.columns*100 - 2 +'%';
             // Calculate max widths for bought part user images

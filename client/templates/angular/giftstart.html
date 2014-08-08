@@ -6,7 +6,7 @@
             <div class="save"><button class="save" ng-click="updateTitle();" ng-show="editingTitle">Save</button><button class="save" ng-click="editingTitle=false;" ng-show="editingTitle">X</button></div>
             <button class="edit" ng-show="campaignEditable && !editingTitle" ng-click="editingTitle=true;">Edit</button>
         </div>
-        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-click="productLinkClicked();" ng-show="giftStart.product.retailer_logo"><p class="title">{{giftStart.product.title}}</p><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/></p></a>
+        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-click="productLinkClicked();" ng-show="giftStart.product.retailer_logo"><p class="title">{{giftStart.product.title}}</p><div><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/><img class="logo" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-src="{{giftStart.product.img_url}}"/></div></a>
 
         <div class="description">
             <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editingDescription"></textarea></span>

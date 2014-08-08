@@ -203,6 +203,9 @@ GiftStarterApp.service('GiftStartService', [
                 .error(function(reason) {Analytics.track('campaign', 'description update failed')});
         };
 
+        this.showOverlay = function() {$rootScope.$broadcast('show-overlay');};
+        this.hideOverlay = function() {$rootScope.$broadcast('hide-overlay');};
+
         this.saveNote = function(noteText) {self.payment.note = noteText};
 
         this.attachStripeResponse = function(response) {
@@ -473,5 +476,7 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
         });
 
+        $scope.showOverlay = GiftStartService.showOverlay;
+        $scope.hideOverlay = GiftStartService.hideOverlay;
 
 }]);
