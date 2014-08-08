@@ -514,7 +514,7 @@ GiftStarterApp.controller('GiftStartController', [
                         var img_data = event.target.result;
                         $scope.newImage = {data: img_data, filename: imageInput[0].files[0].name};
                     };
-                    reader.readAsText(imageInput[0].files[0], 'ascii');
+                    reader.readAsDataURL(imageInput[0].files[0]);
                 }
             }
         };
@@ -524,14 +524,5 @@ GiftStarterApp.controller('GiftStartController', [
             GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage);
             $scope.editMode = false;
         };
-
-//        $scope.updateTitle = function() {
-//            GiftStartService.updateTitle($scope.newTitle);
-//            $scope.editingTitle = false;
-//        };
-//        $scope.updateDescription = function() {
-//            GiftStartService.updateDescription($scope.newDescription);
-//            $scope.editingDescription = false;
-//        };
 
 }]);
