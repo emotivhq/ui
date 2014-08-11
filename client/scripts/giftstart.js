@@ -205,6 +205,9 @@ GiftStarterApp.service('GiftStartService', [
                 });
         };
 
+        this.showOverlay = function() {$rootScope.$broadcast('show-overlay');};
+        this.hideOverlay = function() {$rootScope.$broadcast('hide-overlay');};
+
         this.paymentSuccess = function() {
             self.syncPitchIns('GiftStartService');
             self.updateSelected();
@@ -474,6 +477,7 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.showOverlay = GiftStartService.showOverlay;
         $scope.hideOverlay = GiftStartService.hideOverlay;
+
         var imageInput = angular.element(document.getElementById('campaign-image-input'));
         $scope.updateImage = function() {
             var maxImageSize = 2*1024*1024; // 2 MB
