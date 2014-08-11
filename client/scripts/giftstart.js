@@ -175,33 +175,33 @@ GiftStarterApp.service('GiftStartService', [
             $location.search('gs-id', self.giftStart.gsid);
         };
 
-        this.updateTitle = function(newTitle) {
-            Analytics.track('campaign', 'title update sent');
-            data = {action: 'update', uid: UserService.uid, token: UserService.token,
-                giftstart: {gsid: self.giftStart.gsid, title: newTitle}
-            };
-            $http({method: 'PUT', url: '/giftstart/api', data: data})
-                .success(function(response) {
-                    Analytics.track('campaign', 'title update succeeded');
-                    self.giftStart.title = response.giftstart.title;
-                    $rootScope.$broadcast('giftstart-updated');
-                })
-                .error(function(reason) {Analytics.track('campaign', 'title update failed')});
-        };
-
-        this.updateDescription = function(newDescription) {
-            Analytics.track('campaign', 'description update sent');
-            data = {action: 'update', uid: UserService.uid, token: UserService.token,
-                giftstart: {gsid: self.giftStart.gsid, description: newDescription}
-            };
-            $http({method: 'PUT', url: '/giftstart/api', data: data})
-                .success(function(response) {
-                    Analytics.track('campaign', 'description update succeeded');
-                    self.giftStart.description = response.giftstart.description;
-                    $rootScope.$broadcast('giftstart-updated');
-                })
-                .error(function(reason) {Analytics.track('campaign', 'description update failed')});
-        };
+//        this.updateTitle = function(newTitle) {
+//            Analytics.track('campaign', 'title update sent');
+//            data = {action: 'update', uid: UserService.uid, token: UserService.token,
+//                giftstart: {gsid: self.giftStart.gsid, title: newTitle}
+//            };
+//            $http({method: 'PUT', url: '/giftstart/api', data: data})
+//                .success(function(response) {
+//                    Analytics.track('campaign', 'title update succeeded');
+//                    self.giftStart.title = response.giftstart.title;
+//                    $rootScope.$broadcast('giftstart-updated');
+//                })
+//                .error(function(reason) {Analytics.track('campaign', 'title update failed')});
+//        };
+//
+//        this.updateDescription = function(newDescription) {
+//            Analytics.track('campaign', 'description update sent');
+//            data = {action: 'update', uid: UserService.uid, token: UserService.token,
+//                giftstart: {gsid: self.giftStart.gsid, description: newDescription}
+//            };
+//            $http({method: 'PUT', url: '/giftstart/api', data: data})
+//                .success(function(response) {
+//                    Analytics.track('campaign', 'description update succeeded');
+//                    self.giftStart.description = response.giftstart.description;
+//                    $rootScope.$broadcast('giftstart-updated');
+//                })
+//                .error(function(reason) {Analytics.track('campaign', 'description update failed')});
+//        };
 
         this.saveNote = function(noteText) {self.payment.note = noteText};
 
@@ -240,6 +240,40 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.paymentFailure = function() {console.log("Pitch-in failed!")};
+
+        this.updateCampaign = function(newTitle, newDescription, newImage) {
+            var data = {action: 'update', giftstart: {gsid: self.giftStart.gsid}, uid: UserService.uid, token: UserService.token};
+            if (newTitle || newDescription || newImage) {
+                if (newTitle) {
+                    data.giftstart.title = newTitle;
+                }
+                if (newDescription) {
+                    data.giftstart.description = newDescription;
+                }
+                if (newImage) {
+                    console.log(newImage);
+                    data.giftstart.image = newImage;
+                }
+            }
+            Analytics.track('campaign', 'campaign update sent');
+
+            $http({method: 'PUT', url: '/giftstart/api', data: data})
+                .success(function(response) {
+                    Analytics.track('campaign', 'campaign update succeeded');
+                    if (response.giftstart.title) {
+                        self.giftStart.title = response.giftstart.title;
+                    }
+                    if (response.giftstart.description) {
+                        self.giftStart.description = response.giftstart.description;
+                    }
+                    if (response.giftstart.product.img_url) {
+                        self.giftStart.product.img_url = response.giftstart.product.img_url + '#' +
+                            new Date().getTime();
+                    }
+                    $rootScope.$broadcast('giftstart-updated');
+                })
+                .error(function() {Analytics.track('campaign', 'campaign update failed')})
+        };
 
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
@@ -370,15 +404,6 @@ GiftStarterApp.controller('GiftStartController', [
             }
         }
 
-        $scope.updateTitle = function() {
-            GiftStartService.updateTitle($scope.newTitle);
-            $scope.editingTitle = false;
-        };
-        $scope.updateDescription = function() {
-            GiftStartService.updateDescription($scope.newDescription);
-            $scope.editingDescription = false;
-        };
-
         $scope.updateFundingBar = function() {
             $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price *
                 100).toString() + '%';
@@ -473,5 +498,32 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
         });
 
+        var imageInput = angular.element(document.getElementById('campaign-image-input'));
+        $scope.updateImage = function() {
+            var maxImageSize = 2*1024*1024; // 2 MB
+            var acceptableFileTypes = ['image/jpeg', 'image/png'];
+            if (imageInput[0].files[0]) {
+                if (imageInput[0].files[0].size > maxImageSize) {
+                    alert("Oops!  Images must be smaller than 2 MB.");
+                } else if (acceptableFileTypes.indexOf(imageInput[0].files[0].type) == -1) {
+                    alert("Oops!  Only jpeg and png images are allowed!  You chose a " + imageInput[0].files[0].type + ".");
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        window.MIMG = event.target.result;
+                        window.MIMG2 = reader.result;
+                        var img_data = event.target.result;
+                        $scope.newImage = {data: img_data, filename: imageInput[0].files[0].name};
+                    };
+                    reader.readAsDataURL(imageInput[0].files[0]);
+                }
+            }
+        };
+        imageInput.bind('change', $scope.updateImage);
+
+        $scope.updateCampaign = function() {
+            GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage);
+            $scope.editMode = false;
+        };
 
 }]);
