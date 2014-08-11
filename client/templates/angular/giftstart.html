@@ -4,7 +4,6 @@
         <div class="title">
             <h1 class="title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
             <div class="save"><button class="save" ng-click="updateCampaign();" ng-show="editMode">Save</button><button class="save" ng-click="editMode=false;" ng-show="editMode">X</button></div>
-            <button class="edit" ng-show="campaignEditable && !editMode" ng-click="editMode=true;">Edit</button>
         </div>
         <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-click="productLinkClicked();" ng-show="giftStart.product.retailer_logo"><p class="title">{{giftStart.product.title}}</p><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/></p></a>
 
