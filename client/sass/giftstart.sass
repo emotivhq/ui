@@ -60,6 +60,9 @@ div.block.overlay
   img.share:active
     +filter-brightness(1.6)
 
+  div.image-upload
+    margin-bottom: 0.5em
+
 div.block.description
   float: right
   button
@@ -78,10 +81,6 @@ div.block.description
     float: right
 
   a.title
-    img
-      width: 25%
-      display: block
-      margin: 0 auto
     p
       margin: 0
       text-align: center
@@ -91,6 +90,12 @@ div.block.description
       overflow: hidden
       text-overflow: ellipsis
       white-space: nowrap
+    div
+      text-align: center
+      img
+        width: 25%
+        display: inline-block
+        margin: 0.5em
 
   div.description
     position: relative
@@ -101,8 +106,6 @@ div.block.description
     position: absolute
     right: 0
     bottom: 0
-  //button.save
-  //  float: right
   input.title
     width: 100%
     padding-top: 0.1em

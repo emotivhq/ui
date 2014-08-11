@@ -71,12 +71,14 @@ def does_user_exist(uid, token):
     user_exists = token == token_map[uid[0]](users[0])
     return user_exists
 
+
 def get_campaign_by_id(gsid):
     campaigns = GiftStart.query(GiftStart.gsid == gsid).fetch()
     if len(campaigns) > 0:
         return campaigns[0]
     else:
         return None
+
 
 def find_campaign(campaign):
     # Returns 0 for nonexistent campaign, returns campaign for existing

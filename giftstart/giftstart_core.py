@@ -7,6 +7,7 @@ from GiftStart import GiftStart
 import storage.image_cache
 import giftstart_comm
 import os
+import base64
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -77,6 +78,13 @@ def update(gs):
 
         elif k == 'description':
             giftstart.giftstart_description = gs['description']
+
+        elif k == 'image':
+            content_type = v['data'].split(';')[0].split(':')[1]
+            base64data = ','.join(v['data'].split(',')[1:])
+            img_data = base64data.decode('base64', 'strict')
+            giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, v['filename'],
+                                                                                      gs['gsid'], content_type)
 
     giftstart.put()
     return giftstart

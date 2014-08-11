@@ -4,14 +4,6 @@
 
 GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService, Analytics, $timeout) {
     function link(scope, element, attrs) {
-//
-//        // If the giftstart is already present, draw grid immediately
-//        if (GiftStartService.giftStart.parts.length > 0) {
-////            $timeout(drawGrid, 800);
-//        }
-//
-//        // Listen for late loads of giftstart
-////        scope.$on('giftstart-loaded', drawGrid);
 
         function drawGrid() {
             var imageHeight = element.children()[0].offsetHeight;
@@ -24,6 +16,8 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
             var margin = (marginHeight > marginWidth) ? marginWidth : marginHeight;
             var height  = imageHeight/GiftStartService.giftStart.rows - 2*margin;
             var width  = imageWidth/GiftStartService.giftStart.columns - 2*margin;
+            scope.$on('hide-overlay', function() {overlayElement.css('opacity', '0');});
+            scope.$on('show-overlay', function() {overlayElement.css('opacity', '1');});
             // Calculate max widths for bought part user images
             var usrHeight  = imageHeight/GiftStartService.giftStart.rows - 4*margin;
             var usrWidth  = imageWidth/GiftStartService.giftStart.columns - 4*margin;
