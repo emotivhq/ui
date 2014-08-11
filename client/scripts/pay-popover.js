@@ -7,7 +7,7 @@ GiftStarterApp.controller('PayPopoverController', [
     function($scope,  GiftStartService,  PopoverService,  UserService,  Analytics) {
 
         $scope.currentCharge = GiftStartService.giftStart.totalSelection;
-        $scope.emailSubscribe = false;
+        $scope.emailSubscribe = true;
         $scope.pitchingIn = false;
         $scope.userOnMailingList = UserService.onMailingList;
 
