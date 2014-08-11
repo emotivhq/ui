@@ -267,7 +267,8 @@ GiftStarterApp.service('GiftStartService', [
                         self.giftStart.description = response.giftstart.description;
                     }
                     if (response.giftstart.product.img_url) {
-                        self.giftStart.product.img_url = response.giftstart.product.img_url;
+                        self.giftStart.product.img_url = response.giftstart.product.img_url + '#' +
+                            new Date().getTime();
                     }
                     $rootScope.$broadcast('giftstart-updated');
                 })
