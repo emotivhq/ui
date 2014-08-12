@@ -25,6 +25,8 @@ class PayHandler(webapp2.RequestHandler):
             payment = data['payment']
             result = core.pitch_in(data['uid'], payment['gsid'], payment['parts'], payment['emailAddress'],
                                    payment['note'], payment['stripeResponse'], payment['subscribe'])
+            if 'error' in result.keys():
+                self.response.set_status(400)
             self.response.write(json.dumps(result))
 
         elif data['action'] == 'get-pitch-ins':

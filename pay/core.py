@@ -43,7 +43,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
     bought_parts = {part for pitchin in pitchins for part in pitchin.parts}
     if any([part in bought_parts for part in parts]):
         # One or more parts have already been bought, don't let the purchase happen!
-        return {'result': 'failure', 'error': 'One or more requested parts have already been bought.'}
+        return {'result': 'error', 'error': 'One or more requested parts have already been bought.'}
 
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
