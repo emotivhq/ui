@@ -21,6 +21,8 @@
             <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
         </span>
 
+        <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
+
         <button type="submit" class="large white-border" ng-class="{disabled: pitchingIn}" ng-click="pitchingIn = stripeForm.$valid;">Pay ${{currentCharge / 100 | number : 2}}</button>
     </form>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>

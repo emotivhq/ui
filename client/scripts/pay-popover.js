@@ -12,6 +12,8 @@ GiftStarterApp.controller('PayPopoverController', [
         $scope.userOnMailingList = UserService.onMailingList;
         $scope.addressZip = '';
 
+        $scope.errorMessage = '';
+
         $scope.hidePopover = PopoverService.hidePopover;
 
         $scope.submitted = false;
@@ -56,7 +58,12 @@ GiftStarterApp.controller('PayPopoverController', [
                 GiftStartService.attachStripeResponse(response);
                 GiftStartService.payment.emailAddress = $scope.email;
                 GiftStartService.payment.subscribe = $scope.emailSubscribe;
-                GiftStartService.sendPayment(function (data) {$scope.pitchingIn = false;});
+                GiftStartService.sendPayment(function (data) {
+                    $scope.pitchingIn = false;
+                    if (data['stripe-error']) {
+                        $scope.errorMessage = data['stripe-error'].error.message;
+                    }
+                });
             }
         };
 
