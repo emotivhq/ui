@@ -52,7 +52,7 @@ GiftStarterApp.directive('gsProductLink',
                 scope.loading = false;
                 ProductService.product.url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
-                $location.path("shipping-contact");
+                $location.path("campaign-create");
             }
             function onFailure(reason) {
                 Analytics.track('product', 'link submission failed');

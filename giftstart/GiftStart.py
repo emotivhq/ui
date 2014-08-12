@@ -27,15 +27,16 @@ class GiftStart(ndb.Model):
     overlay_rows = ndb.IntegerProperty(required=True)
 
     gc_name = ndb.StringProperty()
-    gc_phone_number = ndb.StringProperty(required=True)
+    gc_phone_number = ndb.StringProperty()
     gc_email = ndb.StringProperty(required=True)
 
-    shipping_name = ndb.StringProperty(required=True)
-    shipping_address = ndb.StringProperty(required=True)
-    shipping_city = ndb.StringProperty(required=True)
+    shipping_name = ndb.StringProperty()
+    shipping_address = ndb.StringProperty()
+    shipping_city = ndb.StringProperty()
     shipping_state = ndb.StringProperty(required=True)
     shipping_zip = ndb.StringProperty(required=True)
-    shipping_phone_number = ndb.StringProperty(required=True)
+    shipping_phone_number = ndb.StringProperty()
+    shipping_email = ndb.StringProperty()
 
     def jsonify(self):
         return json.dumps({'giftstart': {
