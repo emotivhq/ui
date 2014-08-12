@@ -1,6 +1,6 @@
 
 <div class="create wrapper shipping" id="giftstart-contact-wrapper" ng-controller="GiftStartCreateCampaignController">
-    <img class="progress" src="/assets/progress_bar_3.png"/>
+    <img class="progress" src="/assets/progress_bar_2_of_3.png"/>
     <div class="block image">
         <h2>Select Image</h2>
         <label>(Image {{imgIndex + 1}} of {{product.imgs.length + 1}})</label>
@@ -118,7 +118,7 @@
             <textarea id="special-notes" ng-model="specialNotes" placeholder="&quot;If a grill were a jacket, I'd want it in sage, size medium!&quot;"></textarea>
         </form>
 
-        <button class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Next</button>
+        <button class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">GiftStart!</button>
 
     </div>
 </div>

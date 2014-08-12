@@ -67,9 +67,21 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
         $scope.fetchingTaxRate = false;
-        $scope.selectedXYSet = 7;
+
+
         $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [1, 7], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
             [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
+
+        function calculateInitialNumParts() {
+            for (var guess = 0; guess < $scope.xySets.length; guess++) {
+                if ($scope.inputPrice/$scope.xySets[guess][0]/$scope.xySets[guess][1] < 25) {
+                    return guess;
+                }
+            }
+            return $scope.xySets.length - 1;
+        }
+
+        $scope.selectedXYSet = calculateInitialNumParts();
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
 
@@ -94,6 +106,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
 
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
+                Analytics.track('campaign', 'shipping updated');
                 $scope.fetchingTaxRate = true;
                 $scope.shippingDetailsSubmitted = true;
 
