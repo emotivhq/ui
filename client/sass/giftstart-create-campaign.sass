@@ -16,6 +16,22 @@
     margin-bottom: 0.5em
   textarea
     display: block
+
+  div.block.details
+    text-align: center
+
+    form
+      div.shipping-details
+        span
+          display: inline-block
+          input
+            width: 100%
+        span.state
+          margin-right: 1em
+        span.zip
+          input
+            width: 5em
+
   img.progress
     max-width: 39em
     @media screen and (max-width: $phone-tablet-boundary)
@@ -95,5 +111,6 @@
     height: 2em
 
   #not-long-enough
+    text-align: left
     p, li
       color: $primary-color

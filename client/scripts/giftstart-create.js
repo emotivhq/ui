@@ -78,6 +78,8 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
 
+        $scope.shippingDetailsSubmitted = false;
+
         $scope.product = ProductService.product;
         $scope.imgIndex = 0;
         $scope.selectedImg = ProductService.product.imgs[$scope.imgIndex];
