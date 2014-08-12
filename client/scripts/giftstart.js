@@ -208,10 +208,12 @@ GiftStarterApp.service('GiftStartService', [
         this.showOverlay = function() {$rootScope.$broadcast('show-overlay');};
         this.hideOverlay = function() {$rootScope.$broadcast('hide-overlay');};
 
-        this.paymentSuccess = function() {
-            self.syncPitchIns('GiftStartService');
-            self.updateSelected();
-            $rootScope.$broadcast('payment-success');
+        this.paymentSuccess = function(data) {
+            if (!data['stripe-error']) {
+                self.syncPitchIns('GiftStartService');
+                self.updateSelected();
+                $rootScope.$broadcast('payment-success');
+            }
         };
 
         this.paymentFailure = function() {console.log("Pitch-in failed!")};

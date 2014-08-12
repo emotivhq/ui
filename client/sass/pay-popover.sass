@@ -100,3 +100,35 @@
       margin: 0.35em 0
       input
         vertical-align: middle
+
+    span.error
+      background: rgba(255, 255, 255, 0.2)
+      margin: 1em
+      padding: 0.5em
+      font: $p-font
+      border-radius: 0.5em
+
+  form.submitted.ng-invalid-card
+    div.number
+      input
+        color: red
+
+  form.submitted.ng-invalid-cvc
+    div.cvc
+      input
+        color: red
+
+  form.submitted.ng-invalid-expiry
+    div.expiry
+      input
+        color: red
+
+  form.submitted
+    div.zip.invalidzip
+      input
+        color: red
+
+  form.submitted.ng-invalid-email
+    div.email
+      input
+        color: red

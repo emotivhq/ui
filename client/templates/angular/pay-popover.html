@@ -1,25 +1,27 @@
 <div class="pay-popover" ng-controller="PayPopoverController">
     <h1 class="white">Pitch In!</h1>
     <div class="powered">Powered by <img src="/assets/powered_by_stripe.png"></div>
-    <form stripe-form="stripeSubmit" name="stripeForm">
+    <form stripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}">
         <div class="number">
-            <img src="/assets/cc_icon_card_number.png"/>
-            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number"/>
+            <img ng-src="{{numberImgUrl}}"/>
+            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()"/>
         </div><div class="cvc">
-            <img src="/assets/cc_icon_cvc.png"/>
-            <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC"/>
+            <img ng-src="{{cvcImgUrl}}"/>
+            <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()"/>
         </div><div class="expiry">
-            <img src="/assets/cc_icon_expiry.png"/>
-            <input type="text" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY"/>
-        </div><div class="zip">
-            <img src="/assets/cc_icon_zip.png">
-            <input type="text" ng-model="addressZip" maxlength="5" placeholder="ZIP"/>
+            <img ng-src="{{expiryImgUrl}}"/>
+            <input type="text" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()"/>
+        </div><div class="zip" ng-class="{invalidzip: (addressZip.length < 5)}">
+            <img ng-src="{{zipImgUrl}}">
+            <input type="text" ng-model="addressZip" maxlength="5" placeholder="ZIP" ng-change="updateFormValidity()"/>
         </div><div class="email">
-            <img src="/assets/cc_icon_email.png"/>
-            <input type="email" ng-model="email" placeholder="Email Address"/>
+            <img src="{{emailImgUrl}}"/>
+            <input type="email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()"/>
         </div><span class="subscribe" ng-hide="userOnMailingList">
             <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
         </span>
+
+        <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 
         <button type="submit" class="large white-border" ng-class="{disabled: pitchingIn}" ng-click="pitchingIn = stripeForm.$valid;">Pay ${{currentCharge / 100 | number : 2}}</button>
     </form>

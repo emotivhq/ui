@@ -49,8 +49,12 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, subscribe_t
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / giftstart.overlay_rows / giftstart.overlay_columns
     charge_description_values = {'gsid': gsid, 'parts': str(parts)}
-    charge = stripe.Charge.create(amount=total_charge, currency='usd', card=stripe_response['id'],
-                                  description="GiftStarter #{gsid} parts {parts}".format(**charge_description_values))
+    try:
+        charge = stripe.Charge.create(amount=total_charge, currency='usd', card=stripe_response['id'],
+                                      description="GiftStarter #{gsid} parts {parts}".format(**charge_description_values))
+    except (stripe.error.CardError, stripe.error.InvalidRequestError, stripe.error.AuthenticationError,
+            stripe.error.APIConnectionError, stripe.error.StripeError) as e:
+        return {'result': 'error', 'stripe-error': e.json_body}
 
     pi = PitchIn(uid=uid, gsid=gsid, note=note, parts=parts, stripe_charge_id=charge['id'], email=email_address,
                  stripe_charge_json=json.dumps(charge), last_four=stripe_response['card']['last4'], img_url=usr_img)
