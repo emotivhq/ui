@@ -63,7 +63,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             'Analytics',
     function($scope,  GiftStartService,  $location,  ProductService,  UserService,  PopoverService,  $http,  $timeout,
              Analytics) {
-        $scope.inputPrice = GiftStartService.giftStart.product.price || ProductService.product.price/100;
+        $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
         $scope.fetchingTaxRate = false;
@@ -73,16 +73,16 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
 
-        $scope.shippingZip = GiftStartService.giftStart.shipping_zip || '';
-        $scope.shippingState = GiftStartService.giftStart.shipping_state || '';
+        $scope.shippingZip = '';
+        $scope.shippingState = '';
         $scope.shippingDetailsSubmitted = false;
 
         $scope.product = ProductService.product;
         $scope.imgIndex = 0;
         $scope.selectedImg = ProductService.product.imgs[$scope.imgIndex];
-        $scope.title = GiftStartService.giftStart.title || '';
-        $scope.description = GiftStartService.giftStart.description || '';
-        $scope.specialNotes = GiftStartService.giftStart.specialNotes || '';
+        $scope.title = '';
+        $scope.description = '';
+        $scope.specialNotes = '';
         $scope.pitchInsInitialized = false;
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
@@ -170,23 +170,26 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         $scope.next = function() {
+            GiftStartService.title = $scope.title;
+            GiftStartService.description = $scope.description;
+            GiftStartService.productUrl = ProductService.product.url;
+            GiftStartService.productTitle = ProductService.title;
+            GiftStartService.retailerLogo = ProductService.logo;
+            GiftStartService.productImgUrl = $scope.selectedImg;
+            GiftStartService.rows = $scope.y;
+            GiftStartService.columns = $scope.x;
+            GiftStartService.productPrice = $scope.inputPrice*100;
+            GiftStartService.shippingZip = $scope.shippingZip;
+            GiftStartService.shippingState = $scope.shippingState;
+            GiftStartService.salesTax = $scope.salesTax;
+            GiftStartService.shipping = $scope.shipping;
+            GiftStartService.serviceFee = $scope.serviceFee;
+            GiftStartService.totalPrice = $scope.totalPrice;
+            GiftStartService.specialNotes = $scope.specialNotes;
+            GiftStartService.gcEmail = $scope.gcEmail;
+
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
                 Analytics.track('campaign', 'campaign submitted');
-
-                GiftStartService.title = $scope.title;
-                GiftStartService.description = $scope.description;
-                GiftStartService.productUrl = ProductService.product.url;
-                GiftStartService.productTitle = ProductService.title;
-                GiftStartService.retailerLogo = ProductService.logo;
-                GiftStartService.productImgUrl = $scope.selectedImg;
-                GiftStartService.rows = $scope.y;
-                GiftStartService.columns = $scope.x;
-                GiftStartService.productPrice = $scope.inputPrice*100;
-                GiftStartService.salesTax = $scope.salesTax;
-                GiftStartService.shipping = $scope.shipping;
-                GiftStartService.serviceFee = $scope.serviceFee;
-                GiftStartService.totalPrice = $scope.totalPrice;
-                GiftStartService.specialNotes = $scope.specialNotes;
 
                 if (UserService.loggedIn) {
                     scrollTo(0, 0);
@@ -209,9 +212,18 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
-        GiftStartService.giftStart.gsid = 0;
-
-        GiftStartService.giftStart = GiftStartService.buildGiftStart();
+        if (!GiftStartService.title) {
+            GiftStartService.giftStart.gsid = 0;
+            GiftStartService.giftStart = GiftStartService.buildGiftStart();
+        } else {
+            $scope.inputPrice = GiftStartService.productPrice/100;
+            $scope.shippingZip = GiftStartService.shippingZip;
+            $scope.shippingState = GiftStartService.shippingState;
+            $scope.title = GiftStartService.title;
+            $scope.description = GiftStartService.description;
+            $scope.specialNotes = GiftStartService.specialNotes;
+            $scope.giftStart = GiftStartService.giftStart;
+        }
 
         $scope.updateGiftStartImage();
         $scope.priceChanged();
