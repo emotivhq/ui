@@ -98,7 +98,7 @@
             <div class="total-price-block">
                 <h2>Total Price</h2>
                 <label>Incl. tax, shipping, and fees.</label>
-                <div class="money" ng-hide="fetchingTaxRate | !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div></div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
+                <div class="money" ng-hide="fetchingTaxRate || !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
             </div>
 
             <h2>Number of Parts</h2>

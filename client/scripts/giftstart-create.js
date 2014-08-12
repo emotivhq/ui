@@ -55,11 +55,6 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
             }
         };
 
-        // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
-        GiftStartService.giftStart.gsid = 0;
-
-        GiftStartService.giftStart = GiftStartService.buildGiftStart();
-
     }
 ]);
 
@@ -68,24 +63,26 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             'Analytics',
     function($scope,  GiftStartService,  $location,  ProductService,  UserService,  PopoverService,  $http,  $timeout,
              Analytics) {
-        $scope.inputPrice = ProductService.product.price/100;
+        $scope.inputPrice = GiftStartService.giftStart.product.price || ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
-        $scope.fetchingTaxRate = true;
+        $scope.fetchingTaxRate = false;
         $scope.selectedXYSet = 7;
         $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [1, 7], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
             [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
 
+        $scope.shippingZip = GiftStartService.giftStart.shipping_zip || '';
+        $scope.shippingState = GiftStartService.giftStart.shipping_state || '';
         $scope.shippingDetailsSubmitted = false;
 
         $scope.product = ProductService.product;
         $scope.imgIndex = 0;
         $scope.selectedImg = ProductService.product.imgs[$scope.imgIndex];
-        $scope.title = '';
-        $scope.description = '';
-        $scope.specialNotes = '';
+        $scope.title = GiftStartService.giftStart.title || '';
+        $scope.description = GiftStartService.giftStart.description || '';
+        $scope.specialNotes = GiftStartService.giftStart.specialNotes || '';
         $scope.pitchInsInitialized = false;
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
@@ -95,17 +92,27 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $location.path("");
         }
 
-        $http({method: 'POST', url: '/product',
-            data: {action: 'get-tax-and-shipping', shipping_address: GiftStartService.shippingAddress,
-                shipping_city: GiftStartService.shippingCity, shipping_state: GiftStartService.shippingState,
-                shipping_zip: GiftStartService.shippingZip}})
-            .success(function(result) {
-                Analytics.track('product', 'tax and shipping fetch success');
-                $scope.salesTaxRate = result.tax;
-                $scope.fetchingTaxRate = false;
-                $scope.priceChanged();
-            })
-            .error(function(reason) {Analytics.track('product', 'tax and shipping fetch failed');});
+        $scope.shippingChanged = function() {
+            if ($scope.shippingZip.length == 5) {
+                $scope.fetchingTaxRate = true;
+                $scope.shippingDetailsSubmitted = true;
+
+                $http({method: 'POST', url: '/product',
+                    data: {action: 'get-tax-and-shipping', shipping_address: 'street',
+                        shipping_city: 'city', shipping_state: $scope.shippingState,
+                        shipping_zip: $scope.shippingZip}})
+                    .success(function(result) {
+                        Analytics.track('product', 'tax and shipping fetch success');
+                        $scope.salesTaxRate = result.tax;
+                        $scope.fetchingTaxRate = false;
+                        $scope.priceChanged();
+                    })
+                    .error(function(reason) {
+                        $scope.fetchingTaxRate = false;
+                        Analytics.track('product', 'tax and shipping fetch failed');
+                    });
+            }
+        };
 
         $scope.nextImage = function() {
             $scope.imgIndex = ($scope.imgIndex + 1) % $scope.product.imgs.length;
@@ -200,6 +207,11 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             }
             $scope.descriptionLongEnough = longEnough;
         };
+
+        // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
+        GiftStartService.giftStart.gsid = 0;
+
+        GiftStartService.giftStart = GiftStartService.buildGiftStart();
 
         $scope.updateGiftStartImage();
         $scope.priceChanged();
