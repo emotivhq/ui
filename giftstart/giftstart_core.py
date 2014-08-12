@@ -7,7 +7,6 @@ from GiftStart import GiftStart
 import storage.image_cache
 import giftstart_comm
 import os
-import base64
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
