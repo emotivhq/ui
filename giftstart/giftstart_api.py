@@ -58,6 +58,17 @@ class GiftStartHandler(webapp2.RequestHandler):
             self.response.set_status(403, 'Invalid user credentials')
 
 
+class HotCampaignsHandler(webapp2.RequestHandler):
+
+    def get(self):
+        try:
+            campaigns = giftstart_core.hot_campaigns(int(self.request.get('num_campaigns')))
+            self.response.write(json.dumps(campaigns))
+        except Exception as e:
+            self.response.set_status(400, 'Invalid request')
+            raise e
+
+
 def does_user_exist(uid, token):
     login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter'}
     if uid[0] not in login_service_map.keys():
@@ -95,3 +106,4 @@ def find_campaign(campaign):
     return None
 
 api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)
+hot_campaigns = webapp2.WSGIApplication([('/giftstart/api/hot-campaigns', HotCampaignsHandler)], debug=True)

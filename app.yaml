@@ -10,6 +10,8 @@ handlers:
   script: product.api.api
 - url: /giftstart/api
   script: giftstart.giftstart_api.api
+- url: /giftstart/api/hot-campaigns
+  script: giftstart.giftstart_api.hot_campaigns
 - url: /pay
   script: pay.api.api
 - url: /user.*
