@@ -106,12 +106,20 @@ def hot_campaigns(num_campaigns):
     recent_campaigns = GiftStart.query(GiftStart.deadline > datetime.now() - timedelta(days=7)).fetch()
     campaigns_dict = {c.gsid: c for c in recent_campaigns}
 
+    pitchins_dict = {}
     pitchins_per_campaign = []
     for campaign in recent_campaigns:
-        pitchins_per_campaign.append([campaign.gsid, PitchIn.query(PitchIn.gsid == campaign.gsid).count()])
+        these_pitchins = PitchIn.query(PitchIn.gsid == campaign.gsid).fetch()
+        pitchins_dict[campaign.gsid] = these_pitchins
+        pitchins_per_campaign.append([campaign.gsid, len(these_pitchins)])
 
-    sorted_campaigns = [campaigns_dict[pair2[0]].dictify() for pair2 in
-                        sorted(pitchins_per_campaign, key=lambda pair: -pair[1])]
 
-    return sorted_campaigns[:num_campaigns]
+    sorted_gsids = map(lambda p: p[0], sorted(pitchins_per_campaign, key=lambda pair: -pair[1]))[:num_campaigns]
+    result_campaigns = [campaigns_dict[gsid].dictify() for gsid in sorted_gsids]
+    result_pitchins = [[p.ext_dictify() for p in pitchins_dict[gsid]] for gsid in sorted_gsids]
+
+    return {
+        'pitchins': result_pitchins,
+        'campaigns': result_campaigns,
+    }
 

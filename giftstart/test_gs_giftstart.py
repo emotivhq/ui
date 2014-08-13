@@ -274,9 +274,12 @@ class GiftstartTestHandler(unittest.TestCase):
         # Pitch in on 2 campaigns
         hottest_gsid = '1'
         contrib_campaigns = ['2', hottest_gsid]
+        num_pitchins = 0
         for gsid in contrib_campaigns:
             self.fake_payment(gsid, 'f1234', [1, 2])
+            num_pitchins += 1
         self.fake_payment(hottest_gsid, 'f1234', [5])
+        num_pitchins += 1
 
         # Request hot campaigns
         request = webapp2.Request.blank('/giftstart/api/hot-campaigns')
@@ -285,15 +288,22 @@ class GiftstartTestHandler(unittest.TestCase):
         response = request.get_response(giftstart_api.hot_campaigns)
         self.assertEqual(200, response.status_code, "Should successfully fetch hot campaigns, expected code 200, "
                                                     "response was " + str(response.status_code))
-        campaigns = json.loads(response.body)
+        json_response = json.loads(response.body)
+        print(json_response)
 
         # Verify that all pitchin'd campaigns are returned
-        campaign_ids = map(lambda c: c.get('giftstart').get('gsid'), campaigns)
+        campaign_ids = map(lambda c: c.get('giftstart').get('gsid'), json_response.get('campaigns'))
         for gsid in contrib_campaigns:
             self.assertIn(gsid, campaign_ids, "Should contain pitchin'd campaigns, expected GSID " + gsid +
                           ", list was " + str(campaign_ids))
 
         # Verify that most pitchin'd campaign is first
-        self.assertEqual(hottest_gsid, campaigns[0]['giftstart']['gsid'], "Most pitchin'd campaign should be first in "
-                                                                          "reply, first was actually " +
-                         campaigns[0]['giftstart']['gsid'])
+        self.assertEqual(hottest_gsid, json_response['campaigns'][0]['giftstart']['gsid'], "Most pitchin'd campaign "
+                                                                                           "should be first in reply, "
+                                                                                           "first was actually " +
+                         json_response['campaigns'][0]['giftstart']['gsid'])
+
+        # Verify that the pitchins were sent with it
+        self.assertEqual(num_pitchins, len(json_response['pitchins']), "It should return the same number of pitchins " +
+                         "made, expected " + str(num_pitchins) + ", received " + str(len(json_response['pitchins'])))
+
