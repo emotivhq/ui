@@ -7,7 +7,6 @@ from GiftStart import GiftStart
 import storage.image_cache
 import giftstart_comm
 import os
-import base64
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -32,16 +31,17 @@ def populate_giftstart(ndbgs, giftstart):
     ndbgs.overlay_columns = giftstart['columns']
     ndbgs.overlay_rows = giftstart['rows']
 
-    ndbgs.gc_name = giftstart['gc_name']
-    ndbgs.gc_phone_number = giftstart['gc_phone_number']
+    ndbgs.gc_name = giftstart.get('gc_name')
+    ndbgs.gc_phone_number = giftstart.get('gc_phone_number')
     ndbgs.gc_email = giftstart['gc_email']
 
-    ndbgs.shipping_name = giftstart['shipping_name']
-    ndbgs.shipping_address = giftstart['shipping_address']
-    ndbgs.shipping_city = giftstart['shipping_city']
+    ndbgs.shipping_name = giftstart.get('shipping_name')
+    ndbgs.shipping_address = giftstart.get('shipping_address')
+    ndbgs.shipping_city = giftstart.get('shipping_city')
     ndbgs.shipping_state = giftstart['shipping_state']
     ndbgs.shipping_zip = giftstart['shipping_zip']
-    ndbgs.shipping_phone_number = giftstart['shipping_phone_number']
+    ndbgs.shipping_phone_number = giftstart.get('shipping_phone_number')
+    ndbgs.shipping_email = giftstart.get('shipping_email')
 
     return ndbgs
 
@@ -52,6 +52,7 @@ def create(giftstart):
     gs_count = GiftStart.query().count()
     gs.gsid = str(gs_count + 1) if gs_count else '1'
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
+    # Check if running in development env
     if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
         gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
     gs.put()

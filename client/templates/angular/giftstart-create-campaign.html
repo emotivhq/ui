@@ -1,6 +1,6 @@
 
 <div class="create wrapper shipping" id="giftstart-contact-wrapper" ng-controller="GiftStartCreateCampaignController">
-    <img class="progress" src="/assets/progress_bar_3.png"/>
+    <img class="progress" src="/assets/progress_bar_2_of_3.png"/>
     <div class="block image">
         <h2>Select Image</h2>
         <label>(Image {{imgIndex + 1}} of {{product.imgs.length + 1}})</label>
@@ -11,47 +11,114 @@
     </div>
     <div class="block details">
         <form name="campaignForm" novalidate>
-        <h2>Campaign Title</h2>
-        <label for="campaign-title">Create a name that represents the theme of the gift.</label>
-        <input type="text" id="campaign-title" placeholder="&quot;Grillin' is Awesome Yo&quot;" ng-model="title" required=""/>
+            <h2>Where's It Going?</h2>
+            <div class="shipping-details">
+                <span class="state">
+                    <label>Recipient State</label>
+                    <select class="state" ng-model="shippingState" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
+                        <option value="AL">AL</option>
+                        <option value="AK">AK</option>
+                        <option value="AZ">AZ</option>
+                        <option value="AR">AR</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DE">DE</option>
+                        <option value="DC">DC</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="IA">IA</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="ME">ME</option>
+                        <option value="MT">MT</option>
+                        <option value="NE">NE</option>
+                        <option value="NV">NV</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NY">NY</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="MD">MD</option>
+                        <option value="MA">MA</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MS">MS</option>
+                        <option value="MO">MO</option>
+                        <option value="PA">PA</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VT">VT</option>
+                        <option value="VA">VA</option>
+                        <option value="WA">WA</option>
+                        <option value="WV">WV</option>
+                        <option value="WI">WI</option>
+                        <option value="WY">WY</option>
+                    </select>
+                </span>
+                <span class="zip">
+                    <label>Recipient Zip</label>
+                    <input type="text" class="zip" placeholder="Zip" minlength="5" maxlength="5" ng-model="shippingZip" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" />
+                </span>
+            </div>
+            <h2>Campaign Title</h2>
+            <label for="campaign-title">Create a name that represents the theme of the gift.</label>
+            <input type="text" id="campaign-title" placeholder="&quot;Grillin' is Awesome Yo&quot;" ng-model="title" required=""/>
 
-        <h2>Campaign Description</h2>
-        <label for="campaign-description">Make it fun!  Why should your friends join in on this GiftStarter?  Excite them!</label>
-        <textarea id="campaign-description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
-        <div id="not-long-enough" ng-hide="descriptionLongEnough">
-            <p>Woah there! Looks like your campaign description is a bit short.  We know, brevity is the soul of wit - but how about we add to the story to get people more involved?  Here are a few questions for inspiration:</p>
-            <ul>
-                <li>Why does the recipient deserve this gift?</li>
-                <li>Is there a story behind the gift or why the recipient might need/want it?</li>
-                <li>What is special/awesome/interesting/unique about this product?</li>
-            </ul>
-        </div>
+            <h2>Campaign Description</h2>
+            <label for="campaign-description">Make it fun!  Why should your friends join in on this GiftStarter?  Excite them!</label>
+            <textarea id="campaign-description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
+            <div id="not-long-enough" ng-hide="descriptionLongEnough">
+                <p>Woah there! Looks like your campaign description is a bit short.  We know, brevity is the soul of wit - but how about we add to the story to get people more involved?  Here are a few questions for inspiration:</p>
+                <ul>
+                    <li>Why does the recipient deserve this gift?</li>
+                    <li>Is there a story behind the gift or why the recipient might need/want it?</li>
+                    <li>What is special/awesome/interesting/unique about this product?</li>
+                </ul>
+            </div>
 
-        <div class="price-block">
-            <h2>Price</h2>
-            <label>Base price of the gift.<input type="checkbox" id="tooltip-checkbox"/><label for="tooltip-checkbox"><span class="tooltip-icon">?<span class="tooltip">Due to retailer price fluctuation, <a href="/faq?why-raise-for-the-full-price" target="_blank">we must raise for the full product price.</a></span></span></label></label>
-            <input type="number" id="price" ng-model="inputPrice" ng-change="priceChanged()" required=""/>
-        </div>
+            <div class="email">
+                <h2>Your Email Address</h2>
+                <input type="email" id="contact-email" placeholder="username@mail.com" ng-model="gcEmail" required="">
+            </div>
 
-        <div class="total-price-block">
-            <h2>Total Price</h2>
-            <label>Incl. tax, shipping, and fees.</label>
-            <div class="money" ng-hide="fetchingTaxRate">${{ totalPrice/100 | number : 2 }}</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
-        </div>
+            <div class="price-block">
+                <h2>Price</h2>
+                <label>Base price of the gift.<input type="checkbox" id="tooltip-checkbox"/><label for="tooltip-checkbox"><span class="tooltip-icon">?<span class="tooltip">Due to retailer price fluctuation, <a href="/faq?why-raise-for-the-full-price" target="_blank">we must raise for the full product price.</a></span></span></label></label>
+                <input type="number" id="price" ng-model="inputPrice" ng-change="priceChanged()" required=""/>
+            </div>
 
-        <h2>Number of Parts</h2>
-        <label>Consider the number of participants and how much each might want to contribute.  Keep in mind participants can always give more than one part if they wish!</label>
-        <div id="num-part-selection">
-            <button class="circle" ng-click="fewerParts()">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" ng-click="moreParts()">&gt;</button>
-            <button class="help float-right" ng-click="help()">Help</button>
-        </div>
+            <div class="total-price-block">
+                <h2>Total Price</h2>
+                <label>Incl. tax, shipping, and fees.</label>
+                <div class="money" ng-hide="fetchingTaxRate || !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
+            </div>
 
-        <h2>Special Notes</h2>
-        <label for="special-notes">Need to specify color, size, or political preference?  Do it here!</label>
-        <textarea id="special-notes" ng-model="specialNotes" placeholder="&quot;If a grill were a jacket, I'd want it in sage, size medium!&quot;"></textarea>
+            <h2>Number of Parts</h2>
+            <label>Consider the number of participants and how much each might want to contribute.  Keep in mind participants can always give more than one part if they wish!</label>
+            <div id="num-part-selection">
+                <button class="circle" ng-click="fewerParts()">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" ng-click="moreParts()">&gt;</button>
+                <button class="help float-right" ng-click="help()">Help</button>
+            </div>
+
+            <h2>Special Notes</h2>
+            <label for="special-notes">Need to specify color, size, or political preference?  Do it here!</label>
+            <textarea id="special-notes" ng-model="specialNotes" placeholder="&quot;If a grill were a jacket, I'd want it in sage, size medium!&quot;"></textarea>
         </form>
 
-        <button class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Next</button>
+        <button class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">GiftStart!</button>
 
     </div>
 </div>
