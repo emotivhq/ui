@@ -1,12 +1,15 @@
 
 team_notification_email:  'team@giftstarter.co'
 
-app_url:             'https://www.giftstarter.co'
-email_url:            'http://email.giftstarter.co'
-storage_url:          '/giftstarter-pictures/'
+app_url:                  'https://www.giftstarter.co'
+email_url:                'http://email.giftstarter.co'
+storage_url:              '/giftstarter-pictures/'
 
 googleanalytics:
-  key:                'UA-51616127-2'
+  key:                    'UA-51616127-2'
 
 mixpanel:
-  key:                'e62cefc2003d70c2c10c3fdb1fc46917'
+  key:                    'e62cefc2003d70c2c10c3fdb1fc46917'
+
+heap:
+  key:                    '1741795975'
