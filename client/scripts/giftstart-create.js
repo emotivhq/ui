@@ -74,7 +74,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
 
         function calculateInitialNumParts() {
             for (var guess = 0; guess < $scope.xySets.length; guess++) {
-                if ($scope.inputPrice/$scope.xySets[guess][0]/$scope.xySets[guess][1] < 25) {
+                if ($scope.inputPrice/$scope.xySets[guess][0]/$scope.xySets[guess][1] < 20.5) {
                     return guess;
                 }
             }
