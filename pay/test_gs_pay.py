@@ -2,7 +2,8 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
-os.chdir('..')
+if __file__.split('/')[-1] == 'test_gs_pay.py':
+    os.chdir('..')
 
 import unittest
 import webapp2

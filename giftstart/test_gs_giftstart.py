@@ -2,7 +2,8 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
-os.chdir('..')
+if __file__.split('/')[-1] == 'test_gs_giftstart.py':
+    os.chdir('..')
 
 import unittest
 import webapp2
@@ -13,7 +14,8 @@ from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
 
 # UUT
-import giftstart_api
+from giftstart import giftstart_api
+
 
 example_giftstart = {
     'gift_champion_uid': 'f1234',
