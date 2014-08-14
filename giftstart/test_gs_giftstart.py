@@ -5,13 +5,20 @@ import os
 if __file__.split('/')[-1] == 'test_gs_giftstart.py':
     os.chdir('..')
 
+
 import unittest
 import webapp2
 import json
+import yaml
 from google.appengine.ext import testbed
 from gs_user import User
 from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
+import stripe
+from pay import api as pay_api
+
+secret = yaml.load(open('secret.yaml'))
+stripe.api_key = secret['stripe_auth']['app_secret']
 
 # UUT
 from giftstart import giftstart_api
@@ -25,13 +32,13 @@ example_giftstart = {
     'product': {
         'product_url': 'http://yo.momma.com',
         'img_url': 'http://yo.momma.com/assets/venus.png',
-        'price': 123,
+        'price': 12300,
         'title': '$1.23 venus!',
         'retailer_logo': 'http://yo.momma.com/logo.png',
         'sales_tax': 11,
         'shipping': 23,
         'service_fee': 9,
-        'total_price': 166,
+        'total_price': 12343,
     },
     'columns': 3,
     'rows': 3,
@@ -56,10 +63,12 @@ class GiftstartTestHandler(unittest.TestCase):
         self.testbed.init_datastore_v3_stub()
         self.testbed.init_memcache_stub()
         self.testbed.init_taskqueue_stub()
+        self.testbed.init_urlfetch_stub()
 
         # Insert user
         user = User()
         user.uid = 'f1234'
+        user.cached_profile_image_url = 'lol not a url'
         user.logged_in_with = 'facebook'
         user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
         user.put()
@@ -221,4 +230,84 @@ class GiftstartTestHandler(unittest.TestCase):
         response = request.get_response(giftstart_api.api)
         self.assertEqual(response.status_code, 403, "Should reject campaign updates, expected 403, response was " +
                          str(response.status_code))
+
+    def fake_payment(self, gsid, uid, parts):
+        # Create test token
+        token = stripe.Token.create(card={
+            'number': '4242424242424242',
+            'exp_month': str(datetime.today().month),
+            'exp_year': str(datetime.today().year + 1),
+            'cvc': '123',
+            'address_zip': '12345',
+            })
+
+        # Submit token to API
+        request = webapp2.Request.blank('/pay')
+        request.method = 'POST'
+        request.body = json.dumps({
+            'action': 'pitch-in', 'uid': uid, 'payment': {
+            'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+            'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
+            }
+        })
+        request.get_response(pay_api.api)
+
+    def test_get_hot_campaigns(self):
+        test_gs = example_giftstart
+
+        # Create 3 campaigns
+        for i in range(3):
+            test_gs['title'] += str(i)
+            request = webapp2.Request.blank('/giftstart/api')
+            request.method = 'PUT'
+            request.body = json.dumps({
+                'action': 'create',
+                'uid': 'f1234',
+                'token': 'x1234',
+                'giftstart': test_gs,
+            })
+
+            response = request.get_response(giftstart_api.api)
+            self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                             str(response.status_code))
+
+        # Pitch in on 2 campaigns
+        hottest_gsid = '1'
+        contrib_campaigns = ['2', hottest_gsid]
+        num_pitchins = 0
+        for gsid in contrib_campaigns:
+            self.fake_payment(gsid, 'f1234', [1, 2])
+            num_pitchins += 1
+        self.fake_payment(hottest_gsid, 'f1234', [5])
+        num_pitchins += 1
+
+        # Request hot campaigns
+        request = webapp2.Request.blank('/giftstart/api/hot-campaigns')
+        request.method = 'GET'
+        request.query_string = 'num_campaigns=5'
+        response = request.get_response(giftstart_api.hot_campaigns)
+        self.assertEqual(200, response.status_code, "Should successfully fetch hot campaigns, expected code 200, "
+                                                    "response was " + str(response.status_code))
+        json_response = json.loads(response.body)
+        print(json_response)
+
+        # Verify that all pitchin'd campaigns are returned
+        campaign_ids = map(lambda c: c.get('giftstart').get('gsid'), json_response.get('campaigns'))
+        for gsid in contrib_campaigns:
+            self.assertIn(gsid, campaign_ids, "Should contain pitchin'd campaigns, expected GSID " + gsid +
+                          ", list was " + str(campaign_ids))
+
+        # Verify that most pitchin'd campaign is first
+        self.assertEqual(hottest_gsid, json_response['campaigns'][0]['giftstart']['gsid'], "Most pitchin'd campaign "
+                                                                                           "should be first in reply, "
+                                                                                           "first was actually " +
+                         json_response['campaigns'][0]['giftstart']['gsid'])
+
+        # Verify that the pitchins were sent with it
+        self.assertEqual(num_pitchins, len(json_response['pitchins']), "It should return the same number of pitchins " +
+                         "made, expected " + str(num_pitchins) + ", received " + str(len(json_response['pitchins'])))
+
+        # Verify that pitchins have names
+        self.assertIn('name', json_response['pitchins'][0][0].keys(), "Pitchins should have a 'name' field, but do "
+                                                                      "not.")
 

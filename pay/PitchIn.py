@@ -6,6 +6,7 @@ from google.appengine.ext import ndb
 class PitchIn(ndb.Model):
     uid = ndb.StringProperty(required=True)
     gsid = ndb.StringProperty(required=True)
+    name = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
     img_url = ndb.StringProperty(required=True)
     note = ndb.StringProperty(required=True)
@@ -18,9 +19,10 @@ class PitchIn(ndb.Model):
     def ext_dictify(self):
         return {
             'uid': self.uid,
+            'name': self.name,
             'img': self.img_url,
             'gsid': self.gsid,
             'note': self.note,
             'parts': self.parts,
             'timestamp': self.timestamp.strftime("%s"),
-            }
+        }
