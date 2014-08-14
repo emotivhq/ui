@@ -1,4 +1,11 @@
 <div class="landing-page" ng-controller="HomeController">
+    <div class="hot-campaigns" ng-show="hotCampaigns">
+        <h1>Top Campaigns</h1>
+        <gs-hot-campaign campaign="hotCampaigns.campaigns[0]" pitchins="hotCampaigns.pitchins[0]" index="pitchinIndex" fade-in="fadedIn"></gs-hot-campaign>
+        <gs-hot-campaign campaign="hotCampaigns.campaigns[1]" pitchins="hotCampaigns.pitchins[1]" index="pitchinIndex" fade-in="fadedIn"></gs-hot-campaign>
+        <!--<gs-hot-campaign campaign="hotCampaigns.campaigns[2]" pitchins="hotCampaigns.pitchins[2]" index="pitchinIndex"></gs-hot-campaign>-->
+        <!--<span class="campaign-preview"><img ng-src="{{hotCampaigns[0]['giftstart']['product']['img_url']}}"/><span>{{hotCampaigns[0]['giftstart']['title']}}</span></span>-->
+    </div>
     <div class="copy">
         <h1>What is it and how does it work?</h1>
         <div>
