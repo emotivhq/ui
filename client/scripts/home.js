@@ -25,17 +25,6 @@ GiftStarterApp.controller('HomeController', [
                 Analytics.track("client", "hot campaigns load succeeded");
                 $scope.hotCampaigns = data;
 
-                // TEST EST EST TEST TEST TEST
-                $scope.hotCampaigns.pitchins[0] = [{
-                    img: 'https://storage.googleapis.com/giftstarter-pictures/dev/u/f27213779.jpg',
-                    note: 'This is going to suite you so well!  You\'ve always been so awesome, this is me giving back.  Your besty loves you!!!!!', name: 'Stuart Owen'
-                },{
-                    img: 'https://storage.googleapis.com/giftstarter-pictures/u/f657795820.jpg',
-                    note: 'This is for your 30th.',
-                    name: 'Janet Phillip'
-                }];
-                // TEST EST EST TEST TEST TEST
-
             }).error(function(data) {
                 Analytics.track("client", "hot campaigns load failed");
             });
