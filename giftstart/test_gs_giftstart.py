@@ -307,3 +307,7 @@ class GiftstartTestHandler(unittest.TestCase):
         self.assertEqual(num_pitchins, len(json_response['pitchins']), "It should return the same number of pitchins " +
                          "made, expected " + str(num_pitchins) + ", received " + str(len(json_response['pitchins'])))
 
+        # Verify that pitchins have names
+        self.assertIn('name', json_response['pitchins'][0][0].keys(), "Pitchins should have a 'name' field, but do "
+                                                                      "not.")
+
