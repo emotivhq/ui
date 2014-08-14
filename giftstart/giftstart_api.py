@@ -31,6 +31,9 @@ class GiftStartHandler(webapp2.RequestHandler):
         elif data['action'] == 'check-if-complete':
             giftstart_comm.check_if_complete(data['gsid'])
 
+        elif data['action'] == 'thank-givers':
+            giftstart_comm.congratulate_givers(data.get('gsid'), data.get('funded'))
+
     def put(self):
         data = json.loads(self.request.body)
         # Check if they have permissions!
