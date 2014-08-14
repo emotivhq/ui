@@ -48,9 +48,12 @@ GiftStarterApp.controller('HomeController', [
     }
 ]);
 
-GiftStarterApp.directive('gsHotCampaign', function() {
+GiftStarterApp.directive('gsHotCampaign', function(Analytics) {
     function link(scope, element, attrs) {
-        scope.goToUrl = function() {window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid);};
+        scope.goToUrl = function() {
+            Analytics.track("client", "hot campaigns clicked");
+            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid, "_blank");
+        };
     }
 
     return {
