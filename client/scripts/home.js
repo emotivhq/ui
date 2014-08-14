@@ -25,6 +25,14 @@ GiftStarterApp.controller('HomeController', [
                 Analytics.track("client", "hot campaigns load succeeded");
                 $scope.hotCampaigns = data;
 
+                // Cache images
+                for(var j = 0; j < $scope.hotCampaigns.pitchins.length; j++) {
+                    for (var i = 0; i < $scope.hotCampaigns.pitchins[j].length; i++) {
+                        var image = new Image();
+                        image.src = $scope.hotCampaigns.pitchins[j][i].img;
+                    }
+                }
+
             }).error(function(data) {
                 Analytics.track("client", "hot campaigns load failed");
             });
@@ -33,7 +41,6 @@ GiftStarterApp.controller('HomeController', [
         $scope.fadedIn = false;
         function fadeInComment() {
             $scope.fadedIn = true;
-            $scope.pitchinIndex += 1;
             $timeout(commentDelay, 200);
         }
         function commentDelay() {
@@ -41,7 +48,11 @@ GiftStarterApp.controller('HomeController', [
         }
         function fadeOutComment() {
             $scope.fadedIn = false;
-            $timeout(fadeInComment, 200);
+            $timeout(loadDelay, 200);
+        }
+        function loadDelay() {
+            $scope.pitchinIndex += 1;
+            $timeout(fadeInComment, 100);
         }
         fadeInComment();
         console.log($scope.fadedIn);
