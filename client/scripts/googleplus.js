@@ -32,8 +32,8 @@ GiftStarterApp.service('GooglePlusService', [
 
         this.submitOneTimeCode = function() {
             self.gplus_code_request = {method: 'POST', url: '/user',
-                data: JSON.stringify({service: 'googleplus', action: 'submit-one-time-code',
-                    auth_response: self.authResponse})};
+                data: {service: 'googleplus', action: 'submit-one-time-code',
+                    auth_response: self.authResponse, location: $location.path() + $window.location.search}};
             $http(self.gplus_code_request)
                 .success(function(data) {
                     self.uid = data['uid'];

@@ -2,17 +2,15 @@
 
     <div class="description block">
         <div class="title">
-            <h1 class="title" ng-hide="editingTitle">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editingTitle"/><span class="title edit"></span>
-            <div class="save"><button class="save" ng-click="updateTitle();" ng-show="editingTitle">Save</button><button class="save" ng-click="editingTitle=false;" ng-show="editingTitle">X</button></div>
-            <button class="edit" ng-show="campaignEditable && !editingTitle" ng-click="editingTitle=true;">Edit</button>
+            <h1 class="title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
         </div>
-        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-click="productLinkClicked();" ng-show="giftStart.product.retailer_logo"><p class="title">{{giftStart.product.title}}</p><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/></p></a>
+        <a ng-href="{{giftStart.product.product_url}}" class="title" target="_blank" ng-click="productLinkClicked();" ng-show="giftStart.product.retailer_logo"><p class="title">{{giftStart.product.title}}</p><div><img class="logo" ng-src="{{giftStart.product.retailer_logo}}"/><img class="logo" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-src="{{giftStart.product.img_url}}"/></div></a>
 
         <div class="description">
-            <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editingDescription"></textarea></span>
-            <div class="save"><button class="save" ng-click="updateDescription();" ng-show="editingDescription">Save</button><button class="save" ng-click="editingDescription=false;" ng-show="editingDescription">X</button></div>
-            <button class="edit" ng-show="campaignEditable && !editingDescription" ng-click="editingDescription=true;">Edit</button>
-            <span ng-hide="editingDescription" style="white-space: pre-line;">{{giftStart.description}}</span>
+            <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
+            <div class="save"><button class="save" ng-click="updateCampaign();" ng-show="editMode">Save</button><button class="save" ng-click="editMode=false;" ng-show="editMode">X</button></div>
+            <button class="edit" ng-show="campaignEditable && !editMode" ng-click="editMode=true;"><img class="edit" src="/assets/edit_icon.png"/></button>
+            <span ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
         </div>
         <div class="signature">
             <p class="name">{{giftStart.gc_name}}</p>
@@ -21,11 +19,12 @@
     </div>
 
     <div class="overlay block">
+        <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file"/></div>
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
             <h2>Share This Campaign With Friends!</h2>
-            <a class="share" href="mailto:?subject={{mailSubject}}&body={{mailBody}}" target="_blank" ng-click="emailShare()"><img class="share" src="/assets/share_email.png" /></a>
+            <a class="share" href="mailto:?subject={{mailSubject}}&body={{mailBody()}}" target="_blank" ng-click="emailShare()"><img class="share" src="/assets/share_email.png" /></a>
             <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();" />
             <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
             <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />
@@ -45,6 +44,6 @@
             <img ng-src="{{pitchIn.img}}"/>
             <div><p>{{pitchIn.note}}</p><p class="name">{{pitchIn.name}}</p></div>
         </div>
-        <p class="no-contributors" ng-hide="pitchIns.length > 0">No contributors yet :'(</p>
+        <p class="no-contributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
 </div>

@@ -14,17 +14,17 @@ GiftStarterApp.controller('ThanksPopoverController', [
             + GiftStartService.giftStart.gsid;
 
         $scope.facebookShare = function() {
-            Analytics.track('client', 'facebook share from thanks');
+            Analytics.track('campaign', 'facebook share from thanks');
             FacebookService.inviteFriends();
         };
 
         $scope.twitterShare = function() {
-            Analytics.track('client', 'twitter share from thanks');
+            Analytics.track('campaign', 'twitter share from thanks');
             TwitterService.share();
         };
 
         $scope.googlePlusShare = function() {
-            Analytics.track('client', 'googleplus share from thanks');
+            Analytics.track('campaign', 'googleplus share from thanks');
             GooglePlusService.share();
         };
 

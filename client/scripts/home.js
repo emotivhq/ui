@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('HomeController', [
-            '$scope','Analytics','$window',
-    function($scope,  Analytics,  $window) {
+            '$scope','Analytics','$window','$http','$timeout',
+    function($scope,  Analytics,  $window,  $http,  $timeout) {
         Analytics.track('client', 'loaded home');
 
         $scope.retailerClick = function(retailerUrl, retailerName) {
@@ -18,5 +18,59 @@ GiftStarterApp.controller('HomeController', [
             Analytics.track('client', 'product clicked ' + productName);
         };
 
+        $scope.hotCampaigns = {};
+
+        $http({method: 'GET', url: '/giftstart/api/hot-campaigns?num_campaigns=3'})
+            .success(function(data) {
+                Analytics.track("client", "hot campaigns load succeeded");
+                $scope.hotCampaigns = data;
+
+                // Cache images
+                for(var j = 0; j < $scope.hotCampaigns.pitchins.length; j++) {
+                    for (var i = 0; i < $scope.hotCampaigns.pitchins[j].length; i++) {
+                        var image = new Image();
+                        image.src = $scope.hotCampaigns.pitchins[j][i].img;
+                    }
+                }
+
+            }).error(function(data) {
+                Analytics.track("client", "hot campaigns load failed");
+            });
+
+        $scope.pitchinIndex = 0;
+        $scope.fadedIn = false;
+        function fadeInComment() {
+            $scope.fadedIn = true;
+            $timeout(commentDelay, 200);
+        }
+        function commentDelay() {
+            $timeout(fadeOutComment, 7000);
+        }
+        function fadeOutComment() {
+            $scope.fadedIn = false;
+            $timeout(loadDelay, 200);
+        }
+        function loadDelay() {
+            $scope.pitchinIndex += 1;
+            $timeout(fadeInComment, 100);
+        }
+        fadeInComment();
+        console.log($scope.fadedIn);
     }
 ]);
+
+GiftStarterApp.directive('gsHotCampaign', function(Analytics) {
+    function link(scope, element, attrs) {
+        scope.goToUrl = function() {
+            Analytics.track("client", "hot campaigns clicked");
+            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid, "_blank");
+        };
+    }
+
+    return {
+        restrict: 'E',
+        scope: {campaign: '=', pitchins: '=', index: '=', fadeIn: '='},
+        link: link,
+        templateUrl: '/templates/angular/hot-campaign.html'
+    };
+});

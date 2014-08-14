@@ -31,6 +31,9 @@ class GiftStartHandler(webapp2.RequestHandler):
         elif data['action'] == 'check-if-complete':
             giftstart_comm.check_if_complete(data['gsid'])
 
+        elif data['action'] == 'thank-givers':
+            giftstart_comm.congratulate_givers(data.get('gsid'), data.get('funded'))
+
     def put(self):
         data = json.loads(self.request.body)
         # Check if they have permissions!
@@ -58,6 +61,17 @@ class GiftStartHandler(webapp2.RequestHandler):
             self.response.set_status(403, 'Invalid user credentials')
 
 
+class HotCampaignsHandler(webapp2.RequestHandler):
+
+    def get(self):
+        try:
+            campaigns = giftstart_core.hot_campaigns(int(self.request.get('num_campaigns')))
+            self.response.write(json.dumps(campaigns))
+        except Exception as e:
+            self.response.set_status(400, 'Invalid request')
+            raise e
+
+
 def does_user_exist(uid, token):
     login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter'}
     if uid[0] not in login_service_map.keys():
@@ -71,12 +85,14 @@ def does_user_exist(uid, token):
     user_exists = token == token_map[uid[0]](users[0])
     return user_exists
 
+
 def get_campaign_by_id(gsid):
     campaigns = GiftStart.query(GiftStart.gsid == gsid).fetch()
     if len(campaigns) > 0:
         return campaigns[0]
     else:
         return None
+
 
 def find_campaign(campaign):
     # Returns 0 for nonexistent campaign, returns campaign for existing
@@ -93,3 +109,4 @@ def find_campaign(campaign):
     return None
 
 api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)
+hot_campaigns = webapp2.WSGIApplication([('/giftstart/api/hot-campaigns', HotCampaignsHandler)], debug=True)

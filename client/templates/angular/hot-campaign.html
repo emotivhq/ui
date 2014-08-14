@@ -1,0 +1,12 @@
+<div class="campaign-preview wrapper">
+    <h1 ng-click="goToUrl()">{{campaign.giftstart.title}}</h1>
+    <p class="product-name" ng-click="goToUrl()">{{campaign.giftstart.product.title}}</p>
+    <img class="product-image" ng-src="{{campaign.giftstart.product.img_url}}" ng-click="goToUrl()"/>
+    <div class="comment-container" ng-class="{fadedIn: fadeIn}">
+        <img class="contrib-img" ng-src="{{pitchins[index % pitchins.length].img}}" />
+        <div class="comment-wrapper">
+            <p class="contrib-message">{{pitchins[index % pitchins.length].note}}</p>
+            <p class="contrib-name">{{pitchins[index % pitchins.length].name}}</p>
+        </div>
+    </div>
+</div>

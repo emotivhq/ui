@@ -55,11 +55,6 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
             }
         };
 
-        // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
-        GiftStartService.giftStart.gsid = 0;
-
-        GiftStartService.giftStart = GiftStartService.buildGiftStart();
-
     }
 ]);
 
@@ -71,12 +66,28 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
-        $scope.fetchingTaxRate = true;
-        $scope.selectedXYSet = 7;
+        $scope.fetchingTaxRate = false;
+
+
         $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [1, 7], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
             [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
+
+        function calculateInitialNumParts() {
+            for (var guess = 0; guess < $scope.xySets.length; guess++) {
+                if ($scope.inputPrice/$scope.xySets[guess][0]/$scope.xySets[guess][1] < 20.5) {
+                    return guess;
+                }
+            }
+            return $scope.xySets.length - 1;
+        }
+
+        $scope.selectedXYSet = calculateInitialNumParts();
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
+
+        $scope.shippingZip = '';
+        $scope.shippingState = '';
+        $scope.shippingDetailsSubmitted = false;
 
         $scope.product = ProductService.product;
         $scope.imgIndex = 0;
@@ -93,17 +104,28 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $location.path("");
         }
 
-        $http({method: 'POST', url: '/product',
-            data: {action: 'get-tax-and-shipping', shipping_address: GiftStartService.shippingAddress,
-                shipping_city: GiftStartService.shippingCity, shipping_state: GiftStartService.shippingState,
-                shipping_zip: GiftStartService.shippingZip}})
-            .success(function(result) {
-                Analytics.track('product', 'tax and shipping fetch success');
-                $scope.salesTaxRate = result.tax;
-                $scope.fetchingTaxRate = false;
-                $scope.priceChanged();
-            })
-            .error(function(reason) {Analytics.track('product', 'tax and shipping fetch failed');});
+        $scope.shippingChanged = function() {
+            if ($scope.shippingZip.length == 5) {
+                Analytics.track('campaign', 'shipping updated');
+                $scope.fetchingTaxRate = true;
+                $scope.shippingDetailsSubmitted = true;
+
+                $http({method: 'POST', url: '/product',
+                    data: {action: 'get-tax-and-shipping', shipping_address: 'street',
+                        shipping_city: 'city', shipping_state: $scope.shippingState,
+                        shipping_zip: $scope.shippingZip}})
+                    .success(function(result) {
+                        Analytics.track('product', 'tax and shipping fetch success');
+                        $scope.salesTaxRate = result.tax;
+                        $scope.fetchingTaxRate = false;
+                        $scope.priceChanged();
+                    })
+                    .error(function(reason) {
+                        $scope.fetchingTaxRate = false;
+                        Analytics.track('product', 'tax and shipping fetch failed');
+                    });
+            }
+        };
 
         $scope.nextImage = function() {
             $scope.imgIndex = ($scope.imgIndex + 1) % $scope.product.imgs.length;
@@ -161,23 +183,26 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         };
 
         $scope.next = function() {
+            GiftStartService.title = $scope.title;
+            GiftStartService.description = $scope.description;
+            GiftStartService.productUrl = ProductService.product.url;
+            GiftStartService.productTitle = ProductService.title;
+            GiftStartService.retailerLogo = ProductService.logo;
+            GiftStartService.productImgUrl = $scope.selectedImg;
+            GiftStartService.rows = $scope.y;
+            GiftStartService.columns = $scope.x;
+            GiftStartService.productPrice = $scope.inputPrice*100;
+            GiftStartService.shippingZip = $scope.shippingZip;
+            GiftStartService.shippingState = $scope.shippingState;
+            GiftStartService.salesTax = $scope.salesTax;
+            GiftStartService.shipping = $scope.shipping;
+            GiftStartService.serviceFee = $scope.serviceFee;
+            GiftStartService.totalPrice = $scope.totalPrice;
+            GiftStartService.specialNotes = $scope.specialNotes;
+            GiftStartService.gcEmail = $scope.gcEmail;
+
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
                 Analytics.track('campaign', 'campaign submitted');
-
-                GiftStartService.title = $scope.title;
-                GiftStartService.description = $scope.description;
-                GiftStartService.productUrl = ProductService.product.url;
-                GiftStartService.productTitle = ProductService.title;
-                GiftStartService.retailerLogo = ProductService.logo;
-                GiftStartService.productImgUrl = $scope.selectedImg;
-                GiftStartService.rows = $scope.y;
-                GiftStartService.columns = $scope.x;
-                GiftStartService.productPrice = $scope.inputPrice*100;
-                GiftStartService.salesTax = $scope.salesTax;
-                GiftStartService.shipping = $scope.shipping;
-                GiftStartService.serviceFee = $scope.serviceFee;
-                GiftStartService.totalPrice = $scope.totalPrice;
-                GiftStartService.specialNotes = $scope.specialNotes;
 
                 if (UserService.loggedIn) {
                     scrollTo(0, 0);
@@ -198,6 +223,20 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             }
             $scope.descriptionLongEnough = longEnough;
         };
+
+        // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
+        if (!GiftStartService.title) {
+            GiftStartService.giftStart.gsid = 0;
+            GiftStartService.giftStart = GiftStartService.buildGiftStart();
+        } else {
+            $scope.inputPrice = GiftStartService.productPrice/100;
+            $scope.shippingZip = GiftStartService.shippingZip;
+            $scope.shippingState = GiftStartService.shippingState;
+            $scope.title = GiftStartService.title;
+            $scope.description = GiftStartService.description;
+            $scope.specialNotes = GiftStartService.specialNotes;
+            $scope.giftStart = GiftStartService.giftStart;
+        }
 
         $scope.updateGiftStartImage();
         $scope.priceChanged();
