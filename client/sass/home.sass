@@ -132,10 +132,11 @@ div.landing-page
   div.hot-campaigns
     h1
       text-align: left
-  $campaign-preview-height: 8em
-  $campaign-comment-margin: 1em
-  gs-hot-campaign:first-of-type
-    margin-right: 2*$campaign-comment-margin
+  $campaign-preview-height: 6em
+  $campaign-comment-margin: 2%
+  @media screen and (min-width: $phone-tablet-boundary)
+    gs-hot-campaign:first-of-type
+      margin-right: 1.5*$campaign-comment-margin
   gs-hot-campaign:hover
     h1
       color: $primary-color
@@ -144,26 +145,31 @@ div.landing-page
     vertical-align: top
     margin-bottom: 2em
     margin-top: 1em
+    width: 100%
+    @media screen and (min-width: $tablet-computer-boundary)
+      width: 48%
     div.campaign-preview.wrapper
+      width: 100%
       text-align: left
       display: inline-block
-      h1
-        font-size: 180%
-        cursor: pointer
-        white-space: nowrap
-        max-width: 2*$campaign-preview-height
-        text-overflow: ellipsis
-        overflow: hidden
-        +transition(all, 0.2s)
+      div.campaign-title
+        h1
+          font-size: 180%
+          cursor: pointer
+          white-space: nowrap
+          text-overflow: ellipsis
+          overflow: hidden
+          +transition(all, 0.2s)
       p.product-name
         margin: 0 0 0.5em 0
         color: #888
         text-decoration: underline
         cursor: pointer
       img.product-image
-        max-height: $campaign-preview-height
-        max-width: $campaign-preview-height
-        margin: 0 $campaign-comment-margin
+        max-width: 30%
+        max-height: 6em
+        @media screen and (min-width: $tablet-computer-boundary)
+          max-height: 8em
         cursor: pointer
       div.comment-container.fadedIn
         img
@@ -174,31 +180,39 @@ div.landing-page
         padding: $campaign-comment-margin
         display: inline-block
         vertical-align: top
-        width: 2.5*$campaign-preview-height - $campaign-comment-margin
+        width: 68%
         height: $campaign-preview-height
         border-radius: 0.5em
         border: solid #999 1px
+        @media screen and (min-width: $tablet-computer-boundary)
+          height: $campaign-preview-height + 2
         img
           +transition(all, 0.2s)
           opacity: 0
-          width: 35%
+          width: 27%
           border-radius: 50%
+          @media screen and (min-width: $tablet-computer-boundary)
+            margin-top: 0.75em
         div.comment-wrapper
           +transition(all, 0.2s)
           opacity: 0
           vertical-align: top
-          margin-top: -$campaign-comment-margin/4
           display: inline-block
           padding-left: $campaign-comment-margin
-          width: 63%
+          width: 70%
+          @media screen and (min-width: $tablet-computer-boundary)
+            margin-top: 0.75em
           p
             margin: 0
           p.contrib-message
             display: -webkit-box
             overflow: hidden
-            -webkit-line-clamp: 4
+            -webkit-line-clamp: 3
             -webkit-box-orient: vertical
             max-height: 6em
           p.contrib-name
+            white-space: nowrap
+            text-overflow: ellipsis
+            overflow: hidden
             text-align: right
             color: #999
