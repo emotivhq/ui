@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('ProductService', [
-            '$http',
-    function($http) {
+            '$http','$rootScope','Analytics','$location',
+    function($http,  $rootScope,  Analytics,  $location) {
 
         this.product = {
             product_url: '',
@@ -14,6 +14,8 @@ GiftStarterApp.service('ProductService', [
             imageWidth: 0,
             imageHeight: 0
         };
+
+        this.products = [];
 
         var self = this;
 
@@ -37,15 +39,42 @@ GiftStarterApp.service('ProductService', [
             });
         };
 
+        this.createCampaignFromProduct = function(index) {
+            Analytics.track('product', 'campaign create from search');
+            self.product.product_url = self.products[index].url;
+            self.product.price = self.products[index].price;
+            self.product.title = self.products[index].title;
+            self.logo = '';
+            self.product.imgs = [self.products[index].imgUrl];
+            $location.path("campaign-create");
+
+        };
+
+        this.searchProducts = function(search) {
+            var query = '?search=' + encodeURIComponent(search);
+            Analytics.track('product', 'search submitted');
+            $http({method: 'GET', url: 'http://product.dev.giftstarter.co' + query})
+                .success(self.fetchSuccess)
+                .error(function() {
+                    Analytics.track('product', 'search error');});
+        };
+
+        this.fetchSuccess = function (result) {
+            Analytics.track('product', 'search success');
+            self.products = result;
+            console.log(result);
+            $rootScope.$broadcast('products-fetched');
+        };
+
 }]);
 
 
-GiftStarterApp.directive('gsProductLink',
+GiftStarterApp.directive('gsProductSearch',
     function(ProductService, $location, Analytics) {
         function link(scope) {
             scope.loading = false;
             scope.failed = false;
-            scope.product_url = "";//"http://www.rei.com/product/868340/camelbak-spire-22-lr-hydration-pack-100-fl-oz-womens";
+            scope.product_url = "";
 
             function onSuccess(product) {
                 Analytics.track('product', 'link submission succeeded');
@@ -58,16 +87,28 @@ GiftStarterApp.directive('gsProductLink',
                 Analytics.track('product', 'link submission failed');
                 scope.loading = false;
                 scope.failed = true;
-                console.log("Product service failed to fetch product:");
-                console.log(reason);
             }
+
+            scope.submit = function() {
+                // Determine if url or search term
+                var isUrl = (scope.product_url.indexOf('http://') == 0) | (scope.product_url.indexOf('https://') == 0);
+
+                if (isUrl) {
+                    scope.submitLink();
+                } else {
+                    scope.submitSearch();
+                }
+            };
+
+            scope.submitSearch = function() {
+                ProductService.searchProducts(scope.product_url);
+            };
 
             scope.submitLink = function() {
                 Analytics.track('product', 'link submitted');
 
                 // Fix urls if they don't start with http://
                 if (scope.product_url.slice(0, 7) !== "http://" && scope.product_url.slice(0, 8) !== "https://") {
-                    console.log(scope.product_url.slice(0, 7));
                     scope.product_url = "http://" + scope.product_url;
                 }
 
@@ -76,11 +117,18 @@ GiftStarterApp.directive('gsProductLink',
                 ProductService.product.product_url = scope.product_url;
                 ProductService.submitLink(scope.product_url, onSuccess, onFailure);
             };
+
+            scope.createCampaignFromProduct = ProductService.createCampaignFromProduct;
+
+            scope.$on('products-fetched', function() {
+                scope.products = ProductService.products;
+            });
         }
 
         return {
             restrict: 'E',
             link: link,
-            templateUrl: '/templates/angular/product-link.html'
+            templateUrl: '/templates/angular/product-search.html'
         }
-});
+    }
+);
