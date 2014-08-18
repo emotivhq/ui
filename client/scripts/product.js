@@ -62,7 +62,6 @@ GiftStarterApp.service('ProductService', [
         this.fetchSuccess = function (result) {
             Analytics.track('product', 'search success');
             self.products = result;
-            console.log(result);
             $rootScope.$broadcast('products-fetched');
         };
 
