@@ -219,7 +219,8 @@ GiftStarterApp.service('GiftStartService', [
         this.paymentFailure = function() {console.log("Pitch-in failed!")};
 
         this.updateCampaign = function(newTitle, newDescription, newImage) {
-            var data = {action: 'update', giftstart: {gsid: self.giftStart.gsid}, uid: UserService.uid, token: UserService.token};
+            var data = {action: 'update', giftstart: {gsid: self.giftStart.gsid}, uid: UserService.uid,
+                token: UserService.token};
             if (newTitle || newDescription || newImage) {
                 if (newTitle) {
                     data.giftstart.title = newTitle;
@@ -407,13 +408,13 @@ GiftStarterApp.controller('GiftStartController', [
 
         if (GiftStartService.giftStart.gsid != undefined) {
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-            $timeout($scope.updateSecondsLeft, 1000);
+            $timeout($scope.updateSecondsLeft, 0);
         } else {
             // Update this giftstart when the service updates it
             $scope.$on('giftstart-loaded', function() {
                 $scope.giftStart = GiftStartService.giftStart;
                 $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-                $timeout($scope.updateSecondsLeft, 1000);
+                $timeout($scope.updateSecondsLeft, 0);
             });
             $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
         }
@@ -424,8 +425,16 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.pitchIn = GiftStartService.pitchIn;
 
+        $scope.campaignComplete = function() {
+            return (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price > 0.9975);
+        };
+
         $scope.updateSecondsLeft = function() {
-            if ($scope.secondsLeft > 0) {
+            if (($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
+                $scope.countdown = "Campaign Complete";
+                GiftStartService.disableParts();
+                $scope.updateTimeLeftBar(-1);
+            } else {
                 $scope.secondsLeft -= 1;
 
                 var days = Math.floor($scope.secondsLeft / 86400).toFixed(0);
@@ -434,10 +443,6 @@ GiftStarterApp.controller('GiftStartController', [
                 $scope.countdown = days + " days, " + hours + " hours";
                 $scope.updateTimeLeftBar(days);
                 $timeout($scope.updateSecondsLeft, 1000);
-            } else {
-                $scope.countdown = "Campaign Complete";
-                GiftStartService.disableParts();
-                $scope.updateTimeLeftBar(-1);
             }
         };
 
