@@ -122,11 +122,40 @@ GiftStarterApp.directive('gsProductSearch',
 
             scope.$on('products-fetched', function() {
                 scope.products = ProductService.products;
+                scope.pageNumbers = [];
+                scope.numPages = Math.floor(scope.products.length / scope.pageSize);
+                for (var i = 1; i <= scope.numPages; i++) {
+                    scope.pageNumbers.push(i);
+                }
+                scope.selectPage(1);
             });
 
             scope.showProductDetail = function(index) {
 
-            }
+            };
+
+            scope.selectedPage = 1;
+            scope.pageSize = 10;
+            scope.numPages = 0;
+            scope.pageNumbers = [];
+
+            scope.incrementPage = function() {
+                if (scope.selectedPage < scope.pageNumbers.length) {
+                    scope.selectPage(scope.selectedPage + 1);
+                }
+            };
+
+            scope.decrementPage = function() {
+                if (scope.selectedPage > 1) {
+                    scope.selectPage(scope.selectedPage - 1);
+                }
+            };
+
+            scope.selectPage = function(page) {
+                scope.selectedPage = page;
+                scope.selectedProducts = scope.products.slice((scope.selectedPage - 1) * scope.pageSize,
+                    scope.selectedPage * scope.pageSize);
+            };
         }
 
         return {

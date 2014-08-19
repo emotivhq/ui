@@ -12,6 +12,12 @@ gs-product-search
       color: #000
       font-size: 1.2em
 
+    select
+      margin-top: 0.125em
+      margin-right: 0.25em
+      height: 3.2em
+      vertical-align: top
+
     .search.wrapper
       margin: 0 auto
       text-align: center
@@ -43,9 +49,19 @@ gs-product-search
   section.products
     text-align: left
     margin-top: 2em
-    iframe
-      width: 100%
-      height: 32em
+    div.page-buttons
+      text-align: center
+      span.page-number
+        display: inline-block
+        margin: 0 0.25em
+        padding: 0.25em
+        font: $h3-font
+        font-weight: 300
+        cursor: pointer
+      span.page-number:hover
+        color: $primary-color
+      span.page-number.selected
+        font-weight: 600
     div.product-container:hover
       div.product
         margin-top: 0em
@@ -66,7 +82,7 @@ gs-product-search
         vertical-align: top
         margin: 0.5em
         padding: 1em
-        border: solid 1px rgba(0, 0, 0, 0)
+        border: solid 1px #eee
         cursor: pointer
         border-radius: 1em
         @media screen and (min-width: $phone-tablet-boundary)

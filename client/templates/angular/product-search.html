@@ -3,7 +3,11 @@
     <div class="search wrapper">
         <span class="inputs">
             <label>To start, search for a product below:</label>
-            <input class="text-input" type="text" name="product-link" placeholder="Search terms or product URL" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><button class="submit" ng-click="submit()">Submit</button>
+            <input class="text-input" type="text" name="product-link" placeholder="Search terms or product URL" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><select ng-model="retailer" ng-init="retailer='all'">
+                <option value="all">All Retailers</option>
+                <option value="amazon">Amazon</option>
+                <option value="rei">REI</option>
+            </select><button class="submit" ng-click="submit()">Submit</button>
         </span>
     </div>
 
@@ -21,7 +25,7 @@
 
 
     <section class="products" ng-class="{hidden: products.length == 0}">
-        <div class="product-container" ng-repeat="product in products" ng-hide="!product.imgUrl" ng-click="showProductDetail({{$index}})">
+        <div class="product-container" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetail({{$index}})">
             <div class="product">
                 <img ng-src="{{product.imgUrl}}"/>
                 <div class="product-details">
@@ -29,6 +33,9 @@
                     <label class="price">${{product.price / 100 | number : 2}}</label>
                 </div>
             </div>
+        </div>
+        <div class="page-buttons" ng-show="products" >
+            <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>
 </div>
