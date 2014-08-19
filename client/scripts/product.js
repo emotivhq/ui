@@ -69,11 +69,12 @@ GiftStarterApp.service('ProductService', [
 
 
 GiftStarterApp.directive('gsProductSearch',
-    function(ProductService, $location, Analytics) {
+    function(ProductService, $location, Analytics, $sce) {
         function link(scope) {
             scope.loading = false;
             scope.failed = false;
             scope.product_url = "";
+            scope.currentProductLink = '';
 
             function onSuccess(product) {
                 Analytics.track('product', 'link submission succeeded');
@@ -122,6 +123,10 @@ GiftStarterApp.directive('gsProductSearch',
             scope.$on('products-fetched', function() {
                 scope.products = ProductService.products;
             });
+
+            scope.showProductDetail = function(index) {
+
+            }
         }
 
         return {

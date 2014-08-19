@@ -18,12 +18,16 @@
         </div>
     </div>
 
+
+
     <section class="products" ng-class="{hidden: products.length == 0}">
-        <div class="product" ng-repeat="product in products" ng-hide="!product.imgUrl">
-            <img ng-src="{{product.imgUrl}}" ng-click="showProductDetail({{$index}})"/>
-            <div class="product-details">
-                <h3 class="title" ng-click="showProductDetail({{$index}})">{{product.title}}</h3>
-                <label class="price">${{product.price / 100 | number : 2}}</label>
+        <div class="product-container" ng-repeat="product in products" ng-hide="!product.imgUrl" ng-click="showProductDetail({{$index}})">
+            <div class="product">
+                <img ng-src="{{product.imgUrl}}"/>
+                <div class="product-details">
+                    <h3 class="title">{{product.title}}</h3>
+                    <label class="price">${{product.price / 100 | number : 2}}</label>
+                </div>
             </div>
         </div>
     </section>

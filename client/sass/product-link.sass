@@ -43,52 +43,66 @@ gs-product-search
   section.products
     text-align: left
     margin-top: 2em
-    div.product:hover
-      border-color: #ddd
-      border-radius: 1em
-      div.product-details
-        h3
-          color: $primary-color
-    div.product
+    iframe
+      width: 100%
+      height: 32em
+    div.product-container:hover
+      div.product
+        margin-top: 0em
+        margin-bottom: 1em
+        -webkit-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.5)
+        -moz-box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.5)
+        box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.5)
+        div.product-details
+          h3
+            color: $primary-color
+    div.product-container
+      height: 15em
       display: inline-block
       vertical-align: top
-      margin: 0.25em
-      padding: 1em
-      border: solid 1px rgba(0, 0, 0, 0)
-      cursor: pointer
-      width: 100%
-      @media screen and (min-width: $phone-tablet-boundary)
-        width: 49%
-      @media screen and (min-width: $tablet-computer-boundary)
-        width: 29.5em
-      +transition(all, 0.2s)
-      img
-        margin-right: 1em
-        border-radius: 0.8em
-        width: 100%
-        @media screen and (min-width: $phone-tablet-boundary)
-          width: 40%
-        @media screen and (min-width: $tablet-computer-boundary)
-          max-width: $product-block-width
-          max-height: 1.5*$product-block-width
-      div.product-details
-        display: inline-block
+      div.product
+        height: 14em
+        position: relative
         vertical-align: top
-        width: 100%
+        margin: 0.5em
+        padding: 1em
+        border: solid 1px rgba(0, 0, 0, 0)
+        cursor: pointer
+        border-radius: 1em
         @media screen and (min-width: $phone-tablet-boundary)
-          width: 55%
-        @media screen and (min-width: $tablet-computer-boundary)
-          width: $product-block-width
-        h3
-          font: $h3-font
-          margin: 0
-          display: -webkit-box
-          overflow: hidden
-          -webkit-line-clamp: 3
-          -webkit-box-orient: vertical
-          max-height: 6em
+          width: 49%
           +transition(all, 0.2s)
-        label.price
-          font-size: 1em
-          cursor: pointer
-          color: #666
+        @media screen and (min-width: $tablet-computer-boundary)
+          width: 29.5em
+        img
+          margin-right: 1em
+          border-radius: 0.8em
+          width: 100%
+          @media screen and (min-width: $phone-tablet-boundary)
+            width: auto
+            max-width: 48%
+            max-height: 100%
+        div.product-details
+          display: inline-block
+          vertical-align: top
+          width: 100%
+          @media screen and (min-width: $phone-tablet-boundary)
+            position: absolute
+            left: 51%
+            top: 5%
+            width: 55%
+          @media screen and (min-width: $tablet-computer-boundary)
+            width: $product-block-width
+          h3
+            font: $h3-font
+            margin: 0
+            display: -webkit-box
+            overflow: hidden
+            -webkit-line-clamp: 3
+            -webkit-box-orient: vertical
+            max-height: 6em
+            +transition(all, 0.2s)
+          label.price
+            font-size: 1em
+            cursor: pointer
+            color: #666
