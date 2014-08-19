@@ -53,11 +53,12 @@ gs-product-search
       text-align: center
       span.page-number
         display: inline-block
-        margin: 0 0.25em
         padding: 0.25em
         font: $h3-font
         font-weight: 300
         cursor: pointer
+        @media screen and (min-width: $phone-tablet-boundary)
+          margin: 0 0.25em
       span.page-number:hover
         color: $primary-color
       span.page-number.selected
@@ -73,11 +74,11 @@ gs-product-search
           h3
             color: $primary-color
     div.product-container
-      height: 15em
       display: inline-block
       vertical-align: top
+      @media screen and (min-width: $phone-tablet-boundary)
+        height: 15em
       div.product
-        height: 14em
         position: relative
         vertical-align: top
         margin: 0.5em
@@ -86,6 +87,7 @@ gs-product-search
         cursor: pointer
         border-radius: 1em
         @media screen and (min-width: $phone-tablet-boundary)
+          height: 14em
           width: 49%
           +transition(all, 0.2s)
         @media screen and (min-width: $tablet-computer-boundary)

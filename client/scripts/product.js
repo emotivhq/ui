@@ -70,7 +70,7 @@ GiftStarterApp.service('ProductService', [
 
 GiftStarterApp.directive('gsProductSearch',
     function(ProductService, $location, Analytics, $sce) {
-        function link(scope) {
+        function link(scope, element) {
             scope.loading = false;
             scope.failed = false;
             scope.product_url = "";
@@ -121,7 +121,9 @@ GiftStarterApp.directive('gsProductSearch',
             scope.createCampaignFromProduct = ProductService.createCampaignFromProduct;
 
             scope.$on('products-fetched', function() {
-                scope.products = ProductService.products;
+                scope.products = ProductService.products.filter(function(product) {
+                    return product.imgUrl != '';
+                });
                 scope.pageNumbers = [];
                 scope.numPages = Math.floor(scope.products.length / scope.pageSize);
                 for (var i = 1; i <= scope.numPages; i++) {
@@ -155,6 +157,7 @@ GiftStarterApp.directive('gsProductSearch',
                 scope.selectedPage = page;
                 scope.selectedProducts = scope.products.slice((scope.selectedPage - 1) * scope.pageSize,
                     scope.selectedPage * scope.pageSize);
+                element[0].scrollIntoView();
             };
         }
 

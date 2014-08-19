@@ -1,5 +1,5 @@
 <!--<div class="product-link wrapper" ng-controller="ProductLinkController">-->
-<div class="product-link">
+<div id="product-search-anchor" class="product-link">
     <div class="search wrapper">
         <span class="inputs">
             <label>To start, search for a product below:</label>
@@ -21,8 +21,6 @@
             We couldn't figure out that query.  Try another?
         </div>
     </div>
-
-
 
     <section class="products" ng-class="{hidden: products.length == 0}">
         <div class="product-container" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetail({{$index}})">
