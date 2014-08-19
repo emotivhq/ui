@@ -50,8 +50,8 @@ GiftStarterApp.service('ProductService', [
 
         };
 
-        this.searchProducts = function(search) {
-            var query = '?search=' + encodeURIComponent(search);
+        this.searchProducts = function(search, retailer) {
+            var query = '?search=' + encodeURIComponent(search) + '&retailer=' + retailer;
             Analytics.track('product', 'search submitted');
             $http({method: 'GET', url: 'http://product.dev.giftstarter.co' + query})
                 .success(self.fetchSuccess)
@@ -101,7 +101,7 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.submitSearch = function() {
-                ProductService.searchProducts(scope.product_url);
+                ProductService.searchProducts(scope.product_url, scope.retailer);
             };
 
             scope.submitLink = function() {
