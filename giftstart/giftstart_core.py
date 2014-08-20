@@ -87,6 +87,8 @@ def update(gs):
             img_data = base64data.decode('base64', 'strict')
             giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, v['filename'],
                                                                                       gs['gsid'], content_type)
+        elif k == 'gc_name':
+            giftstart.gc_name = gs['gc_name']
 
     giftstart.put()
     return giftstart

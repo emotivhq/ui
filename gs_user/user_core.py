@@ -111,6 +111,7 @@ def validate(uid, token, path):
     if user:
         if token_pointer_map[uid[0]](user[0]) == token:
             UserLogin.register_login(uid, path)
-            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url, 'token': token}
+            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url, 'token': token,
+                      'on_mailing_list': user[0].subscribed_to_mailing_list, 'name': user[0].name}
 
     return result

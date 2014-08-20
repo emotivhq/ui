@@ -39,7 +39,8 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'on_mailing_list': user.subscribed_to_mailing_list,
-                                                    'token': user.twitter_token_set.access_token}))
+                                                    'token': user.twitter_token_set.access_token,
+                                                    'name': user.name}))
 
         elif data['action'] == 'submit-one-time-code':
             if data['service'] == 'googleplus':
@@ -50,7 +51,8 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'on_mailing_list': user.subscribed_to_mailing_list,
-                                                    'token': user.googleplus_token_set.access_token}))
+                                                    'token': user.googleplus_token_set.access_token,
+                                                    'name': user.name}))
 
         elif data['action'] == 'get-long-term-token':
             if data['service'] == 'facebook':
@@ -64,7 +66,8 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(json.dumps({'status': 'logged-in', 'uid': user.uid,
                                                     'usr_img': user.cached_profile_image_url,
                                                     'on_mailing_list': user.subscribed_to_mailing_list,
-                                                    'token': user.facebook_token_set.access_token}))
+                                                    'token': user.facebook_token_set.access_token,
+                                                    'name': user.name}))
 
         elif data['action'] == 'team-email-authorize':
             token_set = googleplus.submit_code(data['auth_response'])

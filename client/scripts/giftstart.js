@@ -218,7 +218,7 @@ GiftStarterApp.service('GiftStartService', [
 
         this.paymentFailure = function() {console.log("Pitch-in failed!")};
 
-        this.updateCampaign = function(newTitle, newDescription, newImage) {
+        this.updateCampaign = function(newTitle, newDescription, newImage, newGcName) {
             var data = {action: 'update', giftstart: {gsid: self.giftStart.gsid}, uid: UserService.uid,
                 token: UserService.token};
             if (newTitle || newDescription || newImage) {
@@ -229,14 +229,17 @@ GiftStarterApp.service('GiftStartService', [
                     data.giftstart.description = newDescription;
                 }
                 if (newImage) {
-                    console.log(newImage);
                     data.giftstart.image = newImage;
+                }
+                if (newGcName) {
+                    data.giftstart.gc_name = newGcName;
                 }
             }
             Analytics.track('campaign', 'campaign update sent');
 
             $http({method: 'PUT', url: '/giftstart/api', data: data})
                 .success(function(response) {
+                    console.log(response);
                     Analytics.track('campaign', 'campaign update succeeded');
                     if (response.giftstart.title) {
                         self.giftStart.title = response.giftstart.title;
@@ -247,6 +250,9 @@ GiftStarterApp.service('GiftStartService', [
                     if (response.giftstart.product.img_url) {
                         self.giftStart.product.img_url = response.giftstart.product.img_url + '#' +
                             new Date().getTime();
+                    }
+                    if (response.giftstart.gc_name) {
+                        self.giftStart.gc_name = response.giftstart.gc_name;
                     }
                     $rootScope.$broadcast('giftstart-updated');
                 })
@@ -358,6 +364,12 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.editingTitle = false;
         $scope.editingDescription = false;
         $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+
+        if ($scope.giftStart.gc_name) {
+            $scope.newGcName = $scope.giftStart.gc_name;
+        } else {
+            $scope.newGcName = UserService.name;
+        }
 
         $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
         $scope.mailBody= function() {
@@ -509,7 +521,7 @@ GiftStarterApp.controller('GiftStartController', [
         imageInput.bind('change', $scope.updateImage);
 
         $scope.updateCampaign = function() {
-            GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage);
+            GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage, $scope.newGcName);
             $scope.editMode = false;
         };
 

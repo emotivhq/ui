@@ -200,6 +200,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             GiftStartService.totalPrice = $scope.totalPrice;
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
+            GiftStartService.gcName = UserService.name;
 
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
                 Analytics.track('campaign', 'campaign submitted');

@@ -8,6 +8,7 @@ GiftStarterApp.service('TwitterService', [
 
         this.uid = -1;
         this.usr_img = '';
+        this.name = '';
         this.token = '';
 
         this.verifier = '';
@@ -45,6 +46,7 @@ GiftStarterApp.service('TwitterService', [
                 location: $location.path() + $window.location.search}})
                 .success(function(data) {
                     self.uid = data['uid'];
+                    self.name = data['name'];
                     self.usr_img = data['usr_img'];
                     self.token = data['token'];
                     self.subscribed = data['on_mailing_list'];
