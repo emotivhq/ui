@@ -8,6 +8,7 @@ GiftStarterApp.service('GooglePlusService', [
 
         this.uid = -1;
         this.usr_img = '';
+        this.name = '';
         this.token = '';
 
         this.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
@@ -37,6 +38,7 @@ GiftStarterApp.service('GooglePlusService', [
             $http(self.gplus_code_request)
                 .success(function(data) {
                     self.uid = data['uid'];
+                    self.name = data['name'];
                     self.usr_img = data['usr_img'];
                     self.token = data['token'];
                     self.subscribed = data['on_mailing_list'];
