@@ -75,6 +75,7 @@ GiftStarterApp.directive('gsProductSearch',
             scope.failed = false;
             scope.product_url = "";
             scope.currentProductLink = '';
+            scope.selectedProduct = -1;
 
             function onSuccess(product) {
                 Analytics.track('product', 'link submission succeeded');
@@ -159,6 +160,19 @@ GiftStarterApp.directive('gsProductSearch',
                     scope.selectedPage * scope.pageSize);
                 element[0].scrollIntoView();
             };
+
+            scope.showProductDetails = function(index) {
+                scope.selectedProduct = index;
+            };
+
+            scope.hideProductDetails = function() {
+                scope.selectedProduct = -1;
+                console.log(scope.selectedProduct);
+            };
+
+            scope.giftStartSelectedProduct = function() {
+                console.log(scope.selectedProducts[scope.selectedProduct]);
+            }
         }
 
         return {
