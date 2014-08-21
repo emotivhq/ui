@@ -4,12 +4,12 @@
 
 
 var GiftStarterApp = angular.module('GiftStarterApp',
-    ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch']);
+    ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch', 'ngSanitize']);
 console.log("ver28");
 
 GiftStarterApp.config([
-            '$routeProvider','$locationProvider',//'$location',
-    function($routeProvider,  $locationProvider) {
+            '$routeProvider','$locationProvider','$httpProvider',
+    function($routeProvider,  $locationProvider,  $httpProvider) {
         $routeProvider
             .when('/', {templateUrl: '/templates/angular/home.html'})
             .when('/shipping-contact', {templateUrl: '/templates/angular/giftstart-create-shipping.html'})
@@ -23,6 +23,9 @@ GiftStarterApp.config([
             .otherwise({redirectTo: '/'});
 
         $locationProvider.html5Mode(true).hashPrefix('!');
+
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ]);
 

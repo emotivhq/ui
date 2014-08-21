@@ -1,4 +1,5 @@
 <div class="landing-page" ng-controller="HomeController">
+    <gs-product-search></gs-product-search>
     <div class="hot-campaigns" ng-show="hotCampaigns">
         <h1>Top Campaigns</h1>
         <gs-hot-campaign campaign="hotCampaigns.campaigns[0]" pitchins="hotCampaigns.pitchins[0]" index="pitchinIndex" fade-in="fadedIn"></gs-hot-campaign>
