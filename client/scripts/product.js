@@ -125,6 +125,7 @@ GiftStarterApp.directive('gsProductSearch',
                 scope.products = ProductService.products.filter(function(product) {
                     return product.imgUrl != '';
                 });
+//                scope.products = scope.map(function(p) {p.selected = false; return p;}, scope.products);
                 scope.pageNumbers = [];
                 scope.numPages = Math.floor(scope.products.length / scope.pageSize);
                 for (var i = 1; i <= scope.numPages; i++) {
@@ -162,17 +163,23 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.showProductDetails = function(index) {
-                scope.selectedProduct = index;
+                //scope.selectedProduct = index;
+                scope.hideProductDetails();
+                scope.selectedProducts[index].selected = true;
+                console.log(scope.selectedProducts);
             };
 
             scope.hideProductDetails = function() {
-                scope.selectedProduct = -1;
-                console.log(scope.selectedProduct);
+                console.log(scope.selectedProducts.map(function(p) {
+                    p.selected = false;
+                    return p;
+                }));
+                console.log(scope.selectedProducts);
             };
 
-            scope.giftStartSelectedProduct = function() {
-                console.log(scope.selectedProducts[scope.selectedProduct]);
-            }
+            scope.startCampaignFrom = function($index) {
+                console.log(scope.selectedProducts[$index]);
+            };
         }
 
         return {

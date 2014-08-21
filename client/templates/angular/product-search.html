@@ -2,7 +2,7 @@
 <div id="product-search-anchor" class="product-link">
     <div class="search wrapper">
         <span class="inputs">
-            <label>To start, search for a product below:</label>
+            <label class="block">To start, search for a product below:</label>
             <input class="text-input" type="text" name="product-link" placeholder="Search terms or product URL" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><select ng-model="retailer" ng-init="retailer='all'">
                 <option value="all">All Retailers</option>
                 <option value="amazon">Amazon</option>
@@ -24,17 +24,17 @@
     </div>
 
     <section id="search-products-section" class="products" ng-class="{hidden: products.length == 0}">
-        <div class="product-container" ng-class="{selected: selectedProduct == $index}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
+        <div class="product-container" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
             <div class="product">
                 <img ng-src="{{product.imgUrl}}"/>
                 <div class="product-details">
                     <h3 class="title">{{product.title}}</h3>
-                    <label class="retailer">From {{product.retailer}}</label>
+                    <div class="retailer"><label class="retailer">From {{product.retailer}}</label><span class="product-link"> - <a ng-href="{{product.url}}" target="_blank">Link to Product</a></span></div>
                     <p class="description">{{product.description}}</p>
-                    <label class="price">${{product.price / 100 | number : 2}}</label>
+                    <label class="price block">${{product.price / 100 | number : 2}}</label>
                 </div>
                 <div class="buttons">
-                    <button class="cancel" ng-click="hideProductDetails()">X</button><button class="giftstart" ng-click="giftStartSelectedProduct()">GiftStart</button>
+                    <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button><button class="giftstart" ng-click="giftStartSelectedProduct();$event.stopPropagation();">GiftStart</button>
                 </div>
             </div>
         </div>
