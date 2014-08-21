@@ -39,13 +39,13 @@ GiftStarterApp.service('ProductService', [
             });
         };
 
-        this.createCampaignFromProduct = function(index) {
+        this.createCampaignFromProduct = function(url, price, title, imgUrl) {
             Analytics.track('product', 'campaign create from search');
-            self.product.product_url = self.products[index].url;
-            self.product.price = self.products[index].price;
-            self.product.title = self.products[index].title;
+            self.product.product_url = url;
+            self.product.price = price;
+            self.product.title = title;
             self.logo = '';
-            self.product.imgs = [self.products[index].imgUrl];
+            self.product.imgs = [imgUrl];
             $location.path("campaign-create");
 
         };
@@ -119,8 +119,6 @@ GiftStarterApp.directive('gsProductSearch',
                 ProductService.submitLink(scope.product_url, onSuccess, onFailure);
             };
 
-            scope.createCampaignFromProduct = ProductService.createCampaignFromProduct;
-
             scope.$on('products-fetched', function() {
                 scope.products = ProductService.products.filter(function(product) {
                     return product.imgUrl != '';
@@ -159,14 +157,13 @@ GiftStarterApp.directive('gsProductSearch',
                 scope.selectedPage = page;
                 scope.selectedProducts = scope.products.slice((scope.selectedPage - 1) * scope.pageSize,
                     scope.selectedPage * scope.pageSize);
+                scope.hideProductDetails();
                 element[0].scrollIntoView();
             };
 
             scope.showProductDetails = function(index) {
-                //scope.selectedProduct = index;
                 scope.hideProductDetails();
                 scope.selectedProducts[index].selected = true;
-                console.log(scope.selectedProducts);
             };
 
             scope.hideProductDetails = function() {
@@ -174,11 +171,15 @@ GiftStarterApp.directive('gsProductSearch',
                     p.selected = false;
                     return p;
                 }));
-                console.log(scope.selectedProducts);
             };
 
-            scope.startCampaignFrom = function($index) {
-                console.log(scope.selectedProducts[$index]);
+            scope.startCampaignFrom = function(index) {
+                ProductService.createCampaignFromProduct(
+                    scope.selectedProducts[index].url,
+                    scope.selectedProducts[index].price,
+                    scope.selectedProducts[index].title,
+                    scope.selectedProducts[index].imgUrl
+                );
             };
         }
 

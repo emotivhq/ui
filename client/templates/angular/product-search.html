@@ -34,7 +34,7 @@
                     <label class="price block">${{product.price / 100 | number : 2}}</label>
                 </div>
                 <div class="buttons">
-                    <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button><button class="giftstart" ng-click="giftStartSelectedProduct();$event.stopPropagation();">GiftStart</button>
+                    <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button><button class="giftstart" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart</button>
                 </div>
             </div>
         </div>
