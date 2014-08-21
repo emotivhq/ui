@@ -30,11 +30,11 @@
                 <div class="product-details">
                     <h3 class="title">{{product.title}}</h3>
                     <div class="retailer"><label class="retailer">From {{product.retailer}}</label><span class="product-link"> - <a ng-href="{{product.url}}" target="_blank">Link to Product</a></span></div>
-                    <p class="description">{{product.description}}</p>
+                    <p class="description" ng-bind-html="product.description"></p>
                     <label class="price block">${{product.price / 100 | number : 2}}</label>
                 </div>
                 <div class="buttons">
-                    <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button><button class="giftstart" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart</button>
+                    <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button><button class="giftstart" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart!</button>
                 </div>
             </div>
         </div>

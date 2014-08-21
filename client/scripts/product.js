@@ -121,7 +121,7 @@ GiftStarterApp.directive('gsProductSearch',
 
             scope.$on('products-fetched', function() {
                 scope.products = ProductService.products.filter(function(product) {
-                    return product.imgUrl != '';
+                    return product.imgUrl != '' && product.price > 4000;
                 });
 //                scope.products = scope.map(function(p) {p.selected = false; return p;}, scope.products);
                 scope.pageNumbers = [];
