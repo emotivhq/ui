@@ -60,16 +60,16 @@ GiftStarterApp.service('ProductService', [
         };
 
         this.fetchSuccess = function (result) {
-            Analytics.track('product', 'search success');
+            Analytics.track('product', 'search succeeded');
             self.products = result;
             $rootScope.$broadcast('products-fetched');
         };
-
-}]);
+    }
+]);
 
 
 GiftStarterApp.directive('gsProductSearch',
-    function(ProductService, $location, Analytics, $sce) {
+    function(ProductService, $location, Analytics) {
         function link(scope, element) {
             scope.loading = false;
             scope.failed = false;
@@ -121,11 +121,9 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.$on('products-fetched', function() {
-                Analytics.track('product', 'search succeeded');
                 scope.products = ProductService.products.filter(function(product) {
                     return product.imgUrl != '' && product.price > 4000;
                 });
-//                scope.products = scope.map(function(p) {p.selected = false; return p;}, scope.products);
                 scope.pageNumbers = [];
                 scope.numPages = Math.floor(scope.products.length / scope.pageSize);
                 for (var i = 1; i <= scope.numPages; i++) {
@@ -133,10 +131,6 @@ GiftStarterApp.directive('gsProductSearch',
                 }
                 scope.selectPage(1);
             });
-
-            scope.showProductDetail = function(index) {
-
-            };
 
             scope.selectedPage = 1;
             scope.pageSize = 10;
@@ -172,14 +166,13 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.hideProductDetails = function() {
-                console.log(scope.selectedProducts.map(function(p) {
+                scope.selectedProducts.map(function(p) {
                     p.selected = false;
                     return p;
-                }));
+                });
             };
 
             scope.startCampaignFrom = function(index) {
-                Analytics.track("product", "create from search");
                 ProductService.createCampaignFromProduct(
                     scope.selectedProducts[index].url,
                     scope.selectedProducts[index].price,
