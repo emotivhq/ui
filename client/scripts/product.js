@@ -56,7 +56,9 @@ GiftStarterApp.service('ProductService', [
             $http({method: 'GET', url: 'http://product.dev.giftstarter.co' + query})
                 .success(self.fetchSuccess)
                 .error(function() {
-                    Analytics.track('product', 'search error');});
+                    Analytics.track('product', 'search error');
+                    $rootScope.$broadcast('products-fetch-fail');
+                });
         };
 
         this.fetchSuccess = function (result) {
@@ -104,6 +106,8 @@ GiftStarterApp.directive('gsProductSearch',
             scope.submitSearch = function() {
                 Analytics.track('product', 'search submitted');
                 ProductService.searchProducts(scope.product_url, scope.retailer);
+                scope.loading = true;
+                scope.failed = false;
             };
 
             scope.submitLink = function() {
@@ -121,6 +125,8 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.$on('products-fetched', function() {
+                scope.loading = false;
+                scope.failed = false;
                 scope.products = ProductService.products.filter(function(product) {
                     return product.imgUrl != '' && product.price > 4000;
                 });
@@ -130,6 +136,11 @@ GiftStarterApp.directive('gsProductSearch',
                     scope.pageNumbers.push(i);
                 }
                 scope.selectPage(1);
+            });
+
+            scope.$on('products-fetch-fail', function() {
+                scope.loading = false;
+                scope.failed = true;
             });
 
             scope.selectedPage = 1;
