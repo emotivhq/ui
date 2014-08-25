@@ -69,7 +69,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.fetchingTaxRate = false;
 
 
-        $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [1, 7], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
+        $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
             [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
 
         function calculateInitialNumParts() {

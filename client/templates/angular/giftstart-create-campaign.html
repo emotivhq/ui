@@ -3,7 +3,7 @@
     <img class="progress" src="/assets/progress_bar_2_of_3.png"/>
     <div class="block image">
         <h2>Select Image</h2>
-        <label>(Image {{imgIndex + 1}} of {{product.imgs.length + 1}})</label>
+        <label>(Image {{imgIndex + 1}} of {{product.imgs.length}})</label>
         <div><button class="circle" ng-click="previousImage()">&lt;</button><button class="circle" ng-click="nextImage()">&gt;</button></div>
         <div class="image-container">
             <gs-overlay giftstart="giftStart" ng-class="{initialized: pitchInsInitialized}" ng-click="selectionUpdated();"></gs-overlay>
