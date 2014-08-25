@@ -1,18 +1,46 @@
 __author__ = 'stuart'
 
 import webapp2
+from datetime import datetime, timedelta
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
+from gs_user import User
 
 
 def user_growth():
-    result = ''
+    now = datetime.now()
+    weekago = now - timedelta(days=7)
+
+    new_users_last_week = User.query(User.timestamp > weekago).count()
+    now_users = User.query().count()
+
+    percent_user_growth_last_week = float(new_users_last_week) / (now_users - new_users_last_week)
+
+    result = '{percent_growth:.1%} user growth over last week: {new_users} new users, up to {current_users} currently'\
+        .format(**{
+            'percent_growth': percent_user_growth_last_week,
+            'new_users': new_users_last_week,
+            'current_users': now_users
+        })
 
     return result
 
 
-def campaign_growth():
-    result = ''
+def giftstart_growth():
+    now = datetime.now()
+    weekago = now - timedelta(days=7)
+
+    new_giftstarts_last_week = GiftStart.query(GiftStart.timestamp > weekago).count()
+    now_giftstarts = GiftStart.query().count()
+
+    percent_giftstart_growth_last_week = float(new_giftstarts_last_week) / (now_giftstarts - new_giftstarts_last_week)
+
+    result = '{percent_growth:.1%} GiftStart growth over last week: {new_giftstarts} new GiftStarts, up to ' \
+             '{current_giftstarts} currently'.format(**{
+            'percent_growth': percent_giftstart_growth_last_week,
+            'new_giftstarts': new_giftstarts_last_week,
+            'current_giftstarts': now_giftstarts
+        })
 
     return result
 
@@ -58,7 +86,7 @@ class ReportsHandler(webapp2.RequestHandler):
 
         template_kwargs = {
             'user_growth': user_growth(),
-            'campaign_growth': campaign_growth(),
+            'campaign_growth': giftstart_growth(),
             'campaign_success_rate': campaign_success_rate(),
         }
 
