@@ -99,6 +99,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
 
+        console.log($scope.product);
         if (ProductService.product.product_url == "") {
             // User navigated directly here, direct them to home page
             $location.path("");
@@ -185,8 +186,8 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.next = function() {
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
-            GiftStartService.productUrl = ProductService.product.url;
-            GiftStartService.productTitle = ProductService.title;
+            GiftStartService.productUrl = ProductService.product.product_url;
+            GiftStartService.productTitle = ProductService.product.title;
             GiftStartService.retailerLogo = ProductService.logo;
             GiftStartService.productImgUrl = $scope.selectedImg;
             GiftStartService.rows = $scope.y;
@@ -200,6 +201,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             GiftStartService.totalPrice = $scope.totalPrice;
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
+            GiftStartService.gcName = UserService.name;
 
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
                 Analytics.track('campaign', 'campaign submitted');

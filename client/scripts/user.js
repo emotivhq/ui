@@ -9,6 +9,7 @@ GiftStarterApp.service('UserService', [
              Analytics) {
         this.uid = -1;
         this.loggedIn = false;
+        this.name = '';
         this.profileImageUrl  = '';
         this.isStripeCustomer = false;
         this.loginService = '';
@@ -16,12 +17,13 @@ GiftStarterApp.service('UserService', [
 
         var self = this;
 
-        this.registerLogin = function(uid, profileImageUrl, token, onMailingList) {
+        this.registerLogin = function(uid, profileImageUrl, token, onMailingList, name) {
             mixpanel.identify(uid);
             mixpanel.people.set({'$last_login': new Date()});
             Analytics.track('login', uid);
             self.uid = uid;
             self.token = token;
+            self.name = name;
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
             self.onMailingList = onMailingList;
@@ -64,19 +66,22 @@ GiftStarterApp.service('UserService', [
         function facebookLoggedIn () {
             Analytics.track('user', 'logged in with facebook');
             self.loginService = 'facebook';
-            self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token, FacebookService.subscribed);
+            self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token,
+                FacebookService.subscribed, FacebookService.name);
         }
         $rootScope.$on('twitter-login-success', twitterLoggedIn);
         function twitterLoggedIn () {
             Analytics.track('user', 'logged in with twitter');
             self.loginService = 'twitter';
-            self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token, TwitterService.subscribed);
+            self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token,
+                TwitterService.subscribed, TwitterService.name);
         }
         $rootScope.$on('googleplus-login-success', googleplusLoggedIn);
         function googleplusLoggedIn () {
             Analytics.track('user', 'logged in with googleplus');
             self.loginService = 'googleplus';
-            self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token, GooglePlusService.subscribed);
+            self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token,
+                GooglePlusService.subscribed, GooglePlusService.name);
         }
 
         $rootScope.$on('facebook-logout-success', self.registerLogout);
