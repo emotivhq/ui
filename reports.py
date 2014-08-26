@@ -32,14 +32,13 @@ def giftstart_growth():
     twoweeksago = now - timedelta(days=14)
 
     new_giftstarts_last_week = GiftStart.query(GiftStart.timestamp > weekago).count()
-    weekago_giftstarts = GiftStart.query(GiftStart.timestamp > twoweeksago, GiftStart.timestamp < weekago)
+    weekago_giftstarts = GiftStart.query(GiftStart.timestamp > twoweeksago, GiftStart.timestamp < weekago).count()
     # now_giftstarts = GiftStart.query().count()
 
-    percent_giftstart_growth_last_week = float(new_giftstarts_last_week) / (weekago_giftstarts -
-                                                                            new_giftstarts_last_week)
+    percent_giftstart_growth_last_week = float(new_giftstarts_last_week) / weekago_giftstarts - 1
 
-    result = '{percent_growth:.1%} GiftStart growth over last week: {new_giftstarts} new GiftStarts, up to ' \
-             '{current_giftstarts} currently'.format(**{
+    result = '{percent_growth:.1%} GiftStart growth over last week: {new_giftstarts} new GiftStarts, up from ' \
+             '{current_giftstarts} the week before'.format(**{
             'percent_growth': percent_giftstart_growth_last_week,
             'new_giftstarts': new_giftstarts_last_week,
             'current_giftstarts': weekago_giftstarts
