@@ -4,6 +4,7 @@ from social import facebook
 import cloudstorage
 import requests
 import yaml
+import imghdr
 
 config = yaml.load(open('config.yaml'))
 
@@ -30,13 +31,15 @@ def cache_user_image_from_url(uid, img_url):
 
 
 def cache_product_image(img_url, gsid):
-    img = requests.get(img_url).content
-    extension = '.' + img_url.split('.')[-1].split('?')[0]
-    return _save_picture_to_gcs(gsid + extension, 'p/', img)
+    request = requests.get(img_url)
+    img = request.content
+    return _save_picture_to_gcs(gsid + extract_extension_from_content(img), 'p/', img)
 
 
 def cache_user_uploaded_image(img, filename, gsid, content_type='binary/octet-stream'):
-    extension = '.' + filename.split('.')[-1].split('?')[0]
+    extension = extract_extension_from_content(img)
+    if extension:
+        content_type = 'image/' + extension[1:]
     return _save_picture_to_gcs(gsid + extension, 'p/', img, content_type)
 
 
@@ -55,3 +58,8 @@ def _save_picture_to_gcs(filename, folder, data, content_type='binary/octet-stre
     cs_file.write(data)
     cs_file.close()
     return 'https://storage.googleapis.com' + file_url
+
+
+def extract_extension_from_content(img_data):
+    extension = '.' + imghdr.what('', img_data)
+    return extension
