@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 import json
 from google.appengine.api import taskqueue
+import time
 from datetime import datetime, timedelta
 from GiftStart import GiftStart
 from pay.PitchIn import PitchIn
@@ -85,7 +86,8 @@ def update(gs):
             content_type = v['data'].split(';')[0].split(':')[1]
             base64data = ','.join(v['data'].split(',')[1:])
             img_data = base64data.decode('base64', 'strict')
-            giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, v['filename'],
+            filename = v['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
+            giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, filename,
                                                                                       gs['gsid'], content_type)
         elif k == 'gc_name':
             giftstart.gc_name = gs['gc_name']
