@@ -71,7 +71,7 @@ GiftStarterApp.service('ProductService', [
 
 
 GiftStarterApp.directive('gsProductSearch',
-    function(ProductService, $location, Analytics) {
+    function(ProductService, $location, Analytics, $window) {
         function link(scope, element) {
             scope.loading = false;
             scope.failed = false;
@@ -181,6 +181,10 @@ GiftStarterApp.directive('gsProductSearch',
                     p.selected = false;
                     return p;
                 });
+            };
+
+            scope.goToProduct = function(index) {
+//                $window.open(scope.selectedProducts[index].url, '_blank');
             };
 
             scope.startCampaignFrom = function(index) {

@@ -26,10 +26,10 @@
     <section id="search-products-section" class="products" ng-class="{hidden: products.length == 0}">
         <div class="product-container" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
             <div class="product">
-                <img ng-src="{{product.imgUrl}}"/>
+                <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}"/>
                 <div class="product-details">
-                    <h3 class="title">{{product.title}}</h3>
-                    <div class="retailer"><label class="retailer">From {{product.retailer}}</label><span class="product-link"> - <a ng-href="{{product.url}}" target="_blank">Link to Product</a></span></div>
+                    <h3 class="title" ng-click="goToProduct($index);">{{product.title}}</h3>
+                    <div class="retailer"><label class="retailer">From {{product.retailer}}</label></div>
                     <p class="description" ng-bind-html="product.description"></p>
                     <label class="price block">${{product.price / 100 | number : 2}}</label>
                 </div>
