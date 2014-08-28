@@ -11,13 +11,6 @@ GiftStarterApp.service('GooglePlusService', [
         this.name = '';
         this.token = '';
 
-        this.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
-            '?scope=' + encodeURIComponent('https://www.googleapis.com/auth/plus.login') +
-            '&client_id=' + encodeURIComponent($window.googlePlusClientId) +
-            '&redirect_uri=' + encodeURIComponent($window.location.protocol + '//' + $window.location.host + '/oauth-callback/googleplus') +
-            '&response_type=' + encodeURIComponent('code') +
-            '&access_type=' + encodeURIComponent('offline');
-
         this.loginRequested = false;
 
         var self = this;
@@ -32,9 +25,12 @@ GiftStarterApp.service('GooglePlusService', [
         };
 
         this.submitOneTimeCode = function() {
+            // Get app state data from auth response
+            var encodedAppState = self.authResponse.split()
             self.gplus_code_request = {method: 'POST', url: '/user',
                 data: {service: 'googleplus', action: 'submit-one-time-code',
-                    auth_response: self.authResponse, location: $location.path() + $window.location.search}};
+                    auth_response: self.authResponse, location: $location.path() + $window.location.search,
+                    encoded_app_state: encodedAppState}};
             $http(self.gplus_code_request)
                 .success(function(data) {
                     self.uid = data['uid'];
@@ -48,7 +44,14 @@ GiftStarterApp.service('GooglePlusService', [
             self.loginRequested = false;
         };
 
-        this.login = function() {
+        this.login = function(encodedAppState) {
+            self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
+                '?scope=' + encodeURIComponent('https://www.googleapis.com/auth/plus.login') +
+                '&client_id=' + encodeURIComponent($window.googlePlusClientId) +
+                '&redirect_uri=' + encodeURIComponent($window.location.protocol + '//' + $window.location.host +
+                '/oauth-callback/googleplus?appstate=' + encodedAppState) +
+                '&response_type=' + encodeURIComponent('code') +
+                '&access_type=' + encodeURIComponent('offline');
             self.auth_window = $window.open(self.auth_url, 'Google Authorization');
             self.loginRequested = true;
         };

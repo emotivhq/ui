@@ -8,10 +8,10 @@ from .. import OAuthTokenPair
 from twitter_core import TwitterTokenSet
 
 
-def get_auth_url():
+def get_auth_url(encoded_app_state):
     url = 'https://api.twitter.com/oauth/request_token'
     auth = OAuth1(config.APP_KEY, config.APP_SECRET,
-                  callback_uri=config.APP_URL + '/oauth-callback/twitter')
+                  callback_uri=config.APP_URL + '/oauth-callback/twitter?appstate=' + encoded_app_state)
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
 

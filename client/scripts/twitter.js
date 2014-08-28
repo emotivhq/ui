@@ -17,11 +17,12 @@ GiftStarterApp.service('TwitterService', [
 
         var self = this;
 
-        this.login = function() {
+        this.login = function(encodedAppState) {
             self.auth_window = $window.open(self.auth_url, 'Twitter Authorization');
 
             // Fetch new login URL in case they want to login after cancelling
-            $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter'}})
+            $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter',
+                encoded_app_state: encodedAppState}})
                 .success(function(data) {self.auth_url = data['url'];})
                 .error(function(data) {console.log(data);});
         };
@@ -55,14 +56,16 @@ GiftStarterApp.service('TwitterService', [
                 .error(function(data) {console.log(data);});
         };
 
+        this.getAuthUrl = function() {
+            $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter', app_state: ''}})
+                .success(function(data) {self.auth_url = data['url'];})
+                .error(function(data) {console.log(data);});
+        };
+
         window.twitterOauthCallback = function(oauthToken, oauthVerifier) {
             self.oauth_token = oauthToken;
             self.verfier = oauthVerifier;
             self.submitVerifier();
         };
-
-        $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter'}})
-            .success(function(data) {self.auth_url = data['url'];})
-            .error(function(data) {console.log(data);});
     }
 ]);

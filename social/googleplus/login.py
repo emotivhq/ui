@@ -5,16 +5,16 @@ import config
 import json
 from googleplus_core import GooglePlusTokenSet
 
-REDIRECT_URI = config.APP_URL + '/oauth-callback/googleplus'
+REDIRECT_URI = config.APP_URL + '/oauth-callback/googleplus?appstate='
 
 
-def submit_code(auth_response):
+def submit_code(auth_response, encoded_app_state):
     base_url = 'https://accounts.google.com/o/oauth2/token'
     params = {
         'code': auth_response['code'],
         'client_id': config.CLIENT_ID,
         'client_secret': config.CLIENT_SECRET,
-        'redirect_uri': REDIRECT_URI,
+        'redirect_uri': REDIRECT_URI + encoded_app_state,
         'grant_type': 'authorization_code'
     }
     str_params = '&'.join(['='.join(pair) for pair in params.items()])

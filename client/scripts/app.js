@@ -47,3 +47,15 @@ GiftStarterApp.config(
         $httpProvider.defaults.useXDomain = true;
     }
 );
+
+
+GiftStarterApp.service('AppStateService', [
+            '$location',
+    function($location) {
+
+        self.getTwitterRedirectUrl = function() {
+
+        };
+
+    }
+]);
