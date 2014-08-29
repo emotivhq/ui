@@ -74,8 +74,14 @@ GiftStarterApp.service('AppStateService', [
             return btoa(JSON.stringify(state));
         };
 
-        this.overlayState = function(selectedParts) {
-            self.selectedParts = selectedParts;
+        this.overlayState = function(selectedParts) {self.selectedParts = selectedParts};
+
+        this.popoverState = function(popoverName) {self.popover = popoverName};
+
+        this.contributeLogin = function(bool) {self.contributeLogin = bool};
+
+        this.giftstartCreateState = function(createSession) {
+
         };
 
         function getAndClear(search) {

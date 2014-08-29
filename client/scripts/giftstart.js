@@ -283,10 +283,20 @@ GiftStarterApp.service('GiftStartService', [
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
                 Analytics.track('pitchin', 'pitchin button clicked');
-                PopoverService.contributeLogin = true;
+                AppStateService.contributeLogin(true);
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
         };
+
+        function restartPitchin() {
+            if (AppStateService.state) {
+                if (AppStateService.state.popover) {
+                    self.pitchIn();
+                    AppStateService.state.popover = null;
+                }
+            }
+        }
+        $rootScope.$on('selection-changed', restartPitchin);
 
         function checkForSync() {
             $http({

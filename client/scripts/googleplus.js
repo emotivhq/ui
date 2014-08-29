@@ -63,9 +63,7 @@ GiftStarterApp.service('GooglePlusService', [
             $window.open(shareUrl + parameters);
         };
 
-        console.log("googleplus service created");
         if (AppStateService.authResponse) {
-            console.log("executing login callback");
             self.loginCallback(AppStateService.authResponse);
         }
 
