@@ -36,6 +36,8 @@ GiftStarterApp.service('PopoverService', [
         this.hidePopover = function() {
             $timeout(function() {
                 Analytics.track('client', 'hiding popover');
+                self.contributeLogin = false;
+                AppStateService.contributeLogin(false);
                 $rootScope.$broadcast('popover-hidden');
                 self.currentLocation = '';
                 $location.hash('');
@@ -81,9 +83,9 @@ GiftStarterApp.service('PopoverService', [
 
         if (AppStateService.state) {
             if (AppStateService.state.contributeLogin) {
-                self.contributeLogin = AppStateService.state.contributeLogin;
+                self.contributeLogin = AppStateService.state.contributing;
             } else {
-                self.contributeLogin = false;
+                self.contributeLogin = Boolean(self.contributeLogin);
             }
         }
     }

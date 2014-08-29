@@ -70,6 +70,7 @@ GiftStarterApp.service('AppStateService', [
             if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
             if (self.selectedParts) {state.selectedParts = self.selectedParts}
             if (self.popover) {state.popover = self.popover}
+            if (self.contributing != null) {state.contributing = self.contributing}
 
             return btoa(JSON.stringify(state));
         };
@@ -78,7 +79,9 @@ GiftStarterApp.service('AppStateService', [
 
         this.popoverState = function(popoverName) {self.popover = popoverName};
 
-        this.contributeLogin = function(bool) {self.contributeLogin = bool};
+        this.contributeLogin = function(bool) {
+            self.contributing = bool
+        };
 
         this.giftstartCreateState = function(createSession) {
 
@@ -114,5 +117,7 @@ GiftStarterApp.service('AppStateService', [
             })($window.location.search.substr(1).split('&'));
             $location.search('');
         }
+
+        console.log(self);
     }
 ]);
