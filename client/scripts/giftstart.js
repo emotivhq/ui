@@ -54,8 +54,10 @@ GiftStarterApp.service('GiftStartService', [
 
         // Restore from state
         this.preselectedParts = [];
-        if (AppStateService.state.selectedParts) {
-            this.preselectedParts = AppStateService.state.selectedParts;
+        if (AppStateService.state) {
+            if (AppStateService.state.selectedParts) {
+                this.preselectedParts = AppStateService.state.selectedParts;
+            }
         }
 
         var self = this;
