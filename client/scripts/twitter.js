@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('TwitterService', [
-            '$http','$rootScope','$window','$location',
-    function($http,  $rootScope,  $window,  $location) {
+            '$http','$rootScope','$window','$location','AppStateService',
+    function($http,  $rootScope,  $window,  $location,  AppStateService) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -17,14 +17,7 @@ GiftStarterApp.service('TwitterService', [
 
         var self = this;
 
-        this.login = function() {
-            self.auth_window = $window.open(self.auth_url, 'Twitter Authorization');
-
-            // Fetch new login URL in case they want to login after cancelling
-            $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter'}})
-                .success(function(data) {self.auth_url = data['url'];})
-                .error(function(data) {console.log(data);});
-        };
+        this.login = function() {$window.open(self.auth_url, '_self')};
 
         this.logout = function() {
             // TODO: actually log out...?
@@ -55,14 +48,21 @@ GiftStarterApp.service('TwitterService', [
                 .error(function(data) {console.log(data);});
         };
 
-        window.twitterOauthCallback = function(oauthToken, oauthVerifier) {
+        this.getAuthUrl = function() {
+            $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter',
+                   redirect_url: AppStateService.getTwitterRedirectUrl()}})
+                .success(function(data) {self.auth_url = data['url'];})
+                .error(function(data) {console.log(data);});
+        };
+
+        function twitterOauthCallback(oauthToken, oauthVerifier) {
             self.oauth_token = oauthToken;
             self.verfier = oauthVerifier;
             self.submitVerifier();
-        };
+        }
 
-        $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter'}})
-            .success(function(data) {self.auth_url = data['url'];})
-            .error(function(data) {console.log(data);});
+        if (AppStateService.oauthToken) {
+            twitterOauthCallback(AppStateService.oauthToken, AppStateService.oauthVerifier);
+        }
     }
 ]);

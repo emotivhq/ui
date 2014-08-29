@@ -3,12 +3,11 @@
  */
 
 GiftStarterApp.service('PopoverService', [
-            '$rootScope','$location','$timeout','Analytics',
-    function($rootScope,  $location,  $timeout,  Analytics) {
+            '$rootScope','$location','$timeout','Analytics','AppStateService',
+    function($rootScope,  $location,  $timeout,  Analytics,  AppStateService) {
 
         this.template = '';
         this.currentLocation = $location.hash();
-        this.giftstartCreateLogin = false;
         var self = this;
 
         this.setPopover = function(popoverName) {
@@ -34,6 +33,8 @@ GiftStarterApp.service('PopoverService', [
 
         this.hidePopover = function() {
             $timeout(function() {
+                self.contributeLogin = false;
+                AppStateService.contributeLogin(false);
                 $rootScope.$broadcast('popover-hidden');
                 self.currentLocation = '';
                 $location.hash('');
@@ -76,6 +77,14 @@ GiftStarterApp.service('PopoverService', [
         // Ensure they don't navigate directly to a popover
         if ($location.hash()) {
             $location.hash('');
+        }
+
+        if (AppStateService.state) {
+            if (AppStateService.state.contributeLogin) {
+                self.contributeLogin = AppStateService.state.contributing;
+            } else {
+                self.contributeLogin = Boolean(self.contributeLogin);
+            }
         }
     }
 ]);

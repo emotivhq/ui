@@ -4,7 +4,9 @@
 
 GiftStarterApp.service('GiftStartService', [
             '$http','$location','UserService','$rootScope','$filter','PopoverService','$window','Analytics',
-    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics) {
+            'AppStateService',
+    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics,
+             AppStateService) {
 
         this.giftStart = {};
 
@@ -49,6 +51,16 @@ GiftStarterApp.service('GiftStartService', [
         this.shipping = 0;
         this.serviceFee = 0;
         this.totalPrice = 0;
+
+        // Restore from state
+        this.preselectedParts = [];
+        if (AppStateService.state) {
+            AppStateService.state.gsid = null;
+            if (AppStateService.state.selectedParts) {
+                this.preselectedParts = AppStateService.state.selectedParts;
+                AppStateService.state.selectedParts = null;
+            }
+        }
 
         var self = this;
 
@@ -107,10 +119,11 @@ GiftStarterApp.service('GiftStartService', [
 
             var tempParts = [];
             for (var i = 0; i < numParts; i++) {
+                var selected = self.preselectedParts.indexOf(i) > -1;
                 tempParts.push({
                     bought: false,
                     disabled: false,
-                    selected: false,
+                    selected: selected,
                     part_id: i,
                     value: Math.floor(totalPrice/numParts)
                 });
@@ -129,7 +142,6 @@ GiftStarterApp.service('GiftStartService', [
         this.createGiftStart = function() {
             Analytics.track('campaign', 'created');
             self.giftStart = self.buildGiftStart();
-            console.log(self.giftStart);
             $location.path('/giftstart');
             self.pitchInsInitialized = false;
             $http({method: 'POST', url: '/giftstart/api',
@@ -148,6 +160,16 @@ GiftStarterApp.service('GiftStartService', [
 
         this.createFailure = function() {console.log("Failed to create GiftStart.")};
 
+        function getSelectedParts() {
+            var selected = [];
+            for (var i = 0; i < self.giftStart.parts.length; i++) {
+                if (self.giftStart.parts[i].selected) {
+                    selected.push(i);
+                }
+            }
+            return selected;
+        }
+
         this.updateSelected = function() {
             self.giftStart.totalSelection = 0;
             self.giftStart.remaining = 0;
@@ -157,12 +179,12 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.remaining += part.value * !(part.selected || part.bought);
                 self.giftStart.funded += part.value * part.bought;
             });
+            AppStateService.overlayState(getSelectedParts());
             $rootScope.$broadcast('selection-changed');
         };
 
         this.fetchGiftStart = function(gsid) {
-            $http({method: 'POST', url: '/giftstart/api',
-                data: {gsid: gsid, action: 'get'}})
+            $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
                 .success(self.fetchSuccess)
                 .error(function (){console.log("Failed to fetch GiftStart.");});
         };
@@ -264,9 +286,23 @@ GiftStarterApp.service('GiftStartService', [
             if (self.giftStart.totalSelection > 0) {
                 Analytics.track('pitchin', 'pitchin button clicked');
                 PopoverService.contributeLogin = true;
+                AppStateService.contributeLogin(true);
                 PopoverService.nextPopover();
             } else {console.log("Nothing selected!")}
         };
+
+        function restartPitchin() {
+            if (AppStateService.state) {
+                if (AppStateService.state.popover) {
+                    if (AppStateService.state.contributing) {
+                        self.pitchIn();
+                        AppStateService.state.popover = null;
+                        AppStateService.state.contributing = false;
+                    }
+                }
+            }
+        }
+        $rootScope.$on('login-success', restartPitchin);
 
         function checkForSync() {
             $http({
@@ -418,19 +454,6 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.updateFundingBar();
         });
 
-        if (GiftStartService.giftStart.gsid != undefined) {
-            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-            $timeout($scope.updateSecondsLeft, 0);
-        } else {
-            // Update this giftstart when the service updates it
-            $scope.$on('giftstart-loaded', function() {
-                $scope.giftStart = GiftStartService.giftStart;
-                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-                $timeout($scope.updateSecondsLeft, 0);
-            });
-            $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
-        }
-
         // Synchronize parts on mouse activity
         $scope.mouseActivityCallback = function(source) {GiftStartService.syncPitchIns(source)};
         $scope.pitchInHoverCallback = function() {GiftStartService.syncPitchIns('pitch-in-hover')};
@@ -467,8 +490,6 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.emailShare = function() {
             Analytics.track('campaign', 'email share from campaign');
         };
-
-        $scope.updateSecondsLeft();
 
         $scope.facebookShare = function() {
             Analytics.track('campaign', 'facebook share from campaign');
@@ -518,11 +539,28 @@ GiftStarterApp.controller('GiftStartController', [
                 }
             }
         };
-        imageInput.bind('change', $scope.updateImage);
 
         $scope.updateCampaign = function() {
             GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage, $scope.newGcName);
             $scope.editMode = false;
         };
+
+        if (GiftStartService.giftStart.gsid != undefined) {
+            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+            $timeout($scope.updateSecondsLeft, 0);
+        } else {
+            // Update this giftstart when the service updates it
+            $scope.$on('giftstart-loaded', function() {
+                $scope.giftStart = GiftStartService.giftStart;
+                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+                $timeout($scope.updateSecondsLeft, 0);
+            });
+            $scope.$on('giftstart-updated', function() {
+                $scope.giftStart = GiftStartService.giftStart;
+                $scope.updateSecondsLeft();
+            });
+        }
+
+        imageInput.bind('change', $scope.updateImage);
 
 }]);

@@ -28,7 +28,7 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'get-auth-url':
             if data['service'] == 'twitter':
-                self.response.write(twitter.get_auth_url())
+                self.response.write(twitter.get_auth_url(data['redirect_url']))
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
@@ -44,7 +44,7 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'submit-one-time-code':
             if data['service'] == 'googleplus':
-                token_set = googleplus.submit_code(data['auth_response'])
+                token_set = googleplus.submit_code(data['auth_response'], data['redirect_url'])
                 user = update_or_create('googleplus', token_set)
                 if user is not None:
                     UserLogin.register_login(user.uid, data['location'])
