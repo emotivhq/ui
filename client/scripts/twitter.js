@@ -55,10 +55,14 @@ GiftStarterApp.service('TwitterService', [
                 .error(function(data) {console.log(data);});
         };
 
-        window.twitterOauthCallback = function(oauthToken, oauthVerifier) {
+        function twitterOauthCallback(oauthToken, oauthVerifier) {
             self.oauth_token = oauthToken;
             self.verfier = oauthVerifier;
             self.submitVerifier();
-        };
+        }
+
+        if (AppStateService.oauthToken) {
+            twitterOauthCallback(AppStateService.oauthToken, AppStateService.oauthVerifier);
+        }
     }
 ]);

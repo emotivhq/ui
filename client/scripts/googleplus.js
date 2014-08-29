@@ -11,17 +11,13 @@ GiftStarterApp.service('GooglePlusService', [
         this.name = '';
         this.token = '';
 
-        this.loginRequested = false;
-
         var self = this;
 
         this.loginCallback = function(authResponse) {
             // Receive access_token, id_token, and one-time code
             // Send one-time code to server
-            if (self.loginRequested) {
-                self.authResponse = authResponse;
-                self.submitOneTimeCode();
-            }
+            self.authResponse = authResponse;
+            self.submitOneTimeCode();
         };
 
         this.submitOneTimeCode = function() {
@@ -29,7 +25,7 @@ GiftStarterApp.service('GooglePlusService', [
             self.gplus_code_request = {method: 'POST', url: '/user',
                 data: {service: 'googleplus', action: 'submit-one-time-code',
                     auth_response: self.authResponse, location: $location.path() + $window.location.search,
-                    redirect_url: self.auth_url}};
+                    redirect_url: $window.location.protocol + '//' + $window.location.host + '/'}};
             $http(self.gplus_code_request)
                 .success(function(data) {
                     self.uid = data['uid'];
@@ -67,7 +63,11 @@ GiftStarterApp.service('GooglePlusService', [
             $window.open(shareUrl + parameters);
         };
 
-        window.googlePlusCallback = self.loginCallback;
+        console.log("googleplus service created");
+        if (AppStateService.authResponse) {
+            console.log("executing login callback");
+            self.loginCallback(AppStateService.authResponse);
+        }
 
     }
 ]);
