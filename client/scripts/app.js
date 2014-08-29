@@ -71,6 +71,7 @@ GiftStarterApp.service('AppStateService', [
             if (self.selectedParts) {state.selectedParts = self.selectedParts}
             if (self.popover) {state.popover = self.popover}
             if (self.contributing != null) {state.contributing = self.contributing}
+            if (self.createSession != null) {state.createSession = self.createSession}
 
             return btoa(JSON.stringify(state));
         };
@@ -84,7 +85,7 @@ GiftStarterApp.service('AppStateService', [
         };
 
         this.giftstartCreateState = function(createSession) {
-
+            self.createSession = createSession;
         };
 
         function getAndClear(search) {

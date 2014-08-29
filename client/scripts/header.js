@@ -4,13 +4,16 @@
 
 
 GiftStarterApp.controller('HeaderController', [
-            '$scope','$location','UserService','Analytics',
+    '$scope','$location','UserService','Analytics',
     function($scope,  $location,  UserService,  Analytics) {
         $scope.thisRoute = $location.path().toString();
         $scope.loggedIn = UserService.loggedIn;
 
+        // ?
         function routeChangeListener(event, next) {
-            $scope.thisRoute = next.$$route.originalPath;
+            if (next.$$route) {
+                $scope.thisRoute = next.$$route.originalPath;
+            }
         }
         $scope.$on('$routeChangeStart', routeChangeListener);
 

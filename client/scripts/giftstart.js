@@ -55,8 +55,10 @@ GiftStarterApp.service('GiftStartService', [
         // Restore from state
         this.preselectedParts = [];
         if (AppStateService.state) {
+            AppStateService.state.gsid = null;
             if (AppStateService.state.selectedParts) {
                 this.preselectedParts = AppStateService.state.selectedParts;
+                AppStateService.state.selectedParts = null;
             }
         }
 
@@ -292,8 +294,6 @@ GiftStarterApp.service('GiftStartService', [
         function restartPitchin() {
             if (AppStateService.state) {
                 if (AppStateService.state.popover) {
-                    console.log("restart pitchin");
-                    console.log(AppStateService.state);
                     if (AppStateService.state.contributing) {
                         self.pitchIn();
                         AppStateService.state.popover = null;
@@ -302,7 +302,6 @@ GiftStarterApp.service('GiftStartService', [
                 }
             }
         }
-//        $rootScope.$on('selection-changed', restartPitchin);
         $rootScope.$on('login-success', restartPitchin);
 
         function checkForSync() {
