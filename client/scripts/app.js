@@ -61,18 +61,21 @@ GiftStarterApp.service('AppStateService', [
         this.getTwitterRedirectUrl = function() {
             $location.search('state', self.base64State());
             var url = $location.absUrl();
-            console.log(url);
             $location.search('state', null);
             return url;
         };
 
         this.base64State = function() {
             var state = {};
-            if ($location.path() == '/giftstart') {
-                state.gsid = $location.search()['gs-id'];
-            }
+            if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
+            if (self.selectedParts) {state.selectedParts = self.selectedParts}
+            if (self.popover) {state.popover = self.popover}
 
             return btoa(JSON.stringify(state));
+        };
+
+        this.overlayState = function(selectedParts) {
+            self.selectedParts = selectedParts;
         };
 
         function getAndClear(search) {
@@ -105,7 +108,5 @@ GiftStarterApp.service('AppStateService', [
             })($window.location.search.substr(1).split('&'));
             $location.search('');
         }
-
-        console.log(self);
     }
 ]);

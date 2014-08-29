@@ -2,7 +2,7 @@
  * Created by stuart on 4/11/14.
  */
 
-GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService, Analytics, $timeout) {
+GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
 
         function drawGrid() {

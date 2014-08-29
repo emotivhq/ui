@@ -4,7 +4,9 @@
 
 GiftStarterApp.service('GiftStartService', [
             '$http','$location','UserService','$rootScope','$filter','PopoverService','$window','Analytics',
-    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics) {
+            'AppStateService',
+    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics,
+             AppStateService) {
 
         this.giftStart = {};
 
@@ -49,6 +51,12 @@ GiftStarterApp.service('GiftStartService', [
         this.shipping = 0;
         this.serviceFee = 0;
         this.totalPrice = 0;
+
+        // Restore from state
+        this.preselectedParts = [];
+        if (AppStateService.state.selectedParts) {
+            this.preselectedParts = AppStateService.state.selectedParts;
+        }
 
         var self = this;
 
@@ -107,10 +115,11 @@ GiftStarterApp.service('GiftStartService', [
 
             var tempParts = [];
             for (var i = 0; i < numParts; i++) {
+                var selected = self.preselectedParts.indexOf(i) > -1;
                 tempParts.push({
                     bought: false,
                     disabled: false,
-                    selected: false,
+                    selected: selected,
                     part_id: i,
                     value: Math.floor(totalPrice/numParts)
                 });
@@ -129,7 +138,6 @@ GiftStarterApp.service('GiftStartService', [
         this.createGiftStart = function() {
             Analytics.track('campaign', 'created');
             self.giftStart = self.buildGiftStart();
-            console.log(self.giftStart);
             $location.path('/giftstart');
             self.pitchInsInitialized = false;
             $http({method: 'POST', url: '/giftstart/api',
@@ -139,7 +147,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
-            console.log(self);
             Analytics.track('campaign', 'campaign enabled');
             self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
@@ -148,6 +155,16 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.createFailure = function() {console.log("Failed to create GiftStart.")};
+
+        function getSelectedParts() {
+            var selected = [];
+            for (var i = 0; i < self.giftStart.parts.length; i++) {
+                if (self.giftStart.parts[i].selected) {
+                    selected.push(i);
+                }
+            }
+            return selected;
+        }
 
         this.updateSelected = function() {
             self.giftStart.totalSelection = 0;
@@ -158,6 +175,7 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.remaining += part.value * !(part.selected || part.bought);
                 self.giftStart.funded += part.value * part.bought;
             });
+            AppStateService.overlayState(getSelectedParts());
             $rootScope.$broadcast('selection-changed');
         };
 
@@ -168,7 +186,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchSuccess = function(data) {
-            console.log(data);
             Analytics.track('campaign', 'fetched');
             self.giftStart = data['giftstart'];
             self.enableGiftStart();
@@ -430,7 +447,6 @@ GiftStarterApp.controller('GiftStartController', [
         };
 
         $scope.updateSecondsLeft = function() {
-            console.log("updateSecondsLeft");
             if (($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
                 $scope.countdown = "Campaign Complete";
                 GiftStartService.disableParts();
