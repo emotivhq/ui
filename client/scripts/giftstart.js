@@ -139,6 +139,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.enableGiftStart = function() {
+            console.log(self);
             Analytics.track('campaign', 'campaign enabled');
             self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
                 self.giftStart.product.total_price);
@@ -161,13 +162,13 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchGiftStart = function(gsid) {
-            $http({method: 'POST', url: '/giftstart/api',
-                data: {gsid: gsid, action: 'get'}})
+            $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
                 .success(self.fetchSuccess)
                 .error(function (){console.log("Failed to fetch GiftStart.");});
         };
 
         this.fetchSuccess = function(data) {
+            console.log(data);
             Analytics.track('campaign', 'fetched');
             self.giftStart = data['giftstart'];
             self.enableGiftStart();
@@ -424,6 +425,7 @@ GiftStarterApp.controller('GiftStartController', [
         } else {
             // Update this giftstart when the service updates it
             $scope.$on('giftstart-loaded', function() {
+                $scope.updateSecondsLeft();
                 $scope.giftStart = GiftStartService.giftStart;
                 $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
                 $timeout($scope.updateSecondsLeft, 0);
@@ -467,8 +469,6 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.emailShare = function() {
             Analytics.track('campaign', 'email share from campaign');
         };
-
-        $scope.updateSecondsLeft();
 
         $scope.facebookShare = function() {
             Analytics.track('campaign', 'facebook share from campaign');

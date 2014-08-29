@@ -75,11 +75,37 @@ GiftStarterApp.service('AppStateService', [
             return btoa(JSON.stringify(state));
         };
 
+        function getAndClear(search) {
+            var val = $location.search()[search];
+            $location.search(search, null);
+            return val;
+        }
+
         if ($location.search()['state']) {
             this.state = JSON.parse($window.atob($location.search()['state']));
             $location.search('state', null);
-            console.log('State consumed.');
-            console.log(this.state);
         }
+
+        if ($location.search().oauth_token && $location.search().oauth_verifier) {
+            self.oauthToken = getAndClear('oauth_token');
+            self.oauthVerifier = getAndClear('oauth_verifier');
+        }
+
+        if ($location.search().code && $location.search().session_state && $location.search().authuser) {
+            self.authResponse = (function(a) {
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i)
+                {
+                    var p=a[i].split('=');
+                    if (p.length != 2) continue;
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                }
+                return b;
+            })($window.location.search.substr(1).split('&'));
+            $location.search('');
+        }
+
+        console.log(self);
     }
 ]);

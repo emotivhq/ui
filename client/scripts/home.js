@@ -4,9 +4,15 @@
 
 
 GiftStarterApp.controller('HomeController', [
-            '$scope','Analytics','$window','$http','$timeout',
-    function($scope,  Analytics,  $window,  $http,  $timeout) {
+            '$scope','Analytics','$window','$http','$timeout','AppStateService','$location',
+    function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,  $location) {
         Analytics.track('client', 'loaded home');
+
+        if (AppStateService.state) {
+            if (AppStateService.state.gsid) {
+                $location.path('/giftstart').search('gs-id', AppStateService.state.gsid);
+            }
+        }
 
         $scope.retailerClick = function(retailerUrl, retailerName) {
             $window.open(retailerUrl, retailerName);
@@ -20,7 +26,7 @@ GiftStarterApp.controller('HomeController', [
 
         $scope.hotCampaigns = {};
 
-        $http({method: 'GET', url: '/giftstart/api/hot-campaigns?num_campaigns=3'})
+        $http({method: 'GET', url: '/giftstart/api/hot-campaigns?num_campaigns=2'})
             .success(function(data) {
                 Analytics.track("client", "hot campaigns load succeeded");
                 $scope.hotCampaigns = data;
