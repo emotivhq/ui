@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('GooglePlusService', [
-            '$http','$rootScope','$window','$location',
-    function($http,  $rootScope,  $window,  $location) {
+            '$http','$rootScope','$window','$location','AppStateService',
+    function($http,  $rootScope,  $window,  $location,  AppStateService) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -26,11 +26,10 @@ GiftStarterApp.service('GooglePlusService', [
 
         this.submitOneTimeCode = function() {
             // Get app state data from auth response
-            var encodedAppState = self.authResponse.split()
             self.gplus_code_request = {method: 'POST', url: '/user',
                 data: {service: 'googleplus', action: 'submit-one-time-code',
                     auth_response: self.authResponse, location: $location.path() + $window.location.search,
-                    encoded_app_state: encodedAppState}};
+                    redirect_url: self.auth_url}};
             $http(self.gplus_code_request)
                 .success(function(data) {
                     self.uid = data['uid'];
@@ -44,15 +43,15 @@ GiftStarterApp.service('GooglePlusService', [
             self.loginRequested = false;
         };
 
-        this.login = function(encodedAppState) {
+        this.login = function() {
             self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
                 '?scope=' + encodeURIComponent('https://www.googleapis.com/auth/plus.login') +
                 '&client_id=' + encodeURIComponent($window.googlePlusClientId) +
-                '&redirect_uri=' + encodeURIComponent($window.location.protocol + '//' + $window.location.host +
-                '/oauth-callback/googleplus?appstate=' + encodedAppState) +
-                '&response_type=' + encodeURIComponent('code') +
-                '&access_type=' + encodeURIComponent('offline');
-            self.auth_window = $window.open(self.auth_url, 'Google Authorization');
+                '&redirect_uri=' + encodeURIComponent($window.location.protocol + '//' + $window.location.host + '/') +
+                '&response_type=code' +
+                '&state=' + AppStateService.base64State() +
+                '&access_type=offline';
+            self.auth_window = $window.open(self.auth_url, '_self');
             self.loginRequested = true;
         };
 

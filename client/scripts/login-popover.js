@@ -5,9 +5,9 @@
 
 GiftStarterApp.controller('LoginPopoverController', [
             '$scope','UserService','PopoverService','GiftStartService','TwitterService','FacebookService','$location',
-            'GooglePlusService','Analytics',
+            'GooglePlusService','Analytics','AppStateService',
     function($scope,  UserService,  PopoverService,  GiftStartService,  TwitterService,  FacebookService,  $location,
-             GooglePlusService, Analytics) {
+             GooglePlusService,  Analytics,  AppStateService) {
 
         $scope.loggedIn = UserService.loggedIn;
 
@@ -42,6 +42,8 @@ GiftStarterApp.controller('LoginPopoverController', [
                 PopoverService.hidePopover();
             }
         }
+
+        TwitterService.getAuthUrl(AppStateService.getTwitterRedirectUrl());
 
         $scope.$on('login-success', loginComplete);
 
