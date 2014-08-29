@@ -419,20 +419,6 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.updateFundingBar();
         });
 
-        if (GiftStartService.giftStart.gsid != undefined) {
-            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-            $timeout($scope.updateSecondsLeft, 0);
-        } else {
-            // Update this giftstart when the service updates it
-            $scope.$on('giftstart-loaded', function() {
-                $scope.updateSecondsLeft();
-                $scope.giftStart = GiftStartService.giftStart;
-                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-                $timeout($scope.updateSecondsLeft, 0);
-            });
-            $scope.$on('giftstart-updated', function() {$scope.giftStart = GiftStartService.giftStart});
-        }
-
         // Synchronize parts on mouse activity
         $scope.mouseActivityCallback = function(source) {GiftStartService.syncPitchIns(source)};
         $scope.pitchInHoverCallback = function() {GiftStartService.syncPitchIns('pitch-in-hover')};
@@ -444,6 +430,7 @@ GiftStarterApp.controller('GiftStartController', [
         };
 
         $scope.updateSecondsLeft = function() {
+            console.log("updateSecondsLeft");
             if (($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
                 $scope.countdown = "Campaign Complete";
                 GiftStartService.disableParts();
@@ -518,11 +505,28 @@ GiftStarterApp.controller('GiftStartController', [
                 }
             }
         };
-        imageInput.bind('change', $scope.updateImage);
 
         $scope.updateCampaign = function() {
             GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage, $scope.newGcName);
             $scope.editMode = false;
         };
+
+        if (GiftStartService.giftStart.gsid != undefined) {
+            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+            $timeout($scope.updateSecondsLeft, 0);
+        } else {
+            // Update this giftstart when the service updates it
+            $scope.$on('giftstart-loaded', function() {
+                $scope.giftStart = GiftStartService.giftStart;
+                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+                $timeout($scope.updateSecondsLeft, 0);
+            });
+            $scope.$on('giftstart-updated', function() {
+                $scope.giftStart = GiftStartService.giftStart;
+                $scope.updateSecondsLeft();
+            });
+        }
+
+        imageInput.bind('change', $scope.updateImage);
 
 }]);
