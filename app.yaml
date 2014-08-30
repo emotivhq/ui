@@ -15,7 +15,7 @@ handlers:
 - url: /pay
   script: pay.api.api
 - url: /user.*
-  script: gs_user.api.api
+  script: gs_user.gs_user_api.api
 - url: /reports
   script: reports.handler
   login: admin
