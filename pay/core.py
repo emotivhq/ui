@@ -13,12 +13,13 @@ config = yaml.load(open('config.yaml'))
 
 
 def add_name_to_pitchin(pitchin):
-    user = user_core.get_user(pitchin['uid'])
-    if user is not None:
-        if user.name is None or user.name is '':
-            user_core.get_user_info(user)
-            user.put()
-        pitchin['name'] = user.name
+    if pitchin['name'] == '':
+        user = user_core.get_user(pitchin['uid'])
+        if user is not None:
+            if user.name is None or user.name is '':
+                user_core.get_user_info(user)
+                user.put()
+            pitchin['name'] = user.name
     return pitchin
 
 
