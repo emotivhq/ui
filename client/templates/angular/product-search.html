@@ -29,9 +29,9 @@
                 <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}"/>
                 <div class="product-details">
                     <h3 class="title" ng-click="goToProduct($index);">{{product.title}}</h3>
-                    <div class="retailer"><label class="retailer">From {{product.retailer}}</label></div>
+                    <p class="retailer">From {{product.retailer}}</p>
                     <p class="description" ng-bind-html="product.description"></p>
-                    <label class="price block">${{product.price / 100 | number : 2}}</label>
+                    <p class="price block">${{product.price / 100 | number : 2}}</p>
                 </div>
                 <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
                 <div class="buttons">
