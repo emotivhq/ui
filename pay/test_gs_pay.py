@@ -67,6 +67,7 @@ class PayTestHandlers(unittest.TestCase):
         # Insert user
         self.user = User()
         self.user.uid = 'f1234'
+        self.user.name = 'macklemore'
         self.user.logged_in_with = 'facebook'
         self.user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
         self.user.cached_profile_image_url = 'fakeurl'
