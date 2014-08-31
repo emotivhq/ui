@@ -57,7 +57,6 @@ example_giftstart = {
 class GiftstartTestHandler(unittest.TestCase):
 
     def setUp(self):
-        # Should be able to create a campaign
         self.testbed = testbed.Testbed()
         self.testbed.activate()
         self.testbed.init_datastore_v3_stub()
@@ -290,7 +289,6 @@ class GiftstartTestHandler(unittest.TestCase):
         self.assertEqual(200, response.status_code, "Should successfully fetch hot campaigns, expected code 200, "
                                                     "response was " + str(response.status_code))
         json_response = json.loads(response.body)
-        print(json_response)
 
         # Verify that all pitchin'd campaigns are returned
         campaign_ids = map(lambda c: c.get('giftstart').get('gsid'), json_response.get('campaigns'))
