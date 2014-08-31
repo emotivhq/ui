@@ -177,6 +177,7 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.hideProductDetails = function() {
+                scope.selectedProduct = -1;
                 scope.selectedProducts.map(function(p) {
                     p.selected = false;
                     return p;
@@ -184,7 +185,11 @@ GiftStarterApp.directive('gsProductSearch',
             };
 
             scope.goToProduct = function(index) {
-//                $window.open(scope.selectedProducts[index].url, '_blank');
+                if (scope.selectedProduct == index) {
+                    $window.open(scope.selectedProducts[index].url, '_blank');
+                } else {
+                    scope.selectedProduct = index;
+                }
             };
 
             scope.startCampaignFrom = function(index) {
