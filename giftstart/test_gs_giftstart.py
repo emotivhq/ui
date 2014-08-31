@@ -68,6 +68,7 @@ class GiftstartTestHandler(unittest.TestCase):
         # Insert user
         user = User()
         user.uid = 'f1234'
+        user.name = 'flomae'
         user.cached_profile_image_url = 'lol not a url'
         user.logged_in_with = 'facebook'
         user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
