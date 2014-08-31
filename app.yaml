@@ -7,26 +7,18 @@ threadsafe: yes
 handlers:
 # End points
 - url: /product
-  script: product.api.api
+  script: product.product_api.api
 - url: /giftstart/api
   script: giftstart.giftstart_api.api
 - url: /giftstart/api/hot-campaigns
   script: giftstart.giftstart_api.hot_campaigns
 - url: /pay
-  script: pay.api.api
+  script: pay.pay_api.api
 - url: /user.*
   script: gs_user.gs_user_api.api
 - url: /reports
   script: reports.handler
   login: admin
-
-# OAuth
-- url: /oauth-callback/twitter
-  script: social.api.twitter_oauth_callback
-  secure: always
-- url: /oauth-callback/googleplus
-  script: social.api.googleplus_oauth_callback
-  secure: always
 
 # Client static asset urls
 - url: /favicon\.ico

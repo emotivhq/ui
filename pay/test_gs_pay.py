@@ -13,7 +13,7 @@ from datetime import datetime, timedelta
 import yaml
 
 # UUT
-from pay import api, PitchIn
+from pay import pay_api, PitchIn
 
 # Dependencies
 from giftstart import giftstart_api
@@ -112,7 +112,7 @@ class PayTestHandlers(unittest.TestCase):
             }
         })
 
-        response = request.get_response(api.api)
+        response = request.get_response(pay_api.api)
 
         self.assertEqual(response.status_code, 200, "Should accept payment, expected 200, response was " +
                          str(response.status_code))
@@ -149,7 +149,7 @@ class PayTestHandlers(unittest.TestCase):
             }
         })
 
-        response = request.get_response(api.api)
+        response = request.get_response(pay_api.api)
 
         self.assertEqual(response.status_code, 200, "Should accept payment, expected 200, response was " +
                          str(response.status_code))
@@ -186,7 +186,7 @@ class PayTestHandlers(unittest.TestCase):
         }
         })
 
-        response = request.get_response(api.api)
+        response = request.get_response(pay_api.api)
 
         self.assertEqual(response.status_code, 400, "Shouldn't allow purchase of already bought piece, expected 400, "
                                                     "response was " + str(response.status_code))

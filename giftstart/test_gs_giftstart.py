@@ -15,7 +15,7 @@ from gs_user import User
 from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
 import stripe
-from pay import api as pay_api
+from pay import pay_api as pay_api
 
 secret = yaml.load(open('secret.yaml'))
 stripe.api_key = secret['stripe_auth']['app_secret']
