@@ -121,14 +121,24 @@ gs-product-search
             bottom: 5%
           button
             display: none
-        img
-          margin-right: 1em
-          border-radius: 0.8em
-          width: 100%
-          @media screen and (min-width: $phone-tablet-boundary)
-            width: auto
-            max-width: 48%
-            max-height: 100%
+        div.image-container
+          height: 100%
+          text-align: center
+          width: 50%
+          span.vert-align-helper
+            height: 100%
+            display: inline-block
+            vertical-align: middle
+          img
+            margin-right: 1em
+            border-radius: 0.8em
+            vertical-align: middle
+            display: inline-block
+            width: 100%
+            @media screen and (min-width: $phone-tablet-boundary)
+              width: auto
+              max-width: 90%
+              max-height: 100%
         div.product-details
           display: inline-block
           vertical-align: top
