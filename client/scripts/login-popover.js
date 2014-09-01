@@ -32,7 +32,7 @@ GiftStarterApp.controller('LoginPopoverController', [
 
         function loginComplete() {
             Analytics.track('user', 'login succeeded');
-            if ($location.path().search('campaign-create') != -1) {
+            if ($location.path().search('create') != -1) {
                 PopoverService.hidePopover();
                 GiftStartService.createGiftStart();
             } else if (($location.path().search('giftstart?') != -1) && PopoverService.contributeLogin) {

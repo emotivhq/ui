@@ -46,7 +46,7 @@ GiftStarterApp.service('ProductService', [
             self.product.title = title;
             self.logo = '';
             self.product.imgs = [imgUrl];
-            $location.path("campaign-create");
+            $location.path("create");
 
         };
 
@@ -84,7 +84,7 @@ GiftStarterApp.directive('gsProductSearch',
                 scope.loading = false;
                 ProductService.product.url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
-                $location.path("campaign-create");
+                $location.path("create");
             }
             function onFailure(reason) {
                 Analytics.track('product', 'link submission failed');

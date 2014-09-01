@@ -12,17 +12,13 @@ GiftStarterApp.config([
     function($routeProvider,  $locationProvider,  $httpProvider) {
         $routeProvider
             .when('/', {templateUrl: '/templates/angular/home.html', reloadOnSearch: false})
-            .when('/shipping-contact', {templateUrl: '/templates/angular/giftstart-create-shipping.html',
+            .when('/create', {templateUrl: 'templates/angular/giftstart-create-campaign.html',
                 reloadOnSearch: false})
-            .when('/campaign-create', {templateUrl: 'templates/angular/giftstart-create-campaign.html',
-                reloadOnSearch: false})
-            .when('/create-giftstart', {templateUrl: '/templates/angular/giftstart-create.html', reloadOnSearch: false})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
+            .when('/user', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
             .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
             .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
             .when('/privacy', {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
-            .when('/team-email-authorize', {templateUrl: '/templates/angular/team_email_authorize.html',
-                reloadOnSearch: false})
             .otherwise({redirectTo: '/'});
 
         $locationProvider.html5Mode(true).hashPrefix('!');

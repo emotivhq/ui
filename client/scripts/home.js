@@ -12,7 +12,7 @@ GiftStarterApp.controller('HomeController', [
             if (AppStateService.state.gsid) {
                 $location.path('/giftstart').search('gs-id', AppStateService.state.gsid);
             } else if (AppStateService.state.createSession) {
-                $location.path('/giftstart-create');
+                $location.path('/create');
             }
         }
 

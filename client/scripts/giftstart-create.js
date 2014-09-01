@@ -51,7 +51,7 @@ GiftStarterApp.controller('GiftStartCreateShippingController', [
                 GiftStartService.gcPhoneNumber = $scope.gcPhoneNumber;
                 GiftStartService.gcEmail = $scope.gcEmail;
 
-                $location.path("campaign-create");
+                $location.path("create");
             }
         };
 
