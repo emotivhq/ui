@@ -1,0 +1,31 @@
+@import base
+
+div.user-wrapper
+  margin: 0 auto
+  width: 60em
+  header
+    margin-top: 2em
+    img
+      max-width: 16em
+      +border-radius(50%)
+    h1
+      display: inline-block
+
+  section
+    margin: 0 6em
+    article
+      display: inline-block
+      width: 44%
+      margin: 2.5%
+      vertical-align: top
+      div.giftstarts, div.pitchins
+        max-height: 20em
+        overflow-y: auto
+        p
+          cursor: pointer
+          span.title
+            +transition(all, 0.2s)
+            font-weight: 600
+        p:hover
+          span.title
+            color: $primary-color
