@@ -191,7 +191,7 @@ GiftStarterApp.directive('gsProductSearch',
                     var scrollOffset = offset - ($window.innerHeight -
                         2 * height) / 2;
                     $window.scrollTo(0, scrollOffset);
-                }, 50);
+                }, 100);
             };
 
             scope.hideProductDetails = function() {
