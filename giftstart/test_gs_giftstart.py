@@ -250,7 +250,7 @@ class GiftstartTestHandler(unittest.TestCase):
             'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
-        request.get_response(pay_api.api)
+        request.get_response(pay_api.API)
 
     def test_get_hot_campaigns(self):
         test_gs = example_giftstart

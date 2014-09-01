@@ -13,7 +13,7 @@ handlers:
 - url: /giftstart/api/hot-campaigns
   script: giftstart.giftstart_api.hot_campaigns
 - url: /pay
-  script: pay.pay_api.api
+  script: API
 - url: /user.*
   script: gs_user.gs_user_api.api
 - url: /reports
