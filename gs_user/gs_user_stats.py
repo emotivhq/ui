@@ -42,6 +42,7 @@ def get_stats(uids):
     giftstarts = GiftStart.query(GiftStart.gift_champion_uid.IN(uids)).fetch()
 
     return {user.uid: {'name': user.name,
+                       'img_url': user.cached_profile_image_url,
                        'pitchins': filter_pitchins(user.uid, pitchins),
                        'giftstarts': filter_giftstarts(user.uid, giftstarts)}
             for user in users}

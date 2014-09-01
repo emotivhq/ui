@@ -5,6 +5,7 @@ import os
 if __file__.split('/')[-1] == 'test_gs_user.py':
     os.chdir('..')
 
+
 import unittest
 from google.appengine.ext import testbed
 import webapp2
@@ -107,6 +108,9 @@ class UserStatsTestHandler(unittest.TestCase):
         self.assertIn('name',
                       json_response[test_gs['gift_champion_uid']].keys(),
                       "Response should contain user's name")
+        self.assertIn('img_url',
+                      json_response[test_gs['gift_champion_uid']].keys(),
+                      "Response should contain user's img url")
 
     def test_get_number_of_pitchins(self):
         test_gs = example_giftstart
