@@ -17,8 +17,16 @@ GiftStarterApp.service('UserService', [
 
         var self = this;
 
-        this.getUser = function(uid) {
+        this.getUser = function(uid, callback) {
+            Analytics.track("user", "user fetch initiated");
+            $http({method: 'GET', url: '/user?uid=' + uid})
+                .success(statFetchSuccess)
+                .error(Analytics.track("user", "user fetch failed"));
 
+            function statFetchSuccess(response) {
+                Analytics.track("user", "user fetch succeeded");
+                callback(response);
+            }
         };
 
         this.registerLogin = function(uid, profileImageUrl, token, onMailingList, name) {
@@ -93,9 +101,15 @@ GiftStarterApp.service('UserService', [
 ]);
 
 GiftStarterApp.controller('UserController', [
-            'UserService',
-    function(UserService) {
+            'UserService','$location',
+    function(UserService,  $location) {
+        this.user = {};
 
+        var self = this;
+
+        UserService.getUser($location.search()['uid'], function(data) {
+            self.user = data;
+        })
     }
 ]);
 

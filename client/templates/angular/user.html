@@ -1,18 +1,18 @@
 <div class="user-wrapper" ng-controller="UserController">
     <header class="user">
-        <img ng-src="{{imgUrl}}" src=""/>
-        <h1>{{name}}</h1>
+        <img ng-src="{{user.imgUrl}}" src=""/>
+        <h1>{{user.name}}</h1>
     </header>
     <section class="stats">
         <article class="giftstarts">
             <h2>{{giftstarts.length}} GiftStarts</h2>
-            <div class="giftstart" ng-repeat="gs in giftstarts">
+            <div class="giftstart" ng-repeat="gs in user.giftstarts">
                 <p>{{gs.title}}</p>
             </div>
         </article>
         <article class="pitchins">
             <h2>{{pitchins.length}} PitchIns</h2>
-            <div class="pitchin" ng-repeat="pi in pitchins">
+            <div class="pitchin" ng-repeat="pi in user.pitchins">
                 <p>{{pi.comment}}</p>
             </div>
         </article>
