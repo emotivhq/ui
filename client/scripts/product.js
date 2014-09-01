@@ -132,7 +132,7 @@ GiftStarterApp.directive('gsProductSearch',
                 scope.loading = false;
                 scope.failed = false;
                 scope.products = ProductService.products.filter(function(product) {
-                    return product.imgUrl != '' && product.price > 3998;
+                    return product.imgUrl != '' && product.price > 7498;
                 });
                 scope.pageNumbers = [];
                 scope.numPages = Math.floor(scope.products.length / scope.pageSize);
