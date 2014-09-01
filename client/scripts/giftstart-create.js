@@ -2,62 +2,6 @@
  * Created by stuart on 5/5/14.
  */
 
-
-GiftStarterApp.controller('GiftStartCreateShippingController', [
-            '$scope','GiftStartService','$location','ProductService','Analytics',
-    function($scope,  GiftStartService,  $location,  ProductService,  Analytics) {
-        $scope.shippingName = '';
-        $scope.shippingAddress = '';
-        $scope.shippingCity = '';
-        $scope.shippingState = '';
-        $scope.shippingZip = '';
-        $scope.shippingPhoneNumber = '';
-        $scope.shippingEmail = '';
-
-        $scope.gcName = '';
-        $scope.gcPhoneNumber = '';
-        $scope.gcEmail = '';
-
-        $scope.invalidInputs = true;
-
-        $scope.browserWarning =
-            (navigator.platform === 'iPad' || navigator.platform === 'iPhone' || navigator.platform === 'iPod') &&
-            (navigator.userAgent.indexOf('CriOS') > -1 || navigator.userAgent.indexOf('mercury') > -1);
-
-        if (ProductService.product.product_url == "") {
-            // User navigated directly here, direct them to home page
-            $location.path("");
-        }
-
-        $scope.sameAsShipping = function() {
-            Analytics.track('campaign', 'same as shipping clicked');
-            $scope.gcName = $scope.shippingName;
-            $scope.gcPhoneNumber = $scope.shippingPhoneNumber;
-            $scope.gcEmail = $scope.shippingEmail;
-            console.log($scope.shippingForm);
-        };
-
-        $scope.next = function() {
-            if ($scope.shippingForm.$valid) {
-                Analytics.track('campaign', 'shipping/contact information submitted');
-                GiftStartService.shippingName = $scope.shippingName;
-                GiftStartService.shippingAddress = $scope.shippingAddress;
-                GiftStartService.shippingCity = $scope.shippingCity;
-                GiftStartService.shippingState = $scope.shippingState;
-                GiftStartService.shippingZip = $scope.shippingZip;
-                GiftStartService.shippingPhoneNumber = $scope.shippingPhoneNumber;
-                GiftStartService.shippingEmail = $scope.shippingEmail;
-                GiftStartService.gcName = $scope.gcName;
-                GiftStartService.gcPhoneNumber = $scope.gcPhoneNumber;
-                GiftStartService.gcEmail = $scope.gcEmail;
-
-                $location.path("create");
-            }
-        };
-
-    }
-]);
-
 GiftStarterApp.controller('GiftStartCreateCampaignController', [
             '$scope','GiftStartService','$location','ProductService','UserService','PopoverService','$http','$timeout',
             'Analytics','AppStateService',
@@ -67,7 +11,6 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
         $scope.fetchingTaxRate = false;
-
 
         $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
             [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
@@ -294,5 +237,11 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $timeout(function() {
             $scope.pitchInsInitialized = true;
         }, 2500);
+
+        // Scroll to the top of the form on controller creation
+        var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
+        $timeout(function() {
+            root.querySelector('.block.image').scrollIntoView();
+        }, 1000);
     }
 ]);
