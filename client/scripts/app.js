@@ -116,7 +116,5 @@ GiftStarterApp.service('AppStateService', [
             })($window.location.search.substr(1).split('&'));
             $location.search('');
         }
-
-        console.log(self);
     }
 ]);

@@ -16,10 +16,10 @@ handlers:
   script: pay.pay_api.api
 - url: /userstats
   script: gs_user.gs_user_api.stats
-- url: /user
-  script: gs_user.gs_user_api.user_page
-- url: /user/*
+- url: /user.*
   script: gs_user.gs_user_api.api
+- url: /u
+  script: gs_user.gs_user_api.user_page
 - url: /reports
   script: reports.handler
   login: admin

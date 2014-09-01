@@ -508,6 +508,10 @@ GiftStarterApp.controller('GiftStartController', [
             Analytics.track('campaign', 'product link clicked');
         };
 
+        $scope.goToUserPage = function(uid) {
+            $location.path('user').search('').search('uid', uid);
+        };
+
         $scope.$on('login-success', function() {
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
         });

@@ -100,6 +100,6 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
-api = webapp2.WSGIApplication([('/user/*', UserHandler)], debug=True)
+api = webapp2.WSGIApplication([('/user.*', UserHandler)], debug=True)
 stats = webapp2.WSGIApplication([('/userstats', StatsHandler)], debug=True)
-user_page = webapp2.WSGIApplication([('/user', UserPageHandler)], debug=True)
+user_page = webapp2.WSGIApplication([('/u', UserPageHandler)], debug=True)
