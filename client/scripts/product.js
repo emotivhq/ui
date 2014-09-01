@@ -71,7 +71,7 @@ GiftStarterApp.service('ProductService', [
 
 
 GiftStarterApp.directive('gsProductSearch',
-    function(ProductService, $location, Analytics, $window) {
+    function(ProductService, $location, Analytics, $window, $timeout) {
         function link(scope, element) {
             scope.loading = false;
             scope.failed = false;
@@ -94,7 +94,8 @@ GiftStarterApp.directive('gsProductSearch',
 
             scope.submit = function() {
                 // Determine if url or search term
-                var isUrl = (scope.product_url.indexOf('http://') == 0) | (scope.product_url.indexOf('https://') == 0);
+                var isUrl = (scope.product_url.indexOf('http://') == 0) |
+                    (scope.product_url.indexOf('https://') == 0);
 
                 if (isUrl) {
                     scope.submitLink();
@@ -105,7 +106,8 @@ GiftStarterApp.directive('gsProductSearch',
 
             scope.submitSearch = function() {
                 Analytics.track('product', 'search submitted');
-                ProductService.searchProducts(scope.product_url, scope.retailer);
+                ProductService.searchProducts(scope.product_url,
+                    scope.retailer);
                 scope.loading = true;
                 scope.failed = false;
             };
@@ -114,14 +116,16 @@ GiftStarterApp.directive('gsProductSearch',
                 Analytics.track('product', 'link submitted');
 
                 // Fix urls if they don't start with http://
-                if (scope.product_url.slice(0, 7) !== "http://" && scope.product_url.slice(0, 8) !== "https://") {
+                if (scope.product_url.slice(0, 7) !== "http://" &&
+                    scope.product_url.slice(0, 8) !== "https://") {
                     scope.product_url = "http://" + scope.product_url;
                 }
 
                 scope.loading = true;
                 scope.failed = false;
                 ProductService.product.product_url = scope.product_url;
-                ProductService.submitLink(scope.product_url, onSuccess, onFailure);
+                ProductService.submitLink(scope.product_url, onSuccess,
+                    onFailure);
             };
 
             scope.$on('products-fetched', function() {
@@ -174,6 +178,20 @@ GiftStarterApp.directive('gsProductSearch',
                 Analytics.track('product', 'show product details');
                 scope.hideProductDetails();
                 scope.selectedProducts[index].selected = true;
+
+                var root = angular.element(document.querySelector('#search-products-section'))[0];
+                window.mroot = root;
+                console.log(root);
+
+                // Product div animates as it expands, so need to infer height
+                // from initial state (2x height/width)
+                var height = root.children[index].offsetHeight;
+                $timeout(function (){
+                    var offset = root.children[index].offsetTop;
+                    var scrollOffset = offset - ($window.innerHeight -
+                        2 * height) / 2;
+                    $window.scrollTo(0, scrollOffset);
+                }, 50);
             };
 
             scope.hideProductDetails = function() {
