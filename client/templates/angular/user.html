@@ -5,13 +5,13 @@
     </header>
     <section class="stats">
         <article class="giftstarts">
-            <h2>{{giftstarts.length}} GiftStarts</h2>
+            <h2>{{user.giftstarts.length}} GiftStarts</h2>
             <div class="giftstart" ng-repeat="gs in user.giftstarts">
-                <p>{{gs.title}}</p>
+                <p>{{gs.giftstart.title}}<br>{{gs.giftstart.product.title}}</p>
             </div>
         </article>
         <article class="pitchins">
-            <h2>{{pitchins.length}} PitchIns</h2>
+            <h2>{{user.pitchins.length}} PitchIns</h2>
             <div class="pitchin" ng-repeat="pi in user.pitchins">
                 <p>{{pi.comment}}</p>
             </div>

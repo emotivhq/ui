@@ -19,7 +19,7 @@ GiftStarterApp.service('UserService', [
 
         this.getUser = function(uid, callback) {
             Analytics.track("user", "user fetch initiated");
-            $http({method: 'GET', url: '/user?uid=' + uid})
+            $http({method: 'GET', url: '/userstats?uid=' + uid})
                 .success(statFetchSuccess)
                 .error(Analytics.track("user", "user fetch failed"));
 
@@ -101,14 +101,12 @@ GiftStarterApp.service('UserService', [
 ]);
 
 GiftStarterApp.controller('UserController', [
-            'UserService','$location',
-    function(UserService,  $location) {
-        this.user = {};
-
-        var self = this;
+            '$scope','UserService','$location',
+    function($scope,  UserService,  $location) {
+        $scope.user = {};
 
         UserService.getUser($location.search()['uid'], function(data) {
-            self.user = data;
+            $scope.user = data[Object.keys(data)[0]];
         })
     }
 ]);
