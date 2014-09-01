@@ -8,7 +8,7 @@
             <h2>{{user.giftstarts.length}} GiftStarts</h2>
             <div class="giftstarts">
                 <div class="giftstart" ng-repeat="gs in user.giftstarts">
-                    <p><span class="title">{{gs.giftstart.title}}</span><br>{{gs.giftstart.product.title}}</p>
+                    <p ng-click="goToCampaign($index)"><span class="title">{{gs.giftstart.title}}</span><br>{{gs.giftstart.product.title}}</p>
                 </div>
             </div>
         </article>

@@ -105,6 +105,10 @@ GiftStarterApp.controller('UserController', [
     function($scope,  UserService,  $location) {
         $scope.user = {};
 
+        $scope.goToCampaign = function(index) {
+            $location.path('giftstart').search('uid', null).search('gs-id', $scope.user.giftstarts[index].giftstart.gsid);
+        };
+
         UserService.getUser($location.search()['uid'], function(data) {
             $scope.user = data[Object.keys(data)[0]];
         })
