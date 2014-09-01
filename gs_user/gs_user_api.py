@@ -3,8 +3,21 @@ __author__ = 'stuart'
 import webapp2
 from social import twitter, googleplus, facebook
 import json
-from user_core import update_or_create, get_user
+from gs_user_core import update_or_create, get_user
+from gs_user_stats import get_stats
 from UserLogin import UserLogin
+
+
+class StatsHandler(webapp2.RequestHandler):
+    def get(self):
+        """
+        Gets stats for all passed in users.
+        """
+        uids = self.request.get('uid')
+        if len(uids) > 0:
+            self.response.write(json.dumps(get_stats(uids)))
+        else:
+            self.response.set_status(400, "Expected list of UIDs")
 
 
 class UserHandler(webapp2.RequestHandler):
@@ -80,3 +93,4 @@ class UserHandler(webapp2.RequestHandler):
 
 
 api = webapp2.WSGIApplication([('/user.*', UserHandler)], debug=True)
+stats = webapp2.WSGIApplication([('/userstats', StatsHandler)], debug=True)

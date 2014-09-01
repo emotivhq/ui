@@ -5,7 +5,7 @@ __author__ = 'stuart'
 
 from google.appengine.api import taskqueue
 import json, yaml
-from gs_user import user_core
+from gs_user import gs_user_core
 import stripe
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
@@ -17,10 +17,10 @@ config = yaml.load(open('config.yaml'))
 
 def add_name_to_pitchin(pitchin):
     if pitchin['name'] == '':
-        user = user_core.get_user(pitchin['uid'])
+        user = gs_user_core.get_user(pitchin['uid'])
         if user is not None:
             if user.name is None or user.name is '':
-                user_core.get_user_info(user)
+                gs_user_core.get_user_info(user)
                 user.put()
             pitchin['name'] = user.name
     return pitchin
@@ -37,11 +37,11 @@ def get_pitch_in_dicts(gsid):
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
              subscribe_to_mailing_lits):
-    user = user_core.save_email(uid, email_address)
+    user = gs_user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
 
     if subscribe_to_mailing_lits:
-        user_core.subscribe_to_mailing_list(uid, email=email_address)
+        gs_user_core.subscribe_to_mailing_list(uid, email=email_address)
 
     # Verify that none of these parts have been bought yet
     pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()

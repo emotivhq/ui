@@ -92,7 +92,7 @@ class UserStatsTestHandler(unittest.TestCase):
             self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
                              str(response.status_code))
 
-        request = webapp2.Request.blank('/user/stats')
+        request = webapp2.Request.blank('/userstats')
         request.method = 'GET'
         request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
@@ -101,9 +101,9 @@ class UserStatsTestHandler(unittest.TestCase):
         json_response = json.loads(response.body)
 
         # Verify that this user has created the right number of giftstarts
-        self.assertEqual(giftstarts_created, json_response.get(test_gs['gift_champion_uid']).get('giftstarts'),
+        self.assertEqual(giftstarts_created, len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts')),
                          "Should report the right number of giftstarts created, expected " + str(giftstarts_created) +
-                         ", reported was " + json_response.get(test_gs['gift_champion_uid']).get('giftstarts'))
+                         ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts'))))
 
     def test_get_number_of_pitchins(self):
         test_gs = example_giftstart
@@ -127,7 +127,7 @@ class UserStatsTestHandler(unittest.TestCase):
         self.fake_payment('1', 'f1234', [3, 4, 5])
         self.fake_payment('1', 'f1234', [7])
 
-        request = webapp2.Request.blank('/user/stats')
+        request = webapp2.Request.blank('/userstats')
         request.method = 'GET'
         request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
@@ -136,9 +136,9 @@ class UserStatsTestHandler(unittest.TestCase):
         json_response = json.loads(response.body)
 
         # Verify that it reports the right number of pitchins
-        self.assertEqual(num_pitchins, json_response.get(test_gs['gift_champion_uid']).get('giftstarts'),
+        self.assertEqual(num_pitchins, len(json_response.get(test_gs['gift_champion_uid']).get('pitchins')),
                          "Should report the right number of giftstarts created, expected " + str(num_pitchins) +
-                         ", reported was " + json_response.get(test_gs['gift_champion_uid']).get('giftstarts'))
+                         ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('pitchins'))))
 
     def fake_payment(self, gsid, uid, parts):
         # Create test token

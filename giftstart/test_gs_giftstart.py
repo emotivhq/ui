@@ -5,7 +5,6 @@ import os
 if __file__.split('/')[-1] == 'test_gs_giftstart.py':
     os.chdir('..')
 
-
 import unittest
 import webapp2
 import json
