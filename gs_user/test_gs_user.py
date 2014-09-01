@@ -159,4 +159,4 @@ class UserStatsTestHandler(unittest.TestCase):
                 'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
-        request.get_response(pay_api.API)
+        request.get_response(pay_api.api)

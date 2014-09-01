@@ -112,8 +112,7 @@ class PayTestHandlers(unittest.TestCase):
             }
         })
 
-        response = request.get_response(pay_api.API)
-
+        response = request.get_response(pay_api.api)
         self.assertEqual(response.status_code, 200, "Should accept payment, expected 200, response was " +
                          str(response.status_code))
         self.assertNotIn('stripe-error', response.json, "Should accept payment, expected 'stripe-error' not to be in "
@@ -149,8 +148,7 @@ class PayTestHandlers(unittest.TestCase):
             }
         })
 
-        response = request.get_response(pay_api.API)
-
+        response = request.get_response(pay_api.api)
         self.assertEqual(response.status_code, 200, "Should accept payment, expected 200, response was " +
                          str(response.status_code))
         self.assertNotIn('stripe-error', response.json, "Should accept payment, expected 'stripe-error' not to be in "
@@ -186,7 +184,7 @@ class PayTestHandlers(unittest.TestCase):
         }
         })
 
-        response = request.get_response(pay_api.API)
+        response = request.get_response(pay_api.api)
 
         self.assertEqual(response.status_code, 400, "Shouldn't allow purchase of already bought piece, expected 400, "
                                                     "response was " + str(response.status_code))

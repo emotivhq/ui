@@ -58,8 +58,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
                    giftstart.overlay_rows / giftstart.overlay_columns
     try:
 
-        desc = "GiftStarter #{gsid} parts {parts}".format(
-            {'gsid': gsid, 'parts': str(parts)})
+        desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
         charge = stripe.Charge.create(amount=total_charge, currency='usd',
                                       card=stripe_response['id'],
                                       description=desc)

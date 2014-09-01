@@ -39,4 +39,4 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(pitchin_dicts))
 
 
-API = webapp2.WSGIApplication([('/pay', PayHandler)], debug=True)
+api = webapp2.WSGIApplication([('/pay', PayHandler)], debug=True)
