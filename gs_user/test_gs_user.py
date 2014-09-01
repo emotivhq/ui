@@ -104,6 +104,9 @@ class UserStatsTestHandler(unittest.TestCase):
         self.assertEqual(giftstarts_created, len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts')),
                          "Should report the right number of giftstarts created, expected " + str(giftstarts_created) +
                          ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts'))))
+        self.assertIn('name',
+                      json_response[test_gs['gift_champion_uid']].keys(),
+                      "Response should contain user's name")
 
     def test_get_number_of_pitchins(self):
         test_gs = example_giftstart

@@ -17,6 +17,10 @@ GiftStarterApp.service('UserService', [
 
         var self = this;
 
+        this.getUser = function(uid) {
+
+        };
+
         this.registerLogin = function(uid, profileImageUrl, token, onMailingList, name) {
             mixpanel.identify(uid);
             mixpanel.people.set({'$last_login': new Date()});
@@ -33,7 +37,6 @@ GiftStarterApp.service('UserService', [
 
             $rootScope.$broadcast('login-success');
         };
-
 
         this.logout = function() {
             if (self.loginService === 'facebook') {
@@ -54,12 +57,6 @@ GiftStarterApp.service('UserService', [
             $cookieStore.remove('token');
 
             $rootScope.$broadcast('logout-success');
-        };
-
-        this.checkIfStripeCustomer = function() {
-            $http({method: 'POST', url: '/pay', data: {action: 'is-existing-customer', uid: self.uid}})
-                .success(function(response) {self.isStripeCustomer = response.isStripeCustomer})
-                .error(function() {console.log('Failed to determine if stripe customer.')});
         };
 
         $rootScope.$on('facebook-login-success', facebookLoggedIn);
@@ -92,6 +89,12 @@ GiftStarterApp.service('UserService', [
             self.registerLogin.apply(this, $window.loginDeets);
             self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
         }
+    }
+]);
+
+GiftStarterApp.controller('UserController', [
+            'UserService',
+    function(UserService) {
 
     }
 ]);

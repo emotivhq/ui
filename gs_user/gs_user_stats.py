@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
+from gs_user import User
 
 
 def filter_giftstarts(uid, giftstarts):
@@ -28,16 +29,19 @@ def get_stats(uids):
     :return: dicts of stats of the following structure
 
     {'f1234': {'giftstarts': [{giftstart_data}, ...],
-               'pitchins': [{pitchin_data}, ...]},
+               'pitchins': [{pitchin_data}, ...],
+               'name': 'flomae'},
      't1234': {...}
     }
     """
     # Handle singular uid also
     uids = uids if type(uids) == list else [uids]
 
+    users = User.query(User.uid.IN(uids)).fetch()
     pitchins = PitchIn.query(PitchIn.uid.IN(uids)).fetch()
     giftstarts = GiftStart.query(GiftStart.gift_champion_uid.IN(uids)).fetch()
 
-    return {uid: {'pitchins': filter_pitchins(uid, pitchins),
-                  'giftstarts': filter_giftstarts(uid, giftstarts)} for
-            uid in uids}
+    return {user.uid: {'name': user.name,
+                       'pitchins': filter_pitchins(user.uid, pitchins),
+                       'giftstarts': filter_giftstarts(user.uid, giftstarts)}
+            for user in users}

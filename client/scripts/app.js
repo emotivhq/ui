@@ -32,6 +32,7 @@ GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
     $http.get('/templates/angular/faq.html', {cache: $templateCache});
     $http.get('/templates/angular/giftstart.html', {cache: $templateCache});
+    $http.get('/templates/angular/user.html', {cache: $templateCache});
     $http.get('/templates/angular/giftstart-create-campaign.html', {cache: $templateCache});
     $http.get('/templates/angular/login-popover.html', {cache: $templateCache});
     $http.get('/templates/angular/note-popover.html', {cache: $templateCache});
