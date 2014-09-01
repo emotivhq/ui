@@ -56,7 +56,4 @@ GiftStarterApp.service('FacebookService', [
             ga('send', 'event', 'share campaign', 'facebook');
             ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id});
         };
-
-//        ezfb.getLoginStatus(this.loginCallback);
-
 }]);

@@ -141,6 +141,9 @@ GiftStarterApp.service('GiftStartService', [
 
         this.createGiftStart = function() {
             Analytics.track('campaign', 'created');
+            // Check to see that name is populated (for fb-login it is not yet)
+            if (!self.gcName) {self.gcName = UserService.name}
+
             self.giftStart = self.buildGiftStart();
             $location.path('/giftstart');
             self.pitchInsInitialized = false;
