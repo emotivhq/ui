@@ -6,6 +6,7 @@ import json
 from gs_user_core import update_or_create, get_user
 from gs_user_stats import get_stats
 from UserLogin import UserLogin
+from render_app import render_app
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -18,6 +19,13 @@ class StatsHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(get_stats(uids)))
         else:
             self.response.set_status(400, "Expected list of UIDs")
+
+
+class UserPageHandler(webapp2.RequestHandler):
+    def get(self):
+        """ A request for data about a specific user
+        """
+        self.response.write(render_app(self.request))
 
 
 class UserHandler(webapp2.RequestHandler):
@@ -92,5 +100,6 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
-api = webapp2.WSGIApplication([('/user.*', UserHandler)], debug=True)
+api = webapp2.WSGIApplication([('/user/*', UserHandler)], debug=True)
 stats = webapp2.WSGIApplication([('/userstats', StatsHandler)], debug=True)
+user_page = webapp2.WSGIApplication([('/user', UserPageHandler)], debug=True)
