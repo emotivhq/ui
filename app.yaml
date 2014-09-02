@@ -23,6 +23,8 @@ handlers:
 - url: /reports
   script: reports.handler
   login: admin
+- url: /share
+  script: share.email_share_handler
 
 # Client static asset urls
 - url: /favicon\.ico
