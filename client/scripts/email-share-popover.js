@@ -4,8 +4,8 @@
 
 
 GiftStarterApp.controller('EmailSharePopoverController', [
-            '$scope',
-    function($scope) {
+            '$scope','PopoverService','$http',
+    function($scope,  PopoverService,  $http) {
 
         $scope.toEmails = '';
         $scope.fromEmail = '';
