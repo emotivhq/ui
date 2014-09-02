@@ -49,7 +49,7 @@ GiftStarterApp.service('PopoverService', [
         $rootScope.$on('$locationChangeStart', function(event, next, current) {
             var hash = $location.hash();
             if (self.currentLocation === '') {
-                if ((hash == 'login') || (hash == 'note')) {
+                if ((hash == 'login') || (hash == 'note') || (hash == 'email-share')) {
                     self.setPopover(hash);
                 }
             } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) + 1)) {

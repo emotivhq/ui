@@ -491,8 +491,12 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.emailShare = function() {
             Analytics.track('campaign', 'email share from campaign');
-            $window.location.href = "mailto:?subject=" + $scope.mailSubject +
-                "&body=" + $scope.mailBody();
+            if (device.desktop()) {
+                $location.hash("email-share");
+            } else {
+                $window.location.href = "mailto:?subject=" + $scope.mailSubject +
+                    "&body=" + $scope.mailBody();
+            }
         };
 
         $scope.facebookShare = function() {
