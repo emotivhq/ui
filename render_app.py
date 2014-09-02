@@ -49,11 +49,12 @@ def render_app_with_giftstart(request):
             'page_title': gs.giftstart_title,
             'page_url': request.path_url + "?gs-id=" + str(gsid),
             'page_description': gs.giftstart_description,
-            'image_url': 'http://storage.googleapis.com/giftstarter-pictures/p/' + str(gsid) + '.jpg',
+            'image_url': gs.product_img_url.replace('https://', 'http://'),
+            'secure_image_url': gs.product_img_url,
             'googleanalytics_key': config['googleanalytics']['key'],
             'mixpanel_key': config['mixpanel']['key'],
             'heap_key': config['heap']['key'],
-            }
+        }
         response = frame_template.render(render_values)
     else:
         response = 'Error: 404<br>Resource not found!  Go to GiftStarter homepage via <a href="http://giftstarter.co">this link</a>.'
