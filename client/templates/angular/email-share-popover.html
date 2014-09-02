@@ -1,11 +1,17 @@
 <div class="email-share-popover" ng-controller="EmailSharePopoverController">
     <h1 class="white">Email Share!</h1>
-    <p>To: (separate emails with commas or semicolons)</p>
-    <textarea ng-model="toEmails"></textarea>
-    <p>From:</p>
-    <input type="email" ng-model="fromEmail"/>
-    <textarea ng-model="message" placeholder="Check out this baller campaign!">
-    </textarea>
+    <div>
+        <label>To: (separate emails with commas or semicolons)</label>
+        <textarea ng-model="toEmails"></textarea>
+    </div>
+    <div>
+        <label>From:</label>
+        <input type="email" ng-model="fromEmail"/>
+    </div>
+    <div>
+        <textarea class="message" ng-model="message" placeholder="Check out this baller campaign!">
+        </textarea>
+    </div>
     <button class="large white-border" ng-click="submit()">Send!</button>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>
