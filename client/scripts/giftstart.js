@@ -388,9 +388,9 @@ GiftStarterApp.service('GiftStartService', [
 
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$timeout','FacebookService','TwitterService','GooglePlusService',
-            'Analytics','UserService',
+            'Analytics','UserService','$window',
     function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService,
-             Analytics,  UserService) {
+             Analytics,  UserService,  $window) {
 
         Analytics.track('campaign', 'controller created');
 
@@ -491,6 +491,8 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.emailShare = function() {
             Analytics.track('campaign', 'email share from campaign');
+            $window.location.href = "mailto:?subject=" + $scope.mailSubject +
+                "&body=" + $scope.mailBody();
         };
 
         $scope.facebookShare = function() {
