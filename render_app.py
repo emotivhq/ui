@@ -23,6 +23,7 @@ def render_app(request):
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
 
     response = frame_template.render({
+        'product_api_url': config['product_api_url'],
         'js_insert': js_insert,
         'image_url': request.path_url + '/assets/logo_square.png',
         'page_url': request.path_url,

@@ -25,6 +25,7 @@
     "angular-easyfb": "~1.0.0",
     "angular-mocks": "latest",
     "angular-payments": "latest",
-    "angular-cookies": "latest"
+    "angular-cookies": "latest",
+    "xdomain": "~0.6.13"
   }
 }
