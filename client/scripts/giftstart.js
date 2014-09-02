@@ -410,10 +410,9 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.newGcName = UserService.name;
         }
 
-        $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
+        $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
         $scope.mailBody= function() {
-            return "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
-                + GiftStartService.giftStart.gsid;
+            return encodeURIComponent("Seriously, it's the bee's knees.\n\n" + $location.absUrl());
         };
 
         $scope.period = [
