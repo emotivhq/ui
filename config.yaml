@@ -1,5 +1,6 @@
 
 team_notification_email:  'team@giftstarter.co'
+product_api_url:          'https://product-dev-gift-starter.appspot.com'
 
 app_url:                  'https://www.giftstarter.co'
 email_url:                'http://email.giftstarter.co'
