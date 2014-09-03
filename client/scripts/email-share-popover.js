@@ -11,8 +11,7 @@ GiftStarterApp.controller('EmailSharePopoverController', [
 
         $scope.toEmails = '';
         $scope.fromEmail = UserService.email;
-        $scope.message = "Hey, check out this GiftStart, it's the bee's knees!\n"
-            + window.location.href.split("#")[0] + "\n\n" + UserService.name;
+        $scope.message = "Hey, check out this GiftStart, it's the bee's knees!\n\n" + UserService.name;
         $scope.formValid = true;
 
         $scope.sending = false;

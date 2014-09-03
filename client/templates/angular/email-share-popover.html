@@ -12,6 +12,7 @@
         <textarea class="message" ng-model="message" placeholder="Check out this baller campaign!">
         </textarea>
     </div>
+    <span class="error" ng-hide="formValid">Invalid email!</span>
     <button class="large white-border" ng-click="submit()">Send!</button>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

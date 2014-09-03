@@ -30,7 +30,8 @@ def email_share(to, sender, message, gsid, sender_name):
                      'subject': "Check Out This Awesome GiftStart!",
                      'sender': sender, 'to': to,
                      'template_name': "campaign_share_email",
-                     'mime_type': 'HTML',
+                     'mime_type': 'html',
+                     'img_url': gs.product_img_url,
                      'template_kwargs': {
                          'message': message,
                          'sender_name': sender_name,
