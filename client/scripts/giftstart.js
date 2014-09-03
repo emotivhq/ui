@@ -109,6 +109,9 @@ GiftStarterApp.service('GiftStartService', [
                             Analytics.track('campaign', 'overlay part toggled');
                             self.updateSelected();
                         }
+                        if (parts[ti].bought) {
+                            self.goToUserPage(parts[ti].uid);
+                        }
                     }
                 }
 
@@ -284,6 +287,10 @@ GiftStarterApp.service('GiftStartService', [
                 .error(function() {Analytics.track('campaign', 'campaign update failed')})
         };
 
+        this.goToUserPage = function(uid) {
+            $location.path('user').search('').search('uid', uid);
+        };
+
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
@@ -344,6 +351,7 @@ GiftStarterApp.service('GiftStartService', [
                         self.giftStart.parts[partId].bought = true;
                         self.giftStart.parts[partId].selected = false;
                         self.giftStart.parts[partId].img = pitchins[i].img;
+                        self.giftStart.parts[partId].uid = pitchins[i].uid;
                     }
                 }
             }
@@ -516,9 +524,7 @@ GiftStarterApp.controller('GiftStartController', [
             Analytics.track('campaign', 'product link clicked');
         };
 
-        $scope.goToUserPage = function(uid) {
-            $location.path('user').search('').search('uid', uid);
-        };
+        $scope.goToUserPage = GiftStartService.goToUserPage;
 
         $scope.$on('login-success', function() {
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
