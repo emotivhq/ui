@@ -102,11 +102,12 @@ GiftStarterApp.service('UserService', [
 ]);
 
 GiftStarterApp.controller('UserController', [
-            '$scope','UserService','$location',
-    function($scope,  UserService,  $location) {
+            '$scope','UserService','$location','Analytics',
+    function($scope,  UserService,  $location,  Analytics) {
         $scope.user = {};
 
         $scope.goToCampaign = function(index) {
+            Analytics.track('client', 'go to campaign from user page');
             $location.path('giftstart').search('uid', null).search('gs-id', $scope.user.giftstarts[index].giftstart.gsid);
         };
 
