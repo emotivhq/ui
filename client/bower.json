@@ -26,6 +26,7 @@
     "angular-mocks": "latest",
     "angular-payments": "latest",
     "angular-cookies": "latest",
-    "xdomain": "~0.6.13"
+    "xdomain": "~0.6.13",
+    "devicejs": "*"
   }
 }

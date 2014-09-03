@@ -4,10 +4,12 @@ import yaml
 import jinja2
 from giftstart import GiftStart
 import gs_user
+import os
 
 secrets = yaml.load(open('secret.yaml'))
 config = yaml.load(open('config.yaml'))
 
+DEPLOYED = not os.environ['SERVER_SOFTWARE'].startswith('Development')
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
@@ -23,6 +25,7 @@ def render_app(request):
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
 
     response = frame_template.render({
+        'deployed': DEPLOYED,
         'product_api_url': config['product_api_url'],
         'js_insert': js_insert,
         'image_url': request.path_url + '/assets/logo_square.png',
@@ -46,6 +49,8 @@ def render_app_with_giftstart(request):
     if len(gss) > 0:
         gs = gss[0]
         render_values = {
+            'deployed': DEPLOYED,
+            'product_api_url': config['product_api_url'],
             'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
             'page_title': gs.giftstart_title,
             'page_url': request.path_url + "?gs-id=" + str(gsid),

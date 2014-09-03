@@ -40,6 +40,7 @@ GiftStarterApp.run(function($http, $templateCache) {
     $http.get('/templates/angular/overlay.html', {cache: $templateCache});
     $http.get('/templates/angular/popover.html', {cache: $templateCache});
     $http.get('/templates/angular/thanks-popover.html', {cache: $templateCache});
+    $http.get('/templates/angular/email-share-popover.html', {cache: $templateCache});
 });
 
 GiftStarterApp.config(

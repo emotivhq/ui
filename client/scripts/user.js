@@ -14,6 +14,7 @@ GiftStarterApp.service('UserService', [
         this.isStripeCustomer = false;
         this.loginService = '';
         this.onMailinList = false;
+        this.email = '';
 
         var self = this;
 
