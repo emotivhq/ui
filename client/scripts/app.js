@@ -5,7 +5,7 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch', 'ngSanitize']);
-console.log("ver30");
+console.log("ver32");
 
 GiftStarterApp.config([
             '$routeProvider','$locationProvider','$httpProvider',
@@ -15,7 +15,7 @@ GiftStarterApp.config([
             .when('/create', {templateUrl: 'templates/angular/giftstart-create-campaign.html',
                 reloadOnSearch: false})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .when('/user', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
+            .when('/u', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
             .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
             .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
             .when('/privacy', {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})

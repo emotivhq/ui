@@ -16,7 +16,7 @@
             <h2>{{user.pitchins.length}} PitchIns</h2>
             <div class="pitchins">
                 <div class="pitchin" ng-repeat="pi in user.pitchins">
-                    <p>{{pi.note}}</p>
+                    <p ng-click="goToPitchin($index)"><span class="title">{{pitchin.gs_title}}</span>{{pi.note}}</p>
                 </div>
             </div>
         </article>

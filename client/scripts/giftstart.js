@@ -290,7 +290,7 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.goToUserPage = function(uid) {
-            $location.path('user').search('').search('uid', uid);
+            $location.path('u').search('').search('uid', uid);
         };
 
         this.pitchIn = function() {

@@ -66,11 +66,13 @@ GiftStarterApp.controller('HomeController', [
     }
 ]);
 
-GiftStarterApp.directive('gsHotCampaign', function(Analytics) {
+GiftStarterApp.directive('gsHotCampaign', function(Analytics, $location) {
     function link(scope, element, attrs) {
         scope.goToUrl = function() {
             Analytics.track("client", "hot campaigns clicked");
-            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid, "_blank");
+//            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid);
+            $location.path('giftstart').search('').search('gs-id',
+                scope.campaign.giftstart.gsid)
         };
     }
 

@@ -23,6 +23,12 @@ def filter_pitchins(uid, pitchins):
     return [pi.ext_dictify() for pi in pitchins if pi.uid == uid]
 
 
+def pitchin_attach_title(pitchin_dict, giftstarts):
+    gsid = pitchin_dict.get('gsid')
+    gs = filter(lambda g: g.gsid == gsid, giftstarts)[0]
+    return dict(pitchin_dict.items() + [('gs_title', gs.giftstart_title)])
+
+
 def get_stats(uids):
     """
     :param uids: List of uids for which to fetch stats
@@ -39,10 +45,15 @@ def get_stats(uids):
 
     users = User.query(User.uid.IN(uids)).fetch()
     pitchins = PitchIn.query(PitchIn.uid.IN(uids)).fetch()
+    pi_giftstarts = GiftStart.query().fetch()
     giftstarts = GiftStart.query(GiftStart.gift_champion_uid.IN(uids)).fetch()
 
-    return {user.uid: {'name': user.name,
-                       'img_url': user.cached_profile_image_url,
-                       'pitchins': filter_pitchins(user.uid, pitchins),
-                       'giftstarts': filter_giftstarts(user.uid, giftstarts)}
-            for user in users}
+    stats = {user.uid: {'name': user.name,
+                        'img_url': user.cached_profile_image_url,
+                        'pitchins':
+                            [pitchin_attach_title(pi, pi_giftstarts)
+                             for pi in filter_pitchins(user.uid, pitchins)],
+                        'giftstarts': filter_giftstarts(user.uid, giftstarts)}
+             for user in users}
+
+    return stats
