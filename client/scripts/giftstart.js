@@ -110,6 +110,8 @@ GiftStarterApp.service('GiftStartService', [
                             self.updateSelected();
                         }
                         if (parts[ti].bought) {
+                            Analytics.track('client',
+                                'go to user page from overlay');
                             self.goToUserPage(parts[ti].uid);
                         }
                     }
@@ -524,7 +526,10 @@ GiftStarterApp.controller('GiftStartController', [
             Analytics.track('campaign', 'product link clicked');
         };
 
-        $scope.goToUserPage = GiftStartService.goToUserPage;
+        $scope.goToUserPage = function(uid) {
+            Analytics.track('client', 'go to user page from comments');
+            GiftStartService.goToUserPage(uid);
+        };
 
         $scope.$on('login-success', function() {
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
