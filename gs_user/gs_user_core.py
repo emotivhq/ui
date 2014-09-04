@@ -6,6 +6,7 @@ import storage.image_cache
 import json
 import requests
 from UserLogin import UserLogin
+import base64
 
 
 def save_email(uid, email):
@@ -111,7 +112,9 @@ def validate(uid, token, path):
     if user:
         if token_pointer_map[uid[0]](user[0]) == token:
             UserLogin.register_login(uid, path)
-            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url, 'token': token,
-                      'on_mailing_list': user[0].subscribed_to_mailing_list, 'name': user[0].name}
+            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url,
+                      'token': token,
+                      'on_mailing_list': user[0].subscribed_to_mailing_list,
+                      'name': base64.urlsafe_b64encode(user[0].name)}
 
     return result

@@ -19,7 +19,8 @@ frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
 
 
 def render_app(request):
-    js_insert = remember_user(request.cookies, request.path + '?' + request.query_string)
+    js_insert = remember_user(request.cookies, request.path + '?' +
+                              request.query_string)
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
     js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
@@ -39,7 +40,8 @@ def render_app(request):
 
 
 def render_app_with_giftstart(request):
-    js_insert = remember_user(request.cookies, request.path + '?' + request.query_string)
+    js_insert = remember_user(request.cookies, request.path + '?' +
+                              request.query_string)
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
     js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"

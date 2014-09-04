@@ -95,6 +95,8 @@ GiftStarterApp.service('UserService', [
         $rootScope.$on('googleplus-logout-success', self.registerLogout);
 
         if ($window.loginDeets) {
+            // base64 decode the name - for unicode chars in names
+            $window.loginDeets[4] =  decodeURIComponent(escape(atob($window.loginDeets[4])));
             self.registerLogin.apply(this, $window.loginDeets);
             self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
         }
