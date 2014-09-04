@@ -242,6 +242,6 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
         $timeout(function() {
             root.querySelector('.block.image').scrollIntoView();
-        }, 1000);
+        }, 250);
     }
 ]);
