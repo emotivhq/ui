@@ -41,7 +41,7 @@
                     <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}"/>
                 </div>
                 <div class="product-details">
-                    <h3 class="title" ng-click="goToProduct($index);">{{product.title}}</h3>
+                    <h3 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h3>
                     <p class="retailer">From {{product.retailer}}</p>
                     <p class="description" ng-bind-html="product.description"></p>
                     <p class="price block">${{product.price / 100 | number : 2}}</p>

@@ -393,8 +393,6 @@ GiftStarterApp.service('GiftStartService', [
                 console.log('fetching campaign ' + gsid);
                 self.fetchGiftStart(gsid);
             }
-
-            console.log("Route changed, seen in giftstart service");
             self.syncPitchIns('GiftStartService');
         });
 

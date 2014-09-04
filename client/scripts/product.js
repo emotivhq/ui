@@ -178,11 +178,10 @@ GiftStarterApp.directive('gsProductSearch',
             scope.showProductDetails = function(index) {
                 Analytics.track('product', 'show product details');
                 scope.hideProductDetails();
+                scope.selectedProduct = index;
                 scope.selectedProducts[index].selected = true;
 
                 var root = angular.element(document.querySelector('#search-products-section'))[0];
-                window.mroot = root;
-                console.log(root);
 
                 // Product div animates as it expands, so need to infer height
                 // from initial state (2x height/width)
@@ -203,11 +202,10 @@ GiftStarterApp.directive('gsProductSearch',
                 });
             };
 
-            scope.goToProduct = function(index) {
-                if (scope.selectedProduct == index) {
-                    $window.open(scope.selectedProducts[index].url, '_blank');
-                } else {
-                    scope.selectedProduct = index;
+            scope.goToProduct = function($index, $event) {
+                if (scope.selectedProduct == $index) {
+                    $window.open(scope.selectedProducts[$index].url, '_blank');
+                    $event.stopPropagation();
                 }
             };
 

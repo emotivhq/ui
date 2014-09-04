@@ -42,7 +42,6 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
 
-        console.log($scope.product);
         if (ProductService.product.product_url == "") {
             if (!AppStateService.state.createSession) {
                 // User navigated directly here, direct them to home page
