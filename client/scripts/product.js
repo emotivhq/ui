@@ -53,6 +53,7 @@ GiftStarterApp.service('ProductService', [
         this.searchProducts = function(search, retailer) {
             var query = '?search=' + encodeURIComponent(search) + '&retailer=' + retailer;
             Analytics.track('product', 'search submitted');
+            Analytics.track('product', 'searched retailer ' + retailer);
             $http({method: 'GET', url: 'https://product-dev-gift-starter.appspot.com' + query})
                 .success(self.fetchSuccess)
                 .error(function() {

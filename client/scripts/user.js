@@ -102,12 +102,20 @@ GiftStarterApp.service('UserService', [
 ]);
 
 GiftStarterApp.controller('UserController', [
-            '$scope','UserService','$location',
-    function($scope,  UserService,  $location) {
+            '$scope','UserService','$location','Analytics',
+    function($scope,  UserService,  $location,  Analytics) {
         $scope.user = {};
 
         $scope.goToCampaign = function(index) {
-            $location.path('giftstart').search('uid', null).search('gs-id', $scope.user.giftstarts[index].giftstart.gsid);
+            Analytics.track('client', 'go to campaign from user page');
+            $location.path('giftstart').search('').search('gs-id',
+                $scope.user.giftstarts[index].giftstart.gsid);
+        };
+
+        $scope.goToPitchin = function(index) {
+            Analytics.track('client', 'go to pitchin from user page');
+            $location.path('giftstart').search('').search('gs-id',
+                $scope.user.pitchins[index].gsid);
         };
 
         UserService.getUser($location.search()['uid'], function(data) {

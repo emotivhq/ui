@@ -4,7 +4,7 @@
 
 GiftStarterApp.service('GiftStartService', [
             '$http','$location','UserService','$rootScope','$filter','PopoverService','$window','Analytics',
-            'AppStateService',
+            'AppStateService','$timeout',
     function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics,
              AppStateService) {
 
@@ -64,6 +64,20 @@ GiftStarterApp.service('GiftStartService', [
 
         var self = this;
 
+        this.createGiftStart = function() {
+            Analytics.track('campaign', 'created');
+            // Check to see that name is populated (for fb-login it is not yet)
+            if (!self.gcName) {self.gcName = UserService.name}
+
+            self.giftStart = self.buildGiftStart();
+            $location.path('/giftstart');
+            self.pitchInsInitialized = false;
+            $http({method: 'POST', url: '/giftstart/api',
+                data: {giftstart: self.giftStart, action: 'create'}})
+                .success(function(data) {self.inflateGiftStart(data['giftstart'])})
+                .error(function() {Analytics.track('campaign', 'campaign create failed')});
+        };
+
         this.buildGiftStart = function() {
             return {
                 title: self.title,
@@ -109,6 +123,11 @@ GiftStarterApp.service('GiftStartService', [
                             Analytics.track('campaign', 'overlay part toggled');
                             self.updateSelected();
                         }
+                        if (parts[ti].bought) {
+                            Analytics.track('client',
+                                'go to user page from overlay');
+                            self.goToUserPage(parts[ti].uid);
+                        }
                     }
                 }
 
@@ -139,30 +158,6 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart.parts.map(disablePart);
         };
 
-        this.createGiftStart = function() {
-            Analytics.track('campaign', 'created');
-            // Check to see that name is populated (for fb-login it is not yet)
-            if (!self.gcName) {self.gcName = UserService.name}
-
-            self.giftStart = self.buildGiftStart();
-            $location.path('/giftstart');
-            self.pitchInsInitialized = false;
-            $http({method: 'POST', url: '/giftstart/api',
-                data: {giftstart: self.giftStart, action: 'create'}})
-                .success(self.fetchSuccess)
-                .error(self.createFailure);
-        };
-
-        this.enableGiftStart = function() {
-            Analytics.track('campaign', 'campaign enabled');
-            self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
-                self.giftStart.product.total_price);
-            self.updateSelected();
-            self.syncPitchIns('GiftStartService');
-        };
-
-        this.createFailure = function() {console.log("Failed to create GiftStart.")};
-
         function getSelectedParts() {
             var selected = [];
             for (var i = 0; i < self.giftStart.parts.length; i++) {
@@ -188,16 +183,24 @@ GiftStarterApp.service('GiftStartService', [
 
         this.fetchGiftStart = function(gsid) {
             $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
-                .success(self.fetchSuccess)
-                .error(function (){console.log("Failed to fetch GiftStart.");});
+                .success(function(data) {self.inflateGiftStart(data['giftstart'])})
+                .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
         };
 
-        this.fetchSuccess = function(data) {
-            Analytics.track('campaign', 'fetched');
-            self.giftStart = data['giftstart'];
-            self.enableGiftStart();
+        this.inflateGiftStart = function(giftstart) {
+            Analytics.track('campaign', 'campaign enabled');
+
+            self.giftStart = giftstart;
+
+            self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
+                self.giftStart.product.total_price);
+            self.updateSelected();
+
+            $location.search('gs-id', giftstart.gsid);
+
+            self.syncPitchIns('GiftStartService');
+
             $rootScope.$broadcast('giftstart-loaded');
-            $location.search('gs-id', self.giftStart.gsid);
         };
 
         this.saveNote = function(noteText) {self.payment.note = noteText};
@@ -284,6 +287,10 @@ GiftStarterApp.service('GiftStartService', [
                 .error(function() {Analytics.track('campaign', 'campaign update failed')})
         };
 
+        this.goToUserPage = function(uid) {
+            $location.path('u').search('').search('uid', uid);
+        };
+
         this.pitchIn = function() {
             // Ensure they have selected more than $0 of the gift to pitch in
             if (self.giftStart.totalSelection > 0) {
@@ -344,10 +351,12 @@ GiftStarterApp.service('GiftStartService', [
                         self.giftStart.parts[partId].bought = true;
                         self.giftStart.parts[partId].selected = false;
                         self.giftStart.parts[partId].img = pitchins[i].img;
+                        self.giftStart.parts[partId].uid = pitchins[i].uid;
                     }
                 }
             }
-            if (!self.pitchInsInitialized) {
+            console.log(self);
+            if (!Boolean(self.pitchInsInitialized)) {
                 self.pitchInsInitialized = true;
                 $rootScope.$broadcast('pitch-ins-initialized');
             }
@@ -376,11 +385,23 @@ GiftStarterApp.service('GiftStartService', [
             }
         };
 
+        // Sync pitchins on route change (navigation, back, etc.)
+        $rootScope.$on('$routeChangeSuccess', function() {
+            self.pitchInsInitialized = false;
+            var gsid = $location.search()['gs-id'];
+            if (gsid){
+                console.log('fetching campaign ' + gsid);
+                self.fetchGiftStart(gsid);
+            }
+
+            console.log("Route changed, seen in giftstart service");
+            self.syncPitchIns('GiftStartService');
+        });
+
         // Check if giftstart was sent with page on init load
         if ($window.GIFTSTART) {
-            self.giftStart = $window.GIFTSTART.giftstart;
+            self.inflateGiftStart($window.GIFTSTART.giftstart);
             $rootScope.$broadcast('giftstart-loaded');
-            self.enableGiftStart();
         }
 
     }
@@ -403,6 +424,7 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.editingTitle = false;
         $scope.editingDescription = false;
         $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        $scope.pitchInsInitialized = false;
 
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
@@ -517,7 +539,8 @@ GiftStarterApp.controller('GiftStartController', [
         };
 
         $scope.goToUserPage = function(uid) {
-            $location.path('user').search('').search('uid', uid);
+            Analytics.track('client', 'go to user page from comments');
+            GiftStartService.goToUserPage(uid);
         };
 
         $scope.$on('login-success', function() {
@@ -561,17 +584,17 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
             $timeout($scope.updateSecondsLeft, 0);
         } else {
-            // Update this giftstart when the service updates it
-            $scope.$on('giftstart-loaded', function() {
-                $scope.giftStart = GiftStartService.giftStart;
-                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-                $timeout($scope.updateSecondsLeft, 0);
-            });
-            $scope.$on('giftstart-updated', function() {
-                $scope.giftStart = GiftStartService.giftStart;
-                $scope.updateSecondsLeft();
-            });
         }
+        // Update this giftstart when the service updates it
+        $scope.$on('giftstart-loaded', function() {
+            $scope.giftStart = GiftStartService.giftStart;
+            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+            $timeout($scope.updateSecondsLeft, 0);
+        });
+        $scope.$on('giftstart-updated', function() {
+            $scope.giftStart = GiftStartService.giftStart;
+            $scope.updateSecondsLeft();
+        });
 
         imageInput.bind('change', $scope.updateImage);
 
