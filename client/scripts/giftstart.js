@@ -64,6 +64,20 @@ GiftStarterApp.service('GiftStartService', [
 
         var self = this;
 
+        this.createGiftStart = function() {
+            Analytics.track('campaign', 'created');
+            // Check to see that name is populated (for fb-login it is not yet)
+            if (!self.gcName) {self.gcName = UserService.name}
+
+            self.giftStart = self.buildGiftStart();
+            $location.path('/giftstart');
+            self.pitchInsInitialized = false;
+            $http({method: 'POST', url: '/giftstart/api',
+                data: {giftstart: self.giftStart, action: 'create'}})
+                .success(function(data) {self.inflateGiftStart(data['giftstart'])})
+                .error(function() {Analytics.track('campaign', 'campaign create failed')});
+        };
+
         this.buildGiftStart = function() {
             return {
                 title: self.title,
@@ -144,30 +158,6 @@ GiftStarterApp.service('GiftStartService', [
             self.giftStart.parts.map(disablePart);
         };
 
-        this.createGiftStart = function() {
-            Analytics.track('campaign', 'created');
-            // Check to see that name is populated (for fb-login it is not yet)
-            if (!self.gcName) {self.gcName = UserService.name}
-
-            self.giftStart = self.buildGiftStart();
-            $location.path('/giftstart');
-            self.pitchInsInitialized = false;
-            $http({method: 'POST', url: '/giftstart/api',
-                data: {giftstart: self.giftStart, action: 'create'}})
-                .success(self.fetchSuccess)
-                .error(self.createFailure);
-        };
-
-        this.enableGiftStart = function() {
-            Analytics.track('campaign', 'campaign enabled');
-            self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
-                self.giftStart.product.total_price);
-            self.updateSelected();
-            self.syncPitchIns('GiftStartService');
-        };
-
-        this.createFailure = function() {console.log("Failed to create GiftStart.")};
-
         function getSelectedParts() {
             var selected = [];
             for (var i = 0; i < self.giftStart.parts.length; i++) {
@@ -193,16 +183,24 @@ GiftStarterApp.service('GiftStartService', [
 
         this.fetchGiftStart = function(gsid) {
             $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
-                .success(self.fetchSuccess)
-                .error(function (){console.log("Failed to fetch GiftStart.");});
+                .success(function(data) {self.inflateGiftStart(data['giftstart'])})
+                .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
         };
 
-        this.fetchSuccess = function(data) {
-            Analytics.track('campaign', 'fetched');
-            self.giftStart = data['giftstart'];
-            self.enableGiftStart();
+        this.inflateGiftStart = function(giftstart) {
+            Analytics.track('campaign', 'campaign enabled');
+
+            self.giftStart = giftstart;
+
+            self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
+                self.giftStart.product.total_price);
+            self.updateSelected();
+
+            $location.search('gs-id', giftstart.gsid);
+
+            self.syncPitchIns('GiftStartService');
+
             $rootScope.$broadcast('giftstart-loaded');
-            $location.search('gs-id', self.giftStart.gsid);
         };
 
         this.saveNote = function(noteText) {self.payment.note = noteText};
@@ -402,9 +400,8 @@ GiftStarterApp.service('GiftStartService', [
 
         // Check if giftstart was sent with page on init load
         if ($window.GIFTSTART) {
-            self.giftStart = $window.GIFTSTART.giftstart;
+            self.inflateGiftStart($window.GIFTSTART.giftstart);
             $rootScope.$broadcast('giftstart-loaded');
-            self.enableGiftStart();
         }
 
     }
