@@ -2,17 +2,24 @@
 
 div.user-wrapper
   margin: 0 auto
-  width: 60em
+  width: 100%
+  padding: 3%
+  @media screen and (min-width: 60em)
+    width: 60em
   header
     margin-top: 2em
+    margin-left: 2em
+    text-indent: -2em
     img
-      max-width: 16em
+      max-width: 35%
       +border-radius(50%)
+      @media screen and (min-width: $phone-tablet-boundary)
+        max-width: 16em
     h1
-      display: inline-block
+      display: inline
 
   section
-    margin: 0 6em
+    margin: 0 10%
     article
       display: inline-block
       width: 44%
@@ -30,6 +37,7 @@ div.user-wrapper
           text-overflow: ellipsis
           span.title
             +transition(all, 0.2s)
+            text-decoration: underline
             font-weight: 600
         p:hover
           span.title
