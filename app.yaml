@@ -1,5 +1,5 @@
-application: www-dev-gift-starter
-version: 1
+application: gift-starter
+version: 26
 runtime: python27
 api_version: 1
 threadsafe: yes
