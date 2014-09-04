@@ -4,7 +4,7 @@
 
 GiftStarterApp.service('GiftStartService', [
             '$http','$location','UserService','$rootScope','$filter','PopoverService','$window','Analytics',
-            'AppStateService',
+            'AppStateService','$timeout',
     function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics,
              AppStateService) {
 
@@ -357,7 +357,8 @@ GiftStarterApp.service('GiftStartService', [
                     }
                 }
             }
-            if (!self.pitchInsInitialized) {
+            console.log(self);
+            if (!Boolean(self.pitchInsInitialized)) {
                 self.pitchInsInitialized = true;
                 $rootScope.$broadcast('pitch-ins-initialized');
             }
@@ -386,6 +387,19 @@ GiftStarterApp.service('GiftStartService', [
             }
         };
 
+        // Sync pitchins on route change (navigation, back, etc.)
+        $rootScope.$on('$routeChangeSuccess', function() {
+            self.pitchInsInitialized = false;
+            var gsid = $location.search()['gs-id'];
+            if (gsid){
+                console.log('fetching campaign ' + gsid);
+                self.fetchGiftStart(gsid);
+            }
+
+            console.log("Route changed, seen in giftstart service");
+            self.syncPitchIns('GiftStartService');
+        });
+
         // Check if giftstart was sent with page on init load
         if ($window.GIFTSTART) {
             self.giftStart = $window.GIFTSTART.giftstart;
@@ -413,6 +427,7 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.editingTitle = false;
         $scope.editingDescription = false;
         $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        $scope.pitchInsInitialized = false;
 
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
@@ -572,17 +587,17 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
             $timeout($scope.updateSecondsLeft, 0);
         } else {
-            // Update this giftstart when the service updates it
-            $scope.$on('giftstart-loaded', function() {
-                $scope.giftStart = GiftStartService.giftStart;
-                $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
-                $timeout($scope.updateSecondsLeft, 0);
-            });
-            $scope.$on('giftstart-updated', function() {
-                $scope.giftStart = GiftStartService.giftStart;
-                $scope.updateSecondsLeft();
-            });
         }
+        // Update this giftstart when the service updates it
+        $scope.$on('giftstart-loaded', function() {
+            $scope.giftStart = GiftStartService.giftStart;
+            $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+            $timeout($scope.updateSecondsLeft, 0);
+        });
+        $scope.$on('giftstart-updated', function() {
+            $scope.giftStart = GiftStartService.giftStart;
+            $scope.updateSecondsLeft();
+        });
 
         imageInput.bind('change', $scope.updateImage);
 

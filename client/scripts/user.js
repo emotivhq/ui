@@ -115,7 +115,7 @@ GiftStarterApp.controller('UserController', [
         $scope.goToPitchin = function(index) {
             Analytics.track('client', 'go to pitchin from user page');
             $location.path('giftstart').search('').search('gs-id',
-                $scope.user.pitchins[index].gsid).hash('comments');
+                $scope.user.pitchins[index].gsid);
         };
 
         UserService.getUser($location.search()['uid'], function(data) {
