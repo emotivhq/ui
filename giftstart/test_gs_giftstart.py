@@ -14,6 +14,7 @@ from gs_user import User
 from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
 import stripe
+import base64
 from pay import pay_api as pay_api
 
 secret = yaml.load(open('secret.yaml'))
@@ -25,8 +26,10 @@ from giftstart import giftstart_api
 
 example_giftstart = {
     'gift_champion_uid': 'f1234',
-    'title': 'test title what up',
-    'description': 'for every title there must be an equal and possibly related description.',
+    'title': 'Gonna put ' + base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw==') +
+             ' in the title also',
+    'description': 'I will just say this is in honor of ' +
+                   base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw=='),
     'special_notes': 'make it a race car',
     'product': {
         'product_url': 'http://yo.momma.com',
@@ -66,10 +69,12 @@ class GiftstartTestHandler(unittest.TestCase):
         # Insert user
         user = User()
         user.uid = 'f1234'
-        user.name = 'flomae'
+        user.name = base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw==')
         user.cached_profile_image_url = 'lol not a url'
         user.logged_in_with = 'facebook'
-        user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
+        user.facebook_token_set = FacebookTokenSet(access_token='x1234',
+                                                   expires=datetime.now() +
+                                                           timedelta(days=90))
         user.put()
 
     def tearDown(self):
