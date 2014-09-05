@@ -3,7 +3,7 @@
     <div class="search wrapper">
         <span class="inputs">
             <label class="block">To start, search for a product below:</label>
-            <input class="text-input" type="text" name="product-link" placeholder="Search terms or product URL" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><select ng-model="retailer" ng-init="retailer='all'">
+            <input class="text-input" type="text" name="product-link" placeholder="Product search terms" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><select ng-model="retailer" ng-init="retailer='all'">
                 <option value="all">All Retailers</option>
                 <option value="1800flowers">1-800-Flowers.com</option>
                 <option value="amazon">Amazon.com</option>
