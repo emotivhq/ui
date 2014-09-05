@@ -54,7 +54,9 @@ GiftStarterApp.controller('PayPopoverController', [
                 Analytics.track('pitchin', 'payment error');
             } else {
                 // Got stripe token, attach it to the current giftstart payment
-                Analytics.track('pitchin', 'payment submitted');
+                Analytics.track('pitchin', 'payment submitted',
+                    GiftStartService.giftStart.gsid.toString(),
+                    $scope.currentCharge);
                 GiftStartService.attachStripeResponse(response);
                 GiftStartService.payment.emailAddress = $scope.email;
                 GiftStartService.payment.subscribe = $scope.emailSubscribe;
