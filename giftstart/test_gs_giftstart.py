@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
+print(__file__)
 if __file__.split('/')[-1] == 'test_gs_giftstart.py':
     os.chdir('..')
 
