@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
+print('Running tests in path:\t' + __file__ + '\n')
 if __file__.split('/')[-1] == 'test_gs_giftstart.py':
     os.chdir('..')
 
@@ -91,14 +92,19 @@ class GiftstartTestHandler(unittest.TestCase):
         })
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 403, "Should reject due to invalid user details, expected 403, response "
-                                                    "was " + str(response.status_code))
+        self.assertEqual(response.status_code, 403, "Should reject due to "
+                                                    "invalid user details, "
+                                                    "expected 403, response "
+                                                    "was " +
+                         str(response.status_code))
 
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'GET'
         request.query_string = 'gs-id=1'
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 404, "Shouldn't have created a campaign, expected 404, response was " +
+        self.assertEqual(response.status_code, 404, "Shouldn't have created a "
+                                                    "campaign, expected 404, "
+                                                    "response was " +
                          str(response.status_code))
 
     def test_create_with_valid_user(self):
@@ -112,14 +118,18 @@ class GiftstartTestHandler(unittest.TestCase):
         })
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept created "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'GET'
         request.query_string = 'gs-id=1'
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should have created a campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should have created a "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
     def test_create_same_campaign_twice(self):
@@ -132,33 +142,43 @@ class GiftstartTestHandler(unittest.TestCase):
             'giftstart': example_giftstart,
         })
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept created "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept created "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'GET'
         request.query_string = 'gs-id=1'
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should have created first campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should have created first "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'GET'
         request.query_string = 'gs-id=2'
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 404, "Shouldn't have created a second campaign, expected 404, response "
-                                                    "was " + str(response.status_code))
+        self.assertEqual(response.status_code, 404, "Shouldn't have created a "
+                                                    "second campaign, expected "
+                                                    "404, response was " +
+                         str(response.status_code))
 
     def test_get_nonexistent_campaign(self):
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'GET'
         request.query_string = 'gs-id=12341234123'
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 404, "Campaign should not exist, expected 404, response was " +
+        self.assertEqual(response.status_code, 404, "Campaign should not exist,"
+                                                    " expected 404, response "
+                                                    "was " +
                          str(response.status_code))
 
     def test_update_campaign(self):
@@ -171,7 +191,9 @@ class GiftstartTestHandler(unittest.TestCase):
             'giftstart': example_giftstart,
         })
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept created "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         new_giftstart = {'gsid': '1'}
@@ -187,21 +209,30 @@ class GiftstartTestHandler(unittest.TestCase):
             'giftstart': new_giftstart,
         })
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept campaign updates, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept campaign "
+                                                    "updates, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         request = webapp2.Request.blank('/giftstart/api')
         request.method = 'GET'
         request.query_string = 'gs-id=1'
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Campaign should still exist, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Campaign should still "
+                                                    "exist, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
         response_giftstart = json.loads(response.body)['giftstart']
-        self.assertEqual(new_giftstart['gsid'], response_giftstart['gsid'], "gsid should be {gsid1}, was {gsid2}"
-                         .format(gsid1=new_giftstart['gsid'], gsid2=response_giftstart['gsid']))
-        self.assertEqual(new_giftstart['title'], response_giftstart['title'], "title should be {title1}, was {title2}"
-                         .format(title1=new_giftstart['title'], title2=response_giftstart['title']))
-        self.assertEqual(new_giftstart['description'], response_giftstart['description'],
+        self.assertEqual(new_giftstart['gsid'], response_giftstart['gsid'],
+                         "gsid should be {gsid1}, was {gsid2}"
+                         .format(gsid1=new_giftstart['gsid'],
+                                 gsid2=response_giftstart['gsid']))
+        self.assertEqual(new_giftstart['title'], response_giftstart['title'],
+                         "title should be {title1}, was {title2}"
+                         .format(title1=new_giftstart['title'],
+                                 title2=response_giftstart['title']))
+        self.assertEqual(new_giftstart['description'],
+                         response_giftstart['description'],
                          "title should be {description1}, was {description2}"
                          .format(description1=new_giftstart['description'],
                                  description2=response_giftstart['description']))
@@ -216,7 +247,9 @@ class GiftstartTestHandler(unittest.TestCase):
             'giftstart': example_giftstart,
         })
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept created "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
         new_giftstart = {'gsid': '1'}
@@ -232,7 +265,9 @@ class GiftstartTestHandler(unittest.TestCase):
             'giftstart': new_giftstart,
         })
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 403, "Should reject campaign updates, expected 403, response was " +
+        self.assertEqual(response.status_code, 403, "Should reject campaign "
+                                                    "updates, expected 403, "
+                                                    "response was " +
                          str(response.status_code))
 
     def fake_payment(self, gsid, uid, parts):
@@ -251,7 +286,8 @@ class GiftstartTestHandler(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
             'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
-            'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
+            'emailAddress': 'test@giftstarter.co',
+            'note': 'Test note for my besty!', 'subscribe': False
             }
         })
         request.get_response(pay_api.api)
@@ -272,7 +308,9 @@ class GiftstartTestHandler(unittest.TestCase):
             })
 
             response = request.get_response(giftstart_api.api)
-            self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+            self.assertEqual(response.status_code, 200, "Should accept created "
+                                                        "campaign, expected 200"
+                                                        ", response was " +
                              str(response.status_code))
 
         # Pitch in on 2 campaigns
@@ -290,27 +328,35 @@ class GiftstartTestHandler(unittest.TestCase):
         request.method = 'GET'
         request.query_string = 'num_campaigns=5'
         response = request.get_response(giftstart_api.hot_campaigns)
-        self.assertEqual(200, response.status_code, "Should successfully fetch hot campaigns, expected code 200, "
-                                                    "response was " + str(response.status_code))
+        self.assertEqual(200, response.status_code, "Should successfully fetch "
+                                                    "hot campaigns, expected "
+                                                    "code 200, "
+                                                    "response was " +
+                         str(response.status_code))
         json_response = json.loads(response.body)
 
         # Verify that all pitchin'd campaigns are returned
-        campaign_ids = map(lambda c: c.get('giftstart').get('gsid'), json_response.get('campaigns'))
+        campaign_ids = map(lambda c: c.get('giftstart').get('gsid'),
+                           json_response.get('campaigns'))
         for gsid in contrib_campaigns:
-            self.assertIn(gsid, campaign_ids, "Should contain pitchin'd campaigns, expected GSID " + gsid +
-                          ", list was " + str(campaign_ids))
+            self.assertIn(gsid, campaign_ids, "Should contain pitchin'd "
+                                              "campaigns, expected GSID " +
+                          gsid + ", list was " + str(campaign_ids))
 
         # Verify that most pitchin'd campaign is first
-        self.assertEqual(hottest_gsid, json_response['campaigns'][0]['giftstart']['gsid'], "Most pitchin'd campaign "
-                                                                                           "should be first in reply, "
-                                                                                           "first was actually " +
+        self.assertEqual(hottest_gsid,
+                         json_response['campaigns'][0]['giftstart']['gsid'],
+                         "Most pitchin'd campaign should be first in reply, "
+                         "first was actually " +
                          json_response['campaigns'][0]['giftstart']['gsid'])
 
         # Verify that the pitchins were sent with it
-        self.assertEqual(num_pitchins, len(json_response['pitchins']), "It should return the same number of pitchins " +
-                         "made, expected " + str(num_pitchins) + ", received " + str(len(json_response['pitchins'])))
+        self.assertEqual(num_pitchins, len(json_response['pitchins']),
+                         "It should return the same number of pitchins " +
+                         "made, expected " + str(num_pitchins) +
+                         ", received " + str(len(json_response['pitchins'])))
 
         # Verify that pitchins have names
-        self.assertIn('name', json_response['pitchins'][0][0].keys(), "Pitchins should have a 'name' field, but do "
-                                                                      "not.")
+        self.assertIn('name', json_response['pitchins'][0][0].keys(),
+                      "Pitchins should have a 'name' field, but do not.")
 

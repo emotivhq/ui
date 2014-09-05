@@ -25,12 +25,16 @@ def send_create_notification(giftstart):
                      'template_kwargs': email_kwargs
                  }))
 
-    email_kwargs = {'campaign_link': config['app_url'] + '/giftstart?gs-id=' + str(giftstart.gsid),
-                    'campaign_name': str(giftstart.giftstart_title)}
-    requests.put(config['email_url'] + '/send/' + str(uuid.uuid4()).replace("-", ''),
+    email_kwargs = {'campaign_link': config['app_url'] + '/giftstart?gs-id=' +
+                                     giftstart.gsid,
+                    'campaign_name': giftstart.giftstart_title}
+    requests.put(config['email_url'] + '/send/' +
+                 str(uuid.uuid4()).replace("-", ''),
                  data=json.dumps({
-                     'subject': "GiftStarter Campaign Created!", 'sender': "team@giftstarter.co",
-                     'to': [giftstart.gc_email], 'template_name': "campaign_create_user",
+                     'subject': "GiftStarter Campaign Created!",
+                     'sender': "team@giftstarter.co",
+                     'to': [giftstart.gc_email],
+                     'template_name': "campaign_create_user",
                      'template_kwargs': email_kwargs
                  }))
 
