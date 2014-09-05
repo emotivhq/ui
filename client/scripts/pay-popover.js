@@ -69,7 +69,9 @@ GiftStarterApp.controller('PayPopoverController', [
 
         // TODO: Implement error reporting for cards that are rejected!
         $scope.$on('payment-success', function() {
-            Analytics.track('pitchin', 'payment succeeded');
+            Analytics.track('pitchin', 'payment succeeded',
+                GiftStartService.giftStart.gsid.toString(),
+                $scope.currentCharge);
             PopoverService.nextPopover();
             $scope.pitchingIn = false;
         });
