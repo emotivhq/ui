@@ -50,10 +50,11 @@
         var urlParams = {
             product_url: document.location.href,
             title: self.productObject.title,
-            price: self.product.compare_at_price * 100,
-            img_url: self.product.imgUrl
+            price: (self.product.compare_at_price | self.product.price)* 100,
+            img_url: self.product.imgUrl,
+            source: 'shopify/' + window.Shopify.shop
         };
-        var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
+        var url = 'http://localhost:8080/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
     };
 

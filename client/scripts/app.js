@@ -64,6 +64,7 @@ GiftStarterApp.service('AppStateService', [
             return url;
         };
 
+        // Returns encoded app state for persisting across OAuth transitions
         this.base64State = function() {
             var state = {};
             if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
@@ -93,14 +94,14 @@ GiftStarterApp.service('AppStateService', [
             return val;
         }
 
-        if ($location.search()['state']) {
+        if ($location.search().state) {
             this.state = JSON.parse($window.atob($location.search()['state']));
             $location.search('state', null);
         }
 
         if ($location.search().oauth_token && $location.search().oauth_verifier) {
-            self.oauthToken = getAndClear('oauth_token');
-            self.oauthVerifier = getAndClear('oauth_verifier');
+            this.oauthToken = getAndClear('oauth_token');
+            this.oauthVerifier = getAndClear('oauth_verifier');
         }
 
         if ($location.search().code && $location.search().session_state && $location.search().authuser) {
@@ -117,5 +118,12 @@ GiftStarterApp.service('AppStateService', [
             })($window.location.search.substr(1).split('&'));
             $location.search('');
         }
+
+        if ($location.search().source && $location.search().title &&
+            $location.search().product_url) {
+            this.giftstartReferralData = $location.search();
+            $location.search('');
+        }
+        console.log($location.search());
     }
 ]);

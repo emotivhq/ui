@@ -24,10 +24,6 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             return $scope.xySets.length - 1;
         }
 
-        $scope.selectedXYSet = calculateInitialNumParts();
-        $scope.x = $scope.xySets[$scope.selectedXYSet][0];
-        $scope.y = $scope.xySets[$scope.selectedXYSet][1];
-
         $scope.shippingZip = '';
         $scope.shippingState = '';
         $scope.shippingDetailsSubmitted = false;
@@ -42,10 +38,14 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
 
+        $scope.showIntroCopy = false;
+
         if (ProductService.product.product_url == "") {
-            if (!AppStateService.state.createSession) {
-                // User navigated directly here, direct them to home page
-                $location.path("");
+            if (AppStateService.state) {
+                if (!AppStateService.state.createSession) {
+                    // User navigated directly here, direct them to home page
+                    $location.path("");
+                }
             }
         }
 
@@ -170,10 +170,11 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             });
 
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
-                Analytics.track('campaign', 'campaign submitted');
 
                 if (UserService.loggedIn) {
                     scrollTo(0, 0);
+                    Analytics.track('campaign', 'campaign submitted', '',
+                        $scope.totalPrice);
                     GiftStartService.createGiftStart();
                 } else {
                     PopoverService.giftstartCreateLogin = true;
@@ -206,9 +207,6 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $scope.giftStart = GiftStartService.giftStart;
         }
 
-        $scope.updateGiftStartImage();
-        $scope.priceChanged();
-
         if (AppStateService.state) {
             if (AppStateService.state.createSession) {
                 $scope.title = AppStateService.state.createSession.title;
@@ -231,16 +229,37 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 $scope.$on('login-success', $scope.next);
                 AppStateService.state.createSession = null;
             }
+        } else if (AppStateService.giftstartReferralData) {
+            // If user was referred here from a brand
+            ProductService.product.url = AppStateService.giftstartReferralData.product_url;
+            ProductService.title = AppStateService.giftstartReferralData.title;
+            ProductService.product.imgs = [AppStateService.giftstartReferralData.img_url];
+            $scope.selectedImg = AppStateService.giftstartReferralData.img_url;
+            $scope.inputPrice = parseInt(AppStateService.giftstartReferralData.price)/100;
+            $scope.showIntroCopy = true;
+            Analytics.track('client', 'referred from', AppStateService.giftstartReferralData.source);
         }
+
+        $scope.selectedXYSet = calculateInitialNumParts();
+        $scope.x = $scope.xySets[$scope.selectedXYSet][0];
+        $scope.y = $scope.xySets[$scope.selectedXYSet][1];
 
         $timeout(function() {
             $scope.pitchInsInitialized = true;
         }, 2500);
 
+
+        $scope.updateGiftStartImage();
+        $scope.priceChanged();
+
         // Scroll to the top of the form on controller creation
-        var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
         $timeout(function() {
-            root.querySelector('.block.image').scrollIntoView();
+            if (AppStateService.giftstartReferralData) {
+                document.querySelector('#header-logo').scrollIntoView();
+            } else {
+                var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
+                root.querySelector('.block.image').scrollIntoView();
+            }
         }, 250);
     }
 ]);
