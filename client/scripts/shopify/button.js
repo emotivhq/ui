@@ -20,14 +20,15 @@
             self.getSelectedVariant();
             self.updateButtonLink();
         };
-        xhr.open('get', document.location.href + '.json', true);
+        xhr.open('get', document.location.href.split('?')[0] + '.json', true);
         xhr.send();
     };
 
     this.getSelectedVariant = function() {
         self.product = self.productObject.variants[0];
 
-        var variant = self.getParameterByName('variant');
+        var variant = parseInt(self.getParameterByName('variant'));
+        self.product.imgUrl = self.productObject.image.src;
         if (variant) {
             for (var i = 0; i < self.productObject.variants.length; i++) {
                 if (self.productObject.variants[i].id == variant) {
@@ -35,21 +36,22 @@
                     break;
                 }
             }
+            self.product.imgUrl = self.productObject.image.src;
+            for (i = 0; i < self.productObject.images.length; i++) {
+                if (self.productObject.images[i].variant_ids.indexOf(variant) > -1) {
+                    self.product.imgUrl = self.productObject.images[i].src;
+                    break;
+                }
+            }
         }
-    };
-
-    self.product = {
-        title: 'titlewoooh',
-        price: '40.00',
-        img_url: 'http://google.com/'
     };
 
     this.updateButtonLink = function() {
         var urlParams = {
             product_url: document.location.href,
-            title: self.product.title,
-            price: self.product.price * 100,
-            img_url: self.product.img_url
+            title: self.productObject.title,
+            price: self.product.compare_at_price * 100,
+            img_url: self.product.imgUrl
         };
         var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
@@ -76,11 +78,12 @@
         // Create elements...
         self.button = document.querySelector('#gsbutton');
         self.buttonLink = document.createElement('a');
+        self.buttonLink.setAttribute('target', '_blank');
         self.buttonDiv = document.createElement('div');
         self.buttonDiv.innerHTML = "GiftStart!";
 
         // Apply styles...
-        self.buttonDiv.setAttribute('style', ' border-radius: 5px;background: #d45;color: #fff; display: inline-block; padding: 8px 12px; font-weight: 600;');
+        self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: inline-block; padding: 7.5px 20px; font-weight: 700;');
 
         // Put onto the dom...
         self.buttonLink.appendChild(self.buttonDiv);
