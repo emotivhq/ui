@@ -39,6 +39,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.descriptionLongEnough = true;
 
         $scope.showIntroCopy = false;
+        $scope.fromReferral = false;
 
         if (ProductService.product.product_url == "") {
             if (AppStateService.state) {
@@ -237,6 +238,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $scope.selectedImg = AppStateService.giftstartReferralData.img_url;
             $scope.inputPrice = parseInt(AppStateService.giftstartReferralData.price)/100;
             $scope.showIntroCopy = true;
+            $scope.fromReferral = true;
             Analytics.track('client', 'referred from', AppStateService.giftstartReferralData.source);
         }
 

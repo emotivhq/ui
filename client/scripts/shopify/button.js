@@ -54,7 +54,7 @@
             img_url: self.product.imgUrl,
             source: 'shopify/' + window.Shopify.shop
         };
-        var url = 'http://localhost:8080/create?' + self.urlSerialize(urlParams);
+        var url = 'https://www.dev.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
     };
 
