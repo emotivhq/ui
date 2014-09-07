@@ -1,0 +1,41 @@
+@import base
+
+gs-toast
+  width: 100%
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  div.toast-wrapper
+    position: relative
+    display: none
+    background: #f0f0f0
+    border-bottom: solid 4px #e0e0e0
+    text-align: center
+    overflow: none
+    opacity: 1
+    +transition(all, 0.2s)
+    p.toast
+      font-size: 120%
+      padding: 0.5em
+      margin: 0
+      width: 90%
+    p.close
+      padding: 0.5em
+      margin: 0em
+      font-size: 120%
+      color: #808080
+      position: absolute
+      top: 0
+      bottom: 0
+      right: 0
+      cursor: pointer
+      +transition(all, 0.2s)
+    p.close:hover
+      color: $primary-color
+  div.toast-wrapper.hide
+    opacity: 0
+  div.toast-wrapper.displayed
+    display: block
+
+
