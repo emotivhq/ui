@@ -4,8 +4,10 @@
 
 
 GiftStarterApp.controller('HomeController', [
-            '$scope','Analytics','$window','$http','$timeout','AppStateService','$location',
-    function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,  $location) {
+            '$scope','Analytics','$window','$http','$timeout','AppStateService',
+            '$location','ToastService',
+    function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
+             $location, ToastService) {
         Analytics.track('client', 'loaded home');
 
         if (AppStateService.state) {
@@ -44,6 +46,11 @@ GiftStarterApp.controller('HomeController', [
             }).error(function(data) {
                 Analytics.track("client", "hot campaigns load failed");
             });
+
+        $scope.reachOutNotReadyYet = function() {
+            Analytics.track("client", "reach out not ready yet");
+            ToastService.setToast("Oops!  Reaching out to friends isn't quite ready yet.<br>Thanks for letting us know you're interested!", 7000);
+        };
 
         $scope.pitchinIndex = 0;
         $scope.fadedIn = false;

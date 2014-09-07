@@ -12,7 +12,7 @@ GiftStarterApp.service('ToastService', [
         var self = this;
 
         this.getToastText = function() {
-            return self.toastText();
+            return self.toastText;
         };
 
         this.setToast = function(toastText, toastMillis) {
@@ -29,6 +29,10 @@ GiftStarterApp.directive('gsToast',
             scope.toastText = 'Het this is my test toast!';
             scope.hide = true;
             scope.displayed = false;
+            scope.toastP = element[0].children[0].children[0];
+            console.log(scope.toastP);
+            console.log(element[0].children[0].children[0]);
+            window.toastP = scope.toastP;
 
             scope.hideToast = function() {
                 scope.hide = true;
@@ -43,10 +47,10 @@ GiftStarterApp.directive('gsToast',
 
             scope.$on('display-toast', function() {
                 scope.toastText = ToastService.getToastText();
+                scope.toastP.innerHTML = scope.toastText;
+                scope.showToast();
                 $timeout(scope.hideToast, ToastService.toastMillis);
             });
-
-            $timeout(function() {scope.showToast()}, 1000);
 
         }
 
