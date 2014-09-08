@@ -57,9 +57,14 @@ GiftStarterApp.service('FacebookService', [
             $location.search('re', btoa(JSON.stringify({
                 type: 'consumer',
                 uid: uid,
-                channel: 'facebook'
+                channel: 'facebook',
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                    return v.toString(16);
+                })
             })));
             ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id});
+            console.log($location.absUrl());
             $location.search('re', null);
         };
 }]);

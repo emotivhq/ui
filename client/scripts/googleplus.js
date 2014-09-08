@@ -62,7 +62,11 @@ GiftStarterApp.service('GooglePlusService', [
             $location.search('re', btoa(JSON.stringify({
                 type: 'consumer',
                 uid: uid,
-                channel: 'twitter'
+                channel: 'googleplus',
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                    return v.toString(16);
+                })
             })));
             var parameters = '?url=' + encodeURIComponent($location.absUrl().split('#')[0]);
             $window.open(shareUrl + parameters);

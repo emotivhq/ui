@@ -5,6 +5,7 @@ import jinja2
 from giftstart import GiftStart
 import gs_user
 import os
+import analytics
 
 secrets = yaml.load(open('secret.yaml'))
 config = yaml.load(open('config.yaml'))
@@ -19,6 +20,7 @@ frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
 
 
 def render_app(request):
+    analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
@@ -40,6 +42,7 @@ def render_app(request):
 
 
 def render_app_with_giftstart(request):
+    analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"

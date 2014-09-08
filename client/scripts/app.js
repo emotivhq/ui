@@ -5,7 +5,7 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch', 'ngSanitize']);
-console.log("ver39");
+console.log("ver40");
 
 GiftStarterApp.config([
             '$routeProvider','$locationProvider','$httpProvider',
@@ -118,6 +118,9 @@ GiftStarterApp.service('AppStateService', [
             })($window.location.search.substr(1).split('&'));
             $location.search('');
         }
+
+        // Delete tracking url as soon as it is seen
+        if ($location.search().re) {$location.search('re', null)}
 
         if ($location.search().source && $location.search().title &&
             $location.search().product_url) {
