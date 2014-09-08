@@ -5,7 +5,7 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch', 'ngSanitize']);
-console.log("ver33");
+console.log("ver38");
 
 GiftStarterApp.config([
             '$routeProvider','$locationProvider','$httpProvider',
@@ -124,6 +124,5 @@ GiftStarterApp.service('AppStateService', [
             this.giftstartReferralData = $location.search();
             $location.search('');
         }
-        console.log($location.search());
     }
 ]);

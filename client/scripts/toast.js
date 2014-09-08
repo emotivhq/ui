@@ -30,9 +30,6 @@ GiftStarterApp.directive('gsToast',
             scope.hide = true;
             scope.displayed = false;
             scope.toastP = element[0].children[0].children[0];
-            console.log(scope.toastP);
-            console.log(element[0].children[0].children[0]);
-            window.toastP = scope.toastP;
 
             scope.hideToast = function() {
                 scope.hide = true;

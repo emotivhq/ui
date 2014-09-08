@@ -355,7 +355,6 @@ GiftStarterApp.service('GiftStartService', [
                     }
                 }
             }
-            console.log(self);
             if (!Boolean(self.pitchInsInitialized)) {
                 self.pitchInsInitialized = true;
                 $rootScope.$broadcast('pitch-ins-initialized');
@@ -521,7 +520,7 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.facebookShare = function() {
             Analytics.track('campaign', 'facebook share from campaign');
-            FacebookService.inviteFriends();
+            FacebookService.inviteFriends(UserService.uid);
         };
         $scope.twitterShare = function() {
             Analytics.track('campaign', 'twitter share from campaign');

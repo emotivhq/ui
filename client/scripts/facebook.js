@@ -51,9 +51,16 @@ GiftStarterApp.service('FacebookService', [
             $rootScope.$broadcast('facebook-logout-success');
         };
 
-        this.inviteFriends = function() {
+        this.inviteFriends = function(uid) {
             mixpanel.track("share campaign facebook");
             ga('send', 'event', 'share campaign', 'facebook');
-            ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id});
+            $location.search('re', btoa(JSON.stringify({
+                type: 'consumer',
+                uid: uid
+            })));
+            ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id},
+            function() {
+                $location.search('re', null);
+            });
         };
 }]);

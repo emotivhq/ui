@@ -15,7 +15,7 @@ GiftStarterApp.controller('ThanksPopoverController', [
 
         $scope.facebookShare = function() {
             Analytics.track('campaign', 'facebook share from thanks');
-            FacebookService.inviteFriends();
+            FacebookService.inviteFriends(UserService.uid);
         };
 
         $scope.twitterShare = function() {
