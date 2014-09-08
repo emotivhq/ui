@@ -524,11 +524,11 @@ GiftStarterApp.controller('GiftStartController', [
         };
         $scope.twitterShare = function() {
             Analytics.track('campaign', 'twitter share from campaign');
-            TwitterService.share();
+            TwitterService.share(UserService.uid);
         };
         $scope.googlePlusShare = function() {
             Analytics.track('campaign', 'googleplus share from campaign');
-            GooglePlusService.share();
+            GooglePlusService.share(UserService.uid);
         };
 
         $scope.productLinkClicked = function() {

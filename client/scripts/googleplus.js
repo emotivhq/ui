@@ -55,12 +55,18 @@ GiftStarterApp.service('GooglePlusService', [
             $rootScope.$broadcast('googleplus-logout-success');
         };
 
-        this.share = function() {
+        this.share = function(uid) {
             mixpanel.track("share campaign googleplus");
             ga('send', 'event', 'share campaign', 'googleplus');
             var shareUrl = 'https://plus.google.com/share';
+            $location.search('re', btoa(JSON.stringify({
+                type: 'consumer',
+                uid: uid,
+                channel: 'twitter'
+            })));
             var parameters = '?url=' + encodeURIComponent($location.absUrl().split('#')[0]);
             $window.open(shareUrl + parameters);
+            $location.search('re', null);
         };
 
         if (AppStateService.authResponse) {

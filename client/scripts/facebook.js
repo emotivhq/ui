@@ -56,11 +56,10 @@ GiftStarterApp.service('FacebookService', [
             ga('send', 'event', 'share campaign', 'facebook');
             $location.search('re', btoa(JSON.stringify({
                 type: 'consumer',
-                uid: uid
+                uid: uid,
+                channel: 'facebook'
             })));
-            ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id},
-            function() {
-                $location.search('re', null);
-            });
+            ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id});
+            $location.search('re', null);
         };
 }]);
