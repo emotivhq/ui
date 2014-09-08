@@ -5,9 +5,9 @@
 
 GiftStarterApp.controller('EmailSharePopoverController', [
             '$scope','PopoverService','$http','UserService','Analytics',
-            'GiftStartService',
+            'GiftStartService','$location',
     function($scope,  PopoverService,  $http,  UserService,  Analytics,
-             GiftStartService) {
+             GiftStartService, $location) {
 
         $scope.toEmails = '';
         $scope.fromEmail = UserService.email;
@@ -26,15 +26,27 @@ GiftStarterApp.controller('EmailSharePopoverController', [
             $scope.formValid = emails.map(function(s){return email.test(s)})
                 .every(function(b){return b}) && email.test($scope.fromEmail);
 
-            if ($scope.formValid) {sendEmail(emails, $scope.fromEmail,
-                $scope.message)}
+            if ($scope.formValid) {
+                $location.search('re', btoa(JSON.stringify({
+                    type: 'consumer',
+                    uid: UserService.uid,
+                    channel: 'email',
+                    uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                        return v.toString(16);
+                    })
+                })));
+                sendEmail(emails, $scope.fromEmail, $scope.message,
+                    $location.absUrl());
+                $location.search('re', null);
+            }
         };
 
-        function sendEmail(to, from, message) {
+        function sendEmail(to, from, message, share_url) {
             Analytics.track('campaign', 'email share submitted');
             $scope.sending = true;
             $http({method: 'PUT', url: 'share', data:{
-                to: to, from: from, message: message,
+                to: to, from: from, message: message, share_url: share_url,
                 gsid: GiftStartService.giftStart.gsid,
                 sender_name: UserService.name
             }}).success(function() {

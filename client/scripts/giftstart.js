@@ -431,7 +431,18 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
         $scope.mailBody= function() {
-            return encodeURIComponent("Seriously, it's the bee's knees.\n\n" + $location.absUrl());
+            $location.search('re', btoa(JSON.stringify({
+                type: 'consumer',
+                uid: UserService.uid,
+                channel: 'email',
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                })
+            })));
+            var url = encodeURIComponent("Seriously, it's the bee's knees.\n\n" + $location.absUrl());
+            $location.search('re', null);
+            return url;
         };
 
         $scope.period = [
