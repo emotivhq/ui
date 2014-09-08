@@ -10,7 +10,8 @@ import analytics
 secrets = yaml.load(open('secret.yaml'))
 config = yaml.load(open('config.yaml'))
 
-DEPLOYED = not os.environ['SERVER_SOFTWARE'].startswith('Development')
+DEPLOYED = not os.environ['SERVER_SOFTWARE'].startswith('Development') if \
+    os.environ.get('SERVER_SOFTWARE') else False
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
