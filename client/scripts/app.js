@@ -127,6 +127,14 @@ GiftStarterApp.service('AppStateService', [
 
         if ($location.search().source && $location.search().title &&
             $location.search().product_url) {
+            this.referrer = {
+                type: 'partner',
+                channel: $location.search().source.replace("shopify/", ""),
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                    return v.toString(16);
+                })
+            };
             this.giftstartReferralData = $location.search();
             $location.search('');
         }
