@@ -120,7 +120,10 @@ GiftStarterApp.service('AppStateService', [
         }
 
         // Delete tracking url as soon as it is seen
-        if ($location.search().re) {$location.search('re', null)}
+        if ($location.search().re) {
+            self.referrer = JSON.parse(atob($location.search().re));
+            $location.search('re', null);
+        }
 
         if ($location.search().source && $location.search().title &&
             $location.search().product_url) {

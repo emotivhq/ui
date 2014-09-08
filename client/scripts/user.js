@@ -15,6 +15,7 @@ GiftStarterApp.service('UserService', [
         this.loginService = '';
         this.onMailinList = false;
         this.email = '';
+        this.referrer = {};
 
         var self = this;
 

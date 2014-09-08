@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('FacebookService', [
-            'ezfb','$http','$rootScope','$location','$window',
-    function(ezfb,  $http,  $rootScope,  $location,  $window) {
+            'ezfb','$http','$rootScope','$location','$window','AppStateService',
+    function(ezfb,  $http,  $rootScope,  $location,  $window,  AppStateService) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -26,7 +26,8 @@ GiftStarterApp.service('FacebookService', [
         this.getLongTermToken = function(token, uid) {
             $http({method: 'POST', url: '/user',
                 data: {uid: uid, service: 'facebook', action: 'get-long-term-token', auth_token: token,
-                    location: $location.path() + $window.location.search}
+                    location: $location.path() + $window.location.search,
+                    referrer: AppStateService.referrer}
             })
             .success(function(data) {
                     self.uid = data['uid'];

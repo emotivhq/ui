@@ -30,7 +30,8 @@ def store_if_referral(request):
     shareclick.referer_url = referer_url if referer_url else 'direct'
     shareclick.uuid = referral.get('uuid')
 
-    shareclick.put()
+    if shareclick.uuid:
+        shareclick.put()
 
 
 def is_scraper(request):

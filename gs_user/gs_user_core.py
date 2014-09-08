@@ -59,7 +59,7 @@ uid_fns = {'facebook': lambda tok: facebook.get_uid(tok),
            'googleplus': lambda tok: googleplus.get_uid(tok)}
 
 
-def update_or_create(service, token_set):
+def update_or_create(service, token_set, referrer):
     if service not in uid_fns:
         raise ValueError("Invalid service!  Must be facebook, googleplus, or twitter.")
 
@@ -68,7 +68,12 @@ def update_or_create(service, token_set):
 
     if len(users) == 0:
         img_url = cache_profile_image(uid, service, token_set)
-        user = User(uid=uid, logged_in_with=service, cached_profile_image_url=img_url)
+        user = User(uid=uid, logged_in_with=service,
+                    cached_profile_image_url=img_url)
+        user.referrer_channel = referrer.get('channel')
+        user.referrer_type = referrer.get('type')
+        user.referrer_uid = referrer.get('uid')
+        user.referrer_uuid = referrer.get('uuid')
     else:
         user = users[0]
         # Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
