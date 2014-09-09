@@ -62,6 +62,8 @@ describe('Usage Flow', function() {
         ProductService = $injector.get('ProductService');
         $controller = $injector.get('$controller');
 
+        console.log("\n\nThis is happening!\n\n");
+
         // Mock controller scopes
         giftStartScope = $rootScope.$new();
         giftStartController = $controller('GiftStartController', {'$scope': giftStartScope});

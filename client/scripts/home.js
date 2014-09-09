@@ -5,9 +5,9 @@
 
 GiftStarterApp.controller('HomeController', [
             '$scope','Analytics','$window','$http','$timeout','AppStateService',
-            '$location','ToastService',
+            '$location','ToastService','$interval',
     function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
-             $location, ToastService) {
+             $location, ToastService,  $interval) {
         Analytics.track('client', 'loaded home');
 
         if (AppStateService.state) {
@@ -55,21 +55,15 @@ GiftStarterApp.controller('HomeController', [
         $scope.pitchinIndex = 0;
         $scope.fadedIn = false;
         function fadeInComment() {
+            $scope.pitchinIndex += 1;
             $scope.fadedIn = true;
-            $timeout(commentDelay, 200);
-        }
-        function commentDelay() {
-            $timeout(fadeOutComment, 7000);
+            $timeout(fadeOutComment, 6800);
         }
         function fadeOutComment() {
             $scope.fadedIn = false;
-            $timeout(loadDelay, 200);
-        }
-        function loadDelay() {
-            $scope.pitchinIndex += 1;
-            $timeout(fadeInComment, 100);
         }
         fadeInComment();
+        $interval(fadeInComment, 7000);
     }
 ]);
 

@@ -4,9 +4,13 @@ GiftStarterApp.service("Analytics", [
     function($window) {
 
         this.track = function(service, event, label, value) {
-            $window.ga('send', 'event', service, event, label, value);
-            $window.mixpanel.track(service + ' - ' + event + ' - ' + label
-                + ' - ' + value);
+            if ($window.ga) {
+                $window.ga('send', 'event', service, event, label, value);
+            }
+            if ($window.mixpanel) {
+                $window.mixpanel.track(service + ' - ' + event + ' - ' + label
+                    + ' - ' + value);
+            }
         };
 
         this.track('client', 'loaded');

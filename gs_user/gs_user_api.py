@@ -53,7 +53,7 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
-                referrer = data.get('referrer')
+                referrer = data.get('referrer', {})
                 token_set = twitter.submit_verifier(data['oauth_token'], data['verifier'])
                 user = update_or_create('twitter', token_set, referrer)
                 if user is not None:
@@ -66,7 +66,7 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'submit-one-time-code':
             if data['service'] == 'googleplus':
-                referrer = data.get('referrer')
+                referrer = data.get('referrer', {})
                 token_set = googleplus.submit_code(data['auth_response'], data['redirect_url'])
                 user = update_or_create('googleplus', token_set, referrer)
                 if user is not None:
@@ -79,7 +79,7 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'get-long-term-token':
             if data['service'] == 'facebook':
-                referrer = data.get('referrer')
+                referrer = data.get('referrer', {})
                 token_set = facebook.get_extended_key(data['auth_token'])
                 user = update_or_create('facebook', token_set, referrer)
 
