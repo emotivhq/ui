@@ -109,9 +109,9 @@ token_pointer_map = {
 def validate(uid, token, path):
     result = None
     user = User.query(User.uid == uid).fetch(1)
-    if user.name is None:
-        user.name = ''
     if user:
+        if user[0].name is None:
+            user[0].name = ''
         if token_pointer_map[uid[0]](user[0]) == token:
             UserLogin.register_login(uid, path)
             result = {'uid': uid, 'img_url': user[0].cached_profile_image_url,
