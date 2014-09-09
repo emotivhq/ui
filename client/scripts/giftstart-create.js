@@ -151,8 +151,8 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             AppStateService.giftstartCreateState({
                 title: $scope.title,
                 description: $scope.description,
-                productUrl: ProductService.product.url,
-                productTitle: ProductService.title,
+                productUrl: ProductService.product.product_url,
+                productTitle: ProductService.product.title,
                 retailerLogo: ProductService.logo,
                 productImgUrl: $scope.selectedImg,
                 rows: $scope.y,
@@ -212,7 +212,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             if (AppStateService.state.createSession) {
                 $scope.title = AppStateService.state.createSession.title;
                 $scope.description = AppStateService.state.createSession.description;
-                ProductService.product.url = AppStateService.state.createSession.productUrl;
+                ProductService.product.product_url = AppStateService.state.createSession.productUrl;
                 ProductService.title = AppStateService.state.createSession.productTitle;
                 ProductService.logo = AppStateService.state.createSession.retailerLogo;
                 $scope.selectedImg = AppStateService.state.createSession.productImgUrl;
@@ -232,7 +232,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             }
         } else if (AppStateService.giftstartReferralData) {
             // If user was referred here from a brand
-            ProductService.product.url = AppStateService.giftstartReferralData.product_url;
+            ProductService.product.product_url = AppStateService.giftstartReferralData.product_url;
             ProductService.title = AppStateService.giftstartReferralData.title;
             ProductService.product.imgs = [AppStateService.giftstartReferralData.img_url];
             $scope.selectedImg = AppStateService.giftstartReferralData.img_url;

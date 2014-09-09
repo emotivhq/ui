@@ -83,7 +83,7 @@ GiftStarterApp.directive('gsProductSearch',
             function onSuccess(product) {
                 Analytics.track('product', 'link submission succeeded');
                 scope.loading = false;
-                ProductService.product.url = scope.product_url;
+                ProductService.product.product_url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
                 $location.path("create");
             }
