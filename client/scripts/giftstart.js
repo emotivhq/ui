@@ -343,9 +343,12 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         function updatePartsFromPitchIns(pitchins) {
-            self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
-                self.giftStart.product.total_price);
-            for (var i = 0; i < pitchins.length; i++) {
+            for (var i = 0; i < self.giftStart.parts.length; i++) {
+                self.giftStart.parts[i].bought = false;
+                self.giftStart.parts[i].img = '';
+                self.giftStart.parts[i].uid = '';
+            }
+            for (i = 0; i < pitchins.length; i++) {
                 for (var j = 0; j < pitchins[i].parts.length; j++) {
                     var partId = pitchins[i].parts[j];
                     self.giftStart.parts[partId].bought = true;
