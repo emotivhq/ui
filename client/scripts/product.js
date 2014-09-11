@@ -29,7 +29,7 @@ GiftStarterApp.service('ProductService', [
                 } else {
                     self.product.imgs = data.product.imgs;
                     self.product.price = data.product.price;
-                    self.title = data.product.title;
+                    self.product.title = data.product.title;
                     self.logo = data.product.logo;
                     onSuccess(self.product);
                 }
@@ -83,7 +83,7 @@ GiftStarterApp.directive('gsProductSearch',
             function onSuccess(product) {
                 Analytics.track('product', 'link submission succeeded');
                 scope.loading = false;
-                ProductService.product.url = scope.product_url;
+                ProductService.product.product_url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
                 $location.path("create");
             }

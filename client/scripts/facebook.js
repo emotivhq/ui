@@ -3,8 +3,8 @@
  */
 
 GiftStarterApp.service('FacebookService', [
-            'ezfb','$http','$rootScope','$location','$window',
-    function(ezfb,  $http,  $rootScope,  $location,  $window) {
+            'ezfb','$http','$rootScope','$location','$window','AppStateService',
+    function(ezfb,  $http,  $rootScope,  $location,  $window,  AppStateService) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -26,7 +26,8 @@ GiftStarterApp.service('FacebookService', [
         this.getLongTermToken = function(token, uid) {
             $http({method: 'POST', url: '/user',
                 data: {uid: uid, service: 'facebook', action: 'get-long-term-token', auth_token: token,
-                    location: $location.path() + $window.location.search}
+                    location: $location.path() + $window.location.search,
+                    referrer: AppStateService.referrer}
             })
             .success(function(data) {
                     self.uid = data['uid'];
@@ -51,9 +52,20 @@ GiftStarterApp.service('FacebookService', [
             $rootScope.$broadcast('facebook-logout-success');
         };
 
-        this.inviteFriends = function() {
+        this.inviteFriends = function(uid) {
             mixpanel.track("share campaign facebook");
             ga('send', 'event', 'share campaign', 'facebook');
+            $location.search('re', btoa(JSON.stringify({
+                type: 'consumer',
+                uid: uid,
+                channel: 'facebook',
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                    return v.toString(16);
+                })
+            })));
             ezfb.ui({method: 'send', link: $location.absUrl(), app_id: ezfb.app_id});
+            console.log($location.absUrl());
+            $location.search('re', null);
         };
 }]);

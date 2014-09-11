@@ -3,10 +3,10 @@
  */
 
 GiftStarterApp.service('GiftStartService', [
-            '$http','$location','UserService','$rootScope','$filter','PopoverService','$window','Analytics',
-            'AppStateService','$timeout',
-    function($http,  $location,  UserService,  $rootScope,  $filter,  PopoverService,  $window,  Analytics,
-             AppStateService) {
+            '$http','$location','UserService','$rootScope','$filter',
+            'PopoverService','$window','Analytics','AppStateService','$timeout',
+    function($http,  $location,  UserService,  $rootScope,  $filter,
+             PopoverService,  $window,  Analytics,  AppStateService,  $timeout) {
 
         this.giftStart = {};
 
@@ -267,7 +267,6 @@ GiftStarterApp.service('GiftStartService', [
 
             $http({method: 'PUT', url: '/giftstart/api', data: data})
                 .success(function(response) {
-                    console.log(response);
                     Analytics.track('campaign', 'campaign update succeeded');
                     if (response.giftstart.title) {
                         self.giftStart.title = response.giftstart.title;
@@ -344,18 +343,20 @@ GiftStarterApp.service('GiftStartService', [
         }
 
         function updatePartsFromPitchIns(pitchins) {
-            for (var i = 0; i < pitchins.length; i++) {
+            for (var i = 0; i < self.giftStart.parts.length; i++) {
+                self.giftStart.parts[i].bought = false;
+                self.giftStart.parts[i].img = '';
+                self.giftStart.parts[i].uid = '';
+            }
+            for (i = 0; i < pitchins.length; i++) {
                 for (var j = 0; j < pitchins[i].parts.length; j++) {
                     var partId = pitchins[i].parts[j];
-                    if (!self.giftStart.parts[partId].bought) {
-                        self.giftStart.parts[partId].bought = true;
-                        self.giftStart.parts[partId].selected = false;
-                        self.giftStart.parts[partId].img = pitchins[i].img;
-                        self.giftStart.parts[partId].uid = pitchins[i].uid;
-                    }
+                    self.giftStart.parts[partId].bought = true;
+                    self.giftStart.parts[partId].selected = false;
+                    self.giftStart.parts[partId].img = pitchins[i].img;
+                    self.giftStart.parts[partId].uid = pitchins[i].uid;
                 }
             }
-            console.log(self);
             if (!Boolean(self.pitchInsInitialized)) {
                 self.pitchInsInitialized = true;
                 $rootScope.$broadcast('pitch-ins-initialized');
@@ -387,13 +388,12 @@ GiftStarterApp.service('GiftStartService', [
 
         // Sync pitchins on route change (navigation, back, etc.)
         $rootScope.$on('$routeChangeSuccess', function() {
+
             self.pitchInsInitialized = false;
             var gsid = $location.search()['gs-id'];
             if (gsid){
-                console.log('fetching campaign ' + gsid);
                 self.fetchGiftStart(gsid);
             }
-            self.syncPitchIns('GiftStartService');
         });
 
         // Check if giftstart was sent with page on init load
@@ -432,7 +432,18 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
         $scope.mailBody= function() {
-            return encodeURIComponent("Seriously, it's the bee's knees.\n\n" + $location.absUrl());
+            $location.search('re', btoa(JSON.stringify({
+                type: 'consumer',
+                uid: UserService.uid,
+                channel: 'email',
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                })
+            })));
+            var url = encodeURIComponent("Seriously, it's the bee's knees.\n\n" + $location.absUrl());
+            $location.search('re', null);
+            return url;
         };
 
         $scope.period = [
@@ -477,8 +488,11 @@ GiftStarterApp.controller('GiftStartController', [
         });
 
         // Synchronize parts on mouse activity
-        $scope.mouseActivityCallback = function(source) {GiftStartService.syncPitchIns(source)};
-        $scope.pitchInHoverCallback = function() {GiftStartService.syncPitchIns('pitch-in-hover')};
+        $scope.mouseActivityCallback = function(source) {
+            GiftStartService.syncPitchIns(source);
+        };
+        $scope.pitchInHoverCallback = function() {
+            GiftStartService.syncPitchIns('pitch-in-hover')};
 
         $scope.pitchIn = GiftStartService.pitchIn;
 
@@ -521,15 +535,15 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.facebookShare = function() {
             Analytics.track('campaign', 'facebook share from campaign');
-            FacebookService.inviteFriends();
+            FacebookService.inviteFriends(UserService.uid);
         };
         $scope.twitterShare = function() {
             Analytics.track('campaign', 'twitter share from campaign');
-            TwitterService.share();
+            TwitterService.share(UserService.uid);
         };
         $scope.googlePlusShare = function() {
             Analytics.track('campaign', 'googleplus share from campaign');
-            GooglePlusService.share();
+            GooglePlusService.share(UserService.uid);
         };
 
         $scope.productLinkClicked = function() {

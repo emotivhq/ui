@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="GiftStarterApp">
-<head lang="en">
+<head lang="en" ng-controller="HeadController">
 
     {% if deployed %}<script src="/bower_components/xdomain/dist/0.6/xdomain.min.js" slave="{{product_api_url}}/proxy.html"></script>{% endif %}
     {% include 'meta.html' %}
@@ -35,6 +35,8 @@
 
 </head>
 <body>
+    <gs-toast></gs-toast>
+
     {% include 'header.html' %}
 
     <div id="angular-view" ng-view></div>

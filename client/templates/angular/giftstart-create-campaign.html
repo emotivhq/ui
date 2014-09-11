@@ -1,6 +1,12 @@
 
 <div class="create wrapper shipping" id="giftstart-contact-wrapper" ng-controller="GiftStartCreateCampaignController">
-    <img class="progress" src="/assets/progress_bar_2_of_3.png"/>
+    <div class="gsintro" ng-show="showIntroCopy">
+        <h2>Hey There!</h2>
+        <p>GiftStarter helps you and your friends/family get bigger, better gifts by getting everyone to pitch in.</p>
+        <p class="copy">By creating this GiftStart, you're on the way to delivering an awesome gift!  Just add a compelling story, create the GiftStart, and share with your loved ones!  Easy as pie. (Even easier, actually)</p>
+        <p class="cancel-button" ng-click="showIntroCopy = false">Close</p>
+    </div>
+    <img class="progress" src="/assets/progress_bar_2_of_3.png" ng-hide="fromReferral"/>
     <div class="block image">
         <h2>Select Image</h2>
         <label>(Image {{imgIndex + 1}} of {{product.imgs.length}})</label>
@@ -118,7 +124,7 @@
             <textarea id="special-notes" ng-model="specialNotes" placeholder="&quot;If a grill were a jacket, I'd want it in sage, size medium!&quot;"></textarea>
         </form>
 
-        <button class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Create</button>
+        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Create</button>
 
     </div>
 </div>

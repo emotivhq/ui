@@ -54,7 +54,9 @@ GiftStarterApp.controller('PayPopoverController', [
                 Analytics.track('pitchin', 'payment error');
             } else {
                 // Got stripe token, attach it to the current giftstart payment
-                Analytics.track('pitchin', 'payment submitted');
+                Analytics.track('pitchin', 'payment submitted',
+                    GiftStartService.giftStart.gsid.toString(),
+                    $scope.currentCharge);
                 GiftStartService.attachStripeResponse(response);
                 GiftStartService.payment.emailAddress = $scope.email;
                 GiftStartService.payment.subscribe = $scope.emailSubscribe;
@@ -69,7 +71,9 @@ GiftStarterApp.controller('PayPopoverController', [
 
         // TODO: Implement error reporting for cards that are rejected!
         $scope.$on('payment-success', function() {
-            Analytics.track('pitchin', 'payment succeeded');
+            Analytics.track('pitchin', 'payment succeeded',
+                GiftStartService.giftStart.gsid.toString(),
+                $scope.currentCharge);
             PopoverService.nextPopover();
             $scope.pitchingIn = false;
         });
