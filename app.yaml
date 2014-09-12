@@ -23,6 +23,9 @@ handlers:
 - url: /reports
   script: reports.handler
   login: admin
+- url: /card
+  script: card.handler
+  login: admin
 
 # Client static asset urls
 - url: /favicon\.ico
