@@ -34,6 +34,9 @@ section.bow.card
     transform: translateY(-50%)
     text-align: center
     img
+      position: relative
+      top: 50%
+      transform: translateY(-50%)
       max-height: 100%
 
 section.whats-giftstarter.card
@@ -61,6 +64,8 @@ section.grid.card
   text-align: center
   div.grid
     position: relative
+    top: 50%
+    transform: translateY(-50%)
     display: inline-block
     margin-right: 0.75in
     font-size: 0
@@ -68,8 +73,8 @@ section.grid.card
       max-height: 100%
       max-width: 100%
     div.overlay
-      max-height: 100%
-      max-width: 100%
+      height: 100%
+      width: 100%
       display: flex
       flex-wrap: wrap
       top: 0
@@ -77,9 +82,12 @@ section.grid.card
       div.part
         img
           border-radius: 50%
+          top: 50%
+          position: relative
+          transform: translateY(-50%)
           max-height: 100%
           max-width: 100%
-          padding: 0.1in
+          padding: 10%
           -webkit-box-sizing: border-box
 
   p
