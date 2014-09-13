@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/card.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300,600' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,600' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+    <section class="bow card">
+        <div class="product">
+            <img src="{{product_img_url}}"/>
+        </div>
+        <img class="bow image" src="/assets/card_bow.png"/>
+    </section>
+
+    <section class="whats-giftstarter card">
+        <div class="wrapper">
+            <img class="logo" src="/assets/Logo-01.png">
+            <p class="copy">We thought you might really like this {{product_name}}, so we here at GiftStarter got it for you.  We're like the best company ever, right?</p>
+            <p class="copy">Just kidding.  {{gc.name}} set up this gift on GiftStarter so your friends and people who actually know and care about you could all pitch in to get you all this awesome.</p>
+            <p class="copy">We did, however make you this handcrafted card... With their words.  Enjoy!</p>
+            <p class="signoff">Love,</p>
+            <p class="signature">THE GIFTSTARTER TEAM</p>
+        </div>
+        <footer>
+            <p>TO VIEW THE GIFTSTART, VISIT {{giftstart_url}}</p>
+        </footer>
+    </section>
+
+    <section class="gift-champion giver card">
+        <img src="{{gc.img_url}}">
+        <div>
+            <p class="comment">{{gc.comment}}</p>
+            <p class="name">{{gc.name}}</p>
+            <p class="the-giftstarter">The GiftStarter</p>
+        </div>
+    </section>
+
+    <section class="grid card">
+        <div class="grid"><img class="product" src="{{product_img_url}}"/><div class="overlay">{% for part_img_url in parts -%}<div class="part" style="width: {{part_width}}; height: {{part_height}};">{% if part_img_url %}
+                    <img class="part-image" src="{{part_img_url}}"/>
+                    {% endif %}
+                </div>{%- endfor %}</div></div>
+        <p>TO VIEW THE WHOLE ONLINE GIFT, VISIT</p>
+        <a href="">{{giftstart_url}}</a>
+    </section>
+
+    {% for giver in givers %}
+    <section class="giver card">
+        <img src="{{giver.img_url}}">
+        <div>
+            <p class="comment">{{giver.comment}}</p>
+            <p class="name">{{giver.name}}</p>
+        </div>
+    </section>
+    {% endfor %}
+
+</body>
+</html>
