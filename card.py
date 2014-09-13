@@ -42,6 +42,22 @@ def make_gc(giftstart):
     }
 
 
+def make_parts(giftstart, pitchins):
+
+    def get_pitchin_img(pis, partno):
+        """ Returns img url for purchased part or '' for non purchased """
+        for pi in pis:
+            if partno in pi.parts:
+                return pi.img_url
+        return ''
+
+    parts = []
+    for i in range(giftstart.overlay_rows * giftstart.overlay_columns):
+        img = get_pitchin_img(pitchins, i)
+        parts.append(img)
+    return parts
+
+
 class CardHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -51,6 +67,7 @@ class CardHandler(webapp2.RequestHandler):
 
         gc = make_gc(giftstart)
         givers = make_givers(pitchins)
+        parts = make_parts(giftstart, pitchins)
 
         for giver in givers:
             if giver['uid'] == gc['uid']:
@@ -59,9 +76,15 @@ class CardHandler(webapp2.RequestHandler):
                 givers.remove(giver)
                 break
 
+        part_height = str(100.0 / giftstart.overlay_rows) + '%'
+        part_width = str(100.0 / giftstart.overlay_columns) + '%'
+
         self.response.write(card_template.render({
             'givers': givers,
             'gc': gc,
+            'part_height': part_height,
+            'part_width': part_width,
+            'parts': parts,
             'product_name': giftstart.product_title,
             'product_img_url': giftstart.product_img_url,
             'giftstart_url': self.request.host_url + '/giftstart?gs-id=' + gsid
