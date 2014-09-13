@@ -25,6 +25,9 @@ handlers:
   login: admin
 - url: /share
   script: share.email_share_handler
+- url: /card
+  script: card.handler
+  login: admin
 
 # Client static asset urls
 - url: /favicon\.ico
