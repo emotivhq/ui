@@ -78,12 +78,14 @@ class CardHandler(webapp2.RequestHandler):
 
         part_height = str(100.0 / giftstart.overlay_rows) + '%'
         part_width = str(100.0 / giftstart.overlay_columns) + '%'
+        max_img_height = str(4.0 / giftstart.overlay_rows) + 'in'
 
         self.response.write(card_template.render({
             'givers': givers,
             'gc': gc,
             'part_height': part_height,
             'part_width': part_width,
+            'max_img_height': max_img_height,
             'parts': parts,
             'product_name': giftstart.product_title,
             'product_img_url': giftstart.product_img_url,
