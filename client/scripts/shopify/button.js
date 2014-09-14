@@ -89,6 +89,7 @@
 
         // Apply styles...
         self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: none; padding: 7.5px 20px; font-weight: 700;');
+        self.button.setAttribute('title', 'Gift this together with friends and family!');
 
         // Put onto the dom...
         self.buttonLink.appendChild(self.buttonDiv);
