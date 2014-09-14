@@ -17,6 +17,7 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
             self.productObject = JSON.parse(this.responseText).product;
+            console.log(self.productObject);
             self.getSelectedVariant();
             self.updateButtonLink();
         };
@@ -50,12 +51,15 @@
         var urlParams = {
             product_url: document.location.href,
             title: self.productObject.title,
-            price: (self.product.compare_at_price | self.product.price)* 100,
+            price: self.product.price * 100,
             img_url: self.product.imgUrl,
             source: 'shopify/' + window.Shopify.shop
         };
         var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
+        if (self.product.price > 50) {
+            self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: inline-block; padding: 7.5px 20px; font-weight: 700;');
+        }
     };
 
     this.urlSerialize = function(obj) {
@@ -84,7 +88,8 @@
         self.buttonDiv.innerHTML = "GiftStart!";
 
         // Apply styles...
-        self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: inline-block; padding: 7.5px 20px; font-weight: 700;');
+        self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: none; padding: 7.5px 20px; font-weight: 700;');
+        self.button.setAttribute('title', 'Gift this together with friends and family!');
 
         // Put onto the dom...
         self.buttonLink.appendChild(self.buttonDiv);
