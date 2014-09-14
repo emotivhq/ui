@@ -17,11 +17,12 @@
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
             self.productObject = JSON.parse(this.responseText).product;
-            console.log(self.productObject);
             self.getSelectedVariant();
             self.updateButtonLink();
         };
-        xhr.open('get', document.location.href.split('?')[0] + '.json', true);
+        var url = document.location.href.split('#')[0].split('?')[0] + '.json';
+        xhr.open('get', url, true);
+        console.log(document.location.href.split('?')[0] + '.json');
         xhr.send();
     };
 
@@ -58,7 +59,7 @@
         var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
         if (self.product.price > 50) {
-            self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: inline-block; padding: 7.5px 20px; font-weight: 700;');
+            self.button.setAttribute('style', ' display: inline-block; text-align: center;');
         }
     };
 
@@ -84,15 +85,25 @@
         self.button = document.querySelector('#gsbutton');
         self.buttonLink = document.createElement('a');
         self.buttonLink.setAttribute('target', '_blank');
-        self.buttonDiv = document.createElement('div');
-        self.buttonDiv.innerHTML = "GiftStart!";
+        self.buttonLink.setAttribute('style', 'display: block;');
+        self.buttonImg = document.createElement('img');
 
         // Apply styles...
-        self.buttonDiv.setAttribute('style', ' border-radius: 2px;background: #df484b;color: #fff; display: none; padding: 7.5px 20px; font-weight: 700;');
+        var buttonClass= self.button.getAttribute('class');
+        if (buttonClass) {
+            if (buttonClass.indexOf('black') > 0) {
+                self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-black.png');
+            }
+        } else {
+            self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-white.png');
+        }
+        self.buttonImg.setAttribute('style', 'max-height: 92%; margin-top: 3%; padding: 0 8px;');
+        self.button.setAttribute('style', 'display: none;');
         self.button.setAttribute('title', 'Gift this together with friends and family!');
 
+
         // Put onto the dom...
-        self.buttonLink.appendChild(self.buttonDiv);
+        self.buttonLink.appendChild(self.buttonImg);
         self.button.appendChild(self.buttonLink);
     };
 
