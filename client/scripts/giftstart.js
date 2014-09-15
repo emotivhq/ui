@@ -423,6 +423,7 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.editingDescription = false;
         $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
         $scope.pitchInsInitialized = false;
+        $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
@@ -485,6 +486,11 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.$on('selection-changed', function() {
             $scope.updateFundingBar();
+            if (GiftStartService.giftStart.totalSelection > 0) {
+                $scope.pitchinButtonHoverMessage = '';
+            } else {
+                $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
+            }
         });
 
         // Synchronize parts on mouse activity
