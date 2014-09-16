@@ -6,7 +6,7 @@
     // For use with the Shopify GiftStarter Button on product pages
     // Button tag and script source shoul be:
     // <script src="https://www.giftstarter.co/scripts/shopify/button.js"></script>
-    // <gs-button id="gsbutton"></gs-button>
+    // <gs-button id="gsbutton" class="gsbutton"></gs-button>
 
     window.GiftStartButton = this;
     this.productObject = null;
@@ -85,7 +85,7 @@
         self.button = document.querySelector('#gsbutton');
         self.buttonLink = document.createElement('a');
         self.buttonLink.setAttribute('target', '_blank');
-        self.buttonLink.setAttribute('style', 'display: block;');
+        self.buttonLink.setAttribute('style', 'display: block; height: 100%;');
         self.buttonImg = document.createElement('img');
 
         // Apply styles...
@@ -93,6 +93,8 @@
         if (buttonClass) {
             if (buttonClass.indexOf('black') > 0) {
                 self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-black.png');
+            } else {
+                self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-white.png');
             }
         } else {
             self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-white.png');
