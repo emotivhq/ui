@@ -20,7 +20,8 @@ def get_element_attr(element, xpath, attr):
 
 def get_all_imgs(tree, siteurl):
     imgs = filter(lambda img: img[-3:] != 'gif',
-                  filter(lambda img: img is not None, get_element_attr(tree, '//img', 'src')))
+                  filter(lambda img: img is not None,
+                         get_element_attr(tree, '//img', 'src')))
     for i in range(len(imgs)):
         if imgs[i][:4].lower() != 'http':
             imgs[i] = siteurl + imgs[i]
@@ -82,16 +83,7 @@ def extract_price(tree, partner):
             price_string = prices[0].split('$')[1]
             break
 
-    # sale_prices = get_element_text(tree, partner_price_patterns[partner]['sale'])
-    # normal_prices = get_element_text(tree, partner_price_patterns[partner]['normal'])
-    # if normal_prices[0] is not None and '$' in normal_prices[0]:
-    #     price_string = normal_prices[0].split('$')[1]
-    # elif sale_prices[0] is not None and '$' in sale_prices[0]:
-    #     price_string = sale_prices[0].split('$')[1]
-    # else:
-    #     price_string = '0'
-
-    price = str(int(float(price_string.replace(',', ''))*100))
+    price = str(int(float(price_string.replace(',', '').split('-')[0])*100))
 
     return price
 
