@@ -1,4 +1,4 @@
-from lib import stripe
+import stripe
 
 __author__ = 'stuart'
 
@@ -20,6 +20,8 @@ from pay import pay_api as pay_api
 
 secret = yaml.load(open('secret.yaml'))
 stripe.api_key = secret['stripe_auth']['app_secret']
+
+stripe.api_key = 'sk_test_c0lLfixj6NxbEon4gGhR0E6s'
 
 # UUT
 from giftstart import giftstart_api
@@ -272,13 +274,14 @@ class GiftstartTestHandler(unittest.TestCase):
 
     def fake_payment(self, gsid, uid, parts):
         # Create test token
+        print(stripe.api_key)
         token = stripe.Token.create(card={
             'number': '4242424242424242',
             'exp_month': str(datetime.today().month),
             'exp_year': str(datetime.today().year + 1),
             'cvc': '123',
             'address_zip': '12345',
-            })
+        })
 
         # Submit token to API
         request = webapp2.Request.blank('/pay')

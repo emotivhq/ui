@@ -1,4 +1,4 @@
-from lib import stripe
+import stripe
 
 __author__ = 'stuart'
 
