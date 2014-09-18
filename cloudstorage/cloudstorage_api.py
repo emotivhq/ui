@@ -17,7 +17,7 @@
 
 
 from __future__ import with_statement
-from cloudstorage import api_utils, common, storage_api, errors
+
 
 
 __all__ = ['delete',
@@ -30,6 +30,11 @@ import logging
 import StringIO
 import urllib
 import xml.etree.cElementTree as ET
+from . import api_utils
+from . import common
+from . import errors
+from . import storage_api
+
 
 
 def open(filename,
@@ -137,7 +142,7 @@ def stat(filename, retry_params=None, _account_id=None):
                       body=content)
   file_stat = common.GCSFileStat(
       filename=filename,
-      st_size=headers.get('content-length'),
+      st_size=common.get_stored_content_length(headers),
       st_ctime=common.http_time_to_posix(headers.get('last-modified')),
       etag=headers.get('etag'),
       content_type=headers.get('content-type'),

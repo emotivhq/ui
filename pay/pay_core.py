@@ -1,12 +1,12 @@
 """ Core functions for pitchins
 """
+import stripe
 
 __author__ = 'stuart'
 
 from google.appengine.api import taskqueue
 import json, yaml
 from gs_user import gs_user_core
-import stripe
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 import uuid

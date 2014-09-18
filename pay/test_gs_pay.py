@@ -1,3 +1,5 @@
+from lib import stripe
+
 __author__ = 'stuart'
 
 # Change execution path to project root
@@ -19,7 +21,6 @@ from pay import pay_api, PitchIn
 from giftstart import giftstart_api
 from gs_user import User
 from social.facebook import FacebookTokenSet
-import stripe
 
 secret = yaml.load(open('secret.yaml'))
 stripe.api_key = secret['stripe_auth']['app_secret']

@@ -1,0 +1,6 @@
+# Install requirements for GiftStarer Client
+
+GoogleAppEngineCloudStorageClient
+oauthlib
+requests_oauthlib
+stripe

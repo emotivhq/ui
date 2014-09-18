@@ -1,3 +1,5 @@
+from lib import stripe
+
 __author__ = 'stuart'
 
 # Change execution path to project root
@@ -13,7 +15,6 @@ from google.appengine.ext import testbed
 from gs_user import User
 from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
-import stripe
 import base64
 from pay import pay_api as pay_api
 
