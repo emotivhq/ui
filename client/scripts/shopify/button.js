@@ -56,7 +56,7 @@
             img_url: self.product.imgUrl,
             source: 'shopify/' + window.Shopify.shop
         };
-        var url = 'https://www.dev.giftstarter.co/create?' + self.urlSerialize(urlParams);
+        var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
         if (self.product.price > 50) {
             self.button.setAttribute('style', ' display: inline-block; text-align: center;');
