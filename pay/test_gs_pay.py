@@ -28,7 +28,8 @@ stripe.api_key = secret['stripe_auth']['app_secret']
 example_giftstart = {
     'gift_champion_uid': 'f1234',
     'title': 'test title what up',
-    'description': 'for every title there must be an equal and possibly related description.',
+    'description': 'for every title there must be an equal and possibly '
+                   'related description.',
     'special_notes': 'make it a race car',
     'product': {
         'product_url': 'http://yo.momma.com',
@@ -85,7 +86,9 @@ class PayTestHandlers(unittest.TestCase):
         })
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200, "Should accept created "
+                                                    "campaign, expected 200, "
+                                                    "response was " +
                          str(response.status_code))
 
     def tearDown(self):
@@ -127,6 +130,61 @@ class PayTestHandlers(unittest.TestCase):
                          .format(in_gsid=parts, out_gsid=pitchin.parts))
         self.assertEqual(1, PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count(), "Should only have 1 pitchin")
 
+    def test_no_name_purchase(self):
+        # Create test token
+        token = stripe.Token.create(card={
+            'number': '4242424242424242',
+            'exp_month': str(datetime.today().month),
+            'exp_year': str(datetime.today().year + 1),
+            'cvc': '123',
+            'address_zip': '12345',
+        })
+
+        # Insert user
+        self.unnamed_user = User()
+        self.unnamed_user.uid = 'f1236'
+        self.unnamed_user.name = None
+        self.unnamed_user.logged_in_with = 'facebook'
+        self.unnamed_user.facebook_token_set = FacebookTokenSet(
+            access_token='x1236', expires=datetime.now() + timedelta(days=90))
+        self.unnamed_user.cached_profile_image_url = 'fakeurl2'
+        self.unnamed_user.put()
+
+        # Submit token to API
+        request = webapp2.Request.blank('/pay')
+        request.method = 'POST'
+        gsid = '1'
+        parts = [1, 2]
+        request.body = json.dumps({
+            'action': 'pitch-in', 'uid': self.unnamed_user.uid, 'payment': {
+                'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+                'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
+            }
+        })
+
+        response = request.get_response(pay_api.api)
+        self.assertEqual(response.status_code, 200,
+                         "Should accept payment, expected 200, response was " +
+                         str(response.status_code))
+        self.assertNotIn('stripe-error', response.json,
+                         "Should accept payment, expected 'stripe-error' not "
+                         "to be in response, response was " +
+                         str(response.json))
+
+        # Verify pitchin
+        pitchin = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).fetch()[0]
+        self.assertListEqual(parts, pitchin.parts, "Should buy proper parts, "
+                                                   "expected {in_parts}, got "
+                                                   "{out_parts}"
+                             .format(in_parts=parts, out_parts=pitchin.parts))
+        self.assertEqual(gsid, pitchin.gsid, "Should pitchin for the right "
+                                             "campaign, expected {in_gsid}, "
+                                             "got {out_gsid}"
+                         .format(in_gsid=parts, out_gsid=pitchin.parts))
+        pi_count = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count()
+        self.assertEqual(1, pi_count, "Should only have 1 pitchin")
+
     def test_double_purchase(self):
         # Create test token
         token = stripe.Token.create(card={
@@ -145,23 +203,31 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
             'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
-            'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
+            'emailAddress': 'test@giftstarter.co',
+            'note': 'Test note for my besty!', 'subscribe': False
             }
         })
 
         response = request.get_response(pay_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept payment, expected 200, response was " +
+        self.assertEqual(response.status_code, 200,
+                         "Should accept payment, expected 200, response was " +
                          str(response.status_code))
-        self.assertNotIn('stripe-error', response.json, "Should accept payment, expected 'stripe-error' not to be in "
-                                                        "response, response was " + str(response.json))
+        self.assertNotIn('stripe-error', response.json,
+                         "Should accept payment, expected 'stripe-error' not to"
+                         " be in response, response was " + str(response.json))
 
         # Verify pitchin
         pitchin = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).fetch()[0]
-        self.assertListEqual(parts, pitchin.parts, "Should buy proper parts, expected {in_parts}, got {out_parts}"
+        self.assertListEqual(parts, pitchin.parts, "Should buy proper parts, "
+                                                   "expected {in_parts}, got "
+                                                   "{out_parts}"
                              .format(in_parts=parts, out_parts=pitchin.parts))
-        self.assertEqual(gsid, pitchin.gsid, "Should pitchin for the right campaign, expected {in_gsid}, got {out_gsid}"
+        self.assertEqual(gsid, pitchin.gsid, "Should pitchin for the right "
+                                             "campaign, expected {in_gsid}, "
+                                             "got {out_gsid}"
                          .format(in_gsid=parts, out_gsid=pitchin.parts))
-        self.assertEqual(1, PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count(), "Should have 1 pitchin")
+        pi_count = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count()
+        self.assertEqual(1, pi_count, "Should have 1 pitchin")
 
 
         # Create test token

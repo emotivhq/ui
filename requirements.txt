@@ -3,5 +3,4 @@
 GoogleAppEngineCloudStorageClient
 oauthlib
 stripe
-requests
 requests_oauthlib
