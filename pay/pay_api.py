@@ -1,6 +1,5 @@
 """ API for payment endpoint.
 """
-import stripe
 
 __author__ = 'stuart'
 
@@ -9,6 +8,7 @@ from google.appengine.ext import ndb
 from pay import pay_core
 import json
 import yaml
+import stripe
 
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']

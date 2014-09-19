@@ -274,7 +274,6 @@ class GiftstartTestHandler(unittest.TestCase):
 
     def fake_payment(self, gsid, uid, parts):
         # Create test token
-        print(stripe.api_key)
         token = stripe.Token.create(card={
             'number': '4242424242424242',
             'exp_month': str(datetime.today().month),
