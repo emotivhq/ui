@@ -1,8 +1,10 @@
+import stripe
+
 __author__ = 'stuart'
 
 # Change execution path to project root
 import os
-if __file__.split('/')[-1] == 'test_gs_user.py':
+if 'test_gs_user.py' in __file__.split('/')[-1]:
     os.chdir('..')
 
 
@@ -11,7 +13,6 @@ from google.appengine.ext import testbed
 import webapp2
 import json
 from giftstart import giftstart_api
-import stripe
 from datetime import datetime, timedelta
 from pay import pay_api as pay_api
 from gs_user import User

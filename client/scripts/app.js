@@ -5,7 +5,7 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch', 'ngSanitize']);
-console.log("ver30");
+console.log("ver53");
 
 GiftStarterApp.config([
             '$routeProvider','$locationProvider','$httpProvider',
@@ -15,7 +15,7 @@ GiftStarterApp.config([
             .when('/create', {templateUrl: 'templates/angular/giftstart-create-campaign.html',
                 reloadOnSearch: false})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .when('/user', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
+            .when('/u', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
             .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
             .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
             .when('/privacy', {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
@@ -40,6 +40,7 @@ GiftStarterApp.run(function($http, $templateCache) {
     $http.get('/templates/angular/overlay.html', {cache: $templateCache});
     $http.get('/templates/angular/popover.html', {cache: $templateCache});
     $http.get('/templates/angular/thanks-popover.html', {cache: $templateCache});
+    $http.get('/templates/angular/email-share-popover.html', {cache: $templateCache});
 });
 
 GiftStarterApp.config(
@@ -63,6 +64,7 @@ GiftStarterApp.service('AppStateService', [
             return url;
         };
 
+        // Returns encoded app state for persisting across OAuth transitions
         this.base64State = function() {
             var state = {};
             if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
@@ -92,14 +94,14 @@ GiftStarterApp.service('AppStateService', [
             return val;
         }
 
-        if ($location.search()['state']) {
+        if ($location.search().state) {
             this.state = JSON.parse($window.atob($location.search()['state']));
             $location.search('state', null);
         }
 
         if ($location.search().oauth_token && $location.search().oauth_verifier) {
-            self.oauthToken = getAndClear('oauth_token');
-            self.oauthVerifier = getAndClear('oauth_verifier');
+            this.oauthToken = getAndClear('oauth_token');
+            this.oauthVerifier = getAndClear('oauth_verifier');
         }
 
         if ($location.search().code && $location.search().session_state && $location.search().authuser) {
@@ -114,6 +116,26 @@ GiftStarterApp.service('AppStateService', [
                 }
                 return b;
             })($window.location.search.substr(1).split('&'));
+            $location.search('');
+        }
+
+        // Delete tracking url as soon as it is seen
+        if ($location.search().re) {
+            self.referrer = JSON.parse(atob($location.search().re));
+            $location.search('re', null);
+        }
+
+        if ($location.search().source && $location.search().title &&
+            $location.search().product_url) {
+            this.referrer = {
+                type: 'partner',
+                channel: $location.search().source.replace("shopify/", ""),
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                    return v.toString(16);
+                })
+            };
+            this.giftstartReferralData = $location.search();
             $location.search('');
         }
     }

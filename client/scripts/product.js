@@ -29,7 +29,7 @@ GiftStarterApp.service('ProductService', [
                 } else {
                     self.product.imgs = data.product.imgs;
                     self.product.price = data.product.price;
-                    self.title = data.product.title;
+                    self.product.title = data.product.title;
                     self.logo = data.product.logo;
                     onSuccess(self.product);
                 }
@@ -53,6 +53,7 @@ GiftStarterApp.service('ProductService', [
         this.searchProducts = function(search, retailer) {
             var query = '?search=' + encodeURIComponent(search) + '&retailer=' + retailer;
             Analytics.track('product', 'search submitted');
+            Analytics.track('product', 'searched retailer ' + retailer);
             $http({method: 'GET', url: 'https://product-dev-gift-starter.appspot.com' + query})
                 .success(self.fetchSuccess)
                 .error(function() {
@@ -82,7 +83,7 @@ GiftStarterApp.directive('gsProductSearch',
             function onSuccess(product) {
                 Analytics.track('product', 'link submission succeeded');
                 scope.loading = false;
-                ProductService.product.url = scope.product_url;
+                ProductService.product.product_url = scope.product_url;
                 ProductService.product.imgs = product.imgs;
                 $location.path("create");
             }
@@ -177,11 +178,10 @@ GiftStarterApp.directive('gsProductSearch',
             scope.showProductDetails = function(index) {
                 Analytics.track('product', 'show product details');
                 scope.hideProductDetails();
+                scope.selectedProduct = index;
                 scope.selectedProducts[index].selected = true;
 
                 var root = angular.element(document.querySelector('#search-products-section'))[0];
-                window.mroot = root;
-                console.log(root);
 
                 // Product div animates as it expands, so need to infer height
                 // from initial state (2x height/width)
@@ -202,11 +202,10 @@ GiftStarterApp.directive('gsProductSearch',
                 });
             };
 
-            scope.goToProduct = function(index) {
-                if (scope.selectedProduct == index) {
-                    $window.open(scope.selectedProducts[index].url, '_blank');
-                } else {
-                    scope.selectedProduct = index;
+            scope.goToProduct = function($index, $event) {
+                if (scope.selectedProduct == $index) {
+                    $window.open(scope.selectedProducts[$index].url, '_blank');
+                    $event.stopPropagation();
                 }
             };
 

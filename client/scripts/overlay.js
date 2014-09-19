@@ -6,6 +6,7 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
     function link(scope, element, attrs) {
 
         function drawGrid() {
+            console.log('drawing grid');
             var imageHeight = element.children()[0].offsetHeight;
             var imageWidth = element.children()[0].offsetWidth;
 
@@ -42,6 +43,7 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
 
         angular.element(element.children()[0]).bind('load', drawGrid);
         scope.$on('overlay-updated', drawGrid);
+        scope.$on('giftstart-loaded', drawGrid);
     }
 
     return {

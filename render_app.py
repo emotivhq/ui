@@ -4,10 +4,14 @@ import yaml
 import jinja2
 from giftstart import GiftStart
 import gs_user
+import os
+import analytics
 
 secrets = yaml.load(open('secret.yaml'))
 config = yaml.load(open('config.yaml'))
 
+DEPLOYED = not os.environ['SERVER_SOFTWARE'].startswith('Development') if \
+    os.environ.get('SERVER_SOFTWARE') else False
 
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
@@ -17,12 +21,15 @@ frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
 
 
 def render_app(request):
-    js_insert = remember_user(request.cookies, request.path + '?' + request.query_string)
+    analytics.store_if_referral(request)
+    js_insert = remember_user(request.cookies, request.path + '?' +
+                              request.query_string)
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
     js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
 
     response = frame_template.render({
+        'deployed': DEPLOYED,
         'product_api_url': config['product_api_url'],
         'js_insert': js_insert,
         'image_url': request.path_url + '/assets/logo_square.png',
@@ -36,7 +43,9 @@ def render_app(request):
 
 
 def render_app_with_giftstart(request):
-    js_insert = remember_user(request.cookies, request.path + '?' + request.query_string)
+    analytics.store_if_referral(request)
+    js_insert = remember_user(request.cookies, request.path + '?' +
+                              request.query_string)
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
     js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
@@ -46,6 +55,8 @@ def render_app_with_giftstart(request):
     if len(gss) > 0:
         gs = gss[0]
         render_values = {
+            'deployed': DEPLOYED,
+            'product_api_url': config['product_api_url'],
             'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
             'page_title': gs.giftstart_title,
             'page_url': request.path_url + "?gs-id=" + str(gsid),

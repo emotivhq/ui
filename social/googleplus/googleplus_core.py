@@ -1,10 +1,12 @@
 __author__ = 'stuart'
 
-from requests_oauthlib import OAuth2Session
-import config
 import json
 from datetime import datetime, timedelta
+
 from google.appengine.ext import ndb
+
+from requests_oauthlib import OAuth2Session
+import config
 
 
 class GooglePlusTokenSet(ndb.Model):

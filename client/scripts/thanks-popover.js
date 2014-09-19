@@ -15,17 +15,17 @@ GiftStarterApp.controller('ThanksPopoverController', [
 
         $scope.facebookShare = function() {
             Analytics.track('campaign', 'facebook share from thanks');
-            FacebookService.inviteFriends();
+            FacebookService.inviteFriends(UserService.uid);
         };
 
         $scope.twitterShare = function() {
             Analytics.track('campaign', 'twitter share from thanks');
-            TwitterService.share();
+            TwitterService.share(UserService.uid);
         };
 
         $scope.googlePlusShare = function() {
             Analytics.track('campaign', 'googleplus share from thanks');
-            GooglePlusService.share();
+            GooglePlusService.share(UserService.uid);
         };
 
         $scope.hidePopover = PopoverService.hidePopover;

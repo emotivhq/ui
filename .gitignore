@@ -1,8 +1,10 @@
 /client/stylesheets/*.css
 /client/bower_components/*
 /client/client.iml
-requests/
-stripe/
+requests_oauthlib
+stripe
+cloudstorage
+oauthlib
 
 app.iml
 .idea

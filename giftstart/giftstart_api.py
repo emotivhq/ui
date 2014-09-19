@@ -1,3 +1,7 @@
+"""
+API for the giftstart endpoint
+"""
+
 __author__ = 'stuart'
 
 import webapp2
@@ -32,7 +36,8 @@ class GiftStartHandler(webapp2.RequestHandler):
             giftstart_comm.check_if_complete(data['gsid'])
 
         elif data['action'] == 'thank-givers':
-            giftstart_comm.congratulate_givers(data.get('gsid'), data.get('funded'))
+            giftstart_comm.congratulate_givers(data.get('gsid'),
+                                               data.get('funded'))
 
     def put(self):
         data = json.loads(self.request.body)
@@ -52,11 +57,13 @@ class GiftStartHandler(webapp2.RequestHandler):
                         gs = giftstart_core.update(data['giftstart'])
                         self.response.write(gs.jsonify())
                     else:
-                        self.response.set_status(403, 'Invalid user credentials')
+                        self.response.set_status(403,
+                                                 'Invalid user credentials')
                 else:
                     self.response.set_status(400, 'Invalid campaign')
             else:
-                self.response.set_status(400, 'Put must create or update campaign.')
+                self.response.set_status(400,
+                                         'Put must create or update campaign.')
         else:
             self.response.set_status(403, 'Invalid user credentials')
 
@@ -65,7 +72,8 @@ class HotCampaignsHandler(webapp2.RequestHandler):
 
     def get(self):
         try:
-            campaigns = giftstart_core.hot_campaigns(int(self.request.get('num_campaigns')))
+            num_campaigns = int(self.request.get('num_campaigns'))
+            campaigns = giftstart_core.hot_campaigns(num_campaigns)
             self.response.write(json.dumps(campaigns))
         except Exception as e:
             self.response.set_status(400, 'Invalid request')
@@ -79,7 +87,9 @@ def does_user_exist(uid, token):
     token_map = {'f': lambda u: u.facebook_token_set.access_token,
                  'g': lambda u: u.googleplus_token_set.access_token,
                  't': lambda u: u.twitter_token_set.access_token}
-    users = User.query(User.uid == uid, User.logged_in_with == login_service_map[uid[0]]).fetch(1)
+    login_service = login_service_map[uid[0]]
+    users = User.query(User.uid == uid,
+                       User.logged_in_with == login_service).fetch(1)
     if len(users) != 1:
         return False
     user_exists = token == token_map[uid[0]](users[0])
@@ -108,5 +118,9 @@ def find_campaign(campaign):
 
     return None
 
-api = webapp2.WSGIApplication([('/giftstart/api', GiftStartHandler)], debug=True)
-hot_campaigns = webapp2.WSGIApplication([('/giftstart/api/hot-campaigns', HotCampaignsHandler)], debug=True)
+api = webapp2.WSGIApplication([('/giftstart/api',
+                                GiftStartHandler)],
+                              debug=True)
+hot_campaigns = webapp2.WSGIApplication([('/giftstart/api/hot-campaigns',
+                                          HotCampaignsHandler)],
+                                        debug=True)

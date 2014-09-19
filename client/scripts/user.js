@@ -14,6 +14,8 @@ GiftStarterApp.service('UserService', [
         this.isStripeCustomer = false;
         this.loginService = '';
         this.onMailinList = false;
+        this.email = '';
+        this.referrer = {};
 
         var self = this;
 
@@ -94,6 +96,8 @@ GiftStarterApp.service('UserService', [
         $rootScope.$on('googleplus-logout-success', self.registerLogout);
 
         if ($window.loginDeets) {
+            // base64 decode the name - for unicode chars in names
+            $window.loginDeets[4] =  decodeURIComponent(escape(atob($window.loginDeets[4])));
             self.registerLogin.apply(this, $window.loginDeets);
             self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
         }
@@ -101,12 +105,20 @@ GiftStarterApp.service('UserService', [
 ]);
 
 GiftStarterApp.controller('UserController', [
-            '$scope','UserService','$location',
-    function($scope,  UserService,  $location) {
+            '$scope','UserService','$location','Analytics',
+    function($scope,  UserService,  $location,  Analytics) {
         $scope.user = {};
 
         $scope.goToCampaign = function(index) {
-            $location.path('giftstart').search('uid', null).search('gs-id', $scope.user.giftstarts[index].giftstart.gsid);
+            Analytics.track('client', 'go to campaign from user page');
+            $location.path('giftstart').search('').search('gs-id',
+                $scope.user.giftstarts[index].giftstart.gsid);
+        };
+
+        $scope.goToPitchin = function(index) {
+            Analytics.track('client', 'go to pitchin from user page');
+            $location.path('giftstart').search('').search('gs-id',
+                $scope.user.pitchins[index].gsid);
         };
 
         UserService.getUser($location.search()['uid'], function(data) {

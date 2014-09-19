@@ -1,7 +1,8 @@
+import cloudstorage
+
 __author__ = 'stuart'
 
 from social import facebook
-import cloudstorage
 import requests
 import yaml
 import imghdr

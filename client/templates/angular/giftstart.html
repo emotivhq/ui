@@ -8,7 +8,7 @@
 
         <div class="description">
             <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
-            <span ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
+            <span class="description" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
         </div>
         <div class="signature">
             <p ng-show="giftStart.gc_name.length > 0 || editMode" class="gift-champion">GiftStarted By:</p>
@@ -22,9 +22,9 @@
         <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file"/></div>
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
-            <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
+            <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
             <h2>Share This GiftStart With Friends!</h2>
-            <a class="share" href="mailto:?subject={{mailSubject}}&body={{mailBody()}}" target="_blank" ng-click="emailShare()"><img class="share" src="/assets/share_email.png" /></a>
+            <img class="share" src="/assets/share_email.png" ng-click="emailShare();" />
             <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();" />
             <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
             <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />

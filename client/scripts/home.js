@@ -4,8 +4,10 @@
 
 
 GiftStarterApp.controller('HomeController', [
-            '$scope','Analytics','$window','$http','$timeout','AppStateService','$location',
-    function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,  $location) {
+            '$scope','Analytics','$window','$http','$timeout','AppStateService',
+            '$location','ToastService','$interval',
+    function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
+             $location, ToastService,  $interval) {
         Analytics.track('client', 'loaded home');
 
         if (AppStateService.state) {
@@ -45,32 +47,33 @@ GiftStarterApp.controller('HomeController', [
                 Analytics.track("client", "hot campaigns load failed");
             });
 
+        $scope.reachOutNotReadyYet = function() {
+            Analytics.track("client", "reach out not ready yet");
+            ToastService.setToast("Oops!  Reaching out to friends isn't quite ready yet.<br>Thanks for letting us know you're interested!", 7000);
+        };
+
         $scope.pitchinIndex = 0;
         $scope.fadedIn = false;
         function fadeInComment() {
+            $scope.pitchinIndex += 1;
             $scope.fadedIn = true;
-            $timeout(commentDelay, 200);
-        }
-        function commentDelay() {
-            $timeout(fadeOutComment, 7000);
+            $timeout(fadeOutComment, 6800);
         }
         function fadeOutComment() {
             $scope.fadedIn = false;
-            $timeout(loadDelay, 200);
-        }
-        function loadDelay() {
-            $scope.pitchinIndex += 1;
-            $timeout(fadeInComment, 100);
         }
         fadeInComment();
+        $interval(fadeInComment, 7000);
     }
 ]);
 
-GiftStarterApp.directive('gsHotCampaign', function(Analytics) {
+GiftStarterApp.directive('gsHotCampaign', function(Analytics, $location) {
     function link(scope, element, attrs) {
         scope.goToUrl = function() {
             Analytics.track("client", "hot campaigns clicked");
-            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid, "_blank");
+//            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid);
+            $location.path('giftstart').search('').search('gs-id',
+                scope.campaign.giftstart.gsid)
         };
     }
 

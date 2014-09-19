@@ -29,6 +29,11 @@ class User(ndb.Model):
     subscribed_to_mailing_list = ndb.BooleanProperty(default=False)
     phone_number = ndb.StringProperty()
 
+    referrer_type = ndb.StringProperty()
+    referrer_channel = ndb.StringProperty()
+    referrer_uid = ndb.StringProperty()
+    referrer_uuid = ndb.StringProperty()
+
     def jsonify(self):
         return json.dumps({
             'uid': self.uid,
