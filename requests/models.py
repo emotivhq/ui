@@ -19,26 +19,28 @@ from .cookies import cookiejar_from_dict, get_cookie_header
 from .packages.urllib3.fields import RequestField
 from .packages.urllib3.filepost import encode_multipart_formdata
 from .packages.urllib3.util import parse_url
-from .packages.urllib3.exceptions import DecodeError
+from .packages.urllib3.exceptions import (
+    DecodeError, ReadTimeoutError, ProtocolError)
 from .exceptions import (
     HTTPError, RequestException, MissingSchema, InvalidURL,
-    ChunkedEncodingError, ContentDecodingError)
+    ChunkedEncodingError, ContentDecodingError, ConnectionError)
 from .utils import (
     guess_filename, get_auth_from_url, requote_uri,
     stream_decode_response_unicode, to_key_val_list, parse_header_links,
     iter_slices, guess_json_utf, super_len, to_native_string)
 from .compat import (
     cookielib, urlunparse, urlsplit, urlencode, str, bytes, StringIO,
-    is_py2, chardet, json, builtin_str, basestring, IncompleteRead)
+    is_py2, chardet, json, builtin_str, basestring)
 from .status_codes import codes
 
 #: The set of HTTP status codes that indicate an automatically
 #: processable redirect.
 REDIRECT_STATI = (
-    codes.moved,  # 301
-    codes.found,  # 302
-    codes.other,  # 303
-    codes.temporary_moved,  # 307
+    codes.moved,              # 301
+    codes.found,              # 302
+    codes.other,              # 303
+    codes.temporary_redirect, # 307
+    codes.permanent_redirect, # 308
 )
 DEFAULT_REDIRECT_LIMIT = 30
 CONTENT_CHUNK_SIZE = 10 * 1024
@@ -309,8 +311,8 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
         p = PreparedRequest()
         p.method = self.method
         p.url = self.url
-        p.headers = self.headers.copy()
-        p._cookies = self._cookies.copy()
+        p.headers = self.headers.copy() if self.headers is not None else None
+        p._cookies = self._cookies.copy() if self._cookies is not None else None
         p.body = self.body
         p.hooks = self.hooks
         return p
@@ -433,7 +435,7 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
             else:
                 if data:
                     body = self._encode_params(data)
-                    if isinstance(data, str) or isinstance(data, builtin_str) or hasattr(data, 'read'):
+                    if isinstance(data, basestring) or hasattr(data, 'read'):
                         content_type = None
                     else:
                         content_type = 'application/x-www-form-urlencoded'
@@ -556,6 +558,10 @@ class Response(object):
         #: and the arrival of the response (as a timedelta)
         self.elapsed = datetime.timedelta(0)
 
+        #: The :class:`PreparedRequest <PreparedRequest>` object to which this
+        #: is a response.
+        self.request = None
+
     def __getstate__(self):
         # Consume everything; accessing the content attribute makes
         # sure the content has been fully read.
@@ -606,6 +612,11 @@ class Response(object):
         return ('location' in self.headers and self.status_code in REDIRECT_STATI)
 
     @property
+    def is_permanent_redirect(self):
+        """True if this Response one of the permanant versions of redirect"""
+        return ('location' in self.headers and self.status_code in (codes.moved_permanently, codes.permanent_redirect))
+
+    @property
     def apparent_encoding(self):
         """The apparent encoding, provided by the chardet library"""
         return chardet.detect(self.content)['encoding']
@@ -616,21 +627,22 @@ class Response(object):
         large responses.  The chunk size is the number of bytes it should
         read into memory.  This is not necessarily the length of each item
         returned as decoding can take place.
-        """
-        if self._content_consumed:
-            # simulate reading small chunks of the content
-            return iter_slices(self._content, chunk_size)
 
+        If decode_unicode is True, content will be decoded using the best
+        available encoding based on the response.
+        """
         def generate():
             try:
                 # Special case for urllib3.
                 try:
                     for chunk in self.raw.stream(chunk_size, decode_content=True):
                         yield chunk
-                except IncompleteRead as e:
+                except ProtocolError as e:
                     raise ChunkedEncodingError(e)
                 except DecodeError as e:
                     raise ContentDecodingError(e)
+                except ReadTimeoutError as e:
+                    raise ConnectionError(e)
             except AttributeError:
                 # Standard file-like object.
                 while True:
@@ -641,12 +653,17 @@ class Response(object):
 
             self._content_consumed = True
 
-        gen = generate()
+        # simulate reading small chunks of the content
+        reused_chunks = iter_slices(self._content, chunk_size)
+
+        stream_chunks = generate()
+
+        chunks = reused_chunks if self._content_consumed else stream_chunks
 
         if decode_unicode:
-            gen = stream_decode_response_unicode(gen, self)
+            chunks = stream_decode_response_unicode(chunks, self)
 
-        return gen
+        return chunks
 
     def iter_lines(self, chunk_size=ITER_CHUNK_SIZE, decode_unicode=None):
         """Iterates over the response data, one line at a time.  When
