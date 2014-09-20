@@ -62,18 +62,26 @@ def verify_partner(url):
 
 def extract_price(tree, partner):
     partner_price_patterns = {
-        'rei': ['//*[@id="product"]//li[contains(@class, "originalPrice")]/span',
+        'rei': ['//*[@id="product"]//li[contains(@class, "originalPrice")]'
+                '/span',
                 '//*[@id="product"]//li[contains(@class, "price")]',
                 '//*[@id="product"]//li[contains(@class, "salePrice")]'],
-        'brooksrunning': ['//*[@id="product-content"]//span[@class="price-sales"]',
-                          '//*[@id="product-content"]//span[@class="price-sales"]'],
-        'filson': ['//*[@id="prodprice"]', '//*[@id="prodprice"]/span[@class="sale"]'],
-        'amazon': ['//*[@id="priceblock_ourprice"]', '//*[@id="priceblock_ourprice"]'],
-        'nordstrom': ['//*[@id="price"]//span[contains(@class, "after-sale-price")]',
-                      '//*[@id="price"]/table/tbody/tr/td[contains(@class, "item-price")]/span',
+        'brooksrunning': ['//*[@id="product-content"]'
+                          '//span[@class="price-sales"]',
+                          '//*[@id="product-content"]'
+                          '//span[@class="price-sales"]'],
+        'filson': ['//*[@id="prodprice"]', '//*[@id="prodprice"]'
+                                           '/span[@class="sale"]'],
+        'amazon': ['//div[@id="price"]/table/tr[1]/td[2]',
+                   '//*[@id="priceblock_ourprice"]'],
+        'nordstrom': ['//*[@id="price"]'
+                      '//span[contains(@class, "after-sale-price")]',
+                      '//*[@id="price"]/table/tbody/tr'
+                      '/td[contains(@class, "item-price")]/span',
                       '//*[@id="price"]//span[contains(@class, "sale-price")]',
                       '//*[@id="price"]/table/tbody/tr/td[1]/span'],
-        'costco': ['//*[@id="price"]/div[3]/span[2]', '//*[@id="price"]/div[3]/span[2]'],
+        'costco': ['//*[@id="price"]/div[3]/span[2]', '//*[@id="price"]/div[3]'
+                                                      '/span[2]'],
     }
 
     price_string = '0'
