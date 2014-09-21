@@ -124,9 +124,7 @@ DEFAULT_IMAGE = {
 }
 
 
-def product(data):
-
-    url = data['product_url']
+def product(url):
     partner = verify_partner(url)
     if partner is not None:
         headers = {'User-agent': "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"}

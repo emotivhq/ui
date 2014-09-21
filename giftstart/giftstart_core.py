@@ -56,7 +56,8 @@ def create(giftstart):
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
     # Check if running in development env
     if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
-        gs.product_img_url = storage.image_cache.cache_product_image(giftstart['product']['img_url'], gs.gsid)
+        gs.product_img_url = storage.image_cache.cache_product_image(
+            giftstart['product']['img_url'], gs.gsid)
     gs.put()
 
     giftstart_comm.send_create_notification(gs)
@@ -92,7 +93,10 @@ def update(new_gs):
         base64data = ','.join(image['data'].split(',')[1:])
         img_data = base64data.decode('base64', 'strict')
         filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
-        giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, filename, new_gs['gsid'], content_type)
+        giftstart.product_img_url = \
+            storage.image_cache.cache_user_uploaded_image(img_data, filename,
+                                                          new_gs['gsid'],
+                                                          content_type)
 
     giftstart.put()
     return giftstart

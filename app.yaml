@@ -6,8 +6,12 @@ threadsafe: yes
 
 handlers:
 # End points
+- url: /products/urls/.*.json
+  script: product.product_api.handler
+- url: /products/.*.json
+  script: product.product_api.handler
 - url: /product
-  script: product.product_api.api
+  script: product.product_api.handler
 - url: /giftstart/api
   script: giftstart.giftstart_api.api
 - url: /giftstart/api/hot-campaigns
@@ -60,9 +64,9 @@ handlers:
 - url: /admin.*
   script: google.appengine.ext.admin.application
   login: admin
-- url: /.*
-  script: main.app
-  secure: always
+#- url: /.*
+#  script: main.app
+#  secure: always
 
 builtins:
   - admin_redirect: on
