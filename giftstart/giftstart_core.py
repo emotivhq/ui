@@ -62,35 +62,37 @@ def create(giftstart):
     giftstart_comm.send_create_notification(gs)
 
     taskqueue.add(url="/giftstart/api", method="POST",
-                  payload=json.dumps({'action': 'one-day-warning', 'gsid': gs.gsid}),
+                  payload=json.dumps({'action': 'one-day-warning',
+                                      'gsid': gs.gsid}),
                   countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
 
     taskqueue.add(url="/giftstart/api", method="POST",
-                  payload=json.dumps({'action': 'check-if-complete', 'gsid': gs.gsid}),
+                  payload=json.dumps({'action': 'check-if-complete',
+                                      'gsid': gs.gsid}),
                   countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
 
     return gs
 
 
-def update(gs):
-    giftstart = GiftStart.query(GiftStart.gsid == gs['gsid']).fetch(1)[0]
+def update(new_gs):
+    giftstart = GiftStart.query(GiftStart.gsid == new_gs['gsid']).fetch(1)[0]
 
-    for k, v in gs.items():
-        if k == 'title':
-            giftstart.giftstart_title = gs['title']
+    if new_gs.get('title'):
+        giftstart.giftstart_title = new_gs.get('title')
 
-        elif k == 'description':
-            giftstart.giftstart_description = gs['description']
+    if new_gs.get('description'):
+        giftstart.giftstart_description = new_gs.get('description')
 
-        elif k == 'image':
-            content_type = v['data'].split(';')[0].split(':')[1]
-            base64data = ','.join(v['data'].split(',')[1:])
-            img_data = base64data.decode('base64', 'strict')
-            filename = v['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
-            giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, filename,
-                                                                                      gs['gsid'], content_type)
-        elif k == 'gc_name':
-            giftstart.gc_name = gs['gc_name']
+    if new_gs.get('name'):
+        giftstart.gc_name = new_gs.get('name')
+
+    if new_gs.get('image'):
+        image = new_gs.get('image')
+        content_type = image['data'].split(';')[0].split(':')[1]
+        base64data = ','.join(image['data'].split(',')[1:])
+        img_data = base64data.decode('base64', 'strict')
+        filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
+        giftstart.product_img_url = storage.image_cache.cache_user_uploaded_image(img_data, filename, new_gs['gsid'], content_type)
 
     giftstart.put()
     return giftstart
