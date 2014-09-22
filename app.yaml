@@ -64,9 +64,9 @@ handlers:
 - url: /admin.*
   script: google.appengine.ext.admin.application
   login: admin
-#- url: /.*
-#  script: main.app
-#  secure: always
+- url: /.*
+  script: main.app
+  secure: always
 
 builtins:
   - admin_redirect: on

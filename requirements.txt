@@ -1,5 +1,6 @@
 # Install requirements for GiftStarer Client
 
+lxml
 GoogleAppEngineCloudStorageClient
 oauthlib
 stripe

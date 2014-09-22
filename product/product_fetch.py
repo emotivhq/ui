@@ -73,6 +73,7 @@ def extract_price(tree, partner):
         'filson': ['//*[@id="prodprice"]', '//*[@id="prodprice"]'
                                            '/span[@class="sale"]'],
         'amazon': ['//div[@id="price"]/table/tr[1]/td[2]',
+                   '//*[@id="actualPriceValue"]/b',
                    '//*[@id="priceblock_ourprice"]'],
         'nordstrom': ['//*[@id="price"]'
                       '//span[contains(@class, "after-sale-price")]',
@@ -98,15 +99,21 @@ def extract_price(tree, partner):
 
 def extract_title(tree, partner):
     partner_title_patterns = {
-        'rei': '//*[@id="product"]/h1',
-        'brooksrunning': '//*[@id="pdpMain"]/section[1]/div[1]/h1',
-        'filson': '//*[@id="prodcontent"]/h1',
-        'amazon': '//*[@id="productTitle"]',
-        'nordstrom': '//*[@id="product-title"]/h1',
-        'costco': '//*[@id="main_content_wrapper"]/div[2]/div[2]/div[3]/h1',
+        'rei': ['//*[@id="product"]/h1'],
+        'brooksrunning': ['//*[@id="pdpMain"]/section[1]/div[1]/h1'],
+        'filson': ['//*[@id="prodcontent"]/h1'],
+        'amazon': ['//*[@id="productTitle"]', '//*[@id="btAsinTitle"]'],
+        'nordstrom': ['//*[@id="product-title"]/h1'],
+        'costco': ['//*[@id="main_content_wrapper"]/div[2]/div[2]/div[3]/h1'],
     }
 
-    return get_element_text(tree, partner_title_patterns[partner])
+    title = []
+    for xpath in partner_title_patterns[partner]:
+        title = get_element_text(tree, xpath)
+        if title[0]:
+            break
+
+    return title
 
 
 def rotate_list_left(l, n):

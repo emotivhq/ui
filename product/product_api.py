@@ -5,6 +5,7 @@ import json
 import product_fetch
 import product_tax
 import product_search
+import urllib
 
 
 class ProductHandler(webapp2.RequestHandler):
@@ -30,7 +31,11 @@ class ProductHandler(webapp2.RequestHandler):
 class ProductUrlHandler(webapp2.RequestHandler):
 
     def get(self):
-        url = self.request.path.lstrip('/products/urls/').rstrip('.json')
+        url = urllib.unquote(
+            urllib.unquote(
+                self.request.path
+                    .lstrip('/products/urls/')
+                    .rstrip('.json')))
         self.response.write(json.dumps(product_fetch.product(url)))
 
 

@@ -21,7 +21,8 @@ GiftStarterApp.service('ProductService', [
 
         this.submitLink = function(url, onSuccess, onFail) {
             $http({
-                method: 'POST', url: '/product', data: {action: 'get', product_url: url}
+                method: 'GET',
+                url: '/products/urls/' + encodeURIComponent(url) + '.json'
             }).success(function(data) {
                 if (data.error) {
                     console.log("Fetched failed!");
@@ -50,16 +51,11 @@ GiftStarterApp.service('ProductService', [
 
         };
 
-        this.searchProducts = function(search, retailer) {
-            var query = '?search=' + encodeURIComponent(search) + '&retailer=' + retailer;
+        this.searchProducts = function(search) {
             Analytics.track('product', 'search submitted');
-            Analytics.track('product', 'searched retailer ' + retailer);
-            $http({method: 'GET', url: 'https://product-dev-gift-starter.appspot.com' + query})
-                .success(self.fetchSuccess)
-                .error(function() {
-                    Analytics.track('product', 'search error');
-                    $rootScope.$broadcast('products-fetch-fail');
-                });
+            $http({method: 'GET',
+                url: '/products/' + encodeURIComponent(search) + '.json'})
+                .success(self.fetchSuccess);
         };
 
         this.fetchSuccess = function (result) {

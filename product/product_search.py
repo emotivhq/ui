@@ -56,7 +56,10 @@ def make_amazon_url(query):
 
     escaped_request = "GET\nwebservices.amazon.com\n/onca/xml\n" + params
 
-    signature = base64.b64encode(amazon_sign('1akF5yuNxcZiaytkFAkQfgIU5oMpizNXmE44RPtq', escaped_request))
+    signature = base64.b64encode(
+        amazon_sign(
+            '1akF5yuNxcZiaytkFAkQfgIU5oMpizNXmE44RPtq',
+            escaped_request))
     return 'http://webservices.amazon.com/onca/xml?' + params + '&Signature=' \
            + urllib.quote(signature)
 
@@ -85,6 +88,7 @@ def parse_amazon_item(item):
     Parses an lxml element into a product
     """
     def xfind(path):
+        """ xfind('.//{ns}Tag/{ns}ChildTag') -> 'first child text' | None """
         xml_ns = \
             '{http://webservices.amazon.com/AWSECommerceService/2011-08-01}'
         result = etree.ETXPath(path.format(ns=xml_ns))(item)
@@ -109,24 +113,24 @@ def search_prosperent(query):
 
     response = json.loads(requests.get(make_prosperent_url(query)).text)
     if response.get('errors'):
-        logging.ERROR(
+        logging.error(
             'Prosperent error during search:\t' +
             json.dumps(response['errors']))
     else:
         products = [{
-                    'title': prosp_prod.get('keyword'),
-                    'price': prosp_prod.get('price'),
-                    'url': prosp_prod.get('affiliate_url'),
-                    'imgUrl': prosp_prod.get('image_url'),
-                    'retailer': prosp_prod.get('merchant'),
-                    'description': prosp_prod.get('description'),
-                    }
-                    for prosp_prod in response.get('data')]
+            'title': prosp_prod.get('keyword'),
+            'price': prosp_prod.get('price'),
+            'url': prosp_prod.get('affiliate_url'),
+            'imgUrl': prosp_prod.get('image_url'),
+            'retailer': prosp_prod.get('merchant'),
+            'description': prosp_prod.get('description'),
+        } for prosp_prod in response.get('data')]
 
     return products
 
 
 def make_prosperent_url(query):
+    """ make_prosperent_url('xbox 1') -> 'http://api.prosperent.com/a...' """
     return "http://api.prosperent.com/api/search" \
            "?api_key=0ea6828d486ddb94138d277e9007790b" \
            "&query=" + urllib.quote(query) + \
