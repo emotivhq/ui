@@ -196,7 +196,7 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.product.total_price);
             self.updateSelected();
 
-            $location.search('gs-id', giftstart.gsid);
+            $location.path('/giftstart/' + giftstart.url_title);
 
             self.syncPitchIns('GiftStartService');
 

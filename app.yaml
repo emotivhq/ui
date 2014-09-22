@@ -52,10 +52,10 @@ handlers:
 
 # Catch all other urls
 - url: /create-giftstart
-  script: main.app_gsc
+  script: main.app
   secure: always
-- url: /giftstart
-  script: main.app_gs
+- url: /giftstart.*
+  script: main.app
   secure: always
 - url: /admin.*
   script: google.appengine.ext.admin.application

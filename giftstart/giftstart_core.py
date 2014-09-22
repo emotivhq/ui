@@ -9,6 +9,7 @@ from pay.PitchIn import PitchIn
 import storage.image_cache
 import giftstart_comm
 import os
+import re
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -17,6 +18,7 @@ SECONDS_PER_DAY = 24 * 60 * 60
 def populate_giftstart(ndbgs, giftstart):
     ndbgs.gift_champion_uid = giftstart['gift_champion_uid']
     ndbgs.giftstart_title = giftstart['title']
+    ndbgs.giftstart_url_title = create_title_url(giftstart['title'])
     ndbgs.giftstart_description = giftstart['description']
     ndbgs.giftstart_special_notes = giftstart['special_notes']
 
@@ -129,3 +131,7 @@ def hot_campaigns(num_campaigns):
         'campaigns': result_campaigns,
     }
 
+
+def create_title_url(title):
+    hyphen_title = title.replace(' ', '-')
+    return re.sub(r'[^a-zA-Z0-9-]', '', hyphen_title)

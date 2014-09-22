@@ -18,6 +18,9 @@ class GiftStartMainHandler(webapp2.RequestHandler):
         self.response.write(render_app_with_giftstart(self.request))
 
 
-app_gs = webapp2.WSGIApplication([('/giftstart', GiftStartMainHandler)], debug=True)
-app_gsc = webapp2.WSGIApplication([('/create-giftstart', MainHandler)], debug=True)
-app = webapp2.WSGIApplication([('/.*', MainHandler)], debug=True)
+app = webapp2.WSGIApplication([
+    ('/giftstart/.*', GiftStartMainHandler),
+    ('/giftstart', GiftStartMainHandler),
+    ('/create-giftstart', MainHandler),
+    ('/.*', MainHandler),
+], debug=True)
