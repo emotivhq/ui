@@ -8,6 +8,8 @@ handlers:
 # End points
 - url: /product
   script: product.product_api.api
+- url: /giftstart/share
+  script: share.email_share_handler
 - url: /giftstart/api
   script: giftstart.giftstart_api.api
 - url: /giftstart/api/hot-campaigns
@@ -25,8 +27,6 @@ handlers:
 - url: /reports
   script: reports.handler
   login: admin
-- url: /share
-  script: share.email_share_handler
 - url: /card
   script: card.handler
   login: admin

@@ -18,7 +18,6 @@ SECONDS_PER_DAY = 24 * 60 * 60
 def populate_giftstart(ndbgs, giftstart):
     ndbgs.gift_champion_uid = giftstart['gift_champion_uid']
     ndbgs.giftstart_title = giftstart['title']
-    ndbgs.giftstart_url_title = create_title_url(giftstart['title'])
     ndbgs.giftstart_description = giftstart['description']
     ndbgs.giftstart_special_notes = giftstart['special_notes']
 
@@ -55,6 +54,7 @@ def create(giftstart):
     gs = populate_giftstart(gs, giftstart)
     gs_count = GiftStart.query().count()
     gs.gsid = str(gs_count + 1) if gs_count else '1'
+    gs.giftstart_url_title = create_title_url(giftstart['title'], gs.gsid)
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
     # Check if running in development env
     if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
@@ -132,6 +132,16 @@ def hot_campaigns(num_campaigns):
     }
 
 
-def create_title_url(title):
+def create_title_url(title, gsid):
+    def name_ok(name, gsid):
+        gss = GiftStart.query(GiftStart.giftstart_url_title == name).fetch()
+        return len(gss) == 0 or gss[0].gsid == gsid
     hyphen_title = title.replace(' ', '-')
-    return re.sub(r'[^a-zA-Z0-9-]', '', hyphen_title)
+    url_title = re.sub(r'[^a-zA-Z0-9-]', '', hyphen_title)
+    if not name_ok(url_title, gsid):
+        i = 1
+        while not name_ok(url_title + '-' + str(i), gsid):
+            i += 1
+        url_title += '-' + str(i)
+
+    return url_title
