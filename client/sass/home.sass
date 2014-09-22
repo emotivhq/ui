@@ -15,6 +15,16 @@ div.landing-page
   @media screen and (min-width: $tablet-computer-boundary)
     width: 2 * $column-width
 
+  p.explainer
+    margin-top: 0
+    font-size: 18px
+  @media screen and (min-width: $phone-tablet-boundary)
+    p.explainer:first-of-type
+      margin-top: 1em
+      margin-bottom: 0.25em
+    p.explainer:last-of-type
+      margin-top: 0.25em
+    
   div.copy
     margin-bottom: 2em
     text-align: left

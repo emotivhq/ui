@@ -21,7 +21,7 @@ GiftStarterApp.service('UserService', [
 
         this.getUser = function(uid, callback) {
             Analytics.track("user", "user fetch initiated");
-            $http({method: 'GET', url: '/userstats?uid=' + uid})
+            $http({method: 'GET', url: '/users/' + uid + '.json'})
                 .success(statFetchSuccess)
                 .error(Analytics.track("user", "user fetch failed"));
 
@@ -121,7 +121,7 @@ GiftStarterApp.controller('UserController', [
                 $scope.user.pitchins[index].gsid);
         };
 
-        UserService.getUser($location.search()['uid'], function(data) {
+        UserService.getUser($location.path().replace('/users/', ''), function(data) {
             $scope.user = data[Object.keys(data)[0]];
         })
     }

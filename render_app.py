@@ -49,8 +49,15 @@ def render_app_with_giftstart(request):
     js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
     js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
-    gsid = request.get('gs-id')
-    gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
+    if len(request.path.split('/')) > 2:
+        title_url = request.path.split('/')[-1]
+        gss = GiftStart.query(GiftStart.giftstart_url_title == title_url) \
+            .fetch()
+        page_url = request.path_url + "/" + title_url
+    else:
+        gsid = request.get('gs-id')
+        gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
+        page_url = request.path_url + "?gs-id=" + str(gsid)
 
     if len(gss) > 0:
         gs = gss[0]
@@ -59,7 +66,7 @@ def render_app_with_giftstart(request):
             'product_api_url': config['product_api_url'],
             'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
             'page_title': gs.giftstart_title,
-            'page_url': request.path_url + "?gs-id=" + str(gsid),
+            'page_url': page_url,
             'page_description': gs.giftstart_description,
             'image_url': gs.product_img_url.replace('https://', 'http://'),
             'secure_image_url': gs.product_img_url,

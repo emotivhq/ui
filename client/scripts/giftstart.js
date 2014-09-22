@@ -123,11 +123,11 @@ GiftStarterApp.service('GiftStartService', [
                             Analytics.track('campaign', 'overlay part toggled');
                             self.updateSelected();
                         }
-                        if (parts[ti].bought) {
-                            Analytics.track('client',
-                                'go to user page from overlay');
-                            self.goToUserPage(parts[ti].uid);
-                        }
+//                        if (parts[ti].bought) {
+//                            Analytics.track('client',
+//                                'go to user page from overlay');
+//                            self.goToUserPage(parts[ti].uid);
+//                        }
                     }
                 }
 
@@ -181,8 +181,9 @@ GiftStarterApp.service('GiftStartService', [
             $rootScope.$broadcast('selection-changed');
         };
 
-        this.fetchGiftStart = function(gsid) {
-            $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
+        this.fetchGiftStart = function(url_title) {
+//            $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
+            $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
                 .success(function(data) {self.inflateGiftStart(data['giftstart'])})
                 .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
         };
@@ -196,7 +197,7 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.product.total_price);
             self.updateSelected();
 
-            $location.search('gs-id', giftstart.gsid);
+            $location.path('/giftstart/' + giftstart.giftstart_url_title);
 
             self.syncPitchIns('GiftStartService');
 
@@ -390,9 +391,14 @@ GiftStarterApp.service('GiftStartService', [
         $rootScope.$on('$routeChangeSuccess', function() {
 
             self.pitchInsInitialized = false;
-            var gsid = $location.search()['gs-id'];
-            if (gsid){
-                self.fetchGiftStart(gsid);
+//            var gsid = $location.search()['gs-id'];
+//            if (gsid){
+//                self.fetchGiftStart(gsid);
+//            }
+            var url_title = $location.path().replace('/giftstart/', '');
+            if (url_title) {
+                console.log("fetching");
+                self.fetchGiftStart(url_title)
             }
         });
 
@@ -460,9 +466,12 @@ GiftStarterApp.controller('GiftStartController', [
             {passed: true}
         ];
 
-        if(typeof($location.search()['gs-id']) === typeof("string")) {
+//        if(typeof($location.search()['gs-id']) === typeof("string")) {
+        if(typeof($location.path().length > 11)) {
             if (GiftStartService.giftStart.gsid == undefined) {
-                GiftStartService.fetchGiftStart($location.search()['gs-id']);
+//                GiftStartService.fetchGiftStart($location.search()['gs-id']);
+                GiftStartService.fetchGiftStart($location.path()
+                    .replace('/giftstart/', ''));
             }
         }
 

@@ -12,23 +12,25 @@ handlers:
   script: product.product_api.handler
 - url: /product
   script: product.product_api.handler
+- url: /giftstart/share
+  script: share.email_share_handler
 - url: /giftstart/api
   script: giftstart.giftstart_api.api
 - url: /giftstart/api/hot-campaigns
   script: giftstart.giftstart_api.hot_campaigns
 - url: /pay
   script: pay.pay_api.api
-- url: /userstats
+- url: /users/.*.json
   script: gs_user.gs_user_api.stats
-- url: /user.*
+- url: /users/.*
+  script: gs_user.gs_user_api.handler
+- url: /users.*
   script: gs_user.gs_user_api.api
 - url: /u
   script: gs_user.gs_user_api.user_page
 - url: /reports
   script: reports.handler
   login: admin
-- url: /share
-  script: share.email_share_handler
 - url: /card
   script: card.handler
   login: admin
@@ -56,10 +58,13 @@ handlers:
 
 # Catch all other urls
 - url: /create-giftstart
-  script: main.app_gsc
+  script: main.app
   secure: always
-- url: /giftstart
-  script: main.app_gs
+- url: /giftstart/.*.json
+  script: giftstart.giftstart_api.handler
+  secure: always
+- url: /giftstart.*
+  script: main.app
   secure: always
 - url: /admin.*
   script: google.appengine.ext.admin.application

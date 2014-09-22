@@ -9,6 +9,7 @@ from pay.PitchIn import PitchIn
 import storage.image_cache
 import giftstart_comm
 import os
+import re
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -53,6 +54,7 @@ def create(giftstart):
     gs = populate_giftstart(gs, giftstart)
     gs_count = GiftStart.query().count()
     gs.gsid = str(gs_count + 1) if gs_count else '1'
+    gs.giftstart_url_title = create_title_url(giftstart['title'], gs.gsid)
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
     # Check if running in development env
     if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
@@ -133,3 +135,17 @@ def hot_campaigns(num_campaigns):
         'campaigns': result_campaigns,
     }
 
+
+def create_title_url(title, gsid):
+    def name_ok(name, gsid):
+        gss = GiftStart.query(GiftStart.giftstart_url_title == name).fetch()
+        return len(gss) == 0 or gss[0].gsid == gsid
+    hyphen_title = title.replace(' ', '-')
+    url_title = re.sub(r'[^a-zA-Z0-9-]', '', hyphen_title)
+    if not name_ok(url_title, gsid):
+        i = 1
+        while not name_ok(url_title + '-' + str(i), gsid):
+            i += 1
+        url_title += '-' + str(i)
+
+    return url_title
