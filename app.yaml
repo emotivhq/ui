@@ -54,6 +54,9 @@ handlers:
 - url: /create-giftstart
   script: main.app
   secure: always
+- url: /giftstart/.*.json
+  script: giftstart.giftstart_api.handler
+  secure: always
 - url: /giftstart.*
   script: main.app
   secure: always

@@ -68,6 +68,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
         return {'result': 'error', 'stripe-error': e.json_body}
 
     pi = PitchIn(uid=uid, gsid=gsid, note=note, parts=parts,
+                 giftstart_url_title=giftstart.giftstart_url_title,
                  stripe_charge_id=charge['id'], email=email_address,
                  stripe_charge_json=json.dumps(charge),
                  last_four=stripe_response['card']['last4'], img_url=usr_img,

@@ -46,7 +46,7 @@ class GiftStart(ndb.Model):
     def dictify(self):
         return {'giftstart': {
             'gsid': self.gsid, 'title': self.giftstart_title,
-            'url_title': self.giftstart_url_title,
+            'giftstart_url_title': self.giftstart_url_title,
             'description': self.giftstart_description,
             'product': {'img_url': self.product_img_url, 'price': self.product_price, 'product_url': self.product_url,
                         'sales_tax': self.sales_tax, 'shipping': self.shipping, 'service_fee': self.service_fee,
