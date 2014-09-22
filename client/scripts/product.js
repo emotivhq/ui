@@ -103,8 +103,7 @@ GiftStarterApp.directive('gsProductSearch',
 
             scope.submitSearch = function() {
                 Analytics.track('product', 'search submitted');
-                ProductService.searchProducts(scope.product_url,
-                    scope.retailer);
+                ProductService.searchProducts(scope.product_url);
                 scope.loading = true;
                 scope.failed = false;
             };

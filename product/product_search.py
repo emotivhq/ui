@@ -23,11 +23,15 @@ def product_search(query):
     partners, sorted by relevance
     """
     products = []
+    logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
     products += search_amazon(query)
+    logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
     products += search_prosperent(query)
+    logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
     sorted_products = sort_by_relevance(query, products)
+    logging.info("Returning...\t" + datetime.utcnow().isoformat())
 
-    return sorted_products
+    return products
 
 
 def search_amazon(query):
@@ -80,6 +84,7 @@ def parse_amazon_products(response):
     products = [parse_amazon_item(element)
                 for element in root.iter()
                 if element.tag.split('}')[-1] == 'Item']
+
     # Remove products missing data
     return [product for product in products if all(product.values())]
 
@@ -93,16 +98,17 @@ def parse_amazon_item(item):
         xml_ns = \
             '{http://webservices.amazon.com/AWSECommerceService/2011-08-01}'
         result = etree.ETXPath(path.format(ns=xml_ns))(item)
-        return result[0].text if result else ''
+        return result[0].text if result else None
 
+    description = xfind('.//{ns}EditorialReviews/{ns}EditorialReview/{ns}Content')
     return {
         'title': xfind('.//{ns}ItemAttributes/{ns}Title'),
         'price': xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount'),
         'url': xfind('.//{ns}DetailPageURL'),
         'imgUrl': xfind('.//{ns}LargeImage/{ns}URL'),
         'retailer': 'Amazon',
-        'description': xfind('.//{ns}ItemAttributes/{ns}Title'),
-
+        'description': description if description
+        else xfind('.//{ns}ItemAttributes/{ns}Title'),
     }
 
 
@@ -135,8 +141,9 @@ def make_prosperent_url(query):
     return "http://api.prosperent.com/api/search" \
            "?api_key=0ea6828d486ddb94138d277e9007790b" \
            "&query=" + urllib.quote(query) + \
+           "&filterMerchantId=" + "|".join(PROSPERENT_RETAILERS.values()) + \
            "&imageSize=500x500" \
-           "&limit=75" \
+           "&limit=90" \
            "&filterPrice=49.99,"
 
 
@@ -144,8 +151,11 @@ def sort_by_relevance(keywords, products):
     """ sort_by_relavence('xbox 1', [Product...]) -> [Product...]
     Sorts a list of products by relevance to the supplied keywords
     """
+    logging.info("Building index...\t" + datetime.utcnow().isoformat())
     index, ids = put_search_products(products)
+    logging.info("Searching products...\t" + datetime.utcnow().isoformat())
     sorted_products = search_products(index, keywords)
+    logging.info("Cleaning up...\t" + datetime.utcnow().isoformat())
     cleanup_search(index, ids)
 
     return sorted_products
@@ -155,22 +165,23 @@ def put_search_products(products):
     """ put_documents([Product...]) -> (Index, [Id...])
     Puts an array of documents and returns the index and ids of the put docs
     """
-    index = search.Index(name='product-search-0')
-    ids = []
-    for i, prod in enumerate(products):
-        doc = search.Document(
-            doc_id=str(i),
+    def make_doc(prod, id):
+        return search.Document(
+            doc_id=str(id),
             fields=[
                 search.TextField(name='title', value=prod['title']),
-                search.TextField(name='description',
+                search.HtmlField(name='description',
                                  value=prod['description']),
                 search.TextField(name='url', value=prod['url']),
                 search.TextField(name='imgUrl', value=prod['imgUrl']),
                 search.TextField(name='price', value=prod['price']),
                 search.TextField(name='retailer', value=prod['retailer']),
             ])
-        index.put(doc)
-        ids.append(str(i))
+
+    index = search.Index(name='product-search-0')
+    docs = [make_doc(prod, str(i)) for i, prod in enumerate(products)]
+    ids = [str(i) for i in range(len(docs))]
+    index.put(docs)
     return index, ids
 
 
@@ -187,6 +198,67 @@ def search_products(index, keywords):
     """
     def make_product(search_result):
         return {field.name: field.value for field in search_result.fields}
+    sort_opts = search.SortOptions(match_scorer=search.MatchScorer())
+    query_options = search.QueryOptions(
+        limit=100,
+        sort_options=sort_opts)
+    query = search.Query(query_string=keywords, options=query_options)
 
-    results = index.search(keywords)
+    results = index.search(query)
     return [make_product(result) for result in results]
+
+
+PROSPERENT_RETAILERS = {
+    "rei": "123729",
+    "nordstrom": "127294",
+    "1800flowers": "127214",
+    "zappos": "123473",
+    "kohls": "126799",
+    "lowes": "124810",
+    "bestbuy": "126728",
+    "worldmarket": "125441",
+    "surlatable": "125427",
+    "sunglasshut": "125471",
+    "evo": "125646",
+    "redenvelope": "125512",
+    "2modern": "125037",
+    "advanceautoparts": "124411",
+    "anntaylor": "125175",
+    "anneklein": "128076",
+    "autozone": "124137",
+    "backcountry": "123472",
+    "barneysnewyork": "127429",
+    "brooksbrothers": "123775",
+    "brookstone": "123721",
+    "capitollighting": "124449",
+    "carhartt": "123996",
+    "competitivecyclist": "124822",
+    "cooking": "123736",
+    "countryoutfitter": "127239",
+    "cymax": "124230",
+    "easyspirit": "124481",
+    "efaucets": "123991",
+    "eyeglasses": "125174",
+    "guitarcenter": "123887",
+    "hammacherschlemmer": "123712",
+    "kayjewelers": "124968",
+    "lacrosse": "124487",
+    "lordtaylor": "125096",
+    "mightyleaftea": "124167",
+    "militaryuniformsupply": "126947",
+    "moosejaw": "123917",
+    "modernbathroom": "124140",
+    "motorcyclesuperstore": "123992",
+    "motosport": "124443",
+    "newbalance": "124265",
+    "oakley": "123705",
+    "officemax": "124083",
+    "petco": "123839",
+    "saksfifthaveneue": "127419",
+    "skis": "123901",
+    "soccer": "124115",
+    "sportsmemorabilia": "124378",
+    "themicrosoftstore": "127528",
+    "uggaustralia": "124396",
+    "vitaminworld": "126739",
+}

@@ -42,9 +42,8 @@ class ProductUrlHandler(webapp2.RequestHandler):
 class ProductSearchHandler(webapp2.RequestHandler):
 
     def get(self):
-        query = self.request.path.lstrip('/products/').rstrip('.json')
+        query = urllib.unquote(self.request.path[10:-5])
         prods = product_search.product_search(query)
-        print(prods)
         self.response.write(json.dumps(prods))
 
 
