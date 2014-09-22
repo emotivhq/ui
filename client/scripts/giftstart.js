@@ -123,11 +123,11 @@ GiftStarterApp.service('GiftStartService', [
                             Analytics.track('campaign', 'overlay part toggled');
                             self.updateSelected();
                         }
-                        if (parts[ti].bought) {
-                            Analytics.track('client',
-                                'go to user page from overlay');
-                            self.goToUserPage(parts[ti].uid);
-                        }
+//                        if (parts[ti].bought) {
+//                            Analytics.track('client',
+//                                'go to user page from overlay');
+//                            self.goToUserPage(parts[ti].uid);
+//                        }
                     }
                 }
 
