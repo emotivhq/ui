@@ -2,6 +2,7 @@
 <html ng-app="GiftStarterApp">
 <head lang="en" ng-controller="HeadController">
 
+    <title>GiftStarter - {% if page_title %}{{page_title}}{% else %}The Easiest Way To Group Gift Together{% endif %}</title>
     {% if deployed %}<script src="/bower_components/xdomain/dist/0.6/xdomain.min.js" slave="{{product_api_url}}/proxy.html"></script>{% endif %}
     {% include 'meta.html' %}
     {% include 'fonts.html' %}
