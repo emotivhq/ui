@@ -43,7 +43,9 @@ class ProductSearchHandler(webapp2.RequestHandler):
 
     def get(self):
         query = self.request.path.lstrip('/products/').rstrip('.json')
-        self.response.write(json.dumps(product_search.search(query)))
+        prods = product_search.product_search(query)
+        print(prods)
+        self.response.write(json.dumps(prods))
 
 
 handler = webapp2.WSGIApplication([

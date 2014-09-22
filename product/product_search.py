@@ -14,9 +14,10 @@ import hmac
 import hashlib
 from datetime import datetime
 from lxml import etree
+from google.appengine.api import search
 
 
-def search(query):
+def product_search(query):
     """ search('xbox 1') -> [Product...]
     Search for specified keywords, returning a list of products from all
     partners, sorted by relevance
@@ -119,7 +120,7 @@ def search_prosperent(query):
     else:
         products = [{
             'title': prosp_prod.get('keyword'),
-            'price': prosp_prod.get('price'),
+            'price': str(100 * float(prosp_prod.get('price'))),
             'url': prosp_prod.get('affiliate_url'),
             'imgUrl': prosp_prod.get('image_url'),
             'retailer': prosp_prod.get('merchant'),
@@ -135,11 +136,57 @@ def make_prosperent_url(query):
            "?api_key=0ea6828d486ddb94138d277e9007790b" \
            "&query=" + urllib.quote(query) + \
            "&imageSize=500x500" \
-           "&limit=75"
+           "&limit=75" \
+           "&filterPrice=49.99,"
 
 
 def sort_by_relevance(keywords, products):
     """ sort_by_relavence('xbox 1', [Product...]) -> [Product...]
     Sorts a list of products by relevance to the supplied keywords
     """
-    return products
+    index, ids = put_search_products(products)
+    sorted_products = search_products(index, keywords)
+    cleanup_search(index, ids)
+
+    return sorted_products
+
+
+def put_search_products(products):
+    """ put_documents([Product...]) -> (Index, [Id...])
+    Puts an array of documents and returns the index and ids of the put docs
+    """
+    index = search.Index(name='product-search-0')
+    ids = []
+    for i, prod in enumerate(products):
+        doc = search.Document(
+            doc_id=str(i),
+            fields=[
+                search.TextField(name='title', value=prod['title']),
+                search.TextField(name='description',
+                                 value=prod['description']),
+                search.TextField(name='url', value=prod['url']),
+                search.TextField(name='imgUrl', value=prod['imgUrl']),
+                search.TextField(name='price', value=prod['price']),
+                search.TextField(name='retailer', value=prod['retailer']),
+            ])
+        index.put(doc)
+        ids.append(str(i))
+    return index, ids
+
+
+def cleanup_search(index, ids):
+    """ cleanup_search([Id...]) -> None
+    Removes all the added documents from the search index after completion
+    """
+    index.delete(ids)
+
+
+def search_products(index, keywords):
+    """ search_products(Index, 'xbox 1') -> [Product...]
+    Searches the passed in index for the supplied keywords, with scoring
+    """
+    def make_product(search_result):
+        return {field.name: field.value for field in search_result.fields}
+
+    results = index.search(keywords)
+    return [make_product(result) for result in results]
