@@ -34,9 +34,9 @@ GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftSta
                     '].toggle()" ' +
                     'style="width: '+width+'px;height: '+height+'px;margin:'+margin+'px '+margin+'px;">' +
                     '<table><tr><td><span class="price">${{giftstart.parts['+i+
-                    '].value / 100 | number : 2}}</span><img class="giver" style="width:' +
+                    '].value / 100 | number : 2}}</span><a ng-href="/users/{{giftstart.parts['+i+'].uid}}"><img class="giver" style="width:' +
                     usrLongEdge + 'px;height:' + usrLongEdge + 'px;" ng-src="{{giftstart.parts['+i+
-                    '].img}}"/></td></tr></table></div>';
+                    '].img}}"/></a></td></tr></table></div>';
                 overlayElement.append($compile(divString)(scope));
             }
         }

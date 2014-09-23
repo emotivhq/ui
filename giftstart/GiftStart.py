@@ -7,6 +7,7 @@ import json
 class GiftStart(ndb.Model):
     gsid = ndb.StringProperty(required=True)
     giftstart_title = ndb.StringProperty(required=True)
+    giftstart_url_title = ndb.StringProperty()
     giftstart_description = ndb.TextProperty(required=True)
     giftstart_special_notes = ndb.TextProperty()
     gift_champion_uid = ndb.StringProperty(required=True)
@@ -44,7 +45,9 @@ class GiftStart(ndb.Model):
 
     def dictify(self):
         return {'giftstart': {
-            'gsid': self.gsid, 'title': self.giftstart_title, 'description': self.giftstart_description,
+            'gsid': self.gsid, 'title': self.giftstart_title,
+            'giftstart_url_title': self.giftstart_url_title,
+            'description': self.giftstart_description,
             'product': {'img_url': self.product_img_url, 'price': self.product_price, 'product_url': self.product_url,
                         'sales_tax': self.sales_tax, 'shipping': self.shipping, 'service_fee': self.service_fee,
                         'total_price': self.total_price, 'title': self.product_title,

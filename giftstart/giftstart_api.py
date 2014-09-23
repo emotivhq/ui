@@ -118,6 +118,16 @@ def find_campaign(campaign):
 
     return None
 
+
+class GiftStartJsonHandler(webapp2.RequestHandler):
+    def get(self):
+        url_title = self.request.path[11:-5]
+        gs = GiftStart.query(GiftStart.giftstart_url_title == url_title)\
+            .fetch()[0]
+        self.response.write(gs.jsonify())
+
+
+handler = webapp2.WSGIApplication([('/giftstart/.*.json', GiftStartJsonHandler)],debug=True)
 api = webapp2.WSGIApplication([('/giftstart/api',
                                 GiftStartHandler)],
                               debug=True)

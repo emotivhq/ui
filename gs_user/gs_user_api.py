@@ -12,13 +12,10 @@ from render_app import render_app
 class StatsHandler(webapp2.RequestHandler):
     def get(self):
         """
-        Gets stats for all passed in users.
+        Gets stats for passed in user.
         """
-        uids = self.request.get('uid')
-        if len(uids) > 0:
-            self.response.write(json.dumps(get_stats(uids)))
-        else:
-            self.response.set_status(400, "Expected list of UIDs")
+        uid = self.request.path[7:-5]
+        self.response.write(json.dumps(get_stats(uid)))
 
 
 class UserPageHandler(webapp2.RequestHandler):
@@ -103,6 +100,7 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
-api = webapp2.WSGIApplication([('/user.*', UserHandler)], debug=True)
-stats = webapp2.WSGIApplication([('/userstats', StatsHandler)], debug=True)
+handler = webapp2.WSGIApplication([('/users/.*', UserPageHandler)], debug=True)
+api = webapp2.WSGIApplication([('/users.*', UserHandler)], debug=True)
+stats = webapp2.WSGIApplication([('/users/.*.json', StatsHandler)], debug=True)
 user_page = webapp2.WSGIApplication([('/u', UserPageHandler)], debug=True)

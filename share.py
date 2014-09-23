@@ -45,5 +45,5 @@ def email_share(to, sender, message, gsid, sender_name, share_url):
                  }))
 
 
-email_share_handler = webapp2.WSGIApplication([('/share', EmailShareHandler)],
+email_share_handler = webapp2.WSGIApplication([('/giftstart/share', EmailShareHandler)],
                                               debug=True)

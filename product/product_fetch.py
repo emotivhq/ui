@@ -62,18 +62,27 @@ def verify_partner(url):
 
 def extract_price(tree, partner):
     partner_price_patterns = {
-        'rei': ['//*[@id="product"]//li[contains(@class, "originalPrice")]/span',
+        'rei': ['//*[@id="product"]//li[contains(@class, "originalPrice")]'
+                '/span',
                 '//*[@id="product"]//li[contains(@class, "price")]',
                 '//*[@id="product"]//li[contains(@class, "salePrice")]'],
-        'brooksrunning': ['//*[@id="product-content"]//span[@class="price-sales"]',
-                          '//*[@id="product-content"]//span[@class="price-sales"]'],
-        'filson': ['//*[@id="prodprice"]', '//*[@id="prodprice"]/span[@class="sale"]'],
-        'amazon': ['//*[@id="priceblock_ourprice"]', '//*[@id="priceblock_ourprice"]'],
-        'nordstrom': ['//*[@id="price"]//span[contains(@class, "after-sale-price")]',
-                      '//*[@id="price"]/table/tbody/tr/td[contains(@class, "item-price")]/span',
+        'brooksrunning': ['//*[@id="product-content"]'
+                          '//span[@class="price-sales"]',
+                          '//*[@id="product-content"]'
+                          '//span[@class="price-sales"]'],
+        'filson': ['//*[@id="prodprice"]', '//*[@id="prodprice"]'
+                                           '/span[@class="sale"]'],
+        'amazon': ['//div[@id="price"]/table/tr[1]/td[2]',
+                   '//*[@id="actualPriceValue"]/b',
+                   '//*[@id="priceblock_ourprice"]'],
+        'nordstrom': ['//*[@id="price"]'
+                      '//span[contains(@class, "after-sale-price")]',
+                      '//*[@id="price"]/table/tbody/tr'
+                      '/td[contains(@class, "item-price")]/span',
                       '//*[@id="price"]//span[contains(@class, "sale-price")]',
                       '//*[@id="price"]/table/tbody/tr/td[1]/span'],
-        'costco': ['//*[@id="price"]/div[3]/span[2]', '//*[@id="price"]/div[3]/span[2]'],
+        'costco': ['//*[@id="price"]/div[3]/span[2]', '//*[@id="price"]/div[3]'
+                                                      '/span[2]'],
     }
 
     price_string = '0'
@@ -90,15 +99,21 @@ def extract_price(tree, partner):
 
 def extract_title(tree, partner):
     partner_title_patterns = {
-        'rei': '//*[@id="product"]/h1',
-        'brooksrunning': '//*[@id="pdpMain"]/section[1]/div[1]/h1',
-        'filson': '//*[@id="prodcontent"]/h1',
-        'amazon': '//*[@id="productTitle"]',
-        'nordstrom': '//*[@id="product-title"]/h1',
-        'costco': '//*[@id="main_content_wrapper"]/div[2]/div[2]/div[3]/h1',
+        'rei': ['//*[@id="product"]/h1'],
+        'brooksrunning': ['//*[@id="pdpMain"]/section[1]/div[1]/h1'],
+        'filson': ['//*[@id="prodcontent"]/h1'],
+        'amazon': ['//*[@id="productTitle"]', '//*[@id="btAsinTitle"]'],
+        'nordstrom': ['//*[@id="product-title"]/h1'],
+        'costco': ['//*[@id="main_content_wrapper"]/div[2]/div[2]/div[3]/h1'],
     }
 
-    return get_element_text(tree, partner_title_patterns[partner])
+    title = []
+    for xpath in partner_title_patterns[partner]:
+        title = get_element_text(tree, xpath)
+        if title[0]:
+            break
+
+    return title
 
 
 def rotate_list_left(l, n):
@@ -116,9 +131,7 @@ DEFAULT_IMAGE = {
 }
 
 
-def product(data):
-
-    url = data['product_url']
+def product(url):
     partner = verify_partner(url)
     if partner is not None:
         headers = {'User-agent': "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)"}

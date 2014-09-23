@@ -15,7 +15,8 @@ GiftStarterApp.config([
             .when('/create', {templateUrl: 'templates/angular/giftstart-create-campaign.html',
                 reloadOnSearch: false})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .when('/u', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
+            .when('/giftstart/:title', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
+            .when('/users/:uid', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
             .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
             .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
             .when('/privacy', {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
