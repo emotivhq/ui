@@ -1,48 +1,71 @@
 __author__ = 'stuart'
 
 import webapp2
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
 
 
+LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
+                                           hours=datetime.now().hour,
+                                           minutes=datetime.now().minute,
+                                           seconds=datetime.now().second)
+
+
 def user_growth():
-    now = datetime.now()
-    weekago = now - timedelta(days=7)
+    def num_users_by(date):
+        """ num_users_by(datetime) -> 207
+        Returns number of users that have signed up by date
+        """
+        return User.query(User.timestamp < date).count()
 
-    new_users_last_week = User.query(User.timestamp > weekago).count()
-    now_users = User.query().count()
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(7, -1, -1)]
+    total_users = [num_users_by(d) for d in dates]
+    new_users = [0] + [total_users[wk] - total_users[wk-1]
+                       for wk in range(1, 8)]
+    users_growth = [1] + [total_users[i] / float(total_users[i-1])
+                          if total_users[i-1] > 0 else 1
+                          for i in range(1, 8)]
 
-    percent_user_growth_last_week = float(new_users_last_week) / (now_users - new_users_last_week)
+    def build_row(row):
+        return "<tr><td>" + "</td><td>".join([str(v) for v in row]) + "</td></tr>"
 
-    result = '{percent_growth:.1%} user growth over last week: {new_users} new users, up to {current_users} currently'\
-        .format(**{
-            'percent_growth': percent_user_growth_last_week,
-            'new_users': new_users_last_week,
-            'current_users': now_users
-        })
+    result = "<table border=\"2\">"
+    result += build_row(["wk " + str(i-7) for i in range(len(total_users))])
+    result += build_row(total_users)
+    result += build_row(new_users)
+    result += build_row(["{0:.1%}".format(v-1) for v in users_growth])
+    result += "</table>"
 
     return result
 
 
 def giftstart_growth():
-    now = datetime.now()
-    weekago = now - timedelta(days=7)
-    twoweeksago = now - timedelta(days=14)
 
-    new_giftstarts_last_week = GiftStart.query(GiftStart.timestamp > weekago).count()
-    weekago_giftstarts = GiftStart.query(GiftStart.timestamp > twoweeksago, GiftStart.timestamp < weekago).count()
-    # now_giftstarts = GiftStart.query().count()
+    def num_giftstarts_by(date):
+        """ num_users_by(datetime) -> 207
+        Returns number of users that have signed up by date
+        """
+        return GiftStart.query(GiftStart.timestamp < date).count()
 
-    percent_giftstart_growth_last_week = float(new_giftstarts_last_week) / weekago_giftstarts - 1
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(7, -1, -1)]
+    total_giftstarts = [num_giftstarts_by(d) for d in dates]
+    new_giftstarts = [0] + [total_giftstarts[wk] - total_giftstarts[wk-1]
+                       for wk in range(1, 8)]
+    giftstarts_growth = [1] + [total_giftstarts[i] / float(total_giftstarts[i-1])
+                          if total_giftstarts[i-1] > 0 else 1
+                          for i in range(1, 8)]
 
-    result = '{percent_growth:.1%} GiftStart growth over last week: {new_giftstarts} new GiftStarts, up from ' \
-             '{current_giftstarts} the week before'.format(**{
-            'percent_growth': percent_giftstart_growth_last_week,
-            'new_giftstarts': new_giftstarts_last_week,
-            'current_giftstarts': weekago_giftstarts
-        })
+    def build_row(row):
+        return "<tr><td>" + "</td><td>".join([str(v) for v in row]) + "</td></tr>"
+
+    result = "<table border=\"2\">"
+    result += build_row(["wk " + str(i-7) for i in range(len(total_giftstarts))])
+    result += build_row(total_giftstarts)
+    result += build_row(new_giftstarts)
+    result += build_row(["{0:.1%}".format(v-1) for v in giftstarts_growth])
+    result += "</table>"
 
     return result
 
@@ -68,12 +91,12 @@ def campaign_success_rate():
         num_partially_funded += 0 < len(bought_parts) < total_parts
         num_no_funding += 0 == len(bought_parts)
 
-    total_campaigns = float(len(completed_campaigns))
+    total_campaigns = float(len(completed_campaigns)) if float(len(completed_campaigns)) else 1
 
     result = '{full:.1f}% fully funded<br>{part:.1f}% partially funded<br>{no:.1f}% no funding'.format(**{
         'full': 100*num_fully_funded/total_campaigns,
         'part': 100*num_partially_funded/total_campaigns,
-        'no': 100*num_no_funding/total_campaigns,
+        'no':  100*num_no_funding/total_campaigns,
     })
 
     return result

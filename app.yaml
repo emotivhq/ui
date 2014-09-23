@@ -12,27 +12,40 @@ handlers:
   script: product.product_api.handler
 - url: /product
   script: product.product_api.handler
+
+# GiftStart
+- url: /giftstart/api # MAKE RESTful!... Remove?
+  script: giftstart.giftstart_api.api
+- url: /giftstart/api/hot-campaigns # MAKE RESTful!
+  script: giftstart.giftstart_api.hot_campaigns
+- url: /create-giftstart # MAKE RESTful!
+  script: main.app
+  secure: always
 - url: /giftstart/share
   script: share.email_share_handler
-- url: /giftstart/api
-  script: giftstart.giftstart_api.api
-- url: /giftstart/api/hot-campaigns
-  script: giftstart.giftstart_api.hot_campaigns
+- url: /giftstart/.*/card
+  script: giftstart.giftstart_card.handler
+  login: admin
+- url: /giftstart/.*.json
+  script: giftstart.giftstart_api.handler
+  secure: always
+- url: /giftstart/.*
+  script: main.app
+  secure: always
+
+# Pay
 - url: /pay
   script: pay.pay_api.api
+
+# Users
 - url: /users/.*.json
   script: gs_user.gs_user_api.stats
 - url: /users/.*
   script: gs_user.gs_user_api.handler
 - url: /users.*
   script: gs_user.gs_user_api.api
-- url: /u
-  script: gs_user.gs_user_api.user_page
 - url: /reports
   script: reports.handler
-  login: admin
-- url: /card
-  script: card.handler
   login: admin
 
 # Client static asset urls
@@ -57,15 +70,6 @@ handlers:
   secure: always
 
 # Catch all other urls
-- url: /create-giftstart
-  script: main.app
-  secure: always
-- url: /giftstart/.*.json
-  script: giftstart.giftstart_api.handler
-  secure: always
-- url: /giftstart.*
-  script: main.app
-  secure: always
 - url: /admin.*
   script: google.appengine.ext.admin.application
   login: admin

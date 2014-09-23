@@ -4,9 +4,9 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
+
 if 'test_gs_user.py' in __file__.split('/')[-1]:
     os.chdir('..')
-
 
 import unittest
 from google.appengine.ext import testbed
@@ -25,7 +25,8 @@ from gs_user import gs_user_api
 example_giftstart = {
     'gift_champion_uid': 'f1234',
     'title': 'test title what up',
-    'description': 'for every title there must be an equal and possibly related description.',
+    'description': 'for every title there must be an equal and possibly '
+                   'related description.',
     'special_notes': 'make it a race car',
     'product': {
         'product_url': 'http://yo.momma.com',
@@ -37,7 +38,7 @@ example_giftstart = {
         'shipping': 23,
         'service_fee': 9,
         'total_price': 12343,
-        },
+    },
     'columns': 3,
     'rows': 3,
     'gc_name': 'Flombar Omaeliad',
@@ -53,7 +54,6 @@ example_giftstart = {
 
 
 class UserStatsTestHandler(unittest.TestCase):
-
     def setUp(self):
         self.testbed = testbed.Testbed()
         self.testbed.activate()
@@ -68,7 +68,9 @@ class UserStatsTestHandler(unittest.TestCase):
         user.name = 'flomae'
         user.cached_profile_image_url = 'lol not a url'
         user.logged_in_with = 'facebook'
-        user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
+        user.facebook_token_set = FacebookTokenSet(access_token='x1234',
+                                                   expires=datetime.now() +
+                                                           timedelta(days=90))
         user.put()
 
     def tearDown(self):
@@ -91,21 +93,26 @@ class UserStatsTestHandler(unittest.TestCase):
             })
 
             response = request.get_response(giftstart_api.api)
-            self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+            self.assertEqual(response.status_code, 200,
+                             "Should accept created campaign, expected 200, response was " +
                              str(response.status_code))
 
-        request = webapp2.Request.blank('/userstats')
+        request = webapp2.Request.blank(
+            '/users/' + test_gs['gift_champion_uid'] + '.json')
         request.method = 'GET'
-        request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
-        self.assertEqual(200, response.status_code, "Should successfully fetch user stats, expected code 200, "
-                                                    "response was " + str(response.status_code))
+        self.assertEqual(200, response.status_code,
+                         "Should successfully fetch user stats, expected code 200, "
+                         "response was " + str(response.status_code))
         json_response = json.loads(response.body)
 
         # Verify that this user has created the right number of giftstarts
-        self.assertEqual(giftstarts_created, len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts')),
-                         "Should report the right number of giftstarts created, expected " + str(giftstarts_created) +
-                         ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts'))))
+        self.assertEqual(giftstarts_created, len(
+            json_response.get(test_gs['gift_champion_uid']).get('giftstarts')),
+                         "Should report the right number of giftstarts "
+                         "created, expected " + str(giftstarts_created) +
+                         ", reported was " + str(len(json_response.get(
+                             test_gs['gift_champion_uid']).get('giftstarts'))))
         self.assertIn('name',
                       json_response[test_gs['gift_champion_uid']].keys(),
                       "Response should contain user's name")
@@ -126,27 +133,32 @@ class UserStatsTestHandler(unittest.TestCase):
         })
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+        self.assertEqual(response.status_code, 200,
+                         "Should accept created campaign, expected 200, "
+                         "response was " +
                          str(response.status_code))
-
 
         num_pitchins = 3
         self.fake_payment('1', 'f1234', [1, 2])
         self.fake_payment('1', 'f1234', [3, 4, 5])
         self.fake_payment('1', 'f1234', [7])
 
-        request = webapp2.Request.blank('/userstats')
+        request = webapp2.Request.blank(
+            '/users/' + test_gs['gift_champion_uid'] + '.json')
         request.method = 'GET'
-        request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
-        self.assertEqual(200, response.status_code, "Should successfully fetch user stats, expected code 200, "
-                                                    "response was " + str(response.status_code))
+        self.assertEqual(200, response.status_code,
+                         "Should successfully fetch user stats, expected "
+                         "code 200, response was " + str(response.status_code))
         json_response = json.loads(response.body)
 
         # Verify that it reports the right number of pitchins
-        self.assertEqual(num_pitchins, len(json_response.get(test_gs['gift_champion_uid']).get('pitchins')),
-                         "Should report the right number of giftstarts created, expected " + str(num_pitchins) +
-                         ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('pitchins'))))
+        self.assertEqual(num_pitchins, len(
+            json_response.get(test_gs['gift_champion_uid']).get('pitchins')),
+                         "Should report the right number of giftstarts "
+                         "created, expected " + str(num_pitchins) +
+                         ", reported was " + str(len(json_response.get(
+                             test_gs['gift_champion_uid']).get('pitchins'))))
 
     def fake_payment(self, gsid, uid, parts):
         # Create test token
@@ -156,15 +168,16 @@ class UserStatsTestHandler(unittest.TestCase):
             'exp_year': str(datetime.today().year + 1),
             'cvc': '123',
             'address_zip': '12345',
-            })
+        })
 
         # Submit token to API
         request = webapp2.Request.blank('/pay')
         request.method = 'POST'
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
-                'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
-                'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
-            }
+            'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+            'emailAddress': 'test@giftstarter.co',
+            'note': 'Test note for my besty!', 'subscribe': False
+        }
         })
         request.get_response(pay_api.api)

@@ -8,6 +8,7 @@ import jinja2
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
+import re
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
@@ -61,9 +62,9 @@ def make_parts(giftstart, pitchins):
 class CardHandler(webapp2.RequestHandler):
 
     def get(self):
-        gsid = self.request.get('gs-id')
-        giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-        pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+        url_title = re.sub(r'/giftstart/|/card', '', self.request.path)
+        giftstart = GiftStart.query(GiftStart.giftstart_url_title == url_title).fetch(1)[0]
+        pitchins = PitchIn.query(PitchIn.giftstart_url_title == url_title).fetch()
 
         gc = make_gc(giftstart)
         givers = make_givers(pitchins)
@@ -89,7 +90,7 @@ class CardHandler(webapp2.RequestHandler):
             'parts': parts,
             'product_name': giftstart.product_title,
             'product_img_url': giftstart.product_img_url,
-            'giftstart_url': self.request.host_url + '/giftstart?gs-id=' + gsid
+            'giftstart_url': self.request.host_url + '/giftstart/' + url_title
         }))
 
-handler = webapp2.WSGIApplication([('/card', CardHandler)], debug=True)
+handler = webapp2.WSGIApplication([('/giftstart/.*/card', CardHandler)], debug=True)
