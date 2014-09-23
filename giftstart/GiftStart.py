@@ -12,7 +12,7 @@ class GiftStart(ndb.Model):
     giftstart_special_notes = ndb.TextProperty()
     gift_champion_uid = ndb.StringProperty(required=True)
     deadline = ndb.DateTimeProperty(required=True)
-    timestamp = ndb.DateTimeProperty(auto_now=True)
+    timestamp = ndb.DateTimeProperty(auto_now_add=True)
     giftstart_complete = ndb.BooleanProperty(default=False)
 
     product_url = ndb.StringProperty(required=True)

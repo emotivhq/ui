@@ -12,7 +12,7 @@ class PitchIn(ndb.Model):
     img_url = ndb.StringProperty(required=True)
     note = ndb.StringProperty(required=True)
     parts = ndb.IntegerProperty(repeated=True)
-    timestamp = ndb.DateTimeProperty(auto_now=True)
+    timestamp = ndb.DateTimeProperty(auto_now_add=True)
     last_four = ndb.StringProperty(required=True)
     stripe_charge_id = ndb.StringProperty(required=True)
     stripe_charge_json = ndb.JsonProperty(required=True)
