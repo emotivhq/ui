@@ -5,7 +5,9 @@ from datetime import datetime, timedelta, date
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
+import json
 
+NUM_WEEKS = 6
 
 LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
                                            hours=datetime.now().hour,
@@ -13,58 +15,108 @@ LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
                                            seconds=datetime.now().second)
 
 
+def build_row(row):
+    return "<tr><td>" + "</td><td>".join([str(v) for v in row]) + "</td></tr>"
+
+
+def build_hdr(row):
+    return "<tr><th>" + "</th><th>".join([str(v) for v in row]) + "</th></tr>"
+
+
 def user_growth():
+    base_users = User.query().count() - User.query(User.timestamp < LAST_WK_START).count()
+
     def num_users_by(date):
         """ num_users_by(datetime) -> 207
         Returns number of users that have signed up by date
         """
-        return User.query(User.timestamp < date).count()
+        return base_users + User.query(User.timestamp < date).count()
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(7, -1, -1)]
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
     total_users = [num_users_by(d) for d in dates]
     new_users = [0] + [total_users[wk] - total_users[wk-1]
-                       for wk in range(1, 8)]
+                       for wk in range(1, NUM_WEEKS)]
     users_growth = [1] + [total_users[i] / float(total_users[i-1])
                           if total_users[i-1] > 0 else 1
-                          for i in range(1, 8)]
-
-    def build_row(row):
-        return "<tr><td>" + "</td><td>".join([str(v) for v in row]) + "</td></tr>"
+                          for i in range(1, NUM_WEEKS)]
 
     result = "<table border=\"2\">"
-    result += build_row(["wk " + str(i-7) for i in range(len(total_users))])
-    result += build_row(total_users)
-    result += build_row(new_users)
-    result += build_row(["{0:.1%}".format(v-1) for v in users_growth])
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(total_users))])
+    result += build_row(['Total'] + total_users)
+    result += build_row(['New'] + new_users)
+    result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in users_growth])
     result += "</table>"
 
     return result
 
 
 def giftstart_growth():
+    base_giftstarts = GiftStart.query().count() - GiftStart.query(GiftStart.timestamp < LAST_WK_START).count()
 
     def num_giftstarts_by(date):
-        """ num_users_by(datetime) -> 207
-        Returns number of users that have signed up by date
-        """
-        return GiftStart.query(GiftStart.timestamp < date).count()
+        return base_giftstarts + GiftStart.query(GiftStart.timestamp < date).count()
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(7, -1, -1)]
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
     total_giftstarts = [num_giftstarts_by(d) for d in dates]
     new_giftstarts = [0] + [total_giftstarts[wk] - total_giftstarts[wk-1]
-                       for wk in range(1, 8)]
+                       for wk in range(1, NUM_WEEKS)]
     giftstarts_growth = [1] + [total_giftstarts[i] / float(total_giftstarts[i-1])
                           if total_giftstarts[i-1] > 0 else 1
-                          for i in range(1, 8)]
-
-    def build_row(row):
-        return "<tr><td>" + "</td><td>".join([str(v) for v in row]) + "</td></tr>"
+                          for i in range(1, NUM_WEEKS)]
 
     result = "<table border=\"2\">"
-    result += build_row(["wk " + str(i-7) for i in range(len(total_giftstarts))])
-    result += build_row(total_giftstarts)
-    result += build_row(new_giftstarts)
-    result += build_row(["{0:.1%}".format(v-1) for v in giftstarts_growth])
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(total_giftstarts))])
+    result += build_row(['Total'] + total_giftstarts)
+    result += build_row(['New'] + new_giftstarts)
+    result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in giftstarts_growth])
+    result += "</table>"
+
+    return result
+
+
+def transactions_per_week():
+    base_pitchins = PitchIn.query().count() - PitchIn.query(PitchIn.timestamp < LAST_WK_START).count()
+
+    def num_pitchins_by(date):
+        return base_pitchins + PitchIn.query(PitchIn.timestamp < date).count()
+
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
+    total_pitchins = [num_pitchins_by(d) for d in dates]
+    new_pitchins = [0] + [total_pitchins[wk] - total_pitchins[wk-1]
+                       for wk in range(1, NUM_WEEKS)]
+    pitchins_growth = [1] + [total_pitchins[i] / float(total_pitchins[i-1])
+                          if total_pitchins[i-1] > 0 else 1
+                          for i in range(1, NUM_WEEKS)]
+
+    result = "<table border=\"2\">"
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(total_pitchins))])
+    result += build_row(['Total'] + total_pitchins)
+    result += build_row(['New'] + new_pitchins)
+    result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in pitchins_growth])
+    result += "</table>"
+
+    return result
+
+
+def dollars_per_week():
+    def amt_pitchins_by(date):
+        pis = PitchIn.query(PitchIn.timestamp < date).fetch()
+        get_amt = lambda pi: json.loads(pi.stripe_charge_json)['amount']/100.0
+        return sum([get_amt(p) for p in pis])
+
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
+    total_dollars = [amt_pitchins_by(d) for d in dates]
+    new_dollars = [0] + [total_dollars[wk] - total_dollars[wk-1]
+                          for wk in range(1, NUM_WEEKS)]
+    dollars_growth = [1] + [total_dollars[i] / float(total_dollars[i-1])
+                             if total_dollars[i-1] > 0 else 1
+                             for i in range(1, NUM_WEEKS)]
+
+    result = "<table border=\"2\">"
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(total_dollars))])
+    result += build_row(['Total'] + total_dollars)
+    result += build_row(['New'] + new_dollars)
+    result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in dollars_growth])
     result += "</table>"
 
     return result
@@ -97,7 +149,7 @@ def campaign_success_rate():
         'full': 100*num_fully_funded/total_campaigns,
         'part': 100*num_partially_funded/total_campaigns,
         'no':  100*num_no_funding/total_campaigns,
-    })
+        })
 
     return result
 
@@ -105,14 +157,18 @@ def campaign_success_rate():
 class ReportsHandler(webapp2.RequestHandler):
 
     def get(self):
-        template = '<div class="metric"><h3>Wk/wk User Growth</h3><h1>{user_growth}</h1></div>' \
-                   '<div class="metric"><h3>Wk/wk Active GiftStart Growth</h3><h1>{campaign_growth}</h1></div>' \
-                   '<div class="metric"><h3>Percent Campaigns Funded Fully</h3><h1>{campaign_success_rate}</h1></div>'
+        template = '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
+                   '<div class="metric"><h3>Wk/wk Active GiftStart Growth</h3><p>{campaign_growth}</p></div>' \
+                   '<div class="metric"><h3>Percent Campaigns Funded Fully</h3><p>{campaign_success_rate}</p></div>' \
+                   '<div class="metric"><h3>Wk/wk Transactions Growth</h3><p>{transactions_per_week}</p></div>' \
+                   '<div class="metric"><h3>Wk/wk $ Transacted Growth</h3><p>{dollars_per_week}</p></div>'
 
         template_kwargs = {
             'user_growth': user_growth(),
             'campaign_growth': giftstart_growth(),
             'campaign_success_rate': campaign_success_rate(),
+            'transactions_per_week': transactions_per_week(),
+            'dollars_per_week': dollars_per_week(),
         }
 
         self.response.write(template.format(**template_kwargs))
