@@ -3,9 +3,7 @@ team_notification_email:  'test@giftstarter.co'
 product_api_url:          'https://product-dev-gift-starter.appspot.com/static/dev'
 
 app_url:                  'https://www.dev.giftstarter.co'
-email_url:                'http://email.dev.giftstarter.co'
 storage_url:              '/giftstarter-pictures/dev/'
-storage_key:              '-----BEGIN PRIVATE KEY-----\nMIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAK++i8IinbTlUj3F\nVESomjAmpTICnCcS83VFD222VLhjRa0oL0NL0nLYG1H1R3l+Jgb4XQzbSHHOD95e\nFQvRT0OEqh3KL0Zw+YLTmK/eTGkcn08Bz5XciRafQYWUKgGyKJxunghw9KCvdmUe\npoets34XcJ3Gm89A6k6D1B/4mYufAgMBAAECgYBL5b+XvLldGThWQvUsnZ/RMa9g\nFK55VX7c41FRcU/PPdgmetdGeeVOAbRyxbnzZx5nHjWZSs5Tj8lcoEb4jpFrARGd\nry9rwAhfU5+jgKQpGvSZFcioZ87nwocqwyE7KvI+81EQDcAzf8LJ9vBeIpQkkHHE\nFQAsyHnhkYnXtZUEqQJBANepoGczemmhP04uGdoYDIRFLcBGFW7lQCXp0PUus5zA\nSXcMvlZzz4NK9Qvx9L+0Tg2wKETvXvIWB8J5Co4JVssCQQDQnYyMPu3s14X5gkqv\n9CBmVgXrK0BU06mZErLkB/TMjjblOWVk13BGJz5PYEYqWfiGFMDhZO5aVBKNjS55\n3q/9AkBeD7XOTT2O5K1fw+uym9qZtjKGMgsXGxYncxuYVI4ySAvCyOQbgNd5RDAs\nzZMaKeIBRlvJ9T1MCR/JSlG4MYqRAkEApNCkFrUtAh4wUbTXTvX/lvpFiMtN8vaa\nmj4EqVWD2QxOYIEdEzOGF1avysRUCue0CjJhRHGaQjEDy2OMIWqG/QJBALE/UtXj\nVJokcrl8cbtgwUvpATbOBLsOBPb3d9qsKRCwkX18DQeIcW4E7ZxAd/dbS5PP1wRD\noSfSeP1cvTk6NfU\u003d\n-----END PRIVATE KEY-----\n'
 
 googleanalytics:
   key:                    'UA-51616127-3'

@@ -5,7 +5,7 @@ api_version: 1
 threadsafe: yes
 
 handlers:
-# End points
+# Product
 - url: /products/urls/.*.json
   script: product.product_api.handler
 - url: /products/.*.json
@@ -47,6 +47,10 @@ handlers:
 - url: /reports
   script: reports.handler
   login: admin
+
+# Email
+- url: /email/.*
+  script: gs_email.gs_email_api.handler
 
 # Client static asset urls
 - url: /favicon\.ico
