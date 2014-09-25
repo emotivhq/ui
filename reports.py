@@ -163,6 +163,7 @@ class ReportsHandler(webapp2.RequestHandler):
                    '<div class="metric"><h3>Wk/wk Transactions Growth</h3><p>{transactions_per_week}</p></div>' \
                    '<div class="metric"><h3>Wk/wk $ Transacted Growth</h3><p>{dollars_per_week}</p></div>'
 
+
         template_kwargs = {
             'user_growth': user_growth(),
             'campaign_growth': giftstart_growth(),
@@ -172,6 +173,10 @@ class ReportsHandler(webapp2.RequestHandler):
         }
 
         self.response.write(template.format(**template_kwargs))
+        # + '<div><style>gs-button{height: 24px;border: 1px solid #df484b; border-radius: 4px;}</style>'
+        # '<script>window.giftStartButton = {productUrl: "http://google.com", title: "Destinyyyyy", price: 59.99, imgUrl: "http://ecx.images-amazon.com/images/I/91cBPSshuFL._SL1500_.jpg"};</script>'
+        # '<script src="/scripts/butter/button.js"></script>'
+        # '<gs-button id="gsbutton" class="gsbutton bg"  style="display: none;"></gs-button></div>'
 
 
 handler = webapp2.WSGIApplication([('/reports', ReportsHandler)], debug=True)

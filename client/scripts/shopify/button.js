@@ -4,7 +4,7 @@
 
 (function GiftStarterButton() {
     // For use with the Shopify GiftStarter Button on product pages
-    // Button tag and script source shoul be:
+    // Button tag and script source should be:
     // <script src="https://www.giftstarter.co/scripts/shopify/button.js"></script>
     // <gs-button id="gsbutton" class="gsbutton"></gs-button>
 
