@@ -36,7 +36,6 @@ class SendHandler(webapp2.RequestHandler):
     def put(self):
         logging.debug("Request body:\n" + self.request.body)
         params = json.loads(self.request.body)
-        uuid = self.request.path.split('/')[-1]
         email_addresses = [v for k, v in params.items() if k in EMAIL_PARAMS]
 
         def email_invalid(addr):
@@ -64,24 +63,20 @@ class SendHandler(webapp2.RequestHandler):
         # Looks good, ship'em!
         else:
             logging.log(20, "params look good, sending...")
-            taskqueue.add(url="/sendfromqueue", method="PUT",
-                          payload=json.dumps(dict(params.items() + [['uuid', uuid]])))
+            taskqueue.add(url="/email/sendfromqueue", method="PUT",
+                          payload=json.dumps(dict(params.items())))
 
 
 class FromQueueHandler(webapp2.RequestHandler):
 
     def put(self):
         params = json.loads(self.request.body)
-        uuid = params['uuid']
-        if SentEmail.query(SentEmail.uuid == uuid).count() < 1:
-            if 'template_name' in params:
-                gs_email_comm.send_from_template(**{k: v
-                                                    for k, v in params.items()
-                                                    if k in TEMPLATE_PARAMS})
-            else:
-                gs_email_comm.send(**{k: v for k, v in params.items() if k in SEND_PARAMS})
-
-            SentEmail(uuid=uuid).put()
+        if 'template_name' in params:
+            gs_email_comm.send_from_template(**{k: v
+                                                for k, v in params.items()
+                                                if k in TEMPLATE_PARAMS})
+        else:
+            gs_email_comm.send(**{k: v for k, v in params.items() if k in SEND_PARAMS})
 
 
 handler = webapp2.WSGIApplication([

@@ -26,7 +26,6 @@
     "angular-mocks": "latest",
     "angular-payments": "latest",
     "angular-cookies": "latest",
-    "xdomain": "~0.6.13",
     "devicejs": "*",
     "angular-touch": "~1.2.25",
     "angular-sanitize": "~1.2.25"

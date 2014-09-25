@@ -79,13 +79,14 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
 
     email_kwargs = {
         'campaign_name': giftstart.giftstart_title,
-        'campaign_link': config['app_url'] + '/giftstart?gs-id=' + str(gsid),
+        'campaign_link': config['app_url'] + '/giftstart/' +
+                         giftstart.giftstart_url_title,
         'pitchin_charge': '$' + str(total_charge/100.0),
         'pitchin_id': charge['id'],
         'pitchin_last_four': stripe_response['card']['last4']
     }
 
-    url = config['email_url'] + '/send/' + str(uuid.uuid4()).replace("-", '')
+    url = config['email_url']
 
     data = json.dumps({'subject': "Pitch In Received!",
                        'sender': "team@giftstarter.co", 'to': [email_address],

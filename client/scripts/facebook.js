@@ -24,7 +24,7 @@ GiftStarterApp.service('FacebookService', [
         };
 
         this.getLongTermToken = function(token, uid) {
-            $http({method: 'POST', url: '/user',
+            $http({method: 'POST', url: '/users',
                 data: {uid: uid, service: 'facebook', action: 'get-long-term-token', auth_token: token,
                     location: $location.path() + $window.location.search,
                     referrer: AppStateService.referrer}

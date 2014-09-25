@@ -24,7 +24,6 @@ GiftStarterApp.config([
 
         $locationProvider.html5Mode(true).hashPrefix('!');
 
-        $httpProvider.defaults.useXDomain = true;
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ]);
@@ -47,7 +46,6 @@ GiftStarterApp.run(function($http, $templateCache) {
 GiftStarterApp.config(
     function(ezfbProvider, $httpProvider) {
         ezfbProvider.setInitParams({appId: window.fbAppId});
-        $httpProvider.defaults.useXDomain = true;
     }
 );
 
@@ -69,6 +67,7 @@ GiftStarterApp.service('AppStateService', [
         this.base64State = function() {
             var state = {};
             if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
+            if (/\/giftstart\/[a-zA-Z0-9]/.test($location.path())) {state.title_url = $location.path().split('/')[$location.path().split('/').length - 1]}
             if (self.selectedParts) {state.selectedParts = self.selectedParts}
             if (self.popover) {state.popover = self.popover}
             if (self.contributing != null) {state.contributing = self.contributing}
@@ -98,6 +97,9 @@ GiftStarterApp.service('AppStateService', [
         if ($location.search().state) {
             this.state = JSON.parse($window.atob($location.search()['state']));
             $location.search('state', null);
+            if (this.state.title_url) {
+                $location.path('/giftstart/' + this.state.title_url);
+            }
         }
 
         if ($location.search().oauth_token && $location.search().oauth_verifier) {
