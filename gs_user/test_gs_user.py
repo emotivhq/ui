@@ -94,9 +94,8 @@ class UserStatsTestHandler(unittest.TestCase):
             self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
                              str(response.status_code))
 
-        request = webapp2.Request.blank('/userstats')
+        request = webapp2.Request.blank('/users/' + test_gs['gift_champion_uid'] + '.json')
         request.method = 'GET'
-        request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
         self.assertEqual(200, response.status_code, "Should successfully fetch user stats, expected code 200, "
                                                     "response was " + str(response.status_code))
@@ -135,9 +134,8 @@ class UserStatsTestHandler(unittest.TestCase):
         self.fake_payment('1', 'f1234', [3, 4, 5])
         self.fake_payment('1', 'f1234', [7])
 
-        request = webapp2.Request.blank('/userstats')
+        request = webapp2.Request.blank('/users/' + test_gs['gift_champion_uid'] + '.json')
         request.method = 'GET'
-        request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
         self.assertEqual(200, response.status_code, "Should successfully fetch user stats, expected code 200, "
                                                     "response was " + str(response.status_code))
