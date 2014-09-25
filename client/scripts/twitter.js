@@ -34,7 +34,7 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.submitVerifier = function() {
-            $http({method: 'POST', url: '/user', data: {action: 'submit-verifier', service: 'twitter',
+            $http({method: 'POST', url: '/users', data: {action: 'submit-verifier', service: 'twitter',
                 verifier: self.verfier, oauth_token: self.oauth_token,
                 location: $location.path() + $window.location.search,
                 referrer: AppStateService.referrer}})
@@ -50,7 +50,7 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.getAuthUrl = function() {
-            $http({method: 'POST', url: '/user', data: {action: 'get-auth-url', service: 'twitter',
+            $http({method: 'POST', url: '/users', data: {action: 'get-auth-url', service: 'twitter',
                    redirect_url: AppStateService.getTwitterRedirectUrl()}})
                 .success(function(data) {self.auth_url = data['url'];})
                 .error(function(data) {console.log(data);});

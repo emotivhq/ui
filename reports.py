@@ -1,7 +1,7 @@
 __author__ = 'stuart'
 
 import webapp2
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
@@ -149,7 +149,7 @@ def campaign_success_rate():
         'full': 100*num_fully_funded/total_campaigns,
         'part': 100*num_partially_funded/total_campaigns,
         'no':  100*num_no_funding/total_campaigns,
-        })
+    })
 
     return result
 
@@ -163,6 +163,7 @@ class ReportsHandler(webapp2.RequestHandler):
                    '<div class="metric"><h3>Wk/wk Transactions Growth</h3><p>{transactions_per_week}</p></div>' \
                    '<div class="metric"><h3>Wk/wk $ Transacted Growth</h3><p>{dollars_per_week}</p></div>'
 
+
         template_kwargs = {
             'user_growth': user_growth(),
             'campaign_growth': giftstart_growth(),
@@ -172,6 +173,6 @@ class ReportsHandler(webapp2.RequestHandler):
         }
 
         self.response.write(template.format(**template_kwargs))
-
+        
 
 handler = webapp2.WSGIApplication([('/reports', ReportsHandler)], debug=True)
