@@ -27,7 +27,7 @@ def store_if_referral(request):
     shareclick.uid = referral.get('uid') if \
         isinstance(referral.get('uid'), str) else None
     shareclick.channel = referral.get('channel')
-    shareclick.referer_url = referer_url if referer_url else 'direct'
+    shareclick.referer_url = referer_url[:500] if referer_url else 'direct'
     shareclick.uuid = referral.get('uuid')
 
     if shareclick.uuid:
