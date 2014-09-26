@@ -18,6 +18,13 @@
         </div>
     </div>
 
+    <div class="failed" ng-show="results_empty">
+        <img src="/assets/failed.png"/>
+        <div>
+            We didn't find anything for that query.  Try another?
+        </div>
+    </div>
+
     <section id="search-products-section" class="products" ng-class="{hidden: products.length == 0}">
         <div class="product-container" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
             <div class="product">
@@ -37,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-buttons" ng-show="products" >
+        <div class="page-buttons" ng-show="selectedProducts.length > 10" >
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>

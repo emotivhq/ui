@@ -61,7 +61,11 @@ GiftStarterApp.service('ProductService', [
         this.fetchSuccess = function (result) {
             Analytics.track('product', 'search succeeded');
             self.products = result;
-            $rootScope.$broadcast('products-fetched');
+            if (self.products.length) {
+                $rootScope.$broadcast('products-fetched');
+            } else {
+                $rootScope.$broadcast('products-empty');
+            }
         };
     }
 ]);
@@ -72,6 +76,7 @@ GiftStarterApp.directive('gsProductSearch',
         function link(scope, element) {
             scope.loading = false;
             scope.failed = false;
+            scope.results_empty = false;
             scope.product_url = "";
             scope.currentProductLink = '';
             scope.selectedProduct = -1;
@@ -106,6 +111,8 @@ GiftStarterApp.directive('gsProductSearch',
                 ProductService.searchProducts(scope.product_url);
                 scope.loading = true;
                 scope.failed = false;
+                scope.results_empty = false;
+                scope.selectedProducts = [];
             };
 
             scope.submitLink = function() {
@@ -119,6 +126,7 @@ GiftStarterApp.directive('gsProductSearch',
 
                 scope.loading = true;
                 scope.failed = false;
+                scope.results_empty = false;
                 ProductService.product.product_url = scope.product_url;
                 ProductService.submitLink(scope.product_url, onSuccess,
                     onFailure);
@@ -141,6 +149,11 @@ GiftStarterApp.directive('gsProductSearch',
             scope.$on('products-fetch-fail', function() {
                 scope.loading = false;
                 scope.failed = true;
+            });
+
+            scope.$on('products-empty', function() {
+                scope.loading = false;
+                scope.results_empty = true;
             });
 
             scope.selectedPage = 1;
