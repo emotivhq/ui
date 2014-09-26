@@ -74,8 +74,8 @@ GiftStarterApp.service('GooglePlusService', [
             $location.search('re', null);
         };
 
-        if (AppStateService.authResponse) {
-            self.loginCallback(AppStateService.authResponse);
+        if (AppStateService.gplusAuthResponse) {
+            self.loginCallback(AppStateService.gplusAuthResponse);
         }
 
     }

@@ -19,13 +19,17 @@ GiftStarterApp.service('FacebookService', [
         };
 
         this.login = function() {
-            ezfb.login(self.loginCallback,
-                {scope: 'public_profile,basic_info,email,user_birthday,user_friends,friends_birthday'});
+            var url = 'https://www.facebook.com/dialog/oauth' +
+                '?client_id=' + window.fbAppId +
+                '&response_type=token' +
+                '&redirect_uri=' + AppStateService.getOauthRedirectUrl() +
+                '&scope=public_profile,basic_info,email,user_birthday,user_friends,friends_birthday';
+            $window.open(url, '_self');
         };
 
-        this.getLongTermToken = function(token, uid) {
+        this.getLongTermToken = function(token) {
             $http({method: 'POST', url: '/users',
-                data: {uid: uid, service: 'facebook', action: 'get-long-term-token', auth_token: token,
+                data: {service: 'facebook', action: 'get-long-term-token', auth_token: token,
                     location: $location.path() + $window.location.search,
                     referrer: AppStateService.referrer}
             })
@@ -41,14 +45,6 @@ GiftStarterApp.service('FacebookService', [
 
         this.logout = function() {
             // TODO: logout doesn't work due to X FRAME restriction... Facebook is trying to go to facebook.com/home.php?
-//            ezfb.logout(function(response) {
-//                if (response.status  !== 'connected') {
-//                    $rootScope.$broadcast('facebook-logout-success');
-//                } else {
-//                    console.log("Facebook logout failed.");
-//                    console.log(response);
-//                }
-//            });
             $rootScope.$broadcast('facebook-logout-success');
         };
 
@@ -68,4 +64,10 @@ GiftStarterApp.service('FacebookService', [
             console.log($location.absUrl());
             $location.search('re', null);
         };
-}]);
+
+
+        if (AppStateService.fbAuthResponse) {
+            self.getLongTermToken(AppStateService.fbAuthResponse.access_token);
+        }
+    }
+]);

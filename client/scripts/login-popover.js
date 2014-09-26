@@ -43,7 +43,7 @@ GiftStarterApp.controller('LoginPopoverController', [
             }
         }
 
-        TwitterService.getAuthUrl(AppStateService.getTwitterRedirectUrl());
+        TwitterService.getAuthUrl(AppStateService.getOauthRedirectUrl());
 
         $scope.$on('login-success', loginComplete);
 
