@@ -40,10 +40,12 @@
     </section>
 
     <section class="grid card">
-        <div class="grid"><img class="product" src="{{product_img_url}}"/><div class="overlay">{% for part_img_url in parts -%}<div class="part" style="width: {{part_width}}; height: {{part_height}};">{% if part_img_url %}
-                    <img class="part-image" src="{{part_img_url}}" style="max-height: {{max_img_height}};"/>
-                    {% endif %}
-                </div>{%- endfor %}</div></div>
+        <div class="wrapper">
+            <div class="grid"><img class="product" src="{{product_img_url}}"/><div class="overlay">{% for part_img_url in parts -%}<div class="part" style="width: {{part_width}}; height: {{part_height}};">{% if part_img_url %}
+                <img class="part-image" src="{{part_img_url}}" style="max-height: {{max_img_height}};"/>
+                {% endif %}
+            </div>{%- endfor %}</div></div>
+        </div>
         <!--<p>TO VIEW THE WHOLE ONLINE GIFT, VISIT</p>-->
         <a href="">{{giftstart_url}}</a>
     </section>
