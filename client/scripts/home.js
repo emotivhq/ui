@@ -18,16 +18,6 @@ GiftStarterApp.controller('HomeController', [
             }
         }
 
-        $scope.retailerClick = function(retailerUrl, retailerName) {
-            $window.open(retailerUrl, retailerName);
-            Analytics.track('client', 'reatiler clicked ' + retailerName);
-        };
-
-        $scope.productClicked = function(productUrl, productName) {
-            $window.open(productUrl, productName);
-            Analytics.track('client', 'product clicked ' + productName);
-        };
-
         $scope.hotCampaigns = {};
 
         $http({method: 'GET', url: '/giftstart/api/hot-campaigns?num_campaigns=2'})
@@ -71,7 +61,6 @@ GiftStarterApp.directive('gsHotCampaign', function(Analytics, $location) {
     function link(scope, element, attrs) {
         scope.goToUrl = function() {
             Analytics.track("client", "hot campaigns clicked");
-//            window.open('/giftstart?gs-id=' + scope.campaign.giftstart.gsid);
             $location.path('giftstart').search('').search('gs-id',
                 scope.campaign.giftstart.gsid)
         };
