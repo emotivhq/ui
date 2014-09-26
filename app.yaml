@@ -24,7 +24,7 @@ handlers:
 - url: /giftstart/share
   script: share.email_share_handler
 - url: /giftstart/.*/card
-  script: card.handler
+  script: giftstart.giftstart_card.handler
   login: admin
 - url: /giftstart/.*.json
   script: giftstart.giftstart_api.handler
