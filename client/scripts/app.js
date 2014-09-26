@@ -56,7 +56,7 @@ GiftStarterApp.service('AppStateService', [
 
         var self = this;
 
-        this.getTwitterRedirectUrl = function() {
+        this.getOauthRedirectUrl = function() {
             $location.search('state', self.base64State());
             var url = $location.absUrl();
             $location.search('state', null);
@@ -108,7 +108,9 @@ GiftStarterApp.service('AppStateService', [
         }
 
         if ($location.search().code && $location.search().session_state && $location.search().authuser) {
-            self.authResponse = (function(a) {
+            // Handle non-FB oauth
+            // Make object for authResponse
+            self.gplusAuthResponse = (function(a) {
                 if (a == "") return {};
                 var b = {};
                 for (var i = 0; i < a.length; ++i)
@@ -120,6 +122,19 @@ GiftStarterApp.service('AppStateService', [
                 return b;
             })($window.location.search.substr(1).split('&'));
             $location.search('');
+        } else if (/access_token/.test($location.hash())) {
+            // Handle FB oauth
+            self.fbAuthResponse = (function(a) {
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i)
+                {
+                    var p=a[i].split('=');
+                    if (p.length != 2) continue;
+                    b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                }
+                return b;
+            })($location.hash().split('&'));
         }
 
         // Delete tracking url as soon as it is seen
