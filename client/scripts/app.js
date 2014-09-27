@@ -20,6 +20,7 @@ GiftStarterApp.config([
             .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
             .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
             .when('/privacy', {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
+            .when('/what-is-it', {templateUrl: '/templates/angular/what-is-it.html'})
             .otherwise({redirectTo: '/'});
 
         $locationProvider.html5Mode(true).hashPrefix('!');
@@ -156,5 +157,17 @@ GiftStarterApp.service('AppStateService', [
             this.giftstartReferralData = $location.search();
             $location.search('');
         }
+    }
+]);
+
+
+GiftStarterApp.controller('whatIsItController', [
+            '$scope','$location','ToastService',
+    function($scope,  $location,  ToastService) {
+        $scope.showVideo = Boolean($location.search().sv);
+
+        $scope.remindMe = function() {
+            ToastService.setToast("Awesome!  We'll keep you posted!", 7000);
+        };
     }
 ]);

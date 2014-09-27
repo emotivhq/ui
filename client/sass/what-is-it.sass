@@ -1,0 +1,47 @@
+@import base
+@import column
+
+section.what-is-it.wrapper
+  margin: 2em auto
+  width: 100%
+  @media screen and (min-width: 2*$column-width)
+    width: 2*$column-width
+  header
+    h1
+      padding: 0 0.4em
+      width: 100%
+      span
+        color: $primary-color
+  p
+    font-size: 16px
+    text-align: justify
+  div.copy, div.video
+    padding: 4%
+    display: inline-block
+    width: 100%
+    @media screen and (min-width: $column-width)
+      width: 45%
+    @media screen and (min-width: 2*$column-width)
+      padding: 1em
+      width: $column-width - 3em
+
+  div.video
+    padding: 1em
+    background: $footer-bg-color
+
+  div.email
+    width: 100%
+    padding: 1em
+    p
+      margin-top: 0
+    input, button
+      width: 100%
+    input
+      font-size: 18px
+      margin-right: 0.25em
+      @media screen and (min-width: 32em)
+        width: 21em
+    button
+      @media screen and (min-width: 32em)
+        width: 4em
+
