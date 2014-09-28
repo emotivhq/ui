@@ -16,12 +16,22 @@ def save_email(uid, email):
     return user
 
 
-def subscribe_to_mailing_list(uid, email=None):
-    subscribe_list_id = 'c0f44e11c0'
-    mailchimp_api_key = '0a6a663ef69cb19532a41a7582c7b5e1-us8'
+def subscribe_user_to_mailing_list(uid, email=None, double_opt_in=True):
     if email is None:
         email = User.query(User.uid == uid).fetch(1)[0].email
 
+    subscribe_to_mailing_list(email, double_opt_in)
+
+    user = User.query(User.uid == uid).fetch(1)[0]
+    user.subscribed_to_mailing_list = True
+    user.put()
+
+    return
+
+
+def subscribe_to_mailing_list(email, double_opt_in=True):
+    subscribe_list_id = 'c0f44e11c0'
+    mailchimp_api_key = '0a6a663ef69cb19532a41a7582c7b5e1-us8'
     mailchimp_url = 'https://us8.api.mailchimp.com/2.0/lists/subscribe.json'
 
     post_data = json.dumps({
@@ -29,19 +39,18 @@ def subscribe_to_mailing_list(uid, email=None):
         'id': subscribe_list_id,
         'email': {
             'email': email
-        }
+        },
+        'double_optin': double_opt_in,
     })
+
     response = requests.post(mailchimp_url, post_data)
     if response.status_code != 200:
         if json.loads(response.content)['code'] != 214:
-            # Make sure the error is not related to user already being subscribed
-            raise Exception("Failed to subscribe user! Dumping mailchimp response:" + response.content)
+            # Make sure the error is not related to user already being
+            # subscribed
+            raise Exception("Failed to subscribe user! Dumping mailchimp "
+                            "response:" + response.content)
 
-    user = User.query(User.uid == uid).fetch(1)[0]
-    user.subscribed_to_mailing_list = True
-    user.put()
-
-    return
 
 
 cache_fns = {'facebook': lambda uid, tok: storage.image_cache.cache_facebook_user_image(uid, tok),
