@@ -162,8 +162,8 @@ GiftStarterApp.service('AppStateService', [
 
 
 GiftStarterApp.controller('whatIsItController', [
-            '$scope','$location','ToastService','$http',
-    function($scope,  $location,  ToastService,  $http) {
+            '$scope','$location','ToastService','$http','Analytics',
+    function($scope,  $location,  ToastService,  $http,  Analytics) {
         $scope.hideVideo = Boolean($location.search().hv);
         $scope.videoWidth = '100%';
 
@@ -174,6 +174,7 @@ GiftStarterApp.controller('whatIsItController', [
                     double_opt_in: false
                 }
             });
+            Analytics.track('client', 'remind me subscribe');
             ToastService.setToast("Awesome!  We'll keep you posted!", 7000);
         };
     }
