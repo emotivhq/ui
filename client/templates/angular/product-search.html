@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-buttons" ng-show="selectedProducts.length > 10" >
+        <div class="page-buttons" ng-show="products.length > 10" >
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>

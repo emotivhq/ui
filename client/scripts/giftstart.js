@@ -431,6 +431,8 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchInsInitialized = false;
         $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
+        $scope.newUser = true;
+
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
         } else {

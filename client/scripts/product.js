@@ -177,8 +177,9 @@ GiftStarterApp.directive('gsProductSearch',
 
             scope.selectPage = function(page) {
                 scope.selectedPage = page;
-                scope.selectedProducts = scope.products.slice((scope.selectedPage - 1) * scope.pageSize,
-                    scope.selectedPage * scope.pageSize);
+                scope.selectedProducts = scope.products.slice(
+                        (scope.selectedPage - 1) * scope.pageSize,
+                        scope.selectedPage * scope.pageSize);
                 scope.hideProductDetails();
                 element[0].scrollIntoView();
             };
@@ -189,7 +190,8 @@ GiftStarterApp.directive('gsProductSearch',
                 scope.selectedProduct = index;
                 scope.selectedProducts[index].selected = true;
 
-                var root = angular.element(document.querySelector('#search-products-section'))[0];
+                var root = angular.element(document.querySelector(
+                    '#search-products-section'))[0];
 
                 // Product div animates as it expands, so need to infer height
                 // from initial state (2x height/width)

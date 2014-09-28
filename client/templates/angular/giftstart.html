@@ -19,11 +19,12 @@
     </div>
 
     <div class="overlay block">
+        <div class="step-one" ng-show="newUser"><span class="circle step">1</span><span class="instruction">Click on the tiles you want to gift and pitch in!</span></div>
         <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file"/></div>
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
-            <h2>Share This GiftStart With Friends!</h2>
+            <h2 class="black"><span ng-show="newUser" class="circle step">2</span> Share This GiftStart With Friends!</h2>
             <img class="share" src="/assets/share_email.png" ng-click="emailShare();" />
             <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();" />
             <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
@@ -39,7 +40,7 @@
     </div>
 
     <div class="comments block">
-        <h1>Contributors</h1>
+        <h1 ng-show="newUser"><span class="circle step">3</span>Sign The Card!</h1><h1 ng-hide="newUser">Group Card</h1>
         <div class="comment" ng-repeat="pitchIn in pitchIns">
             <a ng-href="/users/{{pitchIn.uid}}"><img ng-src="{{pitchIn.img}}"/></a>
             <div><p>{{pitchIn.note}}</p><p class="name">{{pitchIn.name}}</p></div>
