@@ -3,10 +3,11 @@ __author__ = 'stuart'
 import webapp2
 from social import twitter, googleplus, facebook
 import json
-from gs_user_core import update_or_create, get_user
+from gs_user_core import update_or_create, get_user, subscribe_to_mailing_list
 from gs_user_stats import get_stats
 from UserLogin import UserLogin
 from render_app import render_app
+import re
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -23,6 +24,26 @@ class UserPageHandler(webapp2.RequestHandler):
         """ A request for data about a specific user
         """
         self.response.write(render_app(self.request))
+
+
+class SubscribeHandler(webapp2.RequestHandler):
+    def put(self):
+        data = json.loads(self.request.body)
+        email = data.get('email')
+        double_opt_in = data.get('double_opt_in')
+        if email is None:
+            self.response.set_status(400, 'Expected email address')
+        elif double_opt_in is None:
+            self.response.set_status(400, 'Expected double_opt_in')
+        elif (not isinstance(email, str)) and \
+                (not isinstance(email, type(u''))):
+            self.response.set_status(400, 'Expected email to be string')
+        elif not isinstance(double_opt_in, bool):
+            self.response.set_status(400, 'Expected double_opt_in to be bool')
+        elif not bool(re.search('', email)):
+            self.response.set_status(400, 'Email not valid')
+        else:
+            subscribe_to_mailing_list(email, double_opt_in)
 
 
 class UserHandler(webapp2.RequestHandler):
@@ -95,7 +116,8 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
-handler = webapp2.WSGIApplication([('/users/.*', UserPageHandler)], debug=True)
+handler = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
+                                   ('/users/.*', UserPageHandler),], debug=True)
 api = webapp2.WSGIApplication([('/users.*', UserHandler)], debug=True)
 stats = webapp2.WSGIApplication([('/users/.*.json', StatsHandler)], debug=True)
 user_page = webapp2.WSGIApplication([('/u', UserPageHandler)], debug=True)

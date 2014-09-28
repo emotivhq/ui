@@ -41,7 +41,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     usr_img = user.cached_profile_image_url
 
     if subscribe_to_mailing_lits:
-        gs_user_core.subscribe_to_mailing_list(uid, email=email_address)
+        gs_user_core.subscribe_user_to_mailing_list(uid, email=email_address)
 
     # Verify that none of these parts have been bought yet
     pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()

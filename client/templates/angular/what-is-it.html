@@ -1,0 +1,17 @@
+<section class="what-is-it wrapper" ng-controller="whatIsItController">
+    <header>
+        <h1> GiftStarter makes giving <span>awesome</span> gifts <span>fun</span> and <span>easy</span>.</h1>
+    </header>
+    <div class="copy">
+        <p>Giving an awesome gift is hard - what your friends really want is usually too expensive.  With GiftStarter, you can bring your friends and family together to get a bigger, better gift.</p>
+        <p>All you have to do is create a campaign on GiftStarter and invite your friends!  It's easy for everyone to pitch in, and leave their own special message.  Once it's all bought, GiftStart ships the recipient a beautiful hand-crafted card with everyone's well-wishes, and ships them the gift too!</p>
+    </div>
+
+    <div class="video" ng-hide="hideVideo">
+        <iframe src="//www.youtube.com/embed/FQwKYJk80-8" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="email">
+        <p>Give us your email, and we'll remind you for your next big event!</p>
+        <input type="email" placeholder="email@example.com" ng-model="email"/><button ng-click="remindMe();">Remind Me!</button>
+    </div>
+</section>
