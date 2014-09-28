@@ -35,7 +35,8 @@ class SubscribeHandler(webapp2.RequestHandler):
             self.response.set_status(400, 'Expected email address')
         elif double_opt_in is None:
             self.response.set_status(400, 'Expected double_opt_in')
-        elif not isinstance(email, str):
+        elif (not isinstance(email, str)) and \
+                (not isinstance(email, type(u''))):
             self.response.set_status(400, 'Expected email to be string')
         elif not isinstance(double_opt_in, bool):
             self.response.set_status(400, 'Expected double_opt_in to be bool')

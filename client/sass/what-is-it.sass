@@ -10,6 +10,7 @@ section.what-is-it.wrapper
     h1
       padding: 0 0.4em
       width: 100%
+      margin-bottom: 0.5em
       span
         color: $primary-color
   p
@@ -19,15 +20,23 @@ section.what-is-it.wrapper
     padding: 4%
     display: inline-block
     width: 100%
+    vertical-align: top
     @media screen and (min-width: $column-width)
       width: 45%
     @media screen and (min-width: 2*$column-width)
       padding: 1em
       width: $column-width - 3em
+    p:first-of-type
+      margin-top: 0
 
   div.video
     padding: 1em
     background: $footer-bg-color
+    iframe
+      width: 100%
+      @media screen and (min-width: 2*$column-width)
+        width: 432px
+        height: 243px
 
   div.email
     width: 100%

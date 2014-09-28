@@ -162,11 +162,18 @@ GiftStarterApp.service('AppStateService', [
 
 
 GiftStarterApp.controller('whatIsItController', [
-            '$scope','$location','ToastService',
-    function($scope,  $location,  ToastService) {
-        $scope.showVideo = Boolean($location.search().sv);
+            '$scope','$location','ToastService','$http','$device',
+    function($scope,  $location,  ToastService,  $http) {
+        $scope.hideVideo = Boolean($location.search().hv);
+        $scope.videoWidth = '100%';
 
         $scope.remindMe = function() {
+            $http({
+                method: 'PUT', url: '/users/subscribe.json', data: {
+                    email: $scope.email,
+                    double_opt_in: false
+                }
+            });
             ToastService.setToast("Awesome!  We'll keep you posted!", 7000);
         };
     }
