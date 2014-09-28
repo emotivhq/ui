@@ -162,7 +162,7 @@ GiftStarterApp.service('AppStateService', [
 
 
 GiftStarterApp.controller('whatIsItController', [
-            '$scope','$location','ToastService','$http','$device',
+            '$scope','$location','ToastService','$http',
     function($scope,  $location,  ToastService,  $http) {
         $scope.hideVideo = Boolean($location.search().hv);
         $scope.videoWidth = '100%';
