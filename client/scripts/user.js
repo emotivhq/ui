@@ -16,6 +16,7 @@ GiftStarterApp.service('UserService', [
         this.onMailinList = false;
         this.email = '';
         this.referrer = {};
+        this.hasPitchedIn = false;
 
         var self = this;
 
@@ -31,7 +32,8 @@ GiftStarterApp.service('UserService', [
             }
         };
 
-        this.registerLogin = function(uid, profileImageUrl, token, onMailingList, name) {
+        this.registerLogin = function(uid, profileImageUrl, token,
+                                      onMailingList, name, has_pitched_in) {
             mixpanel.identify(uid);
             mixpanel.people.set({'$last_login': new Date()});
             Analytics.track('login', uid);
@@ -41,6 +43,7 @@ GiftStarterApp.service('UserService', [
             self.profileImageUrl = profileImageUrl;
             self.loggedIn = true;
             self.onMailingList = onMailingList;
+            self.hasPitchedIn = has_pitched_in;
 
             $cookieStore.put('uid', uid);
             $cookieStore.put('token', token);
@@ -56,6 +59,7 @@ GiftStarterApp.service('UserService', [
             } else if (self.loginService === 'googleplus') {
                 GooglePlusService.logout();
             }
+            self.registerLogout();
         };
 
         this.registerLogout = function() {
@@ -73,22 +77,26 @@ GiftStarterApp.service('UserService', [
         function facebookLoggedIn () {
             Analytics.track('user', 'logged in with facebook');
             self.loginService = 'facebook';
-            self.registerLogin(FacebookService.uid, FacebookService.usr_img, FacebookService.token,
-                FacebookService.subscribed, FacebookService.name);
+            self.registerLogin(FacebookService.uid, FacebookService.usr_img,
+                FacebookService.token, FacebookService.subscribed,
+                FacebookService.name, FacebookService.has_pitched_in);
         }
         $rootScope.$on('twitter-login-success', twitterLoggedIn);
         function twitterLoggedIn () {
             Analytics.track('user', 'logged in with twitter');
             self.loginService = 'twitter';
-            self.registerLogin(TwitterService.uid, TwitterService.usr_img, TwitterService.token,
-                TwitterService.subscribed, TwitterService.name);
+            self.registerLogin(TwitterService.uid, TwitterService.usr_img,
+                TwitterService.token, TwitterService.subscribed,
+                TwitterService.name, TwitterService.has_pitched_in);
         }
         $rootScope.$on('googleplus-login-success', googleplusLoggedIn);
         function googleplusLoggedIn () {
             Analytics.track('user', 'logged in with googleplus');
             self.loginService = 'googleplus';
-            self.registerLogin(GooglePlusService.uid, GooglePlusService.usr_img, GooglePlusService.token,
-                GooglePlusService.subscribed, GooglePlusService.name);
+            self.registerLogin(GooglePlusService.uid,
+                GooglePlusService.usr_img, GooglePlusService.token,
+                GooglePlusService.subscribed, GooglePlusService.name,
+                GooglePlusService.has_pitched_in);
         }
 
         $rootScope.$on('facebook-logout-success', self.registerLogout);
