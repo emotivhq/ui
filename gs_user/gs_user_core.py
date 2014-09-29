@@ -131,6 +131,8 @@ def validate(uid, token, path):
             result = {'uid': uid, 'img_url': user[0].cached_profile_image_url,
                       'token': token,
                       'on_mailing_list': user[0].subscribed_to_mailing_list,
-                      'name': base64.urlsafe_b64encode(user[0].name)}
+                      'name': base64.urlsafe_b64encode(user[0].name),
+                      'has_pitched_in': user[0].has_pitched_in,
+                      }
 
     return result

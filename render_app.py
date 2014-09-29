@@ -89,5 +89,5 @@ def remember_user(cookies, path):
         token = cookies['token'].replace('%22', '')
         user_deets = gs_user.validate(uid, token, path)
         if user_deets:
-            js_insert = "window.loginDeets = ['{uid}', '{img_url}', '{token}', '{on_mailing_list}', '{name}'];".format(**user_deets)
+            js_insert = "window.loginDeets = ['{uid}', '{img_url}', '{token}', '{on_mailing_list}', '{name}', '{has_pitched_in}'];".format(**user_deets)
     return js_insert

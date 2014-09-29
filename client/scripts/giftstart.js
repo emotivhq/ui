@@ -431,6 +431,8 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchInsInitialized = false;
         $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
+        $scope.newUser = !UserService.hasPitchedIn;
+
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
         } else {
@@ -572,6 +574,7 @@ GiftStarterApp.controller('GiftStartController', [
 
         $scope.$on('login-success', function() {
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+            $scope.newUser = !UserService.hasPitchedIn;
         });
         $scope.$on('logout-success', function() {
             $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
