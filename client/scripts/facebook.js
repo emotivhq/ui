@@ -39,6 +39,7 @@ GiftStarterApp.service('FacebookService', [
                     self.usr_img = data['usr_img'];
                     self.token = data['token'];
                     self.subscribed = data['on_mailing_list'];
+                    self.has_pitched_in = data['has_pitched_in'];
                     $rootScope.$broadcast('facebook-login-success');
                 })
         };

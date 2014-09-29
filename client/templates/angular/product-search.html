@@ -33,7 +33,7 @@
                     <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}"/>
                 </div>
                 <div class="product-details">
-                    <h3 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h3>
+                    <h4 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h4>
                     <p class="retailer">From {{product.retailer}}</p>
                     <p class="description" ng-bind-html="product.description"></p>
                     <p class="price block">${{product.price / 100 | number : 2}}</p>
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="page-buttons" ng-show="selectedProducts.length > 10" >
+        <div class="page-buttons" ng-show="products.length > 10" >
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>

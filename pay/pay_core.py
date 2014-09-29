@@ -74,6 +74,11 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
                  last_four=stripe_response['card']['last4'], img_url=usr_img,
                  name=user.name if user.name else '')
     pi.put()
+
+    if not user.has_pitched_in:
+        user.has_pitched_in = True
+        user.put()
+
     taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': gsid}), countdown=30)
 

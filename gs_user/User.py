@@ -34,6 +34,8 @@ class User(ndb.Model):
     referrer_uid = ndb.StringProperty()
     referrer_uuid = ndb.StringProperty()
 
+    has_pitched_in = ndb.BooleanProperty(default=False)
+
     def jsonify(self):
         return json.dumps({
             'uid': self.uid,
