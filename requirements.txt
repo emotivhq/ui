@@ -5,3 +5,4 @@ GoogleAppEngineCloudStorageClient
 oauthlib
 stripe
 requests_oauthlib
+mock

@@ -9,6 +9,7 @@ if 'test_gs_user.py' in __file__.split('/')[-1]:
 
 
 import unittest
+from mock import MagicMock
 from google.appengine.ext import testbed
 import webapp2
 import json
@@ -17,6 +18,8 @@ from datetime import datetime, timedelta
 from pay import pay_api as pay_api
 from gs_user import User
 from social.facebook import FacebookTokenSet
+import requests
+from social import OAuthTokenPair
 
 # UUT
 from gs_user import gs_user_api
@@ -61,6 +64,8 @@ class UserStatsTestHandler(unittest.TestCase):
         self.testbed.init_memcache_stub()
         self.testbed.init_taskqueue_stub()
         self.testbed.init_urlfetch_stub()
+        self.testbed.init_app_identity_stub()
+        self.testbed.init_blobstore_stub()
 
         # Insert user
         user = User()
@@ -145,6 +150,47 @@ class UserStatsTestHandler(unittest.TestCase):
         self.assertEqual(num_pitchins, len(json_response.get(test_gs['gift_champion_uid']).get('pitchins')),
                          "Should report the right number of giftstarts created, expected " + str(num_pitchins) +
                          ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('pitchins'))))
+
+    def test_has_ever_pitched_in(self):
+        """ Tests to make sure that the system properly tracks if users have
+         ever pitched in before.
+        """
+
+        # Put in oauth pair to prepare for login
+        oauth_pair = OAuthTokenPair(oauth_token='token', oauth_secret='secret')
+        oauth_pair.put()
+
+        # Set up mock for login
+        class responseMock:
+            def __init__(self, content):
+                self.content = content
+        response = responseMock('oauth_token=token&oauth_token_secret=secret')
+        requests.post = MagicMock(return_value=response)
+        requests.get = MagicMock(return_value=responseMock(
+            json.dumps({'id': 't123', 'profile_image_url': 'http://c',
+                        'name': 'bob'})))
+
+        request = webapp2.Request.blank('/users')
+        request.body = json.dumps({'action': 'submit-verifier',
+                                   'service': 'twitter',
+                                   'oauth_token': 'token',
+                                   'verifier': 'verifier',
+                                   'location': '/'})
+        request.method = 'POST'
+        response = request.get_response(gs_user_api.api)
+        self.assertEqual(200, response.status_code, "Should submit verifier "
+                                                    "successfully, expected "
+                                                    "200, got " +
+                         str(response.status_code))
+        self.assertEqual(False, json.loads(response.body)['has_pitched_in'])
+
+        self.fake_payment('1', 'tt123', [1, 2])
+
+        self.assertEqual(True, json.loads(response.body)['has_pitched_in'])
+
+    def test_has_ever_giftstarted(self):
+        self.assertEqual(False, True)
+
 
     def fake_payment(self, gsid, uid, parts):
         # Create test token
