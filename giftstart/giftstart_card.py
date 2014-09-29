@@ -81,6 +81,11 @@ class CardHandler(webapp2.RequestHandler):
         part_width = str(100.0 / giftstart.overlay_columns) + '%'
         max_img_height = str(4.0 / giftstart.overlay_rows) + 'in'
 
+        if len(giftstart.product_title) < 93:
+            product_name = giftstart.product_title
+        else:
+            product_name = giftstart.product_title[:90] + '...'
+
         self.response.write(card_template.render({
             'givers': givers,
             'gc': gc,
@@ -88,7 +93,7 @@ class CardHandler(webapp2.RequestHandler):
             'part_width': part_width,
             'max_img_height': max_img_height,
             'parts': parts,
-            'product_name': giftstart.product_title,
+            'product_name': product_name,
             'product_img_url': giftstart.product_img_url,
             'giftstart_url': self.request.host_url + '/giftstart/' + url_title
         }))
