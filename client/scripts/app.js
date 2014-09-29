@@ -163,7 +163,9 @@ GiftStarterApp.service('AppStateService', [
 
 GiftStarterApp.controller('whatIsItController', [
             '$scope','$location','ToastService','$http','Analytics',
-    function($scope,  $location,  ToastService,  $http,  Analytics) {
+            '$window',
+    function($scope,  $location,  ToastService,  $http,  Analytics,
+             $window) {
         $scope.hideVideo = Boolean($location.search().hv);
         $scope.videoWidth = '100%';
 
@@ -177,5 +179,37 @@ GiftStarterApp.controller('whatIsItController', [
             Analytics.track('client', 'remind me subscribe');
             ToastService.setToast("Awesome!  We'll keep you posted!", 7000);
         };
+
+        // Load YouTube player asynch
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
     }
 ]);
+
+
+// Create youtube iframe on load
+var player;
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        videoId: 'FQwKYJk80-8',
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+        ga('send', 'event', 'client', 'intro-video', 'play');
+    } else if (event.data == YT.PlayerState.PAUSED) {
+        ga('send', 'event', 'client', 'intro-video', 'pause');
+    } else if (event.data == YT.PlayerState.ENDED) {
+        ga('send', 'event', 'client', 'intro-video', 'complete');
+    }
+}
+function stopVideo() {
+    player.stopVideo();
+}
