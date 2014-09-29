@@ -155,6 +155,21 @@ class UserStatsTestHandler(unittest.TestCase):
         """ Tests to make sure that the system properly tracks if users have
          ever pitched in before.
         """
+        # Create giftstart
+        test_gs = example_giftstart
+
+        request = webapp2.Request.blank('/giftstart/api')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'action': 'create',
+            'uid': test_gs['gift_champion_uid'],
+            'token': 'x1234',
+            'giftstart': test_gs,
+            })
+
+        response = request.get_response(giftstart_api.api)
+        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
+                         str(response.status_code))
 
         # Put in oauth pair to prepare for login
         oauth_pair = OAuthTokenPair(oauth_token='token', oauth_secret='secret')
@@ -186,11 +201,11 @@ class UserStatsTestHandler(unittest.TestCase):
 
         self.fake_payment('1', 'tt123', [1, 2])
 
+        response = request.get_response(gs_user_api.api)
         self.assertEqual(True, json.loads(response.body)['has_pitched_in'])
 
     def test_has_ever_giftstarted(self):
         self.assertEqual(False, True)
-
 
     def fake_payment(self, gsid, uid, parts):
         # Create test token
