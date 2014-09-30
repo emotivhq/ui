@@ -52,8 +52,8 @@ GiftStarterApp.controller('HomeController', [
         function fadeOutComment() {
             $scope.fadedIn = false;
         }
-        fadeInComment();
-        $interval(fadeInComment, 7000);
+//        fadeInComment();
+//        $interval(fadeInComment, 7000);
     }
 ]);
 

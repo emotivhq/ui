@@ -4,7 +4,7 @@
     <div class="note-wrapper">
         <img class="profile-picture" ng-src="{{profilePicture}}">
         <div class="note">
-            <textarea ng-model="noteText" maxlength="500"></textarea>
+            <textarea class="note" ng-model="noteText" maxlength="500"></textarea>
             <p class="chars-left" ng-show="noteText.length > 140" ng-class="{warning: (noteText.length > 450)}">{{500 - noteText.length}}</p>
         </div>
     </div>

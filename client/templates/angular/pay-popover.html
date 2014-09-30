@@ -4,19 +4,19 @@
     <form stripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">
         <div class="number">
             <img ng-src="{{numberImgUrl}}"/>
-            <input type="text" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()"/>
+            <input type="text" id="card-number" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()"/>
         </div><div class="cvc">
             <img ng-src="{{cvcImgUrl}}"/>
-            <input type="text" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()"/>
+            <input type="text" id="card-cvc" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()"/>
         </div><div class="expiry">
             <img ng-src="{{expiryImgUrl}}"/>
-            <input type="text" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()"/>
+            <input type="text" id="card-expiry" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()"/>
         </div><div class="zip" ng-class="{invalidzip: (addressZip.length < 5)}">
             <img ng-src="{{zipImgUrl}}">
-            <input type="text" ng-model="addressZip" maxlength="5" placeholder="ZIP" ng-change="updateFormValidity()"/>
+            <input type="text" id="card-zip" ng-model="addressZip" maxlength="5" placeholder="ZIP" ng-change="updateFormValidity()"/>
         </div><div class="email">
             <img src="{{emailImgUrl}}"/>
-            <input type="email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()"/>
+            <input type="email" id="card-email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()"/>
         </div><span class="subscribe" ng-hide="userOnMailingList">
             <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
         </span>
