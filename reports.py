@@ -64,6 +64,7 @@ def mau_growth():
     dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
 
     mau = [num_logins_between(week-timedelta(days=30), week) for week in dates]
+    mau_delta = [0] + [mau[i] - mau[i-1] for i in range(1, NUM_WEEKS)]
     mau_growth_values = [1] + [mau[i] / float(mau[i-1])
                                if mau[i-1] > 0 else 1
                                for i in range(1, NUM_WEEKS)]
@@ -71,6 +72,7 @@ def mau_growth():
     result = "<table border=\"2\">"
     result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(dates))])
     result += build_row(['MAU'] + mau)
+    result += build_row(['Delta'] + mau_delta)
     result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in mau_growth_values])
     result += "</table>"
 
@@ -185,7 +187,7 @@ class ReportsHandler(webapp2.RequestHandler):
 
     def get(self):
         template = '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
-                   '<div class="metric"><h3>Wk/wk MAU Growth</h3><p>{mau_growth}</p></div>' \
+                   '<div class="metric"><h3>Wk/wk Monthly Active Users Growth</h3><p>{mau_growth}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Active GiftStart Growth</h3><p>{campaign_growth}</p></div>' \
                    '<div class="metric"><h3>Percent Campaigns Funded Fully</h3><p>{campaign_success_rate}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Transactions Growth</h3><p>{transactions_per_week}</p></div>' \
