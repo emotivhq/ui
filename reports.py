@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
+from gs_user.UserLogin import UserLogin
 import json
 
 NUM_WEEKS = 6
@@ -45,6 +46,32 @@ def user_growth():
     result += build_row(['Total'] + total_users)
     result += build_row(['New'] + new_users)
     result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in users_growth])
+    result += "</table>"
+
+    return result
+
+
+def mau_growth():
+    def num_logins_between(start_date, end_date):
+        """ num_logins_by(datetime, datetime) -> 124
+        Returns the number unique users that have logged in in a specd period
+        """
+        logins = UserLogin.query(UserLogin.timestamp > start_date,
+                                 UserLogin.timestamp < end_date).fetch()
+        unique_logins = {login.uid for login in logins}
+        return len(unique_logins)
+
+    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
+
+    mau = [num_logins_between(week-timedelta(days=30), week) for week in dates]
+    mau_growth_values = [1] + [mau[i] / float(mau[i-1])
+                               if mau[i-1] > 0 else 1
+                               for i in range(1, NUM_WEEKS)]
+
+    result = "<table border=\"2\">"
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(dates))])
+    result += build_row(['MAU'] + mau)
+    result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in mau_growth_values])
     result += "</table>"
 
     return result
@@ -158,6 +185,7 @@ class ReportsHandler(webapp2.RequestHandler):
 
     def get(self):
         template = '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
+                   '<div class="metric"><h3>Wk/wk MAU Growth</h3><p>{mau_growth}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Active GiftStart Growth</h3><p>{campaign_growth}</p></div>' \
                    '<div class="metric"><h3>Percent Campaigns Funded Fully</h3><p>{campaign_success_rate}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Transactions Growth</h3><p>{transactions_per_week}</p></div>' \
@@ -166,6 +194,7 @@ class ReportsHandler(webapp2.RequestHandler):
 
         template_kwargs = {
             'user_growth': user_growth(),
+            'mau_growth': mau_growth(),
             'campaign_growth': giftstart_growth(),
             'campaign_success_rate': campaign_success_rate(),
             'transactions_per_week': transactions_per_week(),
