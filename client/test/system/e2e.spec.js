@@ -23,7 +23,7 @@ describe('e2e home page', function() {
 
             ptor.sleep(1500);
             element.all(by.id('submit_approve_access')).get(0).click();
-            ptor.sleep(3000);
+            ptor.sleep(1000);
         }
     });
 
@@ -75,6 +75,7 @@ describe('e2e home page', function() {
         element.all(by.css('div.login-popover')).get(0)
             .all(by.css('div.login-button.googleplus')).get(0).click();
         googleLogin();
+        ptor.sleep(3000);
 
         // Verify the title/description!
         var resultTitle = element.all(by.css("h1.title")).get(0).getText();
@@ -101,7 +102,8 @@ describe('e2e home page', function() {
             .all(by.css('div.login-button.googleplus')).get(0).click();
 
         // Expect to be at the note popup
-        expect(element.all(by.css('textarea.note')).length).toEqual(1);
+        ptor.sleep(1500);
+//        expect(element.all(by.css('textarea.note')).length).toEqual(1);
 
         // Add a note!
         element.all(by.css('textarea.note')).get(0).sendKeys('test note');
@@ -109,19 +111,38 @@ describe('e2e home page', function() {
         ptor.sleep(100);
 
         element.all(by.id('card-number')).get(0).sendKeys('4242424242424242');
-        element.all(by.css('card-cvc')).get(1).sendKeys('123');
-        element.all(by.css('card-expiry')).get(2).sendKeys('12/17');
-        element.all(by.css('card-zip')).get(3).sendKeys('12345');
-        element.all(by.css('card-email')).get(4).sendKeys(
+        element.all(by.id('card-cvc')).get(0).sendKeys('123');
+        element.all(by.id('card-expiry')).get(0).sendKeys('12/17');
+        element.all(by.id('card-zip')).get(0).sendKeys('12345');
+        element.all(by.id('card-email')).get(0).sendKeys(
             'test@giftstarter.co');
 
         element.all(by.css('button.white-border.large')).get(0).click();
 
-        ptor.sleep(3000);
+        ptor.sleep(5000);
 
         element.all(by.css('p.cancel-button')).get(0).click();
 
-        ptor.sleep(300000);
+        // Verify that the pitchin happened
+        element.all(by.css('div.part-cell')).get(0).getAttribute('class').then(
+            function(result) {expect(/bought/.test(result)).toBe(true)}
+        );
+        element.all(by.css('div.part-cell')).get(2).getAttribute('class').then(
+            function(result) {expect(/bought/.test(result)).toBe(true)}
+        );
+        element.all(by.css('div.part-cell')).get(1).getAttribute('class').then(
+            function(result) {expect(/bought/.test(result)).toBe(false)}
+        );
+        element.all(by.css('div.part-cell')).get(3).getAttribute('class').then(
+            function(result) {expect(/bought/.test(result)).toBe(false)}
+        );
+        ptor.sleep(100);
+
+        // Go to user page, go to campaign
+        element.all(by.css('img.giver')).get(0).click();
+        ptor.sleep(100);
+
+
 
 
     });
