@@ -2,7 +2,6 @@
  * Created by stuart on 9/8/14.
  */
 
-
 describe('e2e home page', function() {
 
     var ptor;
@@ -10,7 +9,7 @@ describe('e2e home page', function() {
     var googleLogin;
 
     beforeEach(function() {
-        browser.get('http://localhost:8080');
+        browser.get('http://localhost:8080?TESTING_OMG');
         ptor = protractor.getInstance();
 
         googleLogin = function() {
@@ -68,6 +67,19 @@ describe('e2e home page', function() {
             .sendKeys(gsDescription);
         element.all(by.id('contact-email')).get(0)
             .sendKeys('test@giftstarter.co');
+
+        var moreButton = element.all(by.id('more-parts')).get(0);
+        var lessButton = element.all(by.id('less-parts')).get(0);
+        // Change number of parts
+        for (var i = 0; i < 30; i++) {moreButton.click()}
+        lessButton.click();
+        lessButton.click();
+
+        // There should be 36 parts
+        element.all(by.css('div.part-cell')).then(function(items) {
+            expect(items.length).toBe(36);
+        });
+
         // Submit campaign
         element.all(by.id('giftstart-create-submit')).get(0).click();
 
@@ -83,6 +95,11 @@ describe('e2e home page', function() {
 
         expect(resultTitle).toEqual(gsTitle);
         expect(resultDescription).toEqual(gsDescription);
+
+        // There should be 36 parts
+        element.all(by.css('div.part-cell')).then(function(items) {
+            expect(items.length).toBe(36);
+        });
 
         // Log out first...
         element.all(by.css('h2.navitem.logout')).click();

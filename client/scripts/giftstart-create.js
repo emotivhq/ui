@@ -101,7 +101,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
 
         $scope.moreParts = function() {
             Analytics.track('campaign', 'number of parts changed');
-            if ($scope.selectedXYSet < $scope.xySets.length) {
+            if ($scope.selectedXYSet < $scope.xySets.length - 1) {
                 $scope.selectedXYSet += 1;
                 $scope.x = $scope.xySets[$scope.selectedXYSet][0];
                 $scope.y = $scope.xySets[$scope.selectedXYSet][1];
@@ -157,6 +157,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
                 productImgUrl: $scope.selectedImg,
                 rows: $scope.y,
                 columns: $scope.x,
+                selectedXYSet: $scope.selectedXYSet,
                 productPrice: $scope.inputPrice*100,
                 shippingZip: $scope.shippingZip,
                 shippingState: $scope.shippingState,
@@ -208,28 +209,29 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $scope.giftStart = GiftStartService.giftStart;
         }
 
-        if (AppStateService.state) {
-            if (AppStateService.state.createSession) {
-                $scope.title = AppStateService.state.createSession.title;
-                $scope.description = AppStateService.state.createSession.description;
-                ProductService.product.product_url = AppStateService.state.createSession.productUrl;
-                ProductService.product.title = AppStateService.state.createSession.productTitle;
-                ProductService.logo = AppStateService.state.createSession.retailerLogo;
-                $scope.selectedImg = AppStateService.state.createSession.productImgUrl;
-                $scope.y = AppStateService.state.createSession.rows;
-                $scope.x = AppStateService.state.createSession.columns;
-                $scope.inputPrice = AppStateService.state.createSession.productPrice/100;
-                $scope.shippingZip = AppStateService.state.createSession.shippingZip;
-                $scope.shippingState = AppStateService.state.createSession.shippingState;
-                $scope.salesTax = AppStateService.state.createSession.salesTax;
-                $scope.shipping = AppStateService.state.createSession.shipping;
-                $scope.serviceFee = AppStateService.state.createSession.serviceFee;
-                $scope.totalPrice = AppStateService.state.createSession.totalPrice;
-                $scope.specialNotes = AppStateService.state.createSession.specialNotes;
-                $scope.gcEmail = AppStateService.state.createSession.gcEmail;
-                $scope.$on('login-success', $scope.next);
-                AppStateService.state.createSession = null;
-            }
+        $scope.selectedXYSet = calculateInitialNumParts();
+
+        if ((AppStateService.state || {}).createSession) {
+            $scope.title = AppStateService.state.createSession.title;
+            $scope.description = AppStateService.state.createSession.description;
+            ProductService.product.product_url = AppStateService.state.createSession.productUrl;
+            ProductService.product.title = AppStateService.state.createSession.productTitle;
+            ProductService.logo = AppStateService.state.createSession.retailerLogo;
+            $scope.selectedImg = AppStateService.state.createSession.productImgUrl;
+            $scope.selectedXYSet = AppStateService.state.createSession.selectedXYSet;
+            $scope.y = AppStateService.state.createSession.rows;
+            $scope.x = AppStateService.state.createSession.columns;
+            $scope.inputPrice = AppStateService.state.createSession.productPrice/100;
+            $scope.shippingZip = AppStateService.state.createSession.shippingZip;
+            $scope.shippingState = AppStateService.state.createSession.shippingState;
+            $scope.salesTax = AppStateService.state.createSession.salesTax;
+            $scope.shipping = AppStateService.state.createSession.shipping;
+            $scope.serviceFee = AppStateService.state.createSession.serviceFee;
+            $scope.totalPrice = AppStateService.state.createSession.totalPrice;
+            $scope.specialNotes = AppStateService.state.createSession.specialNotes;
+            $scope.gcEmail = AppStateService.state.createSession.gcEmail;
+            $scope.$on('login-success', $scope.next);
+            AppStateService.state.createSession = null;
         } else if (AppStateService.giftstartReferralData) {
             // If user was referred here from a brand
             ProductService.product.product_url = AppStateService.giftstartReferralData.product_url;
@@ -242,7 +244,6 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             Analytics.track('client', 'referred from', AppStateService.giftstartReferralData.source);
         }
 
-        $scope.selectedXYSet = calculateInitialNumParts();
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
 
