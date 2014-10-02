@@ -29,7 +29,7 @@ GiftStarterApp.config([
     }
 ]);
 
-GiftStarterApp.run(function($http, $templateCache) {
+GiftStarterApp.run(function($http, $templateCache, AB) {
     // Cache templates!
     $http.get('/templates/angular/faq.html', {cache: $templateCache});
     $http.get('/templates/angular/giftstart.html', {cache: $templateCache});
