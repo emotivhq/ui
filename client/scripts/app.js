@@ -31,7 +31,7 @@ GiftStarterApp.config([
 ]);
 
 
-ngAB.value('spec', {
+angular.module('ngAB').value('spec', {
     '/templates/angular/home.html': {
         'steps': {
             perm: 'vertical',
