@@ -2,7 +2,6 @@ __author__ = 'Stuart'
 
 import unittest
 import webapp2
-
 import abtest_core
 
 example_tests = {
@@ -36,6 +35,24 @@ example_tests = {
                     "flags": ""
                 }]
             }
+        },
+        "email-ask": {
+            "vertical": {
+                "weight": 1,
+                "changes": [{
+                    "find": "",
+                    "replace": "",
+                    "flags": ""
+                }]
+            },
+            "horizontal": {
+                "weight": 1,
+                "changes": [{
+                    "find": "",
+                    "replace": "",
+                    "flags": ""
+                }]
+            },
         }
     }
 }
@@ -66,6 +83,17 @@ class ABTestHandler(unittest.TestCase):
                          "Permutation should have only one test case, "
                          "but had " + str(permutation))
 
+        request.remote_addr = '192.168.0.1'
+        permutation_two = abtest_core.choose(request, file_name, test_name,
+                                             example_tests)
+        self.assertEqual(len(permutation_two.values()[0].values()), 1,
+                         "Permutation should have only one test case, "
+                         "but had " + str(permutation_two))
+        self.assertNotEquals(permutation, permutation_two,
+                             "Permutations should not be the same for "
+                             "different IP for certain cases, but were the "
+                             "same: " + str(permutation) +
+                             "\n" + str(permutation_two))
 
     def test_choice_consistency(self):
         """
@@ -100,3 +128,55 @@ class ABTestHandler(unittest.TestCase):
                              "Expected choices to be different, but they were:"
                              " " + str(choices[0]) + " " +
                              str(other_test_choice))
+
+    def test_choice_distribution(self):
+        """
+        Choices should be evenly distributed for different inputs
+        """
+        request = webapp2.Request.blank('/')
+        request.method = 'GET'
+        file_name = '/templates/angular/home.html'
+        test_name = 'steps'
+
+        ips = [str(i) for i in range(20000)]
+
+        choice_counts = {
+            "vertical": 0,
+            "horizontal": 0,
+            "gif": 0
+        }
+
+        for ip in ips:
+            request.remote_addr = ip
+            choice = abtest_core.choose(request, file_name, test_name,
+                                        example_tests)
+            choice_name = choice.values()[0].keys()[0]
+            choice_counts[choice_name] += 1
+
+        difference = float(max(choice_counts.values())) / \
+            min(choice_counts.values()) - 1
+        self.assertLess(difference, 0.02, "Difference between most prominent "
+                                          "and least prominent choice should "
+                                          "be less than 2%, was " +
+                                          str(difference))
+
+    def test_choose_tests(self):
+        """
+        Should choose a set of tests to run
+        """
+        request = webapp2.Request.blank('/')
+        request.remote_addr = '192.168.0.0'
+        request.method = 'GET'
+        tests = abtest_core.choose_tests(request, example_tests)
+
+        for fn in example_tests:
+            def case_generator(spec):
+                for tn in spec[fn]:
+                    yield spec[fn][tn]
+
+            for case in case_generator(tests):
+                self.assertDictContainsSubset(case.values()[0],
+                                              example_tests[fn][case.keys()[0]],
+                                              "Should contain the chosen test:"
+                                              " " + str(case) + "\n"
+                                              + str(example_tests[fn]))

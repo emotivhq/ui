@@ -28,7 +28,7 @@ import hashlib
 import json
 
 
-abtests = json.load(open('spec.json'))
+abspec = json.load(open('spec.json'))
 
 
 def rand_percent(request, file_name, test_name):
@@ -42,14 +42,31 @@ def rand_percent(request, file_name, test_name):
 
 def choose(request, file_name, test_name, test_spec):
     """ choose(webapp2.Request, '/a.html', 'steps', {test_spec}) -> {test}
+    Chooses a test case for a specific test
     """
-    choice_float = rand_percent(request, test_name)
+    choice_float = rand_percent(request, file_name, test_name)
+    this_test = test_spec[file_name][test_name]
+    total_weight = sum([case['weight'] for case in this_test.values()])
+    for case_name, case in this_test.items():
+        adjusted_weight = float(case['weight'])/total_weight
+        choice_float -= adjusted_weight
+        if choice_float <= 0:
+            return {test_name: {case_name: case}}
+    else:
+        return {test_name: {case_name: case}}
 
 
-
-def choose_tests(request):
+def choose_tests(request, spec):
     """ choose_tests(webapp2.Request) -> {tests}
     Returns a chosen permutation of tests for a given client
     """
-    pass
+    tests = {}
+    for file_name in spec.keys():
+        tests[file_name] = {test_name: choose(request, file_name, test_name,
+                                              spec)
+                            for test_name in spec[file_name].keys()}
+    return tests
 
+
+def get_tests(request):
+    return json.dumps(choose_tests(request, abspec))
