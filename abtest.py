@@ -31,11 +31,4 @@ def rand_percent(request, test_name):
     #     return options.keys()[-1]
 
 
-def get_angular_template(request, asset_path):
-    """ get_angular_template(webapp2.Request, '/a.html') -> '<html>...</html>'
-    Returns the rendered
-    """
-    if asset_path not in abtests.values():
-        return open(asset_path).read()
-
 
