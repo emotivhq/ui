@@ -7,6 +7,7 @@ angular.module('ngAB', [])
     .factory('ABInterceptor', [
         'spec',
         function(spec) {
+            console.log(spec);
             return {
                 response: function(response) {
                     var fileSpec = spec[response.config.url];

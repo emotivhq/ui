@@ -28,7 +28,7 @@ import hashlib
 import json
 
 
-abspec = json.load(open('spec.json'))
+abspec = json.load(open('abtest/spec.json'))
 
 
 def rand_percent(request, file_name, test_name):

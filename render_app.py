@@ -6,6 +6,7 @@ from giftstart import GiftStart
 import gs_user
 import os
 import analytics
+import abtest
 
 secrets = yaml.load(open('secret.yaml'))
 config = yaml.load(open('config.yaml'))
@@ -24,9 +25,14 @@ def render_app(request):
     analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
-    js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
-    js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
-    js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
+    js_insert += "Stripe.setPublishableKey('" + \
+                 secrets['stripe_auth']['app_key'] + "');"
+    js_insert += "window.fbAppId = '" + \
+                 secrets['facebook_auth']['app_id'] + "';"
+    js_insert += "window.googlePlusClientId = '" + \
+                 secrets['googleplus_auth']['client_id'] + "';"
+    js_insert += "angular.module('ngAB').value('spec', " + \
+                 abtest.get_tests(request) + "');"
 
     response = frame_template.render({
         'deployed': DEPLOYED,
@@ -46,9 +52,14 @@ def render_app_with_giftstart(request):
     analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
-    js_insert += "Stripe.setPublishableKey('" + secrets['stripe_auth']['app_key'] + "');"
-    js_insert += "window.fbAppId = '" + secrets['facebook_auth']['app_id'] + "';"
-    js_insert += "window.googlePlusClientId = '" + secrets['googleplus_auth']['client_id'] + "';"
+    js_insert += "Stripe.setPublishableKey('" + \
+                 secrets['stripe_auth']['app_key'] + "');"
+    js_insert += "window.fbAppId = '" + \
+                 secrets['facebook_auth']['app_id'] + "';"
+    js_insert += "window.googlePlusClientId = '" + \
+                 secrets['googleplus_auth']['client_id'] + "';"
+    js_insert += "angular.module('ngAB').value('spec', " + \
+                 abtest.get_tests(request) + "');"
     if len(request.path.split('/')) > 2:
         title_url = request.path.split('/')[-1]
         gss = GiftStart.query(GiftStart.giftstart_url_title == title_url) \

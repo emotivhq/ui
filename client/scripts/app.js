@@ -31,26 +31,26 @@ GiftStarterApp.config([
 ]);
 
 
-angular.module('ngAB').value('spec', {
-    '/templates/angular/home.html': {
-        'steps': {
-            perm: 'vertical',
-            changes: [{
-                find: '<h1>',
-                replace: '<h4>',
-                flags: 'g'
-            }, {
-                find: '</h1>',
-                replace: '</h4>',
-                flags: 'g'
-            }, {
-                find: '',
-                replace: '<h1>I\'m here!</h1>',
-                flags: ''
-            }]
-        }
-    }
-});
+//angular.module('ngAB').value('spec', {
+//    '/templates/angular/home.html': {
+//        'steps': {
+//            perm: 'vertical',
+//            changes: [{
+//                find: '<h1>',
+//                replace: '<h4>',
+//                flags: 'g'
+//            }, {
+//                find: '</h1>',
+//                replace: '</h4>',
+//                flags: 'g'
+//            }, {
+//                find: '',
+//                replace: '<h1>I\'m here!</h1>',
+//                flags: ''
+//            }]
+//        }
+//    }
+//});
 
 GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
