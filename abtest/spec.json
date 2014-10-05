@@ -2,22 +2,13 @@
     "name": "steps",
     "cases": [{
         "name": "vertical",
-        "weight": 1,
-        "changes": [{
-            "file": "/templates/angular/home.html"
-        }]
+        "weight": 1
     }, {
         "name": "horizontal",
         "weight": 1,
         "changes": [{
             "file": "/templates/angular/home.html",
-            "css": "#steps {width: 270%; text-align: left;} div.process {overflow: auto} div.landing-page div.process div.step {width: 31%; margin: 0.5em;}"
-        }]
-    }, {
-        "name": "gif",
-        "weight": 1,
-        "changes": [{
-            "file": "/templates/angular/home.html"
+            "css": "@media screen and (max-width: 37.5em) {div.steps {width: 270%; text-align: left;} div.process {overflow: auto} div.landing-page div.process div.step {width: 31%; margin: 0.5em;}}"
         }]
     }]
 }]

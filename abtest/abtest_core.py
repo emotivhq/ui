@@ -65,13 +65,7 @@ def choose_tests(request, spec):
     """ choose_tests(webapp2.Request) -> {tests}
     Returns a chosen permutation of tests for a given client
     """
-    tests = []
-    for test in spec:
-        tests.append({
-            'name': test['name'],
-            'cases': [choose(request, test['name'], spec)]
-        })
-    return tests
+    return [choose(request, test['name'], spec) for test in spec]
 
 
 def get_tests(request):

@@ -32,7 +32,7 @@ def render_app(request):
     js_insert += "window.googlePlusClientId = '" + \
                  secrets['googleplus_auth']['client_id'] + "';"
     js_insert += "angular.module('ngAB').value('spec', " + \
-                 abtest.get_tests(request) + "');"
+                 abtest.get_tests(request) + ");"
 
     response = frame_template.render({
         'deployed': DEPLOYED,
@@ -59,7 +59,8 @@ def render_app_with_giftstart(request):
     js_insert += "window.googlePlusClientId = '" + \
                  secrets['googleplus_auth']['client_id'] + "';"
     js_insert += "angular.module('ngAB').value('spec', " + \
-                 abtest.get_tests(request) + "');"
+                 abtest.get_tests(request) + ");"
+
     if len(request.path.split('/')) > 2:
         title_url = request.path.split('/')[-1]
         gss = GiftStart.query(GiftStart.giftstart_url_title == title_url) \
