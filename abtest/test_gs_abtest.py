@@ -1,61 +1,51 @@
 __author__ = 'Stuart'
 
+# Change execution path to project root
+import os
+if 'test_gs_abtest.py' in __file__.split('/')[-1]:
+    os.chdir('..')
+
 import unittest
 import webapp2
 import abtest_core
 
-example_tests = {
-    "/templates/angular/home.html": {
-        "steps": {
-            "vertical": {
-                "weight": 1,
-                "changes": [{
-                    "find": "",
-                    "replace": "",
-                    "flags": ""
-                }]
-            },
-            "horizontal": {
-                "weight": 1,
-                "changes": [{
-                    "find": "",
-                    "replace": "<style>#steps {width: 270%; text-align: left;} div.process {overflow: auto} div.landing-page div.process div.step {width: 31%; margin: 0.5em;}</style>",
-                    "flags": ""
-                }]
-            },
-            "gif": {
-                "weight": 1,
-                "changes": [{
-                    "find": "",
-                    "replace": "<style></style>",
-                    "flags": ""
-                }, {
-                    "find": "",
-                    "replace": "<style></style>",
-                    "flags": ""
-                }]
-            }
-        },
-        "email-ask": {
-            "vertical": {
-                "weight": 1,
-                "changes": [{
-                    "find": "",
-                    "replace": "",
-                    "flags": ""
-                }]
-            },
-            "horizontal": {
-                "weight": 1,
-                "changes": [{
-                    "find": "",
-                    "replace": "",
-                    "flags": ""
-                }]
-            },
-        }
-    }
-}
+example_tests = [{
+    "name": "home-steps",
+    "cases": [{
+        "name": "vertical",
+        "weight": 1,
+        "changes": [{
+            "file": "/templates/angular/home.html"
+        }]
+    }, {
+        "name": "horizontal",
+        "weight": 1,
+        "changes": [{
+            "file": "/templates/angular/home.html",
+            "css": "#steps {width: 270%; text-align: left;} div.process {overflow: auto} div.landing-page div.process div.step {width: 31%; margin: 0.5em;}"
+        }]
+    }, {
+        "name": "gif",
+        "weight": 1,
+        "changes": [{
+            "file": "/templates/angular/home.html"
+        }]
+    }]
+}, {
+    "name": "home-email",
+    "cases": [{
+        "name": "bottom",
+        "weight": 1,
+    }, {
+        "name": "top",
+        "weight": 1,
+        "changes": [{
+            "file": "/templates/angular/home.html",
+            "findEle": "div.email",
+            "replaceEle": "span.email"
+        }]
+    }]
+}]
 
 
 class ABTestHandler(unittest.TestCase):
@@ -74,19 +64,16 @@ class ABTestHandler(unittest.TestCase):
         request.remote_addr = '192.168.0.0'
         request.method = 'GET'
         file_name = '/templates/angular/home.html'
-        test_name = example_tests[file_name].keys()[0]
-        test = example_tests[file_name][test_name]
+        test_name = 'home-steps'
 
-        permutation = abtest_core.choose(request, file_name, test_name,
-                                         example_tests)
-        self.assertEqual(len(permutation.values()[0].values()), 1,
+        permutation = abtest_core.choose(request, test_name, example_tests)
+        self.assertEqual(len(permutation['cases']), 1,
                          "Permutation should have only one test case, "
                          "but had " + str(permutation))
 
-        request.remote_addr = '192.168.0.1'
-        permutation_two = abtest_core.choose(request, file_name, test_name,
-                                             example_tests)
-        self.assertEqual(len(permutation_two.values()[0].values()), 1,
+        request.remote_addr = '192.168.0.3'
+        permutation_two = abtest_core.choose(request, test_name, example_tests)
+        self.assertEqual(len(permutation['cases']), 1,
                          "Permutation should have only one test case, "
                          "but had " + str(permutation_two))
         self.assertNotEquals(permutation, permutation_two,
@@ -102,28 +89,27 @@ class ABTestHandler(unittest.TestCase):
         paths = ['/', '/giftstart/', '/faq', '/users/abcdefg', '/what-is-it']
         requests = [webapp2.Request.blank(path) for path in paths]
         file_name = '/templates/angular/home.html'
-        test_name = example_tests[file_name].keys()[0]
+        test_name = 'home-steps'
 
         for request in requests:
             request.method = 'GET'
             request.remote_addr = '192.168.0.0'
 
-        choices = [abtest_core.rand_percent(request, file_name, test_name)
+        choices = [abtest_core.rand_percent(request, test_name)
                    for request in requests]
 
         choices_equal = all([choice == choices[0] for choice in choices])
         self.assertTrue(choices_equal, "Expect all choices to be equal, but "
                                        "they where " + str(choices))
 
-        other_test_choice = abtest_core.rand_percent(requests[0], 'a', 'b')
+        other_test_choice = abtest_core.rand_percent(requests[0], 'b')
         self.assertNotEquals(choices[0], other_test_choice,
                              "Expected choices to be different, but they were:"
                              " " + str(choices[0]) + " " +
                              str(other_test_choice))
 
         requests[0].remote_addr = '1.1.1.1'
-        other_ip_choice = abtest_core.rand_percent(requests[0], file_name,
-                                                   test_name)
+        other_ip_choice = abtest_core.rand_percent(requests[0], test_name)
         self.assertNotEquals(choices[0], other_ip_choice,
                              "Expected choices to be different, but they were:"
                              " " + str(choices[0]) + " " +
@@ -136,7 +122,7 @@ class ABTestHandler(unittest.TestCase):
         request = webapp2.Request.blank('/')
         request.method = 'GET'
         file_name = '/templates/angular/home.html'
-        test_name = 'steps'
+        test_name = 'home-steps'
 
         ips = [str(i) for i in range(20000)]
 
@@ -148,9 +134,8 @@ class ABTestHandler(unittest.TestCase):
 
         for ip in ips:
             request.remote_addr = ip
-            choice = abtest_core.choose(request, file_name, test_name,
-                                        example_tests)
-            choice_name = choice.values()[0].keys()[0]
+            choice = abtest_core.choose(request, test_name, example_tests)
+            choice_name = choice['cases'][0]['name']
             choice_counts[choice_name] += 1
 
         difference = float(max(choice_counts.values())) / \
@@ -169,14 +154,7 @@ class ABTestHandler(unittest.TestCase):
         request.method = 'GET'
         tests = abtest_core.choose_tests(request, example_tests)
 
-        for fn in example_tests:
-            def case_generator(spec):
-                for tn in spec[fn]:
-                    yield spec[fn][tn]
-
-            for case in case_generator(tests):
-                self.assertDictContainsSubset(case.values()[0],
-                                              example_tests[fn][case.keys()[0]],
-                                              "Should contain the chosen test:"
-                                              " " + str(case) + "\n"
-                                              + str(example_tests[fn]))
+        for test in tests:
+            self.assertEqual(len(test['cases']), 1,
+                             "Should have only selected one case for each, "
+                             "selected: " + str(test['cases']))
