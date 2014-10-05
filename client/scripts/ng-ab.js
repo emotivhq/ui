@@ -4,7 +4,21 @@
 
 angular.module('ngAB', [])
     .value('spec', {})
-    .value('ABChoices', [])
+    .service('ABChoices', [
+                'spec',
+        function(spec) {
+            this.get = function() {
+                return spec.map(function(test){
+                    return [test.name, test.cases[0].name];
+                });
+            };
+            this.getString = function() {
+                return this.get().map(function(choice) {
+                    return choice.join("=");
+                }).join("&");
+            };
+        }
+    ])
     .factory('ABInterceptor', [
                 'spec','ABChoices',
         function(spec,  ABChoices) {
@@ -19,10 +33,6 @@ angular.module('ngAB', [])
                 (test['cases'][0]['changes'] || []).map(add_changes);
                 return pmods;
             }, {});
-
-            ABChoices = spec.map(function(test){
-                return [test.name, test.cases[0].name];
-            });
 
             return {
                 response: function(response) {
