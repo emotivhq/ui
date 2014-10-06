@@ -4,7 +4,8 @@
 
 
 var GiftStarterApp = angular.module('GiftStarterApp',
-    ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch', 'ngSanitize']);
+    ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
+        'ngSanitize', 'ngAB']);
 console.log("ver53");
 
 GiftStarterApp.config([
@@ -28,6 +29,28 @@ GiftStarterApp.config([
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ]);
+
+
+//angular.module('ngAB').value('spec', {
+//    '/templates/angular/home.html': {
+//        'steps': {
+//            perm: 'vertical',
+//            changes: [{
+//                find: '<h1>',
+//                replace: '<h4>',
+//                flags: 'g'
+//            }, {
+//                find: '</h1>',
+//                replace: '</h4>',
+//                flags: 'g'
+//            }, {
+//                find: '',
+//                replace: '<h1>I\'m here!</h1>',
+//                flags: ''
+//            }]
+//        }
+//    }
+//});
 
 GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
@@ -70,19 +93,26 @@ GiftStarterApp.service('AppStateService', [
             if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
             if (/\/giftstart\/[a-zA-Z0-9]/.test($location.path())) {state.title_url = $location.path().split('/')[$location.path().split('/').length - 1]}
             if (self.selectedParts) {state.selectedParts = self.selectedParts}
-            if (self.popover) {state.popover = self.popover}
             if (self.contributing != null) {state.contributing = self.contributing}
+            if (self.popover) {
+                state.popover = self.popover;
+                $location.hash(self.popover);
+            }
             if (self.createSession != null) {state.createSession = self.createSession}
 
             return btoa(JSON.stringify(state));
         };
 
-        this.overlayState = function(selectedParts) {self.selectedParts = selectedParts};
+        this.overlayState = function(selectedParts) {
+            self.selectedParts = selectedParts;
+        };
 
-        this.popoverState = function(popoverName) {self.popover = popoverName};
+        this.popoverState = function(popoverName) {
+            self.popover = popoverName;
+        };
 
         this.contributeLogin = function(bool) {
-            self.contributing = bool
+            self.contributing = bool;
         };
 
         this.giftstartCreateState = function(createSession) {

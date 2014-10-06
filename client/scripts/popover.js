@@ -11,6 +11,7 @@ GiftStarterApp.service('PopoverService', [
         var self = this;
 
         this.setPopover = function(popoverName) {
+            AppStateService.popoverState(popoverName);
             if (popoverName === '') {
                 this.hidePopover();
             } else {
@@ -48,7 +49,11 @@ GiftStarterApp.service('PopoverService', [
         this.validHashes = ['login', 'note', 'pay', 'thanks'];
         $rootScope.$on('$locationChangeStart', function(event, next, current) {
             var hash = $location.hash();
-            if (self.currentLocation === '') {
+            if ((AppStateService.state || {}).contributeLogin) {
+                self.setPopover(hash);
+                AppStateService.state.contributing = false;
+                alert("Yeeeee buddy");
+            } else if (self.currentLocation === '') {
                 if ((hash == 'login') || (hash == 'note') || (hash == 'email-share')) {
                     self.setPopover(hash);
                 }
