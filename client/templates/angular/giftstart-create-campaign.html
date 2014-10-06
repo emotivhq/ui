@@ -98,7 +98,7 @@
             <h2>Number of Parts</h2>
             <label>Consider the number of participants and how much each might want to contribute.  Keep in mind participants can always give more than one part if they wish!</label>
             <div id="num-part-selection">
-                <button class="circle" ng-click="fewerParts()">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" ng-click="moreParts()">&gt;</button>
+                <button class="circle" id="less-parts" ng-click="fewerParts()">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" id="more-parts" ng-click="moreParts()">&gt;</button>
                 <button class="help float-right" ng-click="help()">Help</button>
             </div>
 
