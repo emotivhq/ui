@@ -2,6 +2,7 @@ __author__ = 'stuart'
 
 import json
 from google.appengine.api import taskqueue
+from google.appengine.ext import ndb
 import time
 from datetime import datetime, timedelta
 from GiftStart import GiftStart
@@ -50,11 +51,13 @@ def populate_giftstart(ndbgs, giftstart):
 
 
 def create(giftstart):
-    gs = GiftStart()
+    gs_url_title = create_title_url(giftstart)
+    gs_key = ndb.Key('GiftStart', gs_url_title)
+    gs = GiftStart(key=gs_key)
     gs = populate_giftstart(gs, giftstart)
+    gs.giftstart_url_title = gs_url_title
     gs_count = GiftStart.query().count()
     gs.gsid = str(gs_count + 1) if gs_count else '1'
-    gs.giftstart_url_title = create_title_url(giftstart['title'], gs.gsid)
     gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
     # Check if running in development env
     if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
@@ -136,15 +139,15 @@ def hot_campaigns(num_campaigns):
     }
 
 
-def create_title_url(title, gsid):
-    def name_ok(name, gsid):
-        gss = GiftStart.query(GiftStart.giftstart_url_title == name).fetch()
-        return len(gss) == 0 or gss[0].gsid == gsid
-    hyphen_title = title.replace(' ', '-')
+def create_title_url(giftstart):
+    def name_ok(name):
+        gs = ndb.Key(GiftStart, name).get()
+        return gs is None
+    hyphen_title = giftstart['title'].replace(' ', '-')
     url_title = re.sub(r'[^a-zA-Z0-9-]', '', hyphen_title)
-    if not name_ok(url_title, gsid):
+    if not name_ok(url_title):
         i = 1
-        while not name_ok(url_title + '-' + str(i), gsid):
+        while not name_ok(url_title + '-' + str(i)):
             i += 1
         url_title += '-' + str(i)
 

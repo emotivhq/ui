@@ -1,5 +1,6 @@
 __author__ = 'stuart'
 
+from google.appengine.ext import ndb
 from gs_user.User import User
 from social import facebook, twitter, googleplus
 import storage.image_cache
@@ -73,18 +74,19 @@ def update_or_create(service, token_set, referrer):
         raise ValueError("Invalid service!  Must be facebook, googleplus, or twitter.")
 
     uid = service[0] + uid_fns[service](token_set)
-    users = User.query(User.uid == uid).fetch()
+    user_key = ndb.Key('User', uid)
+    user = user_key.get()
+    # users = User.query(User.uid == uid).fetch()
 
-    if len(users) == 0:
+    if not user:
         img_url = cache_profile_image(uid, service, token_set)
-        user = User(uid=uid, logged_in_with=service,
+        user = User(key=user_key, uid=uid, logged_in_with=service,
                     cached_profile_image_url=img_url)
         user.referrer_channel = referrer.get('channel')
         user.referrer_type = referrer.get('type')
         user.referrer_uid = referrer.get('uid')
         user.referrer_uuid = referrer.get('uuid')
     else:
-        user = users[0]
         # Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
         if service == 'googleplus':
             if token_set.refresh_token is None:

@@ -5,6 +5,7 @@ import stripe
 __author__ = 'stuart'
 
 from google.appengine.api import taskqueue
+from google.appengine.ext import ndb
 import json, yaml
 from gs_user import gs_user_core
 from giftstart import GiftStart
@@ -66,7 +67,9 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
             stripe.error.StripeError) as e:
         return {'result': 'error', 'stripe-error': e.json_body}
 
-    pi = PitchIn(uid=uid, gsid=gsid, note=note, parts=parts,
+    pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
+                     'PitchIn', charge['id'])
+    pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
                  giftstart_url_title=giftstart.giftstart_url_title,
                  stripe_charge_id=charge['id'], email=email_address,
                  stripe_charge_json=json.dumps(charge),
