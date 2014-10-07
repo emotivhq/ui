@@ -9,7 +9,6 @@ import json, yaml
 from gs_user import gs_user_core
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
-import uuid
 import requests
 
 config = yaml.load(open('config.yaml'))

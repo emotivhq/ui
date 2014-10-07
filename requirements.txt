@@ -6,3 +6,4 @@ oauthlib
 stripe
 requests_oauthlib
 mock
+tl.testing

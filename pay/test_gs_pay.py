@@ -13,6 +13,9 @@ import json
 from google.appengine.ext import testbed
 from datetime import datetime, timedelta
 import yaml
+import Queue
+import threading
+from tl.testing.thread import ThreadJoiner
 
 # UUT
 from pay import pay_api, PitchIn
@@ -229,7 +232,6 @@ class PayTestHandlers(unittest.TestCase):
         pi_count = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count()
         self.assertEqual(1, pi_count, "Should have 1 pitchin")
 
-
         # Create test token
         token = stripe.Token.create(card={
             'number': '4242424242424242',
@@ -246,15 +248,68 @@ class PayTestHandlers(unittest.TestCase):
         parts = [2, 3]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
-            'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
-            'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
-        }
+                'stripeResponse': token.to_dict(), 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
+            }
         })
 
         response = request.get_response(pay_api.api)
 
-        self.assertEqual(response.status_code, 400, "Shouldn't allow purchase of already bought piece, expected 400, "
-                                                    "response was " + str(response.status_code))
+        self.assertEqual(response.status_code, 400,
+                         "Shouldn't allow purchase of already bought piece, "
+                         "expected 400, response was " +
+                         str(response.status_code))
 
         # Verify pitchin isn't there
-        self.assertEqual(1, PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count(), "Should only have 1 pitchin")
+        self.assertEqual(1,
+                         PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid)
+                         .count(),
+                         "Should only have 1 pitchin")
+
+    def test_concurrent_purchase(self):
+        # Create test token
+        token = stripe.Token.create(card={
+            'number': '4242424242424242',
+            'exp_month': str(datetime.today().month),
+            'exp_year': str(datetime.today().year + 1),
+            'cvc': '123',
+            'address_zip': '12345',
+        })
+
+        gsid = '1'
+        parts = [1, 2]
+
+        # Submit token to API
+        request1 = webapp2.Request.blank('/pay')
+        request1.method = 'POST'
+        request1.body = json.dumps({
+            'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
+                'stripeResponse': token.to_dict(), 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
+            }
+        })
+
+        request2 = webapp2.Request.blank('/pay')
+        request2.method = 'POST'
+        request2.body = request1.body
+
+        def run_request(q, req):
+            q.put(req.get_response(pay_api.api))
+
+        with ThreadJoiner(5):
+            queue = Queue.Queue()
+            t1 = threading.Thread(target=run_request, args=(queue, request1))
+            t2 = threading.Thread(target=run_request, args=(queue, request2))
+            t1.daemon = True
+            t2.daemon = True
+            t1.start()
+            t2.start()
+
+        results = [queue.get().status_code for i in range(queue.qsize())]
+
+        self.assertIn(200, results,
+                      "One response should be 200, they were " + str(results))
+        self.assertIn(400, results,
+                      "One response should be 400, they were " + str(results))
