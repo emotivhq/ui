@@ -8,10 +8,11 @@ GiftStarterApp.controller('FaqController', [
         $scope.location = $location;
 
         $scope.scrollToSearch = function() {
-            console.log("Scrolling to " + '#'+Object.keys($location.search())[0]);
-            var selector = document.querySelector('#'+Object.keys($location.search())[0]);
-            var element = angular.element(selector);
-            element[0].scrollIntoView();
+            if (Object.keys($location.search()).length) {
+                var selector = document.querySelector('#'+Object.keys($location.search())[0]);
+                var element = angular.element(selector);
+                element[0].scrollIntoView();
+            }
         };
 
         $scope.$watch('location.search()', function() {
