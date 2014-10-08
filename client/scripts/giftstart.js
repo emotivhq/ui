@@ -389,16 +389,11 @@ GiftStarterApp.service('GiftStartService', [
 
         // Sync pitchins on route change (navigation, back, etc.)
         $rootScope.$on('$routeChangeSuccess', function() {
-
             self.pitchInsInitialized = false;
-//            var gsid = $location.search()['gs-id'];
-//            if (gsid){
-//                self.fetchGiftStart(gsid);
-//            }
-            var url_title = $location.path().replace('/giftstart/', '');
-            if (url_title) {
-                console.log("fetching");
-                self.fetchGiftStart(url_title)
+            var path = $location.path();
+            var re = new RegExp('/giftstart/');
+            if (re.test(path)) {
+                self.fetchGiftStart(path.replace(re, ''));
             }
         });
 

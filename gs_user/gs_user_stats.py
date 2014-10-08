@@ -2,7 +2,7 @@ __author__ = 'stuart'
 
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
-from gs_user import User
+from google.appengine.ext import ndb
 
 
 def filter_giftstarts(uid, giftstarts):
@@ -43,15 +43,18 @@ def get_stats(uids):
     # Handle singular uid also
     uids = uids if type(uids) == list else [uids]
 
-    users = User.query(User.uid.IN(uids)).fetch()
+    users = ndb.get_multi([ndb.Key('User', uid) for uid in uids])
     pitchins = PitchIn.query(PitchIn.uid.IN(uids)).fetch()
-    pi_giftstarts = GiftStart.query().fetch()
+
+    parent_giftstarts = ndb.get_multi([pi.key.parent()
+                                       for pi in pitchins
+                                       if pi.key.parent()])
     giftstarts = GiftStart.query(GiftStart.gift_champion_uid.IN(uids)).fetch()
 
     stats = {user.uid: {'name': user.name,
                         'img_url': user.cached_profile_image_url,
                         'pitchins':
-                            [pitchin_attach_title(pi, pi_giftstarts)
+                            [pitchin_attach_title(pi, parent_giftstarts)
                              for pi in filter_pitchins(user.uid, pitchins)],
                         'giftstarts': filter_giftstarts(user.uid, giftstarts)}
              for user in users}
