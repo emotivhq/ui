@@ -125,8 +125,6 @@ class GiftStartJsonHandler(webapp2.RequestHandler):
         print(self.request.path)
         url_title = self.request.path[11:-5]
         gs = ndb.Key('GiftStart', url_title).get()
-        # gs = GiftStart.query(GiftStart.giftstart_url_title == url_title)\
-        #     .fetch()[0]
         self.response.write(gs.jsonify())
 
 

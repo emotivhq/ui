@@ -108,11 +108,7 @@ def get_user_info(user):
 
 
 def get_user(uid):
-    users = User.query(User.uid == uid).fetch()
-    if len(users) > 0:
-        return users[0]
-    else:
-        return None
+    return ndb.Key('User', uid).get()
 
 
 token_pointer_map = {
