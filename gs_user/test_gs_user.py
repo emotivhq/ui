@@ -20,6 +20,7 @@ from gs_user import User
 from social.facebook import FacebookTokenSet
 import requests
 from social import OAuthTokenPair
+from google.appengine.ext import ndb
 
 # UUT
 from gs_user import gs_user_api
@@ -68,7 +69,8 @@ class UserStatsTestHandler(unittest.TestCase):
         self.testbed.init_blobstore_stub()
 
         # Insert user
-        user = User()
+        user_key = ndb.Key('User', 'f1234')
+        user = User(key=user_key)
         user.uid = 'f1234'
         user.name = 'flomae'
         user.cached_profile_image_url = 'lol not a url'
@@ -144,8 +146,9 @@ class UserStatsTestHandler(unittest.TestCase):
         request.method = 'GET'
         request.query_string = 'uid=' + test_gs['gift_champion_uid']
         response = request.get_response(gs_user_api.stats)
-        self.assertEqual(200, response.status_code, "Should successfully fetch user stats, expected code 200, "
-                                                    "response was " + str(response.status_code))
+        self.assertEqual(200, response.status_code,
+                         "Should successfully fetch user stats, expected code"
+                         " 200, response was " + str(response.status_code))
         json_response = json.loads(response.body)
 
         # Verify that it reports the right number of pitchins

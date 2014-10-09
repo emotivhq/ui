@@ -28,6 +28,7 @@
     "angular-cookies": "latest",
     "devicejs": "*",
     "angular-touch": "~1.2.25",
-    "angular-sanitize": "~1.2.25"
+    "angular-sanitize": "~1.2.25",
+    "jquery": "2.1.1"
   }
 }

@@ -26,12 +26,9 @@ gs-product-search
       input
         padding: 0.4em 0.6em
         width: 16em
-      select
-        @media screen and (max-width: $phone-tablet-boundary)
-          width: 38%
       button
         @media screen and (max-width: $phone-tablet-boundary)
-          width: 60%
+          width: 100%
       input
         @media screen and (max-width: $phone-tablet-boundary)
           margin-right: 0
@@ -126,12 +123,14 @@ gs-product-search
           height: 100%
           text-align: center
           width: 50%
+          @media screen and (max-width: $phone-tablet-boundary)
+            width: 100%
           span.vert-align-helper
             height: 100%
             display: inline-block
             vertical-align: middle
           img
-            margin-right: 1em
+            margin-right: 6%
             border-radius: 0.8em
             vertical-align: middle
             display: inline-block
