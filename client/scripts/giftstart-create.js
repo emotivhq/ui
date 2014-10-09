@@ -16,6 +16,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
 
         function calculateInitialNumParts() {
+            $scope.selectedXYSet = 0;
             for (var guess = 0; guess < $scope.xySets.length; guess++) {
                 if ($scope.inputPrice/$scope.xySets[guess][0]/$scope.xySets[guess][1] < 20.5) {
                     return guess;
@@ -244,14 +245,15 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             Analytics.track('client', 'referred from', AppStateService.giftstartReferralData.source);
         }
 
-        $scope.x = $scope.xySets[$scope.selectedXYSet][0];
-        $scope.y = $scope.xySets[$scope.selectedXYSet][1];
-
         $timeout(function() {
             $scope.pitchInsInitialized = true;
         }, 2500);
 
-
+        if (AppStateService.giftstartReferralData) {
+            $scope.selectedXYSet = calculateInitialNumParts();
+        }
+        $scope.x = $scope.xySets[$scope.selectedXYSet][0];
+        $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
 

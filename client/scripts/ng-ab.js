@@ -34,6 +34,30 @@ angular.module('ngAB', [])
                 return pmods;
             }, {});
 
+            function elementReplace(data, change) {
+                var container = document.createElement('replace-container');
+                container.innerHTML = data;
+                $(container).find(change.findEle)
+                    .replaceWith(change.replace);
+                return container.innerHTML;
+            }
+
+            function elementSwitch(data, change) {
+                var container = document.createElement('replace-container');
+                container.innerHTML = data;
+                var toReplace = $(container).find(change.findEle);
+                var children = toReplace.children().detach();
+                toReplace.replaceWith(change.switchEle).append(children);
+                return container.innerHTML;
+            }
+
+            function elementRemove(data, change) {
+                var container = document.createElement('replace-container');
+                container.innerHTML = data;
+                $(container).find(change.removeEle).replaceWith('');
+                return container.innerHTML;
+            }
+
             return {
                 response: function(response) {
                     var mods = path_mods[response.config.url];
@@ -46,10 +70,17 @@ angular.module('ngAB', [])
                         data += change.append || '';
                         if (change.css) {
                             data += '<style>' + change.css + '</style>'
-                        }
-                        if (change.find && change.replace) {
+                        } else if (change.find && change.replace) {
                             data = data.replace(new RegExp(change.find,
                                 change.flags), change.replace)
+                        } else if (change.findEle && change.replace) {
+                            data = elementReplace(data, change);
+                        } else if (change.findEle && change.switchEle) {
+                            data = elementSwitch(data, change);
+                        } else if (change.removeEle) {
+                            data = elementRemove(data, change);
+                        } else if (change.replaceAll) {
+                            data = change.replaceAll;
                         }
                         return data;
                     }
