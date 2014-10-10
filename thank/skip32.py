@@ -107,4 +107,4 @@ def decode(s):
     """
     digest_int = from_alpha(s)
     digest = [digest_int // (256 ** (3 - i)) % 256 for i in range(4)]
-    return struct.unpack('I', bytearray(skip32(gs_key, digest, False)))[0]
+    return str(struct.unpack('I', bytearray(skip32(gs_key, digest, False)))[0])

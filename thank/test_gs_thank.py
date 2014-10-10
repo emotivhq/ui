@@ -6,9 +6,12 @@ import unittest
 import thank_core
 
 decode_expectations = {
-    '132': '',
-    '1': '',
-    '52': '',
+    '0': 'hglrwzw',
+    '1': 'hfilnrs',
+    '2': 'moljpej',
+    '4632': 'bsaebmf',
+    '4633': 'icbhkad',
+    '4634': 'nidcrsk',
 }
 
 
@@ -17,7 +20,8 @@ class ThankCoreTestHandler(unittest.TestCase):
     def test_encode_secret(self):
         """ Encoded gsids should match expected values
         """
-        self.assertEqual(True, False)
+        for k, v in decode_expectations.items():
+            self.assertEqual(v, thank_core.encode_secret(k))
 
     def test_encode_distribution(self):
         """ The encode function should output a relatively even distribution
@@ -29,4 +33,5 @@ class ThankCoreTestHandler(unittest.TestCase):
     def test_decode_secret(self):
         """ Decoded secrets should match expected values
         """
-        self.assertEqual(True, False)
+        for k, v in decode_expectations.items():
+            self.assertEqual(k, thank_core.decode_secret(v))
