@@ -47,10 +47,10 @@
             "css": "h1.happening-now {text-align: left; margin-top: 0.5em;}"
         }, {
             "file": "/templates/angular/hot-campaign.html",
-            "replaceAll": "<div class=\"hot-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.giftstart.product.img_url}}\"/></a><div class=\"description-container\"><h3 class=\"accent\">{{campaign.giftstart.title}}</h3><p class=\"campaign-description\">{{campaign.giftstart.description}}</p></div></div>"
+            "replaceAll": "<div class=\"hot-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.giftstart.product.img_url}}\"/></a><div class=\"description-container\"><a ng-href=\"/giftstart/{{campaign.giftstart.giftstart_url_title}}\"><h3 class=\"accent\">{{campaign.giftstart.title}}</h3></a><p class=\"campaign-description\">{{campaign.giftstart.description}}</p></div></div>"
         }, {
             "file": "/templates/angular/hot-campaign.html",
-            "css": "div.hot-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.hot-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.hot-campaign.wrapper div.description-container {width: 100%;} div.landing-page gs-hot-campaign {width: 100%} div.hot-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;}"
+            "css": "div.hot-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} div.hot-campaign.wrapper div.description-container {width: 100%;} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.hot-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.landing-page gs-hot-campaign {width: 100%} div.hot-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;} gs-hot-campaign div.description-container a {text-decoration: none}"
         }]
     }]
 }]
