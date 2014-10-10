@@ -2,9 +2,14 @@ __author__ = 'Stuart'
 
 import unittest
 import skip32
+from giftstart import GiftStart
+from google.appengine.ext import testbed, ndb
+from datetime import datetime
+import webapp2
 
 # UUTs
 import thank_core
+import thank_api
 
 decode_expectations = {
     '0': 'hglrwzw',
@@ -43,3 +48,85 @@ class ThankCoreTestHandler(unittest.TestCase):
         """
         for k, v in decode_expectations.items():
             self.assertEqual(k, thank_core.decode_secret(v))
+
+
+class ThankApiTestHandler(unittest.TestCase):
+
+    def setUp(self):
+        self.testbed = testbed.Testbed()
+        self.testbed.activate()
+        self.testbed.init_datastore_v3_stub()
+        self.testbed.init_memcache_stub()
+
+        gs_key = ndb.Key('GiftStart', 'my-title')
+        gs = GiftStart(key=gs_key)
+        gs.gsid = '1'
+        gs.giftstart_title = 'my title'
+        gs.giftstart_url_title = 'my-title'
+        gs.giftstart_description = 'my description'
+        gs.gift_champion_uid = 'f1234'
+        gs.deadline = datetime.now()
+        gs.timestamp = datetime.now()
+        gs.product_url = 'http://abc.com'
+        gs.product_img_url = 'http://abc.com/img.jpg'
+        gs.product_price = 17000
+        gs.sales_tax = 170
+        gs.shipping = 171
+        gs.service_fee = 172
+        gs.total_price = gs.product_price + gs.sales_tax + gs.shipping + \
+                         gs.service_fee
+        gs.overlay_columns = 4
+        gs.overlay_rows = 4
+        gs.gc_email = 'test@giftstarter.co'
+        gs.shipping_state = 'WA'
+        gs.shipping_zip = '98109'
+        gs.put()
+
+    def tearDown(self):
+        self.testbed.deactivate()
+
+    def test_valid_secret(self):
+        """ Expect a 302 to /giftstart/my-title for valid secret
+        """
+        secret = thank_core.encode_secret('1')
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 302,
+                         "Should respond with a 301, got " +
+                         str(response.status_code))
+        self.assertEqual(response.headers['Location'],
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret,
+                         "Should be redirected to proper url - " +
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret + " - was sent to " +
+                         response.headers['Location'])
+
+        gs_key = ndb.Key('GiftStart', 'my-title')
+        gs = gs_key.get()
+        gs.thanked = True
+        gs.put()
+
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 302,
+                         "Should respond with a 301, got " +
+                         str(response.status_code))
+        self.assertEqual(response.headers['Location'],
+                         "http://localhost/giftstart/my-title",
+                         "Should be redirected to non-thank you url - " +
+                         "http://localhost/giftstart/my-title - was sent to " +
+                         response.headers['Location'])
+
+    def test_invalid_secret(self):
+        """ Expect a 403 when an invalid secret is given
+        """
+        secret = 'abcdefg'
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 403,
+                         "Should respond with a 403, got " +
+                         str(response.status_code))

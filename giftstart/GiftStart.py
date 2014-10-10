@@ -40,6 +40,10 @@ class GiftStart(ndb.Model):
     shipping_phone_number = ndb.StringProperty()
     shipping_email = ndb.StringProperty()
 
+    thanked = ndb.BooleanProperty(default=False)
+    thanks_message = ndb.TextProperty()
+    thanks_img_url = ndb.TextProperty()
+
     def jsonify(self):
         return json.dumps(self.dictify())
 
