@@ -1,11 +1,16 @@
 __author__ = 'Stuart'
 
+import os
+if 'test_gs_thank.py' in __file__.split('/')[-1]:
+    os.chdir('..')
+
 import unittest
 import skip32
 from giftstart import GiftStart
 from google.appengine.ext import testbed, ndb
 from datetime import datetime
 import webapp2
+import json
 
 # UUTs
 import thank_core
@@ -103,10 +108,29 @@ class ThankApiTestHandler(unittest.TestCase):
                          secret + " - was sent to " +
                          response.headers['Location'])
 
-        gs_key = ndb.Key('GiftStart', 'my-title')
-        gs = gs_key.get()
-        gs.thanked = True
-        gs.put()
+    def test_thanking(self):
+        secret = thank_core.encode_secret('1')
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 302,
+                         "Should respond with a 301, got " +
+                         str(response.status_code))
+        self.assertEqual(response.headers['Location'],
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret,
+                         "Should be redirected to proper url - " +
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret + " - was sent to " +
+                         response.headers['Location'])
+
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method= 'PUT'
+        request.body = json.dumps({
+            'gsid': '1',
+            'message': 'SUCH THANKS, SO GRATITUDE'
+        })
+        response = request.get_response(thank_api.handler)
 
         request = webapp2.Request.blank('/thanks-' + secret)
         request.method = 'GET'
