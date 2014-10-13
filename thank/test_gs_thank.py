@@ -125,8 +125,9 @@ class ThankApiTestHandler(unittest.TestCase):
                          response.headers['Location'])
 
         request = webapp2.Request.blank('/thanks-' + secret)
-        request.method= 'PUT'
+        request.method = 'PUT'
         request.body = json.dumps({
+            'uid': 'f1234',
             'gsid': '1',
             'message': 'SUCH THANKS, SO GRATITUDE'
         })
@@ -143,6 +144,58 @@ class ThankApiTestHandler(unittest.TestCase):
                          "Should be redirected to non-thank you url - " +
                          "http://localhost/giftstart/my-title - was sent to " +
                          response.headers['Location'])
+
+    def test_edit_thanks(self):
+        secret = thank_core.encode_secret('1')
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 302,
+                         "Should respond with a 301, got " +
+                         str(response.status_code))
+        self.assertEqual(response.headers['Location'],
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret,
+                         "Should be redirected to proper url - " +
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret + " - was sent to " +
+                         response.headers['Location'])
+
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'uid': 'f1234',
+            'gsid': '1',
+            'message': 'SUCH THANKS, SO GRATITUDE'
+        })
+        response = request.get_response(thank_api.handler)
+
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 302,
+                         "Should respond with a 301, got " +
+                         str(response.status_code))
+        self.assertEqual(response.headers['Location'],
+                         "http://localhost/giftstart/my-title",
+                         "Should be redirected to non-thank you url - " +
+                         "http://localhost/giftstart/my-title - was sent to " +
+                         response.headers['Location'])
+
+        request = webapp2.Request.blank('/thanks')
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'uid': 'f1234',
+            'gsid': '1',
+            'url_title': 'my-title',
+            'message': 'SO THANKS, SUCH GRATITUDE'
+        })
+        response = request.get_response(thank_api.handler)
+
+        self.assertEqual(response.status_code, 200,
+                         "Should receive a 200 status, got " +
+                         str(response.status_code))
+
 
     def test_invalid_secret(self):
         """ Expect a 403 when an invalid secret is given

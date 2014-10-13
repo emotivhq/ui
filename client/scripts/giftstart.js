@@ -287,6 +287,13 @@ GiftStarterApp.service('GiftStartService', [
                 .error(function() {Analytics.track('campaign', 'campaign update failed')})
         };
 
+        this.updateThanks = function(message, img) {
+            return $http({method: 'PUT', url: '/thanks-' +
+                $location.search().thanks,
+                data: {message: message, img: img, uid: UserService.uid,
+                gsid: self.giftStart.gsid}});
+        };
+
         this.goToUserPage = function(uid) {
             $location.path('u').search('').search('uid', uid);
         };
@@ -407,10 +414,12 @@ GiftStarterApp.service('GiftStartService', [
 ]);
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$timeout','FacebookService','TwitterService','GooglePlusService',
-            'Analytics','UserService','$window',
-    function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService,
-             Analytics,  UserService,  $window) {
+            '$scope','GiftStartService','$location','$timeout',
+            'FacebookService','TwitterService','GooglePlusService','Analytics',
+            'UserService','$window','AppStateService',
+    function($scope,  GiftStartService,  $location,  $timeout,
+             FacebookService,  TwitterService,  GooglePlusService,  Analytics,
+             UserService,  $window, AppStateService) {
 
         Analytics.track('campaign', 'controller created');
 
@@ -433,6 +442,12 @@ GiftStarterApp.controller('GiftStartController', [
         } else {
             $scope.newGcName = UserService.name;
         }
+
+        $scope.thanksMessage = $scope.giftStart.thanks_message;
+        $scope.newThanksMessage = $scope.giftStart.thanks_message;
+        $scope.thanksImgUrl = $scope.giftStart.thanks_img_url;
+        $scope.editThanks = Boolean($location.search().thanks);
+        $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
 
         $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
         $scope.mailBody= function() {
@@ -463,10 +478,8 @@ GiftStarterApp.controller('GiftStartController', [
             {passed: true}
         ];
 
-//        if(typeof($location.search()['gs-id']) === typeof("string")) {
         if(typeof($location.path().length > 11)) {
             if (GiftStartService.giftStart.gsid == undefined) {
-//                GiftStartService.fetchGiftStart($location.search()['gs-id']);
                 GiftStartService.fetchGiftStart($location.path()
                     .replace('/giftstart/', ''));
             }
@@ -605,11 +618,40 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.editMode = false;
         };
 
+        $scope.updateThanks = function() {
+            if (!UserService.loggedIn) {
+                localStorage.setItem("newThanksImage", $scope.newThanksImg);
+                AppStateService.thanksState($scope.newThanksMessage);
+                $location.hash('login');
+                return;
+            }
+
+            GiftStartService.updateThanks($scope.newThanksMessage,
+                $scope.newThanksImage)
+                .success(function(response) {
+                    $scope.thanksMessage = response.giftstart.thanks_message;
+                    $scope.newThanksMessage = $scope.thanksMessage;
+                    $scope.thanksImgUrl = response.giftstart.thanks_img_url;
+                })
+                .error(function(reason) {
+                    Analytics.track('campaign', 'thanks failed');
+                    $window.alert('Thanking failed!  Did you get the link ' +
+                        'right?');
+                });
+            $scope.editThanks = false;
+        };
+
+        if ((AppStateService.state || {}).thanks) {
+            alert("PRAISING");
+            $scope.newThanksMessage = AppStateService.thanks;
+            $scope.newThanksImg = localStorage.getItem("newThanksImg");
+        }
+
         if (GiftStartService.giftStart.gsid != undefined) {
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
             $timeout($scope.updateSecondsLeft, 0);
-        } else {
         }
+
         // Update this giftstart when the service updates it
         $scope.$on('giftstart-loaded', function() {
             $scope.giftStart = GiftStartService.giftStart;

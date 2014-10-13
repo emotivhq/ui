@@ -7,6 +7,7 @@ __author__ = 'Stuart'
 import webapp2
 import thank_core
 from giftstart import GiftStart
+from google.appengine.ext import ndb
 import json
 from storage import image_cache
 
@@ -28,24 +29,43 @@ class ThankHandler(webapp2.RequestHandler):
 
     def put(self):
         data = json.loads(self.request.body)
-        gsid = thank_core.decode_secret(self.request.path.split('-')[-1])
-        gss = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
-        if gsid == data.get('gsid') and len(gss) > 0:
-            gs = gss[0]
-            if 'message' not in data:
-                self.response.set_status(400, "Expected message")
+        if len(self.request.path.split('-')) > 1:
+            gsid = thank_core.decode_secret(self.request.path.split('-')[-1])
+            gss = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
+            if gsid == data.get('gsid') and len(gss) > 0:
+                gs = gss[0]
+                if 'message' not in data:
+                    self.response.set_status(400, "Expected message")
+                else:
+                    img_url = image_cache.cache_thanks_image(gsid, data.get('img'))
+                    gs.thanked = True
+                    gs.thanks_message = data['message']
+                    gs.thanks_img_url = img_url
+                    gs.thanks_uid = data['uid']
+                    gs.put()
+                    self.response.write(gs.jsonify())
             else:
-                img_url = image_cache.cache_thanks_image(gsid, data.get('img'))
-                gs.thanked = True
-                gs.thanks_message = data['message']
-                gs.thanks_img_url = img_url
-                gs.put()
+                self.response.set_status(403, "Not Allowed")
         else:
-            self.response.set_status(403, "Not Allowed")
+            # Not thanks from card, may be editing
+            gs_key = ndb.Key('GiftStart', data['url_title'])
+            gs = gs_key.get()
+            if gs:
+                if gs.thanks_uid == data['uid']:
+                    img_url = image_cache.cache_thanks_image(gs.gsid,
+                                                             data.get('img'))
+                    gs.thanks_message = data.get('message') if \
+                        data.get('message') else gs.thanks_message
+                    gs.thanks_img_url = img_url if img_url \
+                        else gs.thanks_img_url
+                    if data.get('message') or img_url:
+                        gs.put()
+                    self.response.write(gs.jsonify())
+                else:
+                    self.response.set_status(403, "Invalid user")
+            else:
+                self.response.set_status(400, "Invalid campaign")
 
 
-def store_thanks_img(img_data):
-    pass
 
-
-handler = webapp2.WSGIApplication([('/thanks-.*', ThankHandler)], debug=True)
+handler = webapp2.WSGIApplication([('/thanks.*', ThankHandler)], debug=True)

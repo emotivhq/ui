@@ -98,6 +98,7 @@ GiftStarterApp.service('AppStateService', [
                 state.popover = self.popover;
                 $location.hash(self.popover);
             }
+            if (self.thanks) {state.thanks = self.thanks}
             if (self.createSession != null) {state.createSession = self.createSession}
 
             return btoa(JSON.stringify(state));
@@ -119,14 +120,20 @@ GiftStarterApp.service('AppStateService', [
             self.createSession = createSession;
         };
 
+        this.thanksState = function(thanksData) {
+            self.thanks = thanksData;
+        };
+
         function getAndClear(search) {
             var val = $location.search()[search];
             $location.search(search, null);
             return val;
         }
 
+        console.log($location.search());
         if ($location.search().state) {
             this.state = JSON.parse($window.atob($location.search()['state']));
+            console.log(this.state);
             $location.search('state', null);
             if (this.state.title_url) {
                 $location.path('/giftstart/' + this.state.title_url);
@@ -152,7 +159,11 @@ GiftStarterApp.service('AppStateService', [
                 }
                 return b;
             })($window.location.search.substr(1).split('&'));
-            $location.search('');
+            $location.search('code', null);
+            $location.search('session_state', null);
+            $location.search('authuser', null);
+            $location.search('num_sessions', null);
+            $location.search('prompt', null);
         } else if (/access_token/.test($location.hash())) {
             // Handle FB oauth
             self.fbAuthResponse = (function(a) {
@@ -187,7 +198,8 @@ GiftStarterApp.service('AppStateService', [
                 )
             };
             this.giftstartReferralData = $location.search();
-            $location.search('');
+            $location.search('title', null);
+            $location.search('product_url', null);
         }
     }
 ]);
