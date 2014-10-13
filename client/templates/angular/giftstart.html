@@ -6,7 +6,7 @@
             <div class="show-message" ng-hide="editThanks">
                 <h1>GiftStart Success!</h1>
                 <h3>A Thank You From the Recipient:</h3>
-                <p>{{giftStart.thanks_message}}</p>
+                <p>{{thanksMessage}}</p>
             </div>
             <div class="edit-message" ng-show="editThanks">
                 <h1>Say Thank You!</h1>
@@ -15,10 +15,11 @@
             </div>
         </div>
         <div class="image">
-            <img ng-href="giftStart.thanks_img_url" ng-show="thanks_img_url && !editThanks"/>
+            <img ng-src="{{thanksImgUrl}}" ng-show="giftStart.thanks_img_url && !editThanks"/>
             <div class="image-upload" ng-show="editThanks">
                 <h3>Upload an image of you and your gift!</h3>
-                <button>Select Image</button>
+                <!--<button>Select Image</button>-->
+                <label>Upload Image:  </label><input id="thanks-image-input" type="file"/>
             </div>
         </div>
         <div class="buttons">

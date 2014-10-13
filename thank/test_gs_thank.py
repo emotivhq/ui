@@ -127,7 +127,6 @@ class ThankApiTestHandler(unittest.TestCase):
         request = webapp2.Request.blank('/thanks-' + secret)
         request.method = 'PUT'
         request.body = json.dumps({
-            'uid': 'f1234',
             'gsid': '1',
             'message': 'SUCH THANKS, SO GRATITUDE'
         })
@@ -196,7 +195,6 @@ class ThankApiTestHandler(unittest.TestCase):
                          "Should receive a 200 status, got " +
                          str(response.status_code))
 
-
     def test_invalid_secret(self):
         """ Expect a 403 when an invalid secret is given
         """
@@ -207,3 +205,6 @@ class ThankApiTestHandler(unittest.TestCase):
         self.assertEqual(response.status_code, 403,
                          "Should respond with a 403, got " +
                          str(response.status_code))
+
+    def test_email_notification(self):
+        self.assertTrue(False)

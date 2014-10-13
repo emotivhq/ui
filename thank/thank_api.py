@@ -10,6 +10,7 @@ from giftstart import GiftStart
 from google.appengine.ext import ndb
 import json
 from storage import image_cache
+import time
 
 
 class ThankHandler(webapp2.RequestHandler):
@@ -37,11 +38,11 @@ class ThankHandler(webapp2.RequestHandler):
                 if 'message' not in data:
                     self.response.set_status(400, "Expected message")
                 else:
-                    img_url = image_cache.cache_thanks_image(gsid, data.get('img'))
+                    img_url = cache_thanks_img(gsid, data.get('img'))
                     gs.thanked = True
                     gs.thanks_message = data['message']
                     gs.thanks_img_url = img_url
-                    gs.thanks_uid = data['uid']
+                    gs.thanks_uid = data.get('uid')
                     gs.put()
                     self.response.write(gs.jsonify())
             else:
@@ -52,8 +53,7 @@ class ThankHandler(webapp2.RequestHandler):
             gs = gs_key.get()
             if gs:
                 if gs.thanks_uid == data['uid']:
-                    img_url = image_cache.cache_thanks_image(gs.gsid,
-                                                             data.get('img'))
+                    img_url = cache_thanks_img(gs.gsid, data.get('img'))
                     gs.thanks_message = data.get('message') if \
                         data.get('message') else gs.thanks_message
                     gs.thanks_img_url = img_url if img_url \
@@ -65,6 +65,16 @@ class ThankHandler(webapp2.RequestHandler):
                     self.response.set_status(403, "Invalid user")
             else:
                 self.response.set_status(400, "Invalid campaign")
+
+
+def cache_thanks_img(gsid, image):
+    if image is None:
+        return None
+    content_type = image['data'].split(';')[0].split(':')[1]
+    base64data = ','.join(image['data'].split(',')[1:])
+    img_data = base64data.decode('base64', 'strict')
+    filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
+    return image_cache.cache_thanks_image(img_data, filename, gsid, content_type)
 
 
 

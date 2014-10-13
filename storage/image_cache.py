@@ -29,9 +29,8 @@ def cache_product_image(img_url, gsid):
     return save_picture_to_gcs(gsid + extract_extension_from_content(img), 'p/', img)
 
 
-def cache_thanks_image(gsid, img):
-    if img is None:
-        return None
+def cache_thanks_image(img, filename, gsid,
+                       content_type='binary/octet-stream'):
     extension = extract_extension_from_content(img)
     if extension:
         content_type = 'image/' + extension[1:]

@@ -288,10 +288,14 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.updateThanks = function(message, img) {
-            return $http({method: 'PUT', url: '/thanks-' +
-                $location.search().thanks,
+            var url = '/thanks';
+            if ($location.search().thanks) {
+                url += '-' + $location.search().thanks;
+            }
+            return $http({method: 'PUT', url: url,
                 data: {message: message, img: img, uid: UserService.uid,
-                gsid: self.giftStart.gsid}});
+                gsid: self.giftStart.gsid,
+                url_title: self.giftStart.giftstart_url_title}});
         };
 
         this.goToUserPage = function(uid) {
@@ -619,15 +623,16 @@ GiftStarterApp.controller('GiftStartController', [
         };
 
         $scope.updateThanks = function() {
-            if (!UserService.loggedIn) {
-                localStorage.setItem("newThanksImage", $scope.newThanksImg);
-                AppStateService.thanksState($scope.newThanksMessage);
-                $location.hash('login');
-                return;
-            }
+//            if (!UserService.loggedIn) {
+//                localStorage.setItem("newThanksImage",
+//                    JSON.stringify($scope.newThanksImg));
+//                AppStateService.thanksState($scope.newThanksMessage);
+//                $location.hash('login');
+//                return;
+//            }
 
             GiftStartService.updateThanks($scope.newThanksMessage,
-                $scope.newThanksImage)
+                $scope.newThanksImg)
                 .success(function(response) {
                     $scope.thanksMessage = response.giftstart.thanks_message;
                     $scope.newThanksMessage = $scope.thanksMessage;
@@ -641,10 +646,35 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.editThanks = false;
         };
 
+        var thanksImageInput = angular.element(
+            document.getElementById('thanks-image-input'));
+        $scope.updateThanksImage = function() {
+            var maxImageSize = 2*1024*1024; // 2 MB
+            var acceptableFileTypes = ['image/jpeg', 'image/png'];
+            if (thanksImageInput[0].files[0]) {
+                if (thanksImageInput[0].files[0].size > maxImageSize) {
+                    alert("Oops!  Images must be smaller than 2 MB.");
+                } else if (acceptableFileTypes.indexOf(thanksImageInput[0].files[0].type) == -1) {
+                    alert("Oops!  Only jpeg and png images are allowed!  You chose a " + thanksImageInput[0].files[0].type + ".");
+                } else {
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        var img_data = event.target.result;
+                        $scope.newThanksImg = {data: img_data,
+                            filename: thanksImageInput[0].files[0].name};
+                        console.log($scope.newThanksImg);
+                    };
+                    reader.readAsDataURL(thanksImageInput[0].files[0]);
+                }
+            }
+        };
+
+
         if ((AppStateService.state || {}).thanks) {
             alert("PRAISING");
             $scope.newThanksMessage = AppStateService.thanks;
-            $scope.newThanksImg = localStorage.getItem("newThanksImg");
+            $scope.newThanksImg = JSON.parse(localStorage.getItem(
+                "newThanksImg"));
         }
 
         if (GiftStartService.giftStart.gsid != undefined) {
@@ -663,6 +693,16 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.updateSecondsLeft();
         });
 
-        imageInput.bind('change', $scope.updateImage);
+        function updateEditable() {
+            $scope.campaignEditable =
+                UserService.uid == $scope.giftStart.gift_champion_uid;
+            $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
+        }
 
+        $scope.$on('login-success', updateEditable);
+        $scope.$on('logout-success', updateEditable);
+
+        imageInput.bind('change', $scope.updateImage);
+        thanksImageInput.bind('change', $scope.updateThanksImage);
+        console.log($scope.giftStart);
 }]);
