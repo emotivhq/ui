@@ -52,6 +52,9 @@ GiftStarterApp.service('GiftStartService', [
         this.serviceFee = 0;
         this.totalPrice = 0;
 
+        // Thanks data
+        this.thanks_img = {};
+
         // Restore from state
         this.preselectedParts = [];
         if (AppStateService.state) {
@@ -287,15 +290,19 @@ GiftStarterApp.service('GiftStartService', [
                 .error(function() {Analytics.track('campaign', 'campaign update failed')})
         };
 
-        this.updateThanks = function(message, img) {
+        this.setThanksImage = function(img) {self.thanksImage = img};
+
+        this.updateThanks = function(message) {
             var url = '/thanks';
             if ($location.search().thanks) {
                 url += '-' + $location.search().thanks;
             }
-            return $http({method: 'PUT', url: url,
-                data: {message: message, img: img, uid: UserService.uid,
-                gsid: self.giftStart.gsid,
-                url_title: self.giftStart.giftstart_url_title}});
+
+            var data = {message: message, img: self.thanksImage, gsid: self.giftStart.gsid,
+                url_title: self.giftStart.giftstart_url_title};
+            if (UserService.uid != -1) {data.uid = UserService.uid;}
+
+            return $http({method: 'PUT', url: url, data: data});
         };
 
         this.goToUserPage = function(uid) {
@@ -607,10 +614,9 @@ GiftStarterApp.controller('GiftStartController', [
                 } else {
                     var reader = new FileReader();
                     reader.onload = function (event) {
-                        window.MIMG = event.target.result;
-                        window.MIMG2 = reader.result;
                         var img_data = event.target.result;
-                        $scope.newImage = {data: img_data, filename: imageInput[0].files[0].name};
+                        $scope.newImage = {data: img_data,
+                            filename: imageInput[0].files[0].name};
                     };
                     reader.readAsDataURL(imageInput[0].files[0]);
                 }
@@ -630,10 +636,11 @@ GiftStarterApp.controller('GiftStartController', [
 //                $location.hash('login');
 //                return;
 //            }
-
-            GiftStartService.updateThanks($scope.newThanksMessage,
-                $scope.newThanksImg)
-                .success(function(response) {
+            console.log("what the fuck;");
+            var req = GiftStartService.updateThanks($scope.newThanksMessage);
+            console.log(req);
+            req.success(function(response) {
+                    console.log(response);
                     $scope.thanksMessage = response.giftstart.thanks_message;
                     $scope.newThanksMessage = $scope.thanksMessage;
                     $scope.thanksImgUrl = response.giftstart.thanks_img_url;
@@ -646,28 +653,28 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.editThanks = false;
         };
 
-        var thanksImageInput = angular.element(
-            document.getElementById('thanks-image-input'));
-        $scope.updateThanksImage = function() {
-            var maxImageSize = 2*1024*1024; // 2 MB
-            var acceptableFileTypes = ['image/jpeg', 'image/png'];
-            if (thanksImageInput[0].files[0]) {
-                if (thanksImageInput[0].files[0].size > maxImageSize) {
-                    alert("Oops!  Images must be smaller than 2 MB.");
-                } else if (acceptableFileTypes.indexOf(thanksImageInput[0].files[0].type) == -1) {
-                    alert("Oops!  Only jpeg and png images are allowed!  You chose a " + thanksImageInput[0].files[0].type + ".");
-                } else {
-                    var reader = new FileReader();
-                    reader.onload = function (event) {
-                        var img_data = event.target.result;
-                        $scope.newThanksImg = {data: img_data,
-                            filename: thanksImageInput[0].files[0].name};
-                        console.log($scope.newThanksImg);
-                    };
-                    reader.readAsDataURL(thanksImageInput[0].files[0]);
-                }
-            }
-        };
+//        var thanksImageInput = angular.element(
+//            document.getElementById('thanks-image-input'));
+//        $scope.updateThanksImage = function() {
+//            var maxImageSize = 2*1024*1024; // 2 MB
+//            var acceptableFileTypes = ['image/jpeg', 'image/png'];
+//            if (thanksImageInput[0].files[0]) {
+//                if (thanksImageInput[0].files[0].size > maxImageSize) {
+//                    alert("Oops!  Images must be smaller than 2 MB.");
+//                } else if (acceptableFileTypes.indexOf(thanksImageInput[0].files[0].type) == -1) {
+//                    alert("Oops!  Only jpeg and png images are allowed!  You chose a " + thanksImageInput[0].files[0].type + ".");
+//                } else {
+//                    var reader = new FileReader();
+//                    reader.onload = function (event) {
+//                        var img_data = event.target.result;
+//                        $scope.newThanksImg = {data: img_data,
+//                            filename: thanksImageInput[0].files[0].name};
+//                        console.log($scope.newThanksImg);
+//                    };
+//                    reader.readAsDataURL(thanksImageInput[0].files[0]);
+//                }
+//            }
+//        };
 
 
         if ((AppStateService.state || {}).thanks) {
@@ -703,6 +710,5 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.$on('logout-success', updateEditable);
 
         imageInput.bind('change', $scope.updateImage);
-        thanksImageInput.bind('change', $scope.updateThanksImage);
-        console.log($scope.giftStart);
+//        thanksImageInput.bind('change', $scope.updateThanksImage);
 }]);

@@ -11,6 +11,7 @@ from google.appengine.ext import ndb
 import json
 from storage import image_cache
 import time
+from uuid import uuid4
 
 
 class ThankHandler(webapp2.RequestHandler):
@@ -70,10 +71,10 @@ class ThankHandler(webapp2.RequestHandler):
 def cache_thanks_img(gsid, image):
     if image is None:
         return None
-    content_type = image['data'].split(';')[0].split(':')[1]
-    base64data = ','.join(image['data'].split(',')[1:])
+    content_type = image.split(';')[0].split(':')[1]
+    base64data = ','.join(image.split(',')[1:])
     img_data = base64data.decode('base64', 'strict')
-    filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
+    filename = str(uuid4())
     return image_cache.cache_thanks_image(img_data, filename, gsid, content_type)
 
 

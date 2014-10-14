@@ -2,11 +2,11 @@
  * Created by stuart on 4/11/14.
  */
 
-GiftStarterApp.directive('gsOverlay', function($compile, ProductService, GiftStartService, Analytics) {
+GiftStarterApp.directive('gsOverlay', function($compile, ProductService,
+                                               GiftStartService, Analytics) {
     function link(scope, element, attrs) {
 
         function drawGrid() {
-            console.log('drawing grid');
             var imageHeight = element.children()[0].offsetHeight;
             var imageWidth = element.children()[0].offsetWidth;
 

@@ -34,7 +34,8 @@ def cache_thanks_image(img, filename, gsid,
     extension = extract_extension_from_content(img)
     if extension:
         content_type = 'image/' + extension[1:]
-    return save_picture_to_gcs(gsid + extension, 'thanks/', img, content_type)
+    return save_picture_to_gcs(filename + extension, 'thanks/', img,
+                               content_type)
 
 
 def cache_user_uploaded_image(img, filename, gsid,

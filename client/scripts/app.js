@@ -130,10 +130,8 @@ GiftStarterApp.service('AppStateService', [
             return val;
         }
 
-        console.log($location.search());
         if ($location.search().state) {
             this.state = JSON.parse($window.atob($location.search()['state']));
-            console.log(this.state);
             $location.search('state', null);
             if (this.state.title_url) {
                 $location.path('/giftstart/' + this.state.title_url);

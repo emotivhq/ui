@@ -16,11 +16,12 @@
         </div>
         <div class="image">
             <img ng-src="{{thanksImgUrl}}" ng-show="giftStart.thanks_img_url && !editThanks"/>
-            <div class="image-upload" ng-show="editThanks">
-                <h3>Upload an image of you and your gift!</h3>
-                <!--<button>Select Image</button>-->
-                <label>Upload Image:  </label><input id="thanks-image-input" type="file"/>
-            </div>
+            <gs-image-upload ng-show="editThanks"></gs-image-upload>
+            <!--<div class="image-upload" ng-show="editThanks">-->
+                <!--<h3>Upload an image of you and your gift!</h3>-->
+                <!--&lt;!&ndash;<button>Select Image</button>&ndash;&gt;-->
+                <!--<label>Upload Image:  </label><input id="thanks-image-input" type="file" capture="camera" accept="image/*"/>-->
+            <!--</div>-->
         </div>
         <div class="buttons">
             <button class="white-border submit" ng-show="editThanks" ng-click="updateThanks();">Say Thanks!</button><button class="edit white-border" ng-show="thanksEditable && !editThanks" ng-click="editThanks=true;"><img class="edit" src="/assets/edit_icon.png"/></button><button class="close white-border" ng-show="editThanks" ng-click="editThanks=false;">X</button>
@@ -52,7 +53,7 @@
 
     <div class="overlay block">
         <h3 class="step-one black" ng-show="newUser"><span class="circle step">1</span>Click the tiles you want to gift and pitch in!</h3>
-        <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file"/></div>
+        <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file" capture="camera" accept="image/*"/></div>
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
