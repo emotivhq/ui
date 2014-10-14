@@ -56,7 +56,7 @@
             img_url: self.product.imgUrl,
             source: 'shopify/' + window.Shopify.shop
         };
-        var url = 'https://www.dev.giftstarter.co/create?' + self.urlSerialize(urlParams);
+        var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
         if (self.product.price > 50) {
             self.button.setAttribute('style', ' display: inline-block; text-align: center;');
@@ -91,13 +91,19 @@
         // Apply styles...
         var buttonClass= self.button.getAttribute('class');
         if (buttonClass) {
-            if (buttonClass.indexOf('black') > 0) {
+            if (/black/.test(buttonClass)) {
                 self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-black.png');
-            } else {
+            } else if (/white/.test(buttonClass)) {
                 self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-white.png');
+            } else if (/nobg/.test(buttonClass)) {
+                self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/gs_button_nobg.png');
+            } else if (/bg/.test(buttonClass)) {
+                self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/gs_button_bg.png');
+            } else {
+                self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/gs_button_nobg.png');
             }
         } else {
-            self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/logo-button-white.png');
+            self.buttonImg.setAttribute('src', 'https://www.giftstarter.co/assets/gs_button_nobg.png');
         }
         self.buttonImg.setAttribute('style', 'max-height: 92%; margin-top: 3%; padding: 0 8px;');
         self.button.setAttribute('style', 'display: none;');
