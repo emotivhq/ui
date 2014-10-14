@@ -56,7 +56,7 @@
         self.button = document.querySelector('#gsbutton');
         self.buttonLink = document.createElement('a');
         self.buttonLink.setAttribute('target', '_blank');
-        self.buttonLink.setAttribute('style', 'display: block; height: 100%;');
+        self.buttonLink.setAttribute('style', 'height: 100%;');
         self.buttonImg = document.createElement('img');
 
         // Apply styles...
@@ -75,7 +75,6 @@
         }
         self.buttonImg.setAttribute('style',
             'max-height: 100%;');
-        self.button.setAttribute('style', 'display: inline-block;');
         self.button.setAttribute('title',
             'Gift this together with friends and family!');
 
@@ -96,7 +95,7 @@
     setTimeout(function() {
         self.initializeButton();
         self.buttonLink.setAttribute('href', url);
-        if (price > 40) {
+        if (self.price > 40) {
             self.button.setAttribute('style',
                 ' display: inline-block; text-align: center;');
         }
