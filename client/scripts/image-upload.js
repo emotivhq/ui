@@ -53,6 +53,18 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                 var imageH = tempImg.height;
                 var rotation = 0;
 
+                if (imageW > imageH) {
+                    if (imageW > canvasEle.width) {
+                        imageW *= canvasEle.width / imageH;
+                        imageH = canvasEle.height;
+                    }
+                } else {
+                    if (imageH > canvasEle.height) {
+                        imageH *= canvasEle.height / imageW;
+                        imageW = canvasEle.width;
+                    }
+                }
+
                 var imageContext = this;
                 ctx.drawImage(this, 0, 0, imageW, imageH);
                 GiftStartService.setThanksImage(canvasEle.toDataURL());
@@ -65,18 +77,6 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                     ctx.drawImage(imageContext, imgX, imgY,
                         imageW, imageH);
                 };
-
-                if (imageW > imageH) {
-                    if (imageW > canvasEle.width) {
-                        imageW *= canvasEle.width / imageH;
-                        imageH = canvasEle.height;
-                    }
-                } else {
-                    if (imageH > canvasEle.height) {
-                        imageH *= canvasEle.height / imageW;
-                        imageW = canvasEle.width;
-                    }
-                }
 
                 var dragReady = true;
                 var dragPrevX = 0;
@@ -102,13 +102,15 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                         }
                     });
                 angular.element(canvasEle)
-                    .bind('mouseup touchend mouseleave touchleave', function(event) {
+                    .bind('mouseup touchend mouseleave touchleave',
+                    function(event) {
                         dragging = false;
                         GiftStartService.setThanksImage(canvasEle.toDataURL());
                     });
                 angular.element(canvasEle)
                     .bind('mousemove touchmove', function(event) {
                         if (dragging) {
+                            event.preventDefault();
                             // Transform drag based on rotation
                             switch (rotation) {
                                 case 0:

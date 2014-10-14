@@ -447,6 +447,7 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
         $scope.newUser = !UserService.hasPitchedIn;
+        $scope.loggedIn = UserService.loggedIn;
 
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
@@ -636,7 +637,6 @@ GiftStarterApp.controller('GiftStartController', [
 //                $location.hash('login');
 //                return;
 //            }
-            console.log("what the fuck;");
             var req = GiftStartService.updateThanks($scope.newThanksMessage);
             console.log(req);
             req.success(function(response) {
@@ -652,30 +652,6 @@ GiftStarterApp.controller('GiftStartController', [
                 });
             $scope.editThanks = false;
         };
-
-//        var thanksImageInput = angular.element(
-//            document.getElementById('thanks-image-input'));
-//        $scope.updateThanksImage = function() {
-//            var maxImageSize = 2*1024*1024; // 2 MB
-//            var acceptableFileTypes = ['image/jpeg', 'image/png'];
-//            if (thanksImageInput[0].files[0]) {
-//                if (thanksImageInput[0].files[0].size > maxImageSize) {
-//                    alert("Oops!  Images must be smaller than 2 MB.");
-//                } else if (acceptableFileTypes.indexOf(thanksImageInput[0].files[0].type) == -1) {
-//                    alert("Oops!  Only jpeg and png images are allowed!  You chose a " + thanksImageInput[0].files[0].type + ".");
-//                } else {
-//                    var reader = new FileReader();
-//                    reader.onload = function (event) {
-//                        var img_data = event.target.result;
-//                        $scope.newThanksImg = {data: img_data,
-//                            filename: thanksImageInput[0].files[0].name};
-//                        console.log($scope.newThanksImg);
-//                    };
-//                    reader.readAsDataURL(thanksImageInput[0].files[0]);
-//                }
-//            }
-//        };
-
 
         if ((AppStateService.state || {}).thanks) {
             alert("PRAISING");
@@ -700,15 +676,24 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.updateSecondsLeft();
         });
 
-        function updateEditable() {
+        function loginChanged() {
             $scope.campaignEditable =
                 UserService.uid == $scope.giftStart.gift_champion_uid;
             $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
         }
 
-        $scope.$on('login-success', updateEditable);
-        $scope.$on('logout-success', updateEditable);
+        function loggedIn() {
+            $scope.loggedIn = true;
+            loginChanged();
+        }
+
+        function loggedOut() {
+            $scope.loggedIn = false;
+            loginChanged();
+        }
+
+        $scope.$on('login-success', loggedIn);
+        $scope.$on('logout-success', loggedOut);
 
         imageInput.bind('change', $scope.updateImage);
-//        thanksImageInput.bind('change', $scope.updateThanksImage);
 }]);

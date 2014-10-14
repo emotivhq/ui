@@ -12,19 +12,17 @@
                 <h1>Say Thank You!</h1>
                 <p>Say a few words of thanks to those who pitched in, we'll send them a link when you're finished, and you can share it on your favorite social sites:</p>
                 <textarea ng-model="newThanksMessage"></textarea>
+                <div class="login-for-pic" ng-hide="loggedIn">
+                    <p>Login to add a profile picture</p><button class="white-fill" ng-click="">Login</button>
+                </div>
             </div>
         </div>
         <div class="image">
             <img ng-src="{{thanksImgUrl}}" ng-show="giftStart.thanks_img_url && !editThanks"/>
             <gs-image-upload ng-show="editThanks"></gs-image-upload>
-            <!--<div class="image-upload" ng-show="editThanks">-->
-                <!--<h3>Upload an image of you and your gift!</h3>-->
-                <!--&lt;!&ndash;<button>Select Image</button>&ndash;&gt;-->
-                <!--<label>Upload Image:  </label><input id="thanks-image-input" type="file" capture="camera" accept="image/*"/>-->
-            <!--</div>-->
         </div>
         <div class="buttons">
-            <button class="white-border submit" ng-show="editThanks" ng-click="updateThanks();">Say Thanks!</button><button class="edit white-border" ng-show="thanksEditable && !editThanks" ng-click="editThanks=true;"><img class="edit" src="/assets/edit_icon.png"/></button><button class="close white-border" ng-show="editThanks" ng-click="editThanks=false;">X</button>
+            <button class="white-fill submit" ng-show="editThanks" ng-click="updateThanks();">Say Thanks!</button><button class="edit white-border" ng-show="thanksEditable && !editThanks" ng-click="editThanks=true;"><img class="edit" src="/assets/edit_icon.png"/></button><button class="close white-fill" ng-show="editThanks" ng-click="editThanks=false;">X</button>
         </div>
     </div>
 

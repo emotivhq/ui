@@ -235,6 +235,8 @@ div.giftstart.wrapper
     margin: 1em 0
 
     width: 100%
+    @media screen and (max-width: $phone-tablet-boundary)
+      padding-bottom: 5em
     @media screen and (max-width: $tablet-computer-boundary)
       width: 96%
       margin: 1em 2%
@@ -276,11 +278,16 @@ div.giftstart.wrapper
       p
         white-space: pre-line
       div.edit-message
+        div.login-for-pic
+          text-align: right
+          p
+            display: inline-block
+            margin: 0.75em
         textarea
           width: 100%
           height: 15em
-          @media screen and (min-width: $phone-tablet-boundary)
-            margin-bottom: 4em
+          //@media screen and (min-width: $phone-tablet-boundary)
+          //  margin-bottom: 4em
 
     div.buttons
       position: absolute
