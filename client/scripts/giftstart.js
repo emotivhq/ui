@@ -629,6 +629,8 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.editMode = false;
         };
 
+        $scope.showLogin = function() {$location.hash('login')};
+
         $scope.updateThanks = function() {
 //            if (!UserService.loggedIn) {
 //                localStorage.setItem("newThanksImage",
