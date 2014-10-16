@@ -52,6 +52,9 @@ GiftStarterApp.service('GiftStartService', [
         this.serviceFee = 0;
         this.totalPrice = 0;
 
+        // Thanks data
+        this.thanks_img = {};
+
         // Restore from state
         this.preselectedParts = [];
         if (AppStateService.state) {
@@ -182,7 +185,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchGiftStart = function(url_title) {
-//            $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
             $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
                 .success(function(data) {self.inflateGiftStart(data['giftstart'])})
                 .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
@@ -197,7 +199,10 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.product.total_price);
             self.updateSelected();
 
-            $location.path('/giftstart/' + giftstart.giftstart_url_title);
+            if (!(/\/giftstart\//.test($location.path()))) {
+                console.log(location.pathname);
+                $location.path('/giftstart/' + giftstart.giftstart_url_title);
+            }
 
             self.syncPitchIns('GiftStartService');
 
@@ -285,6 +290,21 @@ GiftStarterApp.service('GiftStartService', [
                     $rootScope.$broadcast('giftstart-updated');
                 })
                 .error(function() {Analytics.track('campaign', 'campaign update failed')})
+        };
+
+        this.setThanksImage = function(img) {self.thanksImage = img};
+
+        this.updateThanks = function(message) {
+            var url = '/thanks';
+            if ($location.search().thanks) {
+                url += '-' + $location.search().thanks;
+            }
+
+            var data = {message: message, img: self.thanksImage, gsid: self.giftStart.gsid,
+                url_title: self.giftStart.giftstart_url_title};
+            if (UserService.uid != -1) {data.uid = UserService.uid;}
+
+            return $http({method: 'PUT', url: url, data: data});
         };
 
         this.goToUserPage = function(uid) {
@@ -391,9 +411,9 @@ GiftStarterApp.service('GiftStartService', [
         $rootScope.$on('$routeChangeSuccess', function() {
             self.pitchInsInitialized = false;
             var path = $location.path();
-            var re = new RegExp('/giftstart/');
-            if (re.test(path)) {
-                self.fetchGiftStart(path.replace(re, ''));
+            if (path.split('/').length > 1) {
+                var urlTitle = path.split('/')[2];
+                self.fetchGiftStart(urlTitle);
             }
         });
 
@@ -407,10 +427,12 @@ GiftStarterApp.service('GiftStartService', [
 ]);
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$timeout','FacebookService','TwitterService','GooglePlusService',
-            'Analytics','UserService','$window',
-    function($scope,  GiftStartService,  $location,  $timeout,  FacebookService,  TwitterService,  GooglePlusService,
-             Analytics,  UserService,  $window) {
+            '$scope','GiftStartService','$location','$timeout',
+            'FacebookService','TwitterService','GooglePlusService','Analytics',
+            'UserService','$window','AppStateService',
+    function($scope,  GiftStartService,  $location,  $timeout,
+             FacebookService,  TwitterService,  GooglePlusService,  Analytics,
+             UserService,  $window, AppStateService) {
 
         Analytics.track('campaign', 'controller created');
 
@@ -427,12 +449,19 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
         $scope.newUser = !UserService.hasPitchedIn;
+        $scope.loggedIn = UserService.loggedIn;
 
         if ($scope.giftStart.gc_name) {
             $scope.newGcName = $scope.giftStart.gc_name;
         } else {
             $scope.newGcName = UserService.name;
         }
+
+        $scope.thanksMessage = $scope.giftStart.thanks_message;
+        $scope.newThanksMessage = $scope.giftStart.thanks_message;
+        $scope.thanksImgUrl = $scope.giftStart.thanks_img_url;
+        $scope.editThanks = Boolean(/\/thanks\/edit/.test($location.path()));
+        $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
 
         $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
         $scope.mailBody= function() {
@@ -463,12 +492,10 @@ GiftStarterApp.controller('GiftStartController', [
             {passed: true}
         ];
 
-//        if(typeof($location.search()['gs-id']) === typeof("string")) {
         if(typeof($location.path().length > 11)) {
             if (GiftStartService.giftStart.gsid == undefined) {
-//                GiftStartService.fetchGiftStart($location.search()['gs-id']);
-                GiftStartService.fetchGiftStart($location.path()
-                    .replace('/giftstart/', ''));
+                var url_title = $location.path().split('/')[2];
+                GiftStartService.fetchGiftStart(url_title);
             }
         }
 
@@ -590,10 +617,9 @@ GiftStarterApp.controller('GiftStartController', [
                 } else {
                     var reader = new FileReader();
                     reader.onload = function (event) {
-                        window.MIMG = event.target.result;
-                        window.MIMG2 = reader.result;
                         var img_data = event.target.result;
-                        $scope.newImage = {data: img_data, filename: imageInput[0].files[0].name};
+                        $scope.newImage = {data: img_data,
+                            filename: imageInput[0].files[0].name};
                     };
                     reader.readAsDataURL(imageInput[0].files[0]);
                 }
@@ -605,11 +631,44 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.editMode = false;
         };
 
+        $scope.showLogin = function() {$location.hash('login')};
+
+        $scope.updateThanks = function() {
+//            if (!UserService.loggedIn) {
+//                localStorage.setItem("newThanksImage",
+//                    JSON.stringify($scope.newThanksImg));
+//                AppStateService.thanksState($scope.newThanksMessage);
+//                $location.hash('login');
+//                return;
+//            }
+            var req = GiftStartService.updateThanks($scope.newThanksMessage);
+            console.log(req);
+            req.success(function(response) {
+                    console.log(response);
+                    $scope.thanksMessage = response.giftstart.thanks_message;
+                    $scope.newThanksMessage = $scope.thanksMessage;
+                    $scope.thanksImgUrl = response.giftstart.thanks_img_url;
+                })
+                .error(function(reason) {
+                    Analytics.track('campaign', 'thanks failed');
+                    $window.alert('Thanking failed!  Did you get the link ' +
+                        'right?');
+                });
+            $scope.editThanks = false;
+        };
+
+        if ((AppStateService.state || {}).thanks) {
+            alert("PRAISING");
+            $scope.newThanksMessage = AppStateService.thanks;
+            $scope.newThanksImg = JSON.parse(localStorage.getItem(
+                "newThanksImg"));
+        }
+
         if (GiftStartService.giftStart.gsid != undefined) {
             $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
             $timeout($scope.updateSecondsLeft, 0);
-        } else {
         }
+
         // Update this giftstart when the service updates it
         $scope.$on('giftstart-loaded', function() {
             $scope.giftStart = GiftStartService.giftStart;
@@ -621,6 +680,24 @@ GiftStarterApp.controller('GiftStartController', [
             $scope.updateSecondsLeft();
         });
 
-        imageInput.bind('change', $scope.updateImage);
+        function loginChanged() {
+            $scope.campaignEditable =
+                UserService.uid == $scope.giftStart.gift_champion_uid;
+            $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
+        }
 
+        function loggedIn() {
+            $scope.loggedIn = true;
+            loginChanged();
+        }
+
+        function loggedOut() {
+            $scope.loggedIn = false;
+            loginChanged();
+        }
+
+        $scope.$on('login-success', loggedIn);
+        $scope.$on('logout-success', loggedOut);
+
+        imageInput.bind('change', $scope.updateImage);
 }]);

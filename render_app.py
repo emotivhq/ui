@@ -62,7 +62,7 @@ def render_app_with_giftstart(request):
                  abtest.get_tests(request) + ");"
 
     if len(request.path.split('/')) > 2:
-        title_url = request.path.split('/')[-1]
+        title_url = request.path.split('/')[2]
         gss = GiftStart.query(GiftStart.giftstart_url_title == title_url) \
             .fetch()
         page_url = request.path_url + "/" + title_url

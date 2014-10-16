@@ -53,11 +53,16 @@ def subscribe_to_mailing_list(email, double_opt_in=True):
                             "response:" + response.content)
 
 
+def fetch_fb_image(uid, tok):
+    # Fetch facebook image
+    graph = facebook.GraphAPI(tok.access_token)
+    img = graph.get_object('me/picture', type='square', height=400, width=400,
+                           redirect=1)['data']
+    return storage.image_cache.save_picture_to_gcs(uid + '.jpg', 'u/', img)
 
-cache_fns = {'facebook': lambda uid, tok: storage.image_cache.cache_facebook_user_image(uid, tok),
+cache_fns = {'facebook': lambda uid, tok: fetch_fb_image(uid, tok),
              'twitter': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid, twitter.get_img_url(tok)),
-             'googleplus': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,
-                                                                                          googleplus.get_img_url(tok))}
+             'googleplus': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,googleplus.get_img_url(tok))}
 
 
 def cache_profile_image(uid, service, token_set):

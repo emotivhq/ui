@@ -17,6 +17,7 @@ GiftStarterApp.config([
                 reloadOnSearch: false})
             .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
             .when('/giftstart/:title', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
+            .when('/giftstart/:title/:object/:attr', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
             .when('/users/:uid', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
             .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
             .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
@@ -29,28 +30,6 @@ GiftStarterApp.config([
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
     }
 ]);
-
-
-//angular.module('ngAB').value('spec', {
-//    '/templates/angular/home.html': {
-//        'steps': {
-//            perm: 'vertical',
-//            changes: [{
-//                find: '<h1>',
-//                replace: '<h4>',
-//                flags: 'g'
-//            }, {
-//                find: '</h1>',
-//                replace: '</h4>',
-//                flags: 'g'
-//            }, {
-//                find: '',
-//                replace: '<h1>I\'m here!</h1>',
-//                flags: ''
-//            }]
-//        }
-//    }
-//});
 
 GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
@@ -98,6 +77,7 @@ GiftStarterApp.service('AppStateService', [
                 state.popover = self.popover;
                 $location.hash(self.popover);
             }
+            if (self.thanks) {state.thanks = self.thanks}
             if (self.createSession != null) {state.createSession = self.createSession}
 
             return btoa(JSON.stringify(state));
@@ -117,6 +97,10 @@ GiftStarterApp.service('AppStateService', [
 
         this.giftstartCreateState = function(createSession) {
             self.createSession = createSession;
+        };
+
+        this.thanksState = function(thanksData) {
+            self.thanks = thanksData;
         };
 
         function getAndClear(search) {
@@ -152,7 +136,11 @@ GiftStarterApp.service('AppStateService', [
                 }
                 return b;
             })($window.location.search.substr(1).split('&'));
-            $location.search('');
+            $location.search('code', null);
+            $location.search('session_state', null);
+            $location.search('authuser', null);
+            $location.search('num_sessions', null);
+            $location.search('prompt', null);
         } else if (/access_token/.test($location.hash())) {
             // Handle FB oauth
             self.fbAuthResponse = (function(a) {
@@ -187,7 +175,8 @@ GiftStarterApp.service('AppStateService', [
                 )
             };
             this.giftstartReferralData = $location.search();
-            $location.search('');
+            $location.search('title', null);
+            $location.search('product_url', null);
         }
     }
 ]);
@@ -226,7 +215,7 @@ GiftStarterApp.controller('whatIsItController', [
 var player;
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        videoId: 'FQwKYJk80-8',
+        videoId: 'tA2gcLIJYBU',
         events: {
             'onStateChange': onPlayerStateChange
         }

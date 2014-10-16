@@ -37,6 +37,10 @@ handlers:
 - url: /pay
   script: pay.pay_api.api
 
+# Thank
+- url: /thanks.*
+  script: thank.thank_api.handler
+
 # Users
 - url: /users/subscribe.json
   script: gs_user.gs_user_api.handler
