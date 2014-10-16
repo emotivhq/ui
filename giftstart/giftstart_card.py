@@ -8,6 +8,7 @@ import jinja2
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
+from thank import thank_core
 import re
 
 
@@ -65,6 +66,7 @@ class CardHandler(webapp2.RequestHandler):
         url_title = re.sub(r'/giftstart/|/card', '', self.request.path)
         giftstart = GiftStart.query(GiftStart.giftstart_url_title == url_title).fetch(1)[0]
         pitchins = PitchIn.query(PitchIn.giftstart_url_title == url_title).fetch()
+        thank_code = thank_core.encode_secret(giftstart.gsid)
 
         gc = make_gc(giftstart)
         givers = make_givers(pitchins)
@@ -95,7 +97,7 @@ class CardHandler(webapp2.RequestHandler):
             'parts': parts,
             'product_name': product_name,
             'product_img_url': giftstart.product_img_url,
-            'giftstart_url': self.request.host_url + '/giftstart/' + url_title
+            'giftstart_url': self.request.host_url + '/thanks-' + thank_code
         }))
 
 handler = webapp2.WSGIApplication([('/giftstart/.*/card', CardHandler)], debug=True)
