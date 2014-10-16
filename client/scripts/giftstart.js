@@ -185,7 +185,6 @@ GiftStarterApp.service('GiftStartService', [
         };
 
         this.fetchGiftStart = function(url_title) {
-//            $http({method: 'GET', url: '/giftstart/api?gs-id=' + gsid})
             $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
                 .success(function(data) {self.inflateGiftStart(data['giftstart'])})
                 .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
@@ -200,7 +199,10 @@ GiftStarterApp.service('GiftStartService', [
                 self.giftStart.product.total_price);
             self.updateSelected();
 
-            $location.path('/giftstart/' + giftstart.giftstart_url_title);
+            if (!(/\/giftstart\//.test($location.path()))) {
+                console.log(location.pathname);
+                $location.path('/giftstart/' + giftstart.giftstart_url_title);
+            }
 
             self.syncPitchIns('GiftStartService');
 
@@ -409,9 +411,9 @@ GiftStarterApp.service('GiftStartService', [
         $rootScope.$on('$routeChangeSuccess', function() {
             self.pitchInsInitialized = false;
             var path = $location.path();
-            var re = new RegExp('/giftstart/');
-            if (re.test(path)) {
-                self.fetchGiftStart(path.replace(re, ''));
+            if (path.split('/').length > 1) {
+                var urlTitle = path.split('/')[2];
+                self.fetchGiftStart(urlTitle);
             }
         });
 
@@ -458,7 +460,7 @@ GiftStarterApp.controller('GiftStartController', [
         $scope.thanksMessage = $scope.giftStart.thanks_message;
         $scope.newThanksMessage = $scope.giftStart.thanks_message;
         $scope.thanksImgUrl = $scope.giftStart.thanks_img_url;
-        $scope.editThanks = Boolean($location.search().thanks);
+        $scope.editThanks = Boolean(/\/thanks\/edit/.test($location.path()));
         $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
 
         $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
@@ -492,8 +494,8 @@ GiftStarterApp.controller('GiftStartController', [
 
         if(typeof($location.path().length > 11)) {
             if (GiftStartService.giftStart.gsid == undefined) {
-                GiftStartService.fetchGiftStart($location.path()
-                    .replace('/giftstart/', ''));
+                var url_title = $location.path().split('/')[2];
+                GiftStartService.fetchGiftStart(url_title);
             }
         }
 

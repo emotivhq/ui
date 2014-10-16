@@ -3,7 +3,7 @@
  */
 
 GiftStarterApp.directive('gsImageUpload', function($timeout,
-                                                   GiftStartService) {
+                                                   GiftStartService, $window) {
 
     function link(scope, element, attrs) {
 
@@ -12,7 +12,9 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
         var ctx = canvasEle.getContext('2d');
         var aspect = attrs.aspect;
 
-        scope.openImageDialog = function() {inputEle.click()};
+        scope.openImageDialog = function () {
+            inputEle.click()
+        };
 
         // Size canvas to container
         canvasEle.width = element[0].parentElement.offsetWidth;
@@ -20,6 +22,13 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
             canvasEle.height = element[0].offsetWidth / aspect;
         } else {
             canvasEle.height = element[0].offsetHeight;
+        }
+
+        // Initialize image from localStorage
+        if ($window.localStorage.getItem('thank-you-image')) {
+            reader = {result: $window.localStorage.getItem('thank-you-image')};
+            $window.localStorage.removeItem('thank-you-image');
+            makeImage(reader.result);
         }
 
         // Callback for uploading file
@@ -32,7 +41,7 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
         };
 
         function setImageRot(orientation) {
-            switch(orientation) {
+            switch (orientation) {
                 case 8:
                     ctx.rotate(90 * Math.PI / 180);
                     break;
@@ -45,9 +54,10 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
             }
         }
 
-        function fileLoaded() {
+        function makeImage(imageData) {
             var tempImg = new Image();
-            tempImg.src = reader.result;
+            tempImg.src = imageData;
+
             tempImg.onload = function imageLoaded() {
                 var imageW = tempImg.width;
                 var imageH = tempImg.height;
@@ -87,10 +97,12 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                 var dragNextY = 0;
                 var dragging = false;
                 angular.element(canvasEle)
-                    .bind('mousedown touchstart', function(event) {
+                    .bind('mousedown touchstart', function (event) {
                         if (dragReady) {
                             dragReady = false;
-                            $timeout(function() {dragReady = true;}, 100);
+                            $timeout(function () {
+                                dragReady = true;
+                            }, 100);
 
                             dragging = true;
                             dragPrevX = event.screenX ||
@@ -103,12 +115,12 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                     });
                 angular.element(canvasEle)
                     .bind('mouseup touchend mouseleave touchleave',
-                    function(event) {
+                    function (event) {
                         dragging = false;
                         GiftStartService.setThanksImage(canvasEle.toDataURL());
                     });
                 angular.element(canvasEle)
-                    .bind('mousemove touchmove', function(event) {
+                    .bind('mousemove touchmove', function (event) {
                         if (dragging) {
                             event.preventDefault();
                             // Transform drag based on rotation
@@ -147,8 +159,12 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                             dragPrevY = dragNextY;
                             dragNextY = event.screenY ||
                                 event.touches.item(0).screenY;
-                            if (imgX > 0) {imgX = 0}
-                            if (imgY > 0) {imgY = 0}
+                            if (imgX > 0) {
+                                imgX = 0
+                            }
+                            if (imgY > 0) {
+                                imgY = 0
+                            }
                             if (imageH + imgY < canvasEle.height) {
                                 imgY = canvasEle.height - imageH;
                                 dragPrevY = dragNextY;
@@ -162,12 +178,21 @@ GiftStarterApp.directive('gsImageUpload', function($timeout,
                                 imageW, imageH);
                         }
                     });
-                };
-            }
 
-            function fileChanged() {scope.putImage(inputEle.files[0])}
-            angular.element(inputEle).bind('change', fileChanged);
+            };
         }
+
+
+        function fileLoaded() {
+            // Cache thank-you image
+            $window.localStorage.setItem('thank-you-image', reader.result);
+            makeImage(reader.result);
+
+        }
+
+        function fileChanged() {scope.putImage(inputEle.files[0])}
+        angular.element(inputEle).bind('change', fileChanged);
+    }
 
     return {
         restrict: 'E',
