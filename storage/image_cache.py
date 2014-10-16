@@ -2,7 +2,6 @@ import cloudstorage
 
 __author__ = 'stuart'
 
-from social import facebook
 import requests
 import yaml
 import imghdr
@@ -18,30 +17,33 @@ key = {
 }
 
 
-def cache_facebook_user_image(uid, token_set):
-    # Fetch facebook image
-    graph = facebook.GraphAPI(token_set.access_token)
-    img = graph.get_object('me/picture', type='square', height=400, width=400, redirect=1)['data']
-    return _save_picture_to_gcs(uid + '.jpg', 'u/', img)
-
-
 def cache_user_image_from_url(uid, img_url):
     img = requests.get(img_url).content
     extension = '.' + img_url.split('.')[-1].split('?')[0]
-    return _save_picture_to_gcs(uid + extension, 'u/', img)
+    return save_picture_to_gcs(uid + extension, 'u/', img)
 
 
 def cache_product_image(img_url, gsid):
     request = requests.get(img_url)
     img = request.content
-    return _save_picture_to_gcs(gsid + extract_extension_from_content(img), 'p/', img)
+    return save_picture_to_gcs(gsid + extract_extension_from_content(img), 'p/', img)
 
 
-def cache_user_uploaded_image(img, filename, gsid, content_type='binary/octet-stream'):
+def cache_thanks_image(img, filename, gsid,
+                       content_type='binary/octet-stream'):
     extension = extract_extension_from_content(img)
     if extension:
         content_type = 'image/' + extension[1:]
-    return _save_picture_to_gcs(gsid + extension, 'p/', img, content_type)
+    return save_picture_to_gcs(filename + extension, 'thanks/', img,
+                               content_type)
+
+
+def cache_user_uploaded_image(img, filename, gsid,
+                              content_type='binary/octet-stream'):
+    extension = extract_extension_from_content(img)
+    if extension:
+        content_type = 'image/' + extension[1:]
+    return save_picture_to_gcs(gsid + extension, 'p/', img, content_type)
 
 
 def _save_picture_to_gcs_http(filename, folder, data):
@@ -52,7 +54,8 @@ def _save_picture_to_gcs_http(filename, folder, data):
     return file_url
 
 
-def _save_picture_to_gcs(filename, folder, data, content_type='binary/octet-stream'):
+def save_picture_to_gcs(filename, folder, data,
+                         content_type='binary/octet-stream'):
     # Open cloud storage file for writing
     file_url = config['storage_url'] + folder + filename
     cs_file = cloudstorage.open(file_url, mode='w', content_type=content_type,

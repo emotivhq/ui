@@ -1,5 +1,32 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
+    <div class="thank-you block" ng-show="thanksEditable || editThanks || thanksMessage">
+    <!--<div class="thank-you block">-->
+        <div class="message">
+            <div class="show-message" ng-hide="editThanks">
+                <h1>GiftStart Success!</h1>
+                <h3>A Thank You From the Recipient:</h3>
+                <p>{{thanksMessage}}</p>
+            </div>
+            <div class="edit-message" ng-show="editThanks">
+                <h1>Say Thank You!</h1>
+                <p>Say a few words of thanks to those who pitched in, we'll send them a link when you're finished, and you can share it on your favorite social sites:</p>
+                <textarea ng-model="newThanksMessage"></textarea>
+                <div class="login-for-pic" ng-hide="loggedIn">
+                    <p>Login to add a profile picture!</p><button class="white-fill" ng-click="showLogin()">Login</button>
+                </div>
+            </div>
+        </div>
+        <div class="image">
+            <img ng-src="{{thanksImgUrl}}" ng-show="giftStart.thanks_img_url && !editThanks"/>
+            <gs-image-upload ng-show="editThanks"></gs-image-upload>
+        </div>
+        <div class="buttons">
+            <button class="white-fill submit" ng-show="editThanks" ng-click="updateThanks();">Say Thanks!</button><button class="edit white-border" ng-show="thanksEditable && !editThanks" ng-click="editThanks=true;"><img class="edit" src="/assets/edit_icon.png"/></button>
+        </div>
+        <button class="cancel" ng-show="editThanks" ng-click="editThanks=false;">X</button>
+    </div>
+
     <div class="join-in block" ng-show="newUser">
         <h1 class="accent">Join In!</h1>
         <a href="/what-is-it" class="what-is-it">Um, what is GiftStarter?</a>
@@ -25,7 +52,7 @@
 
     <div class="overlay block">
         <h3 class="step-one black" ng-show="newUser"><span class="circle step">1</span>Click the tiles you want to gift and pitch in!</h3>
-        <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file"/></div>
+        <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file" capture="camera" accept="image/*"/></div>
         <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         <div class="buttons">
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
