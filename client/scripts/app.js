@@ -12,17 +12,26 @@ GiftStarterApp.config([
             '$routeProvider','$locationProvider','$httpProvider',
     function($routeProvider,  $locationProvider,  $httpProvider) {
         $routeProvider
-            .when('/', {templateUrl: '/templates/angular/home.html', reloadOnSearch: false})
-            .when('/create', {templateUrl: 'templates/angular/giftstart-create-campaign.html',
-                reloadOnSearch: false})
-            .when('/giftstart', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .when('/giftstart/:title', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .when('/giftstart/:title/:object/:attr', {templateUrl: '/templates/angular/giftstart.html', reloadOnSearch: false})
-            .when('/users/:uid', {templateUrl: '/templates/angular/user.html', reloadOnSearch: false})
-            .when('/faq', {templateUrl: '/templates/angular/faq.html', reloadOnSearch: false})
-            .when('/terms', {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
-            .when('/privacy', {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
-            .when('/what-is-it', {templateUrl: '/templates/angular/what-is-it.html'})
+            .when('/',
+            {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+            .when('/create',
+            {templateUrl: '/scripts/giftstart/create/giftstart-create.html', reloadOnSearch: false})
+            .when('/giftstart',
+            {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+            .when('/giftstart/:title',
+            {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+            .when('/giftstart/:title/:object/:attr',
+            {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+            .when('/users/:uid',
+            {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
+            .when('/faq',
+            {templateUrl: '/scripts/faq/faq.html', reloadOnSearch: false})
+            .when('/terms',
+            {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
+            .when('/privacy',
+            {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
+            .when('/what-is-it',
+            {templateUrl: '/templates/angular/what-is-it.html'})
             .otherwise({redirectTo: '/'});
 
         $locationProvider.html5Mode(true).hashPrefix('!');
@@ -33,17 +42,17 @@ GiftStarterApp.config([
 
 GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
-    $http.get('/templates/angular/faq.html', {cache: $templateCache});
-    $http.get('/templates/angular/giftstart.html', {cache: $templateCache});
-    $http.get('/templates/angular/user.html', {cache: $templateCache});
-    $http.get('/templates/angular/giftstart-create-campaign.html', {cache: $templateCache});
-    $http.get('/templates/angular/login-popover.html', {cache: $templateCache});
-    $http.get('/templates/angular/note-popover.html', {cache: $templateCache});
-    $http.get('/templates/angular/pay-popover.html', {cache: $templateCache});
-    $http.get('/templates/angular/overlay.html', {cache: $templateCache});
-    $http.get('/templates/angular/popover.html', {cache: $templateCache});
-    $http.get('/templates/angular/thanks-popover.html', {cache: $templateCache});
-    $http.get('/templates/angular/email-share-popover.html', {cache: $templateCache});
+    $http.get('/scripts/home/home.html', {cache: $templateCache});
+    $http.get('/scripts/giftstart/create/giftstart-create.html', {cache: $templateCache});
+    $http.get('/scripts/giftstart/giftstart.html', {cache: $templateCache});
+    $http.get('/scripts/user/profile.html', {cache: $templateCache});
+    $http.get('/scripts/popover/popover.html', {cache: $templateCache});
+    $http.get('/scripts/popover/email-share/email-share-popover.html', {cache: $templateCache});
+    $http.get('/scripts/popover/login/login-popover.html', {cache: $templateCache});
+    $http.get('/scripts/popover/note/note-popover.html', {cache: $templateCache});
+    $http.get('/scripts/popover/pay/pay-popover.html', {cache: $templateCache});
+    $http.get('/scripts/popover/thanks/thanks-popover.html', {cache: $templateCache});
+    $http.get('/scripts/giftstart/overlay/overlay.html', {cache: $templateCache});
 });
 
 GiftStarterApp.config(
