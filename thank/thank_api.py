@@ -10,7 +10,6 @@ from giftstart import GiftStart
 from google.appengine.ext import ndb
 import json
 from storage import image_cache
-import time
 from uuid import uuid4
 
 
@@ -21,11 +20,15 @@ class ThankHandler(webapp2.RequestHandler):
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
         if len(gss) > 0:
             gs = gss[0]
-            if not gs.thanked:
-                self.redirect('/giftstart/' + gs.giftstart_url_title +
-                              '?thanks=' + self.request.path.split('-')[-1])
-            else:
-                self.redirect('/giftstart/' + gs.giftstart_url_title)
+            self.redirect('/giftstart/' + gs.giftstart_url_title +
+                          '/thanks/edit?thanks=' +
+                          self.request.path.split('-')[-1])
+            # if not gs.thanked:
+            #     self.redirect('/giftstart/' + gs.giftstart_url_title +
+            #                   '/thanks/edit?thanks=' +
+            #                   self.request.path.split('-')[-1])
+            # else:
+            #     self.redirect('/giftstart/' + gs.giftstart_url_title)
         else:
             self.response.set_status(403, "Not Allowed")
 

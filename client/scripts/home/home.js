@@ -5,11 +5,11 @@
 
 GiftStarterApp.controller('HomeController', [
             '$scope','Analytics','$window','$http','$timeout','AppStateService',
-            '$location','ToastService','$interval',
+            '$location','ToastService','$interval','GiftStart',
     function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
-             $location, ToastService,  $interval) {
+             $location, ToastService,  $interval, GiftStart) {
         Analytics.track('client', 'loaded home');
-
+window.gs = GiftStart;
         if (AppStateService.state) {
             if (AppStateService.state.gsid) {
                 $location.path('/giftstart').search('gs-id', AppStateService.state.gsid);

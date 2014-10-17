@@ -101,8 +101,8 @@ class ThankApiTestHandler(unittest.TestCase):
                          "Should respond with a 301, got " +
                          str(response.status_code))
         self.assertEqual(response.headers['Location'],
-                         "http://localhost/giftstart/my-title?thanks=" +
-                         secret,
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret,
                          "Should be redirected to proper url - " +
                          "http://localhost/giftstart/my-title?thanks=" +
                          secret + " - was sent to " +
@@ -114,11 +114,11 @@ class ThankApiTestHandler(unittest.TestCase):
         request.method = 'GET'
         response = request.get_response(thank_api.handler)
         self.assertEqual(response.status_code, 302,
-                         "Should respond with a 301, got " +
+                         "Should respond with a 302, got " +
                          str(response.status_code))
         self.assertEqual(response.headers['Location'],
-                         "http://localhost/giftstart/my-title?thanks=" +
-                         secret,
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret,
                          "Should be redirected to proper url - " +
                          "http://localhost/giftstart/my-title?thanks=" +
                          secret + " - was sent to " +
@@ -136,12 +136,14 @@ class ThankApiTestHandler(unittest.TestCase):
         request.method = 'GET'
         response = request.get_response(thank_api.handler)
         self.assertEqual(response.status_code, 302,
-                         "Should respond with a 301, got " +
+                         "Should respond with a 302, got " +
                          str(response.status_code))
         self.assertEqual(response.headers['Location'],
-                         "http://localhost/giftstart/my-title",
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret,
                          "Should be redirected to non-thank you url - " +
-                         "http://localhost/giftstart/my-title - was sent to " +
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret + " - was sent to " +
                          response.headers['Location'])
 
     def test_edit_thanks(self):
@@ -153,11 +155,11 @@ class ThankApiTestHandler(unittest.TestCase):
                          "Should respond with a 301, got " +
                          str(response.status_code))
         self.assertEqual(response.headers['Location'],
-                         "http://localhost/giftstart/my-title?thanks=" +
-                         secret,
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret,
                          "Should be redirected to proper url - " +
-                         "http://localhost/giftstart/my-title?thanks=" +
-                         secret + " - was sent to " +
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret + " - was sent to " +
                          response.headers['Location'])
 
         request = webapp2.Request.blank('/thanks-' + secret)
@@ -173,12 +175,14 @@ class ThankApiTestHandler(unittest.TestCase):
         request.method = 'GET'
         response = request.get_response(thank_api.handler)
         self.assertEqual(response.status_code, 302,
-                         "Should respond with a 301, got " +
+                         "Should respond with a 302, got " +
                          str(response.status_code))
         self.assertEqual(response.headers['Location'],
-                         "http://localhost/giftstart/my-title",
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret,
                          "Should be redirected to non-thank you url - " +
-                         "http://localhost/giftstart/my-title - was sent to " +
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret + " - was sent to " +
                          response.headers['Location'])
 
         request = webapp2.Request.blank('/thanks')

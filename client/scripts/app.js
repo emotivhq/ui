@@ -6,39 +6,42 @@
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
         'ngSanitize', 'ngAB']);
-console.log("ver53");
 
-GiftStarterApp.config([
-            '$routeProvider','$locationProvider','$httpProvider',
-    function($routeProvider,  $locationProvider,  $httpProvider) {
-        $routeProvider
-            .when('/',
-            {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
-            .when('/create',
-            {templateUrl: '/scripts/giftstart/create/giftstart-create.html', reloadOnSearch: false})
-            .when('/giftstart',
-            {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
-            .when('/giftstart/:title',
-            {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
-            .when('/giftstart/:title/:object/:attr',
-            {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
-            .when('/users/:uid',
-            {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
-            .when('/faq',
-            {templateUrl: '/scripts/faq/faq.html', reloadOnSearch: false})
-            .when('/terms',
-            {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
-            .when('/privacy',
-            {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
-            .when('/what-is-it',
-            {templateUrl: '/templates/angular/what-is-it.html'})
-            .otherwise({redirectTo: '/'});
+console.log("ver54");
 
-        $locationProvider.html5Mode(true).hashPrefix('!');
+GiftStarterApp.config(['$routeProvider','$locationProvider','$httpProvider',
+    appConfig]);
 
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    }
-]);
+function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
+    $routeProvider
+        .when('/',
+        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        .when('/create',
+        {templateUrl: '/scripts/giftstart/create/giftstart-create.html', reloadOnSearch: false})
+        .when('/giftstart',
+        {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+        .when('/giftstart/:title',
+        {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+        .when('/giftstart/:title/:object/:attr',
+        {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+        .when('/users/:uid',
+        {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
+        .when('/faq',
+        {templateUrl: '/scripts/faq/faq.html', reloadOnSearch: false})
+        .when('/terms',
+        {templateUrl: '/templates/angular/terms.html', reloadOnSearch: false})
+        .when('/privacy',
+        {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
+        .when('/what-is-it',
+        {templateUrl: '/templates/angular/what-is-it.html'})
+        .otherwise({redirectTo: '/'});
+
+    $locationProvider.html5Mode(true).hashPrefix('!');
+
+
+
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+}
 
 GiftStarterApp.run(function($http, $templateCache) {
     // Cache templates!
