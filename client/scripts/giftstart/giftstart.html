@@ -1,31 +1,6 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
-    <div class="thank-you block" ng-show="thanksEditable || editThanks || thanksMessage">
-    <!--<div class="thank-you block">-->
-        <div class="message">
-            <div class="show-message" ng-hide="editThanks">
-                <h1>GiftStart Success!</h1>
-                <h3>A Thank You From the Recipient:</h3>
-                <p>{{thanksMessage}}</p>
-            </div>
-            <div class="edit-message" ng-show="editThanks">
-                <h1>Say Thank You!</h1>
-                <p>Say a few words of thanks to those who pitched in, we'll send them a link when you're finished, and you can share it on your favorite social sites:</p>
-                <textarea ng-model="newThanksMessage"></textarea>
-                <div class="login-for-pic" ng-hide="loggedIn">
-                    <p>Login to add a profile picture!</p><button class="white-fill" ng-click="showLogin()">Login</button>
-                </div>
-            </div>
-        </div>
-        <div class="image">
-            <img ng-src="{{thanksImgUrl}}" ng-show="giftStart.thanks_img_url && !editThanks"/>
-            <gs-image-upload ng-show="editThanks"></gs-image-upload>
-        </div>
-        <div class="buttons">
-            <button class="white-fill submit" ng-show="editThanks" ng-click="updateThanks();">Say Thanks!</button><button class="edit white-border" ng-show="thanksEditable && !editThanks" ng-click="editThanks=true;"><img class="edit" src="/assets/edit_icon.png"/></button>
-        </div>
-        <button class="cancel" ng-show="editThanks" ng-click="editThanks=false;">X</button>
-    </div>
+    <gs-thanks></gs-thanks>
 
     <div class="join-in block" ng-show="newUser">
         <h1 class="accent">Join In!</h1>

@@ -34,12 +34,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
         $scope.newGcName = UserService.name;
     }
 
-    $scope.thanksMessage = $scope.giftStart.thanks_message;
-    $scope.newThanksMessage = $scope.giftStart.thanks_message;
-    $scope.thanksImgUrl = $scope.giftStart.thanks_img_url;
-    $scope.editThanks = Boolean(/\/thanks\/edit/.test($location.path()));
-    $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
-
     $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
     $scope.mailBody= function() {
         $location.search('re', btoa(JSON.stringify({
@@ -208,39 +202,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
         $scope.editMode = false;
     };
 
-    $scope.showLogin = function() {$location.hash('login')};
-
-    $scope.updateThanks = function() {
-//            if (!UserService.loggedIn) {
-//                localStorage.setItem("newThanksImage",
-//                    JSON.stringify($scope.newThanksImg));
-//                AppStateService.thanksState($scope.newThanksMessage);
-//                $location.hash('login');
-//                return;
-//            }
-        var req = GiftStartService.updateThanks($scope.newThanksMessage);
-        console.log(req);
-        req.success(function(response) {
-            console.log(response);
-            $scope.thanksMessage = response.giftstart.thanks_message;
-            $scope.newThanksMessage = $scope.thanksMessage;
-            $scope.thanksImgUrl = response.giftstart.thanks_img_url;
-        })
-            .error(function(reason) {
-                Analytics.track('campaign', 'thanks failed');
-                $window.alert('Thanking failed!  Did you get the link ' +
-                    'right?');
-            });
-        $scope.editThanks = false;
-    };
-
-    if ((AppStateService.state || {}).thanks) {
-        alert("PRAISING");
-        $scope.newThanksMessage = AppStateService.thanks;
-        $scope.newThanksImg = JSON.parse(localStorage.getItem(
-            "newThanksImg"));
-    }
-
     if (GiftStartService.giftStart.gsid != undefined) {
         $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
         $timeout($scope.updateSecondsLeft, 0);
@@ -260,7 +221,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     function loginChanged() {
         $scope.campaignEditable =
             UserService.uid == $scope.giftStart.gift_champion_uid;
-        $scope.thanksEditable = $scope.giftStart.thanks_uid == UserService.uid;
     }
 
     function loggedIn() {

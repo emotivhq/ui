@@ -4,7 +4,7 @@
 
 GiftStarterApp.directive('gsOverlay', gsOverlay);
 
-function gsOverlay($compile, ProductService, GiftStartService, Analytics) {
+function gsOverlay($compile, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
 
         function drawGrid() {

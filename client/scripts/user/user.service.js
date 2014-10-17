@@ -36,8 +36,6 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
 
     this.registerLogin = function(uid, profileImageUrl, token,
                                   onMailingList, name, has_pitched_in) {
-        mixpanel.identify(uid);
-        mixpanel.people.set({'$last_login': new Date()});
         Analytics.track('login', uid);
         self.uid = uid;
         self.token = token;
@@ -109,7 +107,6 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
         // base64 decode the name - for unicode chars in names
         $window.loginDeets[4] =  decodeURIComponent(escape(atob($window.loginDeets[4])));
         self.registerLogin.apply(this, $window.loginDeets);
-        self.loginService =
-            {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
+        self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
     }
 }
