@@ -23,12 +23,6 @@ class ThankHandler(webapp2.RequestHandler):
             self.redirect('/giftstart/' + gs.giftstart_url_title +
                           '/thanks/edit?thanks=' +
                           self.request.path.split('-')[-1])
-            # if not gs.thanked:
-            #     self.redirect('/giftstart/' + gs.giftstart_url_title +
-            #                   '/thanks/edit?thanks=' +
-            #                   self.request.path.split('-')[-1])
-            # else:
-            #     self.redirect('/giftstart/' + gs.giftstart_url_title)
         else:
             self.response.set_status(403, "Not Allowed")
 
@@ -42,12 +36,17 @@ class ThankHandler(webapp2.RequestHandler):
                 if 'message' not in data:
                     self.response.set_status(400, "Expected message")
                 else:
+                    thanked_yet = gs.thanked
                     img_url = cache_thanks_img(gsid, data.get('img'))
                     gs.thanked = True
                     gs.thanks_message = data['message']
                     gs.thanks_img_url = img_url
                     gs.thanks_uid = data.get('uid')
                     gs.put()
+
+                    if not thanked_yet:
+                        thank_core.send_emails(gs.giftstart_url_title)
+
                     self.response.write(gs.jsonify())
             else:
                 self.response.set_status(403, "Not Allowed")

@@ -275,10 +275,9 @@ class ThankApiTestHandler(unittest.TestCase):
 
         import requests
         requests.put = MagicMock()
-        response = request.get_response(thank_api.handler)
+        request.get_response(thank_api.handler)
 
         # Expect emails to have been sent out!
-        self.assertEqual(requests.put.call_count, len(uids),
-                         "Email send should have been called three " +
-                         len(uids) + ", was called " +
-                         str(requests.put.call_count) + " times")
+        self.assertEqual(requests.put.call_count, 1,
+                         "Email send should have been called once, was "
+                         "called " + str(requests.put.call_count) + " times")
