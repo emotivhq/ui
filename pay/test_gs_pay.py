@@ -16,14 +16,25 @@ import yaml
 import Queue
 import threading
 from tl.testing.thread import ThreadJoiner
+from mock import MagicMock
+from time import time
 
 # UUT
-from pay import pay_api, PitchIn
+from pay import pay_api, PitchIn, pay_core
 
 # Dependencies
 from giftstart import giftstart_api
 from gs_user import User
 from social.facebook import FacebookTokenSet
+
+
+# Mock stripe
+pay_core.stripe = MagicMock()
+pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
+                                                    str(time())}
+
+# Mock request to email
+pay_core.requests.put = MagicMock()
 
 secret = yaml.load(open('secret.yaml'))
 stripe.api_key = secret['stripe_auth']['app_secret']
@@ -99,13 +110,8 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_proper_payment(self):
         # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-        })
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
 
         # Submit token to API
         request = webapp2.Request.blank('/pay')
@@ -114,7 +120,7 @@ class PayTestHandlers(unittest.TestCase):
         parts = [1, 2]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
-                'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+                'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
                 'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -135,13 +141,8 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_no_name_purchase(self):
         # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-        })
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
 
         # Insert user
         self.unnamed_user = User()
@@ -160,7 +161,7 @@ class PayTestHandlers(unittest.TestCase):
         parts = [1, 2]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.unnamed_user.uid, 'payment': {
-                'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+                'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
                 'emailAddress': 'test@giftstarter.co',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
@@ -190,13 +191,8 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_double_purchase(self):
         # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-            })
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
 
         # Submit token to API
         request = webapp2.Request.blank('/pay')
@@ -205,7 +201,7 @@ class PayTestHandlers(unittest.TestCase):
         parts = [1, 2]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
-            'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+            'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
             'emailAddress': 'test@giftstarter.co',
             'note': 'Test note for my besty!', 'subscribe': False
             }
@@ -233,13 +229,8 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(1, pi_count, "Should have 1 pitchin")
 
         # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-        })
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
 
         # Submit token to API
         request = webapp2.Request.blank('/pay')
@@ -248,7 +239,7 @@ class PayTestHandlers(unittest.TestCase):
         parts = [2, 3]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
-                'stripeResponse': token.to_dict(), 'gsid': gsid,
+                'stripeResponse': stripe_response, 'gsid': gsid,
                 'parts': parts, 'emailAddress': 'test@giftstarter.co',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
@@ -269,13 +260,8 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_concurrent_purchase(self):
         # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-        })
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
 
         gsid = '1'
         parts = [1, 2]
@@ -285,7 +271,7 @@ class PayTestHandlers(unittest.TestCase):
         request1.method = 'POST'
         request1.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
-                'stripeResponse': token.to_dict(), 'gsid': gsid,
+                'stripeResponse': stripe_response, 'gsid': gsid,
                 'parts': parts, 'emailAddress': 'test@giftstarter.co',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
