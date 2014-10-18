@@ -10,7 +10,6 @@ from giftstart import GiftStart
 from google.appengine.ext import ndb
 import json
 from storage import image_cache
-import time
 from uuid import uuid4
 
 
@@ -21,11 +20,9 @@ class ThankHandler(webapp2.RequestHandler):
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
         if len(gss) > 0:
             gs = gss[0]
-            if not gs.thanked:
-                self.redirect('/giftstart/' + gs.giftstart_url_title +
-                              '?thanks=' + self.request.path.split('-')[-1])
-            else:
-                self.redirect('/giftstart/' + gs.giftstart_url_title)
+            self.redirect('/giftstart/' + gs.giftstart_url_title +
+                          '/thanks/edit?thanks=' +
+                          self.request.path.split('-')[-1])
         else:
             self.response.set_status(403, "Not Allowed")
 
@@ -39,12 +36,17 @@ class ThankHandler(webapp2.RequestHandler):
                 if 'message' not in data:
                     self.response.set_status(400, "Expected message")
                 else:
+                    thanked_yet = gs.thanked
                     img_url = cache_thanks_img(gsid, data.get('img'))
                     gs.thanked = True
                     gs.thanks_message = data['message']
                     gs.thanks_img_url = img_url
                     gs.thanks_uid = data.get('uid')
                     gs.put()
+
+                    if not thanked_yet:
+                        thank_core.send_emails(gs.giftstart_url_title)
+
                     self.response.write(gs.jsonify())
             else:
                 self.response.set_status(403, "Not Allowed")

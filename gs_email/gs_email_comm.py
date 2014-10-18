@@ -35,6 +35,8 @@ EMAIL_TEMPLATES = {
         "campaign_create_user.html"),
     'campaign_share_email': JINJA_ENVIRONMENT.get_template(
         "campaign_share_email.html"),
+    'thank_you_notification': JINJA_ENVIRONMENT.get_template(
+        "thank_you_notification.html"),
 }
 
 
