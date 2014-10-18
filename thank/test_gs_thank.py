@@ -11,6 +11,10 @@ from google.appengine.ext import testbed, ndb
 from datetime import datetime
 import webapp2
 import json
+from mock import MagicMock
+from pay import pay_core, pay_api
+from time import time
+from gs_user import User
 
 # UUTs
 import thank_core
@@ -62,6 +66,7 @@ class ThankApiTestHandler(unittest.TestCase):
         self.testbed.activate()
         self.testbed.init_datastore_v3_stub()
         self.testbed.init_memcache_stub()
+        self.testbed.init_taskqueue_stub()
 
         gs_key = ndb.Key('GiftStart', 'my-title')
         gs = GiftStart(key=gs_key)
@@ -86,6 +91,15 @@ class ThankApiTestHandler(unittest.TestCase):
         gs.shipping_state = 'WA'
         gs.shipping_zip = '98109'
         gs.put()
+
+        uids = ['f1235', 'f1236']
+        for uid in uids:
+            u = User()
+            u.uid = uid
+            u.cached_profile_image_url = 'not a url'
+            u.logged_in_with = uid[0]
+            u.email = uid + '@fake.fake'
+            u.put()
 
     def tearDown(self):
         self.testbed.deactivate()
@@ -210,5 +224,61 @@ class ThankApiTestHandler(unittest.TestCase):
                          "Should respond with a 403, got " +
                          str(response.status_code))
 
+    def fake_payment(self, gsid, uid, parts):
+        pay_core.stripe.Charge.create = MagicMock()
+        pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
+                                                            str(time())}
+        # Create test token
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
+
+        # Submit token to API
+        request = webapp2.Request.blank('/pay')
+        request.method = 'POST'
+        request.body = json.dumps({
+            'action': 'pitch-in', 'uid': uid, 'payment': {
+                'stripeResponse': stripe_response, 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
+            }
+        })
+        request.get_response(pay_api.api)
+
     def test_email_notification(self):
-        self.assertTrue(False)
+        # Create Thanks
+        secret = thank_core.encode_secret('1')
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'GET'
+        response = request.get_response(thank_api.handler)
+        self.assertEqual(response.status_code, 302,
+                         "Should respond with a 302, got " +
+                         str(response.status_code))
+        self.assertEqual(response.headers['Location'],
+                         "http://localhost/giftstart/my-title/thanks/edit"
+                         "?thanks=" + secret,
+                         "Should be redirected to proper url - " +
+                         "http://localhost/giftstart/my-title?thanks=" +
+                         secret + " - was sent to " +
+                         response.headers['Location'])
+
+        # Add payments from multiple emails
+        uids = ['f1235', 'f1236']
+        for i, uid in enumerate(uids):
+            self.fake_payment('1', uid, [i])
+
+        request = webapp2.Request.blank('/thanks-' + secret)
+        request.method = 'PUT'
+        request.body = json.dumps({
+            'gsid': '1',
+            'message': 'SUCH THANKS, SO GRATITUDE'
+        })
+
+        import requests
+        requests.put = MagicMock()
+        response = request.get_response(thank_api.handler)
+
+        # Expect emails to have been sent out!
+        self.assertEqual(requests.put.call_count, len(uids),
+                         "Email send should have been called three " +
+                         len(uids) + ", was called " +
+                         str(requests.put.call_count) + " times")
