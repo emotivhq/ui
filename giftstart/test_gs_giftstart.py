@@ -15,17 +15,26 @@ from google.appengine.ext import testbed
 from gs_user import User
 from social.facebook import FacebookTokenSet
 from datetime import datetime, timedelta
+from time import time
 import base64
-from pay import pay_api as pay_api
+from pay import pay_api, pay_core
+from mock import MagicMock
+import giftstart_core
 
 secret = yaml.load(open('secret.yaml'))
-stripe.api_key = secret['stripe_auth']['app_secret']
-
-stripe.api_key = 'sk_test_c0lLfixj6NxbEon4gGhR0E6s'
 
 # UUT
 from giftstart import giftstart_api
 
+
+# Mock stripe
+pay_core.stripe = MagicMock()
+pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
+                                                    str(time())}
+
+# Mock request to email
+pay_core.requests.put = MagicMock()
+giftstart_core.giftstart_comm.send_create_notification = MagicMock()
 
 example_giftstart = {
     'gift_champion_uid': 'f1234',
@@ -228,7 +237,7 @@ class GiftstartTestHandler(unittest.TestCase):
                                                     "exist, expected 200, "
                                                     "response was " +
                          str(response.status_code))
-        response_giftstart = json.loads(response.body)['giftstart']
+        response_giftstart = json.loads(response.body)
         self.assertEqual(new_giftstart['gsid'], response_giftstart['gsid'],
                          "gsid should be {gsid1}, was {gsid2}"
                          .format(gsid1=new_giftstart['gsid'],
@@ -281,21 +290,14 @@ class GiftstartTestHandler(unittest.TestCase):
                          str(response.status_code))
 
     def fake_payment(self, gsid, uid, parts):
-        # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-        })
-
         # Submit token to API
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
         request = webapp2.Request.blank('/pay')
         request.method = 'POST'
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
-            'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+            'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
             'emailAddress': 'test@giftstarter.co',
             'note': 'Test note for my besty!', 'subscribe': False
             }
@@ -346,7 +348,7 @@ class GiftstartTestHandler(unittest.TestCase):
         json_response = json.loads(response.body)
 
         # Verify that all pitchin'd campaigns are returned
-        campaign_ids = map(lambda c: c.get('giftstart').get('gsid'),
+        campaign_ids = map(lambda resp: resp.get('gsid'),
                            json_response.get('campaigns'))
         for gsid in contrib_campaigns:
             self.assertIn(gsid, campaign_ids, "Should contain pitchin'd "
@@ -355,10 +357,10 @@ class GiftstartTestHandler(unittest.TestCase):
 
         # Verify that most pitchin'd campaign is first
         self.assertEqual(hottest_gsid,
-                         json_response['campaigns'][0]['giftstart']['gsid'],
+                         json_response['campaigns'][0]['gsid'],
                          "Most pitchin'd campaign should be first in reply, "
                          "first was actually " +
-                         json_response['campaigns'][0]['giftstart']['gsid'])
+                         json_response['campaigns'][0]['gsid'])
 
         # Verify that the pitchins were sent with it
         self.assertEqual(num_pitchins, len(json_response['pitchins']),

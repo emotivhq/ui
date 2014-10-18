@@ -4,10 +4,12 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService', GiftStartService]);
+    'Analytics','AppStateService','$resource', GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
-         PopoverService,  $window,  Analytics,  AppStateService) {
+         PopoverService,  $window,  Analytics,  AppStateService, $resource) {
+
+    var GiftStart = $resource('/giftstart/:key.json');
 
     this.giftStart = {};
 
@@ -186,12 +188,19 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.fetchGiftStart = function(url_title) {
-        $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
-            .success(function(data) {self.inflateGiftStart(data['giftstart'])})
-            .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
+//        $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
+//            .success(function(data) {self.inflateGiftStart(data['giftstart'])})
+//            .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
+        GiftStart.get({key: url_title}).$promise
+            .success(fetchSuccess)
+            .error(fetchError);
     };
 
+    function fetchSuccess(data) {self.inflateGiftStart(data['giftstart'])}
+    function fetchError(reason) {Analytics.track('campaign', 'campaign fetch failed')}
+
     this.inflateGiftStart = function(giftstart) {
+        console.log(giftstart);
         Analytics.track('campaign', 'campaign enabled');
 
         self.giftStart = giftstart;

@@ -49,7 +49,7 @@ class GiftStart(ndb.Model):
         return json.dumps(self.dictify())
 
     def dictify(self):
-        return {'giftstart': {
+        return {
             'gsid': self.gsid, 'title': self.giftstart_title,
             'giftstart_url_title': self.giftstart_url_title,
             'description': self.giftstart_description,
@@ -66,4 +66,4 @@ class GiftStart(ndb.Model):
             'thanks_message': self.thanks_message,
             'thanks_img_url': self.thanks_img_url,
             'thanks_uid': self.thanks_uid,
-        }}
+        }

@@ -5,7 +5,7 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB']);
+        'ngSanitize', 'ngAB', 'ngResource']);
 
 console.log("ver54");
 
@@ -36,7 +36,10 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/templates/angular/what-is-it.html'})
         .otherwise({redirectTo: '/'});
 
-    $locationProvider.html5Mode(true).hashPrefix('!');
+    $locationProvider.hashPrefix('!').html5Mode({
+        enabled: true,
+        requireBase: false
+    });
 
 
 

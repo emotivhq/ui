@@ -25,10 +25,11 @@ function gsThanks() {
         thanks.update = update;
         thanks.profileImageUrl = UserService.profileImageUrl;
 
-        $scope.$on('login-success', updateEditable);
-        $scope.$on('logout-success', updateEditable);
+        $scope.$on('login-success', loginChanged);
+        $scope.$on('logout-success', loginChanged);
+        $scope.$on('giftstart-loaded', giftstartChanged);
 
-        function updateEditable() {
+        function loginChanged() {
             thanks.profileImageUrl = UserService.profileImageUrl;
             thanks.editable = GiftStartService.giftStart.thanks_uid ==
                 UserService.uid;
@@ -37,6 +38,17 @@ function gsThanks() {
         function showLogin() {
             cacheNewMessage();
             $location.hash('login');
+        }
+
+        function giftstartChanged() {
+            thanks.message = GiftStartService.giftStart.thanks_message;
+            thanks.newMessage = getNewMessage() ||
+                GiftStartService.giftStart.thanks_message;
+
+            thanks.imgUrl = GiftStartService.giftStart.thanks_img_url;
+            thanks.edit = Boolean(/\/thanks\/edit/.test($location.path()));
+            thanks.editable = $scope.giftStart.thanks_uid == UserService.uid
+                || $location.search().thanks;
         }
 
         function cacheNewMessage() {
