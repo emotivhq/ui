@@ -57,7 +57,7 @@ class SendHandler(webapp2.RequestHandler):
             self.response.set_status(400, "Invalid email address sent.")
 
         elif 'template_name' in params and params.get('template_name') not in gs_email_comm.EMAIL_TEMPLATES.keys():
-            logging.debug("Invalid tempalte name.")
+            logging.debug("Invalid template name.")
             self.response.set_status(400, "Invalid template name")
 
         # Looks good, ship'em!
