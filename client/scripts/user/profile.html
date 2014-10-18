@@ -8,8 +8,8 @@
             <h2>{{user.giftstarts.length}} GiftStarts</h2>
             <div class="giftstarts">
                 <div class="giftstart" ng-repeat="gs in user.giftstarts">
-                    <a ng-href="/giftstart/{{gs.giftstart.giftstart_url_title}}">
-                        <p><span class="title">{{gs.giftstart.title}}</span><br>{{gs.giftstart.description}}</p>
+                    <a ng-href="/giftstart/{{gs.giftstart_url_title}}">
+                        <p><span class="title">{{gs.title}}</span><br>{{gs.description}}</p>
                     </a>
                 </div>
             </div>

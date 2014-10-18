@@ -189,16 +189,17 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     this.fetchGiftStart = function(url_title) {
         console.log(url_title);
-//        $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
-//            .success(function(data) {self.inflateGiftStart(data['giftstart'])})
-//            .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
-        GiftStart.get({key: url_title}).$promise
-            .success(fetchSuccess)
-            .error(fetchError);
+        function fetchSuccess(data) {self.inflateGiftStart(data)}
+        function fetchError(reason) {Analytics.track('campaign', 'campaign fetch failed')}
+        $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
+            .success(function(data) {self.inflateGiftStart(data)})
+            .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
+//        var x = GiftStart.get({key: url_title});
+//        var p = x.$promise;
+//        p
+//            .success(fetchSuccess)
+//            .error(fetchError);
     };
-
-    function fetchSuccess(data) {self.inflateGiftStart(data['giftstart'])}
-    function fetchError(reason) {Analytics.track('campaign', 'campaign fetch failed')}
 
     this.inflateGiftStart = function(giftstart) {
         console.log(giftstart);
