@@ -36,10 +36,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/templates/angular/what-is-it.html'})
         .otherwise({redirectTo: '/'});
 
-    $locationProvider.hashPrefix('!').html5Mode({
-        enabled: true,
-        requireBase: false
-    });
+    $locationProvider.hashPrefix('!').html5Mode({enabled: true});
 
 
 

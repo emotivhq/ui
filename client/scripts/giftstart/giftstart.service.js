@@ -188,6 +188,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.fetchGiftStart = function(url_title) {
+        console.log(url_title);
 //        $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
 //            .success(function(data) {self.inflateGiftStart(data['giftstart'])})
 //            .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
@@ -429,7 +430,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     // Check if giftstart was sent with page on init load
     if ($window.GIFTSTART) {
-        self.inflateGiftStart($window.GIFTSTART.giftstart);
+        self.inflateGiftStart($window.GIFTSTART);
         $rootScope.$broadcast('giftstart-loaded');
     }
 
