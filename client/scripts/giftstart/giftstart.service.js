@@ -80,7 +80,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.pitchInsInitialized = false;
         $http({method: 'POST', url: '/giftstart/api',
             data: {giftstart: self.giftStart, action: 'create'}})
-            .success(function(data) {self.inflateGiftStart(data['giftstart'])})
+            .success(function(data) {self.inflateGiftStart(data)})
             .error(function() {Analytics.track('campaign', 'campaign create failed')});
     };
 
