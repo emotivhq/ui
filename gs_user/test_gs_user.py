@@ -21,10 +21,19 @@ from social.facebook import FacebookTokenSet
 import requests
 from social import OAuthTokenPair
 from google.appengine.ext import ndb
+from time import time
+from giftstart import giftstart_core
+from pay import pay_core
 
 # UUT
 from gs_user import gs_user_api
 
+# Mock stripe
+pay_core.stripe = MagicMock()
+
+# Mock request to email
+pay_core.requests.put = MagicMock()
+giftstart_core.giftstart_comm.send_create_notification = MagicMock()
 
 example_giftstart = {
     'gift_champion_uid': 'f1234',
@@ -98,20 +107,30 @@ class UserStatsTestHandler(unittest.TestCase):
             })
 
             response = request.get_response(giftstart_api.api)
-            self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
-                             str(response.status_code))
+            self.assertEqual(response.status_code, 200,
+                            "Should accept created campaign, expected 200, "
+                            "response was " + str(response.status_code))
 
-        request = webapp2.Request.blank('/users/' + test_gs['gift_champion_uid'] + '.json')
+        request = webapp2.Request.blank('/users/' +
+                                        test_gs['gift_champion_uid'] + '.json')
         request.method = 'GET'
         response = request.get_response(gs_user_api.stats)
-        self.assertEqual(200, response.status_code, "Should successfully fetch user stats, expected code 200, "
-                                                    "response was " + str(response.status_code))
+        self.assertEqual(200, response.status_code,
+                         "Should successfully fetch user stats, expected code "
+                         "200, response was " + str(response.status_code))
         json_response = json.loads(response.body)
 
         # Verify that this user has created the right number of giftstarts
-        self.assertEqual(giftstarts_created, len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts')),
-                         "Should report the right number of giftstarts created, expected " + str(giftstarts_created) +
-                         ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('giftstarts'))))
+        self.assertEqual(giftstarts_created,
+                         len(json_response
+                             .get(test_gs['gift_champion_uid'])
+                             .get('giftstarts')),
+                         "Should report the right number of giftstarts created"
+                         ", expected " + str(giftstarts_created) +
+                         ", reported was " +
+                         str(len(json_response
+                                 .get(test_gs['gift_champion_uid'])
+                                 .get('giftstarts'))))
         self.assertIn('name',
                       json_response[test_gs['gift_champion_uid']].keys(),
                       "Response should contain user's name")
@@ -132,9 +151,9 @@ class UserStatsTestHandler(unittest.TestCase):
         })
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
-                         str(response.status_code))
-
+        self.assertEqual(response.status_code, 200,
+                         "Should accept created campaign, expected 200, "
+                         "response was " + str(response.status_code))
 
         num_pitchins = 3
         self.fake_payment('1', 'f1234', [1, 2])
@@ -168,23 +187,24 @@ class UserStatsTestHandler(unittest.TestCase):
             'uid': test_gs['gift_champion_uid'],
             'token': 'x1234',
             'giftstart': test_gs,
-            })
+        })
 
         response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created campaign, expected 200, response was " +
-                         str(response.status_code))
+        self.assertEqual(response.status_code, 200,
+                         "Should accept created campaign, expected 200, "
+                         "response was " + str(response.status_code))
 
         # Put in oauth pair to prepare for login
         oauth_pair = OAuthTokenPair(oauth_token='token', oauth_secret='secret')
         oauth_pair.put()
 
         # Set up mock for login
-        class responseMock:
+        class ResponseMock:
             def __init__(self, content):
                 self.content = content
-        response = responseMock('oauth_token=token&oauth_token_secret=secret')
+        response = ResponseMock('oauth_token=token&oauth_token_secret=secret')
         requests.post = MagicMock(return_value=response)
-        requests.get = MagicMock(return_value=responseMock(
+        requests.get = MagicMock(return_value=ResponseMock(
             json.dumps({'id': 't123', 'profile_image_url': 'http://c',
                         'name': 'bob'})))
 
@@ -196,10 +216,9 @@ class UserStatsTestHandler(unittest.TestCase):
                                    'location': '/'})
         request.method = 'POST'
         response = request.get_response(gs_user_api.api)
-        self.assertEqual(200, response.status_code, "Should submit verifier "
-                                                    "successfully, expected "
-                                                    "200, got " +
-                         str(response.status_code))
+        self.assertEqual(200, response.status_code,
+                         "Should submit verifier successfully, expected 200, "
+                         "got " + str(response.status_code))
         self.assertEqual(False, json.loads(response.body)['has_pitched_in'])
 
         self.fake_payment('1', 'tt123', [1, 2])
@@ -211,21 +230,18 @@ class UserStatsTestHandler(unittest.TestCase):
         self.assertEqual(False, True)
 
     def fake_payment(self, gsid, uid, parts):
+        pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
+                                                            str(time())}
         # Create test token
-        token = stripe.Token.create(card={
-            'number': '4242424242424242',
-            'exp_month': str(datetime.today().month),
-            'exp_year': str(datetime.today().year + 1),
-            'cvc': '123',
-            'address_zip': '12345',
-            })
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
 
         # Submit token to API
         request = webapp2.Request.blank('/pay')
         request.method = 'POST'
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
-                'stripeResponse': token.to_dict(), 'gsid': gsid, 'parts': parts,
+                'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
                 'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
             }
         })

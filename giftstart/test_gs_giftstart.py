@@ -290,6 +290,8 @@ class GiftstartTestHandler(unittest.TestCase):
                          str(response.status_code))
 
     def fake_payment(self, gsid, uid, parts):
+        pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
+                                                            str(time())}
         # Submit token to API
         stripe_response = {'id': 'abc_stripe' + str(time()),
                            'card': {'last4': '8767'}}
