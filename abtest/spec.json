@@ -2,14 +2,14 @@
     "name": "home_page",
     "cases": [{
         "name": "original",
-        "weight": 1,
+        "weight": 0,
         "changes": []
     }, {
         "name": "new",
         "weight": 1,
         "changes": [{
             "file": "/scripts/home/home.html",
-            "removeEle": "div.hot-campaigns"
+            "removeEle": "div.top-campaigns"
         }, {
             "file": "/scripts/home/home.html",
             "find": "<p class=\"explainer\">GiftStarter helps you and your friends and family come together to give bigger, better gifts.</p>",
@@ -41,16 +41,16 @@
         }, {
             "file": "/scripts/home/home.html",
             "findEle": "div.need-a-champion",
-            "replace": "<h1 class=\"happening-now\">GiftStarts Happening Now!</h1><gs-top-campaign campaign=\"hotCampaigns.campaigns[0]\" pitchins=\"hotCampaigns.pitchins[0]\" index=\"pitchinIndex\" fade-in=\"fadedIn\"></gs-top-campaign>"
+            "replace": "<h1 class=\"happening-now\">GiftStarts Happening Now!</h1><gs-top-campaign campaign=\"topCampaigns.campaigns[0]\" pitchins=\"topCampaigns.pitchins[0]\" index=\"pitchinIndex\" fade-in=\"fadedIn\"></gs-top-campaign>"
         }, {
             "file": "/scripts/home/home.html",
             "css": "h1.happening-now {text-align: left; margin-top: 0.5em;}"
         }, {
             "file": "/scripts/home/top-campaign.html",
-            "replaceAll": "<div class=\"hot-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.product.img_url}}\"/></a><div class=\"description-container\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><h3 class=\"accent\">{{campaign.title}}</h3></a><p class=\"campaign-description\">{{campaign.description}}</p></div></div>"
+            "replaceAll": "<div class=\"top-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.product.img_url}}\"/></a><div class=\"description-container\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><h3 class=\"accent\">{{campaign.title}}</h3></a><p class=\"campaign-description\">{{campaign.description}}</p></div></div>"
         }, {
             "file": "/scripts/home/top-campaign.html",
-            "css": "div.hot-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} div.hot-campaign.wrapper div.description-container {width: 100%;} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.hot-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.landing-page gs-hot-campaign {width: 100%} div.hot-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;}"
+            "css": "div.top-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} div.top-campaign.wrapper div.description-container {width: 100%;} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.top-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.landing-page gs-top-campaign {width: 100%} div.top-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;}"
         }]
     }]
 }]

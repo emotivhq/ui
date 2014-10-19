@@ -1,0 +1,30 @@
+@import "../../base"
+
+div.funding-bar.wrapper
+  position: relative
+  margin-bottom: 1em
+
+  div.mask, div.bar, div.bar-bg, div.pi-bar
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    +transition(all, 0.2s)
+
+  div.bar
+    width: 0%
+    background: $primary-color
+
+  div.pi-bar
+    width: 0%
+    background: $primary-color-highlight
+
+  div.bar-bg
+    background: #e6e6e6
+
+  div.mask
+    position: relative
+    img
+      display: block
+      width: 100%

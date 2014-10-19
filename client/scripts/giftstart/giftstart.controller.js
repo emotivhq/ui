@@ -34,6 +34,11 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
         $scope.newGcName = UserService.name;
     }
 
+    // Remove old giftstart scheme if present (it messes up login)
+    if ($location.search()['gs-id']) {
+        $location.search('gs-id', null);
+    }
+
     $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
     $scope.mailBody= function() {
         $location.search('re', btoa(JSON.stringify({

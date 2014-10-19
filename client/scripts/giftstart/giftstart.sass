@@ -1,0 +1,230 @@
+
+@import "../base"
+@import "../frame/column"
+
+div.giftstart.wrapper
+  margin: 0 auto
+
+  button.share
+    width: 4em
+    margin: 0.5em
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin: 0.25em
+
+  button.pitch-in
+    width: 7em
+    margin: 0.5em
+
+  @media screen and (max-width: $tablet-computer-boundary)
+    width: 100%
+  @media screen and (min-width: $tablet-computer-boundary)
+    width: 2*$column-width
+
+  span.circle
+    margin-right: 0.4em
+
+  div.block
+    width: $column-width
+    display: inline-block
+    padding: $margin-vert $margin-horz
+    vertical-align: top
+
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 100%
+
+    @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+      width: 40%
+
+  div.block.join-in
+    float: right
+    text-align: center
+    padding-bottom: 0
+    @media screen and (min-width: $tablet-computer-boundary)
+      margin-bottom: -1em
+    a.what-is-it
+      color: $primary-color
+
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 100%
+    @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+      width: 60%
+
+  div.block.overlay
+    width: $column-width
+    text-align: center
+    padding: 0
+    float: right
+    margin: $margin-vert 0
+
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 100%
+    @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+      width: 60%
+
+    h3.step-two
+      margin-bottom: 0
+
+    img.share
+      width: 2.75em
+      margin-right: 0.5em
+      margin-top: 0.5em
+      position: relative
+      cursor: pointer
+      display: inline-block
+    img.share:last-of-type
+      margin-right: 0
+    img.share:first-of-type
+      margin-right: 0.5em
+    img.share:hover
+      +filter-brightness(1.2)
+    img.share:active
+      +filter-brightness(1.6)
+
+    div.image-upload
+      margin-bottom: 0.5em
+
+  div.block.description
+    float: left
+    button
+      margin: 0.1em
+    div.title
+      position: relative
+      overflow: hidden
+
+      h1.title
+        text-align: center
+      span.title.edit
+        display: block
+        overflow: hidden
+        float: left
+    div.save
+      float: right
+
+    a.title
+      p
+        margin: 0
+        text-align: center
+        vertical-align: top
+        color: #444
+        text-decoration: underline
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+      div
+        text-align: center
+        img
+          width: 25%
+          display: inline-block
+          margin: 0.5em
+
+    div.description
+      position: relative
+      overflow: hidden
+      padding-bottom: 2em
+
+    button.edit
+      position: absolute
+      right: 0
+      bottom: 0
+      img.edit
+        margin-top: 0.25em
+        height: 1.5em
+
+    input.title
+      width: 100%
+      padding-top: 0.1em
+      padding-bottom: 0.1em
+      font: $h2-font
+    input.gc-name
+      width: 100%
+      padding-top: 0.1em
+      padding-bottom: 0.1em
+      font: $h3-font
+    textarea.description
+      width: 100%
+      height: 15em
+
+    h1
+      color: black
+    div.signature
+      position: relative
+      p.name
+        font-weight: 700
+        font-size: 125%
+        margin: 0
+      p.gift-champion
+        margin: 0
+    div.description
+      font: $p-font
+      line-height: 1.5
+    .description
+      line-height: 1.5
+      font-weight: 300
+
+  div.block.price
+    h1
+      color: black
+    div.price
+      display: inline-block
+      width: 49%
+
+    h1.countdown
+      text-align: center
+
+  div.block.comments
+    display: inline-block
+    vertical-align: top
+    width: 100%
+    border: 1px solid #bbb
+    padding: 3%
+    border-radius: 1em
+    @media screen and (max-width: $tablet-computer-boundary)
+      width: 96%
+      margin: 0 2%
+
+    h3
+      margin-top: 0
+      margin-bottom: 1em
+
+    div.comment
+      position: relative
+      margin-bottom: 2.5em
+      vertical-align: top
+      display: inline-block
+      width: 100%
+      @media screen and (min-width: $phone-tablet-boundary)
+        width: 45%
+        margin-right: 5%
+        margin-bottom: 1em
+
+      img
+        width: 16%
+        +border-radius(50%)
+        vertical-align: top
+        cursor: pointer
+
+      div
+        position: relative
+        width: 78%
+        margin-left: 1%
+        padding: 0 3%
+        font-weight: 300
+        text-align: left
+
+        display: inline-block
+        border-radius: 10px
+
+        p
+          margin-top: 0
+        p.name
+          margin-top: 4px
+          text-align: right
+          font-size: 85%
+          display: block
+          color: #555
+
+    p.no-contributors
+      color: #aaa
+      font-size: 1.3em
+      text-align: center
+

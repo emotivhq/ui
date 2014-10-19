@@ -1,0 +1,115 @@
+@import "../base"
+@import "../frame/column"
+
+$step-margin-width: 4em
+$landing-page-padding-horz: 1.5em
+$step-width: (2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
+
+div.landing-page
+  padding: 0.75em $landing-page-padding-horz
+  text-align: center
+  margin: 1em auto
+
+  @media screen and (max-width: $tablet-computer-boundary)
+    width: 100%
+  @media screen and (min-width: $tablet-computer-boundary)
+    width: 2 * $column-width
+
+  p.explainer
+    margin-top: 0
+    font-size: 18px
+  @media screen and (min-width: $phone-tablet-boundary)
+    p.explainer:first-of-type
+      margin-top: 1em
+      margin-bottom: 0.25em
+    p.explainer:last-of-type
+      margin-top: 0.25em
+    
+  div.copy
+    margin-bottom: 2em
+    text-align: left
+
+    div
+      padding-right: 1em
+      display: inline-block
+      vertical-align: top
+      text-align: justify
+      @media screen and (min-width: $tablet-computer-boundary)
+        p.what-is-it
+          +column-count(2)
+          +column-gap(1.5em)
+          margin-top: 0
+          margin-bottom: 1.5em
+      @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+        p.what-is-it
+          +column-count(2)
+          +column-gap(1.5em)
+          margin-top: 0
+          margin-bottom: 1.5em
+      @media screen and (max-width: $phone-tablet-boundary)
+        width: 100%
+        p
+          margin: 0
+
+    h1
+      color: #000
+
+  div.process
+    div.step
+      display: inline-block
+      text-align: center
+      width: $step-width
+      vertical-align: top
+      margin-bottom: 2em
+
+      span.number
+        width: 1em
+        height: 1em
+        display: inline-block
+        text-align: center
+        background: $primary-color
+        +border-radius(50%)
+        color: #fff
+        font: $button-font
+        margin-bottom: 0.2em
+      img
+        width: $step-width
+      p
+        margin: 0
+        text-align: left
+
+  @media screen and (max-width: $phone-tablet-boundary)
+    div.process
+      div.step
+        width: 100%
+
+        img
+          width: 60%
+
+  @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+    div.process
+      div.step
+        margin-left: 2em
+        margin-right: 2em
+
+  div.process
+    @media screen and (min-width: $tablet-computer-boundary)
+      div.step
+        margin-left: $step-margin-width
+        margin-right: $step-margin-width
+
+    @media screen and (min-width: $tablet-computer-boundary)
+      div.step.one
+        margin-left: 0
+      div.step.three
+        margin-right: 0
+
+  div.hot-campaigns
+    h1
+      text-align: left
+
+  div.need-a-champion
+    width: 100%
+    text-align: left
+    @media screen and (min-width: $phone-tablet-boundary)
+      width: 30em

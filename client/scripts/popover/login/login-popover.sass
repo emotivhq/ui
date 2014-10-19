@@ -1,0 +1,23 @@
+@import "../../base"
+
+div.login-popover
+
+  div.block
+    text-align: left
+    width: 18em
+    p
+      margin-top: 0
+  @media screen and (max-width: $phone-tablet-boundary)
+    padding-left: 0
+    padding-right: 0
+
+  div.login-button
+    margin-bottom: 1.5em
+    cursor: pointer
+    img
+      width: 100%
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 80%
+      margin: 0.5em auto
+  div.login-button:last-of-type
+    margin-bottom: 0
