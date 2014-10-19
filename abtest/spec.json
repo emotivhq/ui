@@ -2,7 +2,7 @@
     "name": "home_page",
     "cases": [{
         "name": "original",
-        "weight": 1,
+        "weight": 0,
         "changes": []
     }, {
         "name": "new",
