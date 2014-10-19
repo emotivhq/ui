@@ -4,8 +4,7 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
-if 'test_gs_pay.py' in __file__.split('/')[-1]:
-    os.chdir('..')
+os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
 import webapp2

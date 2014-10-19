@@ -1,11 +1,9 @@
 __author__ = 'Stuart'
 
 import os
-if 'test_gs_thank.py' in __file__.split('/')[-1]:
-    os.chdir('..')
+os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
-import skip32
 from giftstart import GiftStart
 from google.appengine.ext import testbed, ndb
 from datetime import datetime
@@ -17,8 +15,7 @@ from time import time
 from gs_user import User
 
 # UUTs
-import thank_core
-import thank_api
+from thank import thank_core, thank_api, skip32
 
 decode_expectations = {
     '0': 'hglrwzw',
