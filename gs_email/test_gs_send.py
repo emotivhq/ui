@@ -2,8 +2,7 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
-if 'test_gs_send.py' in __file__.split('/')[-1]:
-    os.chdir('..')
+os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
 import webapp2
@@ -12,7 +11,7 @@ from uuid import uuid4
 from google.appengine.ext import testbed
 
 # UUT
-import gs_email_api
+from gs_email import gs_email_api
 
 
 class SendTestHandlers(unittest.TestCase):

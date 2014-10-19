@@ -2,12 +2,11 @@ __author__ = 'Stuart'
 
 # Change execution path to project root
 import os
-if 'test_gs_abtest.py' in __file__.split('/')[-1]:
-    os.chdir('..')
+os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
 import webapp2
-import abtest_core
+from abtest import abtest_core
 
 example_tests = [{
     "name": "home-steps",

@@ -4,8 +4,7 @@ __author__ = 'stuart'
 
 # Change execution path to project root
 import os
-if 'test_gs_giftstart.py' in __file__.split('/')[-1]:
-    os.chdir('..')
+os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
 import webapp2
@@ -19,12 +18,11 @@ from time import time
 import base64
 from pay import pay_api, pay_core
 from mock import MagicMock
-import giftstart_core
 
 secret = yaml.load(open('secret.yaml'))
 
 # UUT
-from giftstart import giftstart_api
+from giftstart import giftstart_api, giftstart_core
 
 
 # Mock stripe

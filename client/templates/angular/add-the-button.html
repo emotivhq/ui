@@ -1,0 +1,45 @@
+<section id="add-the-button">
+    <h1>Adding the Button</h1>
+    <p>Adding the GiftStart It! button is fun and easy! Here's how you do it for your specific platform:</p>
+    <ul>
+        <li><a href="#shopify">Shopify</a></li>
+        <li><a href="#others">Others</a></li>
+    </ul>
+    <h2 id="shopify">Shopify</h2>
+    <p>To add the button to your Shopify store, you should add the following snippet of HTML to your product details liquid file:</p>
+    <pre>
+    &lt;gs-button id="gsbutton" class="gsbutton"&gt;&lt;/gs-button&gt;
+    &lt;script src="https://www.giftstarter.co/scripts/shopify/button.js"&gt;&lt;/script&gt;
+    </pre>
+    <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
+    <pre>
+    #gsbutton {
+        height: 36px;
+        border-radius: 4px;
+        background-color: white;
+    }
+    </pre>
+    <h2 id="others">Others</h2>
+    <p>To add the button to a site not using a service specified above, you should insert the following snippet next to your "Add to Cart" button:</p>
+    <pre>
+    &lt;gs-button id="gsbutton" class="gsbutton" style="display: none;"&gt;&lt;/gs-button&gt;
+    &lt;script&gt;
+        window.giftStartButton = {
+            productUrl: 'http://example.com/product/12345',
+            title: 'Example title',
+            price: 85.00,
+            imgUrl: 'http://example.com/images/12345.jpg'
+        };
+    &lt;/script&gt;
+    &lt;script src="https://www.giftstarter.co/scripts/button/general.js"&gt;&lt;/script&gt;
+    </pre>
+    <p>You'll need to replace the example product info in the first script tag with your actualy product data.  On most platforms this can be done in the template for your product details page.</p>
+    <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
+    <pre>
+    #gsbutton {
+        height: 36px;
+        border-radius: 4px;
+        background-color: white;
+    }
+    </pre>
+</section>

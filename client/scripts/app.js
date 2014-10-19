@@ -34,6 +34,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/templates/angular/privacy.html', reloadOnSearch: false})
         .when('/what-is-it',
         {templateUrl: '/templates/angular/what-is-it.html'})
+        .when('/add-the-button',
+        {templateUrl: '/templates/angular/add-the-button.html'})
         .otherwise({redirectTo: '/'});
 
     $locationProvider.hashPrefix('!').html5Mode({enabled: true});
