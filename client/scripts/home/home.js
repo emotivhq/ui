@@ -17,18 +17,18 @@ GiftStarterApp.controller('HomeController', [
             }
         }
 
-        $scope.hotCampaigns = {};
+        $scope.topCampaigns = {};
 
         $http({method: 'GET', url: '/giftstart/api/hot-campaigns?num_campaigns=2'})
             .success(function(data) {
                 Analytics.track("client", "hot campaigns load succeeded");
-                $scope.hotCampaigns = data;
+                $scope.topCampaigns = data;
 
                 // Cache images
-                for(var j = 0; j < $scope.hotCampaigns.pitchins.length; j++) {
-                    for (var i = 0; i < $scope.hotCampaigns.pitchins[j].length; i++) {
+                for(var j = 0; j < $scope.topCampaigns.pitchins.length; j++) {
+                    for (var i = 0; i < $scope.topCampaigns.pitchins[j].length; i++) {
                         var image = new Image();
-                        image.src = $scope.hotCampaigns.pitchins[j][i].img;
+                        image.src = $scope.topCampaigns.pitchins[j][i].img;
                     }
                 }
 

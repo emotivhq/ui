@@ -17,6 +17,8 @@ function ngABInterceptor(spec,  ABChoices) {
         return pmods;
     }, {});
 
+    console.log(spec);
+
     function elementReplace(data, change) {
         var container = document.createElement('replace-container');
         container.innerHTML = data;
