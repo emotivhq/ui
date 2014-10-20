@@ -37,7 +37,7 @@
     }
 
     var self = window.giftStartButton;
-    var gs_domain = 'https://www.dev.giftstarter.co';
+    var gs_domain = 'https://www.giftstarter.co';
     var source = 'butterLONDON';
     self.button = document.querySelector('#gsbutton');
 
