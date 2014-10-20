@@ -39,7 +39,7 @@ class BUTTER_FEED_MOCK:
                     u'sku': u'2319-AHTQ',
                     u'thumbnail': u'http://localhost:8080/assets/blogLink.png',
                     u'upc': u'85184702319',
-                    u'url': u'http://www.butterlondon.com/Lacquers/All-Hail-The-Queen-'
+                    u'url': u'http://www.tterlondon.com/Lacquers/All-Hail-The-Queen-'
                             u'Nail-Lacquer.html'
                 },
                 u'4411': {
@@ -58,7 +58,7 @@ class BUTTER_FEED_MOCK:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080',
                     u'upc': u'81732301858',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://wwwutterlondon.com/Gift-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4412': {
@@ -77,7 +77,7 @@ class BUTTER_FEED_MOCK:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080',
                     u'upc': u'17323018588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.butterlondon.c/Gift-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4410': {
@@ -96,7 +96,7 @@ class BUTTER_FEED_MOCK:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080/assets/blogLink.png',
                     u'upc': u'81723018588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.butterlondon.com/G-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4415': {
@@ -115,7 +115,7 @@ class BUTTER_FEED_MOCK:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080/assets/blogLink.png',
                     u'upc': u'8173238588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.butterlond/Gift-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 }
             }
@@ -143,7 +143,7 @@ class BUTTER_FEED_MOCK2:
                     u'thumbnail': u'http://www.butterlondon.com/all_hail_the_queen_new'
                                   u'.jpg',
                     u'upc': u'8518470029',
-                    u'url': u'http://www.butterlondon.com/Lacquers/All-Hail-The-Queen-'
+                    u'url': u'http://www.butterlo/Lacquers/All-Hail-The-Queen-'
                             u'Nail-Lacquer.html'
                 },
                 u'4411': {
@@ -162,7 +162,7 @@ class BUTTER_FEED_MOCK2:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080',
                     u'upc': u'8173018588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.butterlondon.comolour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4412': {
@@ -181,7 +181,7 @@ class BUTTER_FEED_MOCK2:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080',
                     u'upc': u'8173230188',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.buttert-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4410': {
@@ -200,7 +200,7 @@ class BUTTER_FEED_MOCK2:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080/assets/blogLink.png',
                     u'upc': u'8173018588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.bdon.com/Gift-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4415': {
@@ -219,7 +219,7 @@ class BUTTER_FEED_MOCK2:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080/assets/blogLink.png',
                     u'upc': u'7323018588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://wwwt-Sets/Colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 },
                 u'4416': {
@@ -238,7 +238,7 @@ class BUTTER_FEED_MOCK2:
                     u'sku': u'8588-ASTS',
                     u'thumbnail': u'http://localhost:8080/assets/blogLink.png',
                     u'upc': u'813018588',
-                    u'url': u'http://www.butterlondon.com/Gift-Sets/Colour-Hardware-'
+                    u'url': u'http://www.butterlondon.colour-Hardware-'
                             u'Nail-Art-Tool-Kit.html'
                 }
             }
@@ -308,13 +308,13 @@ class FeedsTestHandler(unittest.TestCase):
             req.method = method
             return req.get_response(feeds_api.handler)
 
-        for method in ['PUT', 'DELETE', 'POST', 'OPTIONS', 'HEAD', 'TRACE']:
+        for method in ['PUT', 'DELETE', 'GET', 'OPTIONS', 'HEAD', 'TRACE']:
             resp = do_req(method)
             self.assertEqual(405, resp.status_code,
                              "Expected 405 Method Not Allowed for method "
                              "{method}, got: {resp}".format(resp=str(resp),
                                                             method=method))
-        resp = do_req('GET')
+        resp = do_req('POST')
         self.assertEqual(200, resp.status_code,
                          "Expected 200 for GET, got {resp}".format(resp=resp))
 
@@ -322,7 +322,7 @@ class FeedsTestHandler(unittest.TestCase):
         """ GET'ing /feeds/update should get butter feed
         """
         req = webapp2.Request.blank('/feeds/butterLONDON/update')
-        req.method = 'GET'
+        req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to "
@@ -345,7 +345,7 @@ class FeedsTestHandler(unittest.TestCase):
         requests.get = self.requests_get_mock()
 
         req = webapp2.Request.blank('/feeds/butterLONDON/update')
-        req.method = 'GET'
+        req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to "
@@ -364,7 +364,7 @@ class FeedsTestHandler(unittest.TestCase):
         requests.get = self.requests_get_mock()
 
         req = webapp2.Request.blank('/feeds/butterLONDON/update')
-        req.method = 'GET'
+        req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to "

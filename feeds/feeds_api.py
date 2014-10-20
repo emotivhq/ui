@@ -15,12 +15,13 @@ class CronHandler(webapp2.RequestHandler):
 
     def get(self):
         for name, url in FEEDS.items():
-            taskqueue.add(url='/feeds/{name}/update'.format(name=name))
+            taskqueue.add(url='/feeds/{name}/update'.format(name=name),
+                          method='POST')
 
 
 class FeedsHandler(webapp2.RequestHandler):
 
-    def get(self):
+    def post(self):
         try:
             feed_name = self.request.path.split('/')[2]
             feeds_core.cache(feed_name, FEEDS[feed_name])

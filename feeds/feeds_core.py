@@ -42,7 +42,7 @@ def make_butter_product(bl_product):
     Parses a singular butterLONDON product and produces a FeedProduct
     """
     key = ndb.Key('Partner', 'butterLONDON', 'FeedProduct',
-                  bl_product.get('upc'))
+                  bl_product.get('url'))
     return FeedProduct(
         key=key,
         title=bl_product.get('display-name'),
@@ -52,8 +52,10 @@ def make_butter_product(bl_product):
         retailer='butterLONDON',
         description=bl_product.get('description'),
         thumbnail=bl_product.get('thumbnail'),
-        upc=bl_product.get('upc'),
-        sku=bl_product.get('sku')
+        upc=bl_product.get('upc') if isinstance(bl_product.get('upc'), str)
+            else '',
+        sku=bl_product.get('sku') if isinstance(bl_product.get('sku'), str)
+            else ''
     )
 
 
