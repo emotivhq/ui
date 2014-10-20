@@ -4,6 +4,7 @@ import requests
 from feeds import FeedProduct
 import json
 from google.appengine.ext import ndb
+import logging
 
 
 def cache(partner, url):
@@ -46,7 +47,7 @@ def make_butter_product(bl_product):
     return FeedProduct(
         key=key,
         title=bl_product.get('display-name'),
-        price=int(float(bl_product.get('price'))*100),
+        price=str(int(float(bl_product.get('price'))*100)),
         img=bl_product.get('image'),
         url=bl_product.get('url'),
         retailer='butterLONDON',
@@ -97,13 +98,13 @@ def filter_products(partner, products):
     def valid_product(product):
         valid = True
         if partner == 'butterLONDON':
-            valid &= product.price > 3998
+            valid &= int(product.price) > 3998
         else:
-            valid &= product.price > 4998
+            valid &= int(product.price) > 4998
         for test in validity_tests:
-            valid &= test_valid(test, product)
             if not valid:
                 break
+            valid &= test_valid(test, product)
         return valid
 
     return filter(valid_product, products)

@@ -69,7 +69,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
             scope.loading = false;
             scope.failed = false;
             scope.products = ProductService.products.filter(function(product) {
-                return product.imgUrl != '' && product.price > 4998;
+                return product.imgUrl != '' && product.price > 3998;
             });
             scope.pageNumbers = [];
             scope.numPages = Math.floor(scope.products.length / scope.pageSize);

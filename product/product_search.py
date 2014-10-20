@@ -16,6 +16,7 @@ from datetime import datetime
 from lxml import etree
 from google.appengine.api import search
 import re
+from feeds import FeedProduct
 
 
 def product_search(query):
@@ -30,6 +31,8 @@ def product_search(query):
     products += search_amazon(query)
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
     products += search_prosperent(query)
+    logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
+    products += [prod.dictify() for prod in FeedProduct.query().fetch()]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
     sorted_products = sort_by_relevance(escaped_query, products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())

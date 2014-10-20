@@ -7,7 +7,7 @@ import json
 class FeedProduct(ndb.Model):
     title = ndb.StringProperty(required=True)
     timestamp = ndb.TimeProperty(auto_now_add=True)
-    price = ndb.IntegerProperty(required=True)
+    price = ndb.StringProperty(required=True)
     img = ndb.StringProperty(required=True)
     url = ndb.StringProperty(required=True)
     retailer = ndb.StringProperty(required=True)
