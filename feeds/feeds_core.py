@@ -98,7 +98,10 @@ def filter_products(partner, products):
             valid &= product.price > 3998
         else:
             valid &= product.price > 4998
-        valid &= all([test_valid(test, product) for test in validity_tests])
+        for test in validity_tests:
+            valid &= test_valid(test, product)
+            if not valid:
+                break
         return valid
 
     return filter(valid_product, products)
