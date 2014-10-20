@@ -53,6 +53,21 @@
             "css": "div.top-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} div.top-campaign.wrapper div.description-container {width: 100%;} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.top-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.landing-page gs-top-campaign {width: 100%} div.top-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;}"
         }]
     }]
+}, {
+    "name": "brand-pillow",
+    "cases": [{
+        "name": "old",
+        "weight": 0,
+        "changes": []
+    },{
+        "name": "new-video",
+        "weight": 1,
+        "changes": [{
+            "file": "/scripts/giftstart/create/giftstart-create.html",
+            "find": "'/scripts/giftstart/brand-pillow/brand-pillow.html'",
+            "replace": "'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"
+        }]
+    }]
 }]
 
 
