@@ -58,6 +58,11 @@ handlers:
 - url: /email/.*
   script: gs_email.gs_email_api.handler
 
+# Feeds
+- url: /feeds/.*
+  script: feeds.feeds_api.handler
+  login: admin
+
 # Client static asset urls
 - url: /favicon\.ico
   static_files: client/assets/favicon.ico

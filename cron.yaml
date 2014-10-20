@@ -1,0 +1,4 @@
+cron:
+- description: update feeds
+  url: /feeds/update
+  schedule: every 24 hours
