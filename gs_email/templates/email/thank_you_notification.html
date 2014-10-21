@@ -1,12 +1,18 @@
+<h1 style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; color: #dd4455;">NICE ONE!</h1>
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300;"></p>
+<table style=" margin: 40px 10px;">
+    <tr>
+        {% if thanks_img_url %}<td style=" vertical-align: top;"><img src="{{ thanks_img_url }}" style=" vertical-align: top; margin-right: 8px; width: 80px; border-radius: 50%;"></td>{% endif %}
+        <td>
+            <table>
+                <tr><td style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300;">You received a thank you for your awesome pitch in on the GiftStart "<a href="{{giftstart_link}}" style=" color: #dd4455;">{{giftstart_name}}</a>"!  Go see what they said!</td></tr>
+            </table>
+        </td>
+    </tr>
+</table>
 
-<div>
-    {% if thanks_img_url %}
-    <img src="{{thanks_img_url}}" style=" height: 80px; border-radius: 50%; -moz-border-radius: 50%; -webkit-border-radius: 50%; -ms-border-radius: 50%; display: inline;">
-    {% endif %}
-    <h1 style=" display: inline;">Nice One!</h1>
-    <p>You received a thank you for your awesome pitch in on the "<a href="{{giftstart_link}}" style=" color: #df484b;">{{giftstart_name}}</a>" GiftStart!  Go see what they said!</p>
-    <p><a href="{{giftstart_link}}" style=" color: #df484b;">{{giftstart_link}}</a></p>
+<a style=" color: #dd4455; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;" href="{{ campaign_link }}">{{ campaign_link }}</a>
 
-    <p style=" margin-bottom: 0;">Hugs!</p>
-    <p style=" margin-top: 0;">Team GiftStarter</p>
-</div>
+
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-top: 2em; margin-bottom: 0.5em;">Hugs,</p>
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-top: 0.5em;">Team GiftStarter</p>

@@ -39,14 +39,17 @@ def send_emails(key):
         'giftstart_name': gs.giftstart_title,
         'giftstart_link': config['app_url'] + '/giftstart/' +
                           gs.giftstart_url_title,
+        'frame': 'base_frame',
     }
 
-    if gs.thanks_img_url:
-        email_kwargs['thanks_img_url'] = gs.thanks_img_url
+    if gs.thanks_uid:
+        email_kwargs['thanks_img_url'] = ndb.Key('User', gs.thanks_uid).get()\
+            .cached_profile_image_url
 
     url = config['email_url']
 
-    data = json.dumps({'subject': "You Received a Thank You!",
+    data = json.dumps({'subject': "You Received a Thank You for \"" +
+                                  gs.giftstart_title + "\"!",
                        'mime_type': 'html',
                        'sender': "team@giftstarter.co",
                        'to': [pi.email for pi in pis],
