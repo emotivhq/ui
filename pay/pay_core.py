@@ -96,7 +96,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     }
 
     data = json.dumps({'subject': "Pitch In Received for \"" +
-                                  giftstart.giftstart_url_title + "\"!",
+                                  giftstart.giftstart_title + "\"!",
                        'sender': "team@giftstarter.co", 'to': [email_address],
                        'template_name': "pitch_in_thank_you",
                        'mime_type': 'html',
@@ -116,7 +116,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     }
 
     data = json.dumps({'subject': "Someone Pitched In on \"" +
-                                  giftstart.giftstart_url_title + "\"!",
+                                  giftstart.giftstart_title + "\"!",
                        'sender': "team@giftstarter.co",
                        'to': [giftstart.gc_email],
                        'template_name': "gc_pitchin_notification",

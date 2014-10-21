@@ -122,10 +122,10 @@ def find_campaign(campaign):
 
 class GiftStartJsonHandler(webapp2.RequestHandler):
     def get(self):
-        print(self.request.path)
         url_title = self.request.path[11:-5]
-        gs = ndb.Key('GiftStart', url_title).get()
-        self.response.write(gs.jsonify())
+        if url_title != 'undefined':
+            gs = ndb.Key('GiftStart', url_title).get()
+            self.response.write(gs.jsonify())
 
 
 handler = webapp2.WSGIApplication([('/giftstart/.*.json', GiftStartJsonHandler)],debug=True)

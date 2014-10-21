@@ -41,6 +41,12 @@ EMAIL_TEMPLATES = {
         "gc_pitchin_notification.html"),
     "base_frame": JINJA_ENVIRONMENT.get_template(
         "base_frame.html"),
+    "campaign_ending_1_day_giver": JINJA_ENVIRONMENT.get_template(
+        "campaign_ending_1_day_giver.html"),
+    "campaign_ending_1_day_user": JINJA_ENVIRONMENT.get_template(
+        "campaign_ending_1_day_user.html"),
+    "campaign_complete_user_zero_funding": JINJA_ENVIRONMENT.get_template(
+        "campaign_complete_user_zero_funding.html")
 }
 
 

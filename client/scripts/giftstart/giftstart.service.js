@@ -425,7 +425,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         var path = $location.path();
         if (path.split('/').length > 1) {
             var urlTitle = path.split('/')[2];
-            self.fetchGiftStart(urlTitle);
+            if (urlTitle != undefined) {
+                self.fetchGiftStart(urlTitle);
+            }
         }
     });
 

@@ -25,7 +25,8 @@ def send_create_notification(giftstart):
     }
     requests.put(config['email_url'],
                  data=json.dumps({
-                     'subject': "GiftStarter Campaign Created!",
+                     'subject': "GiftStarter Campaign \"" +
+                                giftstart.giftstart_title + "\" Created!",
                      'sender': "team@giftstarter.co",
                      'mime_type': 'html',
                      'to': [team_notification_email],
@@ -41,7 +42,8 @@ def send_create_notification(giftstart):
     }
     requests.put(config['email_url'],
                  data=json.dumps({
-                     'subject': "GiftStarter Campaign Created!",
+                     'subject': "GiftStarter Campaign \"" +
+                                giftstart.giftstart_title + "\" Created!",
                      'sender': "team@giftstarter.co",
                      'to': [giftstart.gc_email],
                      'mime_type': 'html',
@@ -54,32 +56,44 @@ def send_day_left_warning(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     if not giftstart.giftstart_complete:
-        subject = "GiftStarter Campaign Ending Soon!"
-        gc_template = "Oh noes!  Your campaign only has one day left!  Go " \
-                      "back and spread the word to drive it to completion!  " \
-                      "Here's the link to it!\n\n" + config['app_url'] + \
-                      "/giftstart/{title_url}\n\nThanks!\nTeam GiftStarter"
-        contributor_template = "Oh noes!  The GiftStarter campaign you gave" \
-                               " to only has one day left!  Go back and " \
-                               "spread the word to drive it to completion!  " \
-                               "Here's the link to it!\n\n" + \
-                               config['app_url'] + "/giftstart/{title_url}" \
-                               "\n\nThanks!\nTeam GiftStarter"
-        gc_message = gc_template.format(gsid=gsid)
-        contributor_message = contributor_template.format(gsid=gsid)
+        # Notify giftstarter
+        email_kwargs = {
+            'campaign_link': config['app_url'] + '/giftstart/' +
+                             giftstart.giftstart_url_title,
+            'campaign_name': giftstart.giftstart_title,
+            'frame': 'base_frame',
+        }
         requests.put(config['email_url'],
                      data=json.dumps({
-                         'to': [giftstart.gc_email], 'sender': 'team@giftstarter.co', 'body': gc_message,
-                         'subject': subject
+                         'subject': "GiftStart \"" + giftstart.giftstart_title
+                                    + "\" Ending Soon!",
+                         'template_name':
+                             "campaign_ending_1_day_user",
+                         'template_kwargs': email_kwargs,
+                         'sender': "team@giftstarter.co",
+                         'mime_type': 'html',
+                         'to': [giftstart.gc_email],
                      }))
 
-        email_set = set(map(lambda pi: pi.email, pitch_ins))
-        for email in email_set:
-            requests.put(config['email_url'],
-                         data=json.dumps({
-                             'to': [email], 'sender': 'team@giftstarter.co', 'body': contributor_message,
-                             'subject': subject
-                         }))
+        # Notify all givers
+        emails = list(set(map(lambda pi: pi.email, pitch_ins)))
+        email_kwargs = {
+            'campaign_link': config['app_url'] + '/giftstart/' +
+                             giftstart.giftstart_url_title,
+            'campaign_name': giftstart.giftstart_title,
+            'frame': 'base_frame',
+        }
+        requests.put(config['email_url'],
+                     data=json.dumps({
+                         'subject': "GiftStart \"" + giftstart.giftstart_title
+                                    + "\" Ending Soon!",
+                         'template_name':
+                             "campaign_ending_1_day_giver",
+                         'template_kwargs': email_kwargs,
+                         'sender': "team@giftstarter.co",
+                         'mime_type': 'html',
+                         'to': emails,
+                     }))
 
 
 def check_if_complete(gsid):
@@ -155,8 +169,11 @@ def check_if_complete(gsid):
                 }
                 requests.put(config['email_url'],
                              data=json.dumps({
-                                 'subject': "GiftStart Complete!",
-                                 'template_name': "campaign_complete_user_not_funded",
+                                 'subject': "GiftStart \"" +
+                                            giftstart.giftstart_title +
+                                            "\" Complete!",
+                                 'template_name':
+                                     "campaign_complete_user_not_funded",
                                  'template_kwargs': email_kwargs,
                                  'sender': "team@giftstarter.co",
                                  'mime_type': 'html',
@@ -173,8 +190,11 @@ def check_if_complete(gsid):
                 }
                 requests.put(config['email_url'],
                              data=json.dumps({
-                                 'subject': "GiftStart Complete!",
-                                 'template_name': "campaign_complete_team_not_funded",
+                                 'subject': "GiftStart \"" +
+                                            giftstart.giftstart_title +
+                                            "\" Complete!",
+                                 'template_name':
+                                     "campaign_complete_team_not_funded",
                                  'template_kwargs': email_kwargs,
                                  'sender': "team@giftstarter.co",
                                  'mime_type': 'html',
@@ -183,19 +203,22 @@ def check_if_complete(gsid):
 
             else:
                 # Send email of regret to gift champion
+                email_kwargs = {
+                    'campaign_link': config['app_url'] + '/giftstart/' +
+                                     giftstart.giftstart_url_title,
+                    'frame': 'base_frame',
+                }
                 requests.put(config['email_url'],
                              data=json.dumps({
-                                 'subject': "GiftStart Has Ended", 'sender': "team@giftstarter.co",
-                                 'to': [giftstart.gc_email], 'body': "Bummer! Looks like your GiftStart didn't get any love.  That's okay, we know it was it's own special snowflake.  We hope you try it again, and please feel free to get in touch with us at team@giftstarter.co for tips on getting people involved in your next GiftStart!\n\nHere's a link to yours:\n" + config['app_url'] + "/giftstart/" + giftstart.giftstart_url_title + "\n\nHugs,\nTeam Giftstarter"
-                             }))
-
-                # And email GiftStarter personnel...
-                requests.put(config['email_url'],
-                             data=json.dumps({
-                                 'subject': "GiftStart Has Ended", 'sender': "team@giftstarter.co",
-                                 'to': [team_notification_email],
-                                 'body': "GiftStart #" + str(gsid) +
-                                         " failed to get any pitch ins, and has ended.  Bummer!"
+                                 'subject': 'GiftStart "' +
+                                            giftstart.giftstart_title +
+                                            '" has ended',
+                                 'template_name':
+                                     'campaign_complete_user_zero_funding',
+                                 'template_kwargs': email_kwargs,
+                                 'mime_type': 'html',
+                                 'sender': 'team@giftstarter.co',
+                                 'to': [giftstart.gc_email],
                              }))
 
 
@@ -233,6 +256,7 @@ def congratulate_givers(gsid, funded):
                                     + "\" Complete!",
                          'mime_type': 'html',
                          'template_name': "campaign_complete_giver_not_funded",
-                         'template_kwargs': email_kwargs, 'sender': "team@giftstarter.co",
+                         'template_kwargs': email_kwargs,
+                         'sender': "team@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))
