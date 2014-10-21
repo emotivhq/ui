@@ -3,9 +3,9 @@ __author__ = 'stuart'
 import webapp2
 import requests
 import yaml
-import uuid
 import json
 from giftstart import GiftStart
+from gs_user import User
 
 config = yaml.load(open('config.yaml'))
 
@@ -20,12 +20,18 @@ class EmailShareHandler(webapp2.RequestHandler):
         gsid = json_body['gsid']
         sender_name = json_body['sender_name']
         share_url = json_body['share_url']
-        email_share(to, sender, message, gsid, sender_name, share_url)
+        sender_uid = json_body.get('sender_uid')
+        email_share(to, sender, message, gsid, sender_name, share_url,
+                    sender_uid)
 
 
-def email_share(to, sender, message, gsid, sender_name, share_url):
+def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
     gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    requests.put("https://www.giftstarter.co/email/send.json",
+    if sender_uid:
+        sender_img = User.query(User.uid == sender_uid).fetch()[0].cached_profile_image_url
+    else:
+        sender_img = None
+    requests.put(config['email_url'],
                  data=json.dumps({
                      'subject': "Check Out This Awesome GiftStart!",
                      'sender': sender, 'to': to,
@@ -36,10 +42,12 @@ def email_share(to, sender, message, gsid, sender_name, share_url):
                          'message': message,
                          'sender_name': sender_name,
                          'sender_email': sender,
+                         'sender_img': sender_img,
                          'gs_title': gs.giftstart_title,
                          'gs_image': gs.product_img_url,
                          'gs_description': gs.giftstart_description,
-                         'gs_link': share_url
+                         'gs_link': share_url,
+                         'frame': 'base_frame',
                      }
                  }))
 
