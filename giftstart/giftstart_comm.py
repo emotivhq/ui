@@ -15,28 +15,36 @@ team_notification_email = config['team_notification_email']
 
 
 def send_create_notification(giftstart):
-    email_kwargs = {'campaign_link': config['app_url'] +
-                                     '/giftstart/' +
-                                     giftstart.giftstart_url_title,
-                    'campaign_number': str(giftstart.gsid),
-                    'gc_email': giftstart.gc_email}
+    email_kwargs = {
+        'campaign_link': config['app_url'] +
+                         '/giftstart/' +
+                         giftstart.giftstart_url_title,
+        'campaign_number': str(giftstart.gsid),
+        'gc_email': giftstart.gc_email,
+        'frame': 'base_frame',
+    }
     requests.put(config['email_url'],
                  data=json.dumps({
                      'subject': "GiftStarter Campaign Created!",
                      'sender': "team@giftstarter.co",
+                     'mime_type': 'html',
                      'to': [team_notification_email],
                      'template_name': "campaign_create_team",
                      'template_kwargs': email_kwargs
                  }))
 
-    email_kwargs = {'campaign_link': config['app_url'] + '/giftstart/' +
-                                     giftstart.giftstart_url_title,
-                    'campaign_name': giftstart.giftstart_title}
+    email_kwargs = {
+        'campaign_link': config['app_url'] + '/giftstart/' +
+                         giftstart.giftstart_url_title,
+        'campaign_name': giftstart.giftstart_title,
+        'frame': 'base_frame',
+    }
     requests.put(config['email_url'],
                  data=json.dumps({
                      'subject': "GiftStarter Campaign Created!",
                      'sender': "team@giftstarter.co",
                      'to': [giftstart.gc_email],
+                     'mime_type': 'html',
                      'template_name': "campaign_create_user",
                      'template_kwargs': email_kwargs
                  }))
