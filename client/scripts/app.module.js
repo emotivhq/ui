@@ -132,8 +132,6 @@ GiftStarterApp.service('AppStateService', [
                 )
             };
             this.giftstartReferralData = $location.search();
-            $location.search('title', null);
-            $location.search('product_url', null);
         }
     }
 ]);
