@@ -4,10 +4,12 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource', GiftStartService]);
+    'Analytics','AppStateService','$resource','LocalStorage',
+    GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
-         PopoverService,  $window,  Analytics,  AppStateService, $resource) {
+                          PopoverService,  $window,  Analytics,
+                          AppStateService, $resource, LocalStorage) {
 
     var GiftStart = $resource('/giftstart/:key.json');
 
@@ -328,7 +330,8 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (self.giftStart.totalSelection > 0) {
             Analytics.track('pitchin', 'pitchin button clicked');
             PopoverService.contributeLogin = true;
-            AppStateService.contributeLogin(true);
+            LocalStorage.set('/GiftStartService/contributeLogin', true);
+//            AppStateService.contributeLogin(true);
             PopoverService.nextPopover();
         } else {console.log("Nothing selected!")}
     };
@@ -336,10 +339,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     function restartPitchin() {
         if (AppStateService.state) {
             if (AppStateService.state.popover) {
-                if (AppStateService.state.contributing) {
+                if (LocalStorage.get('/GiftStartService/contributeLogin')) {
                     self.pitchIn();
                     AppStateService.state.popover = null;
-                    AppStateService.state.contributing = false;
+                    LocalStorage.set('/GiftStartService/contributeLogin',
+                        true);
                 }
             }
         }

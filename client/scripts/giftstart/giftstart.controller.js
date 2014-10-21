@@ -9,7 +9,7 @@ GiftStarterApp.controller('GiftStartController', [
 
 function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         UserService,  $window, AppStateService) {
+         UserService,  $window) {
 
     Analytics.track('campaign', 'controller created');
 
