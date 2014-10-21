@@ -84,23 +84,46 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': gsid}), countdown=30)
 
+    # Send receipt
     email_kwargs = {
         'campaign_name': giftstart.giftstart_title,
         'campaign_link': config['app_url'] + '/giftstart/' +
                          giftstart.giftstart_url_title,
         'pitchin_charge': '$' + str(total_charge/100.0),
         'pitchin_id': charge['id'],
-        'pitchin_last_four': stripe_response['card']['last4']
+        'pitchin_last_four': stripe_response['card']['last4'],
+        'frame': 'base_frame',
     }
 
-    url = config['email_url']
-
-    data = json.dumps({'subject': "Pitch In Received!",
+    data = json.dumps({'subject': "Pitch In Received for \"" +
+                                  giftstart.giftstart_url_title + "\"!",
                        'sender': "team@giftstarter.co", 'to': [email_address],
                        'template_name': "pitch_in_thank_you",
+                       'mime_type': 'html',
                        'template_kwargs': email_kwargs})
 
-    requests.put(url, data=data)
+    requests.put(config['email_url'], data=data)
+
+    # Notify giftstarter
+    email_kwargs = {
+        'campaign_name': giftstart.giftstart_title,
+        'campaign_link': config['app_url'] + '/giftstart/' +
+                         giftstart.giftstart_url_title,
+        'note': note,
+        'user_name': user.name if user.name else '',
+        'user_img': usr_img,
+        'frame': 'base_frame',
+    }
+
+    data = json.dumps({'subject': "Someone Pitched In on \"" +
+                                  giftstart.giftstart_url_title + "\"!",
+                       'sender': "team@giftstarter.co",
+                       'to': [giftstart.gc_email],
+                       'template_name': "gc_pitchin_notification",
+                       'mime_type': 'html',
+                       'template_kwargs': email_kwargs})
+
+    requests.put(config['email_url'], data=data)
 
     return {'result': 'success', 'purchased-parts': parts}
 

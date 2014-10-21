@@ -9,10 +9,7 @@
             <table style=" border-radius: 8px; background-color: #ffffff; width: 460px; margin: 10px 30px; padding: 30px;">
                 <tr>
                     <td>
-                        <!--{{ body }}-->
-                        <h1 style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; color: #dd4455;">NICE ONE!</h1>
-                        <p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">One of your friends was awesome enough to send their thanks!  Come check it out here!</p>
-                        <a style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;" href="">https://www.giftstarter.co/giftstart/what-an-awesome-campaign</a>
+                        {{ body | safe }}
                     </td>
                 </tr>
             </table>
