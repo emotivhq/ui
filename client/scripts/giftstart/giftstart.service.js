@@ -331,21 +331,13 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             Analytics.track('pitchin', 'pitchin button clicked');
             PopoverService.contributeLogin = true;
             LocalStorage.set('/GiftStartService/contributeLogin', true);
-//            AppStateService.contributeLogin(true);
             PopoverService.nextPopover();
         } else {console.log("Nothing selected!")}
     };
 
     function restartPitchin() {
-        if (AppStateService.state) {
-            if (AppStateService.state.popover) {
-                if (LocalStorage.get('/GiftStartService/contributeLogin')) {
-                    self.pitchIn();
-                    AppStateService.state.popover = null;
-                    LocalStorage.set('/GiftStartService/contributeLogin',
-                        true);
-                }
-            }
+        if (LocalStorage.get('/GiftStartService/contributeLogin')) {
+            self.pitchIn();
         }
     }
     $rootScope.$on('login-success', restartPitchin);

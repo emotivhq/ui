@@ -23,6 +23,8 @@ GiftStarterApp.service('AppStateService', [
             return url;
         };
 
+        this.path = '/';
+
         // Returns encoded app state for persisting across OAuth transitions
         this.base64State = function() {
             var state = {};
@@ -37,23 +39,13 @@ GiftStarterApp.service('AppStateService', [
             if (self.thanks) {state.thanks = self.thanks}
             if (self.createSession != null) {state.createSession = self.createSession}
 
+            state.path = self.path;
+
             return btoa(JSON.stringify(state));
         };
 
         this.overlayState = function(selectedParts) {
             self.selectedParts = selectedParts;
-        };
-
-        this.popoverState = function(popoverName) {
-            self.popover = popoverName;
-        };
-
-        this.contributeLogin = function(bool) {
-            self.contributing = bool;
-        };
-
-        this.giftstartCreateState = function(createSession) {
-            self.createSession = createSession;
         };
 
         this.thanksState = function(thanksData) {
@@ -71,6 +63,9 @@ GiftStarterApp.service('AppStateService', [
             $location.search('state', null);
             if (this.state.title_url) {
                 $location.path('/giftstart/' + this.state.title_url);
+            }
+            if (this.state.path) {
+                $location.path(this.state.path);
             }
         }
 

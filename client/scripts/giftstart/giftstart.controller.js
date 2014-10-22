@@ -5,12 +5,12 @@
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$timeout',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'UserService','$window', 'PopoverService',
+            'UserService','$window', 'PopoverService','LocalStorage',
     GiftStartController]);
 
 function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         UserService,  $window, PopoverService) {
+         UserService,  $window, PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -204,19 +204,22 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     };
 
     $scope.updateCampaign = function() {
-        GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage, $scope.newGcName);
+        GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription,
+            $scope.newImage, $scope.newGcName);
         $scope.editMode = false;
     };
 
     if (GiftStartService.giftStart.gsid != undefined) {
-        $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+        $scope.secondsLeft = GiftStartService.giftStart.deadline -
+            (new Date()).getTime()/1000;
         $timeout($scope.updateSecondsLeft, 0);
     }
 
     // Update this giftstart when the service updates it
     $scope.$on('giftstart-loaded', function() {
         $scope.giftStart = GiftStartService.giftStart;
-        $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime()/1000;
+        $scope.secondsLeft = GiftStartService.giftStart.deadline -
+            (new Date()).getTime()/1000;
         $timeout($scope.updateSecondsLeft, 0);
     });
     $scope.$on('giftstart-updated', function() {

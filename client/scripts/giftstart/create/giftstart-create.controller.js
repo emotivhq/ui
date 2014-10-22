@@ -186,6 +186,7 @@ GiftStarterApp.controller('GiftStartCreateController',
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
                     LocalStorage.remove('/GiftStartCreateController/session');
+                    LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
                 } else {
                     PopoverService.giftstartCreateLogin = true;
@@ -230,14 +231,17 @@ GiftStarterApp.controller('GiftStartCreateController',
         }  else if (referral) {
             restoreFromReferral(referral);
         }
-
+        LocalStorage.remove('/GiftStartCreateController/session');
+        LocalStorage.remove('/GiftStartCreateController/referral');
 
         function extractReferral() {
+            console.log($location.search());
             if ($location.search().product_url &&
                 $location.search().title &&
                 $location.search().price &&
                 $location.search().img_url &&
                 $location.search().source) {
+                console.log($location.search());
                 LocalStorage.set('/GiftStartCreateController/referral', {
                     product_url: $location.search().product_url,
                     productTitle: $location.search().title,
@@ -245,6 +249,11 @@ GiftStarterApp.controller('GiftStartCreateController',
                     productImgUrl: $location.search().img_url,
                     source: $location.search().source
                 });
+                $location.search('product_url', null);
+                $location.search('title', null);
+                $location.search('price', null);
+                $location.search('img_url', null);
+                $location.search('source', null);
             }
         }
 
@@ -269,7 +278,6 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.gcEmail = session.gcEmail;
 
             $scope.$on('login-success', $scope.next);
-
         }
 
         function restoreFromReferral(referral) {
@@ -298,13 +306,13 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.priceChanged();
 
         // Scroll to the top of the form on controller creation
-        $timeout(function() {
-            if (referral) {
-                document.querySelector('#header-logo').scrollIntoView();
-            } else {
-                var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
-                root.querySelector('.block.image').scrollIntoView();
-            }
-        }, 250);
+//        $timeout(function() {
+//            if (referral) {
+//                document.querySelector('#header-logo').scrollIntoView();
+//            } else {
+//                var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
+//                root.querySelector('.block.image').scrollIntoView();
+//            }
+//        }, 250);
     }
 ]);

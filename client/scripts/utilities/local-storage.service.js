@@ -22,7 +22,7 @@ function LocalStorage($window) {
         var item = $window.localStorage.getItem(key);
         try {
             item = JSON.parse(item);
-        } finally {}
+        } catch (e) {}
         return item;
     }
 

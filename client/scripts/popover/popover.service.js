@@ -14,7 +14,8 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
 
     this.setPopover = function(popoverName) {
         LocalStorage.set('/PopoverService/current', popoverName);
-        if (popoverName === '') {
+        console.log('setting popover', popoverName);
+        if (popoverName === '' || popoverName === null) {
             this.hidePopover();
         } else {
             self.template = '<gs-' + popoverName + '-popover></gs-' + popoverName + '-popover>';
@@ -35,8 +36,9 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
 
     this.hidePopover = function() {
         $timeout(function() {
+            LocalStorage.remove('/PopoverService/current');
             self.contributeLogin = false;
-            LocalStorage.set('/PopoverService/contributeLogin', false);
+            LocalStorage.set('/GiftStartService/contributeLogin', false);
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
         });
