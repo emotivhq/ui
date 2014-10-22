@@ -48,6 +48,7 @@ GiftStarterApp.controller('GiftStartCreateController',
         if (ProductService.product.product_url == "") {
             if (!LocalStorage.get('/GiftStartCreateController/referral') &&
                 !LocalStorage.get('/GiftStartCreateController/session')) {
+                // TODO: false positive here when forwarded from butter button... what's going on?
 //                $location.path("");
             }
 //            if (AppStateService.state) {
