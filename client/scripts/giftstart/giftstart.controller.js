@@ -5,11 +5,12 @@
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$timeout',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'UserService','$window','AppStateService', GiftStartController]);
+            'UserService','$window', 'PopoverService',
+    GiftStartController]);
 
 function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         UserService,  $window) {
+         UserService,  $window, PopoverService) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -141,7 +142,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     $scope.emailShare = function() {
         Analytics.track('campaign', 'email share from campaign');
         if (device.desktop()) {
-            $location.hash("email-share");
+            PopoverService.setPopover('email-share');
         } else {
             $window.location.href = "mailto:?subject=" + $scope.mailSubject +
                 "&body=" + $scope.mailBody();

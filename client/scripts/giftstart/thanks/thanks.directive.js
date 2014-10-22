@@ -7,9 +7,9 @@ GiftStarterApp.directive('gsThanks', gsThanks);
 function gsThanks() {
 
     controller.$inject = ['$scope', 'UserService', '$location',
-        'GiftStartService', 'Analytics'];
+        'GiftStartService', 'Analytics', 'PopoverService'];
     function controller($scope, UserService, $location, GiftStartService,
-                        Analytics) {
+                        Analytics, PopoverService) {
         var thanks = this;
 
         thanks.message = GiftStartService.giftStart.thanks_message;
@@ -37,7 +37,7 @@ function gsThanks() {
 
         function showLogin() {
             cacheNewMessage();
-            $location.hash('login');
+            PopoverService.setPopover('login');
         }
 
         function giftstartChanged() {

@@ -11,8 +11,8 @@ console.log("ver54");
 
 
 GiftStarterApp.service('AppStateService', [
-            '$location','$window',
-    function($location,  $window) {
+            '$location','$window','PopoverService',
+    function($location,  $window,  PopoverService) {
 
         var self = this;
 
@@ -32,7 +32,7 @@ GiftStarterApp.service('AppStateService', [
             if (self.contributing != null) {state.contributing = self.contributing}
             if (self.popover) {
                 state.popover = self.popover;
-                $location.hash(self.popover);
+                PopoverService.setPopover(self.popover);
             }
             if (self.thanks) {state.thanks = self.thanks}
             if (self.createSession != null) {state.createSession = self.createSession}
@@ -111,6 +111,7 @@ GiftStarterApp.service('AppStateService', [
                 }
                 return b;
             })($location.hash().split('&'));
+            $location.hash('');
         }
 
         // Delete tracking url as soon as it is seen

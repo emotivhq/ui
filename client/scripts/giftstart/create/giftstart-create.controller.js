@@ -189,7 +189,7 @@ GiftStarterApp.controller('GiftStartCreateController',
                     GiftStartService.createGiftStart();
                 } else {
                     PopoverService.giftstartCreateLogin = true;
-                    $location.hash("login");
+                    PopoverService.setPopover('login');
                 }
             }
         };

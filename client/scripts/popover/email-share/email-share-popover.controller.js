@@ -24,7 +24,6 @@ function EmailSharePopoverController ($scope,  PopoverService,  $http,  UserServ
 
     $scope.submit = function() {
         var emails = $scope.toEmails.replace(/[ \n]/g, "").split(/[,;]/);
-        window.emails = emails;
         $scope.formValid = emails.map(function(s){return email.test(s)})
             .every(function(b){return b}) && email.test($scope.fromEmail);
 
