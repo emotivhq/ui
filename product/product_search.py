@@ -187,7 +187,11 @@ def put_search_products(products):
     index = search.Index(name='product-search-0')
     docs = [make_doc(prod, str(i)) for i, prod in enumerate(products)]
     ids = [str(i) for i in range(len(docs))]
-    index.put(docs)
+    k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
+    doc_sets = [docs[k*i:k*(i+1)] for i in range(len(docs)/k+1)]
+    for doc_set in doc_sets:
+        if len(doc_set) > 0:
+            index.put(doc_set)
     return index, ids
 
 
@@ -195,7 +199,11 @@ def cleanup_search(index, ids):
     """ cleanup_search([Id...]) -> None
     Removes all the added documents from the search index after completion
     """
-    index.delete(ids)
+    k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
+    id_sets = [ids[k*i:k*(i+1)] for i in range(len(ids)/k+1)]
+    for id_set in id_sets:
+        if len(id_set) > 0:
+            index.delete(id_set)
 
 
 def search_products(index, keywords):

@@ -17,7 +17,7 @@ function gsOverlay($compile, GiftStartService, Analytics) {
             var marginWidth = imageWidth/GiftStartService.giftStart.columns/20;
             var margin = (marginHeight > marginWidth) ? marginWidth : marginHeight;
             var height = Math.floor(imageHeight/GiftStartService.giftStart.rows - 2*margin);
-            var width = Math.floor(imageWidth/GiftStartService.giftStart.columns - 2*margin);
+            var width = Math.floor(imageWidth/GiftStartService.giftStart.columns - 2*margin - 1);
             scope.$on('hide-overlay', function() {overlayElement.css('opacity', '0');});
             scope.$on('show-overlay', function() {overlayElement.css('opacity', '1');});
             // Calculate max widths for bought part user images

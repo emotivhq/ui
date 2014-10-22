@@ -37,6 +37,16 @@ EMAIL_TEMPLATES = {
         "campaign_share_email.html"),
     'thank_you_notification': JINJA_ENVIRONMENT.get_template(
         "thank_you_notification.html"),
+    "gc_pitchin_notification": JINJA_ENVIRONMENT.get_template(
+        "gc_pitchin_notification.html"),
+    "base_frame": JINJA_ENVIRONMENT.get_template(
+        "base_frame.html"),
+    "campaign_ending_1_day_giver": JINJA_ENVIRONMENT.get_template(
+        "campaign_ending_1_day_giver.html"),
+    "campaign_ending_1_day_user": JINJA_ENVIRONMENT.get_template(
+        "campaign_ending_1_day_user.html"),
+    "campaign_complete_user_zero_funding": JINJA_ENVIRONMENT.get_template(
+        "campaign_complete_user_zero_funding.html")
 }
 
 
@@ -105,5 +115,14 @@ def send_from_template(subject, template_name, template_kwargs, sender, to,
         raise Exception(e)
 
     message_text = EMAIL_TEMPLATES[template_name].render(template_kwargs)
+
+    if 'frame' in template_kwargs.keys():
+        try:
+            print("\n\ntrying to frame email...\n\n")
+            frame_template = EMAIL_TEMPLATES[template_kwargs['frame']]
+            message_text = frame_template.render({'body': message_text})
+        except:
+            pass
+
     send(subject, message_text, sender, to, cc=cc, bcc=bcc,
          mime_type=mime_type, img_url=img_url)

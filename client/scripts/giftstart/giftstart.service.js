@@ -4,10 +4,12 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource', GiftStartService]);
+    'Analytics','AppStateService','$resource','LocalStorage',
+    GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
-         PopoverService,  $window,  Analytics,  AppStateService, $resource) {
+                          PopoverService,  $window,  Analytics,
+                          AppStateService, $resource, LocalStorage) {
 
     var GiftStart = $resource('/giftstart/:key.json');
 
@@ -328,20 +330,14 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (self.giftStart.totalSelection > 0) {
             Analytics.track('pitchin', 'pitchin button clicked');
             PopoverService.contributeLogin = true;
-            AppStateService.contributeLogin(true);
+            LocalStorage.set('/GiftStartService/contributeLogin', true);
             PopoverService.nextPopover();
         } else {console.log("Nothing selected!")}
     };
 
     function restartPitchin() {
-        if (AppStateService.state) {
-            if (AppStateService.state.popover) {
-                if (AppStateService.state.contributing) {
-                    self.pitchIn();
-                    AppStateService.state.popover = null;
-                    AppStateService.state.contributing = false;
-                }
-            }
+        if (LocalStorage.get('/GiftStartService/contributeLogin')) {
+            self.pitchIn();
         }
     }
     $rootScope.$on('login-success', restartPitchin);
@@ -421,11 +417,14 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     // Sync pitchins on route change (navigation, back, etc.)
     $rootScope.$on('$routeChangeSuccess', function() {
+        AppStateService.setPath($location.path());
         self.pitchInsInitialized = false;
         var path = $location.path();
         if (path.split('/').length > 1) {
             var urlTitle = path.split('/')[2];
-            self.fetchGiftStart(urlTitle);
+            if (urlTitle != undefined) {
+                self.fetchGiftStart(urlTitle);
+            }
         }
     });
 

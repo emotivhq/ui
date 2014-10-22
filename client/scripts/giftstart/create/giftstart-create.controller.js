@@ -2,11 +2,14 @@
  * Created by stuart on 5/5/14.
  */
 
-GiftStarterApp.controller('GiftStartCreateCampaignController', [
-            '$scope','GiftStartService','$location','ProductService','UserService','PopoverService','$http','$timeout',
-            'Analytics','AppStateService',
-    function($scope,  GiftStartService,  $location,  ProductService,  UserService,  PopoverService,  $http,  $timeout,
-             Analytics,  AppStateService) {
+GiftStarterApp.controller('GiftStartCreateController',
+    ['$scope','GiftStartService','$location','ProductService',
+        'UserService','PopoverService','$http','$timeout',
+        'Analytics','AppStateService','LocalStorage',
+
+    function($scope,  GiftStartService,  $location,  ProductService,
+             UserService,  PopoverService,  $http,  $timeout, Analytics,
+             AppStateService, LocalStorage) {
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
@@ -43,12 +46,16 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.fromReferral = false;
 
         if (ProductService.product.product_url == "") {
-            if (AppStateService.state) {
-                if (!AppStateService.state.createSession) {
-                    // User navigated directly here, direct them to home page
-                    $location.path("");
-                }
+            if (!LocalStorage.get('/GiftStartCreateController/referral') &&
+                !LocalStorage.get('/GiftStartCreateController/session')) {
+                $location.path("");
             }
+//            if (AppStateService.state) {
+//                if (!AppStateService.state.createSession) {
+//                    // User navigated directly here, direct them to home page
+//                    $location.path("");
+//                }
+//            }
         }
 
         $scope.shippingChanged = function() {
@@ -96,7 +103,8 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $scope.salesTax = $scope.salesTaxRate * $scope.inputPrice * 100;
             $scope.serviceFee = 0.08 * $scope.inputPrice * 100;
             $scope.shipping = 0.045 * $scope.inputPrice * 100;
-            $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax + $scope.serviceFee + $scope.shipping;
+            $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax +
+                $scope.serviceFee + $scope.shipping;
             $scope.updateOverlay();
         };
 
@@ -149,7 +157,7 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            AppStateService.giftstartCreateState({
+            LocalStorage.set('/GiftStartCreateController/session', {
                 title: $scope.title,
                 description: $scope.description,
                 productUrl: ProductService.product.product_url,
@@ -175,13 +183,14 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
 
                 if (UserService.loggedIn) {
-                    scrollTo(0, 0);
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
+                    LocalStorage.remove('/GiftStartCreateController/session');
+                    LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
                 } else {
                     PopoverService.giftstartCreateLogin = true;
-                    $location.hash("login");
+                    PopoverService.setPopover('login');
                 }
             }
         };
@@ -196,7 +205,8 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
             $scope.descriptionLongEnough = longEnough;
         };
 
-        // So that users that were browsing another giftstart don't experience the "no overlay initially" bug
+        // So that users that were browsing another giftstart don't experience
+        // the "no overlay initially" bug
         if (!GiftStartService.title) {
             GiftStartService.giftStart.gsid = 0;
             GiftStartService.giftStart = GiftStartService.buildGiftStart();
@@ -212,44 +222,82 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
 
         $scope.selectedXYSet = calculateInitialNumParts();
 
-        if ((AppStateService.state || {}).createSession) {
-            $scope.title = AppStateService.state.createSession.title;
-            $scope.description = AppStateService.state.createSession.description;
-            ProductService.product.product_url = AppStateService.state.createSession.productUrl;
-            ProductService.product.title = AppStateService.state.createSession.productTitle;
-            ProductService.logo = AppStateService.state.createSession.retailerLogo;
-            $scope.selectedImg = AppStateService.state.createSession.productImgUrl;
-            $scope.selectedXYSet = AppStateService.state.createSession.selectedXYSet;
-            $scope.y = AppStateService.state.createSession.rows;
-            $scope.x = AppStateService.state.createSession.columns;
-            $scope.inputPrice = AppStateService.state.createSession.productPrice/100;
-            $scope.shippingZip = AppStateService.state.createSession.shippingZip;
-            $scope.shippingState = AppStateService.state.createSession.shippingState;
-            $scope.salesTax = AppStateService.state.createSession.salesTax;
-            $scope.shipping = AppStateService.state.createSession.shipping;
-            $scope.serviceFee = AppStateService.state.createSession.serviceFee;
-            $scope.totalPrice = AppStateService.state.createSession.totalPrice;
-            $scope.specialNotes = AppStateService.state.createSession.specialNotes;
-            $scope.gcEmail = AppStateService.state.createSession.gcEmail;
+        extractReferral();
+
+        var session = LocalStorage.get('/GiftStartCreateController/session');
+        var referral = LocalStorage.get('/GiftStartCreateController/referral');
+        if (session) {
+            restoreFromSession(session);
+        }  else if (referral) {
+            restoreFromReferral(referral);
+        }
+        LocalStorage.remove('/GiftStartCreateController/session');
+        LocalStorage.remove('/GiftStartCreateController/referral');
+
+        function extractReferral() {
+            console.log($location.search());
+            if ($location.search().product_url &&
+                $location.search().title &&
+                $location.search().price &&
+                $location.search().img_url &&
+                $location.search().source) {
+                console.log($location.search());
+                LocalStorage.set('/GiftStartCreateController/referral', {
+                    product_url: $location.search().product_url,
+                    productTitle: $location.search().title,
+                    price: $location.search().price,
+                    productImgUrl: $location.search().img_url,
+                    source: $location.search().source
+                });
+                $location.search('product_url', null);
+                $location.search('title', null);
+                $location.search('price', null);
+                $location.search('img_url', null);
+                $location.search('source', null);
+            }
+        }
+
+        function restoreFromSession(session) {
+            $scope.title = session.title;
+            $scope.description = session.description;
+            ProductService.product.product_url = session.productUrl;
+            ProductService.product.title = session.productTitle;
+            ProductService.logo = session.retailerLogo;
+            $scope.selectedImg = session.productImgUrl;
+            $scope.selectedXYSet = session.selectedXYSet;
+            $scope.y = session.rows;
+            $scope.x = session.columns;
+            $scope.inputPrice = session.productPrice / 100;
+            $scope.shippingZip = session.shippingZip;
+            $scope.shippingState = session.shippingState;
+            $scope.salesTax = session.salesTax;
+            $scope.shipping = session.shipping;
+            $scope.serviceFee = session.serviceFee;
+            $scope.totalPrice = session.totalPrice;
+            $scope.specialNotes = session.specialNotes;
+            $scope.gcEmail = session.gcEmail;
+
             $scope.$on('login-success', $scope.next);
-            AppStateService.state.createSession = null;
-        } else if (AppStateService.giftstartReferralData) {
+        }
+
+        function restoreFromReferral(referral) {
             // If user was referred here from a brand
-            ProductService.product.product_url = AppStateService.giftstartReferralData.product_url;
-            ProductService.product.title = AppStateService.giftstartReferralData.title;
-            ProductService.product.imgs = [AppStateService.giftstartReferralData.img_url];
-            $scope.selectedImg = AppStateService.giftstartReferralData.img_url;
-            $scope.inputPrice = parseInt(AppStateService.giftstartReferralData.price)/100;
+            ProductService.product.product_url = referral.product_url;
+            ProductService.product.title = referral.productTitle;
+            ProductService.product.imgs = [referral.productImgUrl];
+            $scope.selectedImg = referral.productImgUrl;
+            $scope.inputPrice = parseInt(referral.price)/100;
             $scope.showIntroCopy = true;
             $scope.fromReferral = true;
-            Analytics.track('client', 'referred from', AppStateService.giftstartReferralData.source);
+
+            Analytics.track('client', 'referred from', referral.source);
         }
 
         $timeout(function() {
             $scope.pitchInsInitialized = true;
         }, 2500);
 
-        if (AppStateService.giftstartReferralData) {
+        if (referral) {
             $scope.selectedXYSet = calculateInitialNumParts();
         }
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
@@ -258,13 +306,13 @@ GiftStarterApp.controller('GiftStartCreateCampaignController', [
         $scope.priceChanged();
 
         // Scroll to the top of the form on controller creation
-        $timeout(function() {
-            if (AppStateService.giftstartReferralData) {
-                document.querySelector('#header-logo').scrollIntoView();
-            } else {
-                var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
-                root.querySelector('.block.image').scrollIntoView();
-            }
-        }, 250);
+//        $timeout(function() {
+//            if (referral) {
+//                document.querySelector('#header-logo').scrollIntoView();
+//            } else {
+//                var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
+//                root.querySelector('.block.image').scrollIntoView();
+//            }
+//        }, 250);
     }
 ]);

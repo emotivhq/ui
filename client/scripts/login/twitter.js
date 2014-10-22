@@ -51,8 +51,9 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.getAuthUrl = function() {
-            $http({method: 'POST', url: '/users', data: {action: 'get-auth-url', service: 'twitter',
-                   redirect_url: AppStateService.getOauthRedirectUrl()}})
+            $http({method: 'POST', url: '/users', data: {
+                action: 'get-auth-url', service: 'twitter',
+                redirect_url: AppStateService.getOauthRedirectUrl()}})
                 .success(function(data) {self.auth_url = data['url'];})
                 .error(function(data) {console.log(data);});
         };

@@ -11,8 +11,8 @@ console.log("ver54");
 
 
 GiftStarterApp.service('AppStateService', [
-            '$location','$window',
-    function($location,  $window) {
+            '$location','$window','PopoverService',
+    function($location,  $window,  PopoverService) {
 
         var self = this;
 
@@ -23,6 +23,8 @@ GiftStarterApp.service('AppStateService', [
             return url;
         };
 
+        this.path = $location.path();
+
         // Returns encoded app state for persisting across OAuth transitions
         this.base64State = function() {
             var state = {};
@@ -32,28 +34,20 @@ GiftStarterApp.service('AppStateService', [
             if (self.contributing != null) {state.contributing = self.contributing}
             if (self.popover) {
                 state.popover = self.popover;
-                $location.hash(self.popover);
+                PopoverService.setPopover(self.popover);
             }
             if (self.thanks) {state.thanks = self.thanks}
             if (self.createSession != null) {state.createSession = self.createSession}
 
+            state.path = self.path;
+
             return btoa(JSON.stringify(state));
         };
 
+        this.setPath = function(path) {self.path = path};
+
         this.overlayState = function(selectedParts) {
             self.selectedParts = selectedParts;
-        };
-
-        this.popoverState = function(popoverName) {
-            self.popover = popoverName;
-        };
-
-        this.contributeLogin = function(bool) {
-            self.contributing = bool;
-        };
-
-        this.giftstartCreateState = function(createSession) {
-            self.createSession = createSession;
         };
 
         this.thanksState = function(thanksData) {
@@ -71,6 +65,10 @@ GiftStarterApp.service('AppStateService', [
             $location.search('state', null);
             if (this.state.title_url) {
                 $location.path('/giftstart/' + this.state.title_url);
+            }
+            if (this.state.path) {
+                console.log("recovering path", this.state.path);
+                $location.path(this.state.path);
             }
         }
 
@@ -111,6 +109,7 @@ GiftStarterApp.service('AppStateService', [
                 }
                 return b;
             })($location.hash().split('&'));
+            $location.hash('');
         }
 
         // Delete tracking url as soon as it is seen
@@ -132,8 +131,6 @@ GiftStarterApp.service('AppStateService', [
                 )
             };
             this.giftstartReferralData = $location.search();
-            $location.search('title', null);
-            $location.search('product_url', null);
         }
     }
 ]);

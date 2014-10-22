@@ -18,7 +18,8 @@
 // <gs-button id="gsbutton" class="gsbutton" style="display: none;"></gs-button>
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
-(window.makeGiftStartButton = function(productUrl, title, price, imgUrl) {
+(window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
+                                       buttonId) {
     if (!Boolean(window.giftStartButton)) {
         console.log("Ruh roh!  Doesn't look like window.giftStartButton exists!");
         return;

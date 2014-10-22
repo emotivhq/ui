@@ -227,9 +227,6 @@ class UserStatsTestHandler(unittest.TestCase):
         response = request.get_response(gs_user_api.api)
         self.assertEqual(True, json.loads(response.body)['has_pitched_in'])
 
-    def test_has_ever_giftstarted(self):
-        self.assertEqual(False, True)
-
     def fake_payment(self, gsid, uid, parts):
         pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
                                                             str(time())}

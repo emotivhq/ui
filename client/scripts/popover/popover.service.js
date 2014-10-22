@@ -2,24 +2,24 @@
  * Created by stuart on 4/21/14.
  */
 
-GiftStarterApp.service('PopoverService', ['$rootScope','$location','$timeout',
-    'Analytics','AppStateService', PopoverService]);
+GiftStarterApp.service('PopoverService', ['$rootScope','$timeout',
+    'Analytics','LocalStorage', PopoverService]);
 
-function PopoverService($rootScope,  $location,  $timeout,  Analytics,
-                        AppStateService) {
+function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
 
     this.template = '';
-    this.currentLocation = $location.hash();
     var self = this;
+    this.currentLocation = '';
+    this.validHashes = ['login', 'note', 'pay', 'thanks'];
 
     this.setPopover = function(popoverName) {
-        AppStateService.popoverState(popoverName);
-        if (popoverName === '') {
+        LocalStorage.set('/PopoverService/current', popoverName);
+        console.log('setting popover', popoverName);
+        if (popoverName === '' || popoverName === null) {
             this.hidePopover();
         } else {
             self.template = '<gs-' + popoverName + '-popover></gs-' + popoverName + '-popover>';
             self.currentLocation = popoverName;
-            $location.hash(popoverName);
             self.showPopover();
             $rootScope.$broadcast('popover-updated');
         }
@@ -36,40 +36,17 @@ function PopoverService($rootScope,  $location,  $timeout,  Analytics,
 
     this.hidePopover = function() {
         $timeout(function() {
+            LocalStorage.remove('/PopoverService/current');
             self.contributeLogin = false;
-            AppStateService.contributeLogin(false);
+            LocalStorage.set('/GiftStartService/contributeLogin', false);
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
-            $location.hash('');
         });
     };
 
     this.showPopover = function() {
         $rootScope.$broadcast('popover-shown');
     };
-
-    this.validHashes = ['login', 'note', 'pay', 'thanks'];
-    $rootScope.$on('$locationChangeStart', function(event, next, current) {
-        var hash = $location.hash();
-        if ((AppStateService.state || {}).contributeLogin) {
-            self.setPopover(hash);
-            AppStateService.state.contributing = false;
-            alert("Yeeeee buddy");
-        } else if (self.currentLocation === '') {
-            if ((hash == 'login') || (hash == 'note') || (hash == 'email-share')) {
-                self.setPopover(hash);
-            }
-        } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) + 1)) {
-            self.setPopover(hash);
-        } else if (self.validHashes.indexOf(hash) == (self.validHashes.indexOf(self.currentLocation) - 1)) {
-            self.setPopover(hash);
-        } else if(hash == self.currentLocation) {
-            // Noop
-        } else {
-            console.log("Wrong hash location");
-            self.hidePopover();
-        }
-    });
 
     this.nextPopover = function() {
         if (self.validHashes.indexOf(self.currentLocation) + 1 < self.validHashes.length) {
@@ -82,15 +59,10 @@ function PopoverService($rootScope,  $location,  $timeout,  Analytics,
     };
 
     // Ensure they don't navigate directly to a popover
-    if ($location.hash()) {
-        $location.hash('');
-    }
-
-    if (AppStateService.state) {
-        if (AppStateService.state.contributeLogin) {
-            self.contributeLogin = AppStateService.state.contributing;
-        } else {
-            self.contributeLogin = Boolean(self.contributeLogin);
-        }
+    if (LocalStorage.get('/PopoverService/contributeLogin')) {
+        self.contributeLogin = LocalStorage
+            .get('/PopoverService/contributing');
+    } else {
+        self.contributeLogin = Boolean(self.contributeLogin);
     }
 }

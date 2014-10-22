@@ -24,8 +24,10 @@ GiftStarterApp.service('GooglePlusService', [
             // Get app state data from auth response
             self.gplus_code_request = {method: 'POST', url: '/users',
                 data: {service: 'googleplus', action: 'submit-one-time-code',
-                    auth_response: self.authResponse, location: $location.path() + $window.location.search,
-                    redirect_url: $window.location.protocol + '//' + $window.location.host + '/',
+                    auth_response: self.authResponse,
+                    location: $location.path() + $window.location.search,
+                    redirect_url: $window.location.protocol + '//' +
+                        $window.location.host + '/',
                     referrer: AppStateService.referrer}};
             $http(self.gplus_code_request)
                 .success(function(data) {
@@ -43,9 +45,13 @@ GiftStarterApp.service('GooglePlusService', [
 
         this.login = function() {
             self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
-                '?scope=' + encodeURIComponent('https://www.googleapis.com/auth/plus.login') +
-                '&client_id=' + encodeURIComponent($window.googlePlusClientId) +
-                '&redirect_uri=' + encodeURIComponent($window.location.protocol + '//' + $window.location.host + '/') +
+                '?scope=' + encodeURIComponent(
+                'https://www.googleapis.com/auth/plus.login') +
+                '&client_id=' +
+                encodeURIComponent($window.googlePlusClientId) +
+                '&redirect_uri=' +
+                encodeURIComponent($window.location.protocol + '//' +
+                    $window.location.host + '/') +
                 '&response_type=code' +
                 '&state=' + AppStateService.base64State() +
                 '&access_type=offline';
@@ -65,10 +71,12 @@ GiftStarterApp.service('GooglePlusService', [
                 type: 'consumer',
                 uid: uid,
                 channel: 'googleplus',
-                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-                    return v.toString(16);
-                })
+                uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+                    function(c) {
+                        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                        return v.toString(16);
+                    }
+                )
             })));
             var parameters = '?url=' + encodeURIComponent($location.absUrl().split('#')[0]);
             $window.open(shareUrl + parameters);

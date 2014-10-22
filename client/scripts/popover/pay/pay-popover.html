@@ -4,7 +4,7 @@
     <form stripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">
         <div class="number">
             <img ng-src="{{numberImgUrl}}"/>
-            <input type="text" id="card-number" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()"/>
+            <input type="text" id="card-number" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" gs-focus="true"/>
         </div><div class="cvc">
             <img ng-src="{{cvcImgUrl}}"/>
             <input type="text" id="card-cvc" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()"/>

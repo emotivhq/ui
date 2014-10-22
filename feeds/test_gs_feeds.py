@@ -374,8 +374,3 @@ class FeedsTestHandler(unittest.TestCase):
         self.assertEqual(2, len(feed_products),
                          "There should be 2 product in the database, but "
                          "found {0}".format(len(feed_products)))
-
-    def test_butter_shipping_cost(self):
-        """ Butter has special shipping rules, we should abide by those
-        """
-        self.assertTrue(False)

@@ -24,7 +24,6 @@ function EmailSharePopoverController ($scope,  PopoverService,  $http,  UserServ
 
     $scope.submit = function() {
         var emails = $scope.toEmails.replace(/[ \n]/g, "").split(/[,;]/);
-        window.emails = emails;
         $scope.formValid = emails.map(function(s){return email.test(s)})
             .every(function(b){return b}) && email.test($scope.fromEmail);
 
@@ -47,10 +46,10 @@ function EmailSharePopoverController ($scope,  PopoverService,  $http,  UserServ
     function sendEmail(to, from, message, share_url) {
         Analytics.track('campaign', 'email share submitted');
         $scope.sending = true;
-        $http({method: 'PUT', url: 'share', data:{
+        $http({method: 'PUT', url: '/giftstart/share', data:{
             to: to, from: from, message: message, share_url: share_url,
             gsid: GiftStartService.giftStart.gsid,
-            sender_name: UserService.name
+            sender_name: UserService.name, sender_uid: UserService.uid
         }}).success(function() {
             Analytics.track('campaign', 'email share succeeded');
             $scope.sending = false;
