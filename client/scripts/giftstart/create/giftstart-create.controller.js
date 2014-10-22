@@ -48,7 +48,7 @@ GiftStarterApp.controller('GiftStartCreateController',
         if (ProductService.product.product_url == "") {
             if (!LocalStorage.get('/GiftStartCreateController/referral') &&
                 !LocalStorage.get('/GiftStartCreateController/session')) {
-                $location.path("");
+//                $location.path("");
             }
 //            if (AppStateService.state) {
 //                if (!AppStateService.state.createSession) {

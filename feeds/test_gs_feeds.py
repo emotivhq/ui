@@ -304,7 +304,7 @@ class FeedsTestHandler(unittest.TestCase):
         """
 
         def do_req(method):
-            req = webapp2.Request.blank('/feeds/butterLONDON/update')
+            req = webapp2.Request.blank('/feeds/butter-LONDON/update')
             req.method = method
             return req.get_response(feeds_api.handler)
 
@@ -321,12 +321,12 @@ class FeedsTestHandler(unittest.TestCase):
     def test_get_butter_feed(self):
         """ GET'ing /feeds/update should get butter feed
         """
-        req = webapp2.Request.blank('/feeds/butterLONDON/update')
+        req = webapp2.Request.blank('/feeds/butter-LONDON/update')
         req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to "
-                         "/feeds/butterLONDON/update, got: " + str(resp))
+                         "/feeds/butter-LONDON/update, got: " + str(resp))
 
         self.assertEqual(1, self.fake_get.call_count,
                          "Expected requests.get call_count to be 1, was {0}"
@@ -344,12 +344,12 @@ class FeedsTestHandler(unittest.TestCase):
         self.fake_get.return_value = BUTTER_FEED_MOCK2()
         requests.get = self.requests_get_mock()
 
-        req = webapp2.Request.blank('/feeds/butterLONDON/update')
+        req = webapp2.Request.blank('/feeds/butter-LONDON/update')
         req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to "
-                         "/feeds/butterLONDON/update, got: " + str(resp))
+                         "/feeds/butter-LONDON/update, got: " + str(resp))
 
         self.assertEqual(1, self.fake_get.call_count,
                          "Expected requests.get call_count to be 1, was {0}"
@@ -363,12 +363,12 @@ class FeedsTestHandler(unittest.TestCase):
         self.fake_get.return_value = BUTTER_FEED_MOCK()
         requests.get = self.requests_get_mock()
 
-        req = webapp2.Request.blank('/feeds/butterLONDON/update')
+        req = webapp2.Request.blank('/feeds/butter-LONDON/update')
         req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to "
-                         "/feeds/butterLONDON/update, got: " + str(resp))
+                         "/feeds/butter-LONDON/update, got: " + str(resp))
 
         feed_products = FeedProduct.query().fetch()
         self.assertEqual(2, len(feed_products),
