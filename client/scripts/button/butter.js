@@ -88,7 +88,7 @@
     setTimeout(function() {
         initializeButton();
         buttonLink.setAttribute('href', url);
-        if (price > 40) {
+        if (price > 39.98) {
             button.setAttribute('style',
                 ' display: inline-block; text-align: center;');
         }
