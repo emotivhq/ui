@@ -23,7 +23,7 @@ GiftStarterApp.service('AppStateService', [
             return url;
         };
 
-        this.path = '/';
+        this.path = $location.path();
 
         // Returns encoded app state for persisting across OAuth transitions
         this.base64State = function() {
@@ -43,6 +43,8 @@ GiftStarterApp.service('AppStateService', [
 
             return btoa(JSON.stringify(state));
         };
+
+        this.setPath = function(path) {self.path = path};
 
         this.overlayState = function(selectedParts) {
             self.selectedParts = selectedParts;
@@ -65,6 +67,7 @@ GiftStarterApp.service('AppStateService', [
                 $location.path('/giftstart/' + this.state.title_url);
             }
             if (this.state.path) {
+                console.log("recovering path", this.state.path);
                 $location.path(this.state.path);
             }
         }

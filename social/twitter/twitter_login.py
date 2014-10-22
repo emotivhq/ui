@@ -16,11 +16,12 @@ APP_URL = yaml.load(open('config.yaml'))['app_url']
 
 
 def get_auth_url(current_url):
+    print("current url:")
+    print(current_url)
     url = 'https://api.twitter.com/oauth/request_token'
     auth = OAuth1(client_key=APP_KEY, client_secret=APP_SECRET,
                   callback_uri=current_url)
     response = requests.post(url=url, auth=auth)
-    print(response)
     result_dict = {k: v for k, v in [pair.split('=') for pair in
                                      response.content.split('&')]}
 
@@ -28,8 +29,9 @@ def get_auth_url(current_url):
         oauth_token_pair = OAuthTokenPair(oauth_token=result_dict['oauth_token'],
                                           oauth_secret=result_dict['oauth_token_secret'])
         oauth_token_pair.put()
-        return json.dumps({'url': 'https://api.twitter.com/oauth/authenticate?oauth_token=' +
-                                  result_dict['oauth_token']})
+        return json.dumps({
+            'url': 'https://api.twitter.com/oauth/authenticate?oauth_token=' +
+                   result_dict['oauth_token']})
     else:
         return None
 

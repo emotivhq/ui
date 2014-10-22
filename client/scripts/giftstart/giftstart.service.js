@@ -417,6 +417,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     // Sync pitchins on route change (navigation, back, etc.)
     $rootScope.$on('$routeChangeSuccess', function() {
+        AppStateService.setPath($location.path());
         self.pitchInsInitialized = false;
         var path = $location.path();
         if (path.split('/').length > 1) {
