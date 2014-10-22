@@ -60,7 +60,7 @@
                         gs_domain + '/assets/gs_button_bg.png');
             } else {
                 buttonImg.setAttribute('src',
-                        gs_domain + '/assets/gs_button_nobg.png');
+                        gs_domain + '/assets/new_button.png');
             }
         } else {
             buttonImg.setAttribute('src',
