@@ -6,7 +6,7 @@ from google.appengine.api import taskqueue
 
 
 FEEDS = {
-    'butterLONDON': 'http://feed.butterlondon.com/products/acf63017/5394GHbgn'
+    'butter-LONDON': 'http://feed.butterlondon.com/products/acf63017/5394GHbgn'
                     'WnPaSx'
 }
 

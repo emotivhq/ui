@@ -31,7 +31,7 @@ def normalize_products(partner, response_content):
     """ normalize_products('B&H', '{...}') -> [FeedProduct, ...]
     Normalizes and filters a given feed response
     """
-    if partner == 'butterLONDON':
+    if partner == 'butter-LONDON':
         products = normalize_butter_products(response_content)
     else:
         products = []
@@ -42,7 +42,7 @@ def make_butter_product(bl_product):
     """ make_butter_product({...}) -> FeedProduct
     Parses a singular butterLONDON product and produces a FeedProduct
     """
-    key = ndb.Key('Partner', 'butterLONDON', 'FeedProduct',
+    key = ndb.Key('Partner', 'butter-LONDON', 'FeedProduct',
                   bl_product.get('url'))
     return FeedProduct(
         key=key,
@@ -50,7 +50,7 @@ def make_butter_product(bl_product):
         price=str(int(float(bl_product.get('price'))*100)),
         img=bl_product.get('image'),
         url=bl_product.get('url'),
-        retailer='butterLONDON',
+        retailer='butter LONDON',
         description=bl_product.get('description'),
         thumbnail=bl_product.get('thumbnail'),
         upc=bl_product.get('upc') if isinstance(bl_product.get('upc'), str)
@@ -97,7 +97,7 @@ def filter_products(partner, products):
 
     def valid_product(product):
         valid = True
-        if partner == 'butterLONDON':
+        if partner == 'butter-LONDON':
             valid &= int(product.price) > 3998
         else:
             valid &= int(product.price) > 4998
