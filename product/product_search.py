@@ -126,7 +126,8 @@ def product_search(query):
     products += [SearchProduct.from_feed_product(prod)
                  for prod in FeedProduct.query().fetch()]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    filtered_products = [product for product in products if product.price > 40]
+    filtered_products = [product for product in products
+                         if product.price > 39.98]
     sorted_products = sort_by_relevance(escaped_query, filtered_products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
     return SearchProduct.jsonify_product_list(sorted_products)
