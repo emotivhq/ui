@@ -12,6 +12,8 @@ class FeedProduct(ndb.Model):
     url = ndb.StringProperty(required=True)
     retailer = ndb.StringProperty(required=True)
     description = ndb.TextProperty()
+    extended_description = ndb.TextProperty()
+    keywords = ndb.TextProperty()
     thumbnail = ndb.StringProperty()
     upc = ndb.StringProperty()
     sku = ndb.StringProperty()
