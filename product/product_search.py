@@ -35,7 +35,7 @@ class SearchProduct(FeedProduct):
                                  value=self.description),
                 search.TextField(name='url', value=self.url),
                 search.TextField(name='img', value=self.img),
-                search.TextField(name='price', value=self.price),
+                search.NumberField(name='price', value=self.price),
                 search.TextField(name='retailer', value=self.retailer),
                 search.TextField(name='extended_description',
                                  value=self.extended_description),
@@ -64,6 +64,8 @@ class SearchProduct(FeedProduct):
         img = xfind('.//{ns}LargeImage/{ns}URL')
         url = xfind('.//{ns}DetailPageURL')
         retailer = 'Amazon'
+        # TODO: lots of amazon prices are None - why?
+        price = int(price) if price else 0
 
         return SearchProduct(title=title, description=description, price=price,
                              img=img, url=url, retailer=retailer)
@@ -72,7 +74,7 @@ class SearchProduct(FeedProduct):
     def from_prosperent(prod):
         return SearchProduct(title=prod.get('keyword'),
                              description=prod.get('description'),
-                             price=str(100*float(prod.get('price'))),
+                             price=int(100*float(prod.get('price'))),
                              img=prod.get('image_url'),
                              url=prod.get('affiliate_url'),
                              retailer=prod.get('merchant'))
@@ -91,8 +93,9 @@ class SearchProduct(FeedProduct):
         :type search_result: search.Document
         :rtype SearchProduct
         """
-        return SearchProduct(**{field.name: field.value
-                                for field in search_result.fields})
+        fields = {field.name: field.value for field in search_result.fields}
+        fields['price'] = int(fields['price'])
+        return SearchProduct(**fields)
 
     @staticmethod
     def jsonify_product_list(product_list):
@@ -112,18 +115,20 @@ def product_search(query):
     """
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
 
+    """ :type products [SearchProduct] """
     products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
     products += search_amazon(query)
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
     products += search_prosperent(query)
     logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
+
     products += [SearchProduct.from_feed_product(prod)
                  for prod in FeedProduct.query().fetch()]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    sorted_products = sort_by_relevance(escaped_query, products)
+    filtered_products = [product for product in products if product.price > 40]
+    sorted_products = sort_by_relevance(escaped_query, filtered_products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
-
     return SearchProduct.jsonify_product_list(sorted_products)
 
 
@@ -260,16 +265,48 @@ def search_products(index, keywords):
     :type keywords str
     :rtype list of [SearchProduct]
     """
-    sort_opts = search.SortOptions(match_scorer=search.MatchScorer())
+    sort_opts = search.SortOptions(
+        match_scorer=search.MatchScorer(),)
+        # expressions=[partner_target])
     query_options = search.QueryOptions(
         limit=100,
         sort_options=sort_opts)
     query = search.Query(query_string=keywords, options=query_options)
 
-    results = index.search(query)
-    return [SearchProduct.from_search_result(result)
-            for result in results.results]
+    search_result = index.search(query)
+    preferred_results = get_preferred_products(search_result)
+    return [SearchProduct.from_search_result(search_result)
+            for search_result in preferred_results]
 
+
+def get_preferred_products(scored_results):
+    """
+    :type scored_results search.SearchResults
+    :return:
+    """
+    for i in range(len(scored_results.results)):
+        scored_results.results[i] = prefer_brands(scored_results.results[i])
+
+    return sorted(scored_results.results,
+                  key=(lambda res: -res.sort_scores[0]))
+
+
+def prefer_brands(scored_result):
+    """
+    :type scored_result search.ScoredDocument
+    :rtype: search.ScoredDocument
+    """
+    for field in scored_result.fields:
+        """ :type field search.Field """
+        if field.name == 'retailer':
+            if field.value in PARTNERS:
+                scored_result.sort_scores[0] *= 2
+
+    return scored_result
+
+PARTNERS = [
+    'butter LONDON'
+]
 
 PROSPERENT_RETAILERS = {
     "rei": "123729",
