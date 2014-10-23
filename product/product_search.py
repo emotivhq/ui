@@ -19,25 +19,117 @@ import re
 from feeds import FeedProduct
 
 
+class SearchProduct(FeedProduct):
+
+    def to_search_document(self, id):
+        """ self.to_search_document(12) -> search.Document
+        Creates a search document for indexing
+
+        :type id int
+        """
+        return search.Document(
+            doc_id=str(id),
+            fields=[
+                search.TextField(name='title', value=self.title),
+                search.HtmlField(name='description',
+                                 value=self.description),
+                search.TextField(name='url', value=self.url),
+                search.TextField(name='img', value=self.img),
+                search.NumberField(name='price', value=self.price),
+                search.TextField(name='retailer', value=self.retailer),
+                search.TextField(name='extended_description',
+                                 value=self.extended_description),
+                search.TextField(name='keywords', value=self.keywords),
+            ])
+
+    @staticmethod
+    def from_amazon(tree):
+        """ parse_amazon_item(<Element Item ...>) -> {'title': 'xbox 1', ...}
+        Parses an lxml element into a product
+
+        :type tree etree
+        """
+        def xfind(path):
+            """ xfind('.//{ns}Tag/{ns}ChildTag') -> 'first child text' | None
+            """
+            xml_ns = '{http://webservices.amazon.com/AWSECommerceService/' \
+                     '2011-08-01}'
+            result = etree.ETXPath(path.format(ns=xml_ns))(tree)
+            return result[0].text if result else None
+
+        title = xfind('.//{ns}ItemAttributes/{ns}Title')
+        description = xfind('.//{ns}EditorialReviews/{ns}EditorialReview/'
+                            '{ns}Content')
+        price = xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount')
+        img = xfind('.//{ns}LargeImage/{ns}URL')
+        url = xfind('.//{ns}DetailPageURL')
+        retailer = 'Amazon'
+        # TODO: lots of amazon prices are None - why?
+        price = int(price) if price else 0
+
+        return SearchProduct(title=title, description=description, price=price,
+                             img=img, url=url, retailer=retailer)
+
+    @staticmethod
+    def from_prosperent(prod):
+        return SearchProduct(title=prod.get('keyword'),
+                             description=prod.get('description'),
+                             price=int(100*float(prod.get('price'))),
+                             img=prod.get('image_url'),
+                             url=prod.get('affiliate_url'),
+                             retailer=prod.get('merchant'))
+
+    @staticmethod
+    def from_feed_product(prod):
+        return SearchProduct(title=prod.title, description=prod.description,
+                             price=prod.price, img=prod.img, url=prod.url,
+                             retailer=prod.retailer,
+                             extended_description=prod.extended_description,
+                             keywords=prod.keywords)
+
+    @staticmethod
+    def from_search_result(search_result):
+        """
+        :type search_result: search.Document
+        :rtype SearchProduct
+        """
+        fields = {field.name: field.value for field in search_result.fields}
+        fields['price'] = int(fields['price'])
+        return SearchProduct(**fields)
+
+    @staticmethod
+    def jsonify_product_list(product_list):
+        """
+        Returns a json object for the list of SearchProducts passed in
+        :type product_list [SearchProduct]
+        :rtype str
+        """
+        dict_list = [product.dictify() for product in product_list]
+        return json.dumps(dict_list)
+
+
 def product_search(query):
-    """ search('xbox 1') -> [Product...]
+    """ search('xbox 1') -> [SearchProduct...]
     Search for specified keywords, returning a list of products from all
     partners, sorted by relevance
     """
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
 
+    """ :type products [SearchProduct] """
     products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
     products += search_amazon(query)
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
     products += search_prosperent(query)
     logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
-    products += [prod.dictify() for prod in FeedProduct.query().fetch()]
-    logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    sorted_products = sort_by_relevance(escaped_query, products)
-    logging.info("Returning...\t" + datetime.utcnow().isoformat())
 
-    return sorted_products
+    products += [SearchProduct.from_feed_product(prod)
+                 for prod in FeedProduct.query().fetch()]
+    logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
+    filtered_products = [product for product in products if product.price > 40]
+    sorted_products = sort_by_relevance(escaped_query, filtered_products)
+    logging.info("Returning...\t" + datetime.utcnow().isoformat())
+    return SearchProduct.jsonify_product_list(sorted_products)
 
 
 def search_amazon(query):
@@ -87,35 +179,12 @@ def parse_amazon_products(response):
     Parses a response string from Amazon into a list of products
     """
     root = etree.fromstring(response)
-    products = [parse_amazon_item(element)
+    products = [SearchProduct.from_amazon(element)
                 for element in root.iter()
                 if element.tag.split('}')[-1] == 'Item']
 
     # Remove products missing data
-    return [product for product in products if all(product.values())]
-
-
-def parse_amazon_item(item):
-    """ parse_amazon_item(<Element Item ...>) -> {'title': 'xbox 1', ...}
-    Parses an lxml element into a product
-    """
-    def xfind(path):
-        """ xfind('.//{ns}Tag/{ns}ChildTag') -> 'first child text' | None """
-        xml_ns = \
-            '{http://webservices.amazon.com/AWSECommerceService/2011-08-01}'
-        result = etree.ETXPath(path.format(ns=xml_ns))(item)
-        return result[0].text if result else None
-
-    description = xfind('.//{ns}EditorialReviews/{ns}EditorialReview/{ns}Content')
-    return {
-        'title': xfind('.//{ns}ItemAttributes/{ns}Title'),
-        'price': xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount'),
-        'url': xfind('.//{ns}DetailPageURL'),
-        'imgUrl': xfind('.//{ns}LargeImage/{ns}URL'),
-        'retailer': 'Amazon',
-        'description': description if description
-        else xfind('.//{ns}ItemAttributes/{ns}Title'),
-    }
+    return products
 
 
 def search_prosperent(query):
@@ -130,14 +199,8 @@ def search_prosperent(query):
             'Prosperent error during search:\t' +
             json.dumps(response['errors']))
     else:
-        products = [{
-            'title': prosp_prod.get('keyword'),
-            'price': str(100 * float(prosp_prod.get('price'))),
-            'url': prosp_prod.get('affiliate_url'),
-            'imgUrl': prosp_prod.get('image_url'),
-            'retailer': prosp_prod.get('merchant'),
-            'description': prosp_prod.get('description'),
-        } for prosp_prod in response.get('data')]
+        products = [SearchProduct.from_prosperent(prosp_prod)
+                    for prosp_prod in response.get('data')]
 
     return products
 
@@ -171,21 +234,9 @@ def put_search_products(products):
     """ put_documents([Product...]) -> (Index, [Id...])
     Puts an array of documents and returns the index and ids of the put docs
     """
-    def make_doc(prod, id):
-        return search.Document(
-            doc_id=str(id),
-            fields=[
-                search.TextField(name='title', value=prod['title']),
-                search.HtmlField(name='description',
-                                 value=prod['description']),
-                search.TextField(name='url', value=prod['url']),
-                search.TextField(name='imgUrl', value=prod['imgUrl']),
-                search.TextField(name='price', value=prod['price']),
-                search.TextField(name='retailer', value=prod['retailer']),
-            ])
-
     index = search.Index(name='product-search-0')
-    docs = [make_doc(prod, str(i)) for i, prod in enumerate(products)]
+    docs = [prod.to_search_document(str(i))
+            for i, prod in enumerate(products)]
     ids = [str(i) for i in range(len(docs))]
     k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
     doc_sets = [docs[k*i:k*(i+1)] for i in range(len(docs)/k+1)]
@@ -209,18 +260,53 @@ def cleanup_search(index, ids):
 def search_products(index, keywords):
     """ search_products(Index, 'xbox 1') -> [Product...]
     Searches the passed in index for the supplied keywords, with scoring
+
+    :type index search.Index
+    :type keywords str
+    :rtype list of [SearchProduct]
     """
-    def make_product(search_result):
-        return {field.name: field.value for field in search_result.fields}
-    sort_opts = search.SortOptions(match_scorer=search.MatchScorer())
+    sort_opts = search.SortOptions(
+        match_scorer=search.MatchScorer(),)
+        # expressions=[partner_target])
     query_options = search.QueryOptions(
         limit=100,
         sort_options=sort_opts)
     query = search.Query(query_string=keywords, options=query_options)
 
-    results = index.search(query)
-    return [make_product(result) for result in results]
+    search_result = index.search(query)
+    preferred_results = get_preferred_products(search_result)
+    return [SearchProduct.from_search_result(search_result)
+            for search_result in preferred_results]
 
+
+def get_preferred_products(scored_results):
+    """
+    :type scored_results search.SearchResults
+    :return:
+    """
+    for i in range(len(scored_results.results)):
+        scored_results.results[i] = prefer_brands(scored_results.results[i])
+
+    return sorted(scored_results.results,
+                  key=(lambda res: -res.sort_scores[0]))
+
+
+def prefer_brands(scored_result):
+    """
+    :type scored_result search.ScoredDocument
+    :rtype: search.ScoredDocument
+    """
+    for field in scored_result.fields:
+        """ :type field search.Field """
+        if field.name == 'retailer':
+            if field.value in PARTNERS:
+                scored_result.sort_scores[0] *= 2
+
+    return scored_result
+
+PARTNERS = [
+    'butter LONDON'
+]
 
 PROSPERENT_RETAILERS = {
     "rei": "123729",

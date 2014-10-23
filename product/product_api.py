@@ -44,7 +44,7 @@ class ProductSearchHandler(webapp2.RequestHandler):
     def get(self):
         query = urllib.unquote(self.request.path[10:-5])
         prods = product_search.product_search(query)
-        self.response.write(json.dumps(prods))
+        self.response.write(prods)
 
 
 handler = webapp2.WSGIApplication([

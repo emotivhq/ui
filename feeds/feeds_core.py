@@ -47,11 +47,13 @@ def make_butter_product(bl_product):
     return FeedProduct(
         key=key,
         title=bl_product.get('display-name'),
-        price=str(int(float(bl_product.get('price'))*100)),
+        price=int(float(bl_product.get('price'))*100),
         img=bl_product.get('image'),
         url=bl_product.get('url'),
         retailer='butter LONDON',
         description=bl_product.get('description'),
+        extended_description=bl_product.get('full-description'),
+        keywords=bl_product.get('search'),
         thumbnail=bl_product.get('thumbnail'),
         upc=bl_product.get('upc') if isinstance(bl_product.get('upc'), str)
             else '',
