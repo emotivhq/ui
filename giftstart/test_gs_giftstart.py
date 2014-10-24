@@ -372,3 +372,26 @@ class GiftstartTestHandler(unittest.TestCase):
         self.assertIn('name', json_response['pitchins'][0][0].keys(),
                       "Pitchins should have a 'name' field, but do not.")
 
+    def test_missing_product_deets(self):
+        test_gs = example_giftstart
+
+        def create_bad_campaign(campaign):
+            request = webapp2.Request.blank('/giftstart/api')
+            request.method = 'PUT'
+            request.body = json.dumps({
+                'action': 'create',
+                'uid': 'f1234',
+                'token': 'x1234',
+                'giftstart': campaign,
+            })
+
+            response = request.get_response(giftstart_api.api)
+            self.assertEqual(response.status_code, 400,
+                             "Should refuse invalid campaign, expected 400, "
+                             "response was " + str(response))
+
+        for remove_key in test_gs['product'].keys():
+            test_gs['product'] = {k:v for k,v
+                                  in example_giftstart['product'].items()
+                                  if k != remove_key}
+            create_bad_campaign(test_gs)

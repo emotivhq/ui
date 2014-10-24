@@ -26,9 +26,12 @@ class GiftStartHandler(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
         if data['action'] == 'create':
-            giftstart = data['giftstart']
-            gs = giftstart_core.create(giftstart)
-            self.response.write(gs.jsonify())
+            try:
+                giftstart = data['giftstart']
+                gs = giftstart_core.create(giftstart)
+                self.response.write(gs.jsonify())
+            except:
+                self.response.set_status(400, 'Invalid giftstart submitted')
 
         elif data['action'] == 'one-day-warning':
             giftstart_comm.send_day_left_warning(data['gsid'])
