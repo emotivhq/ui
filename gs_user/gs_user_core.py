@@ -150,3 +150,8 @@ def login_googleplus_user(code, redirect_url, referrer):
 def login_facebook_user(auth_token, referrer):
     token_set = facebook.get_extended_key(auth_token)
     return update_or_create('facebook', token_set, referrer)
+
+
+def login_twitter_user(oauth_token, oauth_verifier, referrer):
+    token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
+    return update_or_create('twitter', token_set, referrer)

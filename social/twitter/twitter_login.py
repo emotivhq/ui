@@ -36,7 +36,8 @@ def get_auth_url(current_url):
 
 def submit_verifier(oauth_token, oauth_verifier):
     url = 'https://api.twitter.com/oauth/access_token'
-    oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token == oauth_token).fetch(1)[0].oauth_secret
+    oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token ==
+                                        oauth_token).fetch(1)[0].oauth_secret
     auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=oauth_token,
                   resource_owner_secret=oauth_secret,
                   verifier=oauth_verifier)

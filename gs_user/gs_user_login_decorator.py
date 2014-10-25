@@ -35,9 +35,17 @@ def handle_login(method_handler):
             if staging_uuid:
                 self.request.query_string += '&staging_uuid=' + staging_uuid
 
-        elif self.request.get(''):
+        elif query.get('oauth_token') and query.get('oauth_verifier'):
             # Handle twitter login
-            pass
+            user = gs_user_core.login_twitter_user(query['oauth_token'],
+                                                   query['oauth_verifier'],
+                                                   referrer)
+            self.request.cookies['uid'] = user.uid
+            self.request.cookies['token'] = user.twitter_token_set. \
+                access_token
+            if staging_uuid:
+                self.request.query_string += '&staging_uuid=' + staging_uuid
+
         elif query.get('access_token'):
             # Handle FB login
             user = gs_user_core.login_facebook_user(query['access_token'],

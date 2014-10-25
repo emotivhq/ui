@@ -14,6 +14,7 @@ from google.appengine.ext import testbed
 import base64
 import uuid
 from giftstart import giftstart_api
+from social import OAuthTokenPair
 
 example_giftstart = {
     'title': 'Gonna put ' + base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw==') +
@@ -35,6 +36,7 @@ example_giftstart = {
     'gc_email': 'test@giftstarter.co',
 }
 
+# MOCKS 4DAYZ
 from storage import image_cache
 image_cache.cache_user_image_from_url = MagicMock()
 image_cache.cache_user_image_from_url.return_value = 'lolurl'
@@ -45,6 +47,9 @@ gs_user_core.fetch_fb_image.return_value = "lol an image url"
 gs_user_core.uid_fns = {'facebook': lambda u: '1',
                         'twitter': lambda u: '1',
                         'googleplus': lambda u: '1'}
+gs_user_core.cache_fns = {'facebook': lambda u, a: '1',
+                          'twitter': lambda u, a: '1',
+                          'googleplus': lambda u, a: '1'}
 
 
 fake_referrer = {
@@ -107,7 +112,49 @@ class LoginTestHandler(unittest.TestCase):
                       .format(url_title, response.headers['Location']))
 
     def test_login_twitter(self):
-        self.assertTrue(False)
+        otp = OAuthTokenPair()
+        otp.oauth_secret = 'abcd'
+        otp.oauth_token = '1234'
+        otp.put()
+
+        # Create campaign
+        this_uuid = str(uuid.uuid4())
+        request = webapp2.Request.blank('/giftstart/create.json')
+        request.method = 'POST'
+        request.body = json.dumps(dict(
+            example_giftstart.items() +
+            {'staging_uuid': this_uuid}.items()))
+        response = request.get_response(giftstart_api.handler)
+        url_title = json.loads(response.body)['giftstart_url_title']
+
+        requests.post = MagicMock()
+        requests.post.return_value = TwPostMock()
+        app_state = base64.urlsafe_b64encode(json.dumps({
+            "path": "/giftstart/create",
+            "staging_uuid": this_uuid,
+            "referrer": fake_referrer
+        }))
+
+        request = webapp2.Request.blank('/')
+        request.remote_addr = '1.1.1.1'
+        login_kwargs = {'oauth_token': '1234',
+                        'oauth_verifier': 'abadfsdfgs',
+                        'state': app_state}
+        request.query_string = '/?oauth_token={oauth_token}' \
+                               '&oauth_verifier={oauth_verifier}' \
+                               '&state={state}'.format(**login_kwargs)
+        response = request.get_response(main.app)
+        self.assertEqual(1, requests.post.call_count,
+                         "Should have GET'd details to facebppl once, number "
+                         "of calls was {0}".format(requests.post.call_count))
+
+        self.assertEqual(302, response.status_code,
+                         "Should have gotten 302 redirect, response was {0}"
+                         .format(str(response)))
+        self.assertIn(url_title, response.headers['Location'],
+                      "Should have been redirected to {0}, was"
+                      " redirected to {1}"
+                      .format(url_title, response.headers['Location']))
 
     def test_login_googleplus(self):
         # Create campaign
@@ -171,3 +218,8 @@ class GplusPostMock:
 class FbGetMock:
     def __init__(self):
         self.content = 'access_token=abcd1234&expires=12345'
+
+
+class TwPostMock:
+    def __init__(self):
+        self.content = 'oauth_token=abcd1234&oauth_token_secret=nbmvnfj'
