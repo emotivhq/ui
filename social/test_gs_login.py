@@ -47,6 +47,9 @@ gs_user_core.fetch_fb_image.return_value = "lol an image url"
 gs_user_core.uid_fns = {'facebook': lambda u: '1',
                         'twitter': lambda u: '1',
                         'googleplus': lambda u: '1'}
+gs_user_core.info_map = {'f': lambda u: '1',
+                         't': lambda u: '1',
+                         'g': lambda u: '1'}
 gs_user_core.cache_fns = {'facebook': lambda u, a: '1',
                           'twitter': lambda u, a: '1',
                           'googleplus': lambda u, a: '1'}

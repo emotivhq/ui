@@ -17,6 +17,7 @@ from datetime import datetime, timedelta
 from pay import pay_api as pay_api
 from gs_user import User
 from social.facebook import FacebookTokenSet
+from social.twitter import TwitterTokenSet
 import requests
 from social import OAuthTokenPair
 from google.appengine.ext import ndb
@@ -74,7 +75,18 @@ class UserStatsTestHandler(unittest.TestCase):
         user.name = 'flomae'
         user.cached_profile_image_url = 'lol not a url'
         user.logged_in_with = 'facebook'
-        user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
+        user.facebook_token_set = FacebookTokenSet(access_token='x1234',
+                                                   expires=datetime.now() +
+                                                           timedelta(days=90))
+        user.put()
+
+        user = User(key=ndb.Key('User', 't123'))
+        user.uid = 't123'
+        user.name = 'tristan'
+        user.cached_profile_image_url = 'lol not a url'
+        user.logged_in_with = 'twitter'
+        user.twitter_token_set = TwitterTokenSet(access_token='x1234',
+                                                 access_secret='s1234')
         user.put()
 
     def tearDown(self):
@@ -187,7 +199,7 @@ class UserStatsTestHandler(unittest.TestCase):
         response = ResponseMock('oauth_token=token&oauth_token_secret=secret')
         requests.post = MagicMock(return_value=response)
         requests.get = MagicMock(return_value=ResponseMock(
-            json.dumps({'id': 't123', 'profile_image_url': 'http://c',
+            json.dumps({'id': 't1', 'profile_image_url': 'http://c',
                         'name': 'bob'})))
 
         request = webapp2.Request.blank('/users')
@@ -203,7 +215,7 @@ class UserStatsTestHandler(unittest.TestCase):
                          "got " + str(response.status_code))
         self.assertEqual(False, json.loads(response.body)['has_pitched_in'])
 
-        self.fake_payment('1', 'tt123', [1, 2])
+        self.fake_payment('1', 't1', [1, 2])
 
         response = request.get_response(gs_user_api.api)
         self.assertEqual(True, json.loads(response.body)['has_pitched_in'])

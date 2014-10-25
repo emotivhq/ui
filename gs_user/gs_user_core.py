@@ -105,10 +105,12 @@ def update_or_create(service, token_set, referrer):
     return user
 
 
+info_map = {'f': lambda u: facebook.get_user_info(u),
+            't': lambda u: twitter.get_user_info(u),
+            'g': lambda u: googleplus.get_user_info(u)}
+
+
 def get_user_info(user):
-    info_map = {'f': lambda u: facebook.get_user_info(u),
-                't': lambda u: twitter.get_user_info(u),
-                'g': lambda u: googleplus.get_user_info(u)}
     return info_map[user.uid[0]](user)
 
 

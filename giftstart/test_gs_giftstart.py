@@ -342,9 +342,8 @@ class GiftstartTestHandler(unittest.TestCase):
         request.query_string = 'staging_uuid={uuid}'.format(uuid=this_uuid)
         request.method = 'GET'
         response = request.get_response(main.app)
-        # TODO make this redirect to the proper path on the server
-        self.assertEqual(response.status_code, 200,
-                         "Should have been redirected to campaign with 200,"
+        self.assertEqual(response.status_code, 302,
+                         "Should have been redirected to campaign with 302,"
                          " but response was {0}".format(str(response)))
 
         # Campaign should now be accessible
