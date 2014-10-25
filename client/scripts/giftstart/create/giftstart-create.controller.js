@@ -138,6 +138,34 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.$broadcast('overlay-updated');
         };
 
+        $scope.makeUUID = function() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            });
+        };
+
+        function stagedGiftStart() {
+            return {
+                'title': $scope.title,
+                'description': $scope.description,
+                'product_url': ProductService.product.product_url,
+                'product_img_url': $scope.selectedImg,
+                'product_price': $scope.inputPrice*100,
+                'product_title': ProductService.product.title,
+                'sales_tax': $scope.salesTax,
+                'shipping': $scope.shipping,
+                'service_fee': $scope.serviceFee,
+                'total_price': $scope.totalPrice,
+                'columns': $scope.x,
+                'rows': $scope.y,
+                'shipping_state': $scope.shippingState,
+                'shipping_zip': $scope.shippingZip,
+                'gc_email': $scope.gcEmail,
+                'staging_uuid': $scope.makeUUID()
+            }
+        }
+
         $scope.next = function() {
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
@@ -190,6 +218,9 @@ GiftStarterApp.controller('GiftStartCreateController',
                     LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
                 } else {
+                    // Send giftstart to staging
+                    $http.post('/giftstart/create.json', stagedGiftStart());
+
                     PopoverService.giftstartCreateLogin = true;
                     PopoverService.setPopover('login');
                 }
