@@ -337,9 +337,9 @@ class GiftstartTestHandler(unittest.TestCase):
         # Send OAuth login deets, expect redirect to created campaign
         request = webapp2.Request.blank('/')
         request.remote_addr = '1.1.1.1'
-        request.cookies['uid'] = 'abc123'
-        request.cookies['token'] = 'my_access_token'
-        request.query_string = 'uuid={uuid}'.format(uuid=this_uuid)
+        request.cookies['uid'] = 'f123'
+        request.cookies['token'] = 'x123'
+        request.query_string = 'staging_uuid={uuid}'.format(uuid=this_uuid)
         request.method = 'GET'
         response = request.get_response(main.app)
         # TODO make this redirect to the proper path on the server

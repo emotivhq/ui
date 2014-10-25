@@ -132,11 +132,17 @@ def validate(uid, token, path):
             user[0].name = ''
         if token_pointer_map[uid[0]](user[0]) == token:
             UserLogin.register_login(uid, path)
-            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url,
-                      'token': token,
-                      'on_mailing_list': user[0].subscribed_to_mailing_list,
-                      'name': base64.urlsafe_b64encode(user[0].name),
-                      'has_pitched_in': user[0].has_pitched_in,
-                      }
+            result = {
+                'uid': uid, 'img_url': user[0].cached_profile_image_url,
+                'token': token,
+                'on_mailing_list': user[0].subscribed_to_mailing_list,
+                'name': base64.b64encode(user[0].name),
+                'has_pitched_in': user[0].has_pitched_in,
+            }
 
     return result
+
+
+def login_googleplus_user(code, redirect_url, referrer):
+    token_set = googleplus.submit_code(code, redirect_url)
+    return update_or_create('googleplus', token_set, referrer)
