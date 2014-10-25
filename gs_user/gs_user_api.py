@@ -85,20 +85,6 @@ class UserHandler(webapp2.RequestHandler):
                         'has_pitched_in': user.has_pitched_in,
                     }))
 
-        elif data['action'] == 'submit-one-time-code':
-            if data['service'] == 'googleplus':
-
-                if user is not None:
-                    UserLogin.register_login(user.uid, data['location'])
-                    self.response.write(json.dumps({
-                        'status': 'logged-in', 'uid': user.uid,
-                        'usr_img': user.cached_profile_image_url,
-                        'on_mailing_list': user.subscribed_to_mailing_list,
-                        'token': user.googleplus_token_set.access_token,
-                        'name': user.name,
-                        'has_pitched_in': user.has_pitched_in,
-                    }))
-
         elif data['action'] == 'get-long-term-token':
             if data['service'] == 'facebook':
                 referrer = data.get('referrer', {})

@@ -39,6 +39,14 @@ from storage import image_cache
 image_cache.cache_user_image_from_url = MagicMock()
 image_cache.cache_user_image_from_url.return_value = 'lolurl'
 
+from gs_user import gs_user_core
+gs_user_core.fetch_fb_image = MagicMock()
+gs_user_core.fetch_fb_image.return_value = "lol an image url"
+gs_user_core.uid_fns = {'facebook': lambda u: '1',
+                        'twitter': lambda u: '1',
+                        'googleplus': lambda u: '1'}
+
+
 fake_referrer = {
     'type': 'partner',
     'channel': 'test_channel',
@@ -58,9 +66,45 @@ class LoginTestHandler(unittest.TestCase):
     def tearDown(self):
         self.testbed.deactivate()
 
-
     def test_login_facebook(self):
-        self.assertTrue(False)
+        # Create campaign
+        this_uuid = str(uuid.uuid4())
+        request = webapp2.Request.blank('/giftstart/create.json')
+        request.method = 'POST'
+        request.body = json.dumps(dict(
+            example_giftstart.items() +
+            {'staging_uuid': this_uuid}.items()))
+        response = request.get_response(giftstart_api.handler)
+        url_title = json.loads(response.body)['giftstart_url_title']
+
+        requests.get = MagicMock()
+        requests.get.return_value = FbGetMock()
+        app_state = base64.urlsafe_b64encode(json.dumps({
+            "path": "/giftstart/create",
+            "staging_uuid": this_uuid,
+            "referrer": fake_referrer
+        }))
+
+        request = webapp2.Request.blank('/')
+        request.remote_addr = '1.1.1.1'
+        login_kwargs = {'access_token': 'abcdefg',
+                        'expires': 1234,
+                        'state': app_state}
+        request.query_string = '/?access_token={access_token}' \
+                               '&expires={expires}' \
+                               '&state={state}'.format(**login_kwargs)
+        response = request.get_response(main.app)
+        self.assertEqual(1, requests.get.call_count,
+                         "Should have GET'd details to facebook once, number "
+                         "of calls was {0}".format(requests.get.call_count))
+
+        self.assertEqual(302, response.status_code,
+                         "Should have gotten 302 redirect, response was {0}"
+                         .format(str(response)))
+        self.assertIn(url_title, response.headers['Location'],
+                      "Should have been redirected to {0}, was"
+                      " redirected to {1}"
+                      .format(url_title, response.headers['Location']))
 
     def test_login_twitter(self):
         self.assertTrue(False)
@@ -77,9 +121,9 @@ class LoginTestHandler(unittest.TestCase):
         url_title = json.loads(response.body)['giftstart_url_title']
 
         requests.post = MagicMock()
-        requests.post.return_value = PostMock('google post')
+        requests.post.return_value = GplusPostMock()
         requests.Session.get = MagicMock()
-        requests.Session.get.return_value = PostMock('google get')
+        requests.Session.get.return_value = GplusPostMock()
         app_state = base64.urlsafe_b64encode(json.dumps({
             "path": "/giftstart/create",
             "staging_uuid": this_uuid,
@@ -105,13 +149,11 @@ class LoginTestHandler(unittest.TestCase):
         self.assertIn(url_title, response.headers['Location'],
                       "Should have been redirected to {0}, was"
                       " redirected to {1}"
-                      .format(url_title,
-                              response.headers['Location']))
+                      .format(url_title, response.headers['Location']))
 
 
-class PostMock:
-
-    def __init__(self, type):
+class GplusPostMock:
+    def __init__(self):
         self.body = json.dumps({
             "access_token": "1/fFAGRNJru1FTz70BzhT3Zg",
             "expires_in": 3920,
@@ -124,3 +166,8 @@ class PostMock:
             "expires_in": 3920,
             "token_type": "Bearer"
         })
+
+
+class FbGetMock:
+    def __init__(self):
+        self.content = 'access_token=abcd1234&expires=12345'

@@ -14,6 +14,7 @@ def get_extended_key(auth_token):
                             "&client_id=" + APP_ID +
                             "&client_secret=" + APP_SECRET +
                             "&fb_exchange_token=" + auth_token)
-    result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
+    result_dict = {k: v for k, v in [pair.split('=')
+                                     for pair in response.content.split('&')]}
     return FacebookTokenSet().populate(result_dict['access_token'], result_dict['expires'])
 

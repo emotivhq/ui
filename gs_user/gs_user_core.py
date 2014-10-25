@@ -82,7 +82,6 @@ def update_or_create(service, token_set, referrer):
     uid = service[0] + uid_fns[service](token_set)
     user_key = ndb.Key('User', uid)
     user = user_key.get()
-    # users = User.query(User.uid == uid).fetch()
 
     if not user:
         img_url = cache_profile_image(uid, service, token_set)
@@ -146,3 +145,8 @@ def validate(uid, token, path):
 def login_googleplus_user(code, redirect_url, referrer):
     token_set = googleplus.submit_code(code, redirect_url)
     return update_or_create('googleplus', token_set, referrer)
+
+
+def login_facebook_user(auth_token, referrer):
+    token_set = facebook.get_extended_key(auth_token)
+    return update_or_create('facebook', token_set, referrer)
