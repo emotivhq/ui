@@ -16,8 +16,6 @@ APP_URL = yaml.load(open('config.yaml'))['app_url']
 
 
 def get_auth_url(current_url):
-    print("current url:")
-    print(current_url)
     url = 'https://api.twitter.com/oauth/request_token'
     auth = OAuth1(client_key=APP_KEY, client_secret=APP_SECRET,
                   callback_uri=current_url)
@@ -49,7 +47,8 @@ def submit_verifier(oauth_token, oauth_verifier):
 
 def is_logged_in(token_set):
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=token_set.access_token,
+    auth = OAuth1(APP_KEY, APP_SECRET,
+                  resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth)
     return response.status_code == 200

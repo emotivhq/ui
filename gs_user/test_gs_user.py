@@ -21,8 +21,9 @@ import requests
 from social import OAuthTokenPair
 from google.appengine.ext import ndb
 from time import time
-from giftstart import giftstart_core
+from giftstart import giftstart_core, giftstart_create
 from pay import pay_core
+import base64
 
 # UUT
 from gs_user import gs_user_api
@@ -32,35 +33,26 @@ pay_core.stripe = MagicMock()
 
 # Mock request to email
 pay_core.requests.put = MagicMock()
-giftstart_core.giftstart_comm.send_create_notification = MagicMock()
+giftstart_create.giftstart_comm.send_create_notification = MagicMock()
 
 example_giftstart = {
-    'gift_champion_uid': 'f1234',
-    'title': 'test title what up',
-    'description': 'for every title there must be an equal and possibly related description.',
-    'special_notes': 'make it a race car',
-    'product': {
-        'product_url': 'http://yo.momma.com',
-        'img_url': 'http://yo.momma.com/assets/venus.png',
-        'price': 12300,
-        'title': '$1.23 venus!',
-        'retailer_logo': 'http://yo.momma.com/logo.png',
-        'sales_tax': 11,
-        'shipping': 23,
-        'service_fee': 9,
-        'total_price': 12343,
-        },
+    'title': 'Gonna put ' + base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw==') +
+             ' in the title also',
+    'description': 'I will just say this is in honor of ' +
+                   base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw=='),
+    'product_url': 'http://yo.momma.com',
+    'product_img_url': 'http://yo.momma.com/assets/venus.png',
+    'product_price': 12300,
+    'product_title': '$1.23 venus!',
+    'sales_tax': 11,
+    'shipping': 23,
+    'service_fee': 9,
+    'total_price': 12343,
     'columns': 3,
     'rows': 3,
-    'gc_name': 'Flombar Omaeliad',
-    'gc_phone_number': '1231231234',
-    'gc_email': 'test@giftstarter.co',
-    'shipping_name': 'Count Fluffshire',
-    'shipping_address': '123 candy palace lane',
-    'shipping_city': 'seattle',
-    'shipping_state': 'wa',
+    'shipping_state': 'WA',
     'shipping_zip': '98109',
-    'shipping_phone_number': '1231231234',
+    'gc_email': 'test@giftstarter.co',
 }
 
 
@@ -77,8 +69,7 @@ class UserStatsTestHandler(unittest.TestCase):
         self.testbed.init_blobstore_stub()
 
         # Insert user
-        user_key = ndb.Key('User', 'f1234')
-        user = User(key=user_key)
+        user = User(key=ndb.Key('User', 'f1234'))
         user.uid = 'f1234'
         user.name = 'flomae'
         user.cached_profile_image_url = 'lol not a url'
@@ -96,22 +87,18 @@ class UserStatsTestHandler(unittest.TestCase):
         giftstarts_created = 2
         for i in range(giftstarts_created):
             test_gs['title'] += str(i)
-            request = webapp2.Request.blank('/giftstart/api')
-            request.method = 'PUT'
-            request.body = json.dumps({
-                'action': 'create',
-                'uid': test_gs['gift_champion_uid'],
-                'token': 'x1234',
-                'giftstart': test_gs,
-            })
+            request = webapp2.Request.blank('/giftstart/create.json')
+            request.method = 'POST'
+            request.cookies['uid'] = 'f1234'
+            request.cookies['token'] = 'x1234'
+            request.body = json.dumps(test_gs)
 
-            response = request.get_response(giftstart_api.api)
+            response = request.get_response(giftstart_api.handler)
             self.assertEqual(response.status_code, 200,
-                            "Should accept created campaign, expected 200, "
-                            "response was " + str(response.status_code))
+                             "Should accept created campaign, expected 200, "
+                             "response was " + str(response.status_code))
 
-        request = webapp2.Request.blank('/users/' +
-                                        test_gs['gift_champion_uid'] + '.json')
+        request = webapp2.Request.blank('/users/f1234.json')
         request.method = 'GET'
         response = request.get_response(gs_user_api.stats)
         self.assertEqual(200, response.status_code,
@@ -122,34 +109,29 @@ class UserStatsTestHandler(unittest.TestCase):
         # Verify that this user has created the right number of giftstarts
         self.assertEqual(giftstarts_created,
                          len(json_response
-                             .get(test_gs['gift_champion_uid'])
+                             .get('f1234')
                              .get('giftstarts')),
                          "Should report the right number of giftstarts created"
                          ", expected " + str(giftstarts_created) +
                          ", reported was " +
                          str(len(json_response
-                                 .get(test_gs['gift_champion_uid'])
+                                 .get('f1234')
                                  .get('giftstarts'))))
-        self.assertIn('name',
-                      json_response[test_gs['gift_champion_uid']].keys(),
+        self.assertIn('name', json_response['f1234'].keys(),
                       "Response should contain user's name")
-        self.assertIn('img_url',
-                      json_response[test_gs['gift_champion_uid']].keys(),
+        self.assertIn('img_url', json_response['f1234'].keys(),
                       "Response should contain user's img url")
 
     def test_get_number_of_pitchins(self):
         test_gs = example_giftstart
 
-        request = webapp2.Request.blank('/giftstart/api')
-        request.method = 'PUT'
-        request.body = json.dumps({
-            'action': 'create',
-            'uid': test_gs['gift_champion_uid'],
-            'token': 'x1234',
-            'giftstart': test_gs,
-        })
+        request = webapp2.Request.blank('/giftstart/create.json')
+        request.method = 'POST'
+        request.cookies['uid'] = 'f1234'
+        request.cookies['token'] = 'x1234'
+        request.body = json.dumps(test_gs)
 
-        response = request.get_response(giftstart_api.api)
+        response = request.get_response(giftstart_api.handler)
         self.assertEqual(response.status_code, 200,
                          "Should accept created campaign, expected 200, "
                          "response was " + str(response.status_code))
@@ -159,7 +141,7 @@ class UserStatsTestHandler(unittest.TestCase):
         self.fake_payment('1', 'f1234', [3, 4, 5])
         self.fake_payment('1', 'f1234', [7])
 
-        request = webapp2.Request.blank('/users/' + test_gs['gift_champion_uid'] + '.json')
+        request = webapp2.Request.blank('/users/f1234.json')
         request.method = 'GET'
         response = request.get_response(gs_user_api.stats)
         self.assertEqual(200, response.status_code,
@@ -168,9 +150,13 @@ class UserStatsTestHandler(unittest.TestCase):
         json_response = json.loads(response.body)
 
         # Verify that it reports the right number of pitchins
-        self.assertEqual(num_pitchins, len(json_response.get(test_gs['gift_champion_uid']).get('pitchins')),
-                         "Should report the right number of giftstarts created, expected " + str(num_pitchins) +
-                         ", reported was " + str(len(json_response.get(test_gs['gift_champion_uid']).get('pitchins'))))
+        self.assertEqual(num_pitchins,
+                         len(json_response.get('f1234')
+                             .get('pitchins')),
+                         "Should report the right number of giftstarts "
+                         "created, expected " + str(num_pitchins) +
+                         ", reported was " +
+                         str(len(json_response.get('f1234').get('pitchins'))))
 
     def test_has_ever_pitched_in(self):
         """ Tests to make sure that the system properly tracks if users have
@@ -179,16 +165,13 @@ class UserStatsTestHandler(unittest.TestCase):
         # Create giftstart
         test_gs = example_giftstart
 
-        request = webapp2.Request.blank('/giftstart/api')
-        request.method = 'PUT'
-        request.body = json.dumps({
-            'action': 'create',
-            'uid': test_gs['gift_champion_uid'],
-            'token': 'x1234',
-            'giftstart': test_gs,
-        })
+        request = webapp2.Request.blank('/giftstart/create.json')
+        request.method = 'POST'
+        request.cookies['uid'] = 'f1234'
+        request.cookies['token'] = 'x1234'
+        request.body = json.dumps(test_gs)
 
-        response = request.get_response(giftstart_api.api)
+        response = request.get_response(giftstart_api.handler)
         self.assertEqual(response.status_code, 200,
                          "Should accept created campaign, expected 200, "
                          "response was " + str(response.status_code))

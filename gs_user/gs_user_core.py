@@ -11,9 +11,10 @@ import base64
 
 
 def save_email(uid, email):
-    user = User.query(User.uid == uid).fetch(1)[0]
-    user.email = email
-    user.put()
+    user = ndb.Key('User', uid).get()
+    if user is not None:
+        user.email = email
+        user.put()
     return user
 
 
