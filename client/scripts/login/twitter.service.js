@@ -17,7 +17,10 @@ GiftStarterApp.service('TwitterService', [
 
         var self = this;
 
-        this.login = function() {$window.open(self.auth_url, '_self')};
+        this.login = function() {
+            AppStateService.set('login_service', 'twitter');
+            $window.open(self.auth_url, '_self');
+        };
 
         this.logout = function() {
             // TODO: actually log out...?

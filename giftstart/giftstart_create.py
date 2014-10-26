@@ -25,12 +25,14 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         self.request.giftstart = json.loads(self.request.body)
         broken_param = self.find_invalid_param()
         if broken_param:
+            print("Invalid or missing param {0}".format(broken_param))
             self.response.set_status(400, "Invalid or missing param {0}"
                                      .format(broken_param))
         else:
             try:
                 self.create_giftstart()
             except ValueError as e:
+                print("Expected valid UUID or uid")
                 self.response.set_status(400, "Expected valid UUID or uid")
             except AuthError as e:
                 self.response.set_status(403, "Invalid credentials")
@@ -49,13 +51,13 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         valid &= value != 'None'
         return valid
 
-    def int_param_valid(self, param):
-        """ Check if the parameter in the received json object is an int
+    def coerce_int_param(self, param):
+        """ Tries to make numeric params ints, reports first non-intable param
         :param param: name of parameter to check
         :type param: str
         :rtype: bool
         """
-        return isinstance(self.request.giftstart.get(param), int)
+        return int(self.request.giftstart.get(param))
 
     def find_invalid_param(self):
         """ Finds and returns the name of the first invalid parameter
@@ -71,7 +73,9 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
             if not self.str_param_valid(param):
                 return param
         for param in int_params:
-            if not self.int_param_valid(param):
+            try:
+                self.request.giftstart[param] = self.coerce_int_param(param)
+            except:
                 return param
         if self.request.cookies.get('uid') is None and \
                         self.request.giftstart.get('staging_uuid') is None:

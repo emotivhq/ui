@@ -5,6 +5,7 @@ import gs_user_core
 import base64
 import yaml
 import json
+import urllib
 
 config = yaml.load(open('config.yaml'))
 
@@ -16,17 +17,34 @@ def handle_login(method_handler):
     @wraps(method_handler)
     def wrapper(*args, **kwargs):
         self = args[0]
+        self.request.cookies['test'] = 'good morning, beautiful'
         query = {} if len(self.request.query_string) < 2 else \
             {pair.split('=')[0]: pair.split('=', 1)[1]
-             for pair in self.request.query_string[2:].split('&')}
+             for pair in urllib.unquote(self.request.query_string).split('&')}
         state = json.loads(base64.b64decode(query.get('state', 'e30=')))
+        print(state)
 
-        referrer = state.get('referrer', '')
+        # TODO If im redirecting them, I shouldn't have path in state!!!
+        login_service = state.get('login_service')
+        referrer = state.get('referrer', {})
         staging_uuid = state.get('staging_uuid')
-        redirect_url = config['app_url']
+        if state.get('app_url'):
+            redirect_url = state.get('app_url')
+        else:
+            redirect_url = ''
+        if login_service == 'facebook':
+            # Handle FB login
+            user = gs_user_core.login_facebook_user(query['code'],
+                                                    redirect_url, referrer)
+            self.request.cookies['uid'] = user.uid
+            self.request.cookies['token'] = user.facebook_token_set. \
+                access_token
+            if staging_uuid:
+                self.request.query_string += '&staging_uuid=' + staging_uuid
 
-        if query.get('code'):
+        elif login_service == 'googleplus':
             # Handle googleplus login
+            print('login with googleplus')
             user = gs_user_core.login_googleplus_user(query['code'],
                                                       redirect_url, referrer)
             self.request.cookies['uid'] = user.uid
@@ -35,23 +53,13 @@ def handle_login(method_handler):
             if staging_uuid:
                 self.request.query_string += '&staging_uuid=' + staging_uuid
 
-        elif query.get('oauth_token') and query.get('oauth_verifier'):
+        elif query.get('oauth_token'):
             # Handle twitter login
             user = gs_user_core.login_twitter_user(query['oauth_token'],
                                                    query['oauth_verifier'],
                                                    referrer)
             self.request.cookies['uid'] = user.uid
             self.request.cookies['token'] = user.twitter_token_set. \
-                access_token
-            if staging_uuid:
-                self.request.query_string += '&staging_uuid=' + staging_uuid
-
-        elif query.get('access_token'):
-            # Handle FB login
-            user = gs_user_core.login_facebook_user(query['access_token'],
-                                                    referrer)
-            self.request.cookies['uid'] = user.uid
-            self.request.cookies['token'] = user.facebook_token_set.\
                 access_token
             if staging_uuid:
                 self.request.query_string += '&staging_uuid=' + staging_uuid

@@ -96,7 +96,7 @@ GiftStarterApp.controller('GiftStartCreateController',
 
         $scope.updateGiftStartImage = function() {
             Analytics.track('campaign', 'selected image changed');
-            GiftStartService.giftStart.product.img_url = $scope.selectedImg;
+            GiftStartService.giftStart.product_img_url = $scope.selectedImg;
         };
 
         $scope.priceChanged = function() {
@@ -132,7 +132,7 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.updateOverlay = function() {
             GiftStartService.giftStart.columns = $scope.x;
             GiftStartService.giftStart.rows = $scope.y;
-            GiftStartService.giftStart.product.total_price = $scope.totalPrice;
+            GiftStartService.giftStart.total_price = $scope.totalPrice;
             GiftStartService.giftStart.parts = GiftStartService.makeParts($scope.x * $scope.y, $scope.totalPrice);
             $scope.giftStart = GiftStartService.giftStart;
             $scope.$broadcast('overlay-updated');
@@ -145,7 +145,7 @@ GiftStarterApp.controller('GiftStartCreateController',
             });
         };
 
-        function stagedGiftStart() {
+        function stagedGiftStart(uuid) {
             return {
                 'title': $scope.title,
                 'description': $scope.description,
@@ -162,7 +162,7 @@ GiftStarterApp.controller('GiftStartCreateController',
                 'shipping_state': $scope.shippingState,
                 'shipping_zip': $scope.shippingZip,
                 'gc_email': $scope.gcEmail,
-                'staging_uuid': $scope.makeUUID()
+                'staging_uuid': uuid
             }
         }
 
@@ -186,28 +186,28 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            LocalStorage.set('/GiftStartCreateController/session', {
-                title: $scope.title,
-                description: $scope.description,
-                productUrl: ProductService.product.product_url,
-                productTitle: ProductService.product.title,
-                retailerLogo: ProductService.logo,
-                productImgUrl: $scope.selectedImg,
-                rows: $scope.y,
-                columns: $scope.x,
-                selectedXYSet: $scope.selectedXYSet,
-                productPrice: $scope.inputPrice*100,
-                shippingZip: $scope.shippingZip,
-                shippingState: $scope.shippingState,
-                salesTax: $scope.salesTax,
-                shipping: $scope.shipping,
-                serviceFee: $scope.serviceFee,
-                totalPrice: $scope.totalPrice,
-                specialNotes: $scope.specialNotes,
-                gcEmail: $scope.gcEmail,
-                gcName: UserService.name
-
-            });
+//            LocalStorage.set('/GiftStartCreateController/session', {
+//                title: $scope.title,
+//                description: $scope.description,
+//                productUrl: ProductService.product.product_url,
+//                productTitle: ProductService.product.title,
+//                retailerLogo: ProductService.logo,
+//                productImgUrl: $scope.selectedImg,
+//                rows: $scope.y,
+//                columns: $scope.x,
+//                selectedXYSet: $scope.selectedXYSet,
+//                productPrice: $scope.inputPrice*100,
+//                shippingZip: $scope.shippingZip,
+//                shippingState: $scope.shippingState,
+//                salesTax: $scope.salesTax,
+//                shipping: $scope.shipping,
+//                serviceFee: $scope.serviceFee,
+//                totalPrice: $scope.totalPrice,
+//                specialNotes: $scope.specialNotes,
+//                gcEmail: $scope.gcEmail,
+//                gcName: UserService.name
+//
+//            });
 
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
 
@@ -218,8 +218,11 @@ GiftStarterApp.controller('GiftStartCreateController',
                     LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
                 } else {
+                    var uuid = $scope.makeUUID();
                     // Send giftstart to staging
-                    $http.post('/giftstart/create.json', stagedGiftStart());
+                    $http.post('/giftstart/create.json',
+                        stagedGiftStart(uuid));
+                    AppStateService.set('staging_uuid', uuid);
 
                     PopoverService.giftstartCreateLogin = true;
                     PopoverService.setPopover('login');

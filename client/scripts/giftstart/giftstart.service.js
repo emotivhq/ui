@@ -71,38 +71,36 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     }
 
     var self = this;
-
-    this.createGiftStart = function() {
-        Analytics.track('campaign', 'created');
-        // Check to see that name is populated (for fb-login it is not yet)
-        if (!self.gcName) {self.gcName = UserService.name}
-
-        self.giftStart = self.buildGiftStart();
-        $location.path('/giftstart');
-        self.pitchInsInitialized = false;
-        $http({method: 'POST', url: '/giftstart/api',
-            data: {giftstart: self.giftStart, action: 'create'}})
-            .success(function(data) {self.inflateGiftStart(data)})
-            .error(function() {Analytics.track('campaign', 'campaign create failed')});
-    };
-
+//
+//    this.createGiftStart = function() {
+//        Analytics.track('campaign', 'created');
+//        // Check to see that name is populated (for fb-login it is not yet)
+//        if (!self.gcName) {self.gcName = UserService.name}
+//
+//        self.giftStart = self.buildGiftStart();
+//        $location.path('/giftstart');
+//        self.pitchInsInitialized = false;
+//        $http({method: 'POST', url: '/giftstart/api',
+//            data: {giftstart: self.giftStart, action: 'create'}})
+//            .success(function(data) {self.inflateGiftStart(data)})
+//            .error(function() {Analytics.track('campaign', 'campaign create failed')});
+//    };
+//
     this.buildGiftStart = function() {
         return {
             title: self.title,
             description: self.description,
             special_notes: self.specialNotes,
             gift_champion_uid: UserService.uid,
-            product: {
-                price: self.productPrice,
-                sales_tax: self.salesTax,
-                shipping: self.shipping,
-                service_fee: self.serviceFee,
-                total_price: self.totalPrice,
-                img_url: self.productImgUrl,
-                product_url: self.productUrl,
-                title: self.productTitle,
-                retailer_logo: self.retailerLogo
-            },
+            price: self.productPrice,
+            sales_tax: self.salesTax,
+            shipping: self.shipping,
+            service_fee: self.serviceFee,
+            total_price: self.totalPrice,
+            product_img_url: self.productImgUrl,
+            product_url: self.productUrl,
+            product_title: self.productTitle,
+            retailer_logo: self.retailerLogo,
             totalSelection: 0,
             funded: 0,
             parts: self.makeParts(self.rows * self.columns, self.totalPrice),
@@ -196,11 +194,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
             .success(function(data) {self.inflateGiftStart(data)})
             .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
-//        var x = GiftStart.get({key: url_title});
-//        var p = x.$promise;
-//        p
-//            .success(fetchSuccess)
-//            .error(fetchError);
     };
 
     this.inflateGiftStart = function(giftstart) {
@@ -210,7 +203,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.giftStart = giftstart;
 
         self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
-            self.giftStart.product.total_price);
+            self.giftStart.total_price);
         self.updateSelected();
 
         if (!(/\/giftstart\//.test($location.path()))) {
@@ -294,8 +287,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 if (response.giftstart.description) {
                     self.giftStart.description = response.giftstart.description;
                 }
-                if (response.giftstart.product.img_url) {
-                    self.giftStart.product.img_url = response.giftstart.product.img_url + '#' +
+                if (response.giftstart.product_img_url) {
+                    self.giftStart.product_img_url =
+                        response.giftstart.product_img_url + '#' +
                         new Date().getTime();
                 }
                 if (response.giftstart.gc_name) {

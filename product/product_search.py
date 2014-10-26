@@ -58,6 +58,7 @@ class SearchProduct(FeedProduct):
             return result[0].text if result else None
 
         title = xfind('.//{ns}ItemAttributes/{ns}Title')
+        title = title[:499] if title is not None else None
         description = xfind('.//{ns}EditorialReviews/{ns}EditorialReview/'
                             '{ns}Content')
         price = xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount')

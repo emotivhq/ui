@@ -149,8 +149,8 @@ def login_googleplus_user(code, redirect_url, referrer):
     return update_or_create('googleplus', token_set, referrer)
 
 
-def login_facebook_user(auth_token, referrer):
-    token_set = facebook.get_extended_key(auth_token)
+def login_facebook_user(code, redirect_url, referrer):
+    token_set = facebook.get_extended_key(code, redirect_url)
     return update_or_create('facebook', token_set, referrer)
 
 

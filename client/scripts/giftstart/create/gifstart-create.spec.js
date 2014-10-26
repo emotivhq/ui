@@ -6,7 +6,7 @@ describe('GiftStartCreateController', GiftStartCreateControllerSpec);
 
 function GiftStartCreateControllerSpec() {
     var scope, exampleGiftStart, createController, $httpBackend,
-        ProductService;
+        ProductService, AppStateService;
 
     beforeEach(angular.mock.module('GiftStarterApp'));
     beforeEach(angular.mock.module('ngAB'));
@@ -17,6 +17,7 @@ function GiftStartCreateControllerSpec() {
         var $rootScope = $injector.get('$rootScope');
         var $controller = $injector.get('$controller');
         ProductService = $injector.get('ProductService');
+        AppStateService = $injector.get('AppStateService');
 
         exampleGiftStart = {
             'title': 'Example giftstart',
@@ -77,6 +78,8 @@ function GiftStartCreateControllerSpec() {
             title: '$1.23 venus!'};
         scope.makeUUID = function() {return uuidGiftStart.staging_uuid};
 
+        var setSpy = spyOn(AppStateService, 'set');
+
         // mock form validity
         scope.campaignForm = {$valid: true};
 
@@ -104,6 +107,8 @@ function GiftStartCreateControllerSpec() {
 
         // It should have sent request here!
         $httpBackend.flush();
+
+        expect(setSpy).toHaveBeenCalled();
     }
 
 

@@ -90,15 +90,16 @@ class LoginTestHandler(unittest.TestCase):
         app_state = base64.urlsafe_b64encode(json.dumps({
             "path": "/giftstart/create",
             "staging_uuid": this_uuid,
-            "referrer": fake_referrer
+            "referrer": fake_referrer,
+            "login_service": "facebook"
         }))
 
         request = webapp2.Request.blank('/')
         request.remote_addr = '1.1.1.1'
-        login_kwargs = {'access_token': 'abcdefg',
+        login_kwargs = {'code': 'abcdefg',
                         'expires': 1234,
                         'state': app_state}
-        request.query_string = '/?access_token={access_token}' \
+        request.query_string = '/?code={code}' \
                                '&expires={expires}' \
                                '&state={state}'.format(**login_kwargs)
         response = request.get_response(main.app)
@@ -135,7 +136,8 @@ class LoginTestHandler(unittest.TestCase):
         app_state = base64.urlsafe_b64encode(json.dumps({
             "path": "/giftstart/create",
             "staging_uuid": this_uuid,
-            "referrer": fake_referrer
+            "referrer": fake_referrer,
+            "login_service": "twitter"
         }))
 
         request = webapp2.Request.blank('/')
@@ -177,7 +179,8 @@ class LoginTestHandler(unittest.TestCase):
         app_state = base64.urlsafe_b64encode(json.dumps({
             "path": "/giftstart/create",
             "staging_uuid": this_uuid,
-            "referrer": fake_referrer
+            "referrer": fake_referrer,
+            "login_service": "googleplus"
         }))
 
         request = webapp2.Request.blank('/')

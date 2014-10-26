@@ -44,6 +44,7 @@ GiftStarterApp.service('GooglePlusService', [
         };
 
         this.login = function() {
+            AppStateService.set('login_service', 'googleplus');
             self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
                 '?scope=' + encodeURIComponent(
                 'https://www.googleapis.com/auth/plus.login') +
