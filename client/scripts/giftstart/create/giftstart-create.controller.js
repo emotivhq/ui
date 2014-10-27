@@ -5,11 +5,11 @@
 GiftStarterApp.controller('GiftStartCreateController',
     ['$scope','GiftStartService','$location','ProductService',
         'UserService','PopoverService','$http','$timeout',
-        'Analytics','AppStateService','LocalStorage',
+        'Analytics','AppStateService',
 
     function($scope,  GiftStartService,  $location,  ProductService,
              UserService,  PopoverService,  $http,  $timeout, Analytics,
-             AppStateService, LocalStorage) {
+             AppStateService) {
         var self = this;
 
         $scope.inputPrice = ProductService.product.price/100;
@@ -155,6 +155,16 @@ GiftStarterApp.controller('GiftStartCreateController',
             }
         }
 
+        function clearCreateData() {
+            $scope.title = '';
+            $scope.description = '';
+            $scope.selectedImg = '';
+            $scope.shippingZip = '';
+            $scope.shippingState = '';
+            $scope.inputPrice = 0;
+            $scope.shippingDetailsSubmitted = false;
+        }
+
         $scope.next = function() {
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
@@ -181,6 +191,7 @@ GiftStarterApp.controller('GiftStartCreateController',
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
                     GiftStartService.createGiftStart();
+                    clearCreateData();
                 } else {
                     var uuid = $scope.makeUUID();
                     // Send giftstart to staging
