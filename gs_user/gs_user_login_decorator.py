@@ -20,8 +20,10 @@ def handle_login(method_handler):
         query = {} if len(self.request.query_string) < 2 else \
             {urllib.unquote(pair).split('=')[0]: pair.split('=', 1)[1]
              for pair in self.request.query_string.split('&')}
-        state = json.loads(base64.b64decode(query.get('state', 'e30=')))
-        print(state)
+        state = json.loads(
+            base64.b64decode(
+                urllib.unquote(
+                    query.get('state', 'e30='))))
 
         # TODO If im redirecting them, I shouldn't have path in state!!!
         login_service = state.get('login_service')
