@@ -245,6 +245,13 @@ class BUTTER_FEED_MOCK2:
         })
 
 
+class B_AND_H_FEED_MOCK:
+    def __init__(self):
+        self.status_code = 200
+        with open('feeds/bh_test_data.txt') as feed_file:
+            self.content = feed_file.read()
+
+
 class FeedsTestHandler(unittest.TestCase):
 
     def setUp(self):
@@ -258,8 +265,6 @@ class FeedsTestHandler(unittest.TestCase):
         self.get_store = requests.get
 
         self.fake_get = MagicMock()
-        self.fake_get.return_value = BUTTER_FEED_MOCK()
-        requests.get = self.requests_get_mock()
 
     def requests_get_mock(self):
         def conditional_get(url):
@@ -314,6 +319,9 @@ class FeedsTestHandler(unittest.TestCase):
                              "Expected 405 Method Not Allowed for method "
                              "{method}, got: {resp}".format(resp=str(resp),
                                                             method=method))
+
+        self.fake_get.return_value = BUTTER_FEED_MOCK()
+        requests.get = self.requests_get_mock()
         resp = do_req('POST')
         self.assertEqual(200, resp.status_code,
                          "Expected 200 for GET, got {resp}".format(resp=resp))
@@ -321,6 +329,8 @@ class FeedsTestHandler(unittest.TestCase):
     def test_get_butter_feed(self):
         """ GET'ing /feeds/update should get butter feed
         """
+        self.fake_get.return_value = BUTTER_FEED_MOCK()
+        requests.get = self.requests_get_mock()
         req = webapp2.Request.blank('/feeds/butter-LONDON/update')
         req.method = 'POST'
         resp = req.get_response(feeds_api.handler)
@@ -335,6 +345,27 @@ class FeedsTestHandler(unittest.TestCase):
         feed_products = FeedProduct.query().fetch()
         self.assertEqual(2, len(feed_products),
                          "There should be 2 product in the database, but "
+                         "found {0}".format(len(feed_products)))
+
+    def test_get_b_and_h_feed(self):
+        """ Should be able to parse B&H feed and successfully stash products
+        """
+        self.fake_get.return_value = B_AND_H_FEED_MOCK()
+        requests.get = self.requests_get_mock()
+        req = webapp2.Request.blank('/feeds/B-and-H/update')
+        req.method = 'POST'
+        resp = req.get_response(feeds_api.handler)
+        self.assertEqual(200, resp.status_code,
+                         "Should get a 200 from POST to "
+                         "/feeds/b-and-h/update, got: " + str(resp))
+
+        self.assertEqual(1, self.fake_get.call_count,
+                         "Expected requests.get call_count to be 1, was {0}"
+                         .format(self.fake_get.call_count))
+
+        feed_products = FeedProduct.query().fetch()
+        self.assertEqual(8, len(feed_products),
+                         "There should be 8 products in the database, but "
                          "found {0}".format(len(feed_products)))
 
     def test_feed_cleared(self):
