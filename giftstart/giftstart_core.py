@@ -68,6 +68,8 @@ def hot_campaigns(num_campaigns):
 
 
 def does_user_exist(uid, token):
+    print(uid)
+    print(token)
     login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter'}
     if uid[0] not in login_service_map.keys():
         return False

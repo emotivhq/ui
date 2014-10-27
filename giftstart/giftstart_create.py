@@ -87,8 +87,8 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         """ Create giftstart """
         giftstart = self.request.giftstart
 
-        uid = self.request.cookies.get('uid')
-        token = self.request.cookies.get('token')
+        uid = self.request.cookies.get('uid', '').replace('%22', '')
+        token = self.request.cookies.get('token', '').replace('%22', '')
         if (giftstart.get('staging_uuid')) is None:
             # Then there must be valid uid/token sent
             if uid is not None:
@@ -109,7 +109,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         # Check if running in development env
         if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
             gs.product_img_url = storage.image_cache.cache_product_image(
-                giftstart['product']['img_url'], gs.gsid)
+                giftstart['product_img_url'], gs.gsid)
         gs.put()
 
         giftstart_comm.send_create_notification(gs)

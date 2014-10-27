@@ -70,13 +70,32 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     var self = this;
 
+    this.createGiftStart = function() {
+        Analytics.track('campaign', 'created');
+        // Check to see that name is populated (for fb-login it is not yet)
+        if (!self.gcName) {self.gcName = UserService.name}
+
+        self.giftStart = self.buildGiftStart();
+        var payload = self.giftStart;
+        payload.uid =
+//        $location.path('/giftstart');
+        self.pitchInsInitialized = false;
+        $http({method: 'POST', url: '/giftstart/create.json',
+            data: self.giftStart})
+            .success(function(data) {self.inflateGiftStart(data)})
+            .error(function(reason) {
+                console.log(reason);
+                Analytics.track('campaign', 'campaign create failed');
+            });
+    };
+
     this.buildGiftStart = function() {
         return {
             title: self.title,
             description: self.description,
             special_notes: self.specialNotes,
             gift_champion_uid: UserService.uid,
-            price: self.productPrice,
+            product_price: self.productPrice,
             sales_tax: self.salesTax,
             shipping: self.shipping,
             service_fee: self.serviceFee,

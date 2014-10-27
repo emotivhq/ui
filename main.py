@@ -17,9 +17,11 @@ class MainHandler(webapp2.RequestHandler):
     @handle_login
     def get(self):
         if self.request.cookies.get('uid'):
-            self.response.set_cookie('uid', self.request.cookies['uid'])
+            self.response.set_cookie('uid', self.request.cookies['uid']
+                                     .replace('%22', ''))
         if self.request.cookies.get('token'):
-            self.response.set_cookie('token', self.request.cookies['token'])
+            self.response.set_cookie('token', self.request.cookies['token']
+                                     .replace('%22', ''))
 
         # Check for create redirect
         if self.request.get('state'):
@@ -32,7 +34,7 @@ class MainHandler(webapp2.RequestHandler):
                     .fetch(1)
 
                 if len(gss):
-                    uid = self.request.cookies['uid']
+                    uid = self.request.cookies['uid'].replace('%22', '')
                     user = ndb.Key('User', uid).get()
                     gss[0].gift_champion_uid = uid
                     gss[0].gc_name = user.name
@@ -40,6 +42,7 @@ class MainHandler(webapp2.RequestHandler):
                     self.redirect('/giftstart/' + gss[0].giftstart_url_title)
                     return
 
+        print(self.response.headers)
         # JK! Just render the app
         self.response.write(render_app(self.request))
 

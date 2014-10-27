@@ -45,20 +45,6 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
 
-        if (ProductService.product.product_url == "") {
-            if (!LocalStorage.get('/GiftStartCreateController/referral') &&
-                !LocalStorage.get('/GiftStartCreateController/session')) {
-                // TODO: false positive here when forwarded from butter button... what's going on?
-//                $location.path("");
-            }
-//            if (AppStateService.state) {
-//                if (!AppStateService.state.createSession) {
-//                    // User navigated directly here, direct them to home page
-//                    $location.path("");
-//                }
-//            }
-        }
-
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
                 Analytics.track('campaign', 'shipping updated');
@@ -186,36 +172,11 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-//            LocalStorage.set('/GiftStartCreateController/session', {
-//                title: $scope.title,
-//                description: $scope.description,
-//                productUrl: ProductService.product.product_url,
-//                productTitle: ProductService.product.title,
-//                retailerLogo: ProductService.logo,
-//                productImgUrl: $scope.selectedImg,
-//                rows: $scope.y,
-//                columns: $scope.x,
-//                selectedXYSet: $scope.selectedXYSet,
-//                productPrice: $scope.inputPrice*100,
-//                shippingZip: $scope.shippingZip,
-//                shippingState: $scope.shippingState,
-//                salesTax: $scope.salesTax,
-//                shipping: $scope.shipping,
-//                serviceFee: $scope.serviceFee,
-//                totalPrice: $scope.totalPrice,
-//                specialNotes: $scope.specialNotes,
-//                gcEmail: $scope.gcEmail,
-//                gcName: UserService.name
-//
-//            });
-
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
 
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
-                    LocalStorage.remove('/GiftStartCreateController/session');
-                    LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
                 } else {
                     var uuid = $scope.makeUUID();
@@ -259,15 +220,6 @@ GiftStarterApp.controller('GiftStartCreateController',
 
         extractReferral();
 
-        var session = LocalStorage.get('/GiftStartCreateController/session');
-        var referral = LocalStorage.get('/GiftStartCreateController/referral');
-        if (session) {
-            restoreFromSession(session);
-        }  else if (referral) {
-            restoreFromReferral(referral);
-        }
-        LocalStorage.remove('/GiftStartCreateController/session');
-        LocalStorage.remove('/GiftStartCreateController/referral');
 
         function extractReferral() {
             console.log($location.search());
@@ -277,13 +229,6 @@ GiftStarterApp.controller('GiftStartCreateController',
                 $location.search().img_url &&
                 $location.search().source) {
                 console.log($location.search());
-                LocalStorage.set('/GiftStartCreateController/referral', {
-                    product_url: $location.search().product_url,
-                    productTitle: $location.search().title,
-                    price: $location.search().price,
-                    productImgUrl: $location.search().img_url,
-                    source: $location.search().source
-                });
                 $location.search('product_url', null);
                 $location.search('title', null);
                 $location.search('price', null);
