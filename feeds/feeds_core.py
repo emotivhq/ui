@@ -66,7 +66,7 @@ def make_b_and_h_product(feed_line, headers):
                 price=int(float(bh_product['Price'].replace(',', ''))*100),
                 img=bh_product['image URL'],
                 url=bh_product['Item URL'],
-                retailer='B and H',
+                retailer='B&H Photo Video',
                 description=bh_product['Item Name'],
                 keywords='camera, photo, video',
                 sku='BH SKU',
