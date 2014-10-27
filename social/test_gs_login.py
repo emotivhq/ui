@@ -99,7 +99,7 @@ class LoginTestHandler(unittest.TestCase):
         login_kwargs = {'code': 'abcdefg',
                         'expires': 1234,
                         'state': app_state}
-        request.query_string = '/?code={code}' \
+        request.query_string = 'code={code}' \
                                '&expires={expires}' \
                                '&state={state}'.format(**login_kwargs)
         response = request.get_response(main.app)
@@ -145,7 +145,7 @@ class LoginTestHandler(unittest.TestCase):
         login_kwargs = {'oauth_token': '1234',
                         'oauth_verifier': 'abadfsdfgs',
                         'state': app_state}
-        request.query_string = '/?oauth_token={oauth_token}' \
+        request.query_string = 'oauth_token={oauth_token}' \
                                '&oauth_verifier={oauth_verifier}' \
                                '&state={state}'.format(**login_kwargs)
         response = request.get_response(main.app)
@@ -187,7 +187,7 @@ class LoginTestHandler(unittest.TestCase):
         request.remote_addr = '1.1.1.1'
         login_kwargs = {'code': 'abcdefg',
                         'state': app_state}
-        request.query_string = '/?code={code}&state={state}'\
+        request.query_string = 'code={code}&state={state}'\
             .format(**login_kwargs)
         response = request.get_response(main.app)
         self.assertEqual(1, requests.post.call_count,

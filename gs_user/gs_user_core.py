@@ -127,18 +127,18 @@ token_pointer_map = {
 
 def validate(uid, token, path):
     result = None
-    user = User.query(User.uid == uid).fetch(1)
+    user = ndb.Key('User', uid).get()
     if user:
-        if user[0].name is None:
-            user[0].name = ''
-        if token_pointer_map[uid[0]](user[0]) == token:
+        if user.name is None:
+            user.name = ''
+        if token_pointer_map[uid[0]](user) == token:
             UserLogin.register_login(uid, path)
             result = {
-                'uid': uid, 'img_url': user[0].cached_profile_image_url,
+                'uid': uid, 'img_url': user.cached_profile_image_url,
                 'token': token,
-                'on_mailing_list': user[0].subscribed_to_mailing_list,
-                'name': base64.b64encode(user[0].name),
-                'has_pitched_in': user[0].has_pitched_in,
+                'on_mailing_list': user.subscribed_to_mailing_list,
+                'name': base64.b64encode(user.name),
+                'has_pitched_in': user.has_pitched_in,
             }
 
     return result

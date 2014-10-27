@@ -44,7 +44,6 @@ def handle_login(method_handler):
 
         elif login_service == 'googleplus':
             # Handle googleplus login
-            print('login with googleplus')
             user = gs_user_core.login_googleplus_user(query['code'],
                                                       redirect_url, referrer)
             self.request.cookies['uid'] = user.uid

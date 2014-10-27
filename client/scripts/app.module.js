@@ -25,32 +25,33 @@ GiftStarterApp.service('AppStateService', [
         function get(key) {return state[key]}
         function remove(key) {delete state[key]}
 
-        this.getOauthRedirectUrl = function() {
-//            $location.search('state', );
-            var url = $window.location.protocol + '//' + $window.location.host
-                + '/?state=' + self.base64State();
-            console.log(url);
-            return url;
-//            $location.search('state', null);
-//            return url;
-        };
+        this.getOauthRedirectUrl = getOauthRedirectUrl;
 
         this.path = $location.path();
 
+        // Remove OAuth params
+        $location.search('code', null);
+        $location.search('oauth_verifier', null);
+        $location.search('oauth_token', null);
+        $location.search('authuser', null);
+        $location.search('num_sessions', null);
+        $location.search('session_state', null);
+        $location.search('prompt', null);
+
+        // Remove FB OAuth fragment
+        if ($location.hash() == '_=_') {
+            $location.hash('');
+        }
+
+        function getOauthRedirectUrl() {
+            return $window.location.protocol + '//' + $window.location.host
+                + '/?state=' + self.base64State();
+        }
+
+
+
         // Returns encoded app state for persisting across OAuth transitions
         this.base64State = function() {
-//            var state = {};
-//            if ($location.path() == '/giftstart') {state.gsid = $location.search()['gs-id']}
-//            if (/\/giftstart\/[a-zA-Z0-9]/.test($location.path())) {state.title_url = $location.path().split('/')[$location.path().split('/').length - 1]}
-//            if (self.selectedParts) {state.selectedParts = self.selectedParts}
-//            if (self.contributing != null) {state.contributing = self.contributing}
-//            if (self.popover) {
-//                state.popover = self.popover;
-//                PopoverService.setPopover(self.popover);
-//            }
-//            if (self.thanks) {state.thanks = self.thanks}
-//            if (self.createSession != null) {state.createSession = self.createSession}
-
             state.path = self.path;
             state.app_url = $window.location.protocol + '//' +
                 $window.location.host + '/';

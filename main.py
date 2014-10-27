@@ -16,14 +16,20 @@ config = yaml.load(open('config.yaml'))
 class MainHandler(webapp2.RequestHandler):
     @handle_login
     def get(self):
+        if self.request.cookies.get('uid'):
+            self.response.set_cookie('uid', self.request.cookies['uid'])
+        if self.request.cookies.get('token'):
+            self.response.set_cookie('token', self.request.cookies['token'])
+
         # Check for create redirect
         if self.request.get('state'):
-            state = json.loads(base64.b64decode(self.request.get('state',
-                                                                 'e30=')))
+            state = json.loads(base64.b64decode(
+                self.request.get('state', 'e30=')))
             staging_uuid = state.get('staging_uuid')
             if bool(staging_uuid) and bool(self.request.cookies['uid']):
                 gss = GiftStart.query(GiftStart.staging_uuid ==
-                                      self.request.get('staging_uuid')).fetch(1)
+                                      self.request.get('staging_uuid'))\
+                    .fetch(1)
 
                 if len(gss):
                     uid = self.request.cookies['uid']
@@ -32,6 +38,7 @@ class MainHandler(webapp2.RequestHandler):
                     gss[0].gc_name = user.name
                     gss[0].put()
                     self.redirect('/giftstart/' + gss[0].giftstart_url_title)
+                    print(self.response.headers)
                     return
 
         # JK! Just render the app
