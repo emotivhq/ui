@@ -38,7 +38,6 @@ class MainHandler(webapp2.RequestHandler):
                     gss[0].gc_name = user.name
                     gss[0].put()
                     self.redirect('/giftstart/' + gss[0].giftstart_url_title)
-                    print(self.response.headers)
                     return
 
         # JK! Just render the app

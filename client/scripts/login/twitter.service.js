@@ -37,7 +37,8 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.submitVerifier = function() {
-            $http({method: 'POST', url: '/users', data: {action: 'submit-verifier', service: 'twitter',
+            $http({method: 'POST', url: '/users', data: {
+                action: 'submit-verifier', service: 'twitter',
                 verifier: self.verfier, oauth_token: self.oauth_token,
                 location: $location.path() + $window.location.search,
                 referrer: AppStateService.referrer}})
@@ -68,7 +69,8 @@ GiftStarterApp.service('TwitterService', [
         }
 
         if (AppStateService.oauthToken) {
-            twitterOauthCallback(AppStateService.oauthToken, AppStateService.oauthVerifier);
+            twitterOauthCallback(AppStateService.oauthToken,
+                AppStateService.oauthVerifier);
         }
     }
 ]);

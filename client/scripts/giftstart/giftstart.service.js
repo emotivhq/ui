@@ -62,30 +62,14 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     // Restore from state
     this.preselectedParts = [];
-    if (AppStateService.state) {
-        AppStateService.state.gsid = null;
-        if (AppStateService.state.selectedParts) {
-            this.preselectedParts = AppStateService.state.selectedParts;
-            AppStateService.state.selectedParts = null;
-        }
+    if (AppStateService.get('selectedParts')) {
+        this.preselectedParts = AppStateService.get('selectedParts');
+        AppStateService.remove('selectedParts');
     }
+    $rootScope.$on('giftstart-loaded', restartPitchin);
 
     var self = this;
-//
-//    this.createGiftStart = function() {
-//        Analytics.track('campaign', 'created');
-//        // Check to see that name is populated (for fb-login it is not yet)
-//        if (!self.gcName) {self.gcName = UserService.name}
-//
-//        self.giftStart = self.buildGiftStart();
-//        $location.path('/giftstart');
-//        self.pitchInsInitialized = false;
-//        $http({method: 'POST', url: '/giftstart/api',
-//            data: {giftstart: self.giftStart, action: 'create'}})
-//            .success(function(data) {self.inflateGiftStart(data)})
-//            .error(function() {Analytics.track('campaign', 'campaign create failed')});
-//    };
-//
+
     this.buildGiftStart = function() {
         return {
             title: self.title,
@@ -324,17 +308,17 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (self.giftStart.totalSelection > 0) {
             Analytics.track('pitchin', 'pitchin button clicked');
             PopoverService.contributeLogin = true;
-            LocalStorage.set('/GiftStartService/contributeLogin', true);
+            AppStateService.set('contributeLogin', true);
             PopoverService.nextPopover();
         } else {console.log("Nothing selected!")}
     };
 
     function restartPitchin() {
-        if (LocalStorage.get('/GiftStartService/contributeLogin')) {
+        if (AppStateService.get('contributeLogin')) {
+            AppStateService.remove('contributeLogin');
             self.pitchIn();
         }
     }
-    $rootScope.$on('login-success', restartPitchin);
 
     function checkForSync() {
         $http({

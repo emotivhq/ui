@@ -11,8 +11,8 @@ console.log("ver54");
 
 
 GiftStarterApp.service('AppStateService', [
-            '$location','$window','PopoverService',
-    function($location,  $window,  PopoverService) {
+            '$location','$window','$rootScope',
+    function($location,  $window,  $rootScope) {
 
         var self = this;
         var state = {};
@@ -25,7 +25,10 @@ GiftStarterApp.service('AppStateService', [
         function get(key) {return state[key]}
         function remove(key) {delete state[key]}
 
+        this.base64State = base64State;
         this.getOauthRedirectUrl = getOauthRedirectUrl;
+        this.overlayState = overlayState;
+        this.thanksState = thanksState;
 
         this.path = $location.path();
 
@@ -48,36 +51,35 @@ GiftStarterApp.service('AppStateService', [
                 + '/?state=' + self.base64State();
         }
 
-
-
         // Returns encoded app state for persisting across OAuth transitions
-        this.base64State = function() {
+        function base64State() {
             state.path = self.path;
             state.app_url = $window.location.protocol + '//' +
                 $window.location.host + '/';
             return btoa(JSON.stringify(state));
-        };
+        }
 
         this.setPath = function(path) {self.path = path};
 
-        this.overlayState = function(selectedParts) {
+        function overlayState(selectedParts) {
             set('selectedParts', selectedParts);
-        };
+        }
 
-        this.thanksState = function(thanksData) {
+        function thanksState(thanksData) {
             set('thanks', thanksData);
-        };
-
+        }
 
         if ($location.search().state) {
-            this.state = JSON.parse($window.atob($location.search()['state']));
+            state = JSON.parse($window.atob($location.search()['state']));
+            console.log('parsed state', state);
             $location.search('state', null);
-            if (this.state.title_url) {
-                $location.path('/giftstart/' + this.state.title_url);
+            if (state.title_url) {
+                $location.path('/giftstart/' + state.title_url);
             }
-            if (this.state.path) {
-                $location.path(this.state.path);
+            if (state.path) {
+                $location.path(state.path);
             }
+            $rootScope.$broadcast('state-parsed');
         }
 
         if ($location.search().code && $location.search().session_state && $location.search().authuser) {
@@ -135,6 +137,7 @@ GiftStarterApp.service('AppStateService', [
             };
             this.giftstartReferralData = $location.search();
         }
+
     }
 ]);
 
