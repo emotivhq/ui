@@ -55,6 +55,15 @@ def make_b_and_h_product(feed_line, headers):
     :type bh_product: dict
     :rtype: FeedProduct
     """
+    def make_img_url(thumbnail_url):
+        """
+        :type thumbnail_url: str
+        :rtype: str
+        """
+        id_num = thumbnail_url.split('/')[-1]
+        return 'http://static.bhphoto.com/images/images500x500/{id_num}'\
+            .format(id_num=id_num)
+
     bh_product = {k: v for k, v in zip(headers, feed_line)}
     try:
         if 'Y' in bh_product.get('Stock'):
@@ -64,7 +73,8 @@ def make_b_and_h_product(feed_line, headers):
                 key=key,
                 title=bh_product['Item Name'],
                 price=int(float(bh_product['Price'].replace(',', ''))*100),
-                img=bh_product['image URL'],
+                img=make_img_url(bh_product['image URL']),
+                thumbnail=bh_product['image URL'],
                 url=bh_product['Item URL'],
                 retailer='B&H Photo Video',
                 description=bh_product['Item Name'],
