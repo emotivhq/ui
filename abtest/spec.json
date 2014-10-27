@@ -19,7 +19,7 @@
             "find": "<p class=\"explainer\">Need a wedding, birthday, or baby shower present\\? GiftStart it!</p>",
             "replace": "<h3 class=\"headline\">Ready to gift?  Start here!</h3>"
         }, {
-            "file": "/templates/angular/product-search.html",
+            "file": "/scripts/product/product-search.html",
             "removeEle": "label.block"
         }, {
             "file": "/scripts/home/home.html",
