@@ -19,7 +19,7 @@ describe('GiftStart Overlay', function() {
         cols = 3;
         // TODO: this should read from disk - very unDRY
         $templateCache.put('/templates/angular/overlay.html',
-            '<img ng-src="{{giftstart.product.img_url}}"/>\n<table class="overlay"></table>');
+            '<img ng-src="{{giftstart.product_img_url}}"/>\n<table class="overlay"></table>');
         GiftStartService.initiateGiftStart('title', 'description', 'productImgUrl', 500, 650, 'productUrl', rows, cols);
 
         scope = $rootScope.$new();

@@ -11,9 +11,10 @@ import base64
 
 
 def save_email(uid, email):
-    user = User.query(User.uid == uid).fetch(1)[0]
-    user.email = email
-    user.put()
+    user = ndb.Key('User', uid).get()
+    if user is not None:
+        user.email = email
+        user.put()
     return user
 
 
@@ -81,7 +82,6 @@ def update_or_create(service, token_set, referrer):
     uid = service[0] + uid_fns[service](token_set)
     user_key = ndb.Key('User', uid)
     user = user_key.get()
-    # users = User.query(User.uid == uid).fetch()
 
     if not user:
         img_url = cache_profile_image(uid, service, token_set)
@@ -105,10 +105,12 @@ def update_or_create(service, token_set, referrer):
     return user
 
 
+info_map = {'f': lambda u: facebook.get_user_info(u),
+            't': lambda u: twitter.get_user_info(u),
+            'g': lambda u: googleplus.get_user_info(u)}
+
+
 def get_user_info(user):
-    info_map = {'f': lambda u: facebook.get_user_info(u),
-                't': lambda u: twitter.get_user_info(u),
-                'g': lambda u: googleplus.get_user_info(u)}
     return info_map[user.uid[0]](user)
 
 
@@ -125,17 +127,33 @@ token_pointer_map = {
 
 def validate(uid, token, path):
     result = None
-    user = User.query(User.uid == uid).fetch(1)
+    user = ndb.Key('User', uid).get()
     if user:
-        if user[0].name is None:
-            user[0].name = ''
-        if token_pointer_map[uid[0]](user[0]) == token:
+        if user.name is None:
+            user.name = ''
+        if token_pointer_map[uid[0]](user) == token:
             UserLogin.register_login(uid, path)
-            result = {'uid': uid, 'img_url': user[0].cached_profile_image_url,
-                      'token': token,
-                      'on_mailing_list': user[0].subscribed_to_mailing_list,
-                      'name': base64.urlsafe_b64encode(user[0].name),
-                      'has_pitched_in': user[0].has_pitched_in,
-                      }
+            result = {
+                'uid': uid, 'img_url': user.cached_profile_image_url,
+                'token': token,
+                'on_mailing_list': user.subscribed_to_mailing_list,
+                'name': base64.b64encode(user.name),
+                'has_pitched_in': user.has_pitched_in,
+            }
 
     return result
+
+
+def login_googleplus_user(code, redirect_url, referrer):
+    token_set = googleplus.submit_code(code, redirect_url)
+    return update_or_create('googleplus', token_set, referrer)
+
+
+def login_facebook_user(code, redirect_url, referrer):
+    token_set = facebook.get_extended_key(code, redirect_url)
+    return update_or_create('facebook', token_set, referrer)
+
+
+def login_twitter_user(oauth_token, oauth_verifier, referrer):
+    token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
+    return update_or_create('twitter', token_set, referrer)

@@ -9,7 +9,7 @@ os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 import unittest
 import webapp2
 import json
-from google.appengine.ext import testbed
+from google.appengine.ext import testbed, ndb
 from datetime import datetime, timedelta
 import yaml
 import Queue
@@ -17,6 +17,7 @@ import threading
 from tl.testing.thread import ThreadJoiner
 from mock import MagicMock
 from time import time
+import base64
 
 # UUT
 from pay import pay_api, PitchIn, pay_core
@@ -39,33 +40,23 @@ secret = yaml.load(open('secret.yaml'))
 stripe.api_key = secret['stripe_auth']['app_secret']
 
 example_giftstart = {
-    'gift_champion_uid': 'f1234',
-    'title': 'test title what up',
-    'description': 'for every title there must be an equal and possibly '
-                   'related description.',
-    'special_notes': 'make it a race car',
-    'product': {
-        'product_url': 'http://yo.momma.com',
-        'img_url': 'http://yo.momma.com/assets/venus.png',
-        'price': 12300,
-        'title': '$1.23 venus!',
-        'retailer_logo': 'http://yo.momma.com/logo.png',
-        'sales_tax': 11,
-        'shipping': 23,
-        'service_fee': 9,
-        'total_price': 12334,
-    },
+    'title': 'Gonna put ' + base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw==') +
+             ' in the title also',
+    'description': 'I will just say this is in honor of ' +
+                   base64.b64decode('TWFyaW9uIERlc21hemnDqHJlcw=='),
+    'product_url': 'http://yo.momma.com',
+    'product_img_url': 'http://yo.momma.com/assets/venus.png',
+    'product_price': 12300,
+    'product_title': '$1.23 venus!',
+    'sales_tax': 11,
+    'shipping': 23,
+    'service_fee': 9,
+    'total_price': 12343,
     'columns': 3,
     'rows': 3,
-    'gc_name': 'Flombar Omaeliad',
-    'gc_phone_number': '1231231234',
-    'gc_email': 'test@giftstarter.co',
-    'shipping_name': 'Count Fluffshire',
-    'shipping_address': '123 candy palace lane',
-    'shipping_city': 'seattle',
-    'shipping_state': 'wa',
+    'shipping_state': 'WA',
     'shipping_zip': '98109',
-    'shipping_phone_number': '1231231234',
+    'gc_email': 'test@giftstarter.co',
 }
 
 
@@ -80,7 +71,7 @@ class PayTestHandlers(unittest.TestCase):
         self.testbed.init_urlfetch_stub()
 
         # Insert user
-        self.user = User()
+        self.user = User(key=ndb.Key('User', 'f1234'))
         self.user.uid = 'f1234'
         self.user.name = 'macklemore'
         self.user.logged_in_with = 'facebook'
@@ -89,20 +80,16 @@ class PayTestHandlers(unittest.TestCase):
         self.user.put()
 
         # Create campaign
-        request = webapp2.Request.blank('/giftstart/api')
-        request.method = 'PUT'
-        request.body = json.dumps({
-            'action': 'create',
-            'uid': 'f1234',
-            'token': 'x1234',
-            'giftstart': example_giftstart,
-        })
+        request = webapp2.Request.blank('/giftstart/create.json')
+        request.method = 'POST'
+        request.cookies['uid'] = 'f1234'
+        request.cookies['token'] = 'x1234'
+        request.body = json.dumps(example_giftstart)
+        response = request.get_response(giftstart_api.handler)
 
-        response = request.get_response(giftstart_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept created "
-                                                    "campaign, expected 200, "
-                                                    "response was " +
-                         str(response.status_code))
+        self.assertEqual(response.status_code, 200,
+                         "Should accept created campaign, expected 200, "
+                         "response was " + str(response.status_code))
 
     def tearDown(self):
         self.testbed.deactivate()
@@ -144,7 +131,7 @@ class PayTestHandlers(unittest.TestCase):
                            'card': {'last4': '8767'}}
 
         # Insert user
-        self.unnamed_user = User()
+        self.unnamed_user = User(key=ndb.Key('User', 'f1236'))
         self.unnamed_user.uid = 'f1236'
         self.unnamed_user.name = None
         self.unnamed_user.logged_in_with = 'facebook'
@@ -167,6 +154,7 @@ class PayTestHandlers(unittest.TestCase):
         })
 
         response = request.get_response(pay_api.api)
+        print(response)
         self.assertEqual(response.status_code, 200,
                          "Should accept payment, expected 200, response was " +
                          str(response.status_code))
@@ -216,14 +204,15 @@ class PayTestHandlers(unittest.TestCase):
 
         # Verify pitchin
         pitchin = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).fetch()[0]
-        self.assertListEqual(parts, pitchin.parts, "Should buy proper parts, "
-                                                   "expected {in_parts}, got "
-                                                   "{out_parts}"
+        self.assertListEqual(parts, pitchin.parts,
+                             "Should buy proper parts, expected {in_parts}, "
+                             "got {out_parts}"
                              .format(in_parts=parts, out_parts=pitchin.parts))
-        self.assertEqual(gsid, pitchin.gsid, "Should pitchin for the right "
-                                             "campaign, expected {in_gsid}, "
-                                             "got {out_gsid}"
+        self.assertEqual(gsid, pitchin.gsid,
+                         "Should pitchin for the right campaign, expected "
+                         "{in_gsid}, got {out_gsid}"
                          .format(in_gsid=parts, out_gsid=pitchin.parts))
+
         pi_count = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count()
         self.assertEqual(1, pi_count, "Should have 1 pitchin")
 

@@ -10,7 +10,8 @@ class GiftStart(ndb.Model):
     giftstart_url_title = ndb.StringProperty()
     giftstart_description = ndb.TextProperty(required=True)
     giftstart_special_notes = ndb.TextProperty()
-    gift_champion_uid = ndb.StringProperty(required=True)
+    gift_champion_uid = ndb.StringProperty()
+    staging_uuid = ndb.StringProperty()
     deadline = ndb.DateTimeProperty(required=True)
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
     giftstart_complete = ndb.BooleanProperty(default=False)
@@ -53,13 +54,13 @@ class GiftStart(ndb.Model):
             'gsid': self.gsid, 'title': self.giftstart_title,
             'giftstart_url_title': self.giftstart_url_title,
             'description': self.giftstart_description,
-            'product': {
-                'img_url': self.product_img_url, 'price': self.product_price,
-                'product_url': self.product_url, 'sales_tax': self.sales_tax,
-                'shipping': self.shipping, 'service_fee': self.service_fee,
-                'total_price': self.total_price, 'title': self.product_title,
-                'retailer_logo': self.retailer_logo
-            },
+            'product_img_url': self.product_img_url,
+            'price': self.product_price,
+            'product_url': self.product_url, 'sales_tax': self.sales_tax,
+            'shipping': self.shipping, 'service_fee': self.service_fee,
+            'total_price': self.total_price,
+            'product_title': self.product_title,
+            'retailer_logo': self.retailer_logo,
             'rows': self.overlay_rows, 'columns': self.overlay_columns,
             'gift_champion_uid': self.gift_champion_uid,
             'deadline': self.deadline.strftime("%s"), 'gc_name': self.gc_name,

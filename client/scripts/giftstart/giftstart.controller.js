@@ -77,10 +77,10 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     }
 
     $scope.updateFundingBar = function() {
-        $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price *
+        $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.total_price *
             100).toString() + '%';
         $scope.pitchinBarProgress =  ((GiftStartService.giftStart.funded +
-            GiftStartService.giftStart.totalSelection) / GiftStartService.giftStart.product.total_price *
+            GiftStartService.giftStart.totalSelection) / GiftStartService.giftStart.total_price *
             100).toString() + '%';
     };
 
@@ -113,7 +113,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     $scope.pitchIn = GiftStartService.pitchIn;
 
     $scope.campaignComplete = function() {
-        return (GiftStartService.giftStart.funded / GiftStartService.giftStart.product.total_price > 0.9975);
+        return (GiftStartService.giftStart.funded / GiftStartService.giftStart.total_price > 0.9975);
     };
 
     $scope.updateSecondsLeft = function() {

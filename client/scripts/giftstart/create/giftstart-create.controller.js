@@ -96,7 +96,7 @@ GiftStarterApp.controller('GiftStartCreateController',
 
         $scope.updateGiftStartImage = function() {
             Analytics.track('campaign', 'selected image changed');
-            GiftStartService.giftStart.product.img_url = $scope.selectedImg;
+            GiftStartService.giftStart.product_img_url = $scope.selectedImg;
         };
 
         $scope.priceChanged = function() {
@@ -132,11 +132,39 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.updateOverlay = function() {
             GiftStartService.giftStart.columns = $scope.x;
             GiftStartService.giftStart.rows = $scope.y;
-            GiftStartService.giftStart.product.total_price = $scope.totalPrice;
+            GiftStartService.giftStart.total_price = $scope.totalPrice;
             GiftStartService.giftStart.parts = GiftStartService.makeParts($scope.x * $scope.y, $scope.totalPrice);
             $scope.giftStart = GiftStartService.giftStart;
             $scope.$broadcast('overlay-updated');
         };
+
+        $scope.makeUUID = function() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            });
+        };
+
+        function stagedGiftStart(uuid) {
+            return {
+                'title': $scope.title,
+                'description': $scope.description,
+                'product_url': ProductService.product.product_url,
+                'product_img_url': $scope.selectedImg,
+                'product_price': $scope.inputPrice*100,
+                'product_title': ProductService.product.title,
+                'sales_tax': $scope.salesTax,
+                'shipping': $scope.shipping,
+                'service_fee': $scope.serviceFee,
+                'total_price': $scope.totalPrice,
+                'columns': $scope.x,
+                'rows': $scope.y,
+                'shipping_state': $scope.shippingState,
+                'shipping_zip': $scope.shippingZip,
+                'gc_email': $scope.gcEmail,
+                'staging_uuid': uuid
+            }
+        }
 
         $scope.next = function() {
             GiftStartService.title = $scope.title;
@@ -158,28 +186,28 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            LocalStorage.set('/GiftStartCreateController/session', {
-                title: $scope.title,
-                description: $scope.description,
-                productUrl: ProductService.product.product_url,
-                productTitle: ProductService.product.title,
-                retailerLogo: ProductService.logo,
-                productImgUrl: $scope.selectedImg,
-                rows: $scope.y,
-                columns: $scope.x,
-                selectedXYSet: $scope.selectedXYSet,
-                productPrice: $scope.inputPrice*100,
-                shippingZip: $scope.shippingZip,
-                shippingState: $scope.shippingState,
-                salesTax: $scope.salesTax,
-                shipping: $scope.shipping,
-                serviceFee: $scope.serviceFee,
-                totalPrice: $scope.totalPrice,
-                specialNotes: $scope.specialNotes,
-                gcEmail: $scope.gcEmail,
-                gcName: UserService.name
-
-            });
+//            LocalStorage.set('/GiftStartCreateController/session', {
+//                title: $scope.title,
+//                description: $scope.description,
+//                productUrl: ProductService.product.product_url,
+//                productTitle: ProductService.product.title,
+//                retailerLogo: ProductService.logo,
+//                productImgUrl: $scope.selectedImg,
+//                rows: $scope.y,
+//                columns: $scope.x,
+//                selectedXYSet: $scope.selectedXYSet,
+//                productPrice: $scope.inputPrice*100,
+//                shippingZip: $scope.shippingZip,
+//                shippingState: $scope.shippingState,
+//                salesTax: $scope.salesTax,
+//                shipping: $scope.shipping,
+//                serviceFee: $scope.serviceFee,
+//                totalPrice: $scope.totalPrice,
+//                specialNotes: $scope.specialNotes,
+//                gcEmail: $scope.gcEmail,
+//                gcName: UserService.name
+//
+//            });
 
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
 
@@ -190,6 +218,12 @@ GiftStarterApp.controller('GiftStartCreateController',
                     LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
                 } else {
+                    var uuid = $scope.makeUUID();
+                    // Send giftstart to staging
+                    $http.post('/giftstart/create.json',
+                        stagedGiftStart(uuid));
+                    AppStateService.set('staging_uuid', uuid);
+
                     PopoverService.giftstartCreateLogin = true;
                     PopoverService.setPopover('login');
                 }
