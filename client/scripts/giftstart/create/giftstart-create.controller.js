@@ -10,6 +10,8 @@ GiftStarterApp.controller('GiftStartCreateController',
     function($scope,  GiftStartService,  $location,  ProductService,
              UserService,  PopoverService,  $http,  $timeout, Analytics,
              AppStateService, LocalStorage) {
+        var self = this;
+
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
@@ -42,6 +44,7 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
 
+        this.referral = {};
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
 
@@ -222,13 +225,18 @@ GiftStarterApp.controller('GiftStartCreateController',
 
 
         function extractReferral() {
-            console.log($location.search());
             if ($location.search().product_url &&
                 $location.search().title &&
                 $location.search().price &&
                 $location.search().img_url &&
                 $location.search().source) {
-                console.log($location.search());
+                restoreFromReferral({
+                    product_url: $location.search().product_url,
+                    productTitle: $location.search().title,
+                    productImgUrl: $location.search().img_url,
+                    price: $location.search().price,
+                    source: $location.search().source
+                });
                 $location.search('product_url', null);
                 $location.search('title', null);
                 $location.search('price', null);
@@ -277,7 +285,7 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.pitchInsInitialized = true;
         }, 2500);
 
-        if (referral) {
+        if (this.referral) {
             $scope.selectedXYSet = calculateInitialNumParts();
         }
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];

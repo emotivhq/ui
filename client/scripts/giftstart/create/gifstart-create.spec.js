@@ -6,7 +6,7 @@ describe('GiftStartCreateController', GiftStartCreateControllerSpec);
 
 function GiftStartCreateControllerSpec() {
     var scope, exampleGiftStart, createController, $httpBackend,
-        ProductService, AppStateService;
+        ProductService, AppStateService, $window, $location;
 
     beforeEach(angular.mock.module('GiftStarterApp'));
     beforeEach(angular.mock.module('ngAB'));
@@ -18,6 +18,8 @@ function GiftStartCreateControllerSpec() {
         var $controller = $injector.get('$controller');
         ProductService = $injector.get('ProductService');
         AppStateService = $injector.get('AppStateService');
+        $window = $injector.get('$window');
+        $location = $injector.get('$location');
 
         exampleGiftStart = {
             'title': 'Example giftstart',
@@ -109,6 +111,46 @@ function GiftStartCreateControllerSpec() {
         $httpBackend.flush();
 
         expect(setSpy).toHaveBeenCalled();
+    }
+
+    it('should build creation from refferal data', fromReferral);
+    function fromReferral() {
+        $location.search('product_url=http%3A%2F%2Fstore.icpooch.com'+
+            '%2Ficpooch-internet-pet-treat-dispenser-u-s-canada-model-include'+
+            's-6oz-of-icpooch-cookies%2F&title=ICPOOCH%20-%20INTERNET%20PET%2'+
+            '0TREAT%20DISPENSER%20-%20U.S.%20%26%20CANADA%20MODEL%20-%20INCLU'+
+            'DES%206OZ%20OF%20ICPOOCH%20COOKIES&price=12999&img_url=http%3A%2'+
+            'F%2Fcdn3.bigcommerce.com%2Fs-al2q69%2Fproducts%2F76%2Fimages%2F2'+
+            '75%2FMain_tablet_cookies__02336.1403226511.1280.1280__70484.1403'+
+            '226960.1280.1280.jpg%3Fc%3D2&source=icpooch');
+
+        var controller = createController();
+
+        // it should have moved that data into the scope
+        expect(ProductService.product.product_url)
+            .toBe(decodeURIComponent('http%3A%2F%2Fstore.icpooch.com%2Ficpooc'+
+                'h-internet-pet-treat-dispenser-u-s-canada-model-includes-6oz'+
+                '-of-icpooch-cookies%2F'));
+        expect(ProductService.product.title)
+            .toBe(decodeURIComponent('ICPOOCH%20-%20INTERNET%20PET%20TREAT%20'+
+                'DISPENSER%20-%20U.S.%20%26%20CANADA%20MODEL%20-%20INCLUDES%2'+
+                '06OZ%20OF%20ICPOOCH%20COOKIES'));
+        expect(ProductService.product.imgs)
+            .toEqual([decodeURIComponent('http%3A%2F%2Fcdn3.bigcommerce.com%2'+
+                'Fs-al2q69%2Fproducts%2F76%2Fimages%2F275%2FMain_tablet_cooki'+
+                'es__02336.1403226511.1280.1280__70484.1403226960.1280.1280.j'+
+                'pg%3Fc%3D2')]);
+        expect(scope.selectedImg)
+            .toBe(decodeURIComponent('http%3A%2F%2Fcdn3.bigcommerce.com%2Fs-a'+
+                'l2q69%2Fproducts%2F76%2Fimages%2F275%2FMain_tablet_cookies__'+
+                '02336.1403226511.1280.1280__70484.1403226960.1280.1280.jpg%3'+
+                'Fc%3D2'));
+        expect(scope.inputPrice).toBe(129.99);
+        expect(scope.showIntroCopy).toBe(true);
+        expect(scope.fromReferral).toBe(true);
+
+        // It should have removed data form the search
+        expect($window.location.search).toBe('');
     }
 
 
