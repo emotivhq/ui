@@ -47,7 +47,7 @@
             "css": "h1.happening-now {text-align: left; margin-top: 0.5em;}"
         }, {
             "file": "/scripts/home/top-campaign.html",
-            "replaceAll": "<div class=\"top-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.product.img_url}}\"/></a><div class=\"description-container\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><h3 class=\"accent\">{{campaign.title}}</h3></a><p class=\"campaign-description\">{{campaign.description}}</p></div></div>"
+            "replaceAll": "<div class=\"top-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.product_img_url}}\"/></a><div class=\"description-container\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><h3 class=\"accent\">{{campaign.title}}</h3></a><p class=\"campaign-description\">{{campaign.description}}</p></div></div>"
         }, {
             "file": "/scripts/home/top-campaign.html",
             "css": "div.top-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} div.top-campaign.wrapper div.description-container {width: 100%;} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.top-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.landing-page gs-top-campaign {width: 100%} div.top-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;}"
