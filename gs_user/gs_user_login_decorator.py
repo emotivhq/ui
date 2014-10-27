@@ -17,10 +17,9 @@ def handle_login(method_handler):
     @wraps(method_handler)
     def wrapper(*args, **kwargs):
         self = args[0]
-        self.request.cookies['test'] = 'good morning, beautiful'
         query = {} if len(self.request.query_string) < 2 else \
-            {pair.split('=')[0]: pair.split('=', 1)[1]
-             for pair in urllib.unquote(self.request.query_string).split('&')}
+            {urllib.unquote(pair).split('=')[0]: pair.split('=', 1)[1]
+             for pair in self.request.query_string.split('&')}
         state = json.loads(base64.b64decode(query.get('state', 'e30=')))
         print(state)
 
