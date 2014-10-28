@@ -68,4 +68,7 @@ class AnalyticsTestHandler(unittest.TestCase):
                          str(len(events)))
         self.assertEqual(example_event['productTitle'],
                          events[0].product_title)
+        self.assertIn('text/javascript', resp.headers['Content-Type'],
+                      "Expected mime type for response to be text/javascript,"
+                      " was {0}".format(resp.headers['Content-Type']))
 

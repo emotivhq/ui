@@ -97,6 +97,7 @@ class ButtonAnalyticsHandler(webapp2.RequestHandler):
         logging.info('Putting event')
         event.put()
         logging.info('Event tracking complete')
+        self.response.content_type = 'text/javascript'
 
 
 handler = webapp2.WSGIApplication([('/a/.*', ButtonAnalyticsHandler)])

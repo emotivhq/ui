@@ -18,7 +18,7 @@
 // <gs-button id="gsbutton" class="gsbutton" style="display: none;"></gs-button>
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
-(window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNum) {
+window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNum) {
     if (!Boolean(buttonNum)) {buttonNum = ''}
 
     window.giftStartButton = window.giftStartButton || {};
@@ -95,15 +95,31 @@
     }, 1);
 
     function sendData(data) {
-        var encodedData = encodeURIComponent(window.btoa(JSON.stringify(data)));
+        var encodedData = encodeURIComponent(
+            window.btoa(JSON.stringify(data)));
         var elm = document.createElement('script');
         elm.src = 'https://www.dev.giftstarter.co/a/' + encodedData;
+        elm.onload = function() {document.head.removeChild(elm)};
         document.head.appendChild(elm);
-        document.head.removeChild(elm);
     }
 
-    function onScroll(event) {
+    function isButtonVisible() {
+        // Button is visible if buttonY + button height < scrollY + screen
+        // height and same with X
+        var visible = true;
+        visible &= (buttonY + buttonH) <
+            (window.scrollY + window.screen.height);
+        visible &= (buttonX + buttonW) <
+            (window.scrollX + window.screen.width);
+        return visible;
+    }
 
+    function heartBeat() {
+        if (!buttonSeenSent) {
+            if (isButtonVisible()) {
+                sendData('seen');
+            }
+        }
     }
 
     function makeUUID() {
@@ -115,6 +131,18 @@
 
     function getCookie() {
         // TODO get or make cookie
+    }
+
+    function getBorder() {
+        return document.defaultView.getComputedStyle(
+            document.getElementById(gsButtonId),null)
+            .getPropertyValue('border');
+    }
+
+    function getBackground() {
+        return document.defaultView.getComputedStyle(
+            document.getElementById(gsButtonId),null)
+            .getPropertyValue('background');
     }
 
     function makeData(action) {
@@ -135,14 +163,10 @@
             buttonY: buttonY,
             buttonW: buttonW,
             buttonH: buttonH,
-            buttonBorder: document.defaultView.getComputedStyle(
-                document.getElementById(gsButtonId),null)
-                .getPropertyValue('border'),
-            buttonBackground: document.defaultView.getComputedStyle(
-                document.getElementById(gsButtonId),null)
-                .getPropertyValue('background'),
+            buttonBorder: getBorder(),
+            buttonBackground: getBackground(),
             buttonImg: self.buttonImg.src
         }
     }
     return self;
-})();
+};
