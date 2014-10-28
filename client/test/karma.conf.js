@@ -22,15 +22,15 @@ module.exports = function(config) {
         '../scripts/app.module.js',
         '../scripts/utilities/ng-ab/ng-ab.module.js',
         '../scripts/app.*.js',
-        '../scripts/*/*.controller.js',
-        '../scripts/*/*/*.controller.js',
         '../scripts/*/*/*/*.controller.js',
-        '../scripts/*/*.service.js',
-        '../scripts/*/*/*.service.js',
+        '../scripts/*/*/*.controller.js',
+        '../scripts/*/*.controller.js',
         '../scripts/*/*/*/*.service.js',
-        '../scripts/*/*.spec.js',
+        '../scripts/*/*/*.service.js',
+        '../scripts/*/*.service.js',
+        '../scripts/*/*/*/*.spec.js',
         '../scripts/*/*/*.spec.js',
-        '../scripts/*/*/*/*.spec.js'
+        '../scripts/*/*.spec.js'
     ],
 
 

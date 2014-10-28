@@ -18,28 +18,19 @@
 // <gs-button id="gsbutton" class="gsbutton" style="display: none;"></gs-button>
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
-(window.makeGiftStartButton = function(productUrl, title, price, imgUrl) {
-    if (!Boolean(window.giftStartButton)) {
-        console.log("Ruh roh!  Doesn't look like window.giftStartButton exists!");
-        return;
-    } else if (!Boolean(window.giftStartButton.productUrl)) {
-        console.log("Ruh roh!  Doesn't look like window.giftStartButton.productUrl exists!");
-        return;
-    } else if (!Boolean(window.giftStartButton.title)) {
-        console.log("Ruh roh!  Doesn't look like window.giftStartButton.title exists!");
-        return;
-    } else if (!Boolean(window.giftStartButton.price)) {
-        console.log("Ruh roh!  Doesn't look like window.giftStartButton.price exists!");
-        return;
-    } else if (!Boolean(window.giftStartButton.imgUrl)) {
-        console.log("Ruh roh!  Doesn't look like window.giftStartButton.imgUrl exists!");
-        return;
-    }
+(window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNum) {
+    if (!Boolean(buttonNum)) {buttonNum = ''}
 
+    window.giftStartButton = window.giftStartButton || {};
     var self = window.giftStartButton;
     var gs_domain = 'https://www.giftstarter.co';
     var source = location.host;
+    var gsButtonId = 'gsbutton' + buttonNum;
     self.button = document.querySelector('#gsbutton');
+
+    // Tracking data
+    var buttonSeenSent = false;
+    var buttonX, buttonY, buttonW, buttonH, buttonStyle;
 
     var urlSerialize = function(obj) {
         var str = [];
@@ -99,7 +90,59 @@
             self.button.setAttribute('style',
                 ' display: inline-block; text-align: center;');
         }
+
+        sendData(makeData('create'));
     }, 1);
 
+    function sendData(data) {
+        var encodedData = encodeURIComponent(window.btoa(JSON.stringify(data)));
+        var elm = document.createElement('script');
+        elm.src = 'https://www.dev.giftstarter.co/a/' + encodedData;
+        document.head.appendChild(elm);
+        document.head.removeChild(elm);
+    }
+
+    function onScroll(event) {
+
+    }
+
+    function makeUUID() {
+        if (!Boolean(window.GsButtonUUID)) {
+            window.GsButtonUUID = ''; // TODO make uuid
+        }
+        return window.GsButtonUUID;
+    }
+
+    function getCookie() {
+        // TODO get or make cookie
+    }
+
+    function makeData(action) {
+        return {
+            domain: window.location.host,
+            path: window.location.pathname,
+            uuid: makeUUID(),
+            productUrl: productUrl,
+            productTitle: title,
+            productPrice: price,
+            productImgUrl: imgUrl,
+            scrollDepth: document.documentElement.scrollTop,
+            screenW: window.screen.width,
+            screenH: window.screen.height,
+            cookie: getCookie(),
+            action: action,
+            buttonX: buttonX,
+            buttonY: buttonY,
+            buttonW: buttonW,
+            buttonH: buttonH,
+            buttonBorder: document.defaultView.getComputedStyle(
+                document.getElementById(gsButtonId),null)
+                .getPropertyValue('border'),
+            buttonBackground: document.defaultView.getComputedStyle(
+                document.getElementById(gsButtonId),null)
+                .getPropertyValue('background'),
+            buttonImg: self.buttonImg.src
+        }
+    }
     return self;
 })();
