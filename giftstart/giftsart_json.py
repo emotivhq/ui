@@ -24,12 +24,14 @@ class GiftStartJsonHandler(webapp2.RequestHandler):
         gs = json.loads(self.request.body)
         url_title = self.request.path.split('/')[2][:-5]
         # Check if they have permissions!
-        if giftstart_core.does_user_exist(self.request.cookies['uid'],
-                                          self.request.cookies['token']):
+        if giftstart_core.does_user_exist(
+                self.request.cookies['uid'].replace('%22', ''),
+                self.request.cookies['token'].replace('%22', '')):
             ndbgs = ndb.Key('GiftStart', url_title).get()
             if ndbgs is not None:
-                if ndbgs.gift_champion_uid == self.request.cookies['uid']:
-                    gs = giftstart_core.update(gs)
+                if ndbgs.gift_champion_uid == self.request.cookies['uid']\
+                        .replace('%22', ''):
+                    gs = giftstart_core.update(gs, url_title)
                     self.response.write(gs.jsonify())
                 else:
                     self.response.set_status(403,

@@ -6,10 +6,12 @@ from GiftStart import GiftStart
 from pay.PitchIn import PitchIn
 import storage.image_cache
 from google.appengine.ext import ndb
+import logging
 
 
-def update(new_gs):
-    giftstart = GiftStart.query(GiftStart.gsid == new_gs['gsid']).fetch(1)[0]
+def update(new_gs, url_title):
+    # giftstart = GiftStart.query(GiftStart.gsid == new_gs['gsid']).fetch(1)[0]
+    giftstart = ndb.Key('GiftStart', url_title).get()
 
     if new_gs.get('title'):
         giftstart.giftstart_title = new_gs.get('title')
@@ -17,8 +19,8 @@ def update(new_gs):
     if new_gs.get('description'):
         giftstart.giftstart_description = new_gs.get('description')
 
-    if new_gs.get('name'):
-        giftstart.gc_name = new_gs.get('name')
+    if new_gs.get('gc_name'):
+        giftstart.gc_name = new_gs.get('gc_name')
 
     if new_gs.get('image'):
         image = new_gs.get('image')
@@ -79,8 +81,11 @@ def does_user_exist(uid, token):
 
     user = ndb.Key('User', uid).get()
 
+    logging.info('Checking if user exists')
     if user is None:
+        logging.info("User does not exist")
         return False
 
     user_exists = token == token_map[uid[0]](user)
+    logging.info('User existence: {0}'.format(user_exists))
     return user_exists
