@@ -30,7 +30,7 @@ def update(new_gs, url_title):
         filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
         giftstart.product_img_url = \
             storage.image_cache.cache_user_uploaded_image(img_data, filename,
-                                                          new_gs['gsid'],
+                                                          url_title,
                                                           content_type)
 
     giftstart.put()
