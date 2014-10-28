@@ -62,13 +62,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     // Restore from state
     this.preselectedParts = [];
-    if (AppStateService.state) {
-        AppStateService.state.gsid = null;
-        if (AppStateService.state.selectedParts) {
-            this.preselectedParts = AppStateService.state.selectedParts;
-            AppStateService.state.selectedParts = null;
-        }
+    if (AppStateService.get('selectedParts')) {
+        this.preselectedParts = AppStateService.get('selectedParts');
+        AppStateService.remove('selectedParts');
     }
+    $rootScope.$on('giftstart-loaded', restartPitchin);
 
     var self = this;
 
@@ -78,12 +76,17 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (!self.gcName) {self.gcName = UserService.name}
 
         self.giftStart = self.buildGiftStart();
-        $location.path('/giftstart');
+        var payload = self.giftStart;
+        payload.uid =
+//        $location.path('/giftstart');
         self.pitchInsInitialized = false;
-        $http({method: 'POST', url: '/giftstart/api',
-            data: {giftstart: self.giftStart, action: 'create'}})
+        $http({method: 'POST', url: '/giftstart/create.json',
+            data: self.giftStart})
             .success(function(data) {self.inflateGiftStart(data)})
-            .error(function() {Analytics.track('campaign', 'campaign create failed')});
+            .error(function(reason) {
+                console.log(reason);
+                Analytics.track('campaign', 'campaign create failed');
+            });
     };
 
     this.buildGiftStart = function() {
@@ -92,17 +95,15 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             description: self.description,
             special_notes: self.specialNotes,
             gift_champion_uid: UserService.uid,
-            product: {
-                price: self.productPrice,
-                sales_tax: self.salesTax,
-                shipping: self.shipping,
-                service_fee: self.serviceFee,
-                total_price: self.totalPrice,
-                img_url: self.productImgUrl,
-                product_url: self.productUrl,
-                title: self.productTitle,
-                retailer_logo: self.retailerLogo
-            },
+            product_price: self.productPrice,
+            sales_tax: self.salesTax,
+            shipping: self.shipping,
+            service_fee: self.serviceFee,
+            total_price: self.totalPrice,
+            product_img_url: self.productImgUrl,
+            product_url: self.productUrl,
+            product_title: self.productTitle,
+            retailer_logo: self.retailerLogo,
             totalSelection: 0,
             funded: 0,
             parts: self.makeParts(self.rows * self.columns, self.totalPrice),
@@ -196,11 +197,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
             .success(function(data) {self.inflateGiftStart(data)})
             .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
-//        var x = GiftStart.get({key: url_title});
-//        var p = x.$promise;
-//        p
-//            .success(fetchSuccess)
-//            .error(fetchError);
     };
 
     this.inflateGiftStart = function(giftstart) {
@@ -210,7 +206,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.giftStart = giftstart;
 
         self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
-            self.giftStart.product.total_price);
+            self.giftStart.total_price);
         self.updateSelected();
 
         if (!(/\/giftstart\//.test($location.path()))) {
@@ -294,8 +290,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 if (response.giftstart.description) {
                     self.giftStart.description = response.giftstart.description;
                 }
-                if (response.giftstart.product.img_url) {
-                    self.giftStart.product.img_url = response.giftstart.product.img_url + '#' +
+                if (response.giftstart.product_img_url) {
+                    self.giftStart.product_img_url =
+                        response.giftstart.product_img_url + '#' +
                         new Date().getTime();
                 }
                 if (response.giftstart.gc_name) {
@@ -330,17 +327,17 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (self.giftStart.totalSelection > 0) {
             Analytics.track('pitchin', 'pitchin button clicked');
             PopoverService.contributeLogin = true;
-            LocalStorage.set('/GiftStartService/contributeLogin', true);
+            AppStateService.set('contributeLogin', true);
             PopoverService.nextPopover();
         } else {console.log("Nothing selected!")}
     };
 
     function restartPitchin() {
-        if (LocalStorage.get('/GiftStartService/contributeLogin')) {
+        if (AppStateService.get('contributeLogin')) {
+            AppStateService.remove('contributeLogin');
             self.pitchIn();
         }
     }
-    $rootScope.$on('login-success', restartPitchin);
 
     function checkForSync() {
         $http({

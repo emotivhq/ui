@@ -1,83 +1,11 @@
 __author__ = 'stuart'
 
-import json
-from google.appengine.api import taskqueue
-from google.appengine.ext import ndb
 import time
 from datetime import datetime, timedelta
 from GiftStart import GiftStart
 from pay.PitchIn import PitchIn
 import storage.image_cache
-import giftstart_comm
-import os
-import re
-
-GIFTSTART_CAMPAIGN_DAYS = 10
-SECONDS_PER_DAY = 24 * 60 * 60
-
-
-def populate_giftstart(ndbgs, giftstart):
-    ndbgs.gift_champion_uid = giftstart['gift_champion_uid']
-    ndbgs.giftstart_title = giftstart['title']
-    ndbgs.giftstart_description = giftstart['description']
-    ndbgs.giftstart_special_notes = giftstart['special_notes']
-
-    ndbgs.product_url = giftstart['product']['product_url']
-    ndbgs.product_img_url = giftstart['product']['img_url']
-    ndbgs.product_price = int(giftstart['product']['price'])
-    ndbgs.product_title = giftstart['product']['title']
-    ndbgs.retailer_logo = giftstart['product'].get('retailer_logo')
-    ndbgs.sales_tax = int(giftstart['product']['sales_tax'])
-    ndbgs.shipping = int(giftstart['product']['shipping'])
-    ndbgs.service_fee = int(giftstart['product']['service_fee'])
-    ndbgs.total_price = int(giftstart['product']['total_price'])
-
-    ndbgs.overlay_columns = giftstart['columns']
-    ndbgs.overlay_rows = giftstart['rows']
-
-    ndbgs.gc_name = giftstart.get('gc_name')
-    ndbgs.gc_phone_number = giftstart.get('gc_phone_number')
-    ndbgs.gc_email = giftstart['gc_email']
-
-    ndbgs.shipping_name = giftstart.get('shipping_name')
-    ndbgs.shipping_address = giftstart.get('shipping_address')
-    ndbgs.shipping_city = giftstart.get('shipping_city')
-    ndbgs.shipping_state = giftstart['shipping_state']
-    ndbgs.shipping_zip = giftstart['shipping_zip']
-    ndbgs.shipping_phone_number = giftstart.get('shipping_phone_number')
-    ndbgs.shipping_email = giftstart.get('shipping_email')
-
-    return ndbgs
-
-
-def create(giftstart):
-    gs_url_title = create_title_url(giftstart)
-    gs_key = ndb.Key('GiftStart', gs_url_title)
-    gs = GiftStart(key=gs_key)
-    gs = populate_giftstart(gs, giftstart)
-    gs.giftstart_url_title = gs_url_title
-    gs_count = GiftStart.query().count()
-    gs.gsid = str(gs_count + 1) if gs_count else '1'
-    gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
-    # Check if running in development env
-    if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
-        gs.product_img_url = storage.image_cache.cache_product_image(
-            giftstart['product']['img_url'], gs.gsid)
-    gs.put()
-
-    giftstart_comm.send_create_notification(gs)
-
-    taskqueue.add(url="/giftstart/api", method="POST",
-                  payload=json.dumps({'action': 'one-day-warning',
-                                      'gsid': gs.gsid}),
-                  countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
-
-    taskqueue.add(url="/giftstart/api", method="POST",
-                  payload=json.dumps({'action': 'check-if-complete',
-                                      'gsid': gs.gsid}),
-                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
-
-    return gs
+from google.appengine.ext import ndb
 
 
 def update(new_gs):
@@ -139,16 +67,20 @@ def hot_campaigns(num_campaigns):
     }
 
 
-def create_title_url(giftstart):
-    def name_ok(name):
-        gs = ndb.Key(GiftStart, name).get()
-        return gs is None
-    hyphen_title = giftstart['title'].replace(' ', '-')
-    url_title = re.sub(r'[^a-zA-Z0-9-]', '', hyphen_title)
-    if not name_ok(url_title):
-        i = 1
-        while not name_ok(url_title + '-' + str(i)):
-            i += 1
-        url_title += '-' + str(i)
+def does_user_exist(uid, token):
+    print(uid)
+    print(token)
+    login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter'}
+    if uid[0] not in login_service_map.keys():
+        return False
+    token_map = {'f': lambda u: u.facebook_token_set.access_token,
+                 'g': lambda u: u.googleplus_token_set.access_token,
+                 't': lambda u: u.twitter_token_set.access_token}
 
-    return url_title
+    user = ndb.Key('User', uid).get()
+
+    if user is None:
+        return False
+
+    user_exists = token == token_map[uid[0]](user)
+    return user_exists

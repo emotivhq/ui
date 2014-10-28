@@ -4,11 +4,13 @@ import requests
 from feeds import FeedProduct
 import json
 from google.appengine.ext import ndb
+import csv
 import logging
+import time
 
 
 def cache(partner, url):
-    """ cache('B&H', 'http://bhphotovideo.com/feed') -> None
+    """ cache('B-and-H', 'http://bhphotovideo.com/feed') -> None
     Downloads a feed at a given url and caches all valid products, removing
     all prior products
     """
@@ -33,9 +35,55 @@ def normalize_products(partner, response_content):
     """
     if partner == 'butter-LONDON':
         products = normalize_butter_products(response_content)
+    elif partner == 'B-and-H':
+        products = normalize_b_and_h_products(response_content)
     else:
         products = []
     return filter_products(partner, products)
+
+
+def normalize_b_and_h_products(content):
+    feed_file = csv.reader(content.splitlines())
+    headers = feed_file.next()
+    products = [make_b_and_h_product(feed_line=line, headers=headers)
+                for line in feed_file]
+    return [product for product in products if product]
+
+
+def make_b_and_h_product(feed_line, headers):
+    """ make_b_and_h_product({...}) -> FeedProduct
+    :type bh_product: dict
+    :rtype: FeedProduct
+    """
+    def make_img_url(thumbnail_url):
+        """
+        :type thumbnail_url: str
+        :rtype: str
+        """
+        id_num = thumbnail_url.split('/')[-1]
+        return 'http://static.bhphoto.com/images/images500x500/{id_num}'\
+            .format(id_num=id_num)
+
+    bh_product = {k: v for k, v in zip(headers, feed_line)}
+    try:
+        if 'Y' in bh_product.get('Stock'):
+            key = ndb.Key('Partner', 'B-and-H', 'FeedProduct',
+                          bh_product.get('MPN'))
+            return FeedProduct(
+                key=key,
+                title=bh_product['Item Name'],
+                price=int(float(bh_product['Price'].replace(',', ''))*100),
+                img=make_img_url(bh_product['image URL']),
+                thumbnail=bh_product['image URL'],
+                url=bh_product['Item URL'],
+                retailer='B&H Photo Video',
+                description=bh_product['Item Name'],
+                keywords='camera, photo, video',
+                sku='BH SKU',
+            )
+    except KeyError as e:
+        logging.error(e.message)
+        logging.error('Key missing from B&H product: {0}'.format(feed_line))
 
 
 def make_butter_product(bl_product):
@@ -70,8 +118,7 @@ def normalize_butter_products(response_content):
     feed = json.loads(response_content)
     products = feed.get('products')
     for key, bl_product in products.items():
-        if bl_product.get('qtyavailable'):
-            yield make_butter_product(bl_product)
+        yield make_butter_product(bl_product)
 
 
 validity_tests = [

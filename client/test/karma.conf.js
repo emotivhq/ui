@@ -15,13 +15,22 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        '../bower_components/angular/angular.min.js',
+        '../bower_components/angular/angular.js',
         '../bower_components/angular*/*.min.js',
         '../bower_components/angular-mocks/*.js',
         '../bower_components/angular-payments/lib/*.min.js',
-        '../scripts/app.js',
-        '../scripts/*.js',
-        './*/*.spec.js'
+        '../scripts/app.module.js',
+        '../scripts/utilities/ng-ab/ng-ab.module.js',
+        '../scripts/app.*.js',
+        '../scripts/*/*.controller.js',
+        '../scripts/*/*/*.controller.js',
+        '../scripts/*/*/*/*.controller.js',
+        '../scripts/*/*.service.js',
+        '../scripts/*/*/*.service.js',
+        '../scripts/*/*/*/*.service.js',
+        '../scripts/*/*.spec.js',
+        '../scripts/*/*/*.spec.js',
+        '../scripts/*/*/*/*.spec.js'
     ],
 
 

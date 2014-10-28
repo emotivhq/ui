@@ -19,10 +19,12 @@ GiftStarterApp.service('FacebookService', [
         };
 
         this.login = function() {
+            AppStateService.set('login_service', 'facebook');
             var url = 'https://www.facebook.com/dialog/oauth' +
                 '?client_id=' + window.fbAppId +
-                '&response_type=token' +
-                '&redirect_uri=' + AppStateService.getOauthRedirectUrl() +
+                '&response_type=code' +
+                '&redirect_uri=' + $window.location.protocol + '//' + $window.location.host +
+                '&state=' + AppStateService.base64State() +
                 '&scope=public_profile,basic_info,email,user_birthday,user_friends,friends_birthday';
             $window.open(url, '_self');
         };

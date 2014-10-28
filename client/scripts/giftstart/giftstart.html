@@ -11,7 +11,7 @@
         <div class="title">
             <h1 class="title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
         </div>
-        <a ng-href="{{giftStart.product.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();"><p class="title" ng-show="giftStart.product.title">{{giftStart.product.title}}</p><div><img class="logo" ng-show="giftStart.product.retailer_logo" ng-src="{{giftStart.product.retailer_logo}}"/><img class="logo" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-src="{{giftStart.product.img_url}}"/></div></a>
+        <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();"><p class="title" ng-show="giftStart.product_title">{{giftStart.product_title}}</p><div><img class="logo" ng-show="giftStart.retailer_logo" ng-src="{{giftStart.retailer_logo}}"/><img class="logo" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-src="{{giftStart.product_img_url}}"/></div></a>
 
         <div class="description">
             <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>

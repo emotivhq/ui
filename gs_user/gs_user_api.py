@@ -74,6 +74,7 @@ class UserHandler(webapp2.RequestHandler):
                 referrer = data.get('referrer', {})
                 token_set = twitter.submit_verifier(data['oauth_token'], data['verifier'])
                 user = update_or_create('twitter', token_set, referrer)
+                print(user)
                 if user is not None:
                     UserLogin.register_login(user.uid, data['location'])
                     self.response.write(json.dumps({
@@ -81,22 +82,6 @@ class UserHandler(webapp2.RequestHandler):
                         'usr_img': user.cached_profile_image_url,
                         'on_mailing_list': user.subscribed_to_mailing_list,
                         'token': user.twitter_token_set.access_token,
-                        'name': user.name,
-                        'has_pitched_in': user.has_pitched_in,
-                    }))
-
-        elif data['action'] == 'submit-one-time-code':
-            if data['service'] == 'googleplus':
-                referrer = data.get('referrer', {})
-                token_set = googleplus.submit_code(data['auth_response'], data['redirect_url'])
-                user = update_or_create('googleplus', token_set, referrer)
-                if user is not None:
-                    UserLogin.register_login(user.uid, data['location'])
-                    self.response.write(json.dumps({
-                        'status': 'logged-in', 'uid': user.uid,
-                        'usr_img': user.cached_profile_image_url,
-                        'on_mailing_list': user.subscribed_to_mailing_list,
-                        'token': user.googleplus_token_set.access_token,
                         'name': user.name,
                         'has_pitched_in': user.has_pitched_in,
                     }))

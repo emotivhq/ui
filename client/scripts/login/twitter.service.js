@@ -17,7 +17,10 @@ GiftStarterApp.service('TwitterService', [
 
         var self = this;
 
-        this.login = function() {$window.open(self.auth_url, '_self')};
+        this.login = function() {
+            AppStateService.set('login_service', 'twitter');
+            $window.open(self.auth_url, '_self');
+        };
 
         this.logout = function() {
             // TODO: actually log out...?
@@ -34,7 +37,8 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.submitVerifier = function() {
-            $http({method: 'POST', url: '/users', data: {action: 'submit-verifier', service: 'twitter',
+            $http({method: 'POST', url: '/users', data: {
+                action: 'submit-verifier', service: 'twitter',
                 verifier: self.verfier, oauth_token: self.oauth_token,
                 location: $location.path() + $window.location.search,
                 referrer: AppStateService.referrer}})
@@ -65,7 +69,8 @@ GiftStarterApp.service('TwitterService', [
         }
 
         if (AppStateService.oauthToken) {
-            twitterOauthCallback(AppStateService.oauthToken, AppStateService.oauthVerifier);
+            twitterOauthCallback(AppStateService.oauthToken,
+                AppStateService.oauthVerifier);
         }
     }
 ]);

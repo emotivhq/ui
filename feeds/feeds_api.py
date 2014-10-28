@@ -7,7 +7,8 @@ from google.appengine.api import taskqueue
 
 FEEDS = {
     'butter-LONDON': 'http://feed.butterlondon.com/products/acf63017/5394GHbgn'
-                     'WnPaSx'
+                     'WnPaSx',
+    'B-and-H': 'http://74.113.190.28/dataaf/giftstart_19923.csv',
 }
 
 

@@ -5,11 +5,13 @@
 GiftStarterApp.controller('GiftStartCreateController',
     ['$scope','GiftStartService','$location','ProductService',
         'UserService','PopoverService','$http','$timeout',
-        'Analytics','AppStateService','LocalStorage',
+        'Analytics','AppStateService',
 
     function($scope,  GiftStartService,  $location,  ProductService,
              UserService,  PopoverService,  $http,  $timeout, Analytics,
-             AppStateService, LocalStorage) {
+             AppStateService) {
+        var self = this;
+
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
         $scope.salesTaxRate = 0.098;
@@ -42,22 +44,9 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
 
+        this.referral = {};
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
-
-        if (ProductService.product.product_url == "") {
-            if (!LocalStorage.get('/GiftStartCreateController/referral') &&
-                !LocalStorage.get('/GiftStartCreateController/session')) {
-                // TODO: false positive here when forwarded from butter button... what's going on?
-//                $location.path("");
-            }
-//            if (AppStateService.state) {
-//                if (!AppStateService.state.createSession) {
-//                    // User navigated directly here, direct them to home page
-//                    $location.path("");
-//                }
-//            }
-        }
 
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
@@ -96,7 +85,7 @@ GiftStarterApp.controller('GiftStartCreateController',
 
         $scope.updateGiftStartImage = function() {
             Analytics.track('campaign', 'selected image changed');
-            GiftStartService.giftStart.product.img_url = $scope.selectedImg;
+            GiftStartService.giftStart.product_img_url = $scope.selectedImg;
         };
 
         $scope.priceChanged = function() {
@@ -132,11 +121,49 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.updateOverlay = function() {
             GiftStartService.giftStart.columns = $scope.x;
             GiftStartService.giftStart.rows = $scope.y;
-            GiftStartService.giftStart.product.total_price = $scope.totalPrice;
+            GiftStartService.giftStart.total_price = $scope.totalPrice;
             GiftStartService.giftStart.parts = GiftStartService.makeParts($scope.x * $scope.y, $scope.totalPrice);
             $scope.giftStart = GiftStartService.giftStart;
             $scope.$broadcast('overlay-updated');
         };
+
+        $scope.makeUUID = function() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+                return v.toString(16);
+            });
+        };
+
+        function stagedGiftStart(uuid) {
+            return {
+                'title': $scope.title,
+                'description': $scope.description,
+                'product_url': ProductService.product.product_url,
+                'product_img_url': $scope.selectedImg,
+                'product_price': $scope.inputPrice*100,
+                'product_title': ProductService.product.title,
+                'sales_tax': $scope.salesTax,
+                'shipping': $scope.shipping,
+                'service_fee': $scope.serviceFee,
+                'total_price': $scope.totalPrice,
+                'columns': $scope.x,
+                'rows': $scope.y,
+                'shipping_state': $scope.shippingState,
+                'shipping_zip': $scope.shippingZip,
+                'gc_email': $scope.gcEmail,
+                'staging_uuid': uuid
+            }
+        }
+
+        function clearCreateData() {
+            $scope.title = '';
+            $scope.description = '';
+            $scope.selectedImg = '';
+            $scope.shippingZip = '';
+            $scope.shippingState = '';
+            $scope.inputPrice = 0;
+            $scope.shippingDetailsSubmitted = false;
+        }
 
         $scope.next = function() {
             GiftStartService.title = $scope.title;
@@ -158,38 +185,20 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            LocalStorage.set('/GiftStartCreateController/session', {
-                title: $scope.title,
-                description: $scope.description,
-                productUrl: ProductService.product.product_url,
-                productTitle: ProductService.product.title,
-                retailerLogo: ProductService.logo,
-                productImgUrl: $scope.selectedImg,
-                rows: $scope.y,
-                columns: $scope.x,
-                selectedXYSet: $scope.selectedXYSet,
-                productPrice: $scope.inputPrice*100,
-                shippingZip: $scope.shippingZip,
-                shippingState: $scope.shippingState,
-                salesTax: $scope.salesTax,
-                shipping: $scope.shipping,
-                serviceFee: $scope.serviceFee,
-                totalPrice: $scope.totalPrice,
-                specialNotes: $scope.specialNotes,
-                gcEmail: $scope.gcEmail,
-                gcName: UserService.name
-
-            });
-
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
 
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
-                    LocalStorage.remove('/GiftStartCreateController/session');
-                    LocalStorage.remove('/GiftStartCreateController/referral');
                     GiftStartService.createGiftStart();
+                    clearCreateData();
                 } else {
+                    var uuid = $scope.makeUUID();
+                    // Send giftstart to staging
+                    $http.post('/giftstart/create.json',
+                        stagedGiftStart(uuid));
+                    AppStateService.set('staging_uuid', uuid);
+
                     PopoverService.giftstartCreateLogin = true;
                     PopoverService.setPopover('login');
                 }
@@ -225,29 +234,18 @@ GiftStarterApp.controller('GiftStartCreateController',
 
         extractReferral();
 
-        var session = LocalStorage.get('/GiftStartCreateController/session');
-        var referral = LocalStorage.get('/GiftStartCreateController/referral');
-        if (session) {
-            restoreFromSession(session);
-        }  else if (referral) {
-            restoreFromReferral(referral);
-        }
-        LocalStorage.remove('/GiftStartCreateController/session');
-        LocalStorage.remove('/GiftStartCreateController/referral');
 
         function extractReferral() {
-            console.log($location.search());
             if ($location.search().product_url &&
                 $location.search().title &&
                 $location.search().price &&
                 $location.search().img_url &&
                 $location.search().source) {
-                console.log($location.search());
-                LocalStorage.set('/GiftStartCreateController/referral', {
+                restoreFromReferral({
                     product_url: $location.search().product_url,
                     productTitle: $location.search().title,
-                    price: $location.search().price,
                     productImgUrl: $location.search().img_url,
+                    price: $location.search().price,
                     source: $location.search().source
                 });
                 $location.search('product_url', null);
@@ -298,7 +296,7 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.pitchInsInitialized = true;
         }, 2500);
 
-        if (referral) {
+        if (this.referral) {
             $scope.selectedXYSet = calculateInitialNumParts();
         }
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
