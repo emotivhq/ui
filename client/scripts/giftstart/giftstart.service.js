@@ -262,41 +262,42 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     this.paymentFailure = function() {console.log("Pitch-in failed!")};
 
-    this.updateCampaign = function(newTitle, newDescription, newImage, newGcName) {
-        var data = {action: 'update', giftstart: {gsid: self.giftStart.gsid}, uid: UserService.uid,
-            token: UserService.token};
+    this.updateCampaign = function(newTitle, newDescription, newImage,
+                                   newGcName) {
         if (newTitle || newDescription || newImage) {
+            var newgs = {};
             if (newTitle) {
-                data.giftstart.title = newTitle;
+                newgs.title = newTitle;
             }
             if (newDescription) {
-                data.giftstart.description = newDescription;
+                newgs.description = newDescription;
             }
             if (newImage) {
-                data.giftstart.image = newImage;
+                newgs.image = newImage;
             }
             if (newGcName) {
-                data.giftstart.gc_name = newGcName;
+                newgs.gc_name = newGcName;
             }
         }
         Analytics.track('campaign', 'campaign update sent');
 
-        $http({method: 'PUT', url: '/giftstart/api', data: data})
+        $http({method: 'POST', url: '/giftstart/' +
+            self.giftStart.giftstart_url_title + '.json', data: newgs})
             .success(function(response) {
                 Analytics.track('campaign', 'campaign update succeeded');
-                if (response.giftstart.title) {
-                    self.giftStart.title = response.giftstart.title;
+                if (response.title) {
+                    self.giftStart.title = response.title;
                 }
-                if (response.giftstart.description) {
-                    self.giftStart.description = response.giftstart.description;
+                if (response.description) {
+                    self.giftStart.description = response.description;
                 }
-                if (response.giftstart.product_img_url) {
+                if (response.product_img_url) {
                     self.giftStart.product_img_url =
-                        response.giftstart.product_img_url + '#' +
+                        response.product_img_url + '#' +
                         new Date().getTime();
                 }
-                if (response.giftstart.gc_name) {
-                    self.giftStart.gc_name = response.giftstart.gc_name;
+                if (response.gc_name) {
+                    self.giftStart.gc_name = response.gc_name;
                 }
                 $rootScope.$broadcast('giftstart-updated');
             })
