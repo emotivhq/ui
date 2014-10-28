@@ -63,6 +63,11 @@ handlers:
   script: feeds.feeds_api.handler
   login: admin
 
+# Analytics
+- url: /a/.*
+  script: analytics.handler
+  secure: always
+
 # Client static asset urls
 - url: /favicon\.ico
   static_files: client/assets/favicon.ico

@@ -3,6 +3,10 @@ __author__ = 'stuart'
 from google.appengine.ext import ndb
 import base64
 import json
+import webapp2
+import re
+import urllib
+import logging
 
 
 class ShareClick(ndb.Model):
@@ -46,3 +50,53 @@ def is_scraper(request):
         return True
 
     return False
+
+
+class ButtonAnalyticsEvent(ndb.Model):
+    domain = ndb.StringProperty()
+    path = ndb.StringProperty()
+    uuid = ndb.StringProperty()
+    product_url = ndb.StringProperty()
+    product_price = ndb.IntegerProperty() # cents
+    product_img_url = ndb.StringProperty()
+    timestamp = ndb.DateTimeProperty(auto_now_add=True)
+    product_title = ndb.StringProperty()
+    ip_address = ndb.StringProperty()
+    scroll_depth = ndb.IntegerProperty() # px
+    screen_w = ndb.IntegerProperty() # px
+    screen_h = ndb.IntegerProperty() # px
+    cookie = ndb.StringProperty()
+    action = ndb.StringProperty()
+    button_x = ndb.IntegerProperty() # px
+    button_y = ndb.IntegerProperty() # px
+    button_w = ndb.IntegerProperty() # px
+    button_h = ndb.IntegerProperty() # px
+    button_border = ndb.StringProperty()
+    button_background = ndb.StringProperty()
+    button_img = ndb.StringProperty()
+
+    @staticmethod
+    def from_dict(d):
+        def convert(name):
+            s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+            return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+        return ButtonAnalyticsEvent(**{convert(k): v for k, v in d.items()})
+
+
+class ButtonAnalyticsHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info('Received button analytics event')
+        data = urllib.unquote(self.request.path.split('/')[-1])
+        logging.info('Creating event dict')
+        event_dict = dict(json.loads(base64.b64decode(data)).items() +
+                          [('ip_address', self.request.remote_addr)])
+        logging.info('Create event')
+        event = ButtonAnalyticsEvent.from_dict(event_dict)
+        logging.info('Putting event')
+        event.put()
+        logging.info('Event tracking complete')
+
+
+handler = webapp2.WSGIApplication([('/a/.*', ButtonAnalyticsHandler)])
