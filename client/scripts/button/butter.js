@@ -62,14 +62,14 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         if (buttonClass) {
             if (buttonClass.indexOf('bg') > 0) {
                 buttonImg.setAttribute('src',
-                        gs_domain + '/assets/gs_button_bg.png');
+                    gs_domain + '/assets/gs_button_bg.png');
             } else {
                 buttonImg.setAttribute('src',
                         gs_domain + '/assets/new_button.png');
             }
         } else {
             buttonImg.setAttribute('src',
-                    gs_domain + '/assets/gs_button_nobg.png');
+                gs_domain + '/assets/gs_button_nobg.png');
         }
         buttonImg.setAttribute('style',
             'max-height: 100%;');
