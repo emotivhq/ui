@@ -18,14 +18,21 @@
 // <gs-button id="gsbutton" class="gsbutton" style="display: none;"></gs-button>
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
-window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNum) {
-    if (buttonNum === undefined) {buttonNum = ''}
+window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
+                                      buttonId) {
+    // Ensure inputs are valid before continuing
+    function inputValid(prev, input) {return input != null && input != undefined && prev;}
+    var inputsValid = [productUrl, title, price, imgUrl].reduce(inputValid, true);
+    if (!inputsValid) {return}
 
-    var self = {};
+    if (buttonId == undefined || buttonId == null) {
+        buttonId = '';
+    }
     var gs_domain = 'https://www.giftstarter.co';
     var source = location.host;
-    var gsButtonId = 'gsbutton' + buttonNum;
-    self.button = document.querySelector('#gsbutton' + buttonNum);
+    var gsButtonId = 'gsbutton' + buttonId;
+    var button = document.querySelector('#gsbutton' + buttonId);
+    var buttonLink, buttonImg, intervalId;
 
     // Tracking data
     var buttonSeenSent = false;
@@ -41,38 +48,39 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
         return str.join("&");
     };
 
-    self.initializeButton = function() {
+    function initializeButton() {
         // Create elements...
-        self.button = document.querySelector('#gsbutton' + buttonNum);
-        self.buttonLink = document.createElement('a');
-        self.buttonLink.setAttribute('target', '_blank');
-        self.buttonLink.setAttribute('style', 'height: 100%;');
-        self.buttonImg = document.createElement('img');
+        button = document.querySelector('#gsbutton' + buttonId);
+        buttonLink = document.createElement('a');
+        buttonLink.setAttribute('target', '_blank');
+        buttonLink.setAttribute('style', 'display: block; height: 100%;');
+        buttonImg = document.createElement('img');
 
         // Apply styles...
-        var buttonClass= self.button.getAttribute('class');
+        if (!button) {return;}
+        var buttonClass = button.getAttribute('class');
         if (buttonClass) {
             if (buttonClass.indexOf('bg') > 0) {
-                self.buttonImg.setAttribute('src',
+                buttonImg.setAttribute('src',
                         gs_domain + '/assets/gs_button_bg.png');
             } else {
-                self.buttonImg.setAttribute('src',
+                buttonImg.setAttribute('src',
                         gs_domain + '/assets/gs_button_nobg.png');
             }
         } else {
-            self.buttonImg.setAttribute('src',
+            buttonImg.setAttribute('src',
                     gs_domain + '/assets/gs_button_nobg.png');
         }
-        self.buttonImg.setAttribute('style',
+        buttonImg.setAttribute('style',
             'max-height: 100%;');
-        self.button.setAttribute('title',
+        button.setAttribute('title',
             'Gift this together with friends and family!');
 
 
         // Put onto the dom...
-        self.buttonLink.appendChild(self.buttonImg);
-        self.button.appendChild(self.buttonLink);
-    };
+        buttonLink.appendChild(buttonImg);
+        button.appendChild(buttonLink);
+    }
 
     var url = gs_domain + '/create?' + urlSerialize({
         product_url: productUrl,
@@ -83,17 +91,16 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
     });
 
     setTimeout(function() {
-        self.initializeButton();
-        self.buttonLink.setAttribute('href', url);
+        initializeButton();
+        buttonLink.setAttribute('href', url);
         if (price > 75) {
-            self.button.setAttribute('style',
+            button.setAttribute('style',
                 ' display: inline-block; text-align: center;');
 
-            self.button.onclick = sendClick;
+            button.onclick = sendClick;
             sendData(makeData('create'));
-            self.intervalId = setInterval(heartBeat, 300);
+            intervalId = setInterval(heartBeat, 300);
         }
-
     }, 1);
 
     function sendData(data) {
@@ -109,7 +116,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
         // Button is visible if buttonY + button height < scrollY + screen
         // height and same with X
         var visible = true;
-        var bounds = self.button.getBoundingClientRect();
+        var bounds = button.getBoundingClientRect();
         visible &= bounds.bottom < window.innerHeight;
         visible &= bounds.right < window.innerWidth;
         return visible;
@@ -120,7 +127,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
             if (isButtonVisible()) {
                 buttonSeenSent = true;
                 sendSee();
-                clearInterval(self.intervalId);
+                clearInterval(intervalId);
             }
         }
     }
@@ -183,7 +190,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
             buttonH: buttonH,
             buttonBorder: getBorder(),
             buttonBackground: getBackground(),
-            buttonImg: self.buttonImg.src
+            buttonImg: buttonImg.src
         }
     }
 
@@ -227,7 +234,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
         }
     };
 
-    return self;
+    return this;
 };
 
 if (window.giftStartButton) {
