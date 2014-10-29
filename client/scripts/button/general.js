@@ -104,8 +104,10 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     }, 1);
 
     function sendData(data) {
-        var encodedData = encodeURIComponent(
-            window.btoa(JSON.stringify(data)));
+        var encodedData = window.btoa(JSON.stringify(data))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=/g, '.');
         var elm = document.createElement('script');
         elm.src = 'https://www.giftstarter.co/a/' + encodedData;
         elm.onload = function() {document.head.removeChild(elm)};
@@ -122,14 +124,18 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         return visible;
     }
 
+    var lastScroll = window.scrollY;
     function heartBeat() {
         if (!buttonSeenSent) {
             if (isButtonVisible()) {
-                buttonSeenSent = true;
-                sendSee();
-                clearInterval(intervalId);
+                if (lastScroll == window.scrollY) {
+                    buttonSeenSent = true;
+                    sendSee();
+                    clearInterval(intervalId);
+                }
             }
         }
+        lastScroll = window.scrollY;
     }
 
     function sendSee() {sendData(makeData('seen'))}
