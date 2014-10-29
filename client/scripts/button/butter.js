@@ -107,7 +107,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         var encodedData = encodeURIComponent(
             window.btoa(JSON.stringify(data)));
         var elm = document.createElement('script');
-        elm.src = 'https://www.dev.giftstarter.co/a/' + encodedData;
+        elm.src = 'https://www.giftstarter.co/a/' + encodedData;
         elm.onload = function() {document.head.removeChild(elm)};
         document.head.appendChild(elm);
     }
