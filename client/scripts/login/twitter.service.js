@@ -18,7 +18,6 @@ GiftStarterApp.service('TwitterService', [
         var self = this;
 
         this.login = function() {
-            AppStateService.set('login_service', 'twitter');
             $window.open(self.auth_url, '_self');
         };
 
@@ -55,11 +54,13 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.getAuthUrl = function() {
+            AppStateService.set('login_service', 'twitter');
             $http({method: 'POST', url: '/users', data: {
                 action: 'get-auth-url', service: 'twitter',
                 redirect_url: AppStateService.getOauthRedirectUrl()}})
                 .success(function(data) {self.auth_url = data['url'];})
                 .error(function(data) {console.log(data);});
+            AppStateService.remove('login_service');
         };
 
         function twitterOauthCallback(oauthToken, oauthVerifier) {

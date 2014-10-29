@@ -21,16 +21,17 @@ module.exports = function(config) {
         '../bower_components/angular-payments/lib/*.min.js',
         '../scripts/app.module.js',
         '../scripts/utilities/ng-ab/ng-ab.module.js',
+//        '../scripts/button/general.js',
         '../scripts/app.*.js',
-        '../scripts/*/*.controller.js',
-        '../scripts/*/*/*.controller.js',
         '../scripts/*/*/*/*.controller.js',
-        '../scripts/*/*.service.js',
-        '../scripts/*/*/*.service.js',
+        '../scripts/*/*/*.controller.js',
+        '../scripts/*/*.controller.js',
         '../scripts/*/*/*/*.service.js',
-        '../scripts/*/*.spec.js',
+        '../scripts/*/*/*.service.js',
+        '../scripts/*/*.service.js',
+        '../scripts/*/*/*/*.spec.js',
         '../scripts/*/*/*.spec.js',
-        '../scripts/*/*/*/*.spec.js'
+        '../scripts/*/*.spec.js'
     ],
 
 
