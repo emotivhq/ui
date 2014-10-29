@@ -50,7 +50,10 @@ TAX_CLOUD_API_ID = 'E95D360'
 TAX_CLOUD_API_KEY = '80807DAF-22F1-487A-B0B8-3E103C855637'
 
 
-def lookup(address, city, state, zipcode):
+def lookup(address, city, state, zipcode, is_gift_card):
+    if is_gift_card:
+        return 0
+
     request = TAX_CLOUD_SOAP_TEMPLATE.render({
         'api_id': TAX_CLOUD_API_ID,
         'api_key': TAX_CLOUD_API_KEY,
