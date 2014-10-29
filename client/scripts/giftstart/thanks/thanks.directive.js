@@ -7,9 +7,10 @@ GiftStarterApp.directive('gsThanks', gsThanks);
 function gsThanks() {
 
     controller.$inject = ['$scope', 'UserService', '$location',
-        'GiftStartService', 'Analytics', 'PopoverService'];
+        'GiftStartService', 'Analytics', 'PopoverService','$window',
+        'AppStateService'];
     function controller($scope, UserService, $location, GiftStartService,
-                        Analytics, PopoverService) {
+                        Analytics, PopoverService, $window, AppStateService) {
         var thanks = this;
 
         thanks.message = GiftStartService.giftStart.thanks_message;
@@ -24,6 +25,11 @@ function gsThanks() {
         thanks.showLogin = showLogin;
         thanks.update = update;
         thanks.profileImageUrl = UserService.profileImageUrl;
+
+        if ($location.search().thanks == undefined) {
+            $location.search('thanks', AppStateService.get('thanks-code'));
+            AppStateService.remove('thanks-code');
+        }
 
         $scope.$on('login-success', loginChanged);
         $scope.$on('logout-success', loginChanged);
@@ -55,6 +61,7 @@ function gsThanks() {
             var thisThanksURI = '/giftstart/' +
                 GiftStartService.giftStart.giftstart_url_title +
                 '/thanks/edit/';
+            AppStateService.set('thanks-code', $location.search().thanks);
             // TODO: Replace with data layer
             localStorage.setItem(thisThanksURI + 'message', thanks.newMessage);
         }
@@ -71,10 +78,11 @@ function gsThanks() {
             var req = GiftStartService.updateThanks(thanks.newMessage);
             req.success(
                 function(response) {
-                    console.log(response);
-                    thanks.message = response.giftstart.thanks_message;
+                    thanks.message = response.thanks_message;
                     thanks.newMessage = thanks.message;
-                    thanks.imgUrl = response.giftstart.thanks_img_url;
+                    thanks.imgUrl = response.thanks_img_url;
+                    $location.path('/giftstart/' +
+                        GiftStartService.giftStart.giftstart_url_title);
                 })
                 .error(function(reason) {
                     Analytics.track('campaign', 'thanks failed');

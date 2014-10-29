@@ -4,12 +4,12 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource','LocalStorage',
+    'Analytics','AppStateService','$resource',
     GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
                           PopoverService,  $window,  Analytics,
-                          AppStateService, $resource, LocalStorage) {
+                          AppStateService, $resource) {
 
     var GiftStart = $resource('/giftstart/:key.json');
 
@@ -183,7 +183,8 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.giftStart.funded = 0;
         self.giftStart.parts.map(function(part) {
             self.giftStart.totalSelection += part.value * part.selected;
-            self.giftStart.remaining += part.value * !(part.selected || part.bought);
+            self.giftStart.remaining += part.value *
+                !(part.selected || part.bought);
             self.giftStart.funded += part.value * part.bought;
         });
         AppStateService.overlayState(getSelectedParts());
@@ -193,10 +194,12 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.fetchGiftStart = function(url_title) {
         console.log(url_title);
         function fetchSuccess(data) {self.inflateGiftStart(data)}
-        function fetchError(reason) {Analytics.track('campaign', 'campaign fetch failed')}
+        function fetchError(reason) {Analytics.track('campaign',
+            'campaign fetch failed')}
         $http({method: 'GET', url: '/giftstart/' + url_title + '.json'})
             .success(function(data) {self.inflateGiftStart(data)})
-            .error(function(){Analytics.track('campaign', 'campaign fetch failed')});
+            .error(function(){Analytics.track('campaign',
+                'campaign fetch failed')});
     };
 
     this.inflateGiftStart = function(giftstart) {
@@ -205,7 +208,8 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
         self.giftStart = giftstart;
 
-        self.giftStart.parts = self.makeParts(self.giftStart.rows * self.giftStart.columns,
+        self.giftStart.parts = self.makeParts(self.giftStart.rows *
+                self.giftStart.columns,
             self.giftStart.total_price);
         self.updateSelected();
 
@@ -233,7 +237,8 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.sendPayment = function(callback) {
-        var data = {payment: self.payment, action: 'pitch-in', uid: UserService.uid};
+        var data = {payment: self.payment, action: 'pitch-in',
+            uid: UserService.uid};
         if (self.payment.subscribe) {
             Analytics.track('pitchin', 'subscribed to mailing list');
         }
@@ -312,8 +317,10 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             url += '-' + $location.search().thanks;
         }
 
-        var data = {message: message, img: self.thanksImage, gsid: self.giftStart.gsid,
-            url_title: self.giftStart.giftstart_url_title};
+        var data = {
+            message: message, img: self.thanksImage, gsid: self.giftStart.gsid,
+            url_title: self.giftStart.giftstart_url_title
+        };
         if (UserService.uid != -1) {data.uid = UserService.uid;}
 
         return $http({method: 'PUT', url: url, data: data});
@@ -347,7 +354,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             data: {action: 'get-pitch-ins', gsid: self.giftStart.gsid}
         })
             .success(syncCheckCallback)
-            .error(function() {console.log("Failed to contact part sync service.")})
+            .error(function() {console.log("Failed to contact part sync.")})
     }
 
     function syncCheckCallback(pitchins) {
@@ -361,8 +368,10 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         var newPitchIns = pitchins;
         for (var i = 0; i < newPitchIns.length; i++) {
             var date = new Date(1000 * pitchins[i].timestamp);
-            newPitchIns[i].timestampString = months[date.getMonth()] + " " + date.getDate() + ", " +
-                ((date.getHours() - 1) % 12) + ":" + ('0' + date.getMinutes()).slice(-2) + " " +
+            newPitchIns[i].timestampString = months[date.getMonth()] +
+                " " + date.getDate() + ", " +
+                ((date.getHours() - 1) % 12) + ":" +
+                ('0' + date.getMinutes()).slice(-2) + " " +
                 (date.getHours() >= 12 ? 'PM' : 'AM');
         }
         newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
@@ -391,7 +400,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.updateSelected();
     }
 
-    function updateLastChecked() {self.lastCheckedMilliseconds = new Date().getTime();}
+    function updateLastChecked() {
+        self.lastCheckedMilliseconds = new Date().getTime();
+    }
 
     this.syncPitchIns = function(source) {
         if (self.giftStart.gsid) {
@@ -405,7 +416,8 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             } else {
                 // Update every N seconds upon user activity
                 var currentTime = new Date().getTime();
-                if (currentTime - self.lastCheckedMilliseconds > self.updateInterval) {
+                if (currentTime - self.lastCheckedMilliseconds >
+                    self.updateInterval) {
                     checkForSync();
                     updateLastChecked();
                 }
