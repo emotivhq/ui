@@ -133,7 +133,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     }
 
     function sendSee() {sendData(makeData('seen'))}
-    function sendClick() {sendData(makeData('click')); return false;}
+    function sendClick() {sendData(makeData('click'))}
 
     function makeUUID() {
         if (!Boolean(window.GsButtonUUID)) {
