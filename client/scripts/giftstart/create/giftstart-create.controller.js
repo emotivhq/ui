@@ -55,8 +55,10 @@ GiftStarterApp.controller('GiftStartCreateController',
                 $scope.shippingDetailsSubmitted = true;
 
                 $http({method: 'POST', url: '/product',
-                    data: {action: 'get-tax-and-shipping', shipping_address: 'street',
-                        shipping_city: 'city', shipping_state: $scope.shippingState,
+                    data: {action: 'get-tax-and-shipping',
+                        shipping_address: 'street', shipping_city: 'city',
+                        title: ProductService.product.title,
+                        shipping_state: $scope.shippingState,
                         shipping_zip: $scope.shippingZip}})
                     .success(function(result) {
                         Analytics.track('product', 'tax and shipping fetch success');
