@@ -79,10 +79,12 @@ class ButtonAnalyticsEvent(ndb.Model):
     def from_dict(d):
         def convert(name):
             s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-            s1['product_price'] = int(float(s1['product_price'])*100)
             return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
-        return ButtonAnalyticsEvent(**{convert(k): v for k, v in d.items()})
+        analytics_dict = {convert(k): v for k, v in d.items()}
+        analytics_dict['product_price'] = int(float(
+            analytics_dict['product_price'])*100)
+        return ButtonAnalyticsEvent(**analytics_dict)
 
 
 class ButtonAnalyticsHandler(webapp2.RequestHandler):
