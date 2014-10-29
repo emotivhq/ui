@@ -91,7 +91,8 @@ class ButtonAnalyticsHandler(webapp2.RequestHandler):
 
     def get(self):
         logging.info('Received button analytics event')
-        data = urllib.unquote(urllib.unquote(self.request.path.split('/')[-1]))
+        data = self.request.path.split('/')[-1]\
+            .replace('-', '/').replace('_', '/').replace('.', '=')
         logging.info('Creating event dict')
         event_dict = dict(json.loads(base64.b64decode(data)).items() +
                           [('ip_address', self.request.remote_addr)])
