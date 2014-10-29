@@ -153,7 +153,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         var cookieVal = docCookies.getItem('gsButtonTrack');
         if (!Boolean(cookieVal)) {
             cookieVal = uuid();
-            docCookies.setItem('gsButtonTrack', cookieVal);
+            docCookies.setItem('gsButtonTrack', cookieVal, Infinity, '/');
         }
         return cookieVal;
     }
