@@ -17,6 +17,7 @@ class FeedProduct(ndb.Model):
     thumbnail = ndb.StringProperty()
     upc = ndb.StringProperty()
     sku = ndb.StringProperty()
+    is_gift_card = ndb.BooleanProperty(default=False)
 
     def dictify(self):
         return {
