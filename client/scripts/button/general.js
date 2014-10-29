@@ -19,14 +19,13 @@
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
 window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNum) {
-    if (!Boolean(buttonNum)) {buttonNum = ''}
+    if (buttonNum === undefined) {buttonNum = ''}
 
-    window.giftStartButton = window.giftStartButton || {};
-    var self = window.giftStartButton;
+    var self = {};
     var gs_domain = 'https://www.giftstarter.co';
     var source = location.host;
     var gsButtonId = 'gsbutton' + buttonNum;
-    self.button = document.querySelector('#gsbutton');
+    self.button = document.querySelector('#gsbutton' + buttonNum);
 
     // Tracking data
     var buttonSeenSent = false;
@@ -44,7 +43,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
 
     self.initializeButton = function() {
         // Create elements...
-        self.button = document.querySelector('#gsbutton');
+        self.button = document.querySelector('#gsbutton' + buttonNum);
         self.buttonLink = document.createElement('a');
         self.buttonLink.setAttribute('target', '_blank');
         self.buttonLink.setAttribute('style', 'height: 100%;');
@@ -76,22 +75,25 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
     };
 
     var url = gs_domain + '/create?' + urlSerialize({
-        product_url: self.productUrl,
-        title: self.title,
-        price: self.price * 100,
-        img_url: self.imgUrl,
+        product_url: productUrl,
+        title: title,
+        price: price * 100,
+        img_url: imgUrl,
         source: source
     });
 
     setTimeout(function() {
         self.initializeButton();
         self.buttonLink.setAttribute('href', url);
-        if (self.price > 40) {
+        if (price > 75) {
             self.button.setAttribute('style',
                 ' display: inline-block; text-align: center;');
+
+            self.button.onclick = sendClick;
+            sendData(makeData('create'));
+            self.intervalId = setInterval(heartBeat, 300);
         }
 
-        sendData(makeData('create'));
     }, 1);
 
     function sendData(data) {
@@ -107,30 +109,46 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
         // Button is visible if buttonY + button height < scrollY + screen
         // height and same with X
         var visible = true;
-        visible &= (buttonY + buttonH) <
-            (window.scrollY + window.screen.height);
-        visible &= (buttonX + buttonW) <
-            (window.scrollX + window.screen.width);
+        var bounds = self.button.getBoundingClientRect();
+        visible &= bounds.bottom < window.innerHeight;
+        visible &= bounds.right < window.innerWidth;
         return visible;
     }
 
     function heartBeat() {
         if (!buttonSeenSent) {
             if (isButtonVisible()) {
-                sendData('seen');
+                buttonSeenSent = true;
+                sendSee();
+                clearInterval(self.intervalId);
             }
         }
     }
 
+    function sendSee() {sendData(makeData('seen'))}
+    function sendClick() {sendData(makeData('click')); return false;}
+
     function makeUUID() {
         if (!Boolean(window.GsButtonUUID)) {
-            window.GsButtonUUID = ''; // TODO make uuid
+            window.GsButtonUUID = uuid()
         }
         return window.GsButtonUUID;
     }
 
+    function uuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
     function getCookie() {
-        // TODO get or make cookie
+        var cookieVal = docCookies.getItem('gsButtonTrack');
+        if (!Boolean(cookieVal)) {
+            cookieVal = uuid();
+            docCookies.setItem('gsButtonTrack', cookieVal);
+        }
+        return cookieVal;
     }
 
     function getBorder() {
@@ -168,5 +186,54 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl, buttonNu
             buttonImg: self.buttonImg.src
         }
     }
+
+    var docCookies = {
+        getItem: function (sKey) {
+            if (!sKey) { return null; }
+            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+        },
+        setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+            if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+            var sExpires = "";
+            if (vEnd) {
+                switch (vEnd.constructor) {
+                    case Number:
+                        sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+                        break;
+                    case String:
+                        sExpires = "; expires=" + vEnd;
+                        break;
+                    case Date:
+                        sExpires = "; expires=" + vEnd.toUTCString();
+                        break;
+                }
+            }
+            document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+            return true;
+        },
+        removeItem: function (sKey, sPath, sDomain) {
+            if (!this.hasItem(sKey)) { return false; }
+            document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+            return true;
+        },
+        hasItem: function (sKey) {
+            if (!sKey) { return false; }
+            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+        },
+        keys: function () {
+            var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+            for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+            return aKeys;
+        }
+    };
+
     return self;
 };
+
+if (window.giftStartButton) {
+    window.makeGiftStartButton(
+        window.giftStartButton.productUrl,
+        window.giftStartButton.title,
+        window.giftStartButton.price,
+        window.giftStartButton.imgUrl)
+}
