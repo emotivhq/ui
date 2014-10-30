@@ -53,7 +53,8 @@ class AnalyticsTestHandler(unittest.TestCase):
 
     def test_send_event(self):
         url_path = '/a/' + \
-                   urllib.quote(base64.b64encode(json.dumps(example_event)))
+                   base64.b64encode(json.dumps(example_event))\
+                       .replace('/', '-').replace('/', '_').replace('=', '.')
         req = webapp2.Request.blank(url_path)
         req.remote_addr = '1.2.3.4'
         req.method = 'GET'

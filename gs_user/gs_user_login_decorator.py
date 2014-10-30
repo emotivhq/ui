@@ -6,6 +6,7 @@ import base64
 import yaml
 import json
 import urllib
+from gs_user.gs_user_referral import UserReferral
 
 config = yaml.load(open('config.yaml'))
 
@@ -27,7 +28,7 @@ def handle_login(method_handler):
 
         # TODO If im redirecting them, I shouldn't have path in state!!!
         login_service = state.get('login_service')
-        referrer = state.get('referrer', {})
+        referrer = UserReferral.from_dict(state.get('referrer', {}))
         staging_uuid = state.get('staging_uuid')
         if state.get('app_url'):
             redirect_url = state.get('app_url')
