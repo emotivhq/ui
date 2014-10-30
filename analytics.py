@@ -5,7 +5,6 @@ import base64
 import json
 import webapp2
 import re
-import urllib
 import logging
 
 
