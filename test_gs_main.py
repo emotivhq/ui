@@ -44,3 +44,15 @@ class FeedsTestHandler(unittest.TestCase):
         resp = req.get_response(main.app)
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 from GET to /, got: " + str(resp))
+
+    def test_main_arbitrary_query(self):
+        """ Should not fail for arbitrary search strings
+        """
+        req = webapp2.Request.blank('/')
+        req.remote_addr = '1.1.1.1'
+        req.query_string = 'mailchimp1'
+        req.method = 'GET'
+        resp = req.get_response(main.app)
+        self.assertEqual(200, resp.status_code,
+                         "Should get a 200 from GET to /, got: " + str(resp))
+

@@ -19,7 +19,7 @@ def handle_login(method_handler):
     def wrapper(*args, **kwargs):
         self = args[0]
         query = {} if len(self.request.query_string) < 2 else \
-            {urllib.unquote(pair).split('=')[0]: pair.split('=', 1)[1]
+            {urllib.unquote(pair).split('=')[0]: pair.split('=', 1)[-1]
              for pair in self.request.query_string.split('&')}
         state = json.loads(
             base64.b64decode(
