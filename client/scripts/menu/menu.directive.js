@@ -20,8 +20,7 @@ function gsMenu(UserService) {
 
     return {
         restrict: 'E',
-        template: "hello",
-//        templateUrl: '/scripts/menu/menu.ng.html',
+        templateUrl: '/scripts/menu/menu.ng.html',
         link: link
     };
 }
