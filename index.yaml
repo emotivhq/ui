@@ -10,6 +10,12 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: GiftStart
+  properties:
+  - name: thanked
+  - name: deadline
+    direction: desc
+
 - kind: PitchIn
   properties:
   - name: gsid

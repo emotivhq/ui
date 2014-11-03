@@ -9,6 +9,7 @@ import giftstart_comm
 from giftstart import GiftStart
 import giftstart_core
 import json
+from gs_user import User
 from giftstart.giftstart_create import GiftStartCreateHandler
 from giftstart.giftsart_json import GiftStartJsonHandler
 from giftstart.giftstart_query import GiftStartQueryHandler
