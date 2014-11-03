@@ -1,6 +1,5 @@
 @import ../base
 
-
 gs-menu
   position: fixed
   top: 0
@@ -14,11 +13,15 @@ gs-menu
     color: #888
     z-index: 1021
 
-  ul.menu
-    position: absolute
-    top: 0
+  div.menu-wrapper.expanded
     left: 0
-    bottom: 0
+  div.menu-wrapper
+    left: -240px
+    height: 100%
+    position: absolute
+    +transition(all, 0.2s)
+
+  ul.menu
     width: 240px
     padding: 3em 0
     margin: 0
