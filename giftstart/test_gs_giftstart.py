@@ -20,6 +20,7 @@ import uuid
 from pay import pay_api, pay_core
 from mock import MagicMock
 import main
+from giftstart.GiftStart import GiftStart
 
 secret = yaml.load(open('secret.yaml'))
 
@@ -403,3 +404,28 @@ class GiftstartTestHandler(unittest.TestCase):
         self.assertEqual(response.status_code, 404,
                          "Campaign should not be accessible, expected 404, "
                          "response was {0}".format(str(response.status_code)))
+
+    def test_query_giftstarts(self):
+        ndbgs = GiftStart()
+        """ :type ndbgs GiftStart """
+        ndbgs = giftstart_create.GiftStartCreateHandler\
+            .populate_giftstart(ndbgs, example_giftstart, uid="f1234")
+        ndbgs.thanked = True
+        ndbgs.gsid = '1'
+        ndbgs.deadline = datetime.now()
+        ndbgs.thanks_img_url = "http123"
+        ndbgs.thanks_message = "abc you know me"
+        ndbgs.put()
+
+        request = webapp2.Request.blank('/giftstarts.json')
+        request.method = 'GET'
+        request.query_string = 'thanked=true&num=1'
+        response = request.get_response(giftstart_api.handler)
+        giftstarts = json.loads(response.body)
+        self.assertEqual(1, len(giftstarts),
+                         "Should have fetched 1 giftstart(s), got " +
+                         len(giftstarts))
+        self.assertIn('thanks_img', giftstarts[0].keys(),
+                      "Expected thanks image to be in giftstart")
+        self.assertIn('thanks_message', giftstarts[0].keys(),
+                      "Expected thanks message to be in giftstart")
