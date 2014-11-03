@@ -33,10 +33,6 @@
             "replace": "Um... What Is GiftStarter?"
         }, {
             "file": "/scripts/home/home.html",
-            "find": "<div class=\"need-a-champion\">",
-            "replace": "<div class=\"hero\"><img class=\"hero\" src=\"/assets/hero.png\"/></div><div class=\"need-a-champion\">"
-        }, {
-            "file": "/scripts/home/home.html",
             "css": ".hero {width: 90%; text-align: center;}"
         }, {
             "file": "/scripts/home/home.html",
