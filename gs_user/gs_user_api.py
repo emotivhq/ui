@@ -10,6 +10,7 @@ from render_app import render_app
 import re
 from gs_user.gs_user_referral import UserReferral
 from storage import image_cache
+import base64
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -126,8 +127,13 @@ class ImageUploadHandler(webapp2.RequestHandler):
             self.response.set_status(400, 'Invalid image incoding, only jpg '
                                           'and png are acceptable')
         else:
-            extension = content_type[1]
-            image_cache.cache_user_image(uid, json_body.get('data'), extension)
+            try:
+                extension = image_cache.extract_extension_from_content(
+                    base64.b64decode(json_body.get('data')))
+                image_cache.cache_user_image(uid, json_body.get('data'),
+                                             extension)
+            except TypeError as e:
+                self.response.set_status(400, "Invalid image data")
 
 
 handler = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),

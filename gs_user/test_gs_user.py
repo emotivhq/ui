@@ -289,7 +289,7 @@ class UserStatsTestHandler(unittest.TestCase):
     def test_invalid_image_data(self):
         """ Should send error when image data is invalid
         """
-        resp = self.put_image('f1234', 'abcdefg', 'jpg')
+        resp = self.put_image('f1234', base64.b64encode('abcdefg'), 'jpg')
         self.assertEqual(400, resp.status_code,
                          "Should get a 400 response, response was {0}"
                          .format(str(resp)))
