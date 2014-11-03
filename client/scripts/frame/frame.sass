@@ -140,6 +140,9 @@ h4
 #angular-view
   //overflow: auto
   margin-bottom: 2em
+  margin-top: $header-height-mobile
+  @media screen and (min-width: $phone-tablet-boundary)
+    margin-top: $header-height
 
 //  Disable "Welcome Back!" popup from google
 iframe[src^="https://apis.google.com"]
