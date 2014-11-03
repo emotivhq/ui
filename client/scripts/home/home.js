@@ -55,5 +55,7 @@ GiftStarterApp.controller('HomeController', [
             fadeInComment();
             $interval(fadeInComment, 7000);
         }
+
+
     }
 ]);
