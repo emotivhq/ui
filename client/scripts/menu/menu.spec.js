@@ -10,10 +10,10 @@ function menuSpec() {
         $compile,
         $rootScope,
         scope,
-        createDirective,
         isMobile = true;
 
-    beforeEach(angular.mock.module('GiftStarterApp'));
+    beforeEach(module('GiftStarterApp'));
+    beforeEach(module('htmlTemplates'));
 
     beforeEach(inject(angularSetup));
     function angularSetup($injector, $window) {
@@ -32,6 +32,7 @@ function menuSpec() {
     function loggedInTest() {
         UserService.loggedIn = true;
         var elm = $compile('<gs-menu></gs-menu>')(scope);
+        console.log(elm);
         expect(UserService.loggedIn).toBe(true);
         expect(scope.loggedIn).toBe(true);
     }
@@ -45,4 +46,30 @@ function menuSpec() {
         UserService.registerLogout();
         expect(scope.loggedIn).toBe(false);
     }
+
+    it('should start closed', initTest);
+    function initTest() {
+        var elm = $compile('<gs-menu></gs-menu>')(scope);
+        expect(scope.open).toBe(false);
+    }
+
+    it('should open', openTest);
+    function openTest() {
+        var elm = $compile('<gs-menu></gs-menu>')(scope);
+        expect(scope.expanded).toBe(false);
+        scope.open();
+        expect(scope.expanded).toBe(true);
+    }
+
+    it('should open', closeTest);
+    function closeTest() {
+        var elm = $compile('<gs-menu></gs-menu>')(scope);
+        expect(scope.expanded).toBe(false);
+        scope.expand();
+        expect(scope.expanded).toBe(true);
+        scope.close();
+        expect(scope.expanded).toBe(false);
+    }
+
+
 }

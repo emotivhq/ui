@@ -8,14 +8,27 @@ angular.module('GiftStarterApp')
 function gsMenu(UserService) {
 
     function link(scope, element, attr) {
+        scope.expanded = false;
+
+        if (!device.mobile()) {
+            element.style = "display: None";
+        }
+
         scope.loggedIn = UserService.loggedIn;
 
         scope.$on('logout-success', loginChanged);
         scope.$on('login-success', loginChanged);
 
+        scope.expand = expand;
+        scope.close = close;
+
         function loginChanged() {
             scope.loggedIn = UserService.loggedIn;
         }
+
+        function expand() {scope.expanded = true}
+        function close() {scope.expanded = false}
+
     }
 
     return {
