@@ -14,6 +14,8 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
     this.loggedIn = UserService.loggedIn;
     this.mobile = device.mobile();
 
+    this.subliminal = "Retirement";
+
     this.logout = logout;
     this.login = login;
 
