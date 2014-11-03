@@ -14,7 +14,7 @@ function gsThankedCampaigns($http, Analytics) {
 
         // Get thanked campaigns
         $http({method: 'GET',
-            url: '/giftstarts?thanked=true&num=' + attrs.gsNum})
+            url: '/giftstarts.json?thanked=true&num=' + attrs.gsNum})
             .success(thankedCampaignsFetched)
             .error(thankedCampaignsFailed);
     }
