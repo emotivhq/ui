@@ -4,7 +4,8 @@
 
 
 GiftStarterApp.controller('HeaderController', ['$scope','$location',
-    'UserService','Analytics','PopoverService', '$rootScope', HeaderController]);
+    'UserService','Analytics','PopoverService', '$rootScope',
+    HeaderController]);
 
 function HeaderController($scope,  $location,  UserService,  Analytics,
                           PopoverService, $rootScope) {
@@ -24,6 +25,7 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
 
     // for sizing using ng-class
     function routeChangeListener(event, next) {
+        menuClose();
         if (next.$$route) {
             self.thisRoute = next.$$route.originalPath;
         }
@@ -39,4 +41,5 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
     function updateLogin() {self.loggedIn = UserService.loggedIn}
 
     function menuOpen() {$rootScope.$broadcast('menu-open')}
+    function menuClose() {$rootScope.$broadcast('menu-close')}
 }
