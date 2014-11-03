@@ -139,7 +139,8 @@ class ImageUploadHandler(webapp2.RequestHandler):
 handler = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                    ('/users/.*/img/new.json',
                                     ImageUploadHandler),
-                                   ('/users/.*', UserPageHandler),], debug=True)
+                                   ('/users/.*', UserPageHandler),
+                                   ], debug=True)
 api = webapp2.WSGIApplication([('/users.*', UserHandler)], debug=True)
 stats = webapp2.WSGIApplication([('/users/.*.json', StatsHandler)], debug=True)
 user_page = webapp2.WSGIApplication([('/u', UserPageHandler)], debug=True)
