@@ -9,6 +9,7 @@ from UserLogin import UserLogin
 from render_app import render_app
 import re
 from gs_user.gs_user_referral import UserReferral
+from storage import image_cache
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -75,7 +76,6 @@ class UserHandler(webapp2.RequestHandler):
                 referrer = UserReferral.from_dict(data.get('referrer', {}))
                 token_set = twitter.submit_verifier(data['oauth_token'], data['verifier'])
                 user = update_or_create('twitter', token_set, referrer)
-                print(user)
                 if user is not None:
                     UserLogin.register_login(user.uid, data['location'])
                     self.response.write(json.dumps({
@@ -107,11 +107,32 @@ class UserHandler(webapp2.RequestHandler):
                     }))
 
         else:
-            print(data)
             self.response.status_int = 400
 
 
+class ImageUploadHandler(webapp2.RequestHandler):
+
+    def put(self):
+        uid = self.request.path.split('/')[2]
+        json_body = json.loads(self.request.body)
+        content_type = self.request.headers.get('Content-Type').split('/')
+
+        if content_type[0] != 'image':
+            self.response.set_status(400, 'Invalid content-type, must be '
+                                          'image')
+        elif content_type[1] != 'jpeg' and \
+                        content_type[1] != 'jpg' and \
+                        content_type[1] != 'png':
+            self.response.set_status(400, 'Invalid image incoding, only jpg '
+                                          'and png are acceptable')
+        else:
+            extension = content_type[1]
+            image_cache.cache_user_image(uid, json_body.get('data'), extension)
+
+
 handler = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
+                                   ('/users/.*/img/new.json',
+                                    ImageUploadHandler),
                                    ('/users/.*', UserPageHandler),], debug=True)
 api = webapp2.WSGIApplication([('/users.*', UserHandler)], debug=True)
 stats = webapp2.WSGIApplication([('/users/.*.json', StatsHandler)], debug=True)

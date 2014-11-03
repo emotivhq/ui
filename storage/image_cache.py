@@ -23,6 +23,10 @@ def cache_user_image_from_url(uid, img_url):
     return save_picture_to_gcs(uid + extension, 'u/', img)
 
 
+def cache_user_image(uid, img, extension):
+    return save_picture_to_gcs(uid + '.' + extension, 'u/', str(img))
+
+
 def cache_product_image(img_url, gsid):
     request = requests.get(img_url)
     img = request.content

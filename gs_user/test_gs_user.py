@@ -56,6 +56,11 @@ example_giftstart = {
     'gc_email': 'test@giftstarter.co',
 }
 
+jpeg_file = open('client/assets/stuart_square_s.jpg')
+JPEG_DATA = base64.b64encode(jpeg_file.read())
+png_file = open('client/assets/share_google.png')
+PNG_DATA = base64.b64encode(png_file.read())
+
 
 class UserStatsTestHandler(unittest.TestCase):
 
@@ -233,7 +238,58 @@ class UserStatsTestHandler(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
-                'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
+                'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
             }
         })
         request.get_response(pay_api.api)
+
+    def put_image(self, uid, data, extension):
+        """ Puts image and returns handler response
+        :type uid: string
+        :type data: string
+        :rtype: webapp2.Response
+        """
+        request = webapp2.Request.blank('/users/{0}/img/new.json'.format(uid))
+        request.method = 'PUT'
+        request.headers['Content-Type'] = 'image/' + extension
+        request.body = json.dumps({'data': data})
+        return request.get_response(gs_user_api.handler)
+
+    def test_image_upload(self):
+        """ Should be able to upload a valid image """
+        resp = self.put_image('f1234', JPEG_DATA, 'jpg')
+        self.assertEqual(200, resp.status_code,
+                         "Should get a 200 response, response was {0}"
+                         .format(str(resp)))
+
+    def test_image_content_type(self):
+        """ Should require content-type header, and only accept the right ones
+        """
+        resp = self.put_image('f1234', JPEG_DATA, 'jpg')
+        self.assertEqual(200, resp.status_code,
+                         "Should get a 200 response, response was {0}"
+                         .format(str(resp)))
+
+        resp = self.put_image('f1234', PNG_DATA, 'png')
+        self.assertEqual(200, resp.status_code,
+                         "Should get a 200 response, response was {0}"
+                         .format(str(resp)))
+
+        resp = self.put_image('f1234', JPEG_DATA, 'xml')
+        self.assertEqual(400, resp.status_code,
+                         "Should get a 400 response, response was {0}"
+                         .format(str(resp)))
+
+        resp = self.put_image('f1234', JPEG_DATA, 'gif')
+        self.assertEqual(400, resp.status_code,
+                         "Should get a 400 response, response was {0}"
+                         .format(str(resp)))
+
+    def test_invalid_image_data(self):
+        """ Should send error when image data is invalid
+        """
+        resp = self.put_image('f1234', 'abcdefg', 'jpg')
+        self.assertEqual(400, resp.status_code,
+                         "Should get a 400 response, response was {0}"
+                         .format(str(resp)))

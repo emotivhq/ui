@@ -15,8 +15,6 @@ def get_extended_key(code, redirect_url):
                             "&client_secret=" + APP_SECRET +
                             "&redirect_uri=" + redirect_url +
                             "&code=" + code)
-    print(redirect_url)
-    print(response.content)
     result_dict = {k: v for k, v in [pair.split('=')
                                      for pair in response.content.split('&')]}
     return FacebookTokenSet().populate(result_dict['access_token'],
