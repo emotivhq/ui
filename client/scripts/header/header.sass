@@ -1,0 +1,71 @@
+@import "../base"
+
+#header
+  background: url('/assets/headerBackground.png')
+  background-size: cover
+  width: 100%
+  position: fixed
+  top: 0
+  left: 0
+  right: 0
+  z-index: 1000
+  background-color: rgba(255, 255, 255, 0.8)
+
+  #header-logo
+    height: $header-height-mobile
+    @media screen and (min-width: 37.5em)
+      height: $header-height
+      float: right
+    display: block
+    padding: 0.5em 4em 1.5em
+    margin: 0 auto
+
+  > div.wrapper
+    margin: 0 auto
+
+    h1
+      cursor: default
+      @media screen and (max-width: 37.5em)
+        font-size: 2em
+      color: $primary-color
+      text-align: center
+
+    div.nav
+      text-align: center
+      padding: 1.5em 3em 0
+      display: inline-block
+
+      h2
+        display: inline-block
+        cursor: default
+      h2.navitem
+        padding: 0 0.5em
+        cursor: pointer
+        vertical-align: text-bottom
+      h2.navitem:hover
+        color: $primary-color-highlight
+
+#header-menu-button
+  position: absolute
+  top: 1em
+  left: 0.4em
+  padding: 0.6em 0.6em 0.4em 0.6em
+  display: inline-block
+  cursor: pointer
+  img
+    height: 1.8em
+
+#subliminal-header
+  +transition(all, 0.2s)
+  cursor: default
+  position: absolute
+  top: 3em
+  right: 24%
+  height: 1.0em
+  width: 10em
+  background-image: url("/assets/subliminal_scroller.png")
+  background-size: 8em
+  background-position-y: -3px
+  @media screen and (min-width: $phone-tablet-boundary)
+    right: 1.7em
+  

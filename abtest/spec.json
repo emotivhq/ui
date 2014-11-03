@@ -1,72 +1,16 @@
 [{
-    "name": "home_page",
+   "name": "subliminal",
     "cases": [{
-        "name": "original",
+        "name": "none",
         "weight": 0,
-        "changes": []
+        "changes": [{
+            "file": "/scripts/home/home.html",
+            "css": "#subliminal-header {display: none;}"
+        }]
     }, {
-        "name": "new",
+        "name": "normal",
         "weight": 1,
-        "changes": [{
-            "file": "/scripts/home/home.html",
-            "removeEle": "div.top-campaigns"
-        }, {
-            "file": "/scripts/home/home.html",
-            "find": "<p class=\"explainer\">GiftStarter helps you and your friends and family come together to give bigger, better gifts.</p>",
-            "replace": "<h1 class=\"accent\">The Awesomest Way To Group Gift Online</h1>"
-        }, {
-            "file": "/scripts/home/home.html",
-            "find": "<p class=\"explainer\">Need a wedding, birthday, or baby shower present\\? GiftStart it!</p>",
-            "replace": "<h3 class=\"headline\">Ready to gift?  Start here!</h3>"
-        }, {
-            "file": "/scripts/product/product-search.html",
-            "removeEle": "label.block"
-        }, {
-            "file": "/scripts/home/home.html",
-            "css": "h3.headline {margin: 0.25em}"
-        }, {
-            "file": "/scripts/home/home.html",
-            "css": "@media screen and (min-width: 37.5em) {gs-product-search div.product-link span.inputs input {width: 22em}} @media screen and (max-width: 37.5em) {h1 {font-size: 2.5em;}}"
-        }, {
-            "file": "/scripts/home/home.html",
-            "find": "What is it and how does it work\\?",
-            "replace": "Um... What Is GiftStarter?"
-        }, {
-            "file": "/scripts/home/home.html",
-            "find": "<div class=\"need-a-champion\">",
-            "replace": "<div class=\"hero\"><img class=\"hero\" src=\"/assets/hero.png\"/></div><div class=\"need-a-champion\">"
-        }, {
-            "file": "/scripts/home/home.html",
-            "css": ".hero {width: 90%; text-align: center;}"
-        }, {
-            "file": "/scripts/home/home.html",
-            "findEle": "div.need-a-champion",
-            "replace": "<h1 class=\"happening-now\">GiftStarts Happening Now!</h1><gs-top-campaign campaign=\"topCampaigns.campaigns[0]\" pitchins=\"topCampaigns.pitchins[0]\" index=\"pitchinIndex\" fade-in=\"fadedIn\"></gs-top-campaign>"
-        }, {
-            "file": "/scripts/home/home.html",
-            "css": "h1.happening-now {text-align: left; margin-top: 0.5em;}"
-        }, {
-            "file": "/scripts/home/top-campaign.html",
-            "replaceAll": "<div class=\"top-campaign wrapper\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><img class=\"product-image\" ng-src=\"{{campaign.product_img_url}}\"/></a><div class=\"description-container\"><a ng-href=\"/giftstart/{{campaign.giftstart_url_title}}\"><h3 class=\"accent\">{{campaign.title}}</h3></a><p class=\"campaign-description\">{{campaign.description}}</p></div></div>"
-        }, {
-            "file": "/scripts/home/top-campaign.html",
-            "css": "div.top-campaign.wrapper {background: #eaeaea; padding: 1em} img.product-image {width: 100%} div.top-campaign.wrapper div.description-container {width: 100%;} @media screen and (min-width: 40em) {img.product-image {width: 47%; display: inline-block; margin-right: 4%;} div.top-campaign.wrapper div.description-container {width: 47%; display: inline-block; vertical-align: top;}} div.landing-page gs-top-campaign {width: 100%} div.top-campaign.wrapper p.campaign-description {text-align: left; white-space: pre-line;}"
-        }]
-    }]
-}, {
-    "name": "brand-pillow",
-    "cases": [{
-        "name": "old",
-        "weight": 0,
         "changes": []
-    },{
-        "name": "new-video",
-        "weight": 1,
-        "changes": [{
-            "file": "/scripts/giftstart/create/giftstart-create.html",
-            "find": "'/scripts/giftstart/brand-pillow/brand-pillow.html'",
-            "replace": "'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"
-        }]
     }]
 }]
 

@@ -12,7 +12,7 @@ import json
 from gs_user import User
 from giftstart.giftstart_create import GiftStartCreateHandler
 from giftstart.giftsart_json import GiftStartJsonHandler
-
+from giftstart.giftstart_query import GiftStartQueryHandler
 
 
 class GiftStartHandler(webapp2.RequestHandler):
@@ -84,7 +84,8 @@ def find_campaign(campaign):
 
 handler = webapp2.WSGIApplication(
     [('/giftstart/create.json', GiftStartCreateHandler),
-     ('/giftstart/.*.json', GiftStartJsonHandler)
+     ('/giftstart/.*.json', GiftStartJsonHandler),
+     ('/giftstarts.json', GiftStartQueryHandler),
      ], debug=True)
 api = webapp2.WSGIApplication([('/giftstart/api',
                                 GiftStartHandler)],

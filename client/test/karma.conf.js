@@ -5,7 +5,19 @@ module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
+    basePath: '../',
+
+    plugins: [
+        'karma-chrome-launcher',
+        'karma-jasmine',
+        'karma-ng-html2js-preprocessor'
+    ],
+
+
+      ngHtml2JsPreprocessor: {
+          // the name of the Angular module to create
+          moduleName: "htmlTemplates"
+      },
 
 
     // frameworks to use
@@ -15,34 +27,32 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        '../bower_components/angular/angular.js',
-        '../bower_components/angular*/*.min.js',
-        '../bower_components/angular-mocks/*.js',
-        '../bower_components/angular-payments/lib/*.min.js',
-        '../scripts/app.module.js',
-        '../scripts/utilities/ng-ab/ng-ab.module.js',
-//        '../scripts/button/general.js',
-        '../scripts/app.*.js',
-        '../scripts/*/*/*/*.controller.js',
-        '../scripts/*/*/*.controller.js',
-        '../scripts/*/*.controller.js',
-        '../scripts/*/*/*/*.service.js',
-        '../scripts/*/*/*.service.js',
-        '../scripts/*/*.service.js',
-        '../scripts/*/*/*/*.spec.js',
-        '../scripts/*/*/*.spec.js',
-        '../scripts/*/*.spec.js'
+        'bower_components/angular/angular.js',
+        'bower_components/angular*/*.min.js',
+        'bower_components/angular-mocks/*.js',
+        'bower_components/angular-payments/lib/*.min.js',
+        'scripts/app.module.js',
+        'scripts/utilities/ng-ab/ng-ab.module.js',
+//        'scripts/button/general.js',
+        'scripts/app.*.js',
+        'scripts/**/*.directive.js',
+        'scripts/**/*.controller.js',
+        'scripts/**/*.service.js',
+        'scripts/**/*.spec.js',
+        'scripts/**/*.html'
     ],
 
 
     // list of files to exclude
     exclude: [
+        'scripts/button/button.spec.js'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+        '**/*.html': ['ng-html2js']
     },
 
 

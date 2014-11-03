@@ -20,5 +20,6 @@ function cacheTemplates($http, $templateCache, $timeout) {
         $http.get('/scripts/popover/pay/pay-popover.html', {cache: $templateCache});
         $http.get('/scripts/popover/thanks/thanks-popover.html', {cache: $templateCache});
         $http.get('/scripts/giftstart/overlay/overlay.html', {cache: $templateCache});
+        $http.get('/scripts/menu/menu.ng.html', {cache: $templateCache});
     }
 }
