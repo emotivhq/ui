@@ -6,18 +6,13 @@
   width: 100%
   z-index: 1000
 
-  /*  HEADER  */
-  $header-height: 9em
-  $header-margin-bottom: 10px
-
   #header-logo
-    @media screen and (max-width: 37.5em)
-      width: 100%
+    height: $header-height-mobile
     @media screen and (min-width: 37.5em)
       height: $header-height
     display: block
-    padding: 2em 2em 0 0
-    margin: 0 auto $header-margin-bottom auto
+    padding: 0.5em 4em
+    margin: 0 auto
 
   > div.wrapper
     margin: 0 auto
@@ -43,7 +38,6 @@
       h2.navitem:hover
         color: $primary-color-highlight
 
-#header
   div.wrapper.small
     #header-logo
       //padding: 1em 0 3em 0
@@ -51,3 +45,13 @@
 
     div.big-container
       display: none
+
+#header-menu-button
+  position: absolute
+  top: 1.1em
+  left: 0.4em
+  padding: 0.6em 0.6em 0.4em 0.6em
+  display: inline-block
+  cursor: pointer
+  img
+    height: 2em

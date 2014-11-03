@@ -18,6 +18,7 @@ function gsMenu(UserService) {
 
         scope.$on('logout-success', loginChanged);
         scope.$on('login-success', loginChanged);
+        scope.$on('menu-open', expand);
 
         scope.expand = expand;
         scope.close = close;

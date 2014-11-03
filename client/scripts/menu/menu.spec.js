@@ -57,7 +57,7 @@ function menuSpec() {
     function openTest() {
         var elm = $compile('<gs-menu></gs-menu>')(scope);
         expect(scope.expanded).toBe(false);
-        scope.open();
+        $rootScope.$broadcast('menu-open');
         expect(scope.expanded).toBe(true);
     }
 
@@ -65,7 +65,7 @@ function menuSpec() {
     function closeTest() {
         var elm = $compile('<gs-menu></gs-menu>')(scope);
         expect(scope.expanded).toBe(false);
-        scope.expand();
+        $rootScope.$broadcast('menu-open');
         expect(scope.expanded).toBe(true);
         scope.close();
         expect(scope.expanded).toBe(false);

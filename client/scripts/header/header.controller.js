@@ -4,10 +4,10 @@
 
 
 GiftStarterApp.controller('HeaderController', ['$scope','$location',
-    'UserService','Analytics','PopoverService', HeaderController]);
+    'UserService','Analytics','PopoverService', '$rootScope', HeaderController]);
 
 function HeaderController($scope,  $location,  UserService,  Analytics,
-                          PopoverService) {
+                          PopoverService, $rootScope) {
     var self = this;
     this.thisRoute = $location.path().toString();
     this.loggedIn = UserService.loggedIn;
@@ -15,6 +15,8 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
 
     this.logout = logout;
     this.login = login;
+
+    this.menuOpen = menuOpen;
 
     $scope.$on('login-success', updateLogin);
     $scope.$on('logout-success', updateLogin);
@@ -27,16 +29,14 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
         }
     }
 
-    function login() {
-        PopoverService.setPopover('login');
-    }
+    function login() {PopoverService.setPopover('login')}
 
     function logout() {
         Analytics.track('user', 'logout from header');
         UserService.logout();
     }
 
-    function updateLogin() {
-        self.loggedIn = UserService.loggedIn;
-    }
+    function updateLogin() {self.loggedIn = UserService.loggedIn}
+
+    function menuOpen() {$rootScope.$broadcast('menu-open')}
 }
