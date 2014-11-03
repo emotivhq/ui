@@ -29,6 +29,9 @@ handlers:
 - url: /giftstart/.*.json
   script: giftstart.giftstart_api.handler
   secure: always
+- url: /giftstarts.json
+  script: giftstart.giftstart_api.handler
+  secure: always
 - url: /giftstart/.*
   script: main.app
   secure: always

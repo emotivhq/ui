@@ -424,8 +424,8 @@ class GiftstartTestHandler(unittest.TestCase):
         giftstarts = json.loads(response.body)
         self.assertEqual(1, len(giftstarts),
                          "Should have fetched 1 giftstart(s), got " +
-                         len(giftstarts))
-        self.assertIn('thanks_img', giftstarts[0].keys(),
+                         str(len(giftstarts)))
+        self.assertIn('thanks_img_url', giftstarts[0].keys(),
                       "Expected thanks image to be in giftstart")
         self.assertIn('thanks_message', giftstarts[0].keys(),
                       "Expected thanks message to be in giftstart")
