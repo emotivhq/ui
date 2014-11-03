@@ -9,11 +9,7 @@ var GiftStarterApp = angular.module('GiftStarterApp',
 
 console.log("ver54");
 
-angular.module('GiftStarterApp').run(function() {
-
-});
-
-GiftStarterApp.service('AppStateService', [
+angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
     function($location,  $window,  $rootScope) {
 
