@@ -4,22 +4,26 @@
 
 
 GiftStarterApp.controller('HeaderController', ['$scope','$location',
-    'UserService','Analytics','PopoverService', '$rootScope',
+    'UserService','Analytics','PopoverService', '$rootScope', '$interval',
     HeaderController]);
 
 function HeaderController($scope,  $location,  UserService,  Analytics,
-                          PopoverService, $rootScope) {
+                          PopoverService, $rootScope, $interval) {
     var self = this;
     this.thisRoute = $location.path().toString();
     this.loggedIn = UserService.loggedIn;
     this.mobile = device.mobile();
 
-    this.subliminal = "Retirement";
+    this.subliminalOffset = -3.0;
+    this.subliminalStyle = {'background-position-y': this.subliminalOffset +
+        'px'};
 
     this.logout = logout;
     this.login = login;
 
     this.menuOpen = menuOpen;
+
+    $interval(updateSubliminal, 3000);
 
     $scope.$on('login-success', updateLogin);
     $scope.$on('logout-success', updateLogin);
@@ -31,6 +35,13 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
         if (next.$$route) {
             self.thisRoute = next.$$route.originalPath;
         }
+    }
+
+    function updateSubliminal() {
+        self.subliminalOffset -= 22.8178;
+        self.subliminalStyle = {
+            'background-position-y': self.subliminalOffset + 'px'
+        };
     }
 
     function login() {PopoverService.setPopover('login')}
