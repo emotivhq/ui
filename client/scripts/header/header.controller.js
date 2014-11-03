@@ -11,6 +11,7 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
     var self = this;
     this.thisRoute = $location.path().toString();
     this.loggedIn = UserService.loggedIn;
+    this.mobile = device.mobile();
 
     this.logout = logout;
     this.login = login;
