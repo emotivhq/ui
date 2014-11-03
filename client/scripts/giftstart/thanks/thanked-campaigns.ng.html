@@ -1,0 +1,11 @@
+<div class="top-campaign wrapper" ng-repeat="campaign in campaigns">
+    <a ng-href="/giftstart/{{campaign.giftstart_url_title}}">
+        <img class="product-image" ng-src="{{campaign.thanks_img_url}}"/>
+    </a>
+    <div class="description-container">
+        <a ng-href="/giftstart/{{campaign.giftstart_url_title}}">
+            <h3 class="accent">{{campaign.title}}</h3>
+        </a>
+        <p class="campaign-description">{{campaign.thanks_message}}</p>
+    </div>
+</div>

@@ -1,12 +1,7 @@
 <div class="landing-page" ng-controller="HomeController">
-    <p class="explainer">GiftStarter helps you and your friends and family come together to give bigger, better gifts.</p>
+    <h1 class="accent">The Awesomest Way To Group Gift Online</h1>
     <p class="explainer">Need a wedding, birthday, or baby shower present? GiftStart it!</p>
     <gs-product-search></gs-product-search>
-    <div class="top-campaigns" ng-show="topCampaigns">
-        <h1>Top GiftStarts</h1>
-        <gs-top-campaign campaign="topCampaigns.campaigns[0]" pitchins="topCampaigns.pitchins[0]" index="pitchinIndex" fade-in="fadedIn"></gs-top-campaign>
-        <gs-top-campaign campaign="topCampaigns.campaigns[1]" pitchins="topCampaigns.pitchins[1]" index="pitchinIndex" fade-in="fadedIn"></gs-top-campaign>
-    </div>
     <div class="copy">
         <h1>What is it and how does it work?</h1>
         <div>
@@ -37,9 +32,11 @@
         <img ng-hide="{{gifsrc}}" src="/assets/howToFirstFrame.png"/>
         <img class="gif" gs-scroll-play gs-padding="300"/>
     </div>
-    <div class="need-a-champion">
-        <h1>Shopping For Yourself?</h1>
-        <p>Have your own deserving moment coming up, but your friends and family don't know what you want?  Reach out to them, and find your own GiftStarter!</p>
-        <button class="large" ng-click="reachOutNotReadyYet()">Reach Out!</button>
-    </div>
+    <!--<div class="need-a-champion">-->
+        <!--<h1>Shopping For Yourself?</h1>-->
+        <!--<p>Have your own deserving moment coming up, but your friends and family don't know what you want?  Reach out to them, and find your own GiftStarter!</p>-->
+        <!--<button class="large" ng-click="reachOutNotReadyYet()">Reach Out!</button>-->
+    <!--</div>-->
+    <h1>Successful GiftStarts</h1>
+    <gs-thanked-campaigns gs-num="1"></gs-thanked-campaigns>
 </div>

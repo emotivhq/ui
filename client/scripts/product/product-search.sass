@@ -1,7 +1,12 @@
 
 @import "../base"
 
+
 gs-product-search
+  @media screen and (max-width: 37.5em)
+    h1
+      font-size: 2.5em
+
   div.product-link
     /*  PRODUCT LINK INPUT  */
     text-align: center
@@ -25,7 +30,7 @@ gs-product-search
     span.inputs
       input
         padding: 0.4em 0.6em
-        width: 16em
+        width: 22em
       button
         @media screen and (max-width: $phone-tablet-boundary)
           width: 100%
