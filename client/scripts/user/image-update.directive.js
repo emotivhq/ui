@@ -12,8 +12,9 @@ function gsImageUpdate($http, Analytics) {
         $scope = scope;
         scope.startEdit = startEdit;
         scope.cancel = cancel;
-        scope.upload = upload;
+        scope.submit = submit;
         scope.editing = false;
+        scope.src = attrs.src;
     }
 
     function startEdit() {
@@ -27,14 +28,14 @@ function gsImageUpdate($http, Analytics) {
 
     }
 
-    function upload() {
+    function submit() {
         Analytics.track('user', 'profile image submit');
 
     }
 
     return {
         link: link,
-        template: '<div><img src=""/><button class="edit"></button></div>',
+        template: '<div><img ng-src="{{src}}"/><button class="edit">Edit</button></div>',
         restrict: 'E'
     }
 }
