@@ -198,6 +198,6 @@ function gsImageUpload($timeout, GiftStartService, $window) {
         restrict: 'E',
         scope: {imageUpdated: '=onImageUpdated', imageData: '=newImageData'},
         link: link,
-        templateUrl: '/scripts/giftstart/image-upload/image-upload.html'
+        templateUrl: '/scripts/utilities/image-upload/image-upload.html'
     };
 }
