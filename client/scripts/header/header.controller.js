@@ -39,6 +39,9 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
 
     function updateSubliminal() {
         self.subliminalOffset -= 22.8178;
+        if (self.subliminalOffset < -253) {
+            self.subliminalOffset = -3;
+        }
         self.subliminalStyle = {
             'background-position-y': self.subliminalOffset + 'px'
         };
