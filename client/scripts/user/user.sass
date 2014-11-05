@@ -1,5 +1,46 @@
 @import "../base"
 
+
+#profile-image
+  +border-radius(50%)
+  width: 100%
+
+#profile-image-container
+  display: inline-block
+  position: relative
+  margin-left: -2em
+  max-width: 35%
+  @media screen and (min-width: $phone-tablet-boundary)
+    max-width: 16em
+
+  button.upload
+    width: 1.35em
+    height: 1.35em
+    background-image: url("/assets/upload_button_white.png")
+    background-size: contain
+    position: absolute
+    bottom: 0
+    right: 0
+  button.edit
+    background-image: url("/assets/edit_button_white.png")
+    background-size: contain
+    position: absolute
+    bottom: 0
+    right: 0
+    height: 2em
+    width: 2em
+    @media screen and (min-width: $phone-tablet-boundary)
+      bottom: 1em
+      right: 1em
+      height: 3em
+      width: 3em
+
+#profile-image-container.edit
+  @media screen and (max-width: 479px)
+    width: 100%
+    display: block
+    max-width: initial
+
 div.user-wrapper
   margin: 0 auto
   width: 100%
@@ -9,14 +50,18 @@ div.user-wrapper
   header
     margin-top: 2em
     margin-left: 2em
-    text-indent: -2em
-    img
-      max-width: 35%
-      +border-radius(50%)
-      @media screen and (min-width: $phone-tablet-boundary)
-        max-width: 16em
     h1
       display: inline
+
+    gs-image-upload
+      div.image-upload.wrapper
+        div.uploader
+          bottom: 0
+          @media screen and (max-width: $phone-tablet-boundary)
+            left: 0
+    canvas
+      margin-bottom: -100%
+      +border-radius(50%)
 
   section
     margin: 0 10%

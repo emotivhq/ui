@@ -21,10 +21,10 @@
     </div>
     <div class="image">
         <img ng-src="{{thanks.imgUrl}}" ng-show="thanks.imgUrl && !thanks.edit"/>
-        <gs-image-upload ng-show="thanks.edit" on-image-updated="thanks.imageUpdated"></gs-image-upload>
+        <gs-image-upload class="white-buttons" ng-show="thanks.edit" on-image-updated="thanks.imageUpdated"></gs-image-upload>
     </div>
     <div class="buttons">
-        <button class="white-fill submit" ng-show="thanks.edit" ng-click="thanks.update();">Say Thanks!</button><button class="edit white-border" ng-show="thanks.editable && !thanks.edit" ng-click="thanks.edit=true;"><img class="edit" src="/assets/edit_icon.png"/></button>
+        <button class="white-fill submit" ng-show="thanks.edit" ng-click="thanks.update();">Say Thanks!</button><button class="edit white-border" ng-show="thanks.editable && !thanks.edit" ng-click="thanks.edit=true;"><img class="edit" src="/assets/edit_button_white.png"/></button>
     </div>
     <button class="cancel" ng-show="thanks.edit" ng-click="thanks.edit=false;">X</button>
 </div>

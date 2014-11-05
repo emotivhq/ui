@@ -10,6 +10,16 @@ GiftStarterApp.controller('ProfileController', ['$scope','UserService',
 function ProfileController($scope,  UserService,  $location) {
     $scope.user = {};
 
-    UserService.getUser($location.path().replace('/users/', ''),
+    var thisUser = $location.path().replace('/users/', '');
+
+    UserService.getUser(thisUser,
         function(data) {$scope.user = data[Object.keys(data)[0]]});
+
+    $scope.editable = thisUser == UserService.uid;
+    $scope.imageSet = false;
+
+    $scope.imageUpdated = function(data){
+        $scope.imageSet = true;
+        console.log('image updated', data);
+    }
 }
