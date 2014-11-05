@@ -78,7 +78,7 @@ function gsImageUpload($timeout, GiftStartService, $window) {
 
                 var imageContext = this;
                 ctx.drawImage(this, 0, 0, imageW, imageH);
-                GiftStartService.setThanksImage(canvasEle.toDataURL());
+                scope.imageUpdated(canvasEle.toDataURL());
 
                 scope.rotateImage = function rotateImage() {
                     ctx.translate(canvasEle.width / 2, canvasEle.height / 2);
@@ -99,7 +99,9 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                 var dragging = false;
                 angular.element(canvasEle)
                     .bind('mousedown touchstart', function (event) {
+                        console.log("touchdown");
                         if (dragReady) {
+                            console.log("ready");
                             dragReady = false;
                             $timeout(function () {
                                 dragReady = true;
@@ -118,7 +120,8 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                     .bind('mouseup touchend mouseleave touchleave',
                     function (event) {
                         dragging = false;
-                        GiftStartService.setThanksImage(canvasEle.toDataURL());
+                        console.log("touchend");
+                        scope.imageUpdated(canvasEle.toDataURL());
                     });
                 angular.element(canvasEle)
                     .bind('mousemove touchmove', function (event) {
@@ -197,7 +200,7 @@ function gsImageUpload($timeout, GiftStartService, $window) {
 
     return {
         restrict: 'E',
-        scope: {giftstart: '='},
+        scope: {imageUpdated: '=onImageUpdated', imageData: '=newImageData'},
         link: link,
         templateUrl: '/scripts/giftstart/image-upload/image-upload.html'
     };
