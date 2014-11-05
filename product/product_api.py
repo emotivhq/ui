@@ -26,6 +26,7 @@ class ProductHandler(webapp2.RequestHandler):
             shipping_state = data['shipping_state']
             shipping_zip = data['shipping_zip']
             is_gift_card = 'gift' in title and 'card' in title
+            is_gift_card |= 'ghostruck' in title.lower()
             tax_percent = product_tax.lookup(shipping_address, shipping_city,
                                              shipping_state, shipping_zip,
                                              is_gift_card)
