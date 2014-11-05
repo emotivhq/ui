@@ -133,7 +133,8 @@ class ImageUploadHandler(webapp2.RequestHandler):
         else:
             try:
                 extension = image_cache.extract_extension_from_content(
-                    base64.b64decode(json_body.get('data')))
+                    base64.b64decode(
+                        json_body.get('data').split('base64,')[1]))
                 image_cache.cache_user_image(uid, json_body.get('data'),
                                              extension)
             except TypeError as e:

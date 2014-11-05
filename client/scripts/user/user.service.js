@@ -76,7 +76,9 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
     };
 
     function uploadProfileImage(imageData) {
-        return $http({method: 'PUT',
+        console.log(imageData);
+        var contentType = imageData.split(';')[0].replace('data:', '');
+        return $http({method: 'PUT', headers: {'Content-Type': contentType},
             url: '/users/' + self.uid + '/img/new.json',
             data: {data: imageData}});
     }
