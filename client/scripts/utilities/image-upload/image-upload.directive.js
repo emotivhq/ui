@@ -83,6 +83,7 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                     ctx.translate(-canvasEle.width / 2, -canvasEle.height / 2);
                     ctx.drawImage(imageContext, imgX, imgY,
                         imageW, imageH);
+                    scope.imageUpdated(canvasEle.toDataURL());
                 };
 
                 var dragReady = true;
@@ -95,9 +96,7 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                 var dragging = false;
                 angular.element(canvasEle)
                     .bind('mousedown touchstart', function (event) {
-                        console.log("touchdown");
                         if (dragReady) {
-                            console.log("ready");
                             dragReady = false;
                             $timeout(function () {
                                 dragReady = true;
@@ -116,7 +115,6 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                     .bind('mouseup touchend mouseleave touchleave',
                     function (event) {
                         dragging = false;
-                        console.log("touchend");
                         scope.imageUpdated(canvasEle.toDataURL());
                     });
                 angular.element(canvasEle)
