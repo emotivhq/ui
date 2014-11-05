@@ -3,7 +3,8 @@ __author__ = 'stuart'
 import webapp2
 from social import twitter, googleplus, facebook
 import json
-from gs_user_core import update_or_create, get_user, subscribe_to_mailing_list
+from gs_user_core import update_or_create, get_user, \
+    subscribe_to_mailing_list, validate
 from gs_user_stats import get_stats
 from UserLogin import UserLogin
 from render_app import render_app
@@ -12,6 +13,8 @@ from gs_user.gs_user_referral import UserReferral
 from storage import image_cache
 import base64
 import logging
+from gs_user.User import User
+from google.appengine.ext import ndb
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -118,8 +121,17 @@ class ImageUploadHandler(webapp2.RequestHandler):
         uid = self.request.path.split('/')[2]
         json_body = json.loads(self.request.body)
         content_type = self.request.headers.get('Content-Type').split('/')
+        hdr_uid = self.request.headers.get('uid')
+        token = self.request.headers.get('token')
 
-        if content_type[0] != 'image':
+        if uid != hdr_uid:
+            logging.warning("Received profile image upload for wrong uid")
+            self.response.set_status(403)
+        elif not validate(hdr_uid, token, self.request.path):
+            logging.warning("Invalid credentials passed for profile image "
+                            "upload")
+            self.response.set_status(403)
+        elif content_type[0] != 'image':
             logging.warning("Received profile image upload that was not image")
             self.response.set_status(400, 'Invalid content-type, must be '
                                           'image')
@@ -132,11 +144,14 @@ class ImageUploadHandler(webapp2.RequestHandler):
                                           'and png are acceptable')
         else:
             try:
+                image_data = json_body.get('data').split('base64,')[1]
                 extension = image_cache.extract_extension_from_content(
-                    base64.b64decode(
-                        json_body.get('data').split('base64,')[1]))
-                image_cache.cache_user_image(uid, json_body.get('data'),
-                                             extension)
+                    base64.b64decode(image_data))
+                updated = image_cache.cache_user_image(uid, image_data,
+                                                       extension)
+                user = ndb.Key('User', uid).get()
+                user.cached_profile_image_url = updated
+                user.put()
             except TypeError as e:
                 logging.warning("Received profile image with invalid data")
                 self.response.set_status(400, "Invalid image data")

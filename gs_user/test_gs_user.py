@@ -57,9 +57,9 @@ example_giftstart = {
 }
 
 jpeg_file = open('client/assets/stuart_square_s.jpg')
-JPEG_DATA = base64.b64encode(jpeg_file.read())
+JPEG_DATA = "data:image/jpg;base64," + base64.b64encode(jpeg_file.read())
 png_file = open('client/assets/share_google.png')
-PNG_DATA = base64.b64encode(png_file.read())
+PNG_DATA = "data:image/png;base64," + base64.b64encode(png_file.read())
 
 
 class UserStatsTestHandler(unittest.TestCase):
@@ -244,7 +244,7 @@ class UserStatsTestHandler(unittest.TestCase):
         })
         request.get_response(pay_api.api)
 
-    def put_image(self, uid, data, extension):
+    def put_image(self, uid, data, extension, tok=None):
         """ Puts image and returns handler response
         :type uid: string
         :type data: string
@@ -253,35 +253,44 @@ class UserStatsTestHandler(unittest.TestCase):
         request = webapp2.Request.blank('/users/{0}/img/new.json'.format(uid))
         request.method = 'PUT'
         request.headers['Content-Type'] = 'image/' + extension
+        request.headers['uid'] = uid
+        request.headers['token'] = tok
         request.body = json.dumps({'data': data})
         return request.get_response(gs_user_api.handler)
 
     def test_image_upload(self):
         """ Should be able to upload a valid image """
-        resp = self.put_image('f1234', JPEG_DATA, 'jpg')
+        resp = self.put_image('f1234', JPEG_DATA, 'jpg', 'x1234')
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 response, response was {0}"
+                         .format(str(resp)))
+
+    def test_image_upload_nocreds(self):
+        """ Shouldn't be able to upload an image without credentials """
+        resp = self.put_image('f1234', JPEG_DATA, 'jpg')
+        self.assertEqual(403, resp.status_code,
+                         "Should get a 403 response, response was {0}"
                          .format(str(resp)))
 
     def test_image_content_type(self):
         """ Should require content-type header, and only accept the right ones
         """
-        resp = self.put_image('f1234', JPEG_DATA, 'jpg')
+        resp = self.put_image('f1234', JPEG_DATA, 'jpg', 'x1234')
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 response, response was {0}"
                          .format(str(resp)))
 
-        resp = self.put_image('f1234', PNG_DATA, 'png')
+        resp = self.put_image('f1234', PNG_DATA, 'png', 'x1234')
         self.assertEqual(200, resp.status_code,
                          "Should get a 200 response, response was {0}"
                          .format(str(resp)))
 
-        resp = self.put_image('f1234', JPEG_DATA, 'xml')
+        resp = self.put_image('f1234', JPEG_DATA, 'xml', 'x1234')
         self.assertEqual(400, resp.status_code,
                          "Should get a 400 response, response was {0}"
                          .format(str(resp)))
 
-        resp = self.put_image('f1234', JPEG_DATA, 'gif')
+        resp = self.put_image('f1234', JPEG_DATA, 'gif', 'x1234')
         self.assertEqual(400, resp.status_code,
                          "Should get a 400 response, response was {0}"
                          .format(str(resp)))
@@ -289,7 +298,8 @@ class UserStatsTestHandler(unittest.TestCase):
     def test_invalid_image_data(self):
         """ Should send error when image data is invalid
         """
-        resp = self.put_image('f1234', base64.b64encode('abcdefg'), 'jpg')
+        resp = self.put_image('f1234', "data:image/jpg;base64," +
+                              base64.b64encode("abcdefg"), 'jpg', 'x1234')
         self.assertEqual(400, resp.status_code,
                          "Should get a 400 response, response was {0}"
                          .format(str(resp)))
