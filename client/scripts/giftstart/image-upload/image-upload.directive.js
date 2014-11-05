@@ -18,11 +18,11 @@ function gsImageUpload($timeout, GiftStartService, $window) {
         };
 
         // Size canvas to container
-        canvasEle.width = element[0].parentElement.offsetWidth;
+        canvasEle.width = element[0].parentElement.offsetWidth * 2;
         if (aspect) {
-            canvasEle.height = element[0].offsetWidth / aspect;
+            canvasEle.height = element[0].offsetWidth * 2 / aspect;
         } else {
-            canvasEle.height = element[0].offsetHeight;
+            canvasEle.height = element[0].offsetHeight * 2;
         }
 
         // Initialize image from localStorage
@@ -65,15 +65,11 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                 var rotation = 0;
 
                 if (imageW > imageH) {
-                    if (imageW > canvasEle.width) {
-                        imageW *= canvasEle.width / imageH;
-                        imageH = canvasEle.height;
-                    }
+                    imageW *= canvasEle.width / imageH;
+                    imageH = canvasEle.height;
                 } else {
-                    if (imageH > canvasEle.height) {
-                        imageH *= canvasEle.height / imageW;
-                        imageW = canvasEle.width;
-                    }
+                    imageH *= canvasEle.height / imageW;
+                    imageW = canvasEle.width;
                 }
 
                 var imageContext = this;

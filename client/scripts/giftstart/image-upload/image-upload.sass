@@ -10,9 +10,13 @@ gs-image-upload
     height: 0
     padding-bottom: 100%
     canvas
-      //background-color: $footer-bg-color
       background-image: url("/assets/camera_bg.png")
       background-size: cover
       cursor: all-scroll
+      +transform(scale(0.5) translate(-50%, -50%))
+    div.uploader
+      position: absolute
+      bottom: 1.5em
+      left: 1.5em
   input.thanks-image-input
     display: none
