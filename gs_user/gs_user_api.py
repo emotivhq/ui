@@ -148,15 +148,15 @@ class ImageUploadHandler(webapp2.RequestHandler):
                 image_data = json_body.get('data').split('base64,')[1]
                 extension = image_cache.extract_extension_from_content(
                     base64.b64decode(image_data))
+                base64data = ','.join(json_body.get('data').split(',')[1:])
+                img_data = base64data.decode('base64', 'strict')
                 fname = str(uuid.uuid4())
-                updated = image_cache.save_picture_to_gcs(fname + '.' +
-                                                          extension, 'u/',
-                                                          str(image_data))
-                # updated = image_cache.cache_user_image(uid, image_data,
-                #                                        extension)
+                updated = image_cache.save_picture_to_gcs(fname + extension,
+                                                          'u/', img_data)
                 user = ndb.Key('User', uid).get()
                 user.cached_profile_image_url = updated
                 user.put()
+                self.response.write(updated)
             except TypeError as e:
                 logging.error(e)
                 logging.warning("Received profile image with invalid data")
