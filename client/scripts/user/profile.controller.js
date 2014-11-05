@@ -11,6 +11,7 @@ function ProfileController($scope,  UserService,  $location) {
     $scope.user = {};
 
     var thisUser = $location.path().replace('/users/', '');
+    var imageData;
 
     UserService.getUser(thisUser,
         function(data) {$scope.user = data[Object.keys(data)[0]]});
@@ -18,8 +19,24 @@ function ProfileController($scope,  UserService,  $location) {
     $scope.editable = thisUser == UserService.uid;
     $scope.imageSet = false;
 
-    $scope.imageUpdated = function(data){
+    $scope.imageUpdated = imageUpdated;
+    $scope.submit = submit;
+
+        function imageUpdated(data) {
         $scope.imageSet = true;
-        console.log('image updated', data);
+        imageData = data;
+    }
+
+    function submit() {
+        UserService.uploadProfileImage(imageData)
+            .success(function() {
+                $scope.user.img_url = $scope.user.img_url.split('?')[0] + '?' +
+                    new Date().getTime();
+                $scope.editMode = false;
+            })
+            .error(function(reason) {
+                console.log('Failed to update profile image', reason);
+                $scope.editMode = false;
+            });
     }
 }
