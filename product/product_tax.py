@@ -66,6 +66,5 @@ def lookup(address, city, state, zipcode, is_gift_card):
     headers = {"Content-Type": "text/xml; charset=UTF-8"}
 
     response = requests.post(url='https://api.taxcloud.net/1.0/', headers=headers, data=request)
-    print("Tax API response: " + response.content)
     tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
     return tax_amount
