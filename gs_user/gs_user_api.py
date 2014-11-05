@@ -11,6 +11,7 @@ import re
 from gs_user.gs_user_referral import UserReferral
 from storage import image_cache
 import base64
+import logging
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -119,11 +120,14 @@ class ImageUploadHandler(webapp2.RequestHandler):
         content_type = self.request.headers.get('Content-Type').split('/')
 
         if content_type[0] != 'image':
+            logging.warning("Received profile image upload that was not image")
             self.response.set_status(400, 'Invalid content-type, must be '
                                           'image')
         elif content_type[1] != 'jpeg' and \
                         content_type[1] != 'jpg' and \
                         content_type[1] != 'png':
+            logging.warning("Received profile image upload with invalid "
+                            "content type")
             self.response.set_status(400, 'Invalid image incoding, only jpg '
                                           'and png are acceptable')
         else:
@@ -133,6 +137,7 @@ class ImageUploadHandler(webapp2.RequestHandler):
                 image_cache.cache_user_image(uid, json_body.get('data'),
                                              extension)
             except TypeError as e:
+                logging.warning("Received profile image with invalid data")
                 self.response.set_status(400, "Invalid image data")
 
 
