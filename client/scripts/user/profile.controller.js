@@ -29,9 +29,8 @@ function ProfileController($scope,  UserService,  $location) {
 
     function submit() {
         UserService.uploadProfileImage(imageData)
-            .success(function() {
-                $scope.user.img_url = $scope.user.img_url.split('?')[0] + '?' +
-                    new Date().getTime();
+            .success(function(newImageUrl) {
+                $scope.user.img_url = newImageUrl;
                 $scope.editMode = false;
             })
             .error(function(reason) {
