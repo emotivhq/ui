@@ -253,8 +253,8 @@ class UserStatsTestHandler(unittest.TestCase):
         request = webapp2.Request.blank('/users/{0}/img/new.json'.format(uid))
         request.method = 'PUT'
         request.headers['Content-Type'] = 'image/' + extension
-        request.headers['uid'] = uid
-        request.headers['token'] = tok
+        request.cookies['uid'] = uid
+        request.cookies['token'] = str(tok)
         request.body = json.dumps({'data': data})
         return request.get_response(gs_user_api.handler)
 

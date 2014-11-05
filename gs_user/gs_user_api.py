@@ -15,6 +15,7 @@ import base64
 import logging
 from gs_user.User import User
 from google.appengine.ext import ndb
+import uuid
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -121,8 +122,8 @@ class ImageUploadHandler(webapp2.RequestHandler):
         uid = self.request.path.split('/')[2]
         json_body = json.loads(self.request.body)
         content_type = self.request.headers.get('Content-Type').split('/')
-        hdr_uid = self.request.headers.get('uid')
-        token = self.request.headers.get('token')
+        hdr_uid = str(self.request.cookies.get('uid')).replace('%22', '')
+        token = str(self.request.cookies.get('token')).replace('%22', '')
 
         if uid != hdr_uid:
             logging.warning("Received profile image upload for wrong uid")
@@ -147,12 +148,17 @@ class ImageUploadHandler(webapp2.RequestHandler):
                 image_data = json_body.get('data').split('base64,')[1]
                 extension = image_cache.extract_extension_from_content(
                     base64.b64decode(image_data))
-                updated = image_cache.cache_user_image(uid, image_data,
-                                                       extension)
+                fname = str(uuid.uuid4())
+                updated = image_cache.save_picture_to_gcs(fname + '.' +
+                                                          extension, 'u/',
+                                                          str(image_data))
+                # updated = image_cache.cache_user_image(uid, image_data,
+                #                                        extension)
                 user = ndb.Key('User', uid).get()
                 user.cached_profile_image_url = updated
                 user.put()
             except TypeError as e:
+                logging.error(e)
                 logging.warning("Received profile image with invalid data")
                 self.response.set_status(400, "Invalid image data")
 
