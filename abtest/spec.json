@@ -2,7 +2,7 @@
    "name": "subliminal",
     "cases": [{
         "name": "none",
-        "weight": 0,
+        "weight": 1,
         "changes": [{
             "file": "/scripts/home/home.html",
             "css": "#subliminal-header {display: none;}"
