@@ -35,6 +35,7 @@ def render_app(request):
                  abtest.get_tests(request) + ");"
 
     response = frame_template.render({
+        'facebook_app': config['facebook_app'],
         'deployed': DEPLOYED,
         'product_api_url': config['product_api_url'],
         'js_insert': js_insert,
@@ -74,6 +75,7 @@ def render_app_with_giftstart(request):
     if len(gss) > 0:
         gs = gss[0]
         render_values = {
+            'facebook_app': config['facebook_app'],
             'deployed': DEPLOYED,
             'product_api_url': config['product_api_url'],
             'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
