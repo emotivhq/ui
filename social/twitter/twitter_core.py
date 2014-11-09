@@ -4,7 +4,7 @@ import json
 
 import requests
 from google.appengine.ext import ndb
-
+import logging
 from requests_oauthlib import OAuth1
 import yaml
 
@@ -53,5 +53,6 @@ def get_user_info(user):
         twitter_user = json.loads(response.content)
         user.name = twitter_user['name']
     except:
-        print("Daaaamn failed to get twitter user info for {uid}.".format(uid=user.uid))
+        logging.error("Daaaamn failed to get twitter user info for {uid}."
+                      .format(uid=user.uid))
     return user

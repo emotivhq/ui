@@ -50,7 +50,6 @@ def _save_picture_to_gcs_http(filename, folder, data):
     file_url = 'https://storage.googleapis.com' + config['storage_url']
     response = requests.post(file_url + '?key=' + config['storage_key'] + '&uploadType=media&name=' + folder + filename,
                              data=data)
-    print(response.content)
     return file_url
 
 

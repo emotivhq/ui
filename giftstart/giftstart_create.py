@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import os
 from giftstart import giftstart_comm, giftstart_core
 import storage.image_cache
+import logging
 
 GIFTSTART_CAMPAIGN_DAYS = 10
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -25,14 +26,14 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         self.request.giftstart = json.loads(self.request.body)
         broken_param = self.find_invalid_param()
         if broken_param:
-            print("Invalid or missing param {0}".format(broken_param))
+            logging.error("Invalid or missing param {0}".format(broken_param))
             self.response.set_status(400, "Invalid or missing param {0}"
                                      .format(broken_param))
         else:
             try:
                 self.create_giftstart()
             except ValueError as e:
-                print("Expected valid UUID or uid")
+                logging.error("Expected valid UUID or uid")
                 self.response.set_status(400, "Expected valid UUID or uid")
             except AuthError as e:
                 self.response.set_status(403, "Invalid credentials")
