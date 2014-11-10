@@ -26,6 +26,8 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
     this.userImageUrl = UserService.profileImageUrl;
     this.userProfileUrl = '/users/' + UserService.uid;
 
+    this.creating = $location.path().indexOf('/create') == 0;
+
     $interval(updateSubliminal, 3000);
 
     $scope.$on('login-success', updateLogin);
@@ -34,6 +36,8 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
 
     // for sizing using ng-class
     function routeChangeListener(event, next) {
+        console.log($location.path());
+        self.creating = $location.path().indexOf('/create') == 0;
         menuClose();
         if (next.$$route) {
             self.thisRoute = next.$$route.originalPath;
