@@ -23,6 +23,9 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
 
     this.menuOpen = menuOpen;
 
+    this.userImageUrl = UserService.profileImageUrl;
+    this.userProfileUrl = '/users/' + UserService.uid;
+
     $interval(updateSubliminal, 3000);
 
     $scope.$on('login-success', updateLogin);
@@ -50,11 +53,16 @@ function HeaderController($scope,  $location,  UserService,  Analytics,
     function login() {PopoverService.setPopover('login')}
 
     function logout() {
+        self.userImageUrl = '';
         Analytics.track('user', 'logout from header');
         UserService.logout();
     }
 
-    function updateLogin() {self.loggedIn = UserService.loggedIn}
+    function updateLogin() {
+        self.loggedIn = UserService.loggedIn;
+        self.userImageUrl = UserService.profileImageUrl;
+        self.userProfileUrl = '/users/' + UserService.uid;
+    }
 
     function menuOpen() {$rootScope.$broadcast('menu-open')}
     function menuClose() {$rootScope.$broadcast('menu-close')}
