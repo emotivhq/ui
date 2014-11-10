@@ -18,11 +18,11 @@ function gsImageUpload($timeout, GiftStartService, $window) {
         };
 
         // Size canvas to container
-        canvasEle.width = element[0].parentElement.offsetWidth;
+        canvasEle.width = element[0].parentElement.offsetWidth * 2;
         if (aspect) {
-            canvasEle.height = element[0].offsetWidth / aspect;
+            canvasEle.height = element[0].offsetWidth * 2 / aspect;
         } else {
-            canvasEle.height = element[0].offsetHeight;
+            canvasEle.height = element[0].offsetHeight * 2;
         }
 
         // Initialize image from localStorage
@@ -65,20 +65,16 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                 var rotation = 0;
 
                 if (imageW > imageH) {
-                    if (imageW > canvasEle.width) {
-                        imageW *= canvasEle.width / imageH;
-                        imageH = canvasEle.height;
-                    }
+                    imageW *= canvasEle.width / imageH;
+                    imageH = canvasEle.height;
                 } else {
-                    if (imageH > canvasEle.height) {
-                        imageH *= canvasEle.height / imageW;
-                        imageW = canvasEle.width;
-                    }
+                    imageH *= canvasEle.height / imageW;
+                    imageW = canvasEle.width;
                 }
 
                 var imageContext = this;
                 ctx.drawImage(this, 0, 0, imageW, imageH);
-                GiftStartService.setThanksImage(canvasEle.toDataURL());
+                scope.imageUpdated(canvasEle.toDataURL());
 
                 scope.rotateImage = function rotateImage() {
                     ctx.translate(canvasEle.width / 2, canvasEle.height / 2);
@@ -87,6 +83,7 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                     ctx.translate(-canvasEle.width / 2, -canvasEle.height / 2);
                     ctx.drawImage(imageContext, imgX, imgY,
                         imageW, imageH);
+                    scope.imageUpdated(canvasEle.toDataURL());
                 };
 
                 var dragReady = true;
@@ -118,7 +115,7 @@ function gsImageUpload($timeout, GiftStartService, $window) {
                     .bind('mouseup touchend mouseleave touchleave',
                     function (event) {
                         dragging = false;
-                        GiftStartService.setThanksImage(canvasEle.toDataURL());
+                        scope.imageUpdated(canvasEle.toDataURL());
                     });
                 angular.element(canvasEle)
                     .bind('mousemove touchmove', function (event) {
@@ -197,8 +194,8 @@ function gsImageUpload($timeout, GiftStartService, $window) {
 
     return {
         restrict: 'E',
-        scope: {giftstart: '='},
+        scope: {imageUpdated: '=onImageUpdated', imageData: '=newImageData'},
         link: link,
-        templateUrl: '/scripts/giftstart/image-upload/image-upload.html'
+        templateUrl: '/scripts/utilities/image-upload/image-upload.html'
     };
 }

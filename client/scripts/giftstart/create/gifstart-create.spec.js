@@ -60,7 +60,7 @@ function GiftStartCreateControllerSpec() {
             .expectPOST('/product', {
                 "action":"get-tax-and-shipping","shipping_address":"street",
                 "shipping_city":"city","shipping_state":"WA",
-                "shipping_zip":"98109"
+                "shipping_zip":"98109","title": ""
             })
             .respond(200, {tax: 0.098});
         var controller = createController();

@@ -17,13 +17,16 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.salesTaxRate = 0.098;
         $scope.fetchingTaxRate = false;
 
-        $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4], [3, 3], [2, 5], [3, 4], [3, 5],
-            [4, 4], [3, 6], [4, 5], [4, 6], [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
+        $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4],
+            [3, 3], [2, 5], [3, 4], [3, 5], [4, 4], [3, 6], [4, 5], [4, 6],
+            [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
 
         function calculateInitialNumParts() {
             $scope.selectedXYSet = 0;
             for (var guess = 0; guess < $scope.xySets.length; guess++) {
-                if ($scope.inputPrice/$scope.xySets[guess][0]/$scope.xySets[guess][1] < 20.5) {
+                var calcPrice = $scope.inputPrice / $scope.xySets[guess][0] /
+                    $scope.xySets[guess][1];
+                if (calcPrice < 20.5) {
                     return guess;
                 }
             }
@@ -235,6 +238,7 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.selectedXYSet = calculateInitialNumParts();
 
         extractReferral();
+        extractPromo();
 
 
         function extractReferral() {
@@ -255,6 +259,17 @@ GiftStarterApp.controller('GiftStartCreateController',
                 $location.search('price', null);
                 $location.search('img_url', null);
                 $location.search('source', null);
+            }
+        }
+
+        function extractPromo() {
+            if ($location.search().promo == 'dress-for-success') {
+                $scope.title = 'Gift a Start Collection';
+                $scope.description = 'Give the gift of confidence this holiday season with this curated assortment of beautiful basics. butter LONDON is proud to partner with Dress for Success to gift a new start to women in need. Dress for Success is a not-for-profit organization dedicated to helping women get back on their feet and back into the workforce. For these women giving something as simple as a lipstick can make an impact. Help deliver a new start this holiday season by starting a GiftStart for our Gift A Start Collection.';
+                $scope.shippingZip = '98101';
+                $scope.shippingState = 'WA';
+                $scope.shippingChanged();
+                $location.search('promo', null);
             }
         }
 

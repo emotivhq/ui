@@ -3,12 +3,19 @@ __author__ = 'stuart'
 import webapp2
 from social import twitter, googleplus, facebook
 import json
-from gs_user_core import update_or_create, get_user, subscribe_to_mailing_list
+from gs_user_core import update_or_create, get_user, \
+    subscribe_to_mailing_list, validate
 from gs_user_stats import get_stats
 from UserLogin import UserLogin
 from render_app import render_app
 import re
 from gs_user.gs_user_referral import UserReferral
+from storage import image_cache
+import base64
+import logging
+from gs_user.User import User
+from google.appengine.ext import ndb
+import uuid
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -109,8 +116,58 @@ class UserHandler(webapp2.RequestHandler):
             self.response.status_int = 400
 
 
+class ImageUploadHandler(webapp2.RequestHandler):
+
+    def put(self):
+        uid = self.request.path.split('/')[2]
+        json_body = json.loads(self.request.body)
+        content_type = self.request.headers.get('Content-Type').split('/')
+        hdr_uid = str(self.request.cookies.get('uid')).replace('%22', '')
+        token = str(self.request.cookies.get('token')).replace('%22', '')
+
+        if uid != hdr_uid:
+            logging.warning("Received profile image upload for wrong uid")
+            self.response.set_status(403)
+        elif not validate(hdr_uid, token, self.request.path):
+            logging.warning("Invalid credentials passed for profile image "
+                            "upload")
+            self.response.set_status(403)
+        elif content_type[0] != 'image':
+            logging.warning("Received profile image upload that was not image")
+            self.response.set_status(400, 'Invalid content-type, must be '
+                                          'image')
+        elif content_type[1] != 'jpeg' and \
+                        content_type[1] != 'jpg' and \
+                        content_type[1] != 'png':
+            logging.warning("Received profile image upload with invalid "
+                            "content type")
+            self.response.set_status(400, 'Invalid image incoding, only jpg '
+                                          'and png are acceptable')
+        else:
+            try:
+                image_data = json_body.get('data').split('base64,')[1]
+                extension = image_cache.extract_extension_from_content(
+                    base64.b64decode(image_data))
+                base64data = ','.join(json_body.get('data').split(',')[1:])
+                img_data = base64data.decode('base64', 'strict')
+                fname = str(uuid.uuid4())
+                updated = image_cache.save_picture_to_gcs(fname + extension,
+                                                          'u/', img_data)
+                user = ndb.Key('User', uid).get()
+                user.cached_profile_image_url = updated
+                user.put()
+                self.response.write(updated)
+            except TypeError as e:
+                logging.error(e)
+                logging.warning("Received profile image with invalid data")
+                self.response.set_status(400, "Invalid image data")
+
+
 handler = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
-                                   ('/users/.*', UserPageHandler),], debug=True)
+                                   ('/users/.*/img/new.json',
+                                    ImageUploadHandler),
+                                   ('/users/.*', UserPageHandler),
+                                   ], debug=True)
 api = webapp2.WSGIApplication([('/users.*', UserHandler)], debug=True)
 stats = webapp2.WSGIApplication([('/users/.*.json', StatsHandler)], debug=True)
 user_page = webapp2.WSGIApplication([('/u', UserPageHandler)], debug=True)
