@@ -22,6 +22,8 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
 
     var self = this;
 
+    this.uploadProfileImage = uploadProfileImage;
+
     this.getUser = function(uid, callback) {
         Analytics.track("user", "user fetch initiated");
         $http({method: 'GET', url: '/users/' + uid + '.json'})
@@ -72,6 +74,14 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
 
         $rootScope.$broadcast('logout-success');
     };
+
+    function uploadProfileImage(imageData) {
+        console.log(imageData);
+        var contentType = imageData.split(';')[0].replace('data:', '');
+        return $http({method: 'PUT', headers: {'Content-Type': contentType},
+            url: '/users/' + self.uid + '/img/new.json',
+            data: {data: imageData}});
+    }
 
     $rootScope.$on('facebook-login-success', facebookLoggedIn);
     function facebookLoggedIn () {

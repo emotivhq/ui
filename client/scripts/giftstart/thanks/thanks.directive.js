@@ -26,6 +26,8 @@ function gsThanks() {
         thanks.update = update;
         thanks.profileImageUrl = UserService.profileImageUrl;
 
+        thanks.imageUpdated = imageUpdated;
+
         if ($location.search().thanks == undefined) {
             $location.search('thanks', AppStateService.get('thanks-code'));
             AppStateService.remove('thanks-code');
@@ -90,6 +92,10 @@ function gsThanks() {
                         'right?');
                 });
             thanks.edit = false;
+        }
+
+        function imageUpdated(imageData) {
+            GiftStartService.setThanksImage(imageData);
         }
     }
 
