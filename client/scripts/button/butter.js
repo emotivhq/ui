@@ -32,11 +32,19 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     var source = 'butterLONDON';
     var gsButtonId = 'gsbutton' + buttonId;
     var button = document.querySelector('#gsbutton' + buttonId);
-    var buttonLink, buttonImg, intervalId;
+    var buttonLink,
+        buttonImg,
+        intervalId,
+        promo = '';
 
     // Tracking data
     var buttonSeenSent = false;
     var buttonX, buttonY, buttonW, buttonH, buttonStyle;
+
+    // Determine current promo
+    if (/gift-a-start-collection/.test(window.location.href.toLowerCase())) {
+        promo = 'dress-for-success';
+    }
 
     var urlSerialize = function(obj) {
         var str = [];
@@ -87,7 +95,8 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         title: title,
         price: price * 100,
         img_url: imgUrl,
-        source: source
+        source: source,
+        promo: promo
     });
 
     setTimeout(function() {
