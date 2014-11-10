@@ -35,7 +35,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     var buttonLink,
         buttonImg,
         intervalId,
-        promo = '';
+        promo = 'none';
 
     // Tracking data
     var buttonSeenSent = false;
