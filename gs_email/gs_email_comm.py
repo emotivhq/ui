@@ -5,6 +5,7 @@ import json
 import yaml
 import jinja2
 import os
+import logging
 
 secrets = yaml.load(open('secret.yaml'))
 
@@ -118,11 +119,10 @@ def send_from_template(subject, template_name, template_kwargs, sender, to,
 
     if 'frame' in template_kwargs.keys():
         try:
-            print("\n\ntrying to frame email...\n\n")
             frame_template = EMAIL_TEMPLATES[template_kwargs['frame']]
             message_text = frame_template.render({'body': message_text})
         except:
-            pass
+            logging.error("Failed when framing email")
 
     send(subject, message_text, sender, to, cc=cc, bcc=bcc,
          mime_type=mime_type, img_url=img_url)

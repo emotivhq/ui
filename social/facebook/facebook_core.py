@@ -3,6 +3,7 @@ __author__ = 'stuart'
 from . import GraphAPI
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
+import logging
 
 
 class FacebookTokenSet(ndb.Model):
@@ -27,5 +28,6 @@ def get_user_info(user):
         fb_user = graph.get_object(user.uid[1:])
         user.name = fb_user['name']
     except:
-        print("Daaaamn failed to get facebook user info for {uid}.".format(uid=user.uid))
+        logging.error("Daaaamn failed to get facebook user info for {uid}."
+                      .format(uid=user.uid))
     return user

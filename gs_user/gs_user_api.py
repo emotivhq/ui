@@ -75,7 +75,6 @@ class UserHandler(webapp2.RequestHandler):
                 referrer = UserReferral.from_dict(data.get('referrer', {}))
                 token_set = twitter.submit_verifier(data['oauth_token'], data['verifier'])
                 user = update_or_create('twitter', token_set, referrer)
-                print(user)
                 if user is not None:
                     UserLogin.register_login(user.uid, data['location'])
                     self.response.write(json.dumps({
@@ -107,7 +106,6 @@ class UserHandler(webapp2.RequestHandler):
                     }))
 
         else:
-            print(data)
             self.response.status_int = 400
 
 

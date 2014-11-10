@@ -154,7 +154,6 @@ class PayTestHandlers(unittest.TestCase):
         })
 
         response = request.get_response(pay_api.api)
-        print(response)
         self.assertEqual(response.status_code, 200,
                          "Should accept payment, expected 200, response was " +
                          str(response.status_code))

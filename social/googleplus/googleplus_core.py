@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from google.appengine.ext import ndb
 from requests_oauthlib import OAuth2Session
 import yaml
+import logging
 
 secret = yaml.load(open('secret.yaml'))
 
@@ -67,7 +68,7 @@ def get_img_url(token_set):
 
 
 def token_saver(token):
-    print(token)
+    pass
 
 
 def get_user_info(user):
@@ -77,5 +78,6 @@ def get_user_info(user):
         gplus_user = json.loads(response.content)
         user.name = gplus_user['displayName']
     except:
-        print("Daaaamn failed to get google user info for {uid}.".format(uid=user.uid))
+        logging.error("Daaaamn failed to get google user info for {uid}."
+                      .format(uid=user.uid))
     return user
