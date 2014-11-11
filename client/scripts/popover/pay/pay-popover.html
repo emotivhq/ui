@@ -17,13 +17,15 @@
         </div><div class="email">
             <img src="{{emailImgUrl}}"/>
             <input type="email" id="card-email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()"/>
-        </div><span class="subscribe" ng-hide="userOnMailingList">
+        </div><span class="save-card">
+            <input type="checkbox" id="save-credit-card" ng-model="saveCreditCard"/><label class="small" for="save-credit-card">Save this card</label>
+        </span><span class="subscribe" ng-hide="userOnMailingList">
             <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features? (Don't worry, once a month - max!)</label>
         </span>
 
         <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 
-        <button class="large white-border" ng-class="{disabled: pitchingIn}">Pay ${{currentCharge / 100 | number : 2}}</button>
+        <button class="large white-border pay" ng-class="{disabled: pitchingIn}">Pay ${{currentCharge / 100 | number : 2}}</button>
     </form>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

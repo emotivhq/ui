@@ -10,6 +10,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
 
     $scope.currentCharge = GiftStartService.giftStart.totalSelection;
     $scope.emailSubscribe = true;
+    $scope.saveCreditCard = false;
     $scope.pitchingIn = false;
     $scope.userOnMailingList = UserService.onMailingList;
     $scope.addressZip = '';
@@ -27,7 +28,6 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
     $scope.emailImgUrl = '/assets/cc_icon_email.png';
 
     $scope.updateFormValidity = function() {
-        console.log($scope);
         if ($scope.submitted) {
             $scope.numberImgUrl = $scope.stripeForm.$error.card ?
                 '/assets/cc_icon_card_number_error.png' : '/assets/cc_icon_card_number.png';
