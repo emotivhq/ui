@@ -4,6 +4,7 @@ import webapp2
 from google.appengine.ext import ndb
 import json
 import giftstart_core
+import logging
 
 
 class GiftStartJsonHandler(webapp2.RequestHandler):
@@ -12,12 +13,15 @@ class GiftStartJsonHandler(webapp2.RequestHandler):
         if url_title != 'undefined':
             gs = ndb.Key('GiftStart', url_title).get()
             if gs is None:
+                logging.warning("Didn't find any giftstarts for this title.")
                 self.response.set_status(404)
             elif gs.gift_champion_uid:
                 self.response.write(gs.jsonify())
             else:
+                logging.warning("Campaign didn't have any uid")
                 self.response.set_status(404)
         else:
+            logging.warning("No giftstart title supplied")
             self.response.set_status(404)
 
     def post(self):
