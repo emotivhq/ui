@@ -4,7 +4,7 @@ import yaml
 from render_app import render_app, render_app_with_giftstart
 from giftstart.GiftStart import GiftStart
 from gs_user.gs_user_login_decorator import handle_login
-from google.appengine.ext import ndb
+from giftstart import giftstart_create
 import json
 import base64
 
@@ -35,10 +35,7 @@ class MainHandler(webapp2.RequestHandler):
 
                 if len(gss):
                     uid = self.request.cookies['uid'].replace('%22', '')
-                    user = ndb.Key('User', uid).get()
-                    gss[0].gift_champion_uid = uid
-                    gss[0].gc_name = user.name
-                    gss[0].put()
+                    giftstart_create.complete_campaign_creation(uid, gss[0])
                     self.redirect('/giftstart/' + gss[0].giftstart_url_title)
                     return
 

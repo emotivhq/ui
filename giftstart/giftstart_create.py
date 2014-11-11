@@ -113,18 +113,6 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
                 giftstart['product_img_url'], gs.gsid)
         gs.put()
 
-        giftstart_comm.send_create_notification(gs)
-
-        taskqueue.add(url="/giftstart/api", method="POST",
-                      payload=json.dumps({'action': 'one-day-warning',
-                                          'gsid': gs.gsid}),
-                      countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
-
-        taskqueue.add(url="/giftstart/api", method="POST",
-                      payload=json.dumps({'action': 'check-if-complete',
-                                          'gsid': gs.gsid}),
-                      countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
-
         self.response.write(gs.jsonify())
 
     @staticmethod
@@ -179,3 +167,22 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         ndbgs.shipping_email = giftstart.get('shipping_email')
 
         return ndbgs
+
+
+def complete_campaign_creation(uid, gs):
+    user = ndb.Key('User', uid).get()
+    gs.gc_name = user.name
+    gs.gift_champion_uid = uid
+    gs.put()
+
+    giftstart_comm.send_create_notification(gs)
+
+    taskqueue.add(url="/giftstart/api", method="POST",
+                  payload=json.dumps({'action': 'one-day-warning',
+                                      'gsid': gs.gsid}),
+                  countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
+
+    taskqueue.add(url="/giftstart/api", method="POST",
+                  payload=json.dumps({'action': 'check-if-complete',
+                                      'gsid': gs.gsid}),
+                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
