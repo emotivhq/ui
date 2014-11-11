@@ -105,6 +105,9 @@ class PayTestHandlers(unittest.TestCase):
                          "Should accept created campaign, expected 200, "
                          "response was " + str(response.status_code))
 
+        # Stripe mocks
+        pay_core.stripe.Charge.create.side_effect = None
+
     def tearDown(self):
         self.testbed.deactivate()
 
@@ -391,12 +394,68 @@ class PayTestHandlers(unittest.TestCase):
                          "Expected to get an empty array, got {0}"
                          .format(resp.body))
 
+    def test_use_saved_card_to_pay(self):
+        """ Users should be able to use a saved card to complete a purchase """
+        self.user.stripe_id = 'user_stripe_id'
+        self.user.put()
+        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(1)
+
+        # Make payment!
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
+
+        request = webapp2.Request.blank('/pay')
+        request.method = 'POST'
+        gsid = '1'
+        parts = [1, 2]
+        request.body = json.dumps({
+            'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
+                'stripeResponse': stripe_response, 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
+            }
+        })
+
+        response = request.get_response(pay_api.api)
+        self.assertEqual(response.status_code, 200,
+                         "Should accept payment, expected 200, response was " +
+                         str(response.status_code))
+        self.assertNotIn('stripe-error', response.json,
+                         "Should accept payment, expected 'stripe-error' not "
+                         "to be in response, response was " +
+                         str(response.json))
+
     def test_stripe_display_charge_error_message(self):
         """ Should respond with the error message if a charge fails for a
         remembered card """
-        self.assertTrue(False)
+        pay_core.stripe.Charge.create.side_effect = stripe.error.CardError(
+            "card is actually a bicycle", None, 400)
 
-    def test_use_saved_card_to_pay(self):
-        """ Users should be able to use a saved card to complete a purchase """
-        self.assertTrue(False)
+        self.user.stripe_id = 'user_stripe_id'
+        self.user.put()
+        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(1)
 
+        # Make payment!
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
+
+        request = webapp2.Request.blank('/pay')
+        request.method = 'POST'
+        gsid = '1'
+        parts = [1, 2]
+        request.body = json.dumps({
+            'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
+                'stripeResponse': stripe_response, 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
+            }
+        })
+
+        response = request.get_response(pay_api.api)
+        self.assertEqual(response.status_code, 200,
+                         "Should refuse payment and send 200, response was " +
+                         str(response.status_code))
+        self.assertIn('stripe-error', response.json,
+                      "Should refuse payment, expected 'stripe-error' "
+                      "to be in response, response was " +
+                      str(response.json))

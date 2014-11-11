@@ -11,6 +11,9 @@ from gs_user import gs_user_core
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 import requests
+import logging
+from stripe.error import CardError, InvalidRequestError, AuthenticationError, \
+    APIConnectionError, StripeError
 
 config = yaml.load(open('config.yaml'))
 
@@ -78,9 +81,9 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
             charge = stripe.Charge.create(amount=total_charge, currency='usd',
                                           card=stripe_response['id'],
                                           description=desc)
-    except (stripe.error.CardError, stripe.error.InvalidRequestError,
-            stripe.error.AuthenticationError, stripe.error.APIConnectionError,
-            stripe.error.StripeError) as e:
+    except (CardError, InvalidRequestError, AuthenticationError,
+            APIConnectionError, StripeError) as e:
+        logging.error(e)
         return {'result': 'error', 'stripe-error': e.json_body}
 
     pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
