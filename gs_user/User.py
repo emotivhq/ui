@@ -36,6 +36,8 @@ class User(ndb.Model):
 
     has_pitched_in = ndb.BooleanProperty(default=False)
 
+    stripe_id = ndb.StringProperty()
+
     def jsonify(self):
         return json.dumps({
             'uid': self.uid,

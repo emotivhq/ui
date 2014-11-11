@@ -35,8 +35,14 @@ def get_pitch_in_dicts(gsid):
     return named_pitch_ins
 
 
+def get_card_tokens(customer_id):
+    cards = stripe.Customer.retrieve(customer_id).cards.all()
+    return [{'last_four': card.get('last4'), 'stripe_token': card.get('id'),
+             'brand': card.get('brand')} for card in cards]
+
+
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
-             subscribe_to_mailing_lits):
+             subscribe_to_mailing_lits, save_card):
     user = gs_user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
 
@@ -52,16 +58,26 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
         return {'result': 'error', 'error': 'One or more requested parts have '
                                             'already been bought.'}
 
-
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / \
                    giftstart.overlay_rows / giftstart.overlay_columns
-    try:
 
-        desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
-        charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                      card=stripe_response['id'],
-                                      description=desc)
+    desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+    try:
+        if save_card:
+            customer = stripe.Customer.create(
+                card=stripe_response['id'],
+                description="payinguser@example.com"
+            )
+            user.stripe_id = customer.id
+            charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                          card=customer.id,
+                                          description=desc)
+            user.put()
+        else:
+            charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                          card=stripe_response['id'],
+                                          description=desc)
     except (stripe.error.CardError, stripe.error.InvalidRequestError,
             stripe.error.AuthenticationError, stripe.error.APIConnectionError,
             stripe.error.StripeError) as e:

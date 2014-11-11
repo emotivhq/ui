@@ -28,10 +28,15 @@ from gs_user import User
 from social.facebook import FacebookTokenSet
 
 
+class StripeCustomerMock():
+    def __init__(self):
+        self.id = 'customer_id'
+
 # Mock stripe
 pay_core.stripe = MagicMock()
 pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
                                                     str(time())}
+pay_core.stripe.Customer.create.return_value = StripeCustomerMock()
 
 # Mock request to email
 pay_core.requests.put = MagicMock()
@@ -75,7 +80,8 @@ class PayTestHandlers(unittest.TestCase):
         self.user.uid = 'f1234'
         self.user.name = 'macklemore'
         self.user.logged_in_with = 'facebook'
-        self.user.facebook_token_set = FacebookTokenSet(access_token='x1234', expires=datetime.now() + timedelta(days=90))
+        self.user.facebook_token_set = FacebookTokenSet(access_token='x1234',
+            expires=datetime.now() + timedelta(days=90))
         self.user.cached_profile_image_url = 'fakeurl'
         self.user.put()
 
@@ -300,7 +306,29 @@ class PayTestHandlers(unittest.TestCase):
     def test_existing_card_token_grant(self):
         """ Should grant a stripe token for a user with a pre-existing card """
 
+        # Create test token
+        stripe_response = {'id': 'abc_stripe' + str(time()),
+                           'card': {'last4': '8767'}}
+
+        gsid = '1'
+        parts = [1, 2]
+
+        # Submit token to API
+        request = webapp2.Request.blank('/pay')
+        request.method = 'POST'
+        request.body = json.dumps({
+            'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
+                'stripeResponse': stripe_response, 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False,
+                'save_card': True
+            },
+        })
+        request.get_response(pay_api.api)
+
+
         # TODO mock out stripe token get
+
         stripe_token_string = 'stripe_tok'
         stripe_last_four = '3124'
         stripe_brand = 'visx'
@@ -312,31 +340,56 @@ class PayTestHandlers(unittest.TestCase):
             'parts': [1, 2], 'uid': 'f1234', 'token': 'x1234'
         })
         resp = req.get_response(pay_api.api)
-        json_resp = json.loads(resp.content)
+        json_resp = json.loads(resp.body)
+        first_card = json_resp[0]
 
         self.assertEqual(200, resp.status_code,
                          "Response should be 200, was {0}".format(resp))
-        self.assertEqual(json_resp['stripe_token'], stripe_token_string,
-                         "Should have gotten {0} in token get, got {1}"
-                         .format(json_resp['stripe_token'],
+        self.assertEqual(first_card['stripe_token'], stripe_token_string,
+                         "Should have gotten {1} in token get, got {0}"
+                         .format(first_card['stripe_token'],
                                  stripe_token_string))
-        self.assertEqual(json_resp['last_four'], stripe_last_four,
-                         "Should have gotten {0} in token get, got {1}"
-                         .format(json_resp['last_four'],
+        self.assertEqual(first_card['last_four'], stripe_last_four,
+                         "Should have gotten {1} in token get, got {0}"
+                         .format(first_card['last_four'],
                                  stripe_last_four))
-        self.assertEqual(json_resp['brand'], stripe_brand,
-                         "Should have gotten {0} in token get, got {1}"
-                         .format(json_resp['brand'], stripe_brand))
-
-        self.assertTrue(False)
+        self.assertEqual(first_card['brand'], stripe_brand,
+                         "Should have gotten {1} in token get, got {0}"
+                         .format(first_card['brand'], stripe_brand))
+        self.assertEqual(2, len(json_resp),
+                         "Should have received 2 cards, received {0}"
+                         .format(len(json_resp)))
 
     def test_existing_card_invalid_user(self):
         """ Shouldn't grant a token for invalid uid or token """
-        self.assertTrue(False)
+        req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
+                                    .format(example_giftstart.get('title')))
+        req.method = 'POST'
+        req.body = json.dumps({
+            'parts': [1, 2], 'uid': 'f1235', 'token': 'x1233'
+        })
+        resp = req.get_response(pay_api.api)
+
+        self.assertEqual(403, resp.status_code,
+                         "Expected response of 403, response was {0}"
+                         .format(resp))
 
     def test_stripe_token_request_no_card(self):
         """ Should not grant token to user who has to cards saved """
-        self.assertTrue(False)
+        req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
+                                    .format(example_giftstart.get('title')))
+        req.method = 'POST'
+        req.body = json.dumps({
+            'parts': [1, 2], 'uid': 'f1234', 'token': 'x1234'
+        })
+        resp = req.get_response(pay_api.api)
+
+        self.assertEqual(200, resp.status_code,
+                         "Expected response of 200, response was {0}"
+                         .format(resp))
+        self.assertEqual([], json.loads(resp.body),
+                         "Expected to get an empty array, got {0}"
+                         .format(resp.body))
 
     def test_sripe_charge_invalid_token(self):
         """ Should not accept invalid stripe token for pay processing """
