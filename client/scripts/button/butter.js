@@ -42,7 +42,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     var buttonX, buttonY, buttonW, buttonH, buttonStyle;
 
     // Determine current promo
-    if (/gift-a-start-collection/.test(window.location.href.toLowerCase())) {
+    if (/gift-a-start/.test(window.location.href.toLowerCase())) {
         promo = 'dress-for-success';
     }
 
