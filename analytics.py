@@ -6,6 +6,10 @@ import json
 import webapp2
 import re
 import logging
+import csv
+from giftstart.GiftStart import GiftStart
+from gs_user.User import User
+from pay.PitchIn import PitchIn
 
 
 class ShareClick(ndb.Model):
@@ -103,4 +107,52 @@ class ButtonAnalyticsHandler(webapp2.RequestHandler):
         self.response.content_type = 'text/javascript'
 
 
-handler = webapp2.WSGIApplication([('/a/.*', ButtonAnalyticsHandler)])
+class GiftStartCsvHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info("Received request for giftstart data dump")
+        self.response.headers['Content-Type'] = 'application/csv'
+        gss = GiftStart.query().fetch()
+        writer = csv.DictWriter(self.response.out, gss[0].to_dict().keys())
+        writer.writeheader()
+        for gs in gss:
+            writer.writerow({k: v.encode("utf-8", "ignore")
+                                if isinstance(v, type(u'')) else v
+                             for k, v in gs.to_dict().items()})
+
+
+class UserCsvHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info("Received request for users data dump")
+        self.response.headers['Content-Type'] = 'application/csv'
+        users = User.query().fetch()
+        writer = csv.DictWriter(self.response.out, users[0].to_dict().keys())
+        writer.writeheader()
+        for u in users:
+            writer.writerow({k: v.encode("utf-8", "ignore")
+                                 if isinstance(v, type(u'')) else v
+                             for k, v in u.to_dict().items()})
+
+
+class PitchInCsvHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info("Received request for pitchins data dump")
+        self.response.headers['Content-Type'] = 'application/csv'
+        pis = PitchIn.query().fetch()
+        writer = csv.DictWriter(self.response.out, pis[0].to_dict().keys())
+        writer.writeheader()
+        for pi in pis:
+            writer.writerow({k: v.encode("utf-8", "ignore")
+                                 if isinstance(v, type(u'')) else v
+                             for k, v in pi.to_dict().items()})
+
+
+
+handler = webapp2.WSGIApplication([
+    ('/a/.*', ButtonAnalyticsHandler),
+    ('/dump/giftstarts.csv', GiftStartCsvHandler),
+    ('/dump/users.csv', UserCsvHandler),
+    ('/dump/pitchins.csv', PitchInCsvHandler),
+])
