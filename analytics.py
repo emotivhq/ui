@@ -111,43 +111,40 @@ class GiftStartCsvHandler(webapp2.RequestHandler):
 
     def get(self):
         logging.info("Received request for giftstart data dump")
-        self.response.headers['Content-Type'] = 'application/csv'
         gss = GiftStart.query().fetch()
-        writer = csv.DictWriter(self.response.out, gss[0].to_dict().keys())
-        writer.writeheader()
-        for gs in gss:
-            writer.writerow({k: v.encode("utf-8", "ignore")
-                                if isinstance(v, type(u'')) else v
-                             for k, v in gs.to_dict().items()})
+        write_ds_items(gss, self.response)
 
 
 class UserCsvHandler(webapp2.RequestHandler):
 
     def get(self):
         logging.info("Received request for users data dump")
-        self.response.headers['Content-Type'] = 'application/csv'
         users = User.query().fetch()
-        writer = csv.DictWriter(self.response.out, users[0].to_dict().keys())
-        writer.writeheader()
-        for u in users:
-            writer.writerow({k: v.encode("utf-8", "ignore")
-                                 if isinstance(v, type(u'')) else v
-                             for k, v in u.to_dict().items()})
+        write_ds_items(users, self.response)
 
 
 class PitchInCsvHandler(webapp2.RequestHandler):
 
     def get(self):
         logging.info("Received request for pitchins data dump")
-        self.response.headers['Content-Type'] = 'application/csv'
         pis = PitchIn.query().fetch()
-        writer = csv.DictWriter(self.response.out, pis[0].to_dict().keys())
-        writer.writeheader()
-        for pi in pis:
-            writer.writerow({k: v.encode("utf-8", "ignore")
-                                 if isinstance(v, type(u'')) else v
-                             for k, v in pi.to_dict().items()})
+        write_ds_items(pis, self.response)
 
+
+def write_ds_items(ds_items, response):
+    response.headers['Content-Type'] = 'application/csv'
+
+    header = set()
+    for item in ds_items:
+        map(lambda k: header.add(k), item.to_dict().keys())
+
+    writer = csv.DictWriter(response.out, header)
+    writer.writeheader()
+
+    for item in ds_items:
+        writer.writerow({k: v.encode("utf-8", "ignore")
+                            if isinstance(v, type(u'')) else v
+                         for k, v in item.to_dict().items()})
 
 
 handler = webapp2.WSGIApplication([
