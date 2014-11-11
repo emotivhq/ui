@@ -32,11 +32,19 @@ class StripeCustomerMock():
     def __init__(self):
         self.id = 'customer_id'
 
+
+class StripeCustomerRetrieveMock():
+    def __init__(self, num_cards):
+        self.cards = MagicMock()
+        self.cards.all.return_value = [{'last4': '3124', 'id': 'card_token',
+                                        'brand': 'Visx'}]*num_cards
+
 # Mock stripe
 pay_core.stripe = MagicMock()
 pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
                                                     str(time())}
 pay_core.stripe.Customer.create.return_value = StripeCustomerMock()
+pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
 
 # Mock request to email
 pay_core.requests.put = MagicMock()
@@ -309,6 +317,7 @@ class PayTestHandlers(unittest.TestCase):
         # Create test token
         stripe_response = {'id': 'abc_stripe' + str(time()),
                            'card': {'last4': '8767'}}
+        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(1)
 
         gsid = '1'
         parts = [1, 2]
@@ -329,9 +338,9 @@ class PayTestHandlers(unittest.TestCase):
 
         # TODO mock out stripe token get
 
-        stripe_token_string = 'stripe_tok'
-        stripe_last_four = '3124'
-        stripe_brand = 'visx'
+        stripe_token_string = StripeCustomerRetrieveMock(1).cards.all()[0]['id']
+        stripe_last_four = StripeCustomerRetrieveMock(1).cards.all()[0]['last4']
+        stripe_brand = StripeCustomerRetrieveMock(1).cards.all()[0]['brand']
 
         req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
                                     .format(example_giftstart.get('title')))
@@ -356,8 +365,8 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(first_card['brand'], stripe_brand,
                          "Should have gotten {1} in token get, got {0}"
                          .format(first_card['brand'], stripe_brand))
-        self.assertEqual(2, len(json_resp),
-                         "Should have received 2 cards, received {0}"
+        self.assertEqual(1, len(json_resp),
+                         "Should have received 1 card, received {0}"
                          .format(len(json_resp)))
 
     def test_existing_card_invalid_user(self):
@@ -376,6 +385,7 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_stripe_token_request_no_card(self):
         """ Should not grant token to user who has to cards saved """
+        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
         req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
                                     .format(example_giftstart.get('title')))
         req.method = 'POST'
