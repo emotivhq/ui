@@ -6,6 +6,10 @@ import json
 import webapp2
 import re
 import logging
+import csv
+from giftstart.GiftStart import GiftStart
+from gs_user.User import User
+from pay.PitchIn import PitchIn
 
 
 class ShareClick(ndb.Model):
@@ -103,4 +107,49 @@ class ButtonAnalyticsHandler(webapp2.RequestHandler):
         self.response.content_type = 'text/javascript'
 
 
-handler = webapp2.WSGIApplication([('/a/.*', ButtonAnalyticsHandler)])
+class GiftStartCsvHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info("Received request for giftstart data dump")
+        gss = GiftStart.query().fetch()
+        write_ds_items(gss, self.response)
+
+
+class UserCsvHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info("Received request for users data dump")
+        users = User.query().fetch()
+        write_ds_items(users, self.response)
+
+
+class PitchInCsvHandler(webapp2.RequestHandler):
+
+    def get(self):
+        logging.info("Received request for pitchins data dump")
+        pis = PitchIn.query().fetch()
+        write_ds_items(pis, self.response)
+
+
+def write_ds_items(ds_items, response):
+    response.headers['Content-Type'] = 'application/csv'
+
+    header = set()
+    for item in ds_items:
+        map(lambda k: header.add(k), item.to_dict().keys())
+
+    writer = csv.DictWriter(response.out, header)
+    writer.writeheader()
+
+    for item in ds_items:
+        writer.writerow({k: v.encode("utf-8", "ignore")
+                            if isinstance(v, type(u'')) else v
+                         for k, v in item.to_dict().items()})
+
+
+handler = webapp2.WSGIApplication([
+    ('/a/.*', ButtonAnalyticsHandler),
+    ('/dump/giftstarts.csv', GiftStartCsvHandler),
+    ('/dump/users.csv', UserCsvHandler),
+    ('/dump/pitchins.csv', PitchInCsvHandler),
+])

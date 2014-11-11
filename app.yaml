@@ -94,6 +94,11 @@ handlers:
   static_dir: client/templates/angular
   secure: always
 
+# Data dumps
+- url: /dump/.*
+  script: analytics.handler
+  login: admin
+
 # Catch all other urls
 - url: /admin.*
   script: google.appengine.ext.admin.application
