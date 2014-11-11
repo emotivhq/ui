@@ -11,6 +11,8 @@ class GiftStartJsonHandler(webapp2.RequestHandler):
     def get(self):
         url_title = self.request.path[11:-5]
         if url_title != 'undefined':
+            logging.info("Checking for campaign with url_title {0}"
+                         .format(url_title))
             gs = ndb.Key('GiftStart', url_title).get()
             if gs is None:
                 logging.warning("Didn't find any giftstarts for this title.")
