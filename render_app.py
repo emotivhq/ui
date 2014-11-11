@@ -68,8 +68,9 @@ def render_app_with_giftstart(request):
         gss = GiftStart.query(GiftStart.giftstart_url_title == title_url) \
             .fetch()
         page_url = request.path_url + "/" + title_url
-        if not gss[0].gift_champion_uid:
-            gss = []
+        if len(gss) > 0:
+            if not gss[0].gift_champion_uid:
+                gss = []
     else:
         gsid = request.get('gs-id')
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch()
