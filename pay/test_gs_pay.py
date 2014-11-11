@@ -106,24 +106,34 @@ class PayTestHandlers(unittest.TestCase):
         parts = [1, 2]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
-                'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
-                'emailAddress': 'test@giftstarter.co', 'note': 'Test note for my besty!', 'subscribe': False
+                'stripeResponse': stripe_response, 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'note': 'Test note for my besty!', 'subscribe': False
             }
         })
 
         response = request.get_response(pay_api.api)
-        self.assertEqual(response.status_code, 200, "Should accept payment, expected 200, response was " +
+        self.assertEqual(response.status_code, 200,
+                         "Should accept payment, expected 200, response was " +
                          str(response.status_code))
-        self.assertNotIn('stripe-error', response.json, "Should accept payment, expected 'stripe-error' not to be in "
-                                                        "response, response was " + str(response.json))
+        self.assertNotIn('stripe-error', response.json,
+                         "Should accept payment, expected 'stripe-error' not "
+                         "to be in response, response was " +
+                         str(response.json))
 
         # Verify pitchin
-        pitchin = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).fetch()[0]
-        self.assertListEqual(parts, pitchin.parts, "Should buy proper parts, expected {in_parts}, got {out_parts}"
-                             .format(in_parts=parts, out_parts=pitchin.parts))
-        self.assertEqual(gsid, pitchin.gsid, "Should pitchin for the right campaign, expected {in_gsid}, got {out_gsid}"
+        pitchin = PitchIn.PitchIn.query(
+            PitchIn.PitchIn.gsid == gsid).fetch()[0]
+        self.assertListEqual(parts, pitchin.parts,
+                             "Should buy proper parts, expected {in_parts}, "
+                             "got {out_parts}".format(in_parts=parts,
+                                                      out_parts=pitchin.parts))
+        self.assertEqual(gsid, pitchin.gsid,
+                         "Should pitchin for the right campaign, expected "
+                         "{in_gsid}, got {out_gsid}"
                          .format(in_gsid=parts, out_gsid=pitchin.parts))
-        self.assertEqual(1, PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count(), "Should only have 1 pitchin")
+        pi_count = PitchIn.PitchIn.query(PitchIn.PitchIn.gsid == gsid).count()
+        self.assertEqual(1, pi_count, "Should only have 1 pitchin")
 
     def test_no_name_purchase(self):
         # Create test token
@@ -147,8 +157,8 @@ class PayTestHandlers(unittest.TestCase):
         parts = [1, 2]
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.unnamed_user.uid, 'payment': {
-                'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
-                'emailAddress': 'test@giftstarter.co',
+                'stripeResponse': stripe_response, 'gsid': gsid,
+                'parts': parts, 'emailAddress': 'test@giftstarter.co',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -286,3 +296,53 @@ class PayTestHandlers(unittest.TestCase):
                       "One response should be 200, they were " + str(results))
         self.assertIn(400, results,
                       "One response should be 400, they were " + str(results))
+
+    def test_existing_card_token_grant(self):
+        """ Should grant a stripe token for a user with a pre-existing card """
+
+        # TODO mock out stripe token get
+        stripe_token_string = 'stripe_tok'
+        stripe_last_four = '3124'
+        stripe_brand = 'visx'
+
+        req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
+                                    .format(example_giftstart.get('title')))
+        req.method = 'POST'
+        req.body = json.dumps({
+            'parts': [1, 2], 'uid': 'f1234', 'token': 'x1234'
+        })
+        resp = req.get_response(pay_api.api)
+        json_resp = json.loads(resp.content)
+
+        self.assertEqual(200, resp.status_code,
+                         "Response should be 200, was {0}".format(resp))
+        self.assertEqual(json_resp['stripe_token'], stripe_token_string,
+                         "Should have gotten {0} in token get, got {1}"
+                         .format(json_resp['stripe_token'],
+                                 stripe_token_string))
+        self.assertEqual(json_resp['last_four'], stripe_last_four,
+                         "Should have gotten {0} in token get, got {1}"
+                         .format(json_resp['last_four'],
+                                 stripe_last_four))
+        self.assertEqual(json_resp['brand'], stripe_brand,
+                         "Should have gotten {0} in token get, got {1}"
+                         .format(json_resp['brand'], stripe_brand))
+
+        self.assertTrue(False)
+
+    def test_existing_card_invalid_user(self):
+        """ Shouldn't grant a token for invalid uid or token """
+        self.assertTrue(False)
+
+    def test_stripe_token_request_no_card(self):
+        """ Should not grant token to user who has to cards saved """
+        self.assertTrue(False)
+
+    def test_sripe_charge_invalid_token(self):
+        """ Should not accept invalid stripe token for pay processing """
+        self.assertTrue(False)
+
+    def test_stripe_display_charge_error_message(self):
+        """ Should respond with the error message if a charge fails for a
+        remembered card """
+        self.assertTrue(False)
