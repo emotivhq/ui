@@ -4,6 +4,7 @@ import requests
 import yaml
 import json
 from googleplus_core import GooglePlusTokenSet
+import logging
 
 
 config = yaml.load(open('config.yaml'))
@@ -23,6 +24,9 @@ def submit_code(code, redirect_url):
     }
     str_params = '&'.join(['='.join(pair) for pair in params.items()])
     response = requests.post(base_url, data=str_params)
+    logging.info("Logging in with googleplus - {0}".format(response))
+    if response.status_code != 200:
+        logging.warning(response.content)
     token = json.loads(response.content)
     refresh_token = None if 'refresh_token' not in token \
         else token['refresh_token']
