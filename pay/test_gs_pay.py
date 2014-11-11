@@ -36,8 +36,8 @@ class StripeCustomerMock():
 class StripeCustomerRetrieveMock():
     def __init__(self, num_cards):
         self.cards = MagicMock()
-        self.cards.all.return_value = [{'last4': '3124', 'id': 'card_token',
-                                        'brand': 'Visx'}]*num_cards
+        self.cards.all.return_value = [{'last4': '3124',
+                                        'brand': 'Visx'}] * num_cards
 
 # Mock stripe
 pay_core.stripe = MagicMock()
@@ -335,29 +335,21 @@ class PayTestHandlers(unittest.TestCase):
         })
         request.get_response(pay_api.api)
 
-
-        # TODO mock out stripe token get
-
-        stripe_token_string = StripeCustomerRetrieveMock(1).cards.all()[0]['id']
         stripe_last_four = StripeCustomerRetrieveMock(1).cards.all()[0]['last4']
         stripe_brand = StripeCustomerRetrieveMock(1).cards.all()[0]['brand']
 
-        req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
+        req = webapp2.Request.blank('/pay/{0}/cards.json'
                                     .format(example_giftstart.get('title')))
-        req.method = 'POST'
-        req.body = json.dumps({
-            'parts': [1, 2], 'uid': 'f1234', 'token': 'x1234'
-        })
+        req.method = 'GET'
+        req.cookies['uid'] = 'f1234'
+        req.cookies['token'] = 'x1234'
+
         resp = req.get_response(pay_api.api)
         json_resp = json.loads(resp.body)
         first_card = json_resp[0]
 
         self.assertEqual(200, resp.status_code,
                          "Response should be 200, was {0}".format(resp))
-        self.assertEqual(first_card['stripe_token'], stripe_token_string,
-                         "Should have gotten {1} in token get, got {0}"
-                         .format(first_card['stripe_token'],
-                                 stripe_token_string))
         self.assertEqual(first_card['last_four'], stripe_last_four,
                          "Should have gotten {1} in token get, got {0}"
                          .format(first_card['last_four'],
@@ -371,12 +363,11 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_existing_card_invalid_user(self):
         """ Shouldn't grant a token for invalid uid or token """
-        req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
+        req = webapp2.Request.blank('/pay/{0}/cards.json'
                                     .format(example_giftstart.get('title')))
-        req.method = 'POST'
-        req.body = json.dumps({
-            'parts': [1, 2], 'uid': 'f1235', 'token': 'x1233'
-        })
+        req.method = 'GET'
+        req.cookies['uid'] = 'f1232'
+        req.cookies['token'] = 'x1231'
         resp = req.get_response(pay_api.api)
 
         self.assertEqual(403, resp.status_code,
@@ -386,12 +377,11 @@ class PayTestHandlers(unittest.TestCase):
     def test_stripe_token_request_no_card(self):
         """ Should not grant token to user who has to cards saved """
         pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
-        req = webapp2.Request.blank('/pay/{0}/tokens/create.json'
+        req = webapp2.Request.blank('/pay/{0}/cards.json'
                                     .format(example_giftstart.get('title')))
-        req.method = 'POST'
-        req.body = json.dumps({
-            'parts': [1, 2], 'uid': 'f1234', 'token': 'x1234'
-        })
+        req.method = 'GET'
+        req.cookies['uid'] = 'f1234'
+        req.cookies['token'] = 'x1234'
         resp = req.get_response(pay_api.api)
 
         self.assertEqual(200, resp.status_code,
@@ -401,11 +391,12 @@ class PayTestHandlers(unittest.TestCase):
                          "Expected to get an empty array, got {0}"
                          .format(resp.body))
 
-    def test_sripe_charge_invalid_token(self):
-        """ Should not accept invalid stripe token for pay processing """
-        self.assertTrue(False)
-
     def test_stripe_display_charge_error_message(self):
         """ Should respond with the error message if a charge fails for a
         remembered card """
         self.assertTrue(False)
+
+    def test_use_saved_card_to_pay(self):
+        """ Users should be able to use a saved card to complete a purchase """
+        self.assertTrue(False)
+

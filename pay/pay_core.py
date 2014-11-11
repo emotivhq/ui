@@ -37,8 +37,8 @@ def get_pitch_in_dicts(gsid):
 
 def get_card_tokens(customer_id):
     cards = stripe.Customer.retrieve(customer_id).cards.all()
-    return [{'last_four': card.get('last4'), 'stripe_token': card.get('id'),
-             'brand': card.get('brand')} for card in cards]
+    return [{'last_four': card.get('last4'), 'brand': card.get('brand')}
+            for card in cards]
 
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response,

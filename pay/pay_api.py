@@ -43,17 +43,15 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(pitchin_dicts))
 
 
-class StripeTokenHandler(webapp2.RequestHandler):
+class StripeCardsHandler(webapp2.RequestHandler):
     """ Handles requests for stripe tokens """
 
-    def post(self):
+    def get(self):
         gs_url_title = self.request.path.split('/')[2]
-        req_json = json.loads(self.request.body)
-        uid = req_json.get('uid')
-        token = req_json.get('token')
-        parts = req_json.get('parts')
+        uid = self.request.cookies.get('uid', '').replace('%22', '')
+        token = self.request.cookies.get('token', '').replace('%22', '')
 
-        if not all([bool(thing) for thing in [uid, token, parts]]):
+        if not all([bool(thing) for thing in [uid, token]]):
             logging.warning("Invalid data used for stripe token request:"
                             "\n{0}".format(self.request.body))
             self.response.set_status(400, "Invalid data")
@@ -74,6 +72,6 @@ class StripeTokenHandler(webapp2.RequestHandler):
 
 
 api = webapp2.WSGIApplication(
-    [('/pay/.*/tokens/create.json', StripeTokenHandler),
+    [('/pay/.*/cards.json', StripeCardsHandler),
      ('/pay', PayHandler),
      ], debug=True)
