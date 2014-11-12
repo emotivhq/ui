@@ -15,6 +15,14 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
     $scope.userOnMailingList = UserService.onMailingList;
     $scope.addressZip = '';
 
+    $scope.cards = [{
+        lastFour: '1234', brand: 'Visa', brandImage: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/payment-card.png'
+    },{
+        lastFour: '3234', brand: 'Visa', brandImage: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/payment-card.png'
+    },{
+        lastFour: '4324', brand: 'Visa', brandImage: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/payment-card.png'
+    }];
+
     $scope.errorMessage = '';
 
     $scope.hidePopover = PopoverService.hidePopover;

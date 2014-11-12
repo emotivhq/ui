@@ -7,8 +7,42 @@
     font: $p-font
     margin-bottom: 1em
     img
-      height: 2em
+      height: 2.5em
       margin-bottom: -0.55em
+
+  div.saved-cards
+    background: rgba(0, 0, 0, 0.15)
+    margin-bottom: 1em
+    margin-left: -2em
+    margin-right: -2em
+    text-align: left
+    +inset-vert-shadow(#333333, 10px)
+
+    span.card
+      text-align: center
+      width: 50%
+      display: inline-block
+
+      input
+        display: none
+      label
+        font-family: "Roboto Slab", "Roboto Condensed"
+        font-weight: 100
+        display: block
+        padding: 0.5em
+        cursor: pointer
+        border: solid 1px transparent
+      img
+        height: 2.5em
+        vertical-align: bottom
+      label span.last-four
+        font-size: 1.7em
+        margin-left: 0.5em
+
+      input:checked + label
+        border: 1px solid white
+        background: #df484b
+        font-weight: 600
 
   form
     display: inline-block
