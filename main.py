@@ -34,7 +34,6 @@ class MainHandler(webapp2.RequestHandler):
                     .fetch(1)
 
                 if len(gss):
-                    print("Found giftstart")
                     uid = self.request.cookies['uid'].replace('%22', '')
                     user = ndb.Key('User', uid).get()
                     gss[0].gift_champion_uid = uid
