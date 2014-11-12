@@ -24,16 +24,12 @@ class MainHandler(webapp2.RequestHandler):
             self.response.set_cookie('token', self.request.cookies['token']
                                      .replace('%22', ''))
 
-        print("main handler")
         # Check for create redirect
         if self.request.get('state'):
-            print("State extracted from main request")
             state = json.loads(base64.b64decode(
                 self.request.get('state', 'e30=')))
             staging_uuid = state.get('staging_uuid')
             if bool(staging_uuid) and bool(self.request.cookies['uid']):
-                print("Found staging uuid and uid")
-                print("UUID: {0}".format(staging_uuid))
                 gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid)\
                     .fetch(1)
 
