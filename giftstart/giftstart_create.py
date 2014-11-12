@@ -137,7 +137,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         return url_title
 
     @staticmethod
-    def populate_giftstart(ndbgs, giftstart, uid=None, uuid=None):
+    def populate_giftstart(ndbgs, giftstart, uid='none', uuid='none'):
         if uid != 'none':
             ndbgs.gift_champion_uid = uid
         elif uuid != 'none':
