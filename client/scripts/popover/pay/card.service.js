@@ -17,7 +17,8 @@ function cardService($rootScope, $http, UserService, Analytics) {
         'Unknown': '/assets/unknown_card.png'
     };
 
-    handleCardResponse(JSON.stringify([{lastFour: '1234', brand: 'Visa'},
+    handleCardResponse(JSON.stringify([
+        {lastFour: '1234', brand: 'Visa'},
         {lastFour: '3234', brand: 'American Express'},
         {lastFour: '4324', brand: 'MasterCard'}]));
 

@@ -18,6 +18,8 @@ from tl.testing.thread import ThreadJoiner
 from mock import MagicMock
 from time import time
 import base64
+from gs_user import gs_user_api
+from gs_user import gs_user_core
 
 # UUT
 from pay import pay_api, PitchIn, pay_core
@@ -45,6 +47,11 @@ pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
                                                     str(time())}
 pay_core.stripe.Customer.create.return_value = StripeCustomerMock()
 pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
+gs_user_core.stripe = MagicMock()
+gs_user_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
+                                                    str(time())}
+gs_user_core.stripe.Customer.create.return_value = StripeCustomerMock()
+gs_user_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
 
 # Mock request to email
 pay_core.requests.put = MagicMock()
@@ -341,13 +348,13 @@ class PayTestHandlers(unittest.TestCase):
         stripe_last_four = StripeCustomerRetrieveMock(1).cards.all()[0]['last4']
         stripe_brand = StripeCustomerRetrieveMock(1).cards.all()[0]['brand']
 
-        req = webapp2.Request.blank('/pay/{0}/cards.json'
-                                    .format(example_giftstart.get('title')))
+        req = webapp2.Request.blank('/users/{0}/cards.json'
+                                    .format(self.user.uid))
         req.method = 'GET'
         req.cookies['uid'] = 'f1234'
         req.cookies['token'] = 'x1234'
 
-        resp = req.get_response(pay_api.api)
+        resp = req.get_response(gs_user_api.api)
         json_resp = json.loads(resp.body)
         first_card = json_resp[0]
 
@@ -366,12 +373,12 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_existing_card_invalid_user(self):
         """ Shouldn't grant a token for invalid uid or token """
-        req = webapp2.Request.blank('/pay/{0}/cards.json'
-                                    .format(example_giftstart.get('title')))
+        req = webapp2.Request.blank('/users/{0}/cards.json'
+                                    .format(self.user.uid))
         req.method = 'GET'
         req.cookies['uid'] = 'f1232'
         req.cookies['token'] = 'x1231'
-        resp = req.get_response(pay_api.api)
+        resp = req.get_response(gs_user_api.api)
 
         self.assertEqual(403, resp.status_code,
                          "Expected response of 403, response was {0}"
@@ -380,12 +387,12 @@ class PayTestHandlers(unittest.TestCase):
     def test_stripe_token_request_no_card(self):
         """ Should not grant token to user who has to cards saved """
         pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
-        req = webapp2.Request.blank('/pay/{0}/cards.json'
-                                    .format(example_giftstart.get('title')))
+        req = webapp2.Request.blank('/users/{0}/cards.json'
+                                    .format(self.user.uid))
         req.method = 'GET'
         req.cookies['uid'] = 'f1234'
         req.cookies['token'] = 'x1234'
-        resp = req.get_response(pay_api.api)
+        resp = req.get_response(gs_user_api.api)
 
         self.assertEqual(200, resp.status_code,
                          "Expected response of 200, response was {0}"

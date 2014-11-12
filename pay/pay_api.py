@@ -43,35 +43,6 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(pitchin_dicts))
 
 
-class StripeCardsHandler(webapp2.RequestHandler):
-    """ Handles requests for stripe tokens """
-
-    def get(self):
-        gs_url_title = self.request.path.split('/')[2]
-        uid = self.request.cookies.get('uid', '').replace('%22', '')
-        token = self.request.cookies.get('token', '').replace('%22', '')
-
-        if not all([bool(thing) for thing in [uid, token]]):
-            logging.warning("Invalid data used for stripe token request:"
-                            "\n{0}".format(self.request.body))
-            self.response.set_status(400, "Invalid data")
-            return
-
-        # validate user and token
-        if gs_user_core.validate(uid, token, self.request.path):
-            user = ndb.Key('User', uid).get()
-
-        else:
-            logging.warning("Invalid user credentials:\n{0}"
-                            .format(self.request.body))
-            self.response.set_status(403)
-            return
-
-        charge_tokens = pay_core.get_card_tokens(user.stripe_id)
-        self.response.write(json.dumps(charge_tokens))
-
-
 api = webapp2.WSGIApplication(
-    [('/pay/.*/cards.json', StripeCardsHandler),
-     ('/pay', PayHandler),
+    [('/pay', PayHandler),
      ], debug=True)
