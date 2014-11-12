@@ -7,6 +7,7 @@ from gs_user.gs_user_login_decorator import handle_login
 from giftstart import giftstart_create
 import json
 import base64
+import logging
 
 
 secrets = yaml.load(open('secret.yaml'))
@@ -25,13 +26,17 @@ class MainHandler(webapp2.RequestHandler):
 
         # Check for create redirect
         if self.request.get('state'):
+            logging.info("Found state vairable")
             state = json.loads(base64.b64decode(
                 self.request.get('state', 'e30=')))
             staging_uuid = state.get('staging_uuid')
+            logging.info("Found staging UUID: {0}".format(staging_uuid))
             if bool(staging_uuid) and bool(self.request.cookies['uid']):
                 gss = GiftStart.query(GiftStart.staging_uuid ==
                                       self.request.get('staging_uuid'))\
                     .fetch(1)
+                logging.info("Fetched giftstart with staging uuid:\n{0}"
+                             .format(gss))
 
                 if len(gss):
                     uid = self.request.cookies['uid'].replace('%22', '')
