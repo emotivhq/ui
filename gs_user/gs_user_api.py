@@ -167,7 +167,6 @@ class StripeCardsHandler(webapp2.RequestHandler):
     """ Handles requests for stripe tokens """
 
     def get(self):
-        gs_url_title = self.request.path.split('/')[2]
         uid = self.request.cookies.get('uid', '').replace('%22', '')
         token = self.request.cookies.get('token', '').replace('%22', '')
 
@@ -183,7 +182,7 @@ class StripeCardsHandler(webapp2.RequestHandler):
 
         else:
             logging.warning("Invalid user credentials:\n{0}"
-                            .format(self.request.body))
+                            .format(self.request.cookies))
             self.response.set_status(403)
             return
 

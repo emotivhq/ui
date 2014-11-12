@@ -327,7 +327,8 @@ class PayTestHandlers(unittest.TestCase):
         # Create test token
         stripe_response = {'id': 'abc_stripe' + str(time()),
                            'card': {'last4': '8767'}}
-        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(1)
+        gs_user_core.stripe.Customer.retrieve.\
+            return_value = StripeCustomerRetrieveMock(1)
 
         gsid = '1'
         parts = [1, 2]
@@ -348,8 +349,7 @@ class PayTestHandlers(unittest.TestCase):
         stripe_last_four = StripeCustomerRetrieveMock(1).cards.all()[0]['last4']
         stripe_brand = StripeCustomerRetrieveMock(1).cards.all()[0]['brand']
 
-        req = webapp2.Request.blank('/users/{0}/cards.json'
-                                    .format(self.user.uid))
+        req = webapp2.Request.blank('/users/{0}/cards.json'.format('f1234'))
         req.method = 'GET'
         req.cookies['uid'] = 'f1234'
         req.cookies['token'] = 'x1234'
@@ -386,7 +386,8 @@ class PayTestHandlers(unittest.TestCase):
 
     def test_stripe_token_request_no_card(self):
         """ Should not grant token to user who has to cards saved """
-        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
+        gs_user_core.stripe.Customer.retrieve.\
+            return_value = StripeCustomerRetrieveMock(0)
         req = webapp2.Request.blank('/users/{0}/cards.json'
                                     .format(self.user.uid))
         req.method = 'GET'
@@ -405,7 +406,8 @@ class PayTestHandlers(unittest.TestCase):
         """ Users should be able to use a saved card to complete a purchase """
         self.user.stripe_id = 'user_stripe_id'
         self.user.put()
-        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(1)
+        gs_user_core.stripe.Customer.retrieve.\
+            return_value = StripeCustomerRetrieveMock(1)
 
         # Make payment!
         stripe_response = {'id': 'abc_stripe' + str(time()),
@@ -440,7 +442,8 @@ class PayTestHandlers(unittest.TestCase):
 
         self.user.stripe_id = 'user_stripe_id'
         self.user.put()
-        pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(1)
+        gs_user_core.stripe.Customer.retrieve.\
+            return_value = StripeCustomerRetrieveMock(1)
 
         # Make payment!
         stripe_response = {'id': 'abc_stripe' + str(time()),

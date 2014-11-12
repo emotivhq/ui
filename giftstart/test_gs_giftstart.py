@@ -308,6 +308,7 @@ class GiftstartTestHandler(unittest.TestCase):
 
     def test_uuid_instead_of_uid(self):
         this_uuid = str(uuid.uuid4())
+        print(this_uuid)
 
         def create_campaign(campaign):
             """ :type campaign: dict """
@@ -340,7 +341,10 @@ class GiftstartTestHandler(unittest.TestCase):
         request.remote_addr = '1.1.1.1'
         request.cookies['uid'] = 'f123'
         request.cookies['token'] = 'x123'
-        request.query_string = 'staging_uuid={uuid}'.format(uuid=this_uuid)
+        state_string = base64.b64encode(json.dumps({
+            'staging_uuid': this_uuid
+        }))
+        request.query_string = 'state={0}'.format(state_string)
         request.method = 'GET'
         response = request.get_response(main.app)
         self.assertEqual(response.status_code, 302,

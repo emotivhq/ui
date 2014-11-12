@@ -7,6 +7,7 @@ from gs_user.gs_user_login_decorator import handle_login
 from google.appengine.ext import ndb
 import json
 import base64
+import logging
 
 
 secrets = yaml.load(open('secret.yaml'))
@@ -23,17 +24,21 @@ class MainHandler(webapp2.RequestHandler):
             self.response.set_cookie('token', self.request.cookies['token']
                                      .replace('%22', ''))
 
+        print("main handler")
         # Check for create redirect
         if self.request.get('state'):
+            print("State extracted from main request")
             state = json.loads(base64.b64decode(
                 self.request.get('state', 'e30=')))
             staging_uuid = state.get('staging_uuid')
             if bool(staging_uuid) and bool(self.request.cookies['uid']):
-                gss = GiftStart.query(GiftStart.staging_uuid ==
-                                      self.request.get('staging_uuid'))\
+                print("Found staging uuid and uid")
+                print("UUID: {0}".format(staging_uuid))
+                gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid)\
                     .fetch(1)
 
                 if len(gss):
+                    print("Found giftstart")
                     uid = self.request.cookies['uid'].replace('%22', '')
                     user = ndb.Key('User', uid).get()
                     gss[0].gift_champion_uid = uid
