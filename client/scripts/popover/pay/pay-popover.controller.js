@@ -3,10 +3,11 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', ['$scope','GiftStartService',
-    'PopoverService','UserService','Analytics', PayPopoverController]);
+    'PopoverService','UserService','Analytics','CardService',
+    PayPopoverController]);
 
 function PayPopoverController($scope, GiftStartService, PopoverService,
-                              UserService,  Analytics) {
+                              UserService,  Analytics, CardService) {
 
     $scope.currentCharge = GiftStartService.giftStart.totalSelection;
     $scope.emailSubscribe = true;
@@ -15,13 +16,9 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
     $scope.userOnMailingList = UserService.onMailingList;
     $scope.addressZip = '';
 
-    $scope.cards = [{
-        lastFour: '1234', brand: 'Visa', brandImage: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/payment-card.png'
-    },{
-        lastFour: '3234', brand: 'Visa', brandImage: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/payment-card.png'
-    },{
-        lastFour: '4324', brand: 'Visa', brandImage: 'https://cdn4.iconfinder.com/data/icons/pretty_office_3/256/payment-card.png'
-    }];
+    $scope.cards = CardService.cards;
+
+    $scope.putNew = !(CardService.cards.length > 0);
 
     $scope.errorMessage = '';
 
