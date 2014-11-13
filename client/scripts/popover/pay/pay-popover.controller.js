@@ -95,12 +95,15 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         $scope.pitchingIn = false;
     });
 
-    $scope.$on('cards-fetch-success', function() {
+    $scope.$on('cards-fetch-success', cardsFetched);
+
+    function cardsFetched() {
         $scope.cards = CardService.cards;
-//        $scope.selectedCard = $scope.cards[0].fingerprint;
-        $scope.selectCard.apply({card: $scope.cards[0]});
+        if ($scope.cards.length > 0) {
+            $scope.selectCard.apply({card: $scope.cards[0]});
+        }
         $scope.putNew = !(CardService.cards.length > 0);
-    });
+    }
 
     $scope.deselectCards = deselectCards;
     function deselectCards(except) {
@@ -120,6 +123,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             this.card.selected = true;
             $scope.selectedCard = this.card.fingerprint;
         }
-    }
+    };
 
+    cardsFetched();
 }
