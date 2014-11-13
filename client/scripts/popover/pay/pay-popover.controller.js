@@ -56,12 +56,9 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         $scope.submitted = true;
         $scope.updateFormValidity();
         GiftStartService.payment.subscribe = $scope.emailSubscribe;
-        console.log($scope.selectedCard);
         if ($scope.selectedCard) {
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
-                    console.log("pay with fingerprint done");
-                    console.log(data);
                     $scope.pitchingIn = false;
                     if (data['stripe-error']) {
                         $scope.errorMessage = data['stripe-error'].error.message;
