@@ -34,7 +34,6 @@ function cardService($rootScope, $http, UserService, Analytics) {
     function addCardImage(card) {
         var newCard = card;
         newCard.brandImage = brandImgMap[card.brand];
-        newCard.selected = false;
         return newCard;
     }
 
@@ -45,7 +44,6 @@ function cardService($rootScope, $http, UserService, Analytics) {
         } else {
             self.cards = data.map(addCardImage);
         }
-        if (self.cards.length) {self.cards[0].selected = true}
         $rootScope.$broadcast('cards-fetch-success');
         return self.cards;
     }

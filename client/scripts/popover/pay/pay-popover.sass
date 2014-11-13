@@ -28,6 +28,7 @@
       text-align: center
       width: 50%
       display: inline-block
+      +no-select()
 
       input
         display: none
@@ -38,6 +39,7 @@
         padding: 0.5em
         cursor: pointer
         border: solid 1px transparent
+        +no-select()
         +transition(all, 0.2s)
         span.last-four
           +transition(all, 0.2s)

@@ -54,14 +54,11 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         // 4. Client app sends response with card id to server app
         // 5. Server app attempts to charge card, responds with result (success/fail)
         $scope.submitted = true;
+        $scope.selectedCard = '';
         $scope.updateFormValidity();
-        var selected = $scope.cards.reduce(function(prev, next) {
-            return next.selected ? next : prev
-        }, false);
         GiftStartService.payment.subscribe = $scope.emailSubscribe;
-        console.log(selected);
-        if (selected) {
-            GiftStartService.payWithFingerprint(selected.fingerprint)
+        if ($scope.selectedCard) {
+            GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
                     console.log("pay with fingerprint done");
                     console.log(data);
@@ -103,8 +100,32 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
 
     $scope.$on('cards-fetch-success', function() {
         $scope.cards = CardService.cards;
+//        $scope.selectedCard = $scope.cards[0].fingerprint;
+        $scope.selectCard.apply({card: $scope.cards[0]});
         $scope.putNew = !(CardService.cards.length > 0);
-        console.log($scope.cards);
     });
+
+    $scope.deselectCards = deselectCards;
+    function deselectCards(except) {
+        $scope.selectedCard = '';
+        for (var i = 0; i < $scope.cards.length; i++) {
+            if ($scope.cards[i].fingerprint != except) {
+                $scope.cards[i].selected = false;
+            }
+        }
+    }
+
+    $scope.selectCard = function() {
+        if (this.card.fingerprint == $scope.selectedCard) {
+            console.log('deselecting');
+            deselectCards();
+        } else {
+            console.log('selecting');
+            deselectCards(this.card.fingerprint);
+            this.card.selected = true;
+            $scope.selectedCard = this.card.fingerprint;
+        }
+        return false;
+    }
 
 }

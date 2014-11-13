@@ -4,7 +4,7 @@
 
     <div class="saved-cards" ng-show="cards.length > 0" ng-class="{hidden: putNew}">
         <span ng-repeat="card in cards" class="card">
-            <input ng-attr-id="{{card.fingerprint}}" type="radio" name="card" value="{{card.selected}}" ng-model="card.selected"/>
+            <input ng-attr-id="{{card.fingerprint}}" type="checkbox" ng-checked="card.selected" value="{{card.fingerprint}}" ng-click="selectCard()"/>
             <label ng-attr-for="{{card.fingerprint}}">
                 <img class="brand" ng-src="{{card.brandImage}}">
                 <span class="last-four">{{card.last_four}}</span>
@@ -14,7 +14,7 @@
 
     <form stripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">
 
-        <input id="new-credit-card-cb" type="checkbox" ng-model="putNew"><label for="new-credit-card-cb"><span class="arrow" ng-class="{down: putNew}">&#x25BC;</span><span>Use New Card</span></label>
+        <input id="new-credit-card-cb" type="checkbox" ng-model="putNew"><label for="new-credit-card-cb" ng-click="deselectCards()"><span class="arrow" ng-class="{down: putNew}">&#x25BC;</span><span>Use New Card</span></label>
 
         <div class="card-entry" ng-class="{'put-new': putNew}">
             <div class="number">
