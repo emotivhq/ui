@@ -6,8 +6,9 @@ angular.module('GiftStarterApp').service('CardService', ['$rootScope',
     '$http', 'UserService', 'Analytics', cardService]);
 
 function cardService($rootScope, $http, UserService, Analytics) {
-    var cards = [],
-        brandImgMap = {
+    var self = this;
+
+    var brandImgMap = {
         'Visa': '/assets/visa_card.png',
         'American Express': '/assets/amex_card.png',
         'MasterCard': '/assets/mastercard_card.png',
@@ -17,10 +18,8 @@ function cardService($rootScope, $http, UserService, Analytics) {
         'Unknown': '/assets/unknown_card.png'
     };
 
-    handleCardResponse(JSON.stringify([
-        {lastFour: '1234', brand: 'Visa'},
-        {lastFour: '3234', brand: 'American Express'},
-        {lastFour: '4324', brand: 'MasterCard'}]));
+    this.cards = [];
+    this.fetch = fetchCards;
 
     function fetchCards() {
         Analytics.track('client', 'user cards fetch started');
@@ -35,21 +34,21 @@ function cardService($rootScope, $http, UserService, Analytics) {
     function addCardImage(card) {
         var newCard = card;
         newCard.brandImage = brandImgMap[card.brand];
+        newCard.selected = false;
         return newCard;
     }
 
     function handleCardResponse(data) {
         Analytics.track('client', 'user cards fetch succeeded');
         if (typeof data == 'string') {
-            cards = JSON.parse(data).map(addCardImage);
+            self.cards = JSON.parse(data).map(addCardImage);
         } else {
-            cards = data.map(addCardImage);
+            self.cards = data.map(addCardImage);
         }
+        if (self.cards.length) {self.cards[0].selected = true}
         $rootScope.$broadcast('cards-fetch-success');
-        return cards;
+        return self.cards;
     }
 
-    return {
-        cards: cards
-    }
+    return this;
 }

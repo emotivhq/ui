@@ -161,6 +161,15 @@ def login_twitter_user(oauth_token, oauth_verifier, referrer):
 
 
 def get_card_tokens(customer_id):
+    results = []
+    if customer_id is None:
+        return []
     cards = stripe.Customer.retrieve(customer_id).cards.all()
-    return [{'last_four': card.get('last4'), 'brand': card.get('brand')}
-            for card in cards]
+    card_set = set()
+    for card in cards['data']:
+        if card['fingerprint'] not in card_set:
+            results.append({'last_four': card.get('last4'),
+                            'brand': card.get('brand'),
+                            'fingerprint': card.get('fingerprint')})
+            card_set.add(card['fingerprint'])
+    return results

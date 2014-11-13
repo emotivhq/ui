@@ -242,6 +242,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (self.payment.subscribe) {
             Analytics.track('pitchin', 'subscribed to mailing list');
         }
+        if (self.payment.saveCreditCard) {
+            Analytics.track('pitchin', 'save credit card');
+        }
         $http({method: 'POST', url: '/pay',
             data: data})
             .success(function(data) {

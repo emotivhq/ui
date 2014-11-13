@@ -39,7 +39,7 @@ def get_pitch_in_dicts(gsid):
 
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
-             subscribe_to_mailing_lits, save_card):
+             subscribe_to_mailing_lits, save_this_card):
     user = gs_user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
 
@@ -61,16 +61,11 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
 
     desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
     try:
-        if save_card:
-            customer = stripe.Customer.create(
-                card=stripe_response['id'],
-                description="payinguser@example.com"
-            )
-            user.stripe_id = customer.id
+        if save_this_card:
+            customer, card = save_card(user, stripe_response)
             charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                          card=customer.id,
-                                          description=desc)
-            user.put()
+                                          customer=customer['id'],
+                                          card=card['id'], description=desc)
         else:
             charge = stripe.Charge.create(amount=total_charge, currency='usd',
                                           card=stripe_response['id'],
@@ -140,3 +135,20 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
 
     return {'result': 'success', 'purchased-parts': parts}
 
+
+def save_card(user, stripe_response):
+    if user.stripe_id is None:
+        # User does not have a stripe customer yet
+        customer = stripe.Customer.create(
+            card=stripe_response['id'],
+            description="user {0}".format(user.uid)
+        )
+        user.stripe_id = customer.id
+        user.put()
+        card = customer['cards']['data'][0]
+    else:
+        # User has a stripe customer, add a card to it
+        customer = stripe.Customer.retrieve(user.stripe_id)
+        card = customer.cards.create(card=stripe_response['id'])
+
+    return customer, card

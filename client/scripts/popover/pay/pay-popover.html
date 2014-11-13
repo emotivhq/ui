@@ -3,7 +3,13 @@
     <div class="powered">Powered by <img src="/assets/powered_by_stripe.png"></div>
 
     <div class="saved-cards" ng-show="cards.length > 0" ng-class="{hidden: putNew}">
-        <span ng-repeat="card in cards" class="card"><input ng-attr-id="{{card.brand}}{{card.lastFour}}" type="radio" name="card" value="{{card.brand}}{{card.lastFour}}"/><label ng-attr-for="{{card.brand}}{{card.lastFour}}"><img class="brand" ng-src="{{card.brandImage}}"><span class="last-four">{{card.lastFour}}</span></label></span>
+        <span ng-repeat="card in cards" class="card">
+            <input ng-attr-id="{{card.fingerprint}}" type="radio" name="card" value="{{card.selected}}" ng-model="card.selected"/>
+            <label ng-attr-for="{{card.fingerprint}}">
+                <img class="brand" ng-src="{{card.brandImage}}">
+                <span class="last-four">{{card.last_four}}</span>
+            </label>
+        </span>
     </div>
 
     <form stripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">

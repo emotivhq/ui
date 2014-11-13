@@ -17,7 +17,6 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
     $scope.addressZip = '';
 
     $scope.cards = CardService.cards;
-
     $scope.putNew = !(CardService.cards.length > 0);
 
     $scope.errorMessage = '';
@@ -67,6 +66,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.attachStripeResponse(response);
             GiftStartService.payment.emailAddress = $scope.email;
             GiftStartService.payment.subscribe = $scope.emailSubscribe;
+            GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 $scope.pitchingIn = false;
                 if (data['stripe-error']) {
@@ -82,6 +82,12 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             $scope.currentCharge);
         PopoverService.nextPopover();
         $scope.pitchingIn = false;
+    });
+
+    $scope.$on('cards-fetch-success', function() {
+        $scope.cards = CardService.cards;
+        $scope.putNew = !(CardService.cards.length > 0);
+        console.log($scope.cards);
     });
 
 }

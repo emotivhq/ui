@@ -16,6 +16,10 @@ import logging
 from gs_user.User import User
 from google.appengine.ext import ndb
 import uuid
+import stripe
+import yaml
+
+stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
 
 class StatsHandler(webapp2.RequestHandler):

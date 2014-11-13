@@ -7,7 +7,6 @@ from gs_user.gs_user_login_decorator import handle_login
 from google.appengine.ext import ndb
 import json
 import base64
-import logging
 
 
 secrets = yaml.load(open('secret.yaml'))

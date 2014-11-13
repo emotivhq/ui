@@ -33,7 +33,7 @@ class PayHandler(webapp2.RequestHandler):
                                        payment['note'],
                                        payment['stripeResponse'],
                                        payment['subscribe'],
-                                       payment.get('save_card', False))
+                                       payment.get('saveCreditCard', False))
             if 'error' in result.keys():
                 self.response.set_status(400)
             self.response.write(json.dumps(result))
