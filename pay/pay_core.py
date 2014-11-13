@@ -156,7 +156,7 @@ def save_card(user, stripe_response):
             card=stripe_response['id'],
             description="user {0}".format(user.uid)
         )
-        user.stripe_id = customer.id
+        user.stripe_id = customer['id']
         user.put()
         card = customer['cards']['data'][0]
     else:

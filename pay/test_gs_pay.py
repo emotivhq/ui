@@ -34,7 +34,9 @@ class StripeCustomerMock():
     def __init__(self, num_cards):
         self.id = 'customer_id'
         self.cards = MagicMock()
-        self.cards.all.return_value = {'data': [{'last4': '3124',
+        self.cards.all.return_value = {'data': [{'last4': '1111',
+                                                 'id': 'card_id',
+                                                 'fingerprint': 'abcd1',
                                                  'brand': 'Visx'}] * num_cards}
 
 
@@ -42,7 +44,9 @@ class StripeCustomerRetrieveMock():
     def __init__(self, num_cards):
         self.cards = MagicMock()
         self.cards.all.return_value = {'data': [{'last4': '3124',
-                                                 'brand': 'Visx'}] * num_cards}
+                                                 'id': 'card_id',
+                                                 'fingerprint': 'abcd1',
+                                                 'brand': 'MasterCarx'}] * num_cards}
 
 # Mock stripe
 pay_core.stripe = MagicMock()
@@ -60,7 +64,7 @@ pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
 gs_user_core.stripe = MagicMock()
 gs_user_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
                                                     str(time()),
-                                                  'amount': 1234,}
+                                                  'amount': 1234}
 gs_user_core.stripe.Customer.create.return_value = {'id': 'stripe_id_123' +
                                                           str(time()),
                                                     'amount': 1234,
