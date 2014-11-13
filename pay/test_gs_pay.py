@@ -31,26 +31,41 @@ from social.facebook import FacebookTokenSet
 
 
 class StripeCustomerMock():
-    def __init__(self):
+    def __init__(self, num_cards):
         self.id = 'customer_id'
+        self.cards = MagicMock()
+        self.cards.all.return_value = {'data': [{'last4': '3124',
+                                                 'brand': 'Visx'}] * num_cards}
 
 
 class StripeCustomerRetrieveMock():
     def __init__(self, num_cards):
         self.cards = MagicMock()
-        self.cards.all.return_value = [{'last4': '3124',
-                                        'brand': 'Visx'}] * num_cards
+        self.cards.all.return_value = {'data': [{'last4': '3124',
+                                                 'brand': 'Visx'}] * num_cards}
 
 # Mock stripe
 pay_core.stripe = MagicMock()
 pay_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
-                                                    str(time())}
-pay_core.stripe.Customer.create.return_value = StripeCustomerMock()
+                                                    str(time()),
+                                              'amount': 1234,
+                                              'cards': {'data': [{'last4': '3124',
+                                                                  'brand': 'Visx'}]}}
+pay_core.stripe.Customer.create.return_value = {'id': 'stripe_id_123' +
+                                                      str(time()),
+                                                'amount': 1234,
+                                                'cards': {'data': [{'last4': '3124',
+                                                                    'brand': 'Visx'}]}}
 pay_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
 gs_user_core.stripe = MagicMock()
 gs_user_core.stripe.Charge.create.return_value = {'id': 'stripe_id_123' +
-                                                    str(time())}
-gs_user_core.stripe.Customer.create.return_value = StripeCustomerMock()
+                                                    str(time()),
+                                                  'amount': 1234,}
+gs_user_core.stripe.Customer.create.return_value = {'id': 'stripe_id_123' +
+                                                          str(time()),
+                                                    'amount': 1234,
+                                                    'cards': {'data': [{'last4': '3124',
+                                                                        'brand': 'Visx'}]}}
 gs_user_core.stripe.Customer.retrieve.return_value = StripeCustomerRetrieveMock(0)
 
 # Mock request to email
@@ -341,13 +356,13 @@ class PayTestHandlers(unittest.TestCase):
                 'stripeResponse': stripe_response, 'gsid': gsid,
                 'parts': parts, 'emailAddress': 'test@giftstarter.co',
                 'note': 'Test note for my besty!', 'subscribe': False,
-                'save_card': True
+                'saveCreditCard': True
             },
         })
         request.get_response(pay_api.api)
 
-        stripe_last_four = StripeCustomerRetrieveMock(1).cards.all()[0]['last4']
-        stripe_brand = StripeCustomerRetrieveMock(1).cards.all()[0]['brand']
+        stripe_last_four = StripeCustomerRetrieveMock(1).cards.all()['data'][0]['last4']
+        stripe_brand = StripeCustomerRetrieveMock(1).cards.all()['data'][0]['brand']
 
         req = webapp2.Request.blank('/users/{0}/cards.json'.format('f1234'))
         req.method = 'GET'
@@ -356,6 +371,8 @@ class PayTestHandlers(unittest.TestCase):
 
         resp = req.get_response(gs_user_api.api)
         json_resp = json.loads(resp.body)
+        print(resp)
+        print(json_resp)
         first_card = json_resp[0]
 
         self.assertEqual(200, resp.status_code,

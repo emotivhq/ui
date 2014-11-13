@@ -258,9 +258,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.payWithFingerprint = function(fingerprint) {
+        self.attachStripeResponse('');
         return $http({method: 'POST', url: '/pay',
             data: {fingerprint: fingerprint, action: 'pitch-in',
-                subscribe: self.payment.subscribe}})
+                subscribe: self.payment.subscribe, payment: self.payment,
+                uid: UserService.uid}})
             .success(self.paymentSuccess)
             .error(self.paymentFailure);
     };

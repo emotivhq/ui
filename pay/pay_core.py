@@ -8,7 +8,7 @@ from google.appengine.api import taskqueue
 from google.appengine.ext import ndb
 import json, yaml
 from gs_user import gs_user_core
-from giftstart import GiftStart
+from giftstart.GiftStart import GiftStart
 from pay.PitchIn import PitchIn
 import requests
 import logging
@@ -38,6 +38,13 @@ def get_pitch_in_dicts(gsid):
     return named_pitch_ins
 
 
+def parts_available(parts, gsid):
+    # Verify that none of these parts have been bought yet
+    pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    bought_parts = {part for pitchin in pitchins for part in pitchin.parts}
+    return not any([part in bought_parts for part in parts])
+
+
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
              subscribe_to_mailing_lits, save_this_card):
     user = gs_user_core.save_email(uid, email_address)
@@ -46,12 +53,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     if subscribe_to_mailing_lits:
         gs_user_core.subscribe_user_to_mailing_list(uid, email=email_address)
 
-    # Verify that none of these parts have been bought yet
-    pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()
-    bought_parts = {part for pitchin in pitchins for part in pitchin.parts}
-    if any([part in bought_parts for part in parts]):
-        # One or more parts have already been bought, don't let the purchase
-        # happen!
+    if not parts_available(parts, gsid):
         return {'result': 'error', 'error': 'One or more requested parts have '
                                             'already been bought.'}
 
@@ -75,6 +77,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
         logging.error(e)
         return {'result': 'error', 'stripe-error': e.json_body}
 
+    # Make pitch in
     pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
                      'PitchIn', charge['id'])
     pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
@@ -85,27 +88,39 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
                  name=user.name if user.name else '')
     pi.put()
 
+    set_user_pitched_in(user)
+    send_pitchin_notification(giftstart, charge,
+                              stripe_response['card']['last4'], email_address,
+                              note, user.name, usr_img)
+
+    return {'result': 'success', 'purchased-parts': parts}
+
+
+def set_user_pitched_in(user):
     if not user.has_pitched_in:
         user.has_pitched_in = True
         user.put()
 
+
+def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
+                              usr_img):
     taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps(
-        {'action': 'check-if-complete', 'gsid': gsid}), countdown=30)
+        {'action': 'check-if-complete', 'gsid': giftstart.gsid}), countdown=30)
 
     # Send receipt
     email_kwargs = {
         'campaign_name': giftstart.giftstart_title,
         'campaign_link': config['app_url'] + '/giftstart/' +
                          giftstart.giftstart_url_title,
-        'pitchin_charge': '$' + str(total_charge/100.0),
+        'pitchin_charge': '$' + str(charge['amount']/100.0),
         'pitchin_id': charge['id'],
-        'pitchin_last_four': stripe_response['card']['last4'],
+        'pitchin_last_four': last_four,
         'frame': 'base_frame',
     }
 
     data = json.dumps({'subject': "Pitch In Received for \"" +
                                   giftstart.giftstart_title + "\"!",
-                       'sender': "team@giftstarter.co", 'to': [email_address],
+                       'sender': "team@giftstarter.co", 'to': [email],
                        'template_name': "pitch_in_thank_you",
                        'mime_type': 'html',
                        'template_kwargs': email_kwargs})
@@ -118,7 +133,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
         'campaign_link': config['app_url'] + '/giftstart/' +
                          giftstart.giftstart_url_title,
         'note': note,
-        'user_name': user.name if user.name else '',
+        'user_name': name if name else '',
         'user_img': usr_img,
         'frame': 'base_frame',
     }
@@ -132,8 +147,6 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
                        'template_kwargs': email_kwargs})
 
     requests.put(config['email_url'], data=data)
-
-    return {'result': 'success', 'purchased-parts': parts}
 
 
 def save_card(user, stripe_response):
@@ -152,3 +165,54 @@ def save_card(user, stripe_response):
         card = customer.cards.create(card=stripe_response['id'])
 
     return customer, card
+
+
+def get_card_by_fingerprint(fingerprint, user):
+    result = None
+    customer = stripe.Customer.retrieve(user.stripe_id)
+    cards = customer.cards.all()
+    for card in cards['data']:
+        if card['fingerprint'] == fingerprint:
+            result = card
+            break
+    return customer, result
+
+
+def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe):
+    user = ndb.Key('User', uid).get()
+
+    if not parts_available(parts, gsid):
+        return {'result': 'error', 'error': 'One or more requested parts have '
+                                            'already been bought.'}
+
+    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    total_charge = giftstart.total_price * len(parts) / \
+                   giftstart.overlay_rows / giftstart.overlay_columns
+
+    customer, card = get_card_by_fingerprint(fingerprint, user)
+    desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+    try:
+        charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                      card=card['id'], customer=customer,
+                                      description=desc)
+    except (CardError, InvalidRequestError, AuthenticationError,
+            APIConnectionError, StripeError) as e:
+        logging.error(e)
+        return {'result': 'error', 'stripe-error': e.json_body}
+
+
+    # Make pitch in
+    pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
+                     'PitchIn', charge['id'])
+    pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
+                 giftstart_url_title=giftstart.giftstart_url_title,
+                 stripe_charge_id=charge['id'], email=user.email,
+                 stripe_charge_json=json.dumps(charge),
+                 last_four=card['last4'],
+                 img_url=user.cached_profile_image_url,
+                 name=user.name if user.name else '')
+    pi.put()
+
+    send_pitchin_notification(giftstart, charge,
+                              card['last4'], user.email, note, user.name,
+                              user.cached_profile_image_url)
