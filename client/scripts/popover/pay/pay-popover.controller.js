@@ -55,7 +55,25 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         // 5. Server app attempts to charge card, responds with result (success/fail)
         $scope.submitted = true;
         $scope.updateFormValidity();
-        if(response.error) {
+        var selected = $scope.cards.reduce(function(prev, next) {
+            return next.selected ? next : prev
+        }, false);
+        GiftStartService.payment.subscribe = $scope.emailSubscribe;
+        console.log(selected);
+        if (selected) {
+            GiftStartService.payWithFingerprint(selected.fingerprint)
+                .success(function (data) {
+                    console.log("pay with fingerprint done");
+                    console.log(data);
+                    $scope.pitchingIn = false;
+                    if (data['stripe-error']) {
+                        $scope.errorMessage = data['stripe-error'].error.message;
+                    }
+                })
+                .error(function(data) {
+                    $scope.pitchingIn = false;
+                });
+        } else if (response.error) {
             $scope.pitchingIn = false;
             Analytics.track('pitchin', 'payment error');
         } else {
@@ -65,7 +83,6 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                 $scope.currentCharge);
             GiftStartService.attachStripeResponse(response);
             GiftStartService.payment.emailAddress = $scope.email;
-            GiftStartService.payment.subscribe = $scope.emailSubscribe;
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 $scope.pitchingIn = false;

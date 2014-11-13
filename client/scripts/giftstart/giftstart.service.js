@@ -257,6 +257,14 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             });
     };
 
+    this.payWithFingerprint = function(fingerprint) {
+        return $http({method: 'POST', url: '/pay',
+            data: {fingerprint: fingerprint, action: 'pitch-in',
+                subscribe: self.payment.subscribe}})
+            .success(self.paymentSuccess)
+            .error(self.paymentFailure);
+    };
+
     this.showOverlay = function() {$rootScope.$broadcast('show-overlay');};
     this.hideOverlay = function() {$rootScope.$broadcast('hide-overlay');};
 

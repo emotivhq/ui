@@ -26,16 +26,19 @@ class PayHandler(webapp2.RequestHandler):
         data = json.loads(self.request.body)
 
         if data['action'] == 'pitch-in':
-            payment = data['payment']
-            result = pay_core.pitch_in(data['uid'], payment['gsid'],
-                                       payment['parts'],
-                                       payment['emailAddress'],
-                                       payment['note'],
-                                       payment['stripeResponse'],
-                                       payment['subscribe'],
-                                       payment.get('saveCreditCard', False))
-            if 'error' in result.keys():
-                self.response.set_status(400)
+            if data.get('fingerprint'):
+                result = pay_core.pay_with_fingerprint(data.get('fingerprint'))
+            else:
+                payment = data['payment']
+                result = pay_core.pitch_in(data['uid'], payment['gsid'],
+                                           payment['parts'],
+                                           payment['emailAddress'],
+                                           payment['note'],
+                                           payment['stripeResponse'],
+                                           payment['subscribe'],
+                                           payment.get('saveCreditCard', False))
+                if 'error' in result.keys():
+                    self.response.set_status(400)
             self.response.write(json.dumps(result))
 
         elif data['action'] == 'get-pitch-ins':
