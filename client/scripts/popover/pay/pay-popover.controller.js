@@ -11,7 +11,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
 
     $scope.currentCharge = GiftStartService.giftStart.totalSelection;
     $scope.emailSubscribe = true;
-    $scope.saveCreditCard = false;
+    $scope.saveCreditCard = true;
     $scope.pitchingIn = false;
     $scope.userOnMailingList = UserService.onMailingList;
     $scope.addressZip = '';
