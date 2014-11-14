@@ -106,18 +106,27 @@
         font-weight: 700
         color: black
         margin-top: 0
+        span.tooltip:after
+          content: ""
+          position: absolute
+          bottom: -15px
+          left: 6.875em
+          border-width: 15px 15px 0
+          border-style: solid
+          border-color: #e0e0e0 transparent
+          display: block
+          width: 0
         span.tooltip
           color: #000
           font-weight: 300
           position: absolute
-          top: -7em
+          top: -8em
           left: -7.5em
           padding: 0.7em
           width: 14em
           border-radius: 0.7em
-          border: solid 1px #df4448
           cursor: default
-          background: #ffffff
+          background: #e0e0e0
           text-indent: 0
           margin: 0
           p
