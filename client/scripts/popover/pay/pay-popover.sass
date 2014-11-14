@@ -18,8 +18,11 @@
     max-height: 300px
     background: rgba(0, 0, 0, 0.15)
     margin-bottom: 1em
-    margin-left: -2em
-    margin-right: -2em
+    margin-left: -1em
+    margin-right: -1em
+    @media screen and (min-width: $phone-tablet-boundary)
+      margin-left: -2em
+      margin-right: -2em
     text-align: left
     +transition(all, 0.2s)
     +inset-vert-shadow(#333333, 10px)
