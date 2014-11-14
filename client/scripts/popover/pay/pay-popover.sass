@@ -98,12 +98,53 @@
         margin-bottom: 0.5em
       #save-credit-card + label
         padding-left: 0.5em
+
+
+      span.tooltip-icon
+        position: relative
+        font: $p-font
+        font-weight: 700
+        color: black
+        margin-top: 0
+        span.tooltip
+          color: #000
+          font-weight: 300
+          position: absolute
+          top: -7em
+          left: -7.5em
+          padding: 0.7em
+          width: 14em
+          border-radius: 0.7em
+          border: solid 1px #df4448
+          cursor: default
+          background: #ffffff
+          text-indent: 0
+          margin: 0
+          p
+            margin: 0.5em 0 0 0
+            line-height: 1.2
+      #tooltip-checkbox
+        display: none
+      #tooltip-checkbox + label
+        display: inline-block
+        margin-left: 0.3em
+        padding-left: 0.4em
+        padding-right: 0.5em
+        cursor: pointer
+        +border-radius(50%)
+        background: $primary-color
+
+
+      input#tooltip-checkbox + label span.tooltip
+        display: none
+      input#tooltip-checkbox:checked + label span.tooltip
+        display: inline-block
       #save-credit-card-lock
         height: 1.5em
         vertical-align: top
         border-left: 1px solid rgba(255, 255, 255, 0.5)
         padding-left: 0.4em
-        margin-left: 0.9em
+        margin-left: 0.5em
         cursor: pointer
 
       div
