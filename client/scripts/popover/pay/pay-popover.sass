@@ -14,6 +14,9 @@
     div.saved-cards.hidden
       max-height: 0
       overflow: hidden
+      margin-bottom: 0
+      div
+        display: none
   div.saved-cards
     max-height: 300px
     background: rgba(0, 0, 0, 0.15)
@@ -75,7 +78,7 @@
     #new-credit-card-cb + label
       display: block
       margin-bottom: 0.5em
-      cursor: pointer
+      padding-left: 0.5em
       span.arrow
         +transition(all, 0.2s)
         +transform(rotate(-90deg))
@@ -91,9 +94,17 @@
       +transition(all, 0.2s)
       overflow: hidden
 
+      #save-credit-card
+        margin-bottom: 0.5em
+      #save-credit-card + label
+        padding-left: 0.5em
       #save-credit-card-lock
         height: 1.5em
         vertical-align: top
+        border-left: 1px solid rgba(255, 255, 255, 0.5)
+        padding-left: 0.4em
+        margin-left: 0.9em
+        cursor: pointer
 
       div
         padding: 0.2em 0.3em
