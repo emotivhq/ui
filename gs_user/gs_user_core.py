@@ -137,7 +137,7 @@ def validate(uid, token, path):
                 'uid': uid, 'img_url': user.cached_profile_image_url,
                 'token': token,
                 'on_mailing_list': user.subscribed_to_mailing_list,
-                'name': base64.b64encode(user.name),
+                'name': base64.b64encode(user.name.encode('utf-8')),
                 'has_pitched_in': user.has_pitched_in,
             }
 
