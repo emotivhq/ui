@@ -109,6 +109,14 @@ class SearchProduct(FeedProduct):
         return json.dumps(dict_list)
 
 
+def price_filter(product):
+    logging.warning("{0}: {1}".format(product.title, product.price))
+    if product.retailer == 'butter LONDON':
+        return product.price > 3998
+    else:
+        return product.price > 7498
+
+
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
     Search for specified keywords, returning a list of products from all
@@ -119,18 +127,17 @@ def product_search(query):
     """ :type products [SearchProduct] """
     products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
-    products += search_amazon(query)
+    products += [product for product in search_amazon(query)
+                 if price_filter(product)]
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
-    products += search_prosperent(query)
+    products += [product for product in search_prosperent(query)
+                 if price_filter(product)]
     logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
-
     products += [SearchProduct.from_feed_product(prod)
-                 for prod in FeedProduct.query().fetch()]
-    logging.info("Filtering products...\t" + datetime.utcnow().isoformat())
-    filtered_products = [product for product in products
-                         if product.price > 39.98]
+                 for prod in FeedProduct.query().fetch()
+                 if price_filter(prod)]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    sorted_products = sort_by_relevance(escaped_query, filtered_products)
+    sorted_products = sort_by_relevance(escaped_query, products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
     return SearchProduct.jsonify_product_list(sorted_products)
 
@@ -216,7 +223,7 @@ def make_prosperent_url(query):
            "&filterMerchantId=" + "|".join(PROSPERENT_RETAILERS.values()) + \
            "&imageSize=500x500" \
            "&limit=90" \
-           "&filterPrice=49.99,"
+           "&filterPrice=74.99,"
 
 
 def sort_by_relevance(keywords, products):
