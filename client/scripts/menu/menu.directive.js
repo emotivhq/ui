@@ -7,7 +7,13 @@ setTimeout(function() {
     // https://trello.com/c/8qqEvQL6/182-high-chrome-browser-view-is-not-working
     angular.module('GiftStarterApp')
         .directive('gsMenu', gsMenu);
-}, 100);
+}, 0);
+setTimeout(function() {
+    // Fallback for if it still doesn't load
+    if (document.getElementById('angular-view') === null) {
+        window.location.reload();
+    }
+}, 500);
 
 function gsMenu(UserService, PopoverService) {
 
