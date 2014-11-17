@@ -71,6 +71,11 @@ $tablet-computer-boundary: 1.75*$phone-tablet-boundary
   -moze-box-shadow: $color $x $y $radius
   -webkit-box-shadow: $color $x $y $radius
 
+=inset-vert-shadow($color, $radius)
+  -moz-box-shadow: inset $color 0 $radius $radius (-$radius), inset $color 0 (-$radius) 10px (-$radius)
+  -webkit-box-shadow: inset $color 0 $radius $radius (-$radius), inset $color 0 (-$radius) 10px (-$radius)
+  box-shadow: inset $color 0 $radius $radius (-$radius), inset $color 0 (-$radius) 10px (-$radius)
+
 =no-select()
   -webkit-touch-callout: none
   -webkit-user-select: none

@@ -200,13 +200,13 @@ class LoginTestHandler(unittest.TestCase):
                          "Should have gotten 302 redirect, response was {0}"
                          .format(str(response)))
         self.assertIn(url_title, response.headers['Location'],
-                      "Should have been redirected to {0}, was"
-                      " redirected to {1}"
-                      .format(url_title, response.headers['Location']))
+                      "Should have been redirected to {0}, was redirected to "
+                      "{1}".format(url_title, response.headers['Location']))
 
 
 class GplusPostMock:
     def __init__(self):
+        self.status_code = 200
         self.body = json.dumps({
             "access_token": "1/fFAGRNJru1FTz70BzhT3Zg",
             "expires_in": 3920,

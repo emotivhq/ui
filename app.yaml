@@ -45,14 +45,6 @@ handlers:
   script: thank.thank_api.handler
 
 # Users
-- url: /users/subscribe.json
-  script: gs_user.gs_user_api.handler
-- url: /users/.*/img/new.json
-  script: gs_user.gs_user_api.handler
-- url: /users/.*.json
-  script: gs_user.gs_user_api.stats
-- url: /users/.*
-  script: gs_user.gs_user_api.handler
 - url: /users.*
   script: gs_user.gs_user_api.api
 - url: /reports

@@ -8,6 +8,7 @@ import json
 import requests
 from UserLogin import UserLogin
 import base64
+import stripe
 
 
 def save_email(uid, email):
@@ -157,3 +158,18 @@ def login_facebook_user(code, redirect_url, referrer):
 def login_twitter_user(oauth_token, oauth_verifier, referrer):
     token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
     return update_or_create('twitter', token_set, referrer)
+
+
+def get_card_tokens(customer_id):
+    results = []
+    if customer_id is None:
+        return []
+    cards = stripe.Customer.retrieve(customer_id).cards.all()
+    card_set = set()
+    for card in cards['data']:
+        if card['fingerprint'] not in card_set:
+            results.append({'last_four': card.get('last4'),
+                            'brand': card.get('brand'),
+                            'fingerprint': card.get('fingerprint')})
+            card_set.add(card['fingerprint'])
+    return results

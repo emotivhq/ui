@@ -3,16 +3,21 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', ['$scope','GiftStartService',
-    'PopoverService','UserService','Analytics', PayPopoverController]);
+    'PopoverService','UserService','Analytics','CardService',
+    PayPopoverController]);
 
 function PayPopoverController($scope, GiftStartService, PopoverService,
-                              UserService,  Analytics) {
+                              UserService,  Analytics, CardService) {
 
     $scope.currentCharge = GiftStartService.giftStart.totalSelection;
     $scope.emailSubscribe = true;
+    $scope.saveCreditCard = true;
     $scope.pitchingIn = false;
     $scope.userOnMailingList = UserService.onMailingList;
     $scope.addressZip = '';
+
+    $scope.cards = CardService.cards;
+    $scope.putNew = !(CardService.cards.length > 0);
 
     $scope.errorMessage = '';
 
@@ -27,7 +32,6 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
     $scope.emailImgUrl = '/assets/cc_icon_email.png';
 
     $scope.updateFormValidity = function() {
-        console.log($scope);
         if ($scope.submitted) {
             $scope.numberImgUrl = $scope.stripeForm.$error.card ?
                 '/assets/cc_icon_card_number_error.png' : '/assets/cc_icon_card_number.png';
@@ -51,7 +55,19 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         // 5. Server app attempts to charge card, responds with result (success/fail)
         $scope.submitted = true;
         $scope.updateFormValidity();
-        if(response.error) {
+        GiftStartService.payment.subscribe = $scope.emailSubscribe;
+        if ($scope.selectedCard) {
+            GiftStartService.payWithFingerprint($scope.selectedCard)
+                .success(function (data) {
+                    $scope.pitchingIn = false;
+                    if (data['stripe-error']) {
+                        $scope.errorMessage = data['stripe-error'].error.message;
+                    }
+                })
+                .error(function(data) {
+                    $scope.pitchingIn = false;
+                });
+        } else if (response.error) {
             $scope.pitchingIn = false;
             Analytics.track('pitchin', 'payment error');
         } else {
@@ -61,7 +77,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                 $scope.currentCharge);
             GiftStartService.attachStripeResponse(response);
             GiftStartService.payment.emailAddress = $scope.email;
-            GiftStartService.payment.subscribe = $scope.emailSubscribe;
+            GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 $scope.pitchingIn = false;
                 if (data['stripe-error']) {
@@ -79,4 +95,35 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         $scope.pitchingIn = false;
     });
 
+    $scope.$on('cards-fetch-success', cardsFetched);
+
+    function cardsFetched() {
+        $scope.cards = CardService.cards;
+        if ($scope.cards.length > 0) {
+            $scope.selectCard.apply({card: $scope.cards[0]});
+        }
+        $scope.putNew = !(CardService.cards.length > 0);
+    }
+
+    $scope.deselectCards = deselectCards;
+    function deselectCards(except) {
+        $scope.selectedCard = '';
+        for (var i = 0; i < $scope.cards.length; i++) {
+            if ($scope.cards[i].fingerprint != except) {
+                $scope.cards[i].selected = false;
+            }
+        }
+    }
+
+    $scope.selectCard = function() {
+        if (this.card.fingerprint == $scope.selectedCard) {
+            deselectCards();
+        } else {
+            deselectCards(this.card.fingerprint);
+            this.card.selected = true;
+            $scope.selectedCard = this.card.fingerprint;
+        }
+    };
+
+    cardsFetched();
 }

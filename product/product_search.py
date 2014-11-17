@@ -16,6 +16,7 @@ from datetime import datetime
 from lxml import etree
 from google.appengine.api import search
 import re
+import math
 from feeds import FeedProduct
 
 
@@ -62,6 +63,9 @@ class SearchProduct(FeedProduct):
         description = xfind('.//{ns}EditorialReviews/{ns}EditorialReview/'
                             '{ns}Content')
         price = xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount')
+        if price is None:
+            price = xfind('.//{ns}Offers/{ns}Offer/{ns}OfferListing/'
+                          '{ns}Price/{ns}Amount')
         img = xfind('.//{ns}LargeImage/{ns}URL')
         url = xfind('.//{ns}DetailPageURL')
         retailer = 'Amazon'
@@ -78,7 +82,9 @@ class SearchProduct(FeedProduct):
                              price=int(100*float(prod.get('price'))),
                              img=prod.get('image_url'),
                              url=prod.get('affiliate_url'),
-                             retailer=prod.get('merchant'))
+                             retailer=prod.get('merchant'),
+                             keywords=str(prod.get('category')).replace('>',
+                                                                        ' '))
 
     @staticmethod
     def from_feed_product(prod):
@@ -109,6 +115,13 @@ class SearchProduct(FeedProduct):
         return json.dumps(dict_list)
 
 
+def price_filter(product):
+    if product.retailer == 'butter LONDON':
+        return product.price > 3998
+    else:
+        return product.price > 7498
+
+
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
     Search for specified keywords, returning a list of products from all
@@ -119,18 +132,17 @@ def product_search(query):
     """ :type products [SearchProduct] """
     products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
-    products += search_amazon(query)
+    products += [product for product in search_amazon(query)
+                 if price_filter(product)]
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
-    products += search_prosperent(query)
+    products += [product for product in search_prosperent(query)
+                 if price_filter(product)]
     logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
-
     products += [SearchProduct.from_feed_product(prod)
-                 for prod in FeedProduct.query().fetch()]
-    logging.info("Filtering products...\t" + datetime.utcnow().isoformat())
-    filtered_products = [product for product in products
-                         if product.price > 39.98]
+                 for prod in FeedProduct.query().fetch()
+                 if price_filter(prod)]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    sorted_products = sort_by_relevance(escaped_query, filtered_products)
+    sorted_products = sort_by_relevance(escaped_query, products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
     return SearchProduct.jsonify_product_list(sorted_products)
 
@@ -155,7 +167,7 @@ def make_amazon_url(query):
              "&ItemId=0679722769" \
              "&Keywords=" + urllib.quote(query.replace(' ', '_')) + \
              "&Operation=ItemSearch" \
-             "&ResponseGroup=ItemAttributes%2CImages%2CEditorialReview" \
+             "&ResponseGroup=ItemAttributes%2CImages%2CEditorialReview%2COfferFull" \
              "&SearchIndex=Blended" \
              "&Service=AWSECommerceService" \
              "&Timestamp=" + urllib.quote(datetime.utcnow().isoformat())
@@ -216,7 +228,7 @@ def make_prosperent_url(query):
            "&filterMerchantId=" + "|".join(PROSPERENT_RETAILERS.values()) + \
            "&imageSize=500x500" \
            "&limit=90" \
-           "&filterPrice=49.99,"
+           "&filterPrice=74.99,"
 
 
 def sort_by_relevance(keywords, products):
@@ -288,13 +300,27 @@ def get_preferred_products(scored_results):
     :return:
     """
     for i in range(len(scored_results.results)):
-        scored_results.results[i] = prefer_brands(scored_results.results[i])
+        scored_results.results[i] = apply_preference(scored_results.results[i])
 
     return sorted(scored_results.results,
                   key=(lambda res: -res.sort_scores[0]))
 
 
-def prefer_brands(scored_result):
+def score_price(price):
+    """ Calculates the search score for a given price - don't want too much
+    expensive stuff clogging the first results!
+    :type price: int
+    :rtype: float
+    """
+    if price < 40000:
+        return 1
+    elif price > 320000:
+        return 0.25
+    else:
+        return 1 - 0.25 * math.log(price / 40000.0, 2)
+
+
+def apply_preference(scored_result):
     """
     :type scored_result search.ScoredDocument
     :rtype: search.ScoredDocument
@@ -304,11 +330,13 @@ def prefer_brands(scored_result):
         if field.name == 'retailer':
             if field.value in PARTNERS:
                 scored_result.sort_scores[0] *= 2
-
+        if field.name == 'price':
+            scored_result.sort_scores[0] *= score_price(field.value)
     return scored_result
 
 PARTNERS = [
-    'butter LONDON'
+    'butter LONDON',
+    'B&H Photo Video',
 ]
 
 PROSPERENT_RETAILERS = {
