@@ -15,10 +15,16 @@ function EmailSharePopoverController ($scope,  PopoverService,  $http,  UserServ
     $scope.fromEmail = UserService.email;
     $scope.message = "Hey, check out this GiftStart, it's the bee's knees!\n\n" + UserService.name;
     $scope.formValid = true;
+    $scope.emailUrl = "mailto:?subject=" +
+        encodeURI("Check out this awesome GiftStarter campaign!") + "&body=" +
+        encodeURI("Check out this awesome GiftStarter campaign, it's the " +
+            "bee's knees!\n\n" + $location.absUrl());
 
     $scope.sending = false;
 
     $scope.hidePopover = PopoverService.hidePopover;
+
+    $scope.trackEmailClientClick = trackEmailClientClick;
 
     var email = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+\.([a-z0-9-]+)+$/i;
 
@@ -63,5 +69,9 @@ function EmailSharePopoverController ($scope,  PopoverService,  $http,  UserServ
             $scope.sending = false;
             Analytics.track('campaign', 'email share failed');
         });
+    }
+
+    function trackEmailClientClick() {
+        Analytics.track('client', 'email client share clicked');
     }
 }

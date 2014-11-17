@@ -144,8 +144,9 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
         if (device.desktop()) {
             PopoverService.setPopover('email-share');
         } else {
-            $window.location.href = "mailto:?subject=" + $scope.mailSubject +
-                "&body=" + $scope.mailBody();
+//            $window.location.href =
+                console.log("mailto:?subject=" + $scope.mailSubject +
+                "&body=" + $scope.mailBody());
         }
     };
 

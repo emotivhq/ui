@@ -1,5 +1,10 @@
 <div class="email-share-popover" ng-controller="EmailSharePopoverController">
     <h1 class="white">Email Share!</h1>
+    <div id="open-with-email-client">
+        <a href="{{emailUrl}}" target="_blank" ng-click="trackEmailClientClick()">
+            <span class="share">Open in email client</span>
+        </a>
+    </div>
     <div>
         <label>To:</label>
         <textarea ng-model="toEmails" placeholder="friend@email.com; family@email.com"></textarea>
