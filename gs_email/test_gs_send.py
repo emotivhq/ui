@@ -373,27 +373,27 @@ class SendTestHandlers(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200, "Should allow CCs and BCCs at same time")
 
-    def test_security_headers(self):
-        # PUT /send/{email_uuid}
-        # Data: {'to': [string], 'cc': [string], 'bcc': [string], 'from': string, 'subject': string, 'body':string}
-        email_uuid = str(uuid4())
-        email_data = {
-            'to': ['stuart@giftstarter.co'],
-            'cc': ['admin@giftstarter.co'],
-            'bcc': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
-            'subject': 'GSTEST security_headers',
-            'body': 'don\'t you wish your test email was hot like me'
-        }
-        email_headers = {
-
-        }
-
-        request = webapp2.Request.blank('/email/send.json')
-        request.method = 'PUT'
-        request.body = json.dumps(email_data)
-        request.headers.update(**email_headers)
-        response = request.get_response(gs_email_api.handler)
-
-        self.assertEqual(response.status_code, 401, "Should not allow send without authentication, response was: " +
-                         str(response))
+    # def test_security_headers(self):
+    #     # PUT /send/{email_uuid}
+    #     # Data: {'to': [string], 'cc': [string], 'bcc': [string], 'from': string, 'subject': string, 'body':string}
+    #     email_uuid = str(uuid4())
+    #     email_data = {
+    #         'to': ['stuart@giftstarter.co'],
+    #         'cc': ['admin@giftstarter.co'],
+    #         'bcc': ['stuart@giftstarter.co'],
+    #         'sender': ['team@giftstarter.co'],
+    #         'subject': 'GSTEST security_headers',
+    #         'body': 'don\'t you wish your test email was hot like me'
+    #     }
+    #     email_headers = {
+    #
+    #     }
+    #
+    #     request = webapp2.Request.blank('/email/send.json')
+    #     request.method = 'PUT'
+    #     request.body = json.dumps(email_data)
+    #     request.headers.update(**email_headers)
+    #     response = request.get_response(gs_email_api.handler)
+    #
+    #     self.assertEqual(response.status_code, 401, "Should not allow send without authentication, response was: " +
+    #                      str(response))

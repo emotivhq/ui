@@ -117,7 +117,7 @@ class UserStatsTestHandler(unittest.TestCase):
 
         request = webapp2.Request.blank('/users/f1234.json')
         request.method = 'GET'
-        response = request.get_response(gs_user_api.stats)
+        response = request.get_response(gs_user_api.api)
         self.assertEqual(200, response.status_code,
                          "Should successfully fetch user stats, expected code "
                          "200, response was " + str(response.status_code))
@@ -160,7 +160,7 @@ class UserStatsTestHandler(unittest.TestCase):
 
         request = webapp2.Request.blank('/users/f1234.json')
         request.method = 'GET'
-        response = request.get_response(gs_user_api.stats)
+        response = request.get_response(gs_user_api.api)
         self.assertEqual(200, response.status_code,
                          "Should successfully fetch user stats, expected code"
                          " 200, response was " + str(response.status_code))
@@ -256,7 +256,7 @@ class UserStatsTestHandler(unittest.TestCase):
         request.cookies['uid'] = uid
         request.cookies['token'] = str(tok)
         request.body = json.dumps({'data': data})
-        return request.get_response(gs_user_api.handler)
+        return request.get_response(gs_user_api.api)
 
     def test_image_upload(self):
         """ Should be able to upload a valid image """

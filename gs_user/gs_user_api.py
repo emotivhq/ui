@@ -4,7 +4,7 @@ import webapp2
 from social import twitter, googleplus, facebook
 import json
 from gs_user_core import update_or_create, get_user, \
-    subscribe_to_mailing_list, validate
+    subscribe_to_mailing_list, validate, get_card_tokens
 from gs_user_stats import get_stats
 from UserLogin import UserLogin
 from render_app import render_app
@@ -16,6 +16,10 @@ import logging
 from gs_user.User import User
 from google.appengine.ext import ndb
 import uuid
+import stripe
+import yaml
+
+stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -163,11 +167,38 @@ class ImageUploadHandler(webapp2.RequestHandler):
                 self.response.set_status(400, "Invalid image data")
 
 
-handler = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
-                                   ('/users/.*/img/new.json',
-                                    ImageUploadHandler),
-                                   ('/users/.*', UserPageHandler),
-                                   ], debug=True)
-api = webapp2.WSGIApplication([('/users.*', UserHandler)], debug=True)
-stats = webapp2.WSGIApplication([('/users/.*.json', StatsHandler)], debug=True)
+class StripeCardsHandler(webapp2.RequestHandler):
+    """ Handles requests for stripe tokens """
+
+    def get(self):
+        uid = self.request.cookies.get('uid', '').replace('%22', '')
+        token = self.request.cookies.get('token', '').replace('%22', '')
+
+        if not all([bool(thing) for thing in [uid, token]]):
+            logging.warning("Invalid data used for stripe token request:"
+                            "\n{0}".format(self.request.body))
+            self.response.set_status(400, "Invalid data")
+            return
+
+        # validate user and token
+        if validate(uid, token, self.request.path):
+            user = ndb.Key('User', uid).get()
+
+        else:
+            logging.warning("Invalid user credentials:\n{0}"
+                            .format(self.request.cookies))
+            self.response.set_status(403)
+            return
+
+        charge_tokens = get_card_tokens(user.stripe_id)
+        self.response.write(json.dumps(charge_tokens))
+
+
+api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
+                               ('/users/.*/img/new.json', ImageUploadHandler),
+                               ('/users/.*/cards.json', StripeCardsHandler),
+                               ('/users/.*.json', StatsHandler),
+                               ('/users/.*', UserPageHandler),
+                               ('/users.*', UserHandler),
+                               ], debug=True)
 user_page = webapp2.WSGIApplication([('/u', UserPageHandler)], debug=True)

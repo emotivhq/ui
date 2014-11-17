@@ -9,6 +9,9 @@ from pay import pay_core
 import json
 import yaml
 import stripe
+import logging
+from gs_user import gs_user_core
+from gs_user.User import User
 
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
@@ -24,14 +27,23 @@ class PayHandler(webapp2.RequestHandler):
 
         if data['action'] == 'pitch-in':
             payment = data['payment']
-            result = pay_core.pitch_in(data['uid'], payment['gsid'],
-                                       payment['parts'],
-                                       payment['emailAddress'],
-                                       payment['note'],
-                                       payment['stripeResponse'],
-                                       payment['subscribe'])
-            if 'error' in result.keys():
-                self.response.set_status(400)
+            if data.get('fingerprint'):
+                result = pay_core.pay_with_fingerprint(data.get('fingerprint'),
+                                                       data['uid'],
+                                                       payment['gsid'],
+                                                       payment['parts'],
+                                                       payment['note'],
+                                                       payment['subscribe'],)
+            else:
+                result = pay_core.pitch_in(data['uid'], payment['gsid'],
+                                           payment['parts'],
+                                           payment['emailAddress'],
+                                           payment['note'],
+                                           payment['stripeResponse'],
+                                           payment['subscribe'],
+                                           payment.get('saveCreditCard', False))
+                if 'error' in result.keys():
+                    self.response.set_status(400)
             self.response.write(json.dumps(result))
 
         elif data['action'] == 'get-pitch-ins':
@@ -39,4 +51,6 @@ class PayHandler(webapp2.RequestHandler):
             self.response.write(json.dumps(pitchin_dicts))
 
 
-api = webapp2.WSGIApplication([('/pay', PayHandler)], debug=True)
+api = webapp2.WSGIApplication(
+    [('/pay', PayHandler),
+     ], debug=True)

@@ -242,6 +242,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (self.payment.subscribe) {
             Analytics.track('pitchin', 'subscribed to mailing list');
         }
+        if (self.payment.saveCreditCard) {
+            Analytics.track('pitchin', 'save credit card');
+        }
         $http({method: 'POST', url: '/pay',
             data: data})
             .success(function(data) {
@@ -252,6 +255,16 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 self.paymentFailure(data);
                 if (callback) {callback(data)}
             });
+    };
+
+    this.payWithFingerprint = function(fingerprint) {
+        self.attachStripeResponse('');
+        return $http({method: 'POST', url: '/pay',
+            data: {fingerprint: fingerprint, action: 'pitch-in',
+                subscribe: self.payment.subscribe, payment: self.payment,
+                uid: UserService.uid}})
+            .success(self.paymentSuccess)
+            .error(self.paymentFailure);
     };
 
     this.showOverlay = function() {$rootScope.$broadcast('show-overlay');};

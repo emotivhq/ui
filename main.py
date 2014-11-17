@@ -32,8 +32,7 @@ class MainHandler(webapp2.RequestHandler):
             staging_uuid = state.get('staging_uuid')
             logging.info("Found staging UUID: {0}".format(staging_uuid))
             if bool(staging_uuid) and bool(self.request.cookies['uid']):
-                gss = GiftStart.query(GiftStart.staging_uuid ==
-                                      self.request.get('staging_uuid'))\
+                gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid)\
                     .fetch(1)
                 logging.info("Fetched giftstart with staging uuid:\n{0}"
                              .format(gss))
