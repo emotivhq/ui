@@ -11,6 +11,7 @@ from google.appengine.ext import ndb
 import json
 from storage import image_cache
 from uuid import uuid4
+import logging
 
 
 class ThankHandler(webapp2.RequestHandler):
@@ -24,6 +25,7 @@ class ThankHandler(webapp2.RequestHandler):
                           '/thanks/edit?thanks=' +
                           self.request.path.split('-')[-1])
         else:
+            logging.warning("Invalid thanks code used in get")
             self.response.set_status(403, "Not Allowed")
 
     def put(self):
@@ -34,6 +36,7 @@ class ThankHandler(webapp2.RequestHandler):
             if gsid == data.get('gsid') and len(gss) > 0:
                 gs = gss[0]
                 if 'message' not in data:
+                    logging.warning("No message found in thanks")
                     self.response.set_status(400, "Expected message")
                 else:
                     thanked_yet = gs.thanked
@@ -49,6 +52,7 @@ class ThankHandler(webapp2.RequestHandler):
 
                     self.response.write(gs.jsonify())
             else:
+                logging.warning("Decode for code failed or no campaign found")
                 self.response.set_status(403, "Not Allowed")
         else:
             # Not thanks from card, may be editing
@@ -65,8 +69,10 @@ class ThankHandler(webapp2.RequestHandler):
                         gs.put()
                     self.response.write(gs.jsonify())
                 else:
+                    logging.warning("Invalid user details for editing thanks")
                     self.response.set_status(403, "Invalid user")
             else:
+                logging.warning("Invalid campaign url title for thanks")
                 self.response.set_status(400, "Invalid campaign")
 
 
