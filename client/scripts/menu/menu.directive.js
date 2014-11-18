@@ -13,7 +13,7 @@ setTimeout(function() {
     if (document.getElementById('angular-view') === null) {
         window.location.reload();
     }
-}, 500);
+}, 3000);
 
 function gsMenu(UserService, PopoverService) {
 
