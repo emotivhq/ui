@@ -2,7 +2,7 @@ __author__ = 'Stuart'
 
 # Change execution path to project root
 import os
-os.chdir('/Users/Stuart/Projects/GiftStarter/app')
+#os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
 import webapp2

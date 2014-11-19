@@ -1,7 +1,7 @@
 __author__ = 'Stuart'
 
 import os
-os.chdir('/Users/Stuart/Projects/GiftStarter/app')
+#os.chdir('/Users/Stuart/Projects/GiftStarter/app')
 
 import unittest
 from giftstart import GiftStart
