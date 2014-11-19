@@ -95,7 +95,6 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
             uid + '/taggable_friends' + '?access_token=' +
             window.loginDeets[2]})
             .success(function(response) {
-                console.log(response);
                 self.taggableFriends = response.data;
                 resolve(response.data);
             })
