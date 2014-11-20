@@ -2,12 +2,16 @@
 API for the giftstart endpoint
 """
 
-__author__ = 'stuart'
+__author__ = 'jon'
+
+#import logging
 
 import webapp2
 from gs_user.gs_user_core import get_user, validate
+from social import facebook
+import urllib
 #import giftstart_comm
-#from giftstart import GiftStart
+import giftstart
 #import giftstart_core
 #import json
 
@@ -20,44 +24,64 @@ class FacebookShareHandler(webapp2.RequestHandler):
 
     def get(self):
 
+        uid = self.request.path.split('/')[2]
+        gift_path = self.request.path.split('/')[6]
+        if gift_path.endswith('.json'):
+            gift_path = gift_path[:-5]
 
-        uid = self.request.path.split('/')[0]
-        giftid = self.request.path.split('/')[1]
+        user = None
+        fb_id = ""
+        fb_tokens = None
+
+        if not gift_path:
+            self.response.set_status(400, "No gift URI provided")
+            print "No gift URI provided"
+            return
 
         sessionUid = self.request.cookies.get('uid', '').replace('%22', '')
         sessionToken = self.request.cookies.get('token', '').replace('%22', '')
 
-        if sessionUid!=uid:
-            self.response.set_status(400, "Attempted to use a UID different from Session UID")
+        if not validate(sessionUid,sessionToken,self.request.path):
+            self.response.set_status(400, "Invalid session token")
+            print "Invalid session token"
+            return
 
-        if uid not in ['f', 'g', 't']:
+        if sessionUid!=uid:
+            self.response.set_status(400, "Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
+            print "Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")"
+            return
+
+        if uid[0] not in ['f', 'g', 't']:
             self.response.set_status(400, "Invalid user id")
+            print "Invalid User id "+uid
+            return
         else:
             user = get_user(uid)
             if user is None:
                 self.response.set_status(400, "Invalid user id")
-            #else:
-            #    self.response.write(user.jsonify())
+                print "Invalid User id "+uid
+                return
+            fb_tokens = user.facebook_token_set
+            if fb_tokens is None:
+                self.response.set_status(400, "Invalid FaceBook tokens")
+                print "Invalid FaceBook tokens "+uid
+                return
+            fb_id = user.facebook_uid
+            if(fb_id is None):
+                #todo: figure out why users don't always get their facebook_uid set when they are created
+                fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens);
+                user.put()
 
+        self.publish_share(fb_tokens.access_token, gift_path, "", "", "");
+        return
 
+    @staticmethod
+    def publish_share(access_token, gift_path, message, friends_include, friends_exclude):
+        gift_url = "https%3A%2F%2Fwww.giftstarter.co%2Fgiftstart%2F"+gift_path
+        post_url = "https://graph.facebook.com/me/dev-giftstarter:invite?access_token="+access_token+"&method=POST&gift="+gift_url;
+        #todo: add {message="usermessage",message_tags="FBID1,FBID2",privacy{friends="FRIENDS_OF_FRIENDS",deny="FBID1,FBID2"}}
 
-        self.response.set_status(400, "Invalid user id")
-        self.response.write("reached FacebookShareHandler(webapp2.RequestHandler) with uid="+uid+" sessionUid="+sessionUid+" token="+sessionToken)
-        pass
-"""
-        if not all([bool(thing) for thing in [uid, token]]):
-            logging.warning("Invalid data used for stripe token request:"
-                            "\n{0}".format(self.request.body))
+        #todo: actually call this URL
+        print post_url;
 
-        try:
-            #
-
-        # validate user and token
-        if validate(uid, token, self.num_campaigns = int(self.request.get('num_campaigns'))
-            #campaigns = giftstart_core.hot_campaigns(num_campaigns)
-            #self.response.write(json.dumps(campaigns))
-            #
-        except Exception as e:
-            self.response.set_status(400, 'Invalid request')
-            raise e
-            """
+        return
