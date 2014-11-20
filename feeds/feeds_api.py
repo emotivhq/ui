@@ -3,6 +3,7 @@ __author__ = 'Stuart'
 import webapp2
 import feeds_core
 from google.appengine.api import taskqueue
+from feeds.feeds_upload import SturtevantsUploadHandler
 
 
 FEEDS = {
@@ -30,5 +31,7 @@ class FeedsHandler(webapp2.RequestHandler):
             self.response.set_status(400, "Invalid feed name")
 
 handler = webapp2.WSGIApplication([('/feeds/update', CronHandler),
-                                   ('/feeds/.*/update', FeedsHandler)],
+                                   ('/feeds/.*/update', FeedsHandler),
+                                   ('/feeds/upload/sturtevants',
+                                    SturtevantsUploadHandler)],
                                   debug=True)

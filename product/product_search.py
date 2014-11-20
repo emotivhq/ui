@@ -337,6 +337,7 @@ def apply_preference(scored_result):
 PARTNERS = [
     'butter LONDON',
     'B&H Photo Video',
+    'Sturtevant\'s',
 ]
 
 PROSPERENT_RETAILERS = {
