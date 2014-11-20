@@ -18,18 +18,18 @@ from google.appengine.api import search
 import re
 import math
 from feeds import FeedProduct
+from google.appengine.ext import ndb
 
 
 class SearchProduct(FeedProduct):
+    doc_id = ndb.StringProperty(required=True)
 
-    def to_search_document(self, id):
-        """ self.to_search_document(12) -> search.Document
+    def to_search_document(self, doc_id=None):
+        """ self.to_search_document() -> search.Document
         Creates a search document for indexing
-
-        :type id int
         """
-        return search.Document(
-            doc_id=str(id),
+        doc = search.Document(
+            doc_id=doc_id,
             fields=[
                 search.TextField(name='title', value=self.title),
                 search.HtmlField(name='description',
@@ -42,6 +42,8 @@ class SearchProduct(FeedProduct):
                                  value=self.extended_description),
                 search.TextField(name='keywords', value=self.keywords),
             ])
+        self.doc_id = doc.doc_id
+        return doc
 
     @staticmethod
     def from_amazon(tree):
@@ -137,10 +139,10 @@ def product_search(query):
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
     products += [product for product in search_prosperent(query)
                  if price_filter(product)]
-    logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
-    products += [SearchProduct.from_feed_product(prod)
-                 for prod in FeedProduct.query().fetch()
-                 if price_filter(prod)]
+    # logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
+    # products += [SearchProduct.from_feed_product(prod)
+    #              for prod in FeedProduct.query().fetch()
+    #              if price_filter(prod)]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
     sorted_products = sort_by_relevance(escaped_query, products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
