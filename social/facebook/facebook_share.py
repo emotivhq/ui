@@ -20,6 +20,8 @@ import giftstart
 #from POST: shareToFbIDs, excludeFromFbIDs, messageText,
 #if error, log and respond 400 or 403
 
+
+#test url: http://localhost:8080/users/f426193/network/facebook/giftstart-invite/Testing-GiftStarter-1.json
 class FacebookShareHandler(webapp2.RequestHandler):
 
     def get(self):
@@ -80,6 +82,7 @@ class FacebookShareHandler(webapp2.RequestHandler):
         gift_url = "https%3A%2F%2Fwww.giftstarter.co%2Fgiftstart%2F"+gift_path
         post_url = "https://graph.facebook.com/me/dev-giftstarter:invite?access_token="+access_token+"&method=POST&gift="+gift_url;
         #todo: add {message="usermessage",message_tags="FBID1,FBID2",privacy{friends="FRIENDS_OF_FRIENDS",deny="FBID1,FBID2"}}
+        #  see https://developers.facebook.com/docs/graph-api/reference/v2.2/post
 
         #todo: actually call this URL
         print post_url;
