@@ -18,6 +18,7 @@ from google.appengine.ext import ndb
 import uuid
 import stripe
 import yaml
+from social.facebook import facebook_share
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
@@ -195,6 +196,7 @@ class StripeCardsHandler(webapp2.RequestHandler):
 
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
+                               ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
                                ('/users/.*/cards.json', StripeCardsHandler),
                                ('/users/.*.json', StatsHandler),

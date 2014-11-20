@@ -51,6 +51,8 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
         $cookieStore.put('token', token);
 
         $rootScope.$broadcast('login-success');
+
+        if (uid[0] == 'f') {FacebookService.getTaggableFriends()}
     };
 
     this.logout = function() {
