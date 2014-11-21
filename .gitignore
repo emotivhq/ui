@@ -9,3 +9,5 @@ oauthlib
 app.iml
 .idea
 *.pyc
+*.DS_Store
+*.xcf
