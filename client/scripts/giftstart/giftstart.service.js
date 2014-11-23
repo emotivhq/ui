@@ -32,6 +32,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     // Shipping/Contact Info
     this.shippingName = '';
+    this.shippingEmail = '';
     this.shippingAddress = '';
     this.shippingCity = '';
     this.shippingState = '';
@@ -76,9 +77,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         if (!self.gcName) {self.gcName = UserService.name}
 
         self.giftStart = self.buildGiftStart();
-        var payload = self.giftStart;
-        payload.uid =
-//        $location.path('/giftstart');
         self.pitchInsInitialized = false;
         $http({method: 'POST', url: '/giftstart/create.json',
             data: self.giftStart})
@@ -113,6 +111,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             gc_email: self.gcEmail,
             gc_name: self.gcName,
             shipping_name: self.shippingName,
+            shipping_email: self.shippingEmail,
             shipping_address: self.shippingAddress,
             shipping_city: self.shippingCity,
             shipping_state: self.shippingState,

@@ -165,6 +165,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         ndbgs.gc_email = giftstart['gc_email']
 
         ndbgs.shipping_name = giftstart.get('shipping_name')
+        ndbgs.shipping_email = giftstart.get('shipping_email')
         ndbgs.shipping_address = giftstart.get('shipping_address')
         ndbgs.shipping_city = giftstart.get('shipping_city')
         ndbgs.shipping_state = giftstart['shipping_state']
