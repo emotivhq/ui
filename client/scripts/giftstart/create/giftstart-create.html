@@ -87,6 +87,14 @@
                     <label>Recipient Zip</label>
                     <input type="text" class="zip" placeholder="Zip" minlength="5" maxlength="5" ng-model="shippingZip" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" />
                 </span>
+                <span class="name">
+                    <label>Recipient Name</label>
+                    <input type="text" ng-model="shippingName" required="" />
+                </span>
+                <span class="email">
+                    <label>Recipient Email</label>
+                    <input type="email" ng-model="shippingEmail" placeholder="recipient@mail.com" required="" />
+                </span>
             </div>
 
             <h2>Minimum Pitch In</h2>

@@ -33,6 +33,8 @@ GiftStarterApp.controller('GiftStartCreateController',
             return $scope.xySets.length - 1;
         }
 
+        $scope.shippingName = '';
+        $scope.shippingEmail = '';
         $scope.shippingZip = '';
         $scope.shippingState = '';
         $scope.shippingDetailsSubmitted = false;
@@ -153,6 +155,8 @@ GiftStarterApp.controller('GiftStartCreateController',
                 'total_price': $scope.totalPrice,
                 'columns': $scope.x,
                 'rows': $scope.y,
+                'shipping_name': $scope.shippingName,
+                'shipping_email': $scope.shippingEmail,
                 'shipping_state': $scope.shippingState,
                 'shipping_zip': $scope.shippingZip,
                 'gc_email': $scope.gcEmail,
@@ -164,6 +168,8 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.title = '';
             $scope.description = '';
             $scope.selectedImg = '';
+            $scope.shippingName = '';
+            $scope.shippingEmail = '';
             $scope.shippingZip = '';
             $scope.shippingState = '';
             $scope.inputPrice = 0;
@@ -180,6 +186,8 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.rows = $scope.y;
             GiftStartService.columns = $scope.x;
             GiftStartService.productPrice = $scope.inputPrice*100;
+            GiftStartService.shippingName = $scope.shippingName;
+            GiftStartService.shippingEmail = $scope.shippingEmail;
             GiftStartService.shippingZip = $scope.shippingZip;
             GiftStartService.shippingState = $scope.shippingState;
             GiftStartService.salesTax = $scope.salesTax;
@@ -320,15 +328,5 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
-
-        // Scroll to the top of the form on controller creation
-//        $timeout(function() {
-//            if (referral) {
-//                document.querySelector('#header-logo').scrollIntoView();
-//            } else {
-//                var root = angular.element(document.querySelector('#giftstart-contact-wrapper'))[0];
-//                root.querySelector('.block.image').scrollIntoView();
-//            }
-//        }, 250);
     }
 ]);
