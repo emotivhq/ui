@@ -1,6 +1,7 @@
 /client/stylesheets/*.css
 /client/bower_components/*
 /client/client.iml
+grunt/node_modules
 requests_oauthlib
 stripe
 cloudstorage
@@ -11,3 +12,4 @@ app.iml
 *.pyc
 *.DS_Store
 *.xcf
+*.min.js
