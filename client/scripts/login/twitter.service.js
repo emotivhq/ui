@@ -27,7 +27,6 @@ GiftStarterApp.service('TwitterService', [
         };
 
         this.share = function() {
-            mixpanel.track("share campaign twitter");
             ga('send', 'event', 'share campaign', 'twitter');
             var shareUrl = 'https://twitter.com/share';
             var parameters = "?url=" + encodeURIComponent($location.absUrl().split('#')[0]) +
