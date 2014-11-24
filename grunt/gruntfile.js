@@ -6,6 +6,12 @@ module.exports = function(grunt) {
     remove: {
       fileList: ['../client/scripts/out/*.js']
     },
+      ngtemplates:  {
+      GiftStarterApp:        {
+        src:      '../client/scripts/**/*.html',
+        dest:     '../client/scripts/out/angular-template.js'
+      }
+    },
     concat: {
       build: {
         src: [
@@ -19,6 +25,7 @@ module.exports = function(grunt) {
           '../client//bower_components/angular-resource/angular-resource.min.js',
           '../client//bower_components/devicejs/lib/device.min.js',
           '../client//bower_components/jquery/dist/jquery.min.js',
+          '../client/scripts/out/angular-template.js',
           '../client//scripts/utilities/ng-ab/ng-ab.module.js',
           '../client//scripts/utilities/ng-ab/ng-ab.service.js',
           '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
@@ -84,8 +91,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-remove');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-angular-templates');
 
   // Default task(s).
-  grunt.registerTask('default', ['remove', 'concat']);
+  grunt.registerTask('default', ['remove', 'ngtemplates', 'concat']);
 
 };
