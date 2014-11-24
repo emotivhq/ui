@@ -139,10 +139,10 @@ def product_search(query):
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
     products += [product for product in search_prosperent(query)
                  if price_filter(product)]
-    # logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
-    # products += [SearchProduct.from_feed_product(prod)
-    #              for prod in FeedProduct.query().fetch()
-    #              if price_filter(prod)]
+    logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
+    products += [SearchProduct.from_feed_product(prod)
+                 for prod in FeedProduct.query().fetch()
+                 if price_filter(prod)]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
     sorted_products = sort_by_relevance(escaped_query, products)
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
