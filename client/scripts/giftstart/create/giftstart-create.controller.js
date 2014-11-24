@@ -314,6 +314,8 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.showIntroCopy = true;
             $scope.fromReferral = true;
 
+            $scope.ghostruck = /ghostruck/.test(referral.source.toLowerCase());
+
             Analytics.track('client', 'referred from', referral.source);
         }
 
