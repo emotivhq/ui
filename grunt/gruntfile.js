@@ -6,9 +6,13 @@ module.exports = function(grunt) {
     remove: {
       fileList: ['../client/scripts/out/*.js']
     },
-      ngtemplates:  {
+    ngtemplates:  {
       GiftStarterApp:        {
-        src:      '../client/scripts/**/*.html',
+        options: {
+          prefix: '/'
+        },
+        cwd:      '../client',
+        src:      'scripts/**/*.html',
         dest:     '../client/scripts/out/angular-template.js'
       }
     },
