@@ -6,8 +6,8 @@ app_url:                  'https://www.giftstarter.co'
 email_url:                'http://www.giftstarter.co/email/send.json'
 storage_url:              '/giftstarter-pictures/'
 
-facebook_app:             'dev-giftstarter'
-facebook_app_id:          '336526276498819'
+facebook_app:             'giftstarterapp'
+facebook_app_id:          '301135316704582'
 
 googleanalytics:
   key:                    'UA-51616127-2'
