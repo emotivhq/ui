@@ -4,11 +4,10 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     uglify: {
-        build: {
-            src: '../client/scripts/app.config.js',
-            dest: '../client/scripts/app.config.min.js'
-        }
-    },
+      build: {
+        src: '../client/scripts/app.config.js',
+        dest: '../client/scripts/app.config.min.js'
+      }
     concat: {
       build: {
         src: ['../client/scripts/app.config.min.js'],
