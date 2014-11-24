@@ -7,6 +7,9 @@ __author__ = 'jon'
 #import logging
 
 import webapp2
+import requests
+import json
+import logging
 from gs_user.gs_user_core import get_user, validate
 from social import facebook
 import urllib
@@ -20,20 +23,17 @@ import giftstart
 #from POST: shareToFbIDs, excludeFromFbIDs, messageText,
 #if error, log and respond 400 or 403
 
-
-#test url: http://localhost:8080/users/f426193/network/facebook/giftstart-invite/Testing-GiftStarter-1.json
 class FacebookShareHandler(webapp2.RequestHandler):
 
-    def get(self):
+    def post(self):
 
         uid = self.request.path.split('/')[2]
         gift_path = self.request.path.split('/')[6]
         if gift_path.endswith('.json'):
             gift_path = gift_path[:-5]
-
-        user = None
-        fb_id = ""
-        fb_tokens = None
+        message = self.request.POST.get("message")
+        tags = self.request.POST.get("tags")
+        deny = self.request.POST.get("deny")
 
         if not gift_path:
             self.response.set_status(400, "No gift URI provided")
@@ -45,46 +45,49 @@ class FacebookShareHandler(webapp2.RequestHandler):
 
         if not validate(sessionUid,sessionToken,self.request.path):
             self.response.set_status(400, "Invalid session token")
-            print "Invalid session token"
+            logging.error("facebook_share: Invalid session token")
             return
 
         if sessionUid!=uid:
             self.response.set_status(400, "Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
-            print "Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")"
+            logging.error("facebook_share: Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
             return
 
         if uid[0] not in ['f', 'g', 't']:
             self.response.set_status(400, "Invalid user id")
-            print "Invalid User id "+uid
+            logging.error("facebook_share: Invalid User id "+uid)
             return
         else:
             user = get_user(uid)
             if user is None:
                 self.response.set_status(400, "Invalid user id")
-                print "Invalid User id "+uid
+                logging.error("facebook_share: Invalid User id "+uid)
                 return
             fb_tokens = user.facebook_token_set
             if fb_tokens is None:
                 self.response.set_status(400, "Invalid FaceBook tokens")
-                print "Invalid FaceBook tokens "+uid
+                logging.error("facebook_share: Invalid FaceBook tokens "+uid)
                 return
             fb_id = user.facebook_uid
-            if(fb_id is None):
-                #todo: figure out why users don't always get their facebook_uid set when they are created
-                fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens);
-                user.put()
-
-        self.publish_share(fb_tokens.access_token, gift_path, "", "", "");
-        return
+            try:
+                if(fb_id is None):
+                    #todo: figure out why users don't always get their facebook_uid set when they are created
+                    fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens)
+                    user.fb_id = fb_id
+                    user.put()
+            except Exception as e:
+                logging.error("facebook_share: Unable to set current user's FB ID: "+str(e))
+            self.response.write(text=self.publish_share(fb_tokens.access_token, gift_path, message, tags, deny).content)
 
     @staticmethod
-    def publish_share(access_token, gift_path, message, friends_include, friends_exclude):
-        gift_url = "https%3A%2F%2Fwww.giftstarter.co%2Fgiftstart%2F"+gift_path
-        post_url = "https://graph.facebook.com/me/dev-giftstarter:invite?access_token="+access_token+"&method=POST&gift="+gift_url;
-        #todo: add {message="usermessage",message_tags="FBID1,FBID2",privacy{friends="FRIENDS_OF_FRIENDS",deny="FBID1,FBID2"}}
-        #  see https://developers.facebook.com/docs/graph-api/reference/v2.2/post
-
-        #todo: actually call this URL
-        print post_url;
-
-        return
+    def publish_share(access_token, gift_path, message, tags=None, deny=None):
+        gift_url = "https://www.giftstarter.co/giftstart/"+gift_path
+        post_url = "https://graph.facebook.com/me/dev-giftstarter:invite"
+        privacy = {'value': 'CUSTOM', 'friends': 'FRIENDS_OF_FRIENDS'}
+        if(deny):
+            privacy['deny']=deny
+        req_params = {'access_token': access_token, 'gift': gift_url, 'message': message, 'privacy': json.dumps(privacy)}
+        if(tags):
+            req_params['tags']=tags
+        print json.dumps(req_params)
+        return requests.post(post_url,params=req_params)
