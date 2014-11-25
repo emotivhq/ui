@@ -336,8 +336,6 @@ def apply_preference(scored_result):
             scored_result.sort_scores[0] *= score_price(field.value)
     return scored_result
 
-PRODUCT_INDEX = None
-
 PARTNERS = [
     'butter LONDON',
     'B&H Photo Video',
