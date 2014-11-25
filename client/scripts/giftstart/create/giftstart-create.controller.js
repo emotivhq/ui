@@ -313,10 +313,20 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.inputPrice = parseInt(referral.price)/100;
             $scope.showIntroCopy = true;
             $scope.fromReferral = true;
+            $scope.referredFrom = getReferrerName(referral.source);
 
             $scope.ghostruck = /ghostruck/.test(referral.source.toLowerCase());
 
             Analytics.track('client', 'referred from', referral.source);
+        }
+
+        function getReferrerName(source) {
+            console.log(source);
+            if (/ghostruck/.test(source.toLowerCase())) {
+                return 'Ghostruckers!';
+            } else {
+                return '';
+            }
         }
 
         $timeout(function() {
