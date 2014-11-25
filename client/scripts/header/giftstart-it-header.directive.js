@@ -3,15 +3,14 @@
  */
 
 angular.module('GiftStarterApp').directive('gsItHeader', ['$interval',
-    '$window', gsItHeader]);
+    '$window', '$location', gsItHeader]);
 
-function gsItHeader($interval, $window) {
+function gsItHeader($interval, $window, $location) {
     var $scope,
-        shown = false;
+        shown = $location.path().indexOf('/giftstart') != 0;
 
     function link(scope, ele, attr) {
         $scope = scope;
-        $scope.shown = false;
 
         $scope.hideButtonHeader = hideButtonHeader;
 
