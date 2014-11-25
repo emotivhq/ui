@@ -8,5 +8,6 @@
             <a ng-href="{{header.userProfileUrl}}"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn"/></a><a ng-hide="header.loggedIn || header.creating"><h2 class="login navitem" ng-click="header.login()">Login</h2><h2>|</h2></a><a ng-show="header.loggedIn"><h2 class="logout navitem" ng-click="header.logout()">Logout</h2><h2>|</h2></a><a href="http://blog.giftstarter.co" target="_blank"><h2 class="blog navitem">Tumblr</h2></a><a><h2>|</h2></a><a href="/faq"><h2 class="faq navitem">FAQ</h2></a>
         </div>
     </div>
+    <gs-it-header></gs-it-header>
 </header>
 {% endraw %}

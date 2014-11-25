@@ -78,7 +78,9 @@ module.exports = function(grunt) {
           '../client//scripts/popover/email-share/email-share-popover.directive.js',
           '../client//scripts/utilities/image-upload/image-upload.directive.js',
           '../client//scripts/utilities/local-storage.service.js',
-          '../client//scripts/utilities/uservoice.js'
+          '../client//scripts/utilities/uservoice.js',
+          '../client//scripts/button/campaign-giftstart-it.directive.js',
+          '../client//scripts/header/giftstart-it-header.directive.js'
         ],
         dest: '../client/scripts/out/app.js'
       }
