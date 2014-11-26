@@ -25,6 +25,8 @@ function gsItHeader($interval, $window, $location) {
             }
         }
 
+        scope.$on('$routeChangeStart', hideButtonHeader);
+
         var interval = $interval(onScroll, 3000);
     }
 
