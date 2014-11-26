@@ -45,6 +45,13 @@
       h2.navitem:hover
         color: $primary-color-highlight
 
+#header-padding
+  height: $header-height-mobile * 7 / 8
+  @media screen and (min-width: $phone-tablet-boundary)
+    height: $header-height * 7 / 8
+#header-padding.gs-it-expanded
+  height: $header-height-mobile * 7 / 8 + 3em
+
 #header-menu-button
   position: absolute
   top: 1em
