@@ -36,7 +36,9 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
                 products.append(product)
                 search_docs.append(product.to_search_document(str(uuid4())))
 
+        logging.info("Adding {0} sturt products".format(len(search_docs)))
         add_to_index(get_product_index(), search_docs)
+        logging.info("Indexing {0} sturt products".format(len(products)))
         ndb.put_multi(products)
 
 
@@ -52,8 +54,9 @@ class SturtevantsDeleteHandler(webapp2.RequestHandler):
                 .fetch(100, offset=offset)
             offset += 100
             remaining = len(prods)
-            logging.info("Deleting {0} sturt products".format(remaining))
+            logging.info("Unindexing {0} sturt products".format(remaining))
             delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
+            logging.info("Deleting {0} sturt products".format(remaining))
             ndb.delete_multi_async([prod.key for prod in prods])
 
 

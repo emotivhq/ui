@@ -2,9 +2,14 @@ __author__ = 'Stuart'
 
 import requests
 from feeds import FeedProduct
+from product.product_search import SearchProduct
+from product.product_search import delete_from_index
+from product.product_search import add_to_index
+from product.product_search import get_product_index
 from product.product_search import price_filter
 import json
 from google.appengine.ext import ndb
+from uuid import uuid4
 import csv
 import logging
 import time
@@ -18,16 +23,35 @@ def cache(partner, url):
     feed_resp = requests.get(url)
     clear_feed(partner)
     products = normalize_products(partner, feed_resp.content)
+    products = [SearchProduct.from_feed_product(prod) for prod in products]
+    search_docs = []
+    for product in products:
+        search_docs.append(product.to_search_document(str(uuid4())))
+    #products = [product for product in static_products if price_filter(product)]
+    logging.info("Put {0} products from {1}".format(len(products), partner))
     ndb.put_multi(products)
+    logging.info("Indexed {0} products from {1}".format(len(products), partner))
+    add_to_index(get_product_index(), search_docs)
 
 
 def clear_feed(partner):
     """ clear_feed('B&H') -> None
-    Removes all products for this retailer from the feed
+    Removes all products for this retailer from the feed and the Index
     """
     partner_key = ndb.Key('Partner', partner)
-    partner_products = FeedProduct.query(ancestor=partner_key).fetch()
-    ndb.delete_multi([prod.key for prod in partner_products])
+    logging.info("Found partner_key {0} for {1}".format(partner_key, partner))
+    offset = 0
+    remaining = 1
+    while remaining > 0:
+        prods = SearchProduct\
+            .query(ancestor=partner_key)\
+            .fetch(100, offset=offset)
+        offset += 100
+        remaining = len(prods)
+        logging.info("Unindexing {0} {1} products".format(remaining, partner))
+        delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
+        logging.info("Deleting {0} {1} products".format(remaining, partner))
+        ndb.delete_multi_async([prod.key for prod in prods])
 
 
 def normalize_products(partner, response_content):

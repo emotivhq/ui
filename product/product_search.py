@@ -18,6 +18,7 @@ from google.appengine.api import search
 import re
 import math
 from feeds import FeedProduct
+from uuid import uuid4
 from google.appengine.ext import ndb
 
 
@@ -90,7 +91,7 @@ class SearchProduct(FeedProduct):
 
     @staticmethod
     def from_feed_product(prod):
-        return SearchProduct(title=prod.title, description=prod.description,
+        return SearchProduct(key=ndb.Key(pairs=prod.key.pairs()+ndb.Key("SearchProduct",str(uuid4())).pairs()), title=prod.title, description=prod.description,
                              price=prod.price, img=prod.img, url=prod.url,
                              retailer=prod.retailer,
                              extended_description=prod.extended_description,
@@ -128,31 +129,14 @@ def product_search(query):
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
     index = get_product_index()
 
-    #logging.info("Deleting ALL products from index...\t" + datetime.utcnow().isoformat())
-    #delete_all_from_index(index);
-    logging.info("Indexing feed products...\t" + datetime.utcnow().isoformat())
-    static_products = [SearchProduct.from_feed_product(prod) for prod in FeedProduct.query().fetch()]
-    #todo: the following is already being done in SturtevantsUploadHandler... follow this pattern for others (but remember we need to delete later too!)
-    #static_products += SearchProduct.query().fetch()
-    logging.info("...found " + str(len(static_products)))
-    static_products = [product for product in static_products if price_filter(product)]
-    logging.info("...filtered to " + str(len(static_products)))
-    static_ids = put_search_products(index, static_products)
-
     """ :type products [SearchProduct] """
     dynamic_products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
-    #dynamic_products += [product for product in search_amazon(query)]
+    dynamic_products += [product for product in search_amazon(query)]
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
-    #dynamic_products += [product for product in search_prosperent(query)]
+    dynamic_products += [product for product in search_prosperent(query)]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
     sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
-
-
-
-    logging.info("Cleaning feed products...\t" + datetime.utcnow().isoformat())
-    delete_from_index(index,static_ids)
-
 
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
     return SearchProduct.jsonify_product_list(sorted_products)
