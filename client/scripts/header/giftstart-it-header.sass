@@ -2,11 +2,23 @@
 
 gs-it-header
   text-align: center
+
+  div.giftstart-it-header-padding
+    height: $header-height-mobile * 7 / 8
+    +transition(all, 0.2s)
+  @media screen and (min-width: $phone-tablet-boundary)
+    div.giftstart-it-header-padding.shown
+      height: $header-height-mobile * 7 / 8 + 3em
   @media screen and (min-width: $phone-tablet-boundary)
     div.giftstart-it-header.shown
       height: 3em
   div.giftstart-it-header
+    z-index: 10000
     background-color: $primary-color
+    position: fixed
+    top: $header-height-mobile * 7 / 8
+    right: 0
+    left: 0
     width: 100%
     height: 0
     overflow: hidden
