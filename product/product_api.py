@@ -6,8 +6,6 @@ import product_fetch
 import product_tax
 import product_search
 import urllib
-from feeds.FeedProduct import FeedProduct
-
 
 class ProductHandler(webapp2.RequestHandler):
 

@@ -2,6 +2,7 @@ __author__ = 'Stuart'
 
 import requests
 from feeds import FeedProduct
+from product.product_search import price_filter
 import json
 from google.appengine.ext import ndb
 import csv
@@ -122,6 +123,7 @@ def normalize_butter_products(response_content):
 
 
 validity_tests = [
+    lambda product: price_filter(product),
     lambda product: len(product.title) > 5,
     lambda product: 'http://' in product.img,
     lambda product: 'http://' in product.url,
@@ -146,10 +148,6 @@ def filter_products(partner, products):
 
     def valid_product(product):
         valid = True
-        if partner == 'butter-LONDON':
-            valid &= int(product.price) > 3998
-        else:
-            valid &= int(product.price) > 4998
         for test in validity_tests:
             if not valid:
                 break

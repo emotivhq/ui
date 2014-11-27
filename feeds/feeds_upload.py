@@ -2,6 +2,9 @@ __author__ = 'Stuart'
 
 import webapp2
 from product.product_search import SearchProduct
+from product.product_search import delete_from_index
+from product.product_search import add_to_index
+from product.product_search import get_product_index
 from google.appengine.ext import ndb
 import logging
 from uuid import uuid4
@@ -33,7 +36,7 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
                 products.append(product)
                 search_docs.append(product.to_search_document(str(uuid4())))
 
-        put_search_docs(search_docs)
+        add_to_index(get_product_index(), search_docs)
         ndb.put_multi(products)
 
 
@@ -50,23 +53,8 @@ class SturtevantsDeleteHandler(webapp2.RequestHandler):
             offset += 100
             remaining = len(prods)
             logging.info("Deleting {0} sturt products".format(remaining))
-            delete_search_docs([prod.doc_id for prod in prods])
+            delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
             ndb.delete_multi_async([prod.key for prod in prods])
 
 
-def put_search_docs(docs):
-    index = search.Index(name='product-search-0')
-    k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
-    doc_sets = [docs[k*i:k*(i+1)] for i in range(len(docs)/k+1)]
-    for doc_set in doc_sets:
-        if len(doc_set) > 0:
-            index.put(doc_set)
 
-
-def delete_search_docs(doc_ids):
-    index = search.Index(name='product-search-0')
-    k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
-    id_sets = [doc_ids[k*i:k*(i+1)] for i in range(len(doc_ids)/k+1)]
-    for id_set in id_sets:
-        if len(id_set) > 0:
-            index.delete(id_set)
