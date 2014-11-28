@@ -1,0 +1,43 @@
+@import '../base'
+
+gs-it-header
+  text-align: center
+
+  div.giftstart-it-header-padding
+    height: $header-height-mobile * 7 / 8
+    +transition(all, 0.2s)
+  @media screen and (min-width: $phone-tablet-boundary)
+    div.giftstart-it-header-padding.shown
+      height: $header-height-mobile * 7 / 8 + 3em
+  @media screen and (min-width: $phone-tablet-boundary)
+    div.giftstart-it-header.shown
+      height: 3em
+  div.giftstart-it-header
+    z-index: 10000
+    background-color: $primary-color
+    position: fixed
+    top: $header-height-mobile * 7 / 8
+    right: 0
+    left: 0
+    width: 100%
+    height: 0
+    overflow: hidden
+    +transition(all, 0.2s)
+    span
+      margin: 0 auto
+      display: block
+      p
+        font-size: 16px
+        color: #ffffff
+        display: inline-block
+        margin: 0.75em 0
+        vertical-align: top
+      button
+        padding: 0
+      p.cancel
+        float: right
+        margin: 0
+        padding: 0.75em
+        cursor: pointer
+      p.cancel:hover
+        background-color: $primary-color-highlight

@@ -18,6 +18,7 @@ from google.appengine.api import search
 import re
 import math
 from feeds import FeedProduct
+from uuid import uuid4
 from google.appengine.ext import ndb
 
 
@@ -90,7 +91,7 @@ class SearchProduct(FeedProduct):
 
     @staticmethod
     def from_feed_product(prod):
-        return SearchProduct(title=prod.title, description=prod.description,
+        return SearchProduct(key=ndb.Key(pairs=prod.key.pairs()+ndb.Key("SearchProduct",str(uuid4())).pairs()), title=prod.title, description=prod.description,
                              price=prod.price, img=prod.img, url=prod.url,
                              retailer=prod.retailer,
                              extended_description=prod.extended_description,
@@ -117,11 +118,8 @@ class SearchProduct(FeedProduct):
         return json.dumps(dict_list)
 
 
-def price_filter(product):
-    if product.retailer == 'butter LONDON':
-        return product.price > 3998
-    else:
-        return product.price > 7498
+def get_product_index():
+    return search.Index(name='product-search-0')
 
 
 def product_search(query):
@@ -130,21 +128,17 @@ def product_search(query):
     partners, sorted by relevance
     """
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
+    index = get_product_index()
 
     """ :type products [SearchProduct] """
-    products = []
+    dynamic_products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
-    products += [product for product in search_amazon(query)
-                 if price_filter(product)]
+    dynamic_products += [product for product in search_amazon(query)]
     logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
-    products += [product for product in search_prosperent(query)
-                 if price_filter(product)]
-    logging.info("Adding feed products...\t" + datetime.utcnow().isoformat())
-    products += [SearchProduct.from_feed_product(prod)
-                 for prod in FeedProduct.query().fetch()
-                 if price_filter(prod)]
+    dynamic_products += [product for product in search_prosperent(query)]
     logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    sorted_products = sort_by_relevance(escaped_query, products)
+    sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
+
     logging.info("Returning...\t" + datetime.utcnow().isoformat())
     return SearchProduct.jsonify_product_list(sorted_products)
 
@@ -199,6 +193,7 @@ def parse_amazon_products(response):
     products = [SearchProduct.from_amazon(element)
                 for element in root.iter()
                 if element.tag.split('}')[-1] == 'Item']
+    products = [product for product in products if price_filter(product)]
 
     # Remove products missing data
     return products
@@ -218,6 +213,7 @@ def search_prosperent(query):
     else:
         products = [SearchProduct.from_prosperent(prosp_prod)
                     for prosp_prod in response.get('data')]
+        products = [product for product in products if price_filter(product)]
 
     return products
 
@@ -233,45 +229,65 @@ def make_prosperent_url(query):
            "&filterPrice=74.99,"
 
 
-def sort_by_relevance(keywords, products):
+def sort_by_relevance(index, keywords, dynamic_products):
     """ sort_by_relavence('xbox 1', [Product...]) -> [Product...]
     Sorts a list of products by relevance to the supplied keywords
     """
-    logging.info("Building index...\t" + datetime.utcnow().isoformat())
-    index, ids = put_search_products(products)
+    logging.info("Building dynamic index...\t" + datetime.utcnow().isoformat())
+    dynamic_ids = put_search_products(index, dynamic_products)
     logging.info("Searching products...\t" + datetime.utcnow().isoformat())
     sorted_products = search_products(index, keywords)
+    logging.info("Found: "+str(len(sorted_products)))
     logging.info("Cleaning up...\t" + datetime.utcnow().isoformat())
-    cleanup_search(index, ids)
-
+    delete_from_index(index, dynamic_ids)
     return sorted_products
 
 
-def put_search_products(products):
+def put_search_products(index, products):
     """ put_documents([Product...]) -> (Index, [Id...])
     Puts an array of documents and returns the index and ids of the put docs
     """
-    index = search.Index(name='product-search-0')
+
     docs = [prod.to_search_document(str(i))
             for i, prod in enumerate(products)]
     ids = [str(i) for i in range(len(docs))]
+    add_to_index(index, docs)
+    return ids
+
+
+def add_to_index(index, docs):
+    """ add_to_index(Index, [Doc...]) -> None
+    Adds all the provided documents to the given index
+    """
     k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
     doc_sets = [docs[k*i:k*(i+1)] for i in range(len(docs)/k+1)]
     for doc_set in doc_sets:
         if len(doc_set) > 0:
             index.put(doc_set)
-    return index, ids
 
 
-def cleanup_search(index, ids):
-    """ cleanup_search([Id...]) -> None
-    Removes all the added documents from the search index after completion
+def delete_from_index(index, ids):
+    """ delete_from_index(Index, [Id...]) -> None
+    Removes all the provided ids from the given index
     """
     k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
     id_sets = [ids[k*i:k*(i+1)] for i in range(len(ids)/k+1)]
     for id_set in id_sets:
         if len(id_set) > 0:
             index.delete(id_set)
+
+
+def delete_all_from_index(index):
+    """Delete all the docs in the given index."""
+    # looping because get_range by default returns up to 100 documents at a time
+    while True:
+        # Get a list of documents populating only the doc_id field and extract the ids.
+        document_ids = [document.doc_id
+                        for document in index.get_range(ids_only=True)]
+        if not document_ids:
+            break
+        # Delete the documents for the given ids from the Index.
+        index.delete(document_ids)
 
 
 def search_products(index, keywords):
@@ -306,6 +322,13 @@ def get_preferred_products(scored_results):
 
     return sorted(scored_results.results,
                   key=(lambda res: -res.sort_scores[0]))
+
+
+def price_filter(product):
+    if product.retailer == 'butter LONDON':
+        return product.price > 3998
+    else:
+        return product.price > 7498
 
 
 def score_price(price):

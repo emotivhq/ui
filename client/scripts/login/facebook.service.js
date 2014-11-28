@@ -61,7 +61,6 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
     };
 
     this.inviteFriends = function(uid) {
-        mixpanel.track("share campaign facebook");
         ga('send', 'event', 'share campaign', 'facebook');
         $location.search('re', btoa(JSON.stringify({
             type: 'consumer',

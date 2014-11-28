@@ -1,9 +1,15 @@
-<h1 style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; color: #dd4455;">OH NO!</h1>
+<h1 style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; color: #dd4455; margin-left: 30px; margin-right: 30px; margin-top: 30px;">OH NO!</h1>
 
-<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300;">The giftstart you gave to, "{{campaign_name}}", only has one day left!  Go back and spread the word and drive it to completion!</p>
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-left: 30px; margin-right: 30px;">The giftstart you gave to, "{{campaign_name}}", only has one day left!  Go back and spread the word and drive it to completion!</p>
 
-<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300;">Here's the link to it:</p>
-<a href="{{campaign_link}}" style=" color: #dd4455; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">{{campaign_link}}</a>
+<a href="{{campaign_link}}" style=" color: #dd4455; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; margin-top: 0.5em;"><div style=" width: 460px; height: 270px; margin: 15px 0; background-size: cover; background-position-y: center; background-image: url('{{ product_img_url }}');"></div></a>
 
-<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-top: 2em; margin-bottom: 0.5em;">Thanks!</p>
-<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-top: 0.5em;">Team GiftStarter</p>
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-left: 30px; margin-right: 30px;">Here's the link to it:</p>
+<a href="{{campaign_link}}" style=" color: #dd4455; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; margin-left: 30px; margin-right: 30px;">{{campaign_link}}</a>
+
+{% include 'full_bleed_image.html' %}
+
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-top: 2em; margin-bottom: 0.5em; margin-left: 30px; margin-right: 30px;">Thanks!</p>
+<p style=" font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-weight: 300; margin-top: 0.5em; margin-left: 30px; margin-right: 30px; margin-bottom: 30px;">Team GiftStarter</p>
+
+{% include 'giftstart_it_footer.html' %}

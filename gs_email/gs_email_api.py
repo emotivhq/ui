@@ -11,6 +11,7 @@ import json
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 import logging
+from gs_email.gs_email_preview import EmailPreviewHandler
 
 REQUIRED_PARAMS = ['to', 'sender', 'subject', 'body']
 REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
@@ -18,7 +19,8 @@ REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
 SEND_PARAMS = ['to', 'sender', 'cc', 'bcc', 'subject', 'body', 'mime_type',
                'img_url']
 TEMPLATE_PARAMS = ['to', 'sender', 'cc', 'bcc', 'subject', 'template_name',
-                   'template_kwargs', 'mime_type', 'img_url']
+                   'template_kwargs', 'mime_type', 'img_url',
+                   'giftstart_it_url']
 EMAIL_PARAMS = ['to', 'sender', 'cc', 'bcc']
 
 
@@ -81,5 +83,6 @@ class FromQueueHandler(webapp2.RequestHandler):
 
 handler = webapp2.WSGIApplication([
     ('/email/send.json', SendHandler),
-    ('/email/sendfromqueue', FromQueueHandler)
+    ('/email/sendfromqueue', FromQueueHandler),
+    ('/email/preview/.*', EmailPreviewHandler),
 ], debug=True)

@@ -3,6 +3,7 @@ __author__ = 'Stuart'
 import webapp2
 import feeds_core
 from google.appengine.api import taskqueue
+from google.appengine.ext import ndb
 from feeds.feeds_upload import SturtevantsUploadHandler, \
     SturtevantsDeleteHandler
 
@@ -23,7 +24,7 @@ class CronHandler(webapp2.RequestHandler):
 
 
 class FeedsHandler(webapp2.RequestHandler):
-
+    @ndb.toplevel
     def post(self):
         try:
             feed_name = self.request.path.split('/')[2]

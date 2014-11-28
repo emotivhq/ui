@@ -65,7 +65,6 @@ GiftStarterApp.service('GooglePlusService', [
         };
 
         this.share = function(uid) {
-            mixpanel.track("share campaign googleplus");
             ga('send', 'event', 'share campaign', 'googleplus');
             var shareUrl = 'https://plus.google.com/share';
             $location.search('re', btoa(JSON.stringify({

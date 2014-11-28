@@ -58,7 +58,6 @@ handlers:
 # Feeds
 - url: /feeds/.*
   script: feeds.feeds_api.handler
-  login: admin
 
 # Analytics
 - url: /a/.*

@@ -27,7 +27,7 @@ class EmailShareHandler(webapp2.RequestHandler):
 
 def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
     gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    if sender_uid:
+    if sender_uid != -1 and sender_uid:
         sender_img = User.query(User.uid == sender_uid).fetch()[0].cached_profile_image_url
     else:
         sender_img = None
@@ -47,7 +47,9 @@ def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
                          'gs_image': gs.product_img_url,
                          'gs_description': gs.giftstart_description,
                          'gs_link': share_url,
+                         'campaign_link': share_url,
                          'frame': 'base_frame',
+                         'product_img_url': gs.product_img_url,
                      }
                  }))
 

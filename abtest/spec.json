@@ -33,7 +33,20 @@
             "css": "#giftstart-contact-wrapper #not-long-enough p, #giftstart-contact-wrapper #not-long-enough li {color: black;}"
         }]
     }]
+}, {
+    "name": "brand-pillow",
+    "cases": [{
+        "name": "new",
+        "weight": 0.75,
+        "changes": [{
+            "file": "/scripts/giftstart/create/giftstart-create.html",
+            "find": "/scripts/giftstart/brand-pillow/brand-pillow-video.html",
+            "replace": "/scripts/giftstart/brand-pillow/brand-pillow-new.ng.html"
+        }]
+    }, {
+      "name": "video",
+      "weight": 0.25,
+      "changes": []
+    }]
 }]
-
-
 

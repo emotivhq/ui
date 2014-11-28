@@ -1,0 +1,56 @@
+<html>
+<body>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/ramda/0.8.0/ramda.js"></script>
+    <script>
+        window.onload = makeForm;
+        var urlInput, titleInput, imgUrlInput, priceInput, referrerInput,
+                resultInput, submitButton;
+
+        function makeForm() {
+            urlInput = document.getElementById('url');
+            titleInput = document.getElementById('title');
+            imgUrlInput = document.getElementById('image');
+            priceInput = document.getElementById('price');
+            referrerInput = document.getElementById('source');
+            resultInput = document.getElementById('result');
+            submitButton = document.getElementById('submit');
+        }
+
+        function formSubmit() {
+            var url = makeUrl(urlInput.value, titleInput.value,
+                    priceInput.value, imgUrlInput.value, referrerInput.value);
+            resultInput.value = url;
+        }
+
+        function makeUrl(url, title, price, img, source) {
+            return 'https://www.giftstarter.co/create?' + urlSerialize({
+                        product_url: url,
+                        title: title,
+                        price: 100*price,
+                        img_url: img,
+                        source: source
+                    });
+        }
+
+        function urlSerialize(obj) {
+            var str = [];
+            for(var p in obj)
+                if (obj.hasOwnProperty(p)) {
+                    str.push(encodeURIComponent(p) + "=" +
+                    encodeURIComponent(obj[p]));
+                }
+            return str.join("&");
+        }
+    </script>
+    <h1>Go GiftStarter!!!</h1>
+    <div>
+        <label for="url">Product URL</label><input type="text" id="url"/><br>
+        <label for="title">Product Title</label><input type="text" id="title"/><br>
+        <label for="image">Product Image URL</label><input type="text" id="image"/><br>
+        <label for="price">Product Price</label><input type="text" id="price"/><br>
+        <label for="source">Referrer</label><input type="text" id="source"/><br><br>
+        <button id="submit" onclick="formSubmit()">Create Link</button><br><br>
+        <label for="result">Result</label><input id="result"/>
+    </div>
+</body>
+</html>
