@@ -14,6 +14,7 @@ import requests
 import logging
 from stripe.error import CardError, InvalidRequestError, AuthenticationError, \
     APIConnectionError, StripeError
+from gs_util import gs_util_link
 
 config = yaml.load(open('config.yaml'))
 
@@ -116,6 +117,8 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
         'pitchin_id': charge['id'],
         'pitchin_last_four': last_four,
         'frame': 'base_frame',
+        'product_img_url': giftstart.product_img_url,
+        'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
     }
 
     data = json.dumps({'subject': "Pitch In Received for \"" +
@@ -136,6 +139,8 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
         'user_name': name if name else '',
         'user_img': usr_img,
         'frame': 'base_frame',
+        'product_img_url': giftstart.product_img_url,
+        'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
     }
 
     data = json.dumps({'subject': "Someone Pitched In on \"" +

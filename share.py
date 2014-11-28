@@ -47,7 +47,9 @@ def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
                          'gs_image': gs.product_img_url,
                          'gs_description': gs.giftstart_description,
                          'gs_link': share_url,
+                         'campaign_link': share_url,
                          'frame': 'base_frame',
+                         'product_img_url': gs.product_img_url,
                      }
                  }))
 

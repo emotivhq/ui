@@ -9,6 +9,7 @@ from datetime import datetime
 import json
 import yaml
 from google.appengine.api import taskqueue
+from gs_util import gs_util_link
 
 config = yaml.load(open('config.yaml'))
 team_notification_email = config['team_notification_email']
@@ -62,6 +63,7 @@ def send_day_left_warning(gsid):
                              giftstart.giftstart_url_title,
             'campaign_name': giftstart.giftstart_title,
             'frame': 'base_frame',
+            'product_img_url': giftstart.product_img_url,
         }
         requests.put(config['email_url'],
                      data=json.dumps({
@@ -82,6 +84,8 @@ def send_day_left_warning(gsid):
                              giftstart.giftstart_url_title,
             'campaign_name': giftstart.giftstart_title,
             'frame': 'base_frame',
+            'product_img_url': giftstart.product_img_url,
+            'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
         }
         requests.put(config['email_url'],
                      data=json.dumps({
@@ -119,6 +123,7 @@ def check_if_complete(gsid):
                                  giftstart.giftstart_url_title,
                 'campaign_name': giftstart.giftstart_title,
                 'frame': 'base_frame',
+                'product_img_url': giftstart.product_img_url,
             }
             requests.put(config['email_url'],
                          data=json.dumps({
@@ -166,6 +171,7 @@ def check_if_complete(gsid):
                                      giftstart.giftstart_url_title,
                     'campaign_name': giftstart.giftstart_title,
                     'frame': 'base_frame',
+                    'product_img_url': giftstart.product_img_url,
                 }
                 requests.put(config['email_url'],
                              data=json.dumps({
@@ -232,6 +238,8 @@ def congratulate_givers(gsid, funded):
                              giftstart.giftstart_url_title,
             'campaign_name': giftstart.giftstart_title,
             'frame': 'base_frame',
+            'product_img_url': giftstart.product_img_url,
+            'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
         }
         requests.put(config['email_url'],
                      data=json.dumps({
@@ -240,7 +248,8 @@ def congratulate_givers(gsid, funded):
                          'template_name': "campaign_complete_giver_funded",
                          'template_kwargs': email_kwargs,
                          'mime_type': 'html',
-                         'sender': "team@giftstarter.co", 'to': [pi.email for pi in pitch_ins]
+                         'sender': "team@giftstarter.co",
+                         'to': [pi.email for pi in pitch_ins]
                      }))
     else:
         # Send email to all the givers, great job guys!
@@ -249,6 +258,8 @@ def congratulate_givers(gsid, funded):
                              giftstart.giftstart_url_title,
             'campaign_name': giftstart.giftstart_title,
             'frame': 'base_frame',
+            'product_img_url': giftstart.product_img_url,
+            'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
         }
         requests.put(config['email_url'],
                      data=json.dumps({
