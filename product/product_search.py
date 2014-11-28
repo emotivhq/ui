@@ -121,6 +121,7 @@ class SearchProduct(FeedProduct):
 def get_product_index():
     return search.Index(name='product-search-0')
 
+
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
     Search for specified keywords, returning a list of products from all
@@ -254,7 +255,6 @@ def put_search_products(index, products):
     return ids
 
 
-
 def add_to_index(index, docs):
     """ add_to_index(Index, [Doc...]) -> None
     Adds all the provided documents to the given index
@@ -265,6 +265,7 @@ def add_to_index(index, docs):
         if len(doc_set) > 0:
             index.put(doc_set)
 
+
 def delete_from_index(index, ids):
     """ delete_from_index(Index, [Id...]) -> None
     Removes all the provided ids from the given index
@@ -274,6 +275,7 @@ def delete_from_index(index, ids):
     for id_set in id_sets:
         if len(id_set) > 0:
             index.delete(id_set)
+
 
 def delete_all_from_index(index):
     """Delete all the docs in the given index."""
@@ -286,6 +288,7 @@ def delete_all_from_index(index):
             break
         # Delete the documents for the given ids from the Index.
         index.delete(document_ids)
+
 
 def search_products(index, keywords):
     """ search_products(Index, 'xbox 1') -> [Product...]
@@ -320,11 +323,13 @@ def get_preferred_products(scored_results):
     return sorted(scored_results.results,
                   key=(lambda res: -res.sort_scores[0]))
 
+
 def price_filter(product):
     if product.retailer == 'butter LONDON':
         return product.price > 3998
     else:
         return product.price > 7498
+
 
 def score_price(price):
     """ Calculates the search score for a given price - don't want too much
