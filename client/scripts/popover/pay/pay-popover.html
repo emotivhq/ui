@@ -19,19 +19,19 @@
         <div class="card-entry" ng-class="{'put-new': putNew}">
             <div class="number">
                 <img ng-src="{{numberImgUrl}}"/>
-                <input type="text" id="card-number" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" gs-focus="true"/>
+                <input type="text" id="card-number" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" gs-focus="true" name="cc-number"/>
             </div><div class="cvc">
                 <img ng-src="{{cvcImgUrl}}"/>
-                <input type="text" id="card-cvc" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()"/>
+                <input type="text" id="card-cvc" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc"/>
             </div><div class="expiry">
                 <img ng-src="{{expiryImgUrl}}"/>
-                <input type="text" id="card-expiry" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()"/>
+                <input type="text" id="card-expiry" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()" name="zip"/>
             </div><div class="zip" ng-class="{invalidzip: (addressZip.length < 5)}">
                 <img ng-src="{{zipImgUrl}}">
-                <input type="text" id="card-zip" ng-model="addressZip" maxlength="5" placeholder="ZIP" ng-change="updateFormValidity()"/>
+                <input type="text" id="card-zip" ng-model="addressZip" maxlength="5" placeholder="ZIP" ng-change="updateFormValidity()" name="zip"/>
             </div><div class="email">
                 <img src="{{emailImgUrl}}"/>
-                <input type="email" id="card-email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()"/>
+                <input type="email" id="card-email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()" name="email"/>
             </div><span class="save-card">
                 <input type="checkbox" id="save-credit-card" ng-model="saveCreditCard"/><label class="small" for="save-credit-card">Save my card</label><input type="checkbox" id="tooltip-checkbox"/><label for="tooltip-checkbox"><span class="tooltip-icon"><img id="save-credit-card-lock" src="/assets/cc_icon_cvc_white.png"/><span class="tooltip">Transactions are processed via secure 128-bit SSL encryption.</span></span></label>
             </span>
