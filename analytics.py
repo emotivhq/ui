@@ -146,13 +146,15 @@ def write_ds_items(ds_items, response):
     for item in ds_items:
         names = []
         if 'gc_name' in item.to_dict().keys():
-            name_split = item.gc_name.split(' ')
+            name_split = (item.gc_name if item.gc_name is not None else '')\
+                .strip().split(' ')
             first_name = name_split[0]
             last_name = name_split[-1] if len(name_split) > 1 else ''
             names = [['first name', first_name],
                      ['last name', last_name]]
         elif 'name' in item.to_dict().keys():
-            name_split = item.name.split(' ')
+            name_split = (item.name if item.name is not None else '') \
+                .strip().split(' ')
             first_name = name_split[0]
             last_name = name_split[-1] if len(name_split) > 1 else ''
             names = [['first name', first_name],
