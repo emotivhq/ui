@@ -3,9 +3,9 @@
  */
 
 angular.module('GiftStarterApp').directive('gsItHeader', ['$interval',
-    '$window', '$location', gsItHeader]);
+    '$window', '$location', 'Analytics', gsItHeader]);
 
-function gsItHeader($interval, $window, $location) {
+function gsItHeader($interval, $window, $location, Analytics) {
     var $scope,
         shown = $location.path().indexOf('/giftstart') != 0;
 
@@ -13,6 +13,7 @@ function gsItHeader($interval, $window, $location) {
         $scope = scope;
 
         $scope.hideButtonHeader = hideButtonHeader;
+        $scope.linkClicked = linkClicked;
 
         function hideButtonHeader() {$scope.shown = false}
         function showButtonHeader() {$scope.shown = true}
@@ -23,6 +24,10 @@ function gsItHeader($interval, $window, $location) {
                     showButtonHeader();
                 }
             }
+        }
+
+        function linkClicked() {
+            Analytics.track('client', 'giftstart it header button clicked');
         }
 
         scope.$on('$routeChangeStart', hideButtonHeader);
