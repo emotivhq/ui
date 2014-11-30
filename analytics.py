@@ -137,14 +137,29 @@ def write_ds_items(ds_items, response):
     header = set()
     for item in ds_items:
         map(lambda k: header.add(k), item.to_dict().keys())
+    header.add('first name')
+    header.add('last name')
 
     writer = csv.DictWriter(response.out, header)
     writer.writeheader()
 
     for item in ds_items:
+        names = []
+        if 'gc_name' in item.to_dict().keys():
+            name_split = item.gc_name.split(' ')
+            first_name = name_split[0]
+            last_name = name_split[-1] if len(name_split) > 1 else ''
+            names = [['first name', first_name],
+                     ['last name', last_name]]
+        elif 'name' in item.to_dict().keys():
+            name_split = item.name.split(' ')
+            first_name = name_split[0]
+            last_name = name_split[-1] if len(name_split) > 1 else ''
+            names = [['first name', first_name],
+                     ['last name', last_name]]
         writer.writerow({k: v.encode("utf-8", "ignore")
                             if isinstance(v, type(u'')) else v
-                         for k, v in item.to_dict().items()})
+                         for k, v in item.to_dict().items() + names})
 
 
 handler = webapp2.WSGIApplication([
