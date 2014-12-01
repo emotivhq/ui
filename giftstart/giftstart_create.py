@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import os
 from giftstart import giftstart_comm, giftstart_core
 import storage.image_cache
+import math
 import logging
 
 GIFTSTART_CAMPAIGN_DAYS = 10
@@ -184,12 +185,30 @@ def complete_campaign_creation(uid, gs):
 
     giftstart_comm.send_create_notification(gs)
 
+    campaign_length=gs.deadline - datetime.now()
+    campaign_seconds = (campaign_length.days*SECONDS_PER_DAY) + campaign_length.seconds
+    countdown_warning_OLD = (GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY
+    countdown_warning = campaign_seconds - SECONDS_PER_DAY
+    countdown_complete_OLD = (GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180)
+    countdown_complete = (campaign_seconds + 180)
+
+    logging.info("gs.deadline: {0}".format(gs.deadline))
+    logging.info("datetime.now(): {0}".format(datetime.now()))
+    logging.info("campaign_length.days*SECONDS_PER_DAY: {0}".format(campaign_length.days*SECONDS_PER_DAY))
+    logging.info("campaign_length.seconds: {0}".format(campaign_length.seconds))
+    logging.info("campaign_seconds: {0}".format(campaign_seconds))
+    logging.info("GIFTSTART_CAMPAIGN_DAYS: {0}".format(GIFTSTART_CAMPAIGN_DAYS))
+    logging.info("countdown_warning_OLD {0}".format(countdown_warning_OLD))
+    logging.info("countdown_warning NEW {0}".format(countdown_warning))
+    logging.info("countdown_complete_OLD {0}".format(countdown_complete_OLD))
+    logging.info("countdown_complete NEW {0}".format(countdown_complete))
+
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning',
                                       'gsid': gs.gsid}),
-                  countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
+                  countdown=(countdown_warning))
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'check-if-complete',
                                       'gsid': gs.gsid}),
-                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
+                  countdown=countdown_complete)
