@@ -317,11 +317,17 @@ GiftStarterApp.controller('GiftStartCreateController',
 
             $scope.ghostruck = /ghostruck/.test(referral.source.toLowerCase());
 
+            // special for ghostruck: auto zip and state
+            if (/ghostruck/.test(referral.source.toLowerCase())) {
+                $scope.shippingState = 'WA';
+                $scope.shippingZip = '98101';
+                $scope.shippingChanged();
+            }
+
             Analytics.track('client', 'referred from', referral.source);
         }
 
         function getReferrerName(source) {
-            console.log(source);
             if (/ghostruck/.test(source.toLowerCase())) {
                 return 'Ghostruckers!';
             } else {
