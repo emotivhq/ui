@@ -12,7 +12,6 @@ from google.appengine.ext import ndb
 from uuid import uuid4
 import csv
 import logging
-import time
 
 
 def cache(partner, url):
@@ -40,18 +39,16 @@ def clear_feed(partner):
     """
     partner_key = ndb.Key('Partner', partner)
     logging.info("Found partner_key {0} for {1}".format(partner_key, partner))
-    offset = 0
     remaining = 1
     while remaining > 0:
         prods = SearchProduct\
             .query(ancestor=partner_key)\
-            .fetch(100, offset=offset)
-        offset += 100
+            .fetch(100)
         remaining = len(prods)
         logging.info("Unindexing {0} {1} products".format(remaining, partner))
         delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
         logging.info("Deleting {0} {1} products".format(remaining, partner))
-        ndb.delete_multi_async([prod.key for prod in prods])
+        ndb.delete_multi([prod.key for prod in prods])
 
 
 def normalize_products(partner, response_content):
@@ -72,6 +69,7 @@ def normalize_b_and_h_products(content):
     headers = feed_file.next()
     products = [make_b_and_h_product(feed_line=line, headers=headers)
                 for line in feed_file]
+    logging.info("Normalizing {0} B&H products".format(len(products.items())))
     return [product for product in products if product]
 
 
@@ -142,6 +140,7 @@ def normalize_butter_products(response_content):
     """
     feed = json.loads(response_content)
     products = feed.get('products')
+    logging.info("Normalizing {0} butter products".format(len(products.items())))
     for key, bl_product in products.items():
         yield make_butter_product(bl_product)
 
