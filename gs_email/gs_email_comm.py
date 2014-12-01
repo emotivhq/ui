@@ -74,6 +74,7 @@ def send_mandrill(sender, to, subject, message_text, cc=None, bcc=None,
         'key': secrets['mandrill_auth']['key'],
         'message': {
             'subject': subject,
+            'from_name': 'GiftStarter Concierge',
             'from_email': 'team@giftstarter.co',
             'to': [
                 {'email': to, 'type': 'to'},
