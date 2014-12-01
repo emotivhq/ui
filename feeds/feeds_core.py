@@ -69,7 +69,6 @@ def normalize_b_and_h_products(content):
     headers = feed_file.next()
     products = [make_b_and_h_product(feed_line=line, headers=headers)
                 for line in feed_file]
-    logging.info("Normalizing {0} B&H products".format(len(products.items())))
     return [product for product in products if product]
 
 
@@ -140,7 +139,6 @@ def normalize_butter_products(response_content):
     """
     feed = json.loads(response_content)
     products = feed.get('products')
-    logging.info("Normalizing {0} butter products".format(len(products.items())))
     for key, bl_product in products.items():
         yield make_butter_product(bl_product)
 
