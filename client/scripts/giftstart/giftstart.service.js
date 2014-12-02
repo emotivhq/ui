@@ -57,6 +57,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.shipping = 0;
     this.serviceFee = 0;
     this.totalPrice = 0;
+    this.campaignLength = 0;
 
     // Thanks data
     this.thanks_img = {};
@@ -98,6 +99,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             shipping: self.shipping,
             service_fee: self.serviceFee,
             total_price: self.totalPrice,
+            campaign_length: self.campaignLength,
             product_img_url: self.productImgUrl,
             product_url: self.productUrl,
             product_title: self.productTitle,

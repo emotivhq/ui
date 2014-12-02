@@ -32,6 +32,7 @@ function GiftStartCreateControllerSpec() {
             'shipping': 23,
             'service_fee': 9,
             'total_price': 12343,
+            'campaign_length': 10,
             'columns': 3,
             'rows': 3,
             'shipping_state': 'WA',
@@ -103,6 +104,7 @@ function GiftStartCreateControllerSpec() {
         scope.shipping = exampleGiftStart.shipping;
         scope.serviceFee = exampleGiftStart.service_fee;
         scope.totalPrice = exampleGiftStart.total_price;
+        scope.campaignLength = exampleGiftStart.campaign_length;
         scope.gcEmail = exampleGiftStart.gc_email;
 
         scope.next();
