@@ -14,6 +14,7 @@ import json
 
 # UUT
 from feeds import feeds_api, FeedProduct
+from product.product_search import SearchProduct
 
 
 MOCK_URLS = feeds_api.FEEDS.values()
@@ -363,7 +364,7 @@ class FeedsTestHandler(unittest.TestCase):
                          "Expected requests.get call_count to be 1, was {0}"
                          .format(self.fake_get.call_count))
 
-        feed_products = FeedProduct.query().fetch()
+        feed_products = SearchProduct.query().fetch()
         self.assertEqual(8, len(feed_products),
                          "There should be 8 products in the database, but "
                          "found {0}".format(len(feed_products)))
@@ -386,7 +387,7 @@ class FeedsTestHandler(unittest.TestCase):
                          "Expected requests.get call_count to be 1, was {0}"
                          .format(self.fake_get.call_count))
 
-        feed_products = FeedProduct.query().fetch()
+        feed_products = SearchProduct.query().fetch()
         self.assertEqual(3, len(feed_products),
                          "There should be 3 product in the database, but "
                          "found {0}".format(len(feed_products)))
@@ -401,7 +402,7 @@ class FeedsTestHandler(unittest.TestCase):
                          "Should get a 200 from GET to "
                          "/feeds/butter-LONDON/update, got: " + str(resp))
 
-        feed_products = FeedProduct.query().fetch()
+        feed_products = SearchProduct.query().fetch()
         self.assertEqual(2, len(feed_products),
                          "There should be 2 product in the database, but "
                          "found {0}".format(len(feed_products)))
