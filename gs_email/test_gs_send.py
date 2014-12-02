@@ -64,7 +64,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'body': 'don\'t you wish your test email was hot like me'
         }
 
@@ -81,7 +81,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST no_body',
         }
 
@@ -98,7 +98,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuartgiftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST test_invalid_email',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -130,7 +130,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'cc': ['teamgiftstarter.co'],
             'subject': 'GSTEST test_invalid_email',
             'body': 'don\'t you wish your test email was hot like me'
@@ -147,7 +147,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'bcc': ['teamgiftstarter.co'],
             'subject': 'GSTEST test_invalid_email',
             'body': 'don\'t you wish your test email was hot like me'
@@ -167,7 +167,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST test_single_send',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -186,7 +186,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST test_single_send',
             'template_name': 'pitch_in_thank_you',
             'template_kwargs': {}
@@ -206,7 +206,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST test_single_send',
             'template_name': 'akjsoifdjaosidjfoiasfiajsdofij',
             'template_kwargs': {}
@@ -225,7 +225,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co', 'admin@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_with_post',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -246,7 +246,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'to': ['stuart@giftstarter.co', 'admin@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_to_multiple',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -265,7 +265,7 @@ class SendTestHandlers(unittest.TestCase):
         email_data = {
             'to': ['stuart@giftstarter.co'],
             'cc': ['admin@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_with_cc',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -284,7 +284,7 @@ class SendTestHandlers(unittest.TestCase):
         email_data = {
             'to': ['stuart@giftstarter.co'],
             'cc': ['admin@giftstarter.co', 'stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_multiple_cc',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -302,7 +302,7 @@ class SendTestHandlers(unittest.TestCase):
         email_uuid = str(uuid4())
         email_data = {
             'cc': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_only_cc',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -322,7 +322,7 @@ class SendTestHandlers(unittest.TestCase):
         email_data = {
             'to': ['stuart@giftstarter.co'],
             'bcc': ['admin@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_with_bcc',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -341,7 +341,7 @@ class SendTestHandlers(unittest.TestCase):
         email_data = {
             'to': ['stuart@giftstarter.co'],
             'bcc': ['admin@giftstarter.co', 'stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_with_bcc',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -361,7 +361,7 @@ class SendTestHandlers(unittest.TestCase):
             'to': ['stuart@giftstarter.co'],
             'cc': ['admin@giftstarter.co'],
             'bcc': ['stuart@giftstarter.co'],
-            'sender': ['team@giftstarter.co'],
+            'sender': ['giftconcierge@giftstarter.co'],
             'subject': 'GSTEST send_with_bcc',
             'body': 'don\'t you wish your test email was hot like me'
         }
@@ -381,7 +381,7 @@ class SendTestHandlers(unittest.TestCase):
     #         'to': ['stuart@giftstarter.co'],
     #         'cc': ['admin@giftstarter.co'],
     #         'bcc': ['stuart@giftstarter.co'],
-    #         'sender': ['team@giftstarter.co'],
+    #         'sender': ['giftconcierge@giftstarter.co'],
     #         'subject': 'GSTEST security_headers',
     #         'body': 'don\'t you wish your test email was hot like me'
     #     }

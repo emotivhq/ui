@@ -51,7 +51,7 @@ def send_emails(key):
     data = json.dumps({'subject': "You Received a Thank You for \"" +
                                   gs.giftstart_title + "\"!",
                        'mime_type': 'html',
-                       'sender': "team@giftstarter.co",
+                       'sender': "giftconcierge@giftstarter.co",
                        'to': [pi.email for pi in pis],
                        'template_name': "thank_you_notification",
                        'template_kwargs': email_kwargs})

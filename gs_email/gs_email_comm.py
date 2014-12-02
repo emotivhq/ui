@@ -75,7 +75,7 @@ def send_mandrill(sender, to, subject, message_text, cc=None, bcc=None,
         'message': {
             'subject': subject,
             'from_name': 'GiftStarter Concierge',
-            'from_email': 'team@giftstarter.co',
+            'from_email': 'giftconcierge@giftstarter.co',
             'to': [
                 {'email': to, 'type': 'to'},
             ],

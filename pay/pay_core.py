@@ -123,7 +123,7 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
 
     data = json.dumps({'subject': "Pitch In Received for \"" +
                                   giftstart.giftstart_title + "\"!",
-                       'sender': "team@giftstarter.co", 'to': [email],
+                       'sender': "giftconcierge@giftstarter.co", 'to': [email],
                        'template_name': "pitch_in_thank_you",
                        'mime_type': 'html',
                        'template_kwargs': email_kwargs})
@@ -145,7 +145,7 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
 
     data = json.dumps({'subject': "Someone Pitched In on \"" +
                                   giftstart.giftstart_title + "\"!",
-                       'sender': "team@giftstarter.co",
+                       'sender': "giftconcierge@giftstarter.co",
                        'to': [giftstart.gc_email],
                        'template_name': "gc_pitchin_notification",
                        'mime_type': 'html',
