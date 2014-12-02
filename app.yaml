@@ -114,3 +114,15 @@ libraries:
 
 env_variables:
   OAUTHLIB_INSECURE_TRANSPORT: 1
+
+skip_files:
+- grunt/.*
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- client/stylesheets/^(?!compiled)
+- client/test/*
+- client/bower_components/*
+- client/scripts/^(?!out)
