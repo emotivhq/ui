@@ -1,7 +1,7 @@
 
 <div class="create wrapper shipping" id="giftstart-contact-wrapper" ng-controller="GiftStartCreateController">
 
-    <ng-include src="'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"></ng-include>
+    <ng-include ng-show="fromReferral" src="'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"></ng-include>
 
     <img class="progress" src="/assets/progress_bar_2_of_3.png" ng-hide="fromReferral"/>
     <div class="block image">
