@@ -12,14 +12,14 @@
         <div class="steps">
             <div class="step one">
                 <span class="number">1</span>
-                <h2>Create a GiftStart</h2>
+                <h2>Search and GiftStart!</h2>
                 <img src="/assets/step1.png">
-                <p>Select the product you want to gift with your friends and create a GiftStart for it.</p>
+                <p>Search for the gift and create a GiftStart for it.</p>
             </div><div class="step two">
                 <span class="number">2</span>
                 <h2>Pitch In and Share</h2>
                 <img src="/assets/step2.png">
-                <p>Share your GiftStart with friends and family via Facebook, Twitter, or email so they can pitch in!</p>
+                <p>Pitch in and then share your GiftStart with friends and family via Facebook, Twitter, or email so they can pitch in, too!</p>
             </div><div class="step three">
                 <span class="number">3</span>
                 <h2>Complete and Ship</h2>
@@ -38,5 +38,6 @@
         <!--<button class="large" ng-click="reachOutNotReadyYet()">Reach Out!</button>-->
     <!--</div>-->
     <h1 class="successful-giftstarts">Successful GiftStarts</h1>
-    <gs-thanked-campaigns gs-num="1"></gs-thanked-campaigns>
+    <!--<gs-thanked-campaigns gs-num="1"></gs-thanked-campaigns>-->
+    <ng-include src="'/scripts/home/giftstart-squares.ng.html'"></ng-include>
 </div>

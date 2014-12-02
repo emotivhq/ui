@@ -1,0 +1,67 @@
+@import ../base
+
+
+#giftstart-squares
+  text-align: left
+  width: 110%
+  div.column
+    display: inline-block
+  div.column.one
+    width: 12vw
+  div.column.two
+    width: 24vw
+  div.column.three
+    width: 36vw
+  div.giftstart-square.big
+    height: 23.99vw
+    width: 23.99vw
+    p
+      font-size: 1.5em
+  div.giftstart-square
+    vertical-align: bottom
+    padding: 0.25em
+    position: relative
+    height: 12vw
+    width: 12vw
+    display: inline-block
+
+    div.square-overlay
+      +transition(all, 0.2s)
+      opacity: 1
+      height: 100%
+      width: 100%
+      background-size: 150%
+      background-position: 0, 0
+      background-repeat: no-repeat
+      p
+        +transition(all, 0.2s)
+        opacity: 1
+        padding: 1em
+        background: rgba(0, 0, 0, 0.3)
+        color: #ffffff
+        height: 100%
+        width: 100%
+        text-shadow: rgba(0, 0, 0, 0.7) 0 0 5px
+    div.square-overlay:hover
+      opacity: 1
+      background-size: 120%
+      background-position: 20%, 20%
+      p
+        opacity: 0
+
+    p
+      margin: 0
+
+  @media screen and (max-width: $phone-tablet-boundary)
+    div.column.one
+      width: 29vw
+    div.column.two
+      width: 56vw
+    div.column.three
+      width: 90vw
+    div.giftstart-square.big
+      height: 60vw
+      width: 60vw
+    div.giftstart-square
+      height: 29vw
+      width: 29vw
