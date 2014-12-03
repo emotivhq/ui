@@ -261,6 +261,7 @@ class FeedsTestHandler(unittest.TestCase):
         self.testbed.init_taskqueue_stub()
         self.testbed.init_datastore_v3_stub()
         self.testbed.init_memcache_stub()
+        self.testbed.init_search_stub()
 
         # Mock out requests.get
         self.get_store = requests.get
@@ -343,7 +344,7 @@ class FeedsTestHandler(unittest.TestCase):
                          "Expected requests.get call_count to be 1, was {0}"
                          .format(self.fake_get.call_count))
 
-        feed_products = FeedProduct.query().fetch()
+        feed_products = SearchProduct.query().fetch()
         self.assertEqual(2, len(feed_products),
                          "There should be 2 product in the database, but "
                          "found {0}".format(len(feed_products)))
