@@ -91,7 +91,7 @@
                         return v.toString(16);
                     })
                 })));
-                //sendEmail(emails, $scope.fromEmail, $scope.message, $location.absUrl());
+                sendEmail(emails, $scope.fromEmail, $scope.message, $location.absUrl());
                 $location.search('re', null);
             }
         };
