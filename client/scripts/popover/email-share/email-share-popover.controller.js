@@ -67,17 +67,10 @@
         $scope.trackEmailClientClick = trackEmailClientClick;
 
         $scope.submit = function () {
-            emails = $scope.toEmails.replace(/[ \n]/g, "").split(/[,;]/);
-
-            // Remove empty email entries in the array caused by extra delimiters
-            if (emails.length > 1) {
-                for (i = 0; i < emails.length; i++) {
-                    if (emails[i] === '') {
-                        emails.splice(i, 1);
-                        --i;
-                    }
-                }
-            }
+            emails = $scope.toEmails
+                .replace(/[ \n]/g, "")
+                .split(/[,;]/)
+                .filter(function (eml) { return eml !== ''; });
 
             $scope.formValid = emails.length > 0 && emails.every(function (s) { return email.test(s) }) && email.test($scope.fromEmail);
 
@@ -108,4 +101,4 @@
         emailSharePopoverController
     ]);
 
-}(GiftStarterApp));
+}(angular.module('GiftStarterApp')));
