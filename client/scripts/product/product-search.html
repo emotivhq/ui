@@ -47,6 +47,6 @@
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>
-    <p class="need-help-concierge" ng-hide="products.length">Need help finding the perfect gift? Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
+    <p class="need-help-concierge" ng-hide="products.length || results_empty || failed">Need help finding the perfect gift? Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
     <p class="need-help-concierge" ng-show="products.length && !results_empty && !failed">Not finding what you’re looking for? Our gift concierge would love to help! Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
 </div>
