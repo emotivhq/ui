@@ -14,8 +14,7 @@
                                                 $location) {
 
         var email = /^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+\.([a-z0-9-]+)+$/i,
-            emails,
-            i;
+            emails;
 
         var trackEmailClientClick = function () {
             Analytics.track('client', 'email client share clicked');
