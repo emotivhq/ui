@@ -1,5 +1,5 @@
 # GiftStarter
-The main repo for GiftStarter, a group-gifting platform.
+The main repo for GiftStarter, the most awesome group-gifting experience.
 
 ## Setup
 1. Clone git repo
