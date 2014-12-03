@@ -47,7 +47,9 @@ EMAIL_TEMPLATES = {
     "campaign_ending_1_day_user": JINJA_ENVIRONMENT.get_template(
         "campaign_ending_1_day_user.html"),
     "campaign_complete_user_zero_funding": JINJA_ENVIRONMENT.get_template(
-        "campaign_complete_user_zero_funding.html")
+        "campaign_complete_user_zero_funding.html"),
+    "recipient_thankyou_notification": JINJA_ENVIRONMENT.get_template(
+        "recipient_thankyou_notification.html"),
 }
 
 

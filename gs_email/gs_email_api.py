@@ -19,8 +19,8 @@ REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
 SEND_PARAMS = ['to', 'sender', 'cc', 'bcc', 'subject', 'body', 'mime_type',
                'img_url']
 TEMPLATE_PARAMS = ['to', 'sender', 'cc', 'bcc', 'subject', 'template_name',
-                   'template_kwargs', 'mime_type', 'img_url',
-                   'giftstart_it_url']
+                   'template_kwargs', 'mime_type', 'img_url', 'user_name',
+                   'giftstart_it_url', 'thank_you_link']
 EMAIL_PARAMS = ['to', 'sender', 'cc', 'bcc']
 
 

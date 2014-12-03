@@ -16,7 +16,7 @@ def make_giftstart_it_url(giftstart):
         'query': urllib.urlencode({
             'product_url': giftstart.product_url,
             'title': giftstart.product_title,
-            'price': giftstart.product_price/float(100),
+            'price': giftstart.product_price,
             'img_url': giftstart.product_img_url,
             'source': 'GiftStarter Email',
         }),
