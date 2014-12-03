@@ -4,7 +4,7 @@
 
 GiftStarterApp.directive('gsImageUpload', gsImageUpload);
 
-function gsImageUpload($timeout, GiftStartService, $window) {
+function gsImageUpload($timeout, $window) {
 
     function link(scope, element, attrs) {
 
@@ -183,9 +183,13 @@ function gsImageUpload($timeout, GiftStartService, $window) {
 
         function fileLoaded() {
             // Cache thank-you image
-            $window.localStorage.setItem('thank-you-image', reader.result);
+            try {
+                $window.localStorage.setItem('thank-you-image', reader.result);
+            } catch (exception) {
+                console.log("Unable to store image in localStorage",
+                    exception);
+            }
             makeImage(reader.result);
-
         }
 
         function fileChanged() {scope.putImage(inputEle.files[0])}
