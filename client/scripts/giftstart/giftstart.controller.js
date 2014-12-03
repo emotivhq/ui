@@ -109,7 +109,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         if (($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
             $scope.countdown = "Campaign Complete";
             GiftStartService.disableParts();
-            $scope.updateTimeLeftBar(-1);
         } else {
             $scope.secondsLeft -= 1;
 
@@ -117,8 +116,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
             var hours = Math.floor(($scope.secondsLeft / 3600) % 24).toFixed(0);
 
             $scope.countdown = days + " days, " + hours + " hours";
-            $scope.updateTimeLeftBar(days);
-            $timeout($scope.updateSecondsLeft, 1000);
         }
     };
 
