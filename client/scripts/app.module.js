@@ -5,7 +5,7 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB', 'ngResource']);
+        'ngSanitize', 'ngAB', 'ngResource', 'ui.date']);
 
 console.log("ver54");
 
