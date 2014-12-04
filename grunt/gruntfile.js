@@ -19,6 +19,8 @@ module.exports = function(grunt) {
     concat: {
       build: {
         src: [
+          '../client//bower_components/jquery/dist/jquery.min.js',
+          '../client//bower_components/jquery-ui/jquery-ui.min.js',
           '../client//bower_components/angular/angular.min.js',
           '../client//bower_components/angucomplete/angucomplete.js',
           '../client//bower_components/angular-route/angular-route.min.js',
@@ -28,10 +30,8 @@ module.exports = function(grunt) {
           '../client//bower_components/angular-cookies/angular-cookies.min.js',
           '../client//bower_components/angular-sanitize/angular-sanitize.min.js',
           '../client//bower_components/angular-resource/angular-resource.min.js',
-          '../client//bower_components/angular-ui-date/src/date.js',
           '../client//bower_components/devicejs/lib/device.min.js',
-          '../client//bower_components/jquery/dist/jquery.min.js',
-          '../client//bower_components/jquery-ui/jquery-ui.min.js',
+          '../client//bower_components/angular-ui-date/src/date.js',
           '../client//scripts/utilities/ng-ab/ng-ab.module.js',
           '../client//scripts/utilities/ng-ab/ng-ab.service.js',
           '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
