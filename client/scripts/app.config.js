@@ -33,7 +33,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/:path*', {
             controller: 'ContentRouteController',
             reloadOnSearch: false,
-            template: '<div ng-bind-html="{{ content }}"></div>'
+            template: '<div ng-bind-html="content"></div>'
         })
         .otherwise({redirectTo: '/'});
 
@@ -53,13 +53,11 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
     var baseUrl = '//content.giftstarter.co/';
     function onRouteUpdate() {
         $scope.templateUrl = baseUrl + $routeParams.path;
+
+        $http.get($scope.templateUrl).then(function(response) {
+            $scope.content = $sce.trustAsHtml(response.data);
+        });
     }
     $scope.$on('$routeChangeSuccess', onRouteUpdate);
     onRouteUpdate();
-
-    $http.get(baseUrl).then(function(response) {
-        $scope.content = $sce.trustAsHtml(response.data);
-    });
-
-
 }
