@@ -55,8 +55,23 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
         $scope.templateUrl = baseUrl + $routeParams.path;
 
         $http.get($scope.templateUrl).then(function(response) {
-            $scope.content = $sce.trustAsHtml(response.data);
+            $scope.content = $sce.trustAsHtml(extractMain(response.data));
         });
+    }
+
+    function extractMain(html) {
+        var container = document.createElement('div'),
+            bodyTags,
+            result;
+        container.innerHTML = html;
+        bodyTags = container.querySelector('main');
+        if (bodyTags.length > 0) {
+            result = bodyTags.innerHTML;
+        } else {
+            result = html;
+        }
+        container = null;
+        return result;
     }
     $scope.$on('$routeChangeSuccess', onRouteUpdate);
     onRouteUpdate();
