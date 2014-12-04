@@ -26,6 +26,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.pitchInsInitialized = false;
     $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
+    $scope.isMobile = device.mobile();
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
 
