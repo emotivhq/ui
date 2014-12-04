@@ -350,7 +350,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             Analytics.track('pitchin', 'pitchin button clicked');
             PopoverService.contributeLogin = true;
             AppStateService.set('contributeLogin', true);
-            PopoverService.nextPopover();
+            PopoverService.setPopover('login');
         } else {console.log("Nothing selected!")}
     };
 
