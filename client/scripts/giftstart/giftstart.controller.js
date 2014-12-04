@@ -3,12 +3,12 @@
  */
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$timeout',
+            '$scope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
             'UserService','$window', 'PopoverService','LocalStorage',
     GiftStartController]);
 
-function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
+function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
          UserService,  $window, PopoverService, LocalStorage) {
 
@@ -26,6 +26,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     $scope.pitchInsInitialized = false;
     $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
 
+    $scope.isMobile = device.mobile();
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
 
@@ -56,50 +57,38 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
         return url;
     };
 
-    $scope.period = [
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true},
-        {passed: true}
-    ];
-
-    if(typeof($location.path().length > 11)) {
+    // Check if we should fetch a giftstart
+    if($location.path().length > 11) {
         if (GiftStartService.giftStart.gsid == undefined) {
             var url_title = $location.path().split('/')[2];
             GiftStartService.fetchGiftStart(url_title);
         }
     }
 
-    $scope.updateFundingBar = function() {
-        $scope.fundingBarProgress =  (GiftStartService.giftStart.funded / GiftStartService.giftStart.total_price *
-            100).toString() + '%';
-        $scope.pitchinBarProgress =  ((GiftStartService.giftStart.funded +
-            GiftStartService.giftStart.totalSelection) / GiftStartService.giftStart.total_price *
-            100).toString() + '%';
+    $scope.fundingBarProgress = function() {
+        return (GiftStartService.giftStart.funded /
+            GiftStartService.giftStart.total_price * 100).toString() + '%';
+    };
+
+    $scope.pitchinBarProgress = function() {
+        return ((GiftStartService.giftStart.funded +
+            GiftStartService.giftStart.totalSelection) /
+            GiftStartService.giftStart.total_price * 100).toString() + '%';
     };
 
     $scope.$on('pitch-ins-initialized', function() {
         $scope.pitchInsInitialized = true;
-        $scope.updateFundingBar();
     });
 
     $scope.$on('pitch-ins-updated', function() {
         $scope.pitchIns = GiftStartService.pitchIns;
-        $scope.updateFundingBar();
     });
 
     $scope.$on('selection-changed', function() {
-        $scope.updateFundingBar();
         if (GiftStartService.giftStart.totalSelection > 0) {
             $scope.pitchinButtonHoverMessage = '';
         } else {
-            $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
+            $scope.pitchinButtonHoverMessage = 'Click on some parts first!';
         }
     });
 
@@ -113,14 +102,14 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     $scope.pitchIn = GiftStartService.pitchIn;
 
     $scope.campaignComplete = function() {
-        return (GiftStartService.giftStart.funded / GiftStartService.giftStart.total_price > 0.9975);
+        return (GiftStartService.giftStart.funded /
+            GiftStartService.giftStart.total_price > 0.9975);
     };
 
     $scope.updateSecondsLeft = function() {
         if (($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
             $scope.countdown = "Campaign Complete";
             GiftStartService.disableParts();
-            $scope.updateTimeLeftBar(-1);
         } else {
             $scope.secondsLeft -= 1;
 
@@ -128,16 +117,17 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
             var hours = Math.floor(($scope.secondsLeft / 3600) % 24).toFixed(0);
 
             $scope.countdown = days + " days, " + hours + " hours";
-            $scope.updateTimeLeftBar(days);
-            $timeout($scope.updateSecondsLeft, 1000);
         }
     };
 
-    $scope.updateTimeLeftBar = function(daysLeft) {
-        for (var i = 0; i < $scope.period.length; i++) {
-            $scope.period[$scope.period.length - i - 1].passed = ($scope.period.length - i - 1) > daysLeft;
-        }
-    };
+    function startSecondsLeftTimer() {
+        $scope.secondsLeftTimer = $interval($scope.updateSecondsLeft, 1000);
+    }
+    function stopSecondsLeftTime() {
+        $scope.secondsLeftTimer.cancel();
+        $scope.secondsLeftTimer = null;
+    }
+
 
     $scope.emailShare = function() {
         Analytics.track('campaign', 'email share from campaign');
@@ -172,11 +162,11 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     };
 
     $scope.$on('login-success', function() {
-        $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
         $scope.newUser = !UserService.hasPitchedIn;
     });
     $scope.$on('logout-success', function() {
-        $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
+        $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
     });
 
     $scope.showOverlay = GiftStartService.showOverlay;
@@ -210,9 +200,10 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
     };
 
     if (GiftStartService.giftStart.gsid != undefined) {
+        // Start timer update ticker
         $scope.secondsLeft = GiftStartService.giftStart.deadline -
             (new Date()).getTime()/1000;
-        $timeout($scope.updateSecondsLeft, 0);
+        startSecondsLeftTimer();
     }
 
     // Update this giftstart when the service updates it
@@ -220,11 +211,11 @@ function GiftStartController($scope,  GiftStartService,  $location,  $timeout,
         $scope.giftStart = GiftStartService.giftStart;
         $scope.secondsLeft = GiftStartService.giftStart.deadline -
             (new Date()).getTime()/1000;
-        $timeout($scope.updateSecondsLeft, 0);
+        startSecondsLeftTimer();
     });
     $scope.$on('giftstart-updated', function() {
         $scope.giftStart = GiftStartService.giftStart;
-        $scope.updateSecondsLeft();
+        startSecondsLeftTimer();
     });
 
     function loginChanged() {

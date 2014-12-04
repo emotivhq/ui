@@ -14,6 +14,9 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         scope.currentProductLink = '';
         scope.selectedProduct = -1;
 
+        scope.giftConciergeClicked = function() {Analytics.track('client',
+            'gift concierge email clicked')};
+
         function onSuccess(product) {
             Analytics.track('product', 'link submission succeeded');
             scope.loading = false;

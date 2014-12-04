@@ -29,6 +29,7 @@
             </div>
 
             <h2>Where's It Going?</h2>
+            <label>So you don't get dinged later, all prices include shipping, handling, and taxes.</label>
             <div class="shipping-details">
                 <span class="state">
                     <label>Recipient State</label>
@@ -97,6 +98,12 @@
                     <label>Recipient Email</label>
                     <input type="email" ng-model="shippingEmail" placeholder="recipient@mail.com" required="" />
                 </span>
+            </div>
+
+            <div class="campaign-length" style="display: none">
+                <h2>How Long Should this GiftStart Run?</h2>
+                <label>Be sure to end your GiftStart at least a week (7 days) before it should arrive</label>
+                <input type="text" id="campaign-length" placeholder="10 days" minlength="1" maxlength="2" ng-model="campaignLength" required="">
             </div>
 
             <h2>Minimum Pitch In</h2>

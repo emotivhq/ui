@@ -12,7 +12,6 @@ from google.appengine.ext import ndb
 from uuid import uuid4
 import csv
 import logging
-import time
 
 
 def cache(partner, url):
@@ -40,18 +39,16 @@ def clear_feed(partner):
     """
     partner_key = ndb.Key('Partner', partner)
     logging.info("Found partner_key {0} for {1}".format(partner_key, partner))
-    offset = 0
     remaining = 1
     while remaining > 0:
         prods = SearchProduct\
             .query(ancestor=partner_key)\
-            .fetch(100, offset=offset)
-        offset += 100
+            .fetch(100)
         remaining = len(prods)
         logging.info("Unindexing {0} {1} products".format(remaining, partner))
         delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
         logging.info("Deleting {0} {1} products".format(remaining, partner))
-        ndb.delete_multi_async([prod.key for prod in prods])
+        ndb.delete_multi([prod.key for prod in prods])
 
 
 def normalize_products(partner, response_content):

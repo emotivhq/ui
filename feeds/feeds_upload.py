@@ -44,20 +44,14 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
 
 class SturtevantsDeleteHandler(webapp2.RequestHandler):
 
-    @ndb.toplevel
     def post(self):
-        offset = 0
         remaining = 1
         while remaining > 0:
             prods = SearchProduct\
                 .query(SearchProduct.retailer == "Sturtevant's")\
-                .fetch(100, offset=offset)
-            offset += 100
+                .fetch(100)
             remaining = len(prods)
             logging.info("Unindexing {0} sturt products".format(remaining))
             delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
             logging.info("Deleting {0} sturt products".format(remaining))
-            ndb.delete_multi_async([prod.key for prod in prods])
-
-
-
+            ndb.delete_multi([prod.key for prod in prods])

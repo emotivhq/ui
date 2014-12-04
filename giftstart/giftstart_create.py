@@ -10,9 +10,11 @@ from datetime import datetime, timedelta
 import os
 from giftstart import giftstart_comm, giftstart_core
 import storage.image_cache
+import math
 import logging
 
-GIFTSTART_CAMPAIGN_DAYS = 10
+MIN_GIFTSTART_CAMPAIGN_DAYS = 2
+MAX_GIFTSTART_CAMPAIGN_DAYS = 92 #no more than 3 months
 SECONDS_PER_DAY = 24 * 60 * 60
 
 
@@ -69,7 +71,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
                       'product_img_url', 'product_title', 'shipping_zip',
                       'shipping_state']
         int_params = ['product_price', 'sales_tax', 'shipping',
-                      'service_fee', 'total_price', 'columns', 'rows']
+                      'service_fee', 'total_price', 'campaign_length', 'columns', 'rows']
         for param in str_params:
             if not self.str_param_valid(param):
                 return param
@@ -78,6 +80,14 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
                 self.request.giftstart[param] = self.coerce_int_param(param)
             except:
                 return param
+
+        campaign_length = self.coerce_int_param('campaign_length')
+        if campaign_length<MIN_GIFTSTART_CAMPAIGN_DAYS:
+            logging.info('Corrected the campaign_length from {0} to {1} days'.format(campaign_length,MIN_GIFTSTART_CAMPAIGN_DAYS))
+            self.request.giftstart['campaign_length'] = MIN_GIFTSTART_CAMPAIGN_DAYS
+        if campaign_length>MAX_GIFTSTART_CAMPAIGN_DAYS:
+            logging.info('Corrected the campaign_length from {0} to {1} days'.format(campaign_length,MAX_GIFTSTART_CAMPAIGN_DAYS))
+            self.request.giftstart['campaign_length'] = MAX_GIFTSTART_CAMPAIGN_DAYS
         if self.request.cookies.get('uid') is None and \
                         self.request.giftstart.get('staging_uuid') is None:
             return 'staging_uuid'
@@ -106,7 +116,6 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         gs.giftstart_url_title = gs_url_title
         gs_count = GiftStart.query().count()
         gs.gsid = str(gs_count + 1) if gs_count else '1'
-        gs.deadline = datetime.now() + timedelta(days=GIFTSTART_CAMPAIGN_DAYS)
         # Check if running in development env
         if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
             gs.product_img_url = storage.image_cache.cache_product_image(
@@ -164,6 +173,9 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         ndbgs.gc_phone_number = giftstart.get('gc_phone_number')
         ndbgs.gc_email = giftstart['gc_email']
 
+        campaign_length = giftstart['campaign_length']
+        ndbgs.deadline = datetime.now() + timedelta(days=campaign_length)
+
         ndbgs.shipping_name = giftstart.get('shipping_name')
         ndbgs.shipping_email = giftstart.get('shipping_email')
         ndbgs.shipping_address = giftstart.get('shipping_address')
@@ -184,12 +196,17 @@ def complete_campaign_creation(uid, gs):
 
     giftstart_comm.send_create_notification(gs)
 
+    campaign_length=gs.deadline - datetime.now()
+    campaign_seconds = (campaign_length.days*SECONDS_PER_DAY) + campaign_length.seconds
+    countdown_warning = campaign_seconds - SECONDS_PER_DAY
+    countdown_complete = (campaign_seconds + 180)
+
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'one-day-warning',
                                       'gsid': gs.gsid}),
-                  countdown=((GIFTSTART_CAMPAIGN_DAYS - 1) * SECONDS_PER_DAY))
+                  countdown=(countdown_warning))
 
     taskqueue.add(url="/giftstart/api", method="POST",
                   payload=json.dumps({'action': 'check-if-complete',
                                       'gsid': gs.gsid}),
-                  countdown=(GIFTSTART_CAMPAIGN_DAYS * SECONDS_PER_DAY + 180))
+                  countdown=countdown_complete)

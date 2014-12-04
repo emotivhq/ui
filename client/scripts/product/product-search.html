@@ -13,14 +13,14 @@
     <div class="failed" ng-show="failed">
         <img src="/assets/failed.png"/>
         <div>
-            We couldn't figure out that query.  Try another?
+            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at gift <a href="mailto:concierge@giftstarter.co" ng-click="giftConciergeClicked()">concierge@giftstarter.co</a> for help finding the perfect gift!</p>
         </div>
     </div>
 
     <div class="failed" ng-show="results_empty">
         <img src="/assets/failed.png"/>
         <div>
-            We didn't find anything for that query.  Try another?
+            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at gift <a href="mailto:concierge@giftstarter.co" ng-click="giftConciergeClicked()">concierge@giftstarter.co</a> for help finding the perfect gift!</p>
         </div>
     </div>
 
@@ -47,5 +47,6 @@
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>
-    <p id="need-help-concierge">Need help finding the perfect gift? Email <a href="mailto:giftconcierge@giftstarter.co">giftconcierge@giftstarter.co</a>!</p>
+    <p class="need-help-concierge" ng-hide="products.length || results_empty || failed">Need help finding the perfect gift? Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
+    <p class="need-help-concierge" ng-show="products.length && !results_empty && !failed">Not finding what you’re looking for? Our gift concierge would love to help! Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
 </div>

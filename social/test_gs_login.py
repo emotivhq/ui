@@ -29,6 +29,7 @@ example_giftstart = {
     'shipping': 23,
     'service_fee': 9,
     'total_price': 12343,
+    'campaign_length': 10,
     'columns': 3,
     'rows': 3,
     'shipping_state': 'WA',

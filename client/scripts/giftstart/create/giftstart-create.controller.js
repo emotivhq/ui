@@ -14,6 +14,7 @@ GiftStarterApp.controller('GiftStartCreateController',
 
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
+        $scope.campaignLength = 10;
         $scope.salesTaxRate = 0.098;
         $scope.fetchingTaxRate = false;
 
@@ -153,6 +154,7 @@ GiftStarterApp.controller('GiftStartCreateController',
                 'shipping': $scope.shipping,
                 'service_fee': $scope.serviceFee,
                 'total_price': $scope.totalPrice,
+                'campaign_length': $scope.campaignLength,
                 'columns': $scope.x,
                 'rows': $scope.y,
                 'shipping_name': $scope.shippingName,
@@ -173,6 +175,7 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.shippingZip = '';
             $scope.shippingState = '';
             $scope.inputPrice = 0;
+            $scope.campaignLength = 10;
             $scope.shippingDetailsSubmitted = false;
         }
 
@@ -194,6 +197,7 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.shipping = $scope.shipping;
             GiftStartService.serviceFee = $scope.serviceFee;
             GiftStartService.totalPrice = $scope.totalPrice;
+            GiftStartService.campaignLength = $scope.campaignLength;
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
@@ -298,6 +302,7 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.shipping = session.shipping;
             $scope.serviceFee = session.serviceFee;
             $scope.totalPrice = session.totalPrice;
+            $scope.campaignLength = session.campaignLength;
             $scope.specialNotes = session.specialNotes;
             $scope.gcEmail = session.gcEmail;
 

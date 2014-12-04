@@ -5,11 +5,13 @@ __author__ = 'stuart'
 from GiftStart import GiftStart
 from pay.PitchIn import PitchIn
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import yaml
 from google.appengine.api import taskqueue
 from gs_util import gs_util_link
+from thank import thank_core
+from gs_user.User import User
 
 config = yaml.load(open('config.yaml'))
 team_notification_email = config['team_notification_email']
@@ -28,7 +30,7 @@ def send_create_notification(giftstart):
                  data=json.dumps({
                      'subject': "GiftStarter Campaign \"" +
                                 giftstart.giftstart_title + "\" Created!",
-                     'sender': "team@giftstarter.co",
+                     'sender': "giftconcierge@giftstarter.co",
                      'mime_type': 'html',
                      'to': [team_notification_email],
                      'template_name': "campaign_create_team",
@@ -45,7 +47,7 @@ def send_create_notification(giftstart):
                  data=json.dumps({
                      'subject': "GiftStarter Campaign \"" +
                                 giftstart.giftstart_title + "\" Created!",
-                     'sender': "team@giftstarter.co",
+                     'sender': "giftconcierge@giftstarter.co",
                      'to': [giftstart.gc_email],
                      'mime_type': 'html',
                      'template_name': "campaign_create_user",
@@ -72,7 +74,7 @@ def send_day_left_warning(gsid):
                          'template_name':
                              "campaign_ending_1_day_user",
                          'template_kwargs': email_kwargs,
-                         'sender': "team@giftstarter.co",
+                         'sender': "giftconcierge@giftstarter.co",
                          'mime_type': 'html',
                          'to': [giftstart.gc_email],
                      }))
@@ -94,7 +96,7 @@ def send_day_left_warning(gsid):
                          'template_name':
                              "campaign_ending_1_day_giver",
                          'template_kwargs': email_kwargs,
-                         'sender': "team@giftstarter.co",
+                         'sender': "giftconcierge@giftstarter.co",
                          'mime_type': 'html',
                          'to': emails,
                      }))
@@ -110,6 +112,8 @@ def check_if_complete(gsid):
     if not giftstart.giftstart_complete:
 
         if len(pitch_in_parts) == giftstart.overlay_columns * giftstart.overlay_rows:
+            # Giftstart is complete!
+
             giftstart.giftstart_complete = True
             giftstart.put()
 
@@ -133,7 +137,7 @@ def check_if_complete(gsid):
                              'mime_type': 'html',
                              'template_name': "campaign_complete_user_funded",
                              'template_kwargs': email_kwargs,
-                             'sender': "team@giftstarter.co",
+                             'sender': "giftconcierge@giftstarter.co",
                              'to': [giftstart.gc_email]
                          }))
 
@@ -153,9 +157,39 @@ def check_if_complete(gsid):
                              'mime_type': 'html',
                              'template_name': "campaign_complete_team_funded",
                              'template_kwargs': email_kwargs,
-                             'sender': "team@giftstarter.co",
+                             'sender': "giftconcierge@giftstarter.co",
                              'to': [team_notification_email]
                          }))
+
+            if giftstart.shipping_email:
+                gc_pi = first_pitchin_by_gc(giftstart, pitch_ins)
+                email_kwargs = {
+                    'campaign_link': config['app_url'] + '/giftstart/' +
+                                     giftstart.giftstart_url_title,
+                    'campaign_number': str(gsid),
+                    'gc_email': giftstart.gc_email,
+                    'frame': 'base_frame',
+                    'giftstart_it_url':
+                        gs_util_link.make_giftstart_it_url(giftstart),
+                    'user_name': giftstart.gc_name,
+                    'note': gc_pi.note if gc_pi else '',
+                    'user_img': get_gc_img(giftstart),
+                    'thank_you_link': config['app_url'] + '/thanks-' +
+                                      thank_core.encode_secret(gsid),
+                    }
+                email_url = config['email_url']
+                send_path = email_url[email_url.find('/', 8):]
+                payload = json.dumps({
+                    'subject': "You've Receive a GiftStarter Gift!",
+                    'mime_type': 'html',
+                    'template_name': "recipient_thankyou_notification",
+                    'template_kwargs': email_kwargs,
+                    'sender': "giftconcierge@giftstarter.co",
+                    'to': [giftstart.shipping_email]
+                })
+                taskqueue.add(url=send_path, method='PUT',
+                              eta=datetime.now() + timedelta(days=10),
+                              payload=payload)
 
         elif giftstart.deadline < datetime.now():
             giftstart.giftstart_complete = True
@@ -181,7 +215,7 @@ def check_if_complete(gsid):
                                  'template_name':
                                      "campaign_complete_user_not_funded",
                                  'template_kwargs': email_kwargs,
-                                 'sender': "team@giftstarter.co",
+                                 'sender': "giftconcierge@giftstarter.co",
                                  'mime_type': 'html',
                                  'to': [giftstart.gc_email]
                              }))
@@ -202,10 +236,40 @@ def check_if_complete(gsid):
                                  'template_name':
                                      "campaign_complete_team_not_funded",
                                  'template_kwargs': email_kwargs,
-                                 'sender': "team@giftstarter.co",
+                                 'sender': "giftconcierge@giftstarter.co",
                                  'mime_type': 'html',
                                  'to': [team_notification_email]
                              }))
+
+                if giftstart.shipping_email:
+                    gc_pi = first_pitchin_by_gc(giftstart, pitch_ins)
+                    email_kwargs = {
+                        'campaign_link': config['app_url'] + '/giftstart/' +
+                                         giftstart.giftstart_url_title,
+                        'campaign_number': str(gsid),
+                        'gc_email': giftstart.gc_email,
+                        'frame': 'base_frame',
+                        'giftstart_it_url':
+                            gs_util_link.make_giftstart_it_url(giftstart),
+                        'user_name': giftstart.gc_name,
+                        'note': gc_pi.note if gc_pi else '',
+                        'user_img': get_gc_img(giftstart),
+                        'thank_you_link': config['app_url'] + '/thanks-' +
+                                          thank_core.encode_secret(gsid),
+                    }
+                    email_url = config['email_url']
+                    send_path = email_url[email_url.find('/', 8):]
+                    payload = json.dumps({
+                        'subject': "You've Receive a GiftStarter Gift!",
+                        'mime_type': 'html',
+                        'template_name': "recipient_thankyou_notification",
+                        'template_kwargs': email_kwargs,
+                        'sender': "giftconcierge@giftstarter.co",
+                        'to': [giftstart.shipping_email]
+                    })
+                    taskqueue.add(url=send_path, method='PUT',
+                                  eta=datetime.now() + timedelta(days=10),
+                                  payload=payload)
 
             else:
                 # Send email of regret to gift champion
@@ -223,9 +287,24 @@ def check_if_complete(gsid):
                                      'campaign_complete_user_zero_funding',
                                  'template_kwargs': email_kwargs,
                                  'mime_type': 'html',
-                                 'sender': 'team@giftstarter.co',
+                                 'sender': 'giftconcierge@giftstarter.co',
                                  'to': [giftstart.gc_email],
                              }))
+
+
+def pitchins_by_gc(giftstart, pitchins):
+    uid = giftstart.gift_champion_uid
+    return filter(lambda pi: pi.uid == uid, pitchins)
+
+
+def first_pitchin_by_gc(giftstart, pitchins):
+    gc_pis = pitchins_by_gc(giftstart, pitchins)
+    return gc_pis[0] if len(gc_pis) > 0 else None
+
+
+def get_gc_img(giftstart):
+    user = User.query(User.uid == giftstart.gift_champion_uid).fetch(1)[0]
+    return user.cached_profile_image_url
 
 
 def congratulate_givers(gsid, funded):
@@ -248,7 +327,7 @@ def congratulate_givers(gsid, funded):
                          'template_name': "campaign_complete_giver_funded",
                          'template_kwargs': email_kwargs,
                          'mime_type': 'html',
-                         'sender': "team@giftstarter.co",
+                         'sender': "giftconcierge@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))
     else:
@@ -268,6 +347,6 @@ def congratulate_givers(gsid, funded):
                          'mime_type': 'html',
                          'template_name': "campaign_complete_giver_not_funded",
                          'template_kwargs': email_kwargs,
-                         'sender': "team@giftstarter.co",
+                         'sender': "giftconcierge@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))

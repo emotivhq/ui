@@ -47,7 +47,9 @@ EMAIL_TEMPLATES = {
     "campaign_ending_1_day_user": JINJA_ENVIRONMENT.get_template(
         "campaign_ending_1_day_user.html"),
     "campaign_complete_user_zero_funding": JINJA_ENVIRONMENT.get_template(
-        "campaign_complete_user_zero_funding.html")
+        "campaign_complete_user_zero_funding.html"),
+    "recipient_thankyou_notification": JINJA_ENVIRONMENT.get_template(
+        "recipient_thankyou_notification.html"),
 }
 
 
@@ -74,7 +76,8 @@ def send_mandrill(sender, to, subject, message_text, cc=None, bcc=None,
         'key': secrets['mandrill_auth']['key'],
         'message': {
             'subject': subject,
-            'from_email': 'team@giftstarter.co',
+            'from_name': 'GiftStarter Concierge',
+            'from_email': 'giftconcierge@giftstarter.co',
             'to': [
                 {'email': to, 'type': 'to'},
             ],

@@ -24,7 +24,6 @@ class CronHandler(webapp2.RequestHandler):
 
 
 class FeedsHandler(webapp2.RequestHandler):
-    @ndb.toplevel
     def post(self):
         try:
             feed_name = self.request.path.split('/')[2]
