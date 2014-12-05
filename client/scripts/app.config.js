@@ -30,6 +30,11 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/what-is-it/what-is-it.html'})
         .when('/add-the-button',
         {templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
+        .when('/:path*', {
+            controller: 'ContentRouteController',
+            reloadOnSearch: false,
+            template: '<div id="wp-content" ng-bind-html="content"></div>'
+        })
         .otherwise({redirectTo: '/'});
 
     $locationProvider.hashPrefix('!').html5Mode({enabled: true});
@@ -39,4 +44,38 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
 
 function facebookConfig(ezfbProvider, $httpProvider) {
     ezfbProvider.setInitParams({appId: window.fbAppId});
+}
+
+GiftStarterApp.controller('ContentRouteController', contentRouteController);
+
+function contentRouteController($scope, $routeParams, $http, $sce) {
+    $scope.templateUrl = '';
+    var baseUrl = '//content.giftstarter.co/';
+    function onRouteUpdate() {
+        $scope.templateUrl = baseUrl + $routeParams.path;
+
+        $http.get($scope.templateUrl).then(function(response) {
+            $scope.content = $sce.trustAsHtml(extractMain(response.data));
+        });
+    }
+
+    function extractMain(html) {
+        var container = document.createElement('div'),
+            bodyTags,
+            result;
+        container.innerHTML = html;
+        bodyTags = container.querySelector('main');
+        window.bt = bodyTags;
+        if (bodyTags.length > 0) {
+            result = bodyTags.innerHTML;
+        } else if (bodyTags.hasAttribute('innerHTML')) {
+            result = bodyTags.innerHTML;
+        } else {
+            result = html;
+        }
+        container = null;
+        return result;
+    }
+    $scope.$on('$routeChangeSuccess', onRouteUpdate);
+    onRouteUpdate();
 }
