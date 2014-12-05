@@ -102,14 +102,14 @@
 
             <div class="campaign-length">
                 <h2>How Long Should this GiftStart Run?</h2>
-                <label>Be sure to end your GiftStart at least a week (7 days) before it should arrive</label>
+                <label>Be sure to end your GiftStart at least a week (7 days) before it should arrive.  Minimum 2 days, maximum 3 months.</label>
                 <input ui-date
                        type="text"
                        class="endDate"
                        ng-model="campaignEndDate"
                        placeholder="mm/dd/yyyy"
                        required="">
-                <label>{{getCampaignLength(campaignEndDate)}} Days</label>
+                <label ng-class="{error: getCampaignLength(campaignEndDate) > 92 || getCampaignLength(campaignEndDate) < 2}">{{getCampaignLength(campaignEndDate)}} Days</label>
             </div>
 
             <h2>Minimum Pitch In</h2>
