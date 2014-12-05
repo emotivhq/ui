@@ -48,7 +48,7 @@ function facebookConfig(ezfbProvider, $httpProvider) {
 
 GiftStarterApp.controller('ContentRouteController', contentRouteController);
 
-function contentRouteController($scope, $routeParams, $http, $sce) {
+function contentRouteController($scope, $routeParams, $http, $sce, $window) {
     $scope.templateUrl = '';
     var baseUrl = '//content.giftstarter.co/';
     function onRouteUpdate() {
@@ -64,16 +64,16 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
         });
     }
 
-    function replaceAnchorLinks() {
-        function replaceLink(linkText) {
-            return linkText.replace(/content.giftstarter/g,
-                'www.giftstarter');
-        }
-
-
+    var re = new RegExp('content.giftstarter.co', 'g');
+    function replaceLink(ele) {
+        ele.host = ele.host.replace(re, $window.location.host);
     }
 
-    function containsImages(ele) {return ele.querySelector('img') == null;}
+    function replaceAnchorLinks(ele) {
+        var anchors = ele.querySelectorAll('a');
+        Array.prototype.slice.call(anchors).forEach(replaceLink);
+        return ele;
+    }
 
     function extractMain(html) {
         var container = document.createElement('div'),
@@ -81,7 +81,7 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
             result;
         container.innerHTML = html;
         bodyTags = container.querySelector('main');
-        window.bt = bodyTags;
+        console.log(replaceAnchorLinks(bodyTags));
         if (bodyTags == null) {
             result = html;
             console.log('html: ',html);
