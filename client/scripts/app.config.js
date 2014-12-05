@@ -33,7 +33,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/:path*', {
             controller: 'ContentRouteController',
             reloadOnSearch: false,
-            template: '<div ng-bind-html="content"></div>'
+            template: '<div id="wp-content" ng-bind-html="content"></div>'
         })
         .otherwise({redirectTo: '/'});
 
@@ -65,7 +65,10 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
             result;
         container.innerHTML = html;
         bodyTags = container.querySelector('main');
+        window.bt = bodyTags;
         if (bodyTags.length > 0) {
+            result = bodyTags.innerHTML;
+        } else if (bodyTags.hasAttribute('innerHTML')) {
             result = bodyTags.innerHTML;
         } else {
             result = html;
