@@ -66,10 +66,10 @@
             width: 5em
         span.email
           input
-            width: 25.75em
+            width: 23.75em
       div.email
         input
-          width: 25.75em
+          width: 23.75em
 
   img.progress
     max-width: 30em
@@ -149,6 +149,11 @@
   img.loading
     height: 2em
 
+  input.hasDatepicker
+    width: 23.75em
+  input.hasDatepicker + label
+    display: inline-block
+
   #not-long-enough
     text-align: left
     p, li
@@ -178,3 +183,32 @@
         img
           float: right
           height: 1em
+
+#ui-datepicker-div
+  font-family: "Roboto Condensed", sans-serif
+  div.ui-datepicker-header
+    color: #ffffff
+    background: $primary-color
+    border: 0
+    font-weight: 300
+
+  table
+    th
+      font-weight: 300
+    td
+      a.ui-state-default
+        +transition(all, 0.2s)
+        background: #ffffff
+        color: $primary-color
+      a.ui-state-default:hover
+        border-color: $primary-color
+    td.ui-datepicker-current-day
+      a
+        background: $primary-color
+        color: #ffffff
+
+    td.ui-datepicker-today
+      a
+        border-color: $primary-color
+        font-weight: 700
+
