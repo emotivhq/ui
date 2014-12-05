@@ -64,6 +64,17 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
         });
     }
 
+    function replaceAnchorLinks() {
+        function replaceLink(linkText) {
+            return linkText.replace(/content.giftstarter/g,
+                'www.giftstarter');
+        }
+
+
+    }
+
+    function containsImages(ele) {return ele.querySelector('img') == null;}
+
     function extractMain(html) {
         var container = document.createElement('div'),
             bodyTags,
@@ -76,7 +87,7 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
             console.log('html: ',html);
         } else if (bodyTags.length > 0) {
             result = bodyTags.innerHTML;
-        } else if (bodyTags.hasAttribute('innerHTML')) {
+        } else if (bodyTags.hasOwnProperty('innerHTML')) {
             result = bodyTags.innerHTML;
         } else {
             result = html;
