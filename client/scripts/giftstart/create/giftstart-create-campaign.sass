@@ -211,3 +211,27 @@
       a
         border-color: $primary-color
         font-weight: 700
+
+  a.ui-datepicker-prev::after
+    content: "<"
+    color: #ffffff
+    font-size: 1.5em
+    padding: 0.2em
+    cursor: pointer
+    span.ui-icon-circle-triangle-w
+      cursor: pointer
+  a.ui-datepicker-prev.ui-state-hover
+    background: none
+    border: none
+  a.ui-datepicker-next::after
+    content: ">"
+    color: #ffffff
+    font-size: 1.5em
+    padding: 0.2em
+    cursor: pointer
+    span.ui-icon-circle-triangle-w
+      cursor: pointer
+  a.ui-datepicker-next.ui-state-hover
+    background: none
+    border: none
+
