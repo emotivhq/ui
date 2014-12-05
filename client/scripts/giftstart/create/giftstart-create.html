@@ -109,7 +109,7 @@
                        ng-model="campaignEndDate"
                        placeholder="mm/dd/yyyy"
                        required="">
-                <label ng-class="{error: getCampaignLength(campaignEndDate) > 92 || getCampaignLength(campaignEndDate) < 2}">{{getCampaignLength(campaignEndDate)}} Days</label>
+                <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)}} Days</label>
             </div>
 
             <h2>Minimum Pitch In</h2>
@@ -137,7 +137,7 @@
             </div>
         </form>
 
-        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Create</button>
+        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0) || !dateChosenValid())}">Create</button>
 
     </div>
 </div>

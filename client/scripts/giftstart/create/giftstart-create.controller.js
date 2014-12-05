@@ -67,6 +67,8 @@
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
 
+        $scope.dateChosenValid = dateChosenValid;
+
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
                 Analytics.track('campaign', 'shipping updated');
@@ -192,6 +194,11 @@
             $scope.shippingDetailsSubmitted = false;
         }
 
+        function dateChosenValid() {
+            return !($scope.getCampaignLength($scope.campaignEndDate) > 92 ||
+                $scope.getCampaignLength($scope.campaignEndDate) < 2);
+        }
+
         $scope.next = function() {
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
@@ -215,7 +222,8 @@
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
+                dateChosenValid()) {
 
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
