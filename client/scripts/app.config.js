@@ -33,7 +33,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/:path*', {
             controller: 'ContentRouteController',
             reloadOnSearch: false,
-            template: '<div id="wp-content" ng-bind-html="content"></div>'
+            template: '<ng-include ng-show="error" src="\'/scripts/four-oh-four.ng.html\'"></ng-include><div id="wp-content" ng-bind-html="content"></div>'
         })
         .otherwise({redirectTo: '/'});
 
@@ -48,15 +48,31 @@ function facebookConfig(ezfbProvider, $httpProvider) {
 
 GiftStarterApp.controller('ContentRouteController', contentRouteController);
 
-function contentRouteController($scope, $routeParams, $http, $sce) {
+function contentRouteController($scope, $routeParams, $http, $sce, $window) {
     $scope.templateUrl = '';
     var baseUrl = '//content.giftstarter.co/';
     function onRouteUpdate() {
         $scope.templateUrl = baseUrl + $routeParams.path;
+        $scope.error = false;
 
-        $http.get($scope.templateUrl).then(function(response) {
-            $scope.content = $sce.trustAsHtml(extractMain(response.data));
+        $http.get($scope.templateUrl).success(function(response) {
+            $scope.content = $sce.trustAsHtml(extractMain(response));
+            $scope.error = false;
+        }).error(function(){
+            $scope.content = '';
+            $scope.error = true;
         });
+    }
+
+    var re = new RegExp('content.giftstarter.co', 'g');
+    function replaceLink(ele) {
+        ele.host = ele.host.replace(re, $window.location.host);
+    }
+
+    function replaceAnchorLinks(ele) {
+        var anchors = ele.querySelectorAll('a');
+        Array.prototype.slice.call(anchors).forEach(replaceLink);
+        return ele;
     }
 
     function extractMain(html) {
@@ -65,10 +81,13 @@ function contentRouteController($scope, $routeParams, $http, $sce) {
             result;
         container.innerHTML = html;
         bodyTags = container.querySelector('main');
-        window.bt = bodyTags;
-        if (bodyTags.length > 0) {
+        console.log(replaceAnchorLinks(bodyTags));
+        if (bodyTags == null) {
+            result = html;
+            console.log('html: ',html);
+        } else if (bodyTags.length > 0) {
             result = bodyTags.innerHTML;
-        } else if (bodyTags.hasAttribute('innerHTML')) {
+        } else if (bodyTags.hasOwnProperty('innerHTML')) {
             result = bodyTags.innerHTML;
         } else {
             result = html;

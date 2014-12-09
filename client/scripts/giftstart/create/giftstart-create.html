@@ -100,10 +100,16 @@
                 </span>
             </div>
 
-            <div class="campaign-length" style="display: none">
+            <div class="campaign-length">
                 <h2>How Long Should this GiftStart Run?</h2>
-                <label>Be sure to end your GiftStart at least a week (7 days) before it should arrive</label>
-                <input type="text" id="campaign-length" placeholder="10 days" minlength="1" maxlength="2" ng-model="campaignLength" required="">
+                <label>Be sure to end your GiftStart at least a week (7 days) before it should arrive.  Minimum 2 days, maximum 3 months.</label>
+                <input ui-date
+                       type="text"
+                       class="endDate"
+                       ng-model="campaignEndDate"
+                       placeholder="mm/dd/yyyy"
+                       required="">
+                <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)}} Days</label>
             </div>
 
             <h2>Minimum Pitch In</h2>
@@ -131,7 +137,7 @@
             </div>
         </form>
 
-        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Create</button>
+        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0) || !dateChosenValid())}">Create</button>
 
     </div>
 </div>

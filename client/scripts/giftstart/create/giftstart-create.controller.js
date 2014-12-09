@@ -1,20 +1,33 @@
 /**
  * Created by stuart on 5/5/14.
+ * TODO: Update this file for function expressions
  */
 
-GiftStarterApp.controller('GiftStartCreateController',
-    ['$scope','GiftStartService','$location','ProductService',
-        'UserService','PopoverService','$http','$timeout',
-        'Analytics','AppStateService',
+(function (app) {
+    'use strict';
 
-    function($scope,  GiftStartService,  $location,  ProductService,
-             UserService,  PopoverService,  $http,  $timeout, Analytics,
-             AppStateService) {
-        var self = this;
+    var controller = function ($scope,
+                               GiftStartService,
+                               $location,
+                               ProductService,
+                               UserService,
+                               PopoverService,
+                               $http,
+                               $timeout,
+                               Analytics,
+                               AppStateService) {
+        var campaignLength = 10;
 
         $scope.inputPrice = ProductService.product.price/100;
         $scope.totalPrice = 0;
-        $scope.campaignLength = 10;
+        $scope.campaignEndDate = null;
+        $scope.getCampaignLength = function (date) {
+            if (angular.isDate(date)) {
+                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000);
+            }
+
+            return campaignLength;
+        };
         $scope.salesTaxRate = 0.098;
         $scope.fetchingTaxRate = false;
 
@@ -53,6 +66,8 @@ GiftStarterApp.controller('GiftStartCreateController',
         this.referral = {};
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
+
+        $scope.dateChosenValid = dateChosenValid;
 
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
@@ -154,7 +169,7 @@ GiftStarterApp.controller('GiftStartCreateController',
                 'shipping': $scope.shipping,
                 'service_fee': $scope.serviceFee,
                 'total_price': $scope.totalPrice,
-                'campaign_length': $scope.campaignLength,
+                'campaign_length': campaignLength,
                 'columns': $scope.x,
                 'rows': $scope.y,
                 'shipping_name': $scope.shippingName,
@@ -175,8 +190,13 @@ GiftStarterApp.controller('GiftStartCreateController',
             $scope.shippingZip = '';
             $scope.shippingState = '';
             $scope.inputPrice = 0;
-            $scope.campaignLength = 10;
+            campaignLength = 10;
             $scope.shippingDetailsSubmitted = false;
+        }
+
+        function dateChosenValid() {
+            return !($scope.getCampaignLength($scope.campaignEndDate) > 92 ||
+                $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
         $scope.next = function() {
@@ -197,12 +217,13 @@ GiftStarterApp.controller('GiftStartCreateController',
             GiftStartService.shipping = $scope.shipping;
             GiftStartService.serviceFee = $scope.serviceFee;
             GiftStartService.totalPrice = $scope.totalPrice;
-            GiftStartService.campaignLength = $scope.campaignLength;
+            GiftStartService.campaignLength = campaignLength;
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
+                dateChosenValid()) {
 
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
@@ -286,6 +307,7 @@ GiftStarterApp.controller('GiftStartCreateController',
         }
 
         function restoreFromSession(session) {
+            // This function doesn't seem to in use
             $scope.title = session.title;
             $scope.description = session.description;
             ProductService.product.product_url = session.productUrl;
@@ -351,5 +373,19 @@ GiftStarterApp.controller('GiftStartCreateController',
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
-    }
-]);
+    };
+
+    app.controller('GiftStartCreateController', [
+        '$scope',
+        'GiftStartService',
+        '$location',
+        'ProductService',
+        'UserService',
+        'PopoverService',
+        '$http',
+        '$timeout',
+        'Analytics',
+        'AppStateService',
+        controller]);
+
+}(angular.module('GiftStarterApp')));
