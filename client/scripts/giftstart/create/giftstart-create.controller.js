@@ -195,7 +195,7 @@
         }
 
         function dateChosenValid() {
-            return !($scope.getCampaignLength($scope.campaignEndDate) > 500 ||
+            return !($scope.getCampaignLength($scope.campaignEndDate) > 30 ||
                 $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
