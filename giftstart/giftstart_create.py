@@ -14,7 +14,7 @@ import math
 import logging
 
 MIN_GIFTSTART_CAMPAIGN_DAYS = 2
-MAX_GIFTSTART_CAMPAIGN_DAYS = 30 #no more than 1 month
+MAX_GIFTSTART_CAMPAIGN_DAYS = 29 #no more than 29 days (taskqueue restriction)
 SECONDS_PER_DAY = 24 * 60 * 60
 
 
