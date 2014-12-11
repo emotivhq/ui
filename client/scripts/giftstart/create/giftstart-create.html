@@ -137,7 +137,7 @@
             </div>
         </form>
 
-        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0))}">Create</button>
+        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0) || !dateChosenValid())}">Create</button>
 
     </div>
 </div>

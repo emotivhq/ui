@@ -185,7 +185,7 @@ def campaign_success_rate():
         'full': 100*num_fully_funded/total_campaigns,
         'part': 100*num_partially_funded/total_campaigns,
         'no':  100*num_no_funding/total_campaigns,
-    })
+        })
 
     return result
 

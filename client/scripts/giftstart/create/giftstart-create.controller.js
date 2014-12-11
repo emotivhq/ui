@@ -1,5 +1,6 @@
 /**
  * Created by stuart on 5/5/14.
+ * TODO: Update this file for function expressions
  */
 
 (function (app) {
@@ -65,6 +66,8 @@
         this.referral = {};
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
+
+        $scope.dateChosenValid = dateChosenValid;
 
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
@@ -166,7 +169,7 @@
                 'shipping': $scope.shipping,
                 'service_fee': $scope.serviceFee,
                 'total_price': $scope.totalPrice,
-                'campaign_length': $scope.campaignLength,
+                'campaign_length': campaignLength,
                 'columns': $scope.x,
                 'rows': $scope.y,
                 'shipping_name': $scope.shippingName,
@@ -187,8 +190,13 @@
             $scope.shippingZip = '';
             $scope.shippingState = '';
             $scope.inputPrice = 0;
-            $scope.campaignLength = 10;
+            campaignLength = 10;
             $scope.shippingDetailsSubmitted = false;
+        }
+
+        function dateChosenValid() {
+            return !($scope.getCampaignLength($scope.campaignEndDate) > 29 ||
+                $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
         $scope.next = function() {
@@ -209,12 +217,13 @@
             GiftStartService.shipping = $scope.shipping;
             GiftStartService.serviceFee = $scope.serviceFee;
             GiftStartService.totalPrice = $scope.totalPrice;
-            GiftStartService.campaignLength = $scope.campaignLength;
+            GiftStartService.campaignLength = campaignLength;
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
+                dateChosenValid()) {
 
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
@@ -298,6 +307,7 @@
         }
 
         function restoreFromSession(session) {
+            // This function doesn't seem to in use
             $scope.title = session.title;
             $scope.description = session.description;
             ProductService.product.product_url = session.productUrl;
