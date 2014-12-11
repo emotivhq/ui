@@ -67,8 +67,6 @@
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
 
-        $scope.dateChosenValid = dateChosenValid;
-
         $scope.shippingChanged = function() {
             if ($scope.shippingZip.length == 5) {
                 Analytics.track('campaign', 'shipping updated');
@@ -169,7 +167,7 @@
                 'shipping': $scope.shipping,
                 'service_fee': $scope.serviceFee,
                 'total_price': $scope.totalPrice,
-                'campaign_length': campaignLength,
+                'campaign_length': $scope.campaignLength,
                 'columns': $scope.x,
                 'rows': $scope.y,
                 'shipping_name': $scope.shippingName,
@@ -190,13 +188,8 @@
             $scope.shippingZip = '';
             $scope.shippingState = '';
             $scope.inputPrice = 0;
-            campaignLength = 10;
+            $scope.campaignLength = 10;
             $scope.shippingDetailsSubmitted = false;
-        }
-
-        function dateChosenValid() {
-            return !($scope.getCampaignLength($scope.campaignEndDate) > 92 ||
-                $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
         $scope.next = function() {
@@ -217,13 +210,12 @@
             GiftStartService.shipping = $scope.shipping;
             GiftStartService.serviceFee = $scope.serviceFee;
             GiftStartService.totalPrice = $scope.totalPrice;
-            GiftStartService.campaignLength = campaignLength;
+            GiftStartService.campaignLength = $scope.campaignLength;
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
-                dateChosenValid()) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0)) {
 
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
@@ -307,7 +299,6 @@
         }
 
         function restoreFromSession(session) {
-            // This function doesn't seem to in use
             $scope.title = session.title;
             $scope.description = session.description;
             ProductService.product.product_url = session.productUrl;
@@ -373,19 +364,5 @@
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
-    };
-
-    app.controller('GiftStartCreateController', [
-        '$scope',
-        'GiftStartService',
-        '$location',
-        'ProductService',
-        'UserService',
-        'PopoverService',
-        '$http',
-        '$timeout',
-        'Analytics',
-        'AppStateService',
-        controller]);
-
-}(angular.module('GiftStarterApp')));
+    }
+]);
