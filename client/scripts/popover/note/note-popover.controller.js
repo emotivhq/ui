@@ -1,26 +1,46 @@
 /**
- * Created by stuart on 4/21/14.
+ * Copyright (C) Giftstarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('NotePopoverController', ['$scope','UserService',
-    'PopoverService','GiftStartService','Analytics', 'CardService',
-    NotePopoverController]);
+(function (app) {
+    'use strict';
 
-function NotePopoverController($scope,  UserService,  PopoverService,
-                               GiftStartService,  Analytics, CardService) {
-    $scope.noteText = '';
-    $scope.profilePicture = UserService.profileImageUrl;
+    var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics, CardService) {
 
-    $scope.hidePopover = PopoverService.hidePopover;
+        $scope.noteText = '';
+        $scope.profilePicture = UserService.profileImageUrl;
 
-    CardService.fetch();
+        $scope.hidePopover = function () {
+            PopoverService.hidePopover();
+            $scope.skipNote = false;
+            $scope.noteText = '';
+        }
 
-    // Now that user is logged in, create giftstart in server
-    if (!GiftStartService.giftStart.gsid) {GiftStartService.createGiftStart()}
+        $scope.skipNote = false;
 
-    $scope.submit = function() {
-        Analytics.track('pitchin', 'note submitted');
-        GiftStartService.saveNote($scope.noteText);
-        PopoverService.nextPopover();
+        CardService.fetch();
+
+        // Now that user is logged in, create giftstart in server
+        if (!GiftStartService.giftStart.gsid) {
+            GiftStartService.createGiftStart()
+        }
+
+        $scope.action = {
+            submit: function () {
+                if (skipNote) {
+                    Analytics.track('pitchin', 'no note submitted');
+                    PopoverService.nextPopover();
+                } else {
+                    Analytics.track('pitchin', 'note submitted');
+                    GiftStartService.saveNote($scope.noteText);
+                    PopoverService.nextPopover();
+                }
+            }
+        }
     };
-}
+
+    app.controller('NotePopoverController', ['$scope','UserService', 'PopoverService','GiftStartService','Analytics', 'CardService', notePopoverController]);
+}(angular.module('GiftStarterApp')));
+

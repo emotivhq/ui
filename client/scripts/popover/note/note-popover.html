@@ -1,5 +1,5 @@
-<div class="note-popover" ng-controller="NotePopoverController">
-    <h1 class="white">Make Your Mark!</h1>
+<div class="note-popover" ng-controller="NotePopoverController" >
+    <h1 class="white">Sign the Card!</h1>
     <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
     <div class="note-wrapper">
         <img class="profile-picture" ng-src="{{profilePicture}}">
@@ -8,6 +8,10 @@
             <p class="chars-left" ng-show="noteText.length > 140" ng-class="{warning: (noteText.length > 450)}">{{500 - noteText.length}}</p>
         </div>
     </div>
-    <button class="large white-border" ng-click="submit()">Submit!</button>
+    <div>
+        <input id="skipNote" type="checkbox" ng-model="skipNote">
+        <label for="skipNote">No thanks, just put my name on the group card with no message.</label>
+    </div>
+    <button class="large white-border" ng-click="action.submit()" ng-disabled="!skipNote && !noteText" ng-class="{disabled: !skipNote && !noteText}">Sign it!</button>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>
