@@ -1,6 +1,5 @@
 /**
  * Created by stuart on 5/5/14.
- * TODO: Update this file for function expressions
  */
 
 (function (app) {
@@ -364,5 +363,19 @@
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
-    }
-]);
+    };
+
+    app.controller('GiftStartCreateController', [
+        '$scope',
+        'GiftStartService',
+        '$location',
+        'ProductService',
+        'UserService',
+        'PopoverService',
+        '$http',
+        '$timeout',
+        'Analytics',
+        'AppStateService',
+        controller]);
+
+}(angular.module('GiftStarterApp')));
