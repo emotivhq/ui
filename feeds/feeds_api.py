@@ -5,7 +5,7 @@ import feeds_core
 from google.appengine.api import taskqueue
 from google.appengine.ext import ndb
 from feeds.feeds_upload import SturtevantsUploadHandler, \
-    SturtevantsDeleteHandler
+    SturtevantsDeleteHandler, ManualUploadHandler
 
 
 FEEDS = {
@@ -33,6 +33,8 @@ class FeedsHandler(webapp2.RequestHandler):
 
 handler = webapp2.WSGIApplication([('/feeds/update', CronHandler),
                                    ('/feeds/.*/update', FeedsHandler),
+                                   ('/feeds/upload/manual',
+                                    ManualUploadHandler),
                                    ('/feeds/upload/sturtevants',
                                     SturtevantsUploadHandler),
                                    ('/feeds/delete/sturtevants',

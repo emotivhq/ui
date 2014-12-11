@@ -11,6 +11,42 @@ from uuid import uuid4
 from google.appengine.api import search
 
 
+class ManualUploadHandler(webapp2.RequestHandler):
+    def post(self):
+        data = self.request.body
+
+        line_split = '[giftstartersplit]'
+        line_end = '[giftstarterendline]'
+        lines = [line.split(line_split) for line in data.split(line_end)]
+
+        products = []
+        search_docs = []
+        for line in lines:
+            if len(line) < 5:
+                break
+            price = int(100*float(line[4].strip()))
+            if price > 7498:
+                title = line[0].strip()
+                img = line[2].strip()
+                url = line[3].strip()
+                retailer = line[5].strip()
+                description = line[1].strip().decode('ascii', 'ignore')
+                logging.info("Adding: {0} {1} {2} {3} {4} {5}...".format(retailer,title,price,img,url,description[:15]))
+                product = SearchProduct(
+                    title=title,
+                    price=price,
+                    img=img,
+                    url=url,
+                    retailer=retailer,
+                    description=description)
+                products.append(product)
+                search_docs.append(product.to_search_document(str(uuid4())))
+
+        logging.info("Adding {0} manual products".format(len(search_docs)))
+        add_to_index(get_product_index(), search_docs)
+        logging.info("Indexing {0} manual products".format(len(products)))
+        ndb.put_multi(products)
+
 class SturtevantsUploadHandler(webapp2.RequestHandler):
     def post(self):
         data = self.request.body
