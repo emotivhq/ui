@@ -10,6 +10,28 @@ div.landing-page
   text-align: center
   margin: 1em auto
 
+  *
+    font-family: "Roboto", sans-serif
+    font-color: #333
+    margin: 0
+    padding: 0
+
+  hr
+    margin-top: 90px
+
+  div.clear
+    clear: both
+
+  button
+    font-family: BlanchCondensed
+
+  div.horizontalBar
+    border-color: $primary-color
+    background-color: $primary-color
+    width: 160px
+    height: 2px
+    margin: 0 auto 60px auto
+
   @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
   @media screen and (min-width: $tablet-computer-boundary)
@@ -24,7 +46,19 @@ div.landing-page
       margin-bottom: 0.25em
     p.explainer:last-of-type
       margin-top: 0.25em
-    
+
+  h1
+    font-family: "Roboto Bold", sans-serif
+    font-size: 65pt
+  h3
+    font-size: 36pt
+    margin: 90px 0 40px 0
+  h5
+    font-size: 24pt
+    color: #666
+  h5.stepsHeader
+    margin-bottom: 60px
+
   div.copy
     margin-bottom: 2em
     text-align: left
@@ -56,27 +90,20 @@ div.landing-page
 
   div.process
     div.step
-      display: inline-block
+      float: left
       text-align: center
       width: $step-width
       vertical-align: top
-      margin-bottom: 2em
 
-      span.number
-        width: 1em
-        height: 1em
-        display: inline-block
-        text-align: center
-        background: $primary-color
-        +border-radius(50%)
-        color: #fff
-        font: $button-font
-        margin-bottom: 0.2em
       img
         width: $step-width
       p
         margin: 0
-        text-align: left
+        text-align: center
+      p.stepTitle
+        font-size: 24pt
+        margin: 25px 0
+
 
   @media screen and (max-width: $phone-tablet-boundary)
     div.process
@@ -113,6 +140,23 @@ div.landing-page
     text-align: left
     @media screen and (min-width: $phone-tablet-boundary)
       width: 30em
+
+  p.need-help-concierge
+    width: 300px
+    margin: 0 auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 80%
+
+    a
+      color: $primary-color
+      text-decoration: none
+
+  p.exploreText
+    width: 470px
+    margin: 0 auto 60px auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 80%
+
 
 #how-to-gif
   width: 118%
