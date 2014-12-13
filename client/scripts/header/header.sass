@@ -1,24 +1,31 @@
 @import "../base"
 
 #header
-  background: url('/assets/headerBackground.png')
   background-size: cover
   width: 100%
   position: fixed
-  top: 0
+  top: 48px
   left: 0
   right: 0
   z-index: 1000
-  background-color: rgba(255, 255, 255, 0.8)
+  background-color: white
+  height: $header-height
+  @media screen and (max-width: $phone-tablet-boundary)
+    height: $header-height-mobile
+
+  @media screen and (max-width: $phone-tablet-boundary)
+    top: 0
 
   #header-logo
-    height: $header-height-mobile
-    @media screen and (min-width: 37.5em)
-      height: $header-height
-      float: right
-    display: block
-    padding: 0.5em 4em 1.5em
-    margin: 0 auto
+    height: $header-height
+    position: absolute
+    left: 20px
+    top: 0
+    @media screen and (max-width: $phone-tablet-boundary)
+      height: $header-height-mobile
+      left: auto
+      right: 20px
+      top: 5px
 
   > div.wrapper
     margin: 0 auto
@@ -30,20 +37,23 @@
       color: $primary-color
       text-align: center
 
-    div.nav
+    ul.nav
+      padding-top: 25px
       text-align: center
-      padding: 1.5em 3em 0
-      display: inline-block
-
-      h2
+      font-family: "Roboto"
+      li.login
+        position: absolute
+        right: 20px
+        margin-top: -7px
+      li
+        list-style: none
         display: inline-block
-        cursor: default
-      h2.navitem
-        padding: 0 0.5em
-        cursor: pointer
-        vertical-align: text-bottom
-      h2.navitem:hover
-        color: $primary-color-highlight
+        margin: 0 10px
+        a
+          text-decoration: none
+          color: #000
+          font-size: 14pt
+
 
 #header-padding
   height: $header-height-mobile * 7 / 8

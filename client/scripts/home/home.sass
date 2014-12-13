@@ -8,16 +8,17 @@ $step-width: (2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-pad
 div.landing-page
   padding: 0.75em $landing-page-padding-horz
   text-align: center
-  margin: 1em auto
+  margin: 0 auto
 
   *
     font-family: "Roboto", sans-serif
     font-color: #333
     margin: 0
-    padding: 0
 
   hr
     margin-top: 90px
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin-top: 50px
 
   div.clear
     clear: both
@@ -31,6 +32,8 @@ div.landing-page
     width: 160px
     height: 2px
     margin: 0 auto 60px auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin: 0 auto 40px auto
 
   @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
@@ -49,15 +52,24 @@ div.landing-page
 
   h1
     font-family: "Roboto Bold", sans-serif
-    font-size: 65pt
+    font-size: 55pt
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 30pt
   h3
-    font-size: 36pt
+    font-size: 30pt
     margin: 90px 0 40px 0
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 20pt
+      margin: 45px 0 30px 0
   h5
-    font-size: 24pt
+    font-size: 20pt
     color: #666
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 13pt
   h5.stepsHeader
     margin-bottom: 60px
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin-bottom: 30px
 
   div.copy
     margin-bottom: 2em
@@ -94,15 +106,25 @@ div.landing-page
       text-align: center
       width: $step-width
       vertical-align: top
+      @media screen and (max-width: $phone-tablet-boundary)
+        margin-bottom: 45px
 
       img
         width: $step-width
       p
         margin: 0
         text-align: center
+        @media screen and (max-width: $phone-tablet-boundary)
+          font-size: 10pt
       p.stepTitle
-        font-size: 24pt
+        font-size: 20pt
         margin: 25px 0
+        @media screen and (max-width: $phone-tablet-boundary)
+          font-size: 13pt
+          margin: 15px
+    @media screen and (max-width: $phone-tablet-boundary)
+      div.step.three
+        margin-bottom: 0
 
 
   @media screen and (max-width: $phone-tablet-boundary)
@@ -153,7 +175,7 @@ div.landing-page
 
   p.exploreText
     width: 470px
-    margin: 0 auto 60px auto
+    margin: 60px auto 0 auto
     @media screen and (max-width: $phone-tablet-boundary)
       width: 80%
 

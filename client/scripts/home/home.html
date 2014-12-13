@@ -1,5 +1,5 @@
 <div class="landing-page" ng-controller="HomeController">
-    <h1>Welcome to Giftstarter!</h1>
+    <h1>Welcome to GiftStarter!</h1>
     <h5>Group gifting made easy.</h5>
 
     <h3>Here's how it works</h3>
@@ -10,7 +10,7 @@
             <div class="step one">
                 <img src="/assets/shop_large.png">
                 <p class="stepTitle">You shop.</p>
-                <p>You can group gift anything on the internet! Find a link or search over 3 million gifts right here.  Our gift Concierge can help!</p>
+                <p>You can group gift anything on the internet! Search over 3 million gifts right here, or find a link and our Gift Concierge can help!</p>
             </div>
             <div class="step two">
                 <img src="/assets/share_large.png">
@@ -39,6 +39,8 @@
 
     <h3 class="successful-giftstarts">Explore</h3>
     <div class="horizontalBar"></div>
+    <!--<gs-thanked-campaigns gs-num="1"></gs-thanked-campaigns>-->
+    <ng-include src="'/scripts/home/giftstart-squares.ng.html'"></ng-include>
     <p class="exploreText">
         Looking for a better way to group gift? GiftStarter's patent-pending technology divides the perfect gift into "tiles," giving friends and family
         the ability to purchase as much or as little as they wish. Any product available online can be gifted through GiftStarter - simply search from
@@ -46,8 +48,6 @@
         card featuring a personal message from each Gifter and ensure the gift is shipped to you. When all's said and done, saying "Thank You" is baked into
         the process.
     </p>
-    <!--<gs-thanked-campaigns gs-num="1"></gs-thanked-campaigns>-->
-    <ng-include src="'/scripts/home/giftstart-squares.ng.html'"></ng-include>
 
 
 

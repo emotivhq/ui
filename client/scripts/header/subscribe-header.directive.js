@@ -13,7 +13,7 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
     function link(scope, ele, attr) {
         $scope = scope;
 
-        $scope.subscribeShow = false;
+        $scope.subscribeShow = true;
         $scope.hideSubscribeHeader = hideHeader;
         $scope.subscribeClicked = subscribeClicked;
 

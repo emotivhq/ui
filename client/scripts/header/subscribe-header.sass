@@ -13,16 +13,17 @@ gs-subscribe-header
     div.subscribe-header.shown
       max-height: 6em
   div.subscribe-header
-    z-index: 10000
     background-color: #414141
     position: fixed
-    top: $header-height-mobile * 7 / 8
     right: 0
     left: 0
     width: 100%
-    max-height: 0
     overflow: hidden
     +transition(all, 0.2s)
+
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: none
+
     span
       margin: 0 auto
       display: block
