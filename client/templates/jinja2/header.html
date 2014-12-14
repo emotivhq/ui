@@ -3,10 +3,13 @@
     <gs-subscribe-header></gs-subscribe-header>
     <div id="header">
         <div class="wrapper" ng-class="{big: header.thisRoute == '/', small: header.thisRoute != '/'}">
-            <div id="header-menu-button" ng-show="header.mobile"><img src="/assets/hamburgerGrey.png" ng-click="header.menuOpen()"/></div>
-            <a href="/"><img id="header-logo" src="/assets/GSlogo_web_large.png"/></a>
-           <!-- <span id="subliminal-header" ng-style="header.subliminalStyle"></span>-->
-            <ul ng-hide="header.mobile" class="nav">
+            <div class="headerLogoWrapper">
+                <div id="header-menu-button" ng-show="header.mobile">
+                    <img src="/assets/hamburgerGrey.png" ng-click="actions.toggleMobileMenu()"/>
+                </div>
+                <a href="/"><img id="header-logo" src="/assets/GSlogo_web_large.png"/></a>
+            </div>
+            <ul class="nav">
                 <li>
                     <a href="mailto:giftconcierge@giftstarter.co">GIFT CONCIERGE</a>
                 </li>

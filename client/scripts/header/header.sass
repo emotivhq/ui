@@ -30,6 +30,12 @@
   > div.wrapper
     margin: 0 auto
 
+    @media screen and (max-width: $phone-tablet-boundary)
+      div.headerLogoWrapper
+        width: 100%
+        height: $header-height-mobile
+        background-color: #fff
+
     h1
       cursor: default
       @media screen and (max-width: 37.5em)
@@ -37,18 +43,35 @@
       color: $primary-color
       text-align: center
 
+    ul.nav.expanded
+      top: 60px
     ul.nav
       padding-top: 25px
       text-align: center
       font-family: "Roboto"
+      @media screen and (max-width: $phone-tablet-boundary)
+        position: absolute
+        padding: 10px 20px
+        background-color: #eaeaea
+        text-align: left
+        top: -250px
+        width: 100%
+        z-index: -1
+        +transition(all, 0.5s)
       li.login
         position: absolute
         right: 20px
         margin-top: -7px
+        @media screen and (max-width: $phone-tablet-boundary)
+          position: static
+          margin: auto
       li
         list-style: none
         display: inline-block
         margin: 0 10px
+        @media screen and (max-width: $phone-tablet-boundary)
+          display: block
+          margin: 15px 0
         a
           text-decoration: none
           color: #000
