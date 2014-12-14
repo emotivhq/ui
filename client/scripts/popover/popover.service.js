@@ -43,6 +43,12 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
             LocalStorage.set('/GiftStartService/contributeLogin', false);
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
+
+            // Some mobile cases we hide olark.
+            // show olark message app if mobile.
+            if (device.mobile()) {
+                olark('api.box.show');
+            }
         });
     };
 

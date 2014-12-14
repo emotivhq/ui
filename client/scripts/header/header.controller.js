@@ -76,10 +76,13 @@
 
                 // Not recommended way: needs to happen in the directive
                 // TODO: future work item - move the header to a directive
-                hideMenu
-                    ? angular.element('ul.nav').removeClass('expanded')
-                    : angular.element('ul.nav').addClass('expanded');
-                //$scope.hideMenu = !$scope.hideMenu;
+                if (hideMenu) {
+                    olark('api.box.show');
+                    angular.element('ul.nav').removeClass('expanded');
+                } else {
+                    olark('api.box.hide');
+                    angular.element('ul.nav').addClass('expanded');
+                }
             }
         }
     };
