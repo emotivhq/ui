@@ -29,7 +29,7 @@
 
         $scope.action = {
             submit: function () {
-                if (skipNote) {
+                if ($scope.skipNote) {
                     Analytics.track('pitchin', 'no note submitted');
                     PopoverService.nextPopover();
                 } else {
