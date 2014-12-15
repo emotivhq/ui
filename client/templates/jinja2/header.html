@@ -11,26 +11,26 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="mailto:giftconcierge@giftstarter.co">GIFT CONCIERGE</a>
+                    <a href="mailto:giftconcierge@giftstarter.co" ng-click="actions.menuItemClicked()">GIFT CONCIERGE</a>
                 </li>
                 <li>
-                    <a href="/about/">ABOUT</a>
+                    <a href="/about/" ng-click="actions.menuItemClicked()">ABOUT</a>
                 </li>
                 <li>
-                    <a href="/faq/">FAQ</a>
+                    <a href="/faq/" ng-click="actions.menuItemClicked()">FAQ</a>
                 </li>
                 <li>
-                    <a href="/press/">PRESS</a>
+                    <a href="/press/" ng-click="actions.menuItemClicked()">PRESS</a>
                 </li>
                 <li>
-                    <a href="/partners/">PARTNERS</a>
+                    <a href="/partners/" ng-click="actions.menuItemClicked()">PARTNERS</a>
                 </li>
                 <li>
-                    <a href="/blog/">BLOG</a>
+                    <a href="/blog/" ng-click="actions.menuItemClicked()">BLOG</a>
                 </li>
                 <li class="login">
-                    <button ng-hide="header.loggedIn || header.creating" ng-click="header.login()">Sign in</button>
-                    <button ng-show="header.loggedIn" ng-click="header.logout()">Sign out</button>
+                    <button ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked()">Sign in</button>
+                    <button ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Sign out</button>
                 </li>
             </ul>
 

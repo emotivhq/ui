@@ -83,6 +83,13 @@
                     olark('api.box.hide');
                     angular.element('ul.nav').addClass('expanded');
                 }
+            },
+            menuItemClicked: function () {
+                if (device.mobile()) {
+                    olark('api.box.show');
+                    angular.element('ul.nav').removeClass('expanded');
+                    hideMenu = true;
+                }
             }
         }
     };
