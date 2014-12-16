@@ -24,6 +24,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
         .when('/about',
         {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
+        .when('/concierge',
+        {templateUrl: '/scripts/static-pages/concierge/concierge.html', reloadOnSearch: false})
         .when('/faq',
         {templateUrl: '/scripts/static-pages/faq/faq.html', reloadOnSearch: false})
         .when('/partners',
