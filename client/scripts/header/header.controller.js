@@ -78,16 +78,16 @@
                 // TODO: future work item - move the header to a directive
                 if (hideMenu) {
                     olark('api.box.show');
-                    angular.element('ul.nav').removeClass('expanded');
+                    angular.element('ul.headerNav').removeClass('expanded');
                 } else {
                     olark('api.box.hide');
-                    angular.element('ul.nav').addClass('expanded');
+                    angular.element('ul.headerNav').addClass('expanded');
                 }
             },
             menuItemClicked: function () {
                 if (device.mobile()) {
                     olark('api.box.show');
-                    angular.element('ul.nav').removeClass('expanded');
+                    angular.element('ul.headerNav').removeClass('expanded');
                     hideMenu = true;
                 }
             }

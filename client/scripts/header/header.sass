@@ -33,7 +33,7 @@
     @media screen and (max-width: $phone-tablet-boundary)
       div.headerLogoWrapper
         width: 100%
-        height: $header-height-mobile
+        height: 80px
         background-color: #fff
 
     h1
@@ -43,10 +43,10 @@
       color: $primary-color
       text-align: center
 
-    ul.nav.expanded
-      top: 60px
-    ul.nav
-      padding-top: 25px
+    ul.headerNav.expanded
+      top: 75px
+    ul.headerNav
+      padding-top: 35px
       text-align: center
       font-family: "Roboto"
       @media screen and (max-width: $phone-tablet-boundary)
@@ -54,7 +54,7 @@
         padding: 10px 20px
         background-color: #eaeaea
         text-align: left
-        top: -280px
+        top: -380px
         width: 100%
         z-index: -1
         +transition(all, 0.5s)
@@ -75,7 +75,9 @@
         a
           text-decoration: none
           color: #000
-          font-size: 14pt
+          font-size: 16pt
+          @media screen and (max-width: $phone-tablet-boundary)
+            font-size: 14pt
 
 
 #header-padding
@@ -87,13 +89,12 @@
 
 #header-menu-button
   position: absolute
-  top: 1em
-  left: 0.4em
-  padding: 0.6em 0.6em 0.4em 0.6em
+  top: 20px
+  left: 20px
   display: inline-block
   cursor: pointer
   img
-    height: 1.8em
+    height: 40px
 
 #subliminal-header
   +transition(all, 0.2s)
