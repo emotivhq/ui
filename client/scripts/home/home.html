@@ -1,28 +1,23 @@
 <div class="landing-page" ng-controller="HomeController">
     <h1>Welcome to GiftStarter!</h1>
 
-    <h3>Here's how it works</h3>
-    <div class="horizontalBar"></div>
-    <h5 class="stepsHeader">SHOP. SHARE. SHIP.</h5>
+    <h3>Here's how it works.</h3>
     <div class="process">
         <div class="steps">
             <div class="step one">
-                <img src="/assets/shop_large.png">
                 <p class="stepTitle">You shop.</p>
-                <p>You can group gift anything on the internet! Search over 3 million gifts right here, or find a link and our Gift Concierge can help!</p>
+                <img src="/assets/shop_large.png">
+                <p>Anything sold online can be GiftStarted. Search our catalog of over three million items or send your list to our <a href="/concierge">Gift Concierge</a>.</p>
             </div>
             <div class="step two">
-                <img src="/assets/share_large.png">
                 <p class="stepTitle">You share.</p>
-                <p>
-                    Break the gift into tiles, then share & invite through social media. Friends & family can purchase
-                    their desired amounts by selecting one or many tiles.
-                </p>
+                <img src="/assets/share_large.png">
+                <p>Divide the gift into tiles, then invite your friends and family to purchase one or more tiles through social media and email.</p>
             </div>
             <div class="step three">
-                <img src="/assets/ship_large.png">
                 <p class="stepTitle">We ship.</p>
-                <p>We handcraft a card from your personal messages. We also take care of ordering & shipping the gift. It's that easy.</p>
+                <img src="/assets/ship_large.png">
+                <p>Once funded, we take care of shipping it along with a handmade card featuring personal wishes from all the Gifters.</p>
             </div>
             <div class="clear"></div>
         </div>
@@ -30,14 +25,12 @@
 
     <hr/>
 
-    <h3 class="successful-giftstarts">Lets get shopping!</h3>
-    <div class="horizontalBar"></div>
+    <h3 class="successful-giftstarts">Let's get started.</h3>
     <gs-product-search></gs-product-search>
 
     <hr/>
 
-    <h3 class="successful-giftstarts">Explore</h3>
-    <div class="horizontalBar"></div>
+    <h3 class="successful-giftstarts">Explore GiftStarts.</h3>
     <!--<gs-thanked-campaigns gs-num="1"></gs-thanked-campaigns>-->
     <ng-include src="'/scripts/home/giftstart-squares.ng.html'"></ng-include>
     <p class="exploreText">
