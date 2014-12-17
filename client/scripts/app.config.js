@@ -35,7 +35,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/privacy',
         {templateUrl: '/scripts/static-pages/privacy/privacy.html', reloadOnSearch: false})
         .when('/what-is-it',
-        {templateUrl: '/scripts/static-pages/what-is-it/what-is-it.html'})
+        {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
         .when('/add-the-button',
         {templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
         .when('/:path*', {
