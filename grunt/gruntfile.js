@@ -32,6 +32,7 @@ module.exports = function(grunt) {
           '../client//bower_components/angular-resource/angular-resource.min.js',
           '../client//bower_components/devicejs/lib/device.min.js',
           '../client//bower_components/angular-ui-date/src/date.js',
+          '../client//bower_components/bootstrap/dist/bootstrap.min..js',
           '../client//scripts/utilities/ng-ab/ng-ab.module.js',
           '../client//scripts/utilities/ng-ab/ng-ab.service.js',
           '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
