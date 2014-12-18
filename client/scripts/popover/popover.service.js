@@ -44,7 +44,6 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
 
-            // Some mobile cases we hide olark.
             // show olark message app if mobile.
             if (device.mobile()) {
                 olark('api.box.show');
@@ -53,6 +52,10 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
     };
 
     this.showPopover = function() {
+        // hide olark message app if mobile.
+        if (device.mobile()) {
+            olark('api.box.hide');
+        }
         $rootScope.$broadcast('popover-shown');
     };
 

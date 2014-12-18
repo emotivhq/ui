@@ -353,11 +353,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             PopoverService.contributeLogin = true;
             AppStateService.set('contributeLogin', true);
             PopoverService.setPopover('login');
-
-            // hide olark message app if mobile
-            if (device.mobile()) {
-                olark('api.box.hide');
-            }
         } else {console.log("Nothing selected!")}
     };
 

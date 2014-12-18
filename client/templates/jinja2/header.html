@@ -29,7 +29,7 @@
                     <a href="http://content.giftstarter.co/category/blog/" ng-click="actions.menuItemClicked()">BLOG</a>
                 </li>
                 <li class="login">
-                    <button ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked()">Sign in</button>
+                    <button ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">Sign in</button>
                     <button ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Sign out</button>
                 </li>
             </ul>

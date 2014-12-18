@@ -77,16 +77,16 @@
                 // Not recommended way: needs to happen in the directive
                 // TODO: future work item - move the header to a directive
                 if (hideMenu) {
-                    olark('api.box.show');
+                    device.mobile() && olark('api.box.show');
                     angular.element('ul.headerNav').removeClass('expanded');
                 } else {
-                    olark('api.box.hide');
+                    device.mobile() && olark('api.box.hide');
                     angular.element('ul.headerNav').addClass('expanded');
                 }
             },
-            menuItemClicked: function () {
+            menuItemClicked: function (isLoginItem) {
                 if (device.mobile() || device.tablet()) {
-                    olark('api.box.show');
+                    device.mobile() && !isLoginItem && olark('api.box.show');
                     angular.element('ul.headerNav').removeClass('expanded');
                     hideMenu = true;
                 }
