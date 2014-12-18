@@ -10,7 +10,7 @@
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
-        this.mobile = device.mobile();
+        this.mobile = device.mobile() || device.tablet();
 
         this.subliminalOffset = -3.0;
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
@@ -68,7 +68,7 @@
         function menuOpen() {$rootScope.$broadcast('menu-open')}
         function menuClose() {$rootScope.$broadcast('menu-close')}
 
-        var hideMenu = device.mobile();
+        var hideMenu = device.mobile() || device.tablet();
 
         $scope.actions = {
             toggleMobileMenu: function () {
@@ -85,7 +85,7 @@
                 }
             },
             menuItemClicked: function () {
-                if (device.mobile()) {
+                if (device.mobile() || device.tablet()) {
                     olark('api.box.show');
                     angular.element('ul.headerNav').removeClass('expanded');
                     hideMenu = true;

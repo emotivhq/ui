@@ -6,10 +6,10 @@ gs-subscribe-header
   div.subscribe-header-padding
     max-height: $header-height-mobile * 7 / 8
     +transition(all, 0.2s)
-  @media screen and (min-width: $phone-tablet-boundary)
+  @media screen and (min-width: $phone-boundary)
     div.subscribe-header-padding.shown
       max-height: $header-height-mobile * 7 / 8 + 3em
-  @media screen and (min-width: $phone-tablet-boundary)
+  @media screen and (min-width: $phone-boundary)
     div.subscribe-header.shown
       max-height: 6em
   div.subscribe-header
@@ -22,7 +22,7 @@ gs-subscribe-header
     z-index: 1000
     +transition(all, 0.2s)
 
-    @media screen and (max-width: $phone-tablet-boundary)
+    @media screen and (max-width: $phone-boundary)
       display: none
 
     span
