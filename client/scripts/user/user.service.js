@@ -1,5 +1,7 @@
 /**
- * Created by stuart on 6/25/14.
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
 GiftStarterApp.service('UserService', ['$http','$rootScope','$cookieStore',

@@ -84,6 +84,12 @@ handlers:
 - url: /templates/angular
   static_dir: client/templates/angular
   secure: always
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+- url: /sitemap.xml
+  static_files: sitemap.xml
+  upload: sitemap.xml
 
 # Data dumps
 - url: /dump/.*

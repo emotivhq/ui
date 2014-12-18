@@ -1,7 +1,8 @@
 /**
- * Created by Stuart on 10/19/14.
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
-
 
 GiftStarterApp.controller('whatIsItController', [
     '$scope','$location','ToastService','$http','Analytics',

@@ -1,5 +1,7 @@
 /**
- * Created by Stuart on 11/11/14.
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
 angular.module('GiftStarterApp').service('CardService', ['$rootScope',

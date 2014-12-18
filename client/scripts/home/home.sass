@@ -8,7 +8,32 @@ $step-width: (2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-pad
 div.landing-page
   padding: 0.75em $landing-page-padding-horz
   text-align: center
-  margin: 1em auto
+  margin: 0 auto
+
+  *
+    font-family: "Roboto", sans-serif
+    font-color: #333
+    margin: 0
+
+  hr
+    margin: 30px 0 30px 0
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin: 35px 0 20px 0
+
+  div.clear
+    clear: both
+
+  button
+    font-family: BlanchCondensed
+
+  div.horizontalBar
+    border-color: $primary-color
+    background-color: $primary-color
+    width: 160px
+    height: 2px
+    margin: 0 auto 30px auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin: 0 auto 40px auto
 
   @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
@@ -24,7 +49,28 @@ div.landing-page
       margin-bottom: 0.25em
     p.explainer:last-of-type
       margin-top: 0.25em
-    
+
+  h1
+    font-family: "Roboto Bold", sans-serif
+    font-size: 40pt
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 30pt
+  h3
+    font-size: 25pt
+    margin-bottom: 5px
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 20pt
+      margin: 15px
+  h5
+    font-size: 20pt
+    color: #666
+    @media screen and (max-width: $phone-tablet-boundary)
+      font-size: 13pt
+  h5.stepsHeader
+    margin-bottom: 30px
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin-bottom: 30px
+
   div.copy
     margin-bottom: 2em
     text-align: left
@@ -55,28 +101,38 @@ div.landing-page
       color: #000
 
   div.process
+    div.steps
+      max-width: 800px
+      margin: 0 auto
     div.step
-      display: inline-block
+      float: left
       text-align: center
       width: $step-width
       vertical-align: top
-      margin-bottom: 2em
+      @media screen and (max-width: $phone-tablet-boundary)
+        margin-bottom: 45px
 
-      span.number
-        width: 1em
-        height: 1em
-        display: inline-block
-        text-align: center
-        background: $primary-color
-        +border-radius(50%)
-        color: #fff
-        font: $button-font
-        margin-bottom: 0.2em
       img
         width: $step-width
+        margin-bottom: 10px
       p
-        margin: 0
-        text-align: left
+        margin: 0px
+        text-align: center
+        font-size: 13.5px
+        @media screen and (max-width: $phone-tablet-boundary)
+          font-size: 11.5pt
+          max-width: 500px
+          margin: 0 auto
+      p.stepTitle
+        font-weight: 800
+        font-size: 20pt
+        margin: 15px 0 10px 0px
+        @media screen and (max-width: $phone-tablet-boundary)
+          margin: 15px auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      div.step.three
+        margin-bottom: 0
+
 
   @media screen and (max-width: $phone-tablet-boundary)
     div.process
@@ -84,7 +140,7 @@ div.landing-page
         width: 100%
 
         img
-          width: 60%
+          width: 170px
 
   @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
     div.process
@@ -113,6 +169,24 @@ div.landing-page
     text-align: left
     @media screen and (min-width: $phone-tablet-boundary)
       width: 30em
+
+  p.need-help-concierge
+    width: 300px
+    margin: 0 auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 80%
+
+    a
+      color: $primary-color
+      text-decoration: none
+
+  p.exploreText
+    width: 798px
+    max-width: 80%
+    margin: 30px auto 30px auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 80%
+
 
 #how-to-gif
   width: 118%

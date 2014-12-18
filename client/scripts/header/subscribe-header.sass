@@ -6,23 +6,25 @@ gs-subscribe-header
   div.subscribe-header-padding
     max-height: $header-height-mobile * 7 / 8
     +transition(all, 0.2s)
-  @media screen and (min-width: $phone-tablet-boundary)
+  @media screen and (min-width: $phone-boundary)
     div.subscribe-header-padding.shown
       max-height: $header-height-mobile * 7 / 8 + 3em
-  @media screen and (min-width: $phone-tablet-boundary)
+  @media screen and (min-width: $phone-boundary)
     div.subscribe-header.shown
       max-height: 6em
   div.subscribe-header
-    z-index: 10000
     background-color: #414141
     position: fixed
-    top: $header-height-mobile * 7 / 8
     right: 0
     left: 0
     width: 100%
-    max-height: 0
     overflow: hidden
+    z-index: 1001
     +transition(all, 0.2s)
+
+    @media screen and (max-width: $phone-boundary)
+      display: none
+
     span
       margin: 0 auto
       display: block

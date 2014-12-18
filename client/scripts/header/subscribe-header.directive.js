@@ -1,5 +1,7 @@
 /**
- * Created by Stuart on 12/5/14.
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
 angular.module('GiftStarterApp').directive('gsSubscribeHeader', ['$location',
@@ -13,7 +15,7 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
     function link(scope, ele, attr) {
         $scope = scope;
 
-        $scope.subscribeShow = false;
+        $scope.subscribeShow = true;
         $scope.hideSubscribeHeader = hideHeader;
         $scope.subscribeClicked = subscribeClicked;
 

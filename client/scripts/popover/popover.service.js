@@ -1,5 +1,7 @@
 /**
- * Created by stuart on 4/21/14.
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
 GiftStarterApp.service('PopoverService', ['$rootScope','$timeout',
@@ -41,10 +43,19 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
             LocalStorage.set('/GiftStartService/contributeLogin', false);
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
+
+            // show olark message app if mobile.
+            if (device.mobile()) {
+                olark('api.box.show');
+            }
         });
     };
 
     this.showPopover = function() {
+        // hide olark message app if mobile.
+        if (device.mobile()) {
+            olark('api.box.hide');
+        }
         $rootScope.$broadcast('popover-shown');
     };
 

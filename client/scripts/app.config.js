@@ -1,5 +1,7 @@
 /**
- * Created by Stuart on 10/19/14.
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
  */
 
 GiftStarterApp.config(['$routeProvider','$locationProvider','$httpProvider',
@@ -20,14 +22,20 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
         .when('/users/:uid',
         {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
+        .when('/about',
+        {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
+        .when('/concierge',
+        {templateUrl: '/scripts/static-pages/concierge/concierge.html', reloadOnSearch: false})
         .when('/faq',
         {templateUrl: '/scripts/static-pages/faq/faq.html', reloadOnSearch: false})
+        .when('/partners',
+        {templateUrl: '/scripts/static-pages/partners/partners.html', reloadOnSearch: false})
         .when('/terms',
         {templateUrl: '/scripts/static-pages/terms/terms.html', reloadOnSearch: false})
         .when('/privacy',
         {templateUrl: '/scripts/static-pages/privacy/privacy.html', reloadOnSearch: false})
         .when('/what-is-it',
-        {templateUrl: '/scripts/static-pages/what-is-it/what-is-it.html'})
+        {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
         .when('/add-the-button',
         {templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
         .when('/:path*', {
