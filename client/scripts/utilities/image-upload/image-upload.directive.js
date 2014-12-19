@@ -188,7 +188,7 @@ function gsImageUpload($timeout, $window) {
             try {
                 $window.localStorage.setItem('thank-you-image', reader.result);
             } catch (exception) {
-                console.log("Unable to store image in localStorage",
+                console && console.log && console.log("Unable to store image in localStorage",
                     exception);
             }
             makeImage(reader.result);

@@ -15,7 +15,7 @@ describe("ProductService", function() {
     }));
 
     beforeEach(function() {
-        console.log("setting up get watcher");
+        console && console.log && console.log("setting up get watcher");
         $httpBackend.when('GET', function(url) {
             console.log(url);
             return url.indexOf('/templates/') > -1;

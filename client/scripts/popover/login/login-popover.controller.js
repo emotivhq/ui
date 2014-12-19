@@ -29,7 +29,7 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
     $scope.twitterLogin = function() {
         Analytics.track('user', 'login attempt with twitter');
         AppStateService.setPath($location.path());
-        console.log("Setting path", AppStateService.path);
+        console && console.log && console.log("Setting path", AppStateService.path);
         TwitterService.login();
     };
     $scope.googleLogin  = function() {

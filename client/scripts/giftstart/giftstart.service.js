@@ -85,7 +85,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             data: self.giftStart})
             .success(function(data) {self.inflateGiftStart(data)})
             .error(function(reason) {
-                console.log(reason);
+                console && console.log && console.log(reason);
                 Analytics.track('campaign', 'campaign create failed');
             });
     };
@@ -195,7 +195,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.fetchGiftStart = function(url_title) {
-        console.log(url_title);
+        console && console.log && console.log(url_title);
         function fetchSuccess(data) {self.inflateGiftStart(data)}
         function fetchError(reason) {Analytics.track('campaign',
             'campaign fetch failed')}
@@ -206,7 +206,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.inflateGiftStart = function(giftstart) {
-        console.log(giftstart);
+        console && console.log && console.log(giftstart);
         Analytics.track('campaign', 'campaign enabled');
 
         self.giftStart = giftstart;
@@ -217,7 +217,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.updateSelected();
 
         if (!(/\/giftstart\//.test($location.path()))) {
-            console.log(location.pathname);
+            console && console.log && console.log(location.pathname);
             $location.path('/giftstart/' + giftstart.giftstart_url_title);
         }
 
@@ -281,7 +281,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         }
     };
 
-    this.paymentFailure = function() {console.log("Pitch-in failed!")};
+    this.paymentFailure = function() {console && console.log && console.log("Pitch-in failed!")};
 
     this.updateCampaign = function(newTitle, newDescription, newImage,
                                    newGcName) {
@@ -353,7 +353,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             PopoverService.contributeLogin = true;
             AppStateService.set('contributeLogin', true);
             PopoverService.setPopover('login');
-        } else {console.log("Nothing selected!")}
+        } else {console && console.log && console.log("Nothing selected!")}
     };
 
     function restartPitchin() {
@@ -370,7 +370,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             data: {action: 'get-pitch-ins', gsid: self.giftStart.gsid}
         })
             .success(syncCheckCallback)
-            .error(function() {console.log("Failed to contact part sync.")})
+            .error(function() {console && console.log && console.log("Failed to contact part sync.")})
     }
 
     function syncCheckCallback(pitchins) {

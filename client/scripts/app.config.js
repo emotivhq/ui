@@ -89,10 +89,10 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
             result;
         container.innerHTML = html;
         bodyTags = container.querySelector('main');
-        console.log(replaceAnchorLinks(bodyTags));
+        console && console.log && console.log(replaceAnchorLinks(bodyTags));
         if (bodyTags == null) {
             result = html;
-            console.log('html: ',html);
+            console && console.log && console.log('html: ',html);
         } else if (bodyTags.length > 0) {
             result = bodyTags.innerHTML;
         } else if (bodyTags.hasOwnProperty('innerHTML')) {

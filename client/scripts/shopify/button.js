@@ -24,7 +24,7 @@
         };
         var url = document.location.href.split('#')[0].split('?')[0] + '.json';
         xhr.open('get', url, true);
-        console.log(document.location.href.split('?')[0] + '.json');
+        console && console.log && console.log(document.location.href.split('?')[0] + '.json');
         xhr.send();
     };
 

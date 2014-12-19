@@ -8,7 +8,7 @@ var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
         'ngSanitize', 'ngAB', 'ngResource', 'ui.date']);
 
-console.log("ver54");
+console && console.log && console.log("ver54");
 
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
@@ -71,7 +71,7 @@ angular.module('GiftStarterApp').service('AppStateService', [
 
         if ($location.search().state) {
             state = JSON.parse($window.atob($location.search()['state']));
-            console.log('parsed state', state);
+            console && console.log && console.log('parsed state', state);
             $location.search('state', null);
             if (state.title_url) {
                 $location.path('/giftstart/' + state.title_url);

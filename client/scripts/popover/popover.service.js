@@ -16,7 +16,7 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
 
     this.setPopover = function(popoverName) {
         LocalStorage.set('/PopoverService/current', popoverName);
-        console.log('setting popover', popoverName);
+        console && console.log && console.log('setting popover', popoverName);
         if (popoverName === '' || popoverName === null) {
             this.hidePopover();
         } else {

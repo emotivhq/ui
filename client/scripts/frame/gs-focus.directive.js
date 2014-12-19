@@ -20,7 +20,7 @@ function gsFocus($timeout, $parse) {
             });
             // on blur event:
             element.bind('blur', function() {
-                console.log('blur');
+                console && console.log && console.log('blur');
                 scope.$apply(model.assign(scope, false));
             });
         }

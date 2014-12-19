@@ -28,7 +28,7 @@ function ProductService($http,  $rootScope,  Analytics,  $location) {
             url: '/products/urls/' + encodeURIComponent(url) + '.json'
         }).success(function(data) {
             if (data.error) {
-                console.log("Fetched failed!");
+                console && console.log && console.log("Fetched failed!");
                 onFail(data);
             } else {
                 self.product.imgs = data.product.imgs;
@@ -38,7 +38,7 @@ function ProductService($http,  $rootScope,  Analytics,  $location) {
                 onSuccess(self.product);
             }
         }).error(function(data) {
-            console.log("Fetched failed!");
+            console && console.log && console.log("Fetched failed!");
             onFail(data);
         });
     };

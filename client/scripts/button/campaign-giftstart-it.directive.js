@@ -21,7 +21,7 @@ function gsItButton(GiftStartService) {
     }
 
     function calculateLink() {
-        console.log(GiftStartService.giftStart);
+        console && console.log && console.log(GiftStartService.giftStart);
         return url = '/create?' + urlSerialize({
                 product_url: GiftStartService.giftStart.product_url,
                 title: GiftStartService.giftStart.product_title,
