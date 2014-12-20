@@ -41,7 +41,7 @@ GiftStarterApp.service('GooglePlusService', [
                     self.has_pitched_in = data['has_pitched_in'];
                     $rootScope.$broadcast('googleplus-login-success');
                 })
-                .error(function(data) {console.log(data)});
+                .error(function(data) {console && console.log && console.log(data)});
             self.loginRequested = false;
         };
 

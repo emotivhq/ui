@@ -51,7 +51,7 @@ GiftStarterApp.service('TwitterService', [
                     self.has_pitched_in = data['has_pitched_in'];
                     $rootScope.$broadcast('twitter-login-success');
                 })
-                .error(function(data) {console.log(data);});
+                .error(function(data) {console && console.log && console.log(data);});
         };
 
         this.getAuthUrl = function() {
@@ -60,7 +60,7 @@ GiftStarterApp.service('TwitterService', [
                 action: 'get-auth-url', service: 'twitter',
                 redirect_url: AppStateService.getOauthRedirectUrl()}})
                 .success(function(data) {self.auth_url = data['url'];})
-                .error(function(data) {console.log(data);});
+                .error(function(data) {console && console.log && console.log(data);});
             AppStateService.remove('login_service');
         };
 

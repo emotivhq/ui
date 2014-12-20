@@ -34,7 +34,7 @@ function ProfileController($scope,  UserService,  $location) {
                 $scope.editMode = false;
             })
             .error(function(reason) {
-                console.log('Failed to update profile image', reason);
+                console && console.log && console.log('Failed to update profile image', reason);
                 $scope.editMode = false;
             });
     }

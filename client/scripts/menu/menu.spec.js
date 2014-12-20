@@ -33,7 +33,7 @@ function menuSpec() {
     function loggedInTest() {
         UserService.loggedIn = true;
         var elm = $compile('<gs-menu></gs-menu>')(scope);
-        console.log(elm);
+        console && console.log && console.log(elm);
         expect(UserService.loggedIn).toBe(true);
         expect(scope.loggedIn).toBe(true);
     }
