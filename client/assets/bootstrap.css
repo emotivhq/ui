@@ -184,7 +184,7 @@ td,
 th {
   padding: 0;
 }
-@media print {
+/*@media print {
   * {
     color: #000 !important;
     text-shadow: none !important;
@@ -255,7 +255,7 @@ th {
   .table-bordered td {
     border: 1px solid #ddd !important;
   }
-}
+}*/
 * {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -5805,7 +5805,7 @@ th.visible-print,
 td.visible-print {
   display: none !important;
 }
-@media print {
+/*@media print {
   .visible-print {
     display: block !important;
   }
@@ -5827,5 +5827,5 @@ td.visible-print {
   td.hidden-print {
     display: none !important;
   }
-}
+}*/
 /*# sourceMappingURL=bootstrap.css.map */
