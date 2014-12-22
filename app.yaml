@@ -90,6 +90,9 @@ handlers:
 - url: /sitemap.xml
   static_files: sitemap.xml
   upload: sitemap.xml
+- url: /googled6c05fd809b457a4.html
+  static_files: googled6c05fd809b457a4.html
+  upload: googled6c05fd809b457a4.html
 
 # Data dumps
 - url: /dump/.*
