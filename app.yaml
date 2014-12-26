@@ -99,6 +99,20 @@ handlers:
   script: analytics.handler
   login: admin
 
+# Blog
+- url: /blog
+  script: blog.handler
+  secure: always
+- url: /blog/.*
+  script: blog.handler
+  secure: always
+- url: /press
+  script: blog.handler
+  secure: always
+- url: /press/
+  script: blog.handler
+  secure: always
+
 # Catch all other urls
 - url: /admin.*
   script: google.appengine.ext.admin.application
