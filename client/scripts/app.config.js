@@ -58,7 +58,7 @@ GiftStarterApp.controller('ContentRouteController', contentRouteController);
 
 function contentRouteController($scope, $routeParams, $http, $sce, $window) {
     $scope.templateUrl = '';
-    var baseUrl = '//content.giftstarter.co/';
+//    var baseUrl = '//content.giftstarter.co/';
     function onRouteUpdate() {
 //        $scope.templateUrl = baseUrl + $routeParams.path;
 //        $scope.error = false;
