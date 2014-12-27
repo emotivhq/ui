@@ -1,4 +1,10 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  technically invalid due to nested sitemapindexes, but left for reference
+  both sitemaps are listed properly in robots.txt
+  submit the following sitemaps SEPARATELY to Google, not this one
+-->
 <sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
     <sitemap>
         <loc>https://www.giftstarter.co/sitemap-app.xml</loc>

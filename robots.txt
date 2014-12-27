@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /wp-admin/
 
-Sitemap: https://www.giftstarter.co/sitemap.xml
+Sitemap: https://www.giftstarter.co/sitemap-app.xml
+Sitemap: https://www.giftstarter.co/blog/sitemap.xml
