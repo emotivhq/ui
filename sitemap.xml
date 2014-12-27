@@ -1,43 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-
-<url>
-  <loc>https://www.giftstarter.co/</loc>
-  <changefreq>daily</changefreq>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://www.giftstarter.co/about/</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.giftstarter.co/concierge/</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.giftstarter.co/faq/</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.giftstarter.co/partners/</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.giftstarter.co/privacy</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://www.giftstarter.co/terms</loc>
-  <changefreq>daily</changefreq>
-  <priority>0.80</priority>
-</url>
-</urlset>
+<sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
+    <sitemap>
+        <loc>https://www.giftstarter.co/sitemap-app.xml</loc>
+    </sitemap>
+    <sitemap>
+        <loc>https://www.giftstarter.co/blog/sitemap.xml</loc>
+    </sitemap>
+</sitemapindex>

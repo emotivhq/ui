@@ -37,9 +37,19 @@ class BlogHandler(webapp2.RequestHandler):
         content = content.replace('<comments>http://'+blog_subdomain+'.giftstarter.co','<comments>'+blog_path_url)
         content = content.replace('<wfw:commentRss>http://'+blog_subdomain+'.giftstarter.co','<wfw:commentRss>'+blog_path_url)
         content = content.replace(blog_path_url+'/',blog_path_url)
+        #sitemap xml files
+        if(re.match('.*sitemap.*\.xml',fetch_url)):
+            content = content.replace("http://"+blog_subdomain+".giftstarter.co",self.request.host_url+blog_path_notrail)
         #avoid providing non-SSL content in SSL page
         content = content.replace("http://"+blog_subdomain+".giftstarter.co","https://"+blog_subdomain+".giftstarter.co")
         content = content.replace("http://fonts.googleapis.com","https://fonts.googleapis.com")
+        logging.info("Headers: {0}".format(fetched.headers))
+        #headers = self.response._get_headers;
+        #headers['content-type'] = fetched.headers['content-type']
+        self.response.headers['Content-Type']=fetched.headers['content-type']
+        self.response.headers['Content-Length']=fetched.headers['content-length']
+        self.response.headers['Date']=fetched.headers['date']
+        logging.info("Headers: {0}".format(self.response.headers))
         self.response.write(content)
 
 handler = webapp2.WSGIApplication([
