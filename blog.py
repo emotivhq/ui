@@ -44,11 +44,13 @@ class BlogHandler(webapp2.RequestHandler):
         content = content.replace("http://"+blog_subdomain+".giftstarter.co","https://"+blog_subdomain+".giftstarter.co")
         content = content.replace("http://fonts.googleapis.com","https://fonts.googleapis.com")
         logging.info("Headers: {0}".format(fetched.headers))
-        #headers = self.response._get_headers;
         #headers['content-type'] = fetched.headers['content-type']
-        self.response.headers['Content-Type']=fetched.headers['content-type']
-        self.response.headers['Content-Length']=fetched.headers['content-length']
-        self.response.headers['Date']=fetched.headers['date']
+        if('content-type' in fetched.headers):
+            self.response.headers['Content-Type']=fetched.headers['content-type']
+        if('content-length' in fetched.headers):
+            self.response.headers['Content-Length']=fetched.headers['content-length']
+        if('date' in fetched.headers):
+            self.response.headers['Date']=fetched.headers['date']
         logging.info("Headers: {0}".format(self.response.headers))
         self.response.write(content)
 
