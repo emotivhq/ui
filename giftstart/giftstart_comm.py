@@ -180,7 +180,7 @@ def check_if_complete(gsid):
                 email_url = config['email_url']
                 send_path = email_url[email_url.find('/', 8):]
                 payload = json.dumps({
-                    'subject': "You've Receive a GiftStarter Gift!",
+                    'subject': "You've Received a GiftStarter Gift!",
                     'mime_type': 'html',
                     'template_name': "recipient_thankyou_notification",
                     'template_kwargs': email_kwargs,
@@ -260,7 +260,7 @@ def check_if_complete(gsid):
                     email_url = config['email_url']
                     send_path = email_url[email_url.find('/', 8):]
                     payload = json.dumps({
-                        'subject': "You've Receive a GiftStarter Gift!",
+                        'subject': "You've Received a GiftStarter Gift!",
                         'mime_type': 'html',
                         'template_name': "recipient_thankyou_notification",
                         'template_kwargs': email_kwargs,
