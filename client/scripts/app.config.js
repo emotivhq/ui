@@ -60,16 +60,16 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
     $scope.templateUrl = '';
     var baseUrl = '//content.giftstarter.co/';
     function onRouteUpdate() {
-        $scope.templateUrl = baseUrl + $routeParams.path;
-        $scope.error = false;
-
-        $http.get($scope.templateUrl).success(function(response) {
-            $scope.content = $sce.trustAsHtml(extractMain(response));
-            $scope.error = false;
-        }).error(function(){
+//        $scope.templateUrl = baseUrl + $routeParams.path;
+//        $scope.error = false;
+//
+//        $http.get($scope.templateUrl).success(function(response) {
+//            $scope.content = $sce.trustAsHtml(extractMain(response));
+//            $scope.error = false;
+//        }).error(function(){
             $scope.content = '';
             $scope.error = true;
-        });
+//        });
     }
 
     var re = new RegExp('content.giftstarter.co', 'g');
