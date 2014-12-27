@@ -18,10 +18,11 @@ class PressRootHandler(webapp2.RequestHandler):
 class BlogHandler(webapp2.RequestHandler):
     def get(self):
         blog_subdomain="content"
-        blog_path="/blog/"
+        blog_path_notrail = "/blog"
+        blog_path=blog_path_notrail+"/"
         blog_subdomain_url = "http://"+blog_subdomain+".giftstarter.co/"
         blog_path_url = self.request.host_url+blog_path
-        fetch_url = self.request.path.replace('/blog',blog_subdomain_url,1)
+        fetch_url = self.request.path.replace(blog_path_notrail,blog_subdomain_url,1)
         #get remote page
         urlfetch.set_default_fetch_deadline(30)
         fetch_url = fetch_url.replace(blog_subdomain_url+'/',blog_subdomain_url,1)
