@@ -106,15 +106,19 @@ handlers:
 - url: /blog
   script: blog.handler
   secure: always
+  expiration: 1s
 - url: /blog/.*
   script: blog.handler
   secure: always
+  expiration: 1s
 - url: /press
   script: blog.handler
   secure: always
+  expiration: 1s
 - url: /press/
   script: blog.handler
   secure: always
+  expiration: 1s
 
 # Catch all other urls
 - url: /admin.*
