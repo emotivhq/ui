@@ -25,6 +25,15 @@ function ThanksPopoverController($scope,  PopoverService,  GiftStartService,
         google_remarketing_only: false
     });
 
+    window.uetq = window.uetq || [];
+    var data = {
+        ec: 'PitchInThankYou',
+        ea: 'PitchInSuccess',
+        el: 'PurchaseConfirmation',
+        ev: GiftStartService.giftStart.totalSelection
+    };
+    window.uetq.push(data);
+
     $scope.close = function(){PopoverService.hidePopover()};
 
     $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
