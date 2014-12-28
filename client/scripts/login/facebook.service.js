@@ -65,7 +65,7 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
     this.inviteFriends = function(uid) {
         ga('send', 'event', 'share campaign', 'facebook');
 
-        if (!device.mobile() && !device.    tablet()) {
+        if (!device.mobile() && !device.tablet()) {
             $location.search('re', btoa(JSON.stringify({
                 type: 'consumer',
                 uid: uid,
