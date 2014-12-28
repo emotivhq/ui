@@ -100,6 +100,9 @@ def render_app_with_giftstart(request):
             'googleanalytics_key': config['googleanalytics']['key'],
             'mixpanel_key': config['mixpanel']['key'],
             'heap_key': config['heap']['key'],
+            'hide_header': False,
+            'hide_body': False,
+            'hide_footer': False,
         }
         response = frame_template.render(render_values)
     else:
