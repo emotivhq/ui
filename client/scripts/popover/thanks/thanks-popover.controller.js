@@ -13,6 +13,18 @@ function ThanksPopoverController($scope,  PopoverService,  GiftStartService,
                                  UserService,  FacebookService,
                                  TwitterService, GooglePlusService,
                                  Analytics) {
+
+    window.google_trackConversion({
+        google_conversion_id: 961290155,
+        google_conversion_language: "en",
+        google_conversion_format: "2",
+        google_conversion_color: "ffffff",
+        google_conversion_label: "mwFzCO75mlgQq7-wygM",
+        google_conversion_value: GiftStartService.giftStart.totalSelection,
+        google_conversion_currency: "USD",
+        google_remarketing_only: false
+    });
+
     $scope.close = function(){PopoverService.hidePopover()};
 
     $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
