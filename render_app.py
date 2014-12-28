@@ -22,6 +22,11 @@ frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
 
 
 def render_app(request):
+
+    hide_header = False
+    hide_body = request.path == '/header'
+    hide_footer = request.path == '/header'
+
     analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
@@ -45,6 +50,9 @@ def render_app(request):
         'googleanalytics_key': config['googleanalytics']['key'],
         'mixpanel_key': config['mixpanel']['key'],
         'heap_key': config['heap']['key'],
+        'hide_header': hide_header,
+        'hide_body': hide_body,
+        'hide_footer': hide_footer,
     })
 
     return response
@@ -92,6 +100,9 @@ def render_app_with_giftstart(request):
             'googleanalytics_key': config['googleanalytics']['key'],
             'mixpanel_key': config['mixpanel']['key'],
             'heap_key': config['heap']['key'],
+            'hide_header': False,
+            'hide_body': False,
+            'hide_footer': False,
         }
         response = frame_template.render(render_values)
     else:

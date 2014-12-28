@@ -57,12 +57,11 @@ function facebookConfig(ezfbProvider, $httpProvider) {
 GiftStarterApp.controller('ContentRouteController', contentRouteController);
 
 function contentRouteController($scope, $routeParams, $http, $sce, $window) {
-    $scope.templateUrl = '';
-//    var baseUrl = '//content.giftstarter.co/';
+//    $scope.templateUrl = '';
+//    var baseUrl = '/blog/'; //content.giftstarter.co/';
     function onRouteUpdate() {
 //        $scope.templateUrl = baseUrl + $routeParams.path;
 //        $scope.error = false;
-//
 //        $http.get($scope.templateUrl).success(function(response) {
 //            $scope.content = $sce.trustAsHtml(extractMain(response));
 //            $scope.error = false;
@@ -72,24 +71,26 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
 //        });
     }
 
-    var re = new RegExp('content.giftstarter.co', 'g');
-    function replaceLink(ele) {
-        ele.host = ele.host.replace(re, $window.location.host);
-    }
+//    var re = new RegExp('content.giftstarter.co', 'g');
+//    function replaceLink(ele) {
+//        ele.host = ele.host.replace(re, $window.location.host);
+//    }
 
-    function replaceAnchorLinks(ele) {
-        var anchors = ele.querySelectorAll('a');
-        Array.prototype.slice.call(anchors).forEach(replaceLink);
-        return ele;
-    }
+//    function replaceAnchorLinks(ele) {
+//        var anchors = ele.querySelectorAll('a');
+//        Array.prototype.slice.call(anchors).forEach(replaceLink);
+//        return ele;
+//    }
 
     function extractMain(html) {
+        return $(html).find('.site-inner').html()+'<link rel="stylesheet" id="open-sans-css" href="//fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C300%2C400%2C600&amp;subset=latin%2Clatin-ext&amp;ver=4.1" type="text/css" media="all"><link rel="stylesheet" id="dashicons-css" href="http://content.giftstarter.co/wp-includes/css/dashicons.min.css?ver=4.1" type="text/css" media="all"><link rel="stylesheet" id="admin-bar-css" href="http://content.giftstarter.co/wp-includes/css/admin-bar.min.css?ver=4.1" type="text/css" media="all"><link rel="stylesheet" id="menu-image-css" href="http://content.giftstarter.co/wp-content/plugins/menu-image/menu-image.css?ver=1.1" type="text/css" media="all"><link rel="stylesheet" id="googlefonts-css" href="http://fonts.googleapis.com/css?family=Roboto+Condensed:400&amp;subset=latin" type="text/css" media="all"><link rel="stylesheet" id="omega-style-css" href="http://content.giftstarter.co/wp-content/themes/omega/style.css?ver=4.1" type="text/css" media="all"><link rel="stylesheet" id="footer-credits-css" href="http://content.giftstarter.co/wp-content/plugins/footer-putter/styles/footer-credits.css?ver=1.11" type="text/css" media="all">';
+        /*
         var container = document.createElement('div'),
             bodyTags,
             result;
         container.innerHTML = html;
         bodyTags = container.querySelector('main');
-        console && console.log && console.log(replaceAnchorLinks(bodyTags));
+        //console && console.log && console.log(replaceAnchorLinks(bodyTags));
         if (bodyTags == null) {
             result = html;
             console && console.log && console.log('html: ',html);
@@ -102,6 +103,7 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
         }
         container = null;
         return result;
+        */
     }
     $scope.$on('$routeChangeSuccess', onRouteUpdate);
     onRouteUpdate();

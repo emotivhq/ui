@@ -20,11 +20,11 @@
     <gs-menu></gs-menu>
     <gs-toast></gs-toast>
 
-    {% include 'header.html' %}
+    {% if not hide_header %}{% include 'header.html' %}{% endif %}
 
-    <div id="angular-view" ng-view gs-view></div>
+    {% if hide_body %}<div id="angular-view" ng-view gs-view style="display:none"></div>{% else %}<div id="angular-view" ng-view gs-view></div>{% endif %}
 
-    {% include 'footer.html' %}
+    {% if not hide_footer %}{% include 'footer.html' %}{% endif %}
 
     <gs-popover></gs-popover>
 
@@ -41,6 +41,24 @@
         ga('send', 'pageview');
     </script>
 
+    {% if hide_body %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('a').attr("target","_top");
+            $('#login_button').attr("onclick","window.top.location.href='/#login';return false;");
+            $('#logout_button').attr("onclick","window.top.location.href='/#logout';return false;");
+            $('#header-menu-button img').attr("onclick","window.top.location.href='/#menu';return false;");
+            $('.popover-container').attr("style","display:none");
+        });
+    </script>
+    {% else %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            if(window.location.hash=="#login"){$('#login_button').click()}
+            else if(window.location.hash=="#logout"){$('#logout_button').click()}
+            else if(window.location.hash=="#menu"){$('#header-menu-button img').click()}
+        });
+    </script>
     <!-- begin olark code -->
     <script data-cfasync="false" type='text/javascript'>/*<![CDATA[*/window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https:"?"https:":"http:",z=c.name,r="load";var nt=function(){
         f[z]=function(){
@@ -61,5 +79,6 @@
     /* custom configuration goes here (www.olark.com/documentation) */
     olark.identify('1628-599-10-6804');/*]]>*/</script><noscript><a href="https://www.olark.com/site/1628-599-10-6804/contact" title="Contact us" target="_blank">Questions? Feedback?</a> powered by <a href="http://www.olark.com?welcome" title="Olark live chat software">Olark live chat software</a></noscript>
     <!-- end olark code -->
+    {% endif %}
 </body>
 </html>
