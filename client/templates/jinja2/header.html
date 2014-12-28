@@ -11,7 +11,7 @@
             </div>
             <ul class="headerNav">
                 <li>
-                    <a href="/concierge" ng-click="actions.menuItemClicked()">GIFT CONCIERGE</a>
+                    <a href="/concierge"  ng-click="actions.menuItemClicked()">GIFT CONCIERGE</a>
                 </li>
                 <li>
                     <a href="/about" ng-click="actions.menuItemClicked()">ABOUT</a>
@@ -29,8 +29,8 @@
                     <a href="/blog" ng-click="actions.menuItemClicked()" target="_self">BLOG</a>
                 </li>
                 <li class="login">
-                    <button ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">Sign in</button>
-                    <button ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Sign out</button>
+                    <button id="login_button" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">Sign in</button>
+                    <button id="logout_button" ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Sign out</button>
                 </li>
             </ul>
 
