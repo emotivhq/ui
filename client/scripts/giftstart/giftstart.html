@@ -33,7 +33,7 @@
             <button class="pitch-in button" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pitch In ${{giftStart.totalSelection / 100 | number : 2}}</button>
             <h3 class="black step-two"><span ng-show="newUser" class="circle step">2</span>Share This GiftStart With Friends!</h3>
             <img class="share" src="/assets/share_email.png" ng-click="emailShare();" />
-            <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();" ng-hide="isMobile" />
+            <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();"/>
             <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
             <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />
         </div>

@@ -5,8 +5,10 @@
 // Product overlay
 gs-overlay
   display: inline-block
-  max-width: 100%
+  width: 100%
+  max-width: 500px
   position: relative
+  padding-top: 100% // trick to set the height of the container to be the same as the width
 
   .overlay
     //max-width: 100% // This was causing the overlay not to fully stretch across the image.
@@ -14,16 +16,14 @@ gs-overlay
     position: absolute
     height: 100%
     top: 0
+    left: 0
     border-collapse: collapse
     transition: all 0.2s
     +display-flex()
     +flex-wrap(wrap)
-
-  img.image
-    width: 100%
-    max-width: 500px
-    padding: 0
-
+    background-repeat: no-repeat
+    background-position: center
+    background-size: contain
 
   // Part cells
   .part-cell

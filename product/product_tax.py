@@ -66,5 +66,9 @@ def lookup(address, city, state, zipcode, is_gift_card):
     headers = {"Content-Type": "text/xml; charset=UTF-8"}
 
     response = requests.post(url='https://api.taxcloud.net/1.0/', headers=headers, data=request)
-    tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
+    tax_amount = 0
+    try:
+        tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
+    except IndexError:
+        logging.error("Bad response from TaxCloud for {0}, {1}, {2}, {3}".format(address,city,state,zipcode))
     return tax_amount
