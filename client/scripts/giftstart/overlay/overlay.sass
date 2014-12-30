@@ -6,9 +6,11 @@
 gs-overlay
   display: inline-block
   width: 100%
+  height: 100%
   max-width: 500px
+  max-height: 500px
   position: relative
-  padding-top: 100% // trick to set the height of the container to be the same as the width
+  padding-top: 100%
 
   .overlay
     //max-width: 100% // This was causing the overlay not to fully stretch across the image.
@@ -24,7 +26,6 @@ gs-overlay
     background-repeat: no-repeat
     background-position: center
     background-size: contain
-
   // Part cells
   .part-cell
     +display-flex()
