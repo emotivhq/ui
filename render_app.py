@@ -39,6 +39,29 @@ def render_app(request):
     js_insert += "angular.module('ngAB').value('spec', " + \
                  abtest.get_tests(request) + ");"
 
+    page_titles = {
+        '/':'GiftStarter: Group Gifting Made Easy',
+        '/about':'Meet the GiftStarter Team and our Mission',
+        '/faq':'GiftStarter - Learn how to easily group gift with friends and family',
+        '/partners':'GiftStarter - Social Commerce for brands',
+        '/concierge':'Gift Concierge - Personal Gifting Service and Gift Inspiration'
+    }
+    page_descriptions = {
+        '/':'Group Gifts: GiftStarter divides the perfect gift into "tiles," giving friends and family the ability to purchase as much or as little as they wish.',
+        '/about':'GiftStarter is a Seattle based start-up intent on changing the way people give gifts by making it easy to group gift anything.',
+        '/faq':'Giving group gifts with GiftStarter is easy, but in case you have any questions, find out more here',
+        '/partners':'Partner with GiftStarter, the best group gifting service for brands. Our seamless social commerce platform uses patent-pending technology to give your customers a better way to gift, together.',
+        '/concierge':'Gift Concierge provides fast and friendly gift help to make your group gift campaign a success.'
+    }
+    try:
+        page_title = page_titles[request.path]
+    except KeyError:
+        page_title = page_titles['/']
+    try:
+        page_description = page_descriptions[request.path]
+    except KeyError:
+        page_description = page_descriptions['/']
+
     response = frame_template.render({
         'facebook_app_id': config['facebook_app_id'],
         'facebook_app': config['facebook_app'],
@@ -47,6 +70,8 @@ def render_app(request):
         'js_insert': js_insert,
         'image_url': request.path_url + '/assets/logo_square.png',
         'page_url': request.path_url,
+        'page_title': page_title,
+        'page_description': page_description,
         'googleanalytics_key': config['googleanalytics']['key'],
         'mixpanel_key': config['mixpanel']['key'],
         'heap_key': config['heap']['key'],
@@ -92,7 +117,7 @@ def render_app_with_giftstart(request):
             'deployed': DEPLOYED,
             'product_api_url': config['product_api_url'],
             'js_insert': js_insert + 'var GIFTSTART = ' + gs.jsonify() + ';',
-            'page_title': gs.giftstart_title,
+            'page_title': gs.giftstart_title + ' - GiftStarter',
             'page_url': page_url,
             'page_description': gs.giftstart_description,
             'image_url': gs.product_img_url.replace('https://', 'http://'),
