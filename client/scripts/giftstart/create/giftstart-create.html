@@ -12,9 +12,9 @@
     </div>
     <div class="block details">
         <form name="campaignForm" novalidate>
-            <h2>GiftStart Name</h2>
+            <h2>Name Your Campaign</h2>
             <label for="campaign-title">Create a name that represents the theme of the gift.</label>
-            <input type="text" id="campaign-title" name="title" placeholder="&quot;Grillin' is Awesome Yo&quot;" ng-model="title" required=""/>
+            <input type="text" id="campaign-title" name="title" placeholder="Enter campaign name..." ng-model="title" required=""/>
             <div ng-show="campaignForm.$submitted || campaignForm.title.$touched" class="errorWrapper">
                 <div ng-show="campaignForm.title.$error.required">
                     <div class="arrowUp"></div>
@@ -24,9 +24,9 @@
                 </div>
             </div>
 
-            <h2>GiftStart Story</h2>
+            <h2>Tell your story</h2>
             <label for="campaign-description">Make it fun!  Why should your friends join in on this GiftStarter?  Excite them!</label>
-            <textarea id="campaign-description" name="description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
+            <textarea id="campaign-description" name="description" placeholder="Enter your story..." maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
             <div ng-show="campaignForm.$submitted || campaignForm.description.$touched" class="errorWrapper">
                 <div ng-show="campaignForm.description.$error.required">
                     <div class="arrowUp"></div>
@@ -45,10 +45,10 @@
             </div>
 
             <h2>Where's It Going?</h2>
-            <label>So you don't get dinged later, all prices include shipping, handling, and taxes.</label>
+            <label>All prices include taxes, shipping, and handling, based on destination.</label>
             <div class="shipping-details">
                 <span class="state">
-                    <label>Recipient State</label>
+                    <label>Recipient's State</label>
                     <select class="state" ng-model="shippingState" name="shippingState" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
@@ -111,8 +111,8 @@
                     </div>
                 </span>
                 <span class="zip">
-                    <label>Recipient Zip</label>
-                    <input type="text" class="zip" name="shippingZip" placeholder="Zip" minlength="5" maxlength="5" ng-model="shippingZip" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" />
+                    <label>Recipient's Zip</label>
+                    <input type="text" class="zip" name="shippingZip" placeholder="Enter zip" minlength="5" maxlength="5" ng-model="shippingZip" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" />
                     <div ng-show="campaignForm.$submitted || campaignForm.shippingZip.$touched" class="errorWrapper">
                         <div ng-show="campaignForm.shippingZip.$error.required">
                             <div class="arrowUp"></div>
@@ -123,8 +123,8 @@
                     </div>
                 </span>
                 <span class="name">
-                    <label>Recipient Name</label>
-                    <input type="text" ng-model="shippingName" name="shippingName" required="" />
+                    <label>Recipient's Name</label>
+                    <input type="text" placeholder="Enter name..." ng-model="shippingName" name="shippingName" required="" />
                     <div ng-show="campaignForm.$submitted || campaignForm.shippingName.$touched" class="errorWrapper">
                         <div ng-show="campaignForm.shippingName.$error.required">
                             <div class="arrowUp"></div>
@@ -156,7 +156,7 @@
 
             <div class="campaign-length">
                 <h2>How Long Should this GiftStart Run?</h2>
-                <label>Maximum: 29 days.  Be sure to end your GiftStart at least a week (7 days) before it should arrive.</label>
+                <label>Max: 29 days.  Be sure to end your GiftStart at least 7 days before it should arrive.</label>
                 <input ui-date
                        type="text"
                        class="endDate"
@@ -169,13 +169,13 @@
                     <div ng-show="campaignForm.campaignEndDate.$error.required">
                         <div class="arrowUp"></div>
                         <div class="errorMessage">
-                            Don't forget campaign length!
+                            Your campaign must be between 2 and 29 days!
                         </div>
                     </div>
                     <div ng-show="!dateChosenValid()">
                         <div class="arrowUp"></div>
                         <div class="errorMessage">
-                            Campaign length is out of range!
+                            Your campaign must be between 2 and 29 days!
                         </div>
                     </div>
                 </div>
@@ -217,7 +217,7 @@
 
             <div class="total-price-block">
                 <h2>Total Price</h2>
-                <label>Incl. tax, shipping, and fees.</label>
+                <label>Incl. taxes, shipping, and handling.</label>
                 <div class="money" ng-hide="fetchingTaxRate || !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
             </div>
         </form>
