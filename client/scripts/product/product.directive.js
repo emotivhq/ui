@@ -153,6 +153,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         scope.goToProduct = function($index, $event) {
             if (scope.selectedProduct == $index) {
                 //$window.open(scope.selectedProducts[$index].url, '_blank');
+                scope.startCampaignFrom($index);
                 $event.stopPropagation();
             }
         };
