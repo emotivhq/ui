@@ -328,7 +328,7 @@ def price_filter(product):
     if product.retailer == 'butter LONDON':
         return product.price > 3998
     else:
-        return product.price > 7498
+        return product.price > 9998
 
 
 def score_price(price):
