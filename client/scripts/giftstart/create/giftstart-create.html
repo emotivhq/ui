@@ -12,13 +12,44 @@
     </div>
     <div class="block details">
         <form name="campaignForm" novalidate>
-            <h2>GiftStart Name</h2>
+            <h2>Name Your Campaign</h2>
             <label for="campaign-title">Create a name that represents the theme of the gift.</label>
-            <input type="text" id="campaign-title" placeholder="&quot;Grillin' is Awesome Yo&quot;" ng-model="title" required=""/>
+            <input type="text"
+                   id="campaign-title"
+                   name="title"
+                   placeholder="Enter campaign name..."
+                   ng-model="title"
+                   ng-focus="hideValidationError.title = true"
+                   ng-blur="hideValidationError.title = false"
+                   required=""/>
+            <div ng-show="(campaignForm.$submitted || campaignForm.title.$touched || validationTrigger.createButtonClicked) && !hideValidationError.title" class="errorWrapper">
+                <div ng-show="campaignForm.title.$error.required">
+                    <div class="arrowUp"></div>
+                    <div class="errorMessage">
+                        Don't forget to name your campaign!
+                    </div>
+                </div>
+            </div>
 
-            <h2>GiftStart Story</h2>
+            <h2>Tell your story</h2>
             <label for="campaign-description">Make it fun!  Why should your friends join in on this GiftStarter?  Excite them!</label>
-            <textarea id="campaign-description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
+            <textarea id="campaign-description"
+                      name="description"
+                      placeholder="Enter your story..."
+                      maxlength="2000"
+                      ng-focus="hideValidationError.description = true"
+                      ng-blur="hideValidationError.description = false"
+                      ng-model="description"
+                      ng-blur="onDescriptionBlur()"
+                      required=""></textarea>
+            <div ng-show="(campaignForm.$submitted || campaignForm.description.$touched || validationTrigger.createButtonClicked) && !hideValidationError.description" class="errorWrapper">
+                <div ng-show="campaignForm.description.$error.required">
+                    <div class="arrowUp"></div>
+                    <div class="errorMessage">
+                        Don't forget to include your story!
+                    </div>
+                </div>
+            </div>
             <div id="not-long-enough" ng-hide="descriptionLongEnough">
                 <p>Woah there! Looks like your GiftStart description is a bit short.  We know, brevity is the soul of wit - but how about we add to the story to get people more involved?  Here are a few questions for inspiration:</p>
                 <ul>
@@ -29,11 +60,18 @@
             </div>
 
             <h2>Where's It Going?</h2>
-            <label>So you don't get dinged later, all prices include shipping, handling, and taxes.</label>
+            <label>All prices include taxes, shipping, and handling, based on destination.</label>
             <div class="shipping-details">
                 <span class="state">
-                    <label>Recipient State</label>
-                    <select class="state" ng-model="shippingState" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }">
+                    <label>Recipient's State</label>
+                    <select class="state"
+                            ng-model="shippingState"
+                            name="shippingState"
+                            required=""
+                            ng-change="shippingChanged()"
+                            ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
+                            ng-focus="hideValidationError.shippingState = true"
+                            ng-blur="hideValidationError.shippingState = false">
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
                         <option value="AZ">AZ</option>
@@ -85,59 +123,170 @@
                         <option value="WI">WI</option>
                         <option value="WY">WY</option>
                     </select>
+                    <div ng-show="(campaignForm.$submitted || campaignForm.shippingState.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingState" class="errorWrapper">
+                        <div ng-show="campaignForm.shippingState.$error.required">
+                            <div class="arrowUp"></div>
+                            <div class="errorMessage">
+                                Don't forget to add the state!
+                            </div>
+                        </div>
+                    </div>
                 </span>
                 <span class="zip">
-                    <label>Recipient Zip</label>
-                    <input type="text" class="zip" placeholder="Zip" minlength="5" maxlength="5" ng-model="shippingZip" required="" ng-change="shippingChanged()" ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }" />
+                    <label>Recipient's Zip</label>
+                    <input type="text"
+                           class="zip"
+                           name="shippingZip"
+                           placeholder="Enter zip"
+                           minlength="5" maxlength="5"
+                           ng-model="shippingZip"
+                           required=""
+                           ng-change="shippingChanged()"
+                           ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
+                           ng-focus="hideValidationError.shippingZip = true"
+                           ng-blur="hideValidationError.shippingZip = false" />
+                    <div ng-show="(campaignForm.$submitted || campaignForm.shippingZip.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingZip" class="errorWrapper">
+                        <div ng-show="campaignForm.shippingZip.$error.required">
+                            <div class="arrowUp"></div>
+                            <div class="errorMessage">
+                                Don't forget to add the zip!
+                            </div>
+                        </div>
+                    </div>
                 </span>
                 <span class="name">
-                    <label>Recipient Name</label>
-                    <input type="text" ng-model="shippingName" required="" />
+                    <label>Recipient's Name</label>
+                    <input type="text"
+                           placeholder="Enter name..."
+                           ng-model="shippingName"
+                           name="shippingName"
+                           ng-focus="hideValidationError.shippingName = true"
+                           ng-blur="hideValidationError.shippingName = false"
+                           required="" />
+                    <div ng-show="(campaignForm.$submitted || campaignForm.shippingName.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingName " class="errorWrapper">
+                        <div ng-show="campaignForm.shippingName.$error.required">
+                            <div class="arrowUp"></div>
+                            <div class="errorMessage">
+                                Don't forget recipient's name!
+                            </div>
+                        </div>
+                    </div>
                 </span>
                 <span class="email">
                     <label>Recipient Email (they will not be emailed until your gift is delivered)</label>
-                    <input type="email" ng-model="shippingEmail" placeholder="recipient@mail.com" required="" />
+                    <input type="email"
+                           ng-model="shippingEmail"
+                           name="shippingEmail"
+                           placeholder="recipient@mail.com"
+                           ng-focus="hideValidationError.shippingEmail = true"
+                           ng-blur="hideValidationError.shippingEmail = false"
+                           required="" />
+                    <div ng-show="(campaignForm.$submitted || campaignForm.shippingEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingEmail" class="errorWrapper">
+                        <div ng-show="campaignForm.shippingEmail.$error.required">
+                            <div class="arrowUp"></div>
+                            <div class="errorMessage">
+                                Don't forget recipient's email address!
+                            </div>
+                        </div>
+                        <div ng-show="campaignForm.shippingEmail.$error.email">
+                            <div class="arrowUp"></div>
+                            <div class="errorMessage">
+                                Recipient's email address is invalid!
+                            </div>
+                        </div>
+                    </div>
                 </span>
             </div>
 
             <div class="campaign-length">
                 <h2>How Long Should this GiftStart Run?</h2>
-                <label>Maximum: 29 days.  Be sure to end your GiftStart at least a week (7 days) before it should arrive.</label>
+                <label>Max: 29 days.  Be sure to end your GiftStart at least 7 days before it should arrive.</label>
                 <input ui-date
                        type="text"
                        class="endDate"
                        ng-model="campaignEndDate"
+                       name="campaignEndDate"
                        placeholder="mm/dd/yyyy"
+                       name="campaignEndDate"
+                       ng-focus="hideValidationError.campaignEndDate = true"
+                       ng-blur="hideValidationError.campaignEndDate = false"
                        required="">
+                <div ng-show="(campaignForm.$submitted || campaignForm.campaignEndDate.$touched || validationTrigger.createButtonClicked) && !hideValidationError.campaignEndDate" class="errorWrapper">
+                    <div ng-show="campaignForm.campaignEndDate.$error.required">
+                        <div class="arrowUp"></div>
+                        <div class="errorMessage">
+                            Your campaign must be between 2 and 29 days!
+                        </div>
+                    </div>
+                    <div ng-show="!dateChosenValid()">
+                        <div class="arrowUp"></div>
+                        <div class="errorMessage">
+                            Your campaign must be between 2 and 29 days!
+                        </div>
+                    </div>
+                </div>
+
                 <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)}} Days</label>
             </div>
 
             <h2>Minimum Pitch In</h2>
             <label>Consider the number of participants and how much each might want to contribute.  Keep in mind participants can always give more than one part if they wish!</label>
             <div id="num-part-selection">
-                <button class="circle" id="less-parts" ng-click="fewerParts()">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" id="more-parts" ng-click="moreParts()">&gt;</button>
+                <button class="circle" id="less-parts" ng-click="fewerParts($event)">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" id="more-parts" ng-click="moreParts($event)">&gt;</button>
                 <button class="help float-right" ng-click="help()">Help</button>
             </div>
 
             <div class="email">
                 <h2>Your Email Address</h2>
-                <input type="email" id="contact-email" placeholder="username@mail.com" ng-model="gcEmail" required="">
+                <input type="email"
+                       id="contact-email"
+                       placeholder="username@mail.com"
+                       name="gcEmail"
+                       ng-model="gcEmail"
+                       ng-focus="hideValidationError.gcEmail = true"
+                       ng-blur="hideValidationError.gcEmail = false"
+                       required="">
+                <div ng-show="(campaignForm.$submitted || campaignForm.gcEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.gcEmail" class="errorWrapper">
+                    <div ng-show="campaignForm.gcEmail.$error.required">
+                        <div class="arrowUp"></div>
+                        <div class="errorMessage">
+                            Don't forget your email address!
+                        </div>
+                    </div>
+                    <div ng-show="campaignForm.gcEmail.$error.email">
+                        <div class="arrowUp"></div>
+                        <div class="errorMessage">
+                            Your email address is invalid!
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="price-block">
                 <h2>Price</h2>
-                <label>Base price of the gift.<input type="checkbox" id="tooltip-checkbox"/><label for="tooltip-checkbox"><span class="tooltip-icon">?<span class="tooltip">Due to retailer price fluctuation, <a href="/faq?why-raise-for-the-full-price" target="_blank">we must raise for the full product price.</a></span></span></label></label>
+                <label>
+                    Base price of the gift.
+                    <input type="checkbox" id="tooltip-checkbox"/>
+                    <label for="tooltip-checkbox">
+                        <span class="tooltip-icon">
+                            ?
+                            <span class="tooltip">
+                                The price of the gift at the time of campaign creation will be used to determine the "base price."
+                            </span>
+                        </span>
+                    </label>
+                </label>
                 <div class="money" id="price">${{inputPrice}}</div>
             </div>
 
             <div class="total-price-block">
                 <h2>Total Price</h2>
-                <label>Incl. tax, shipping, and fees.</label>
+                <label>Incl. taxes, shipping, and handling.</label>
                 <div class="money" ng-hide="fetchingTaxRate || !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
             </div>
         </form>
 
-        <button id="giftstart-create-submit" class="float-right next" ng-click="next()" ng-class="{disabled: (campaignForm.$invalid || (inputPrice == 0) || !dateChosenValid())}">Create</button>
+        <button id="giftstart-create-submit" class="float-right next" ng-click="next()">Create</button>
 
     </div>
 </div>

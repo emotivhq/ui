@@ -65,9 +65,9 @@ class SearchProduct(FeedProduct):
         title = title[:499] if title is not None else None
         description = xfind('.//{ns}EditorialReviews/{ns}EditorialReview/'
                             '{ns}Content')
-        price = xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount')
-        if price is None:
-            price = xfind('.//{ns}Offers/{ns}Offer/{ns}OfferListing/'
+        #price = xfind('.//{ns}ItemAttributes/{ns}ListPrice/{ns}Amount')
+        #if price is None:
+        price = xfind('.//{ns}Offers/{ns}Offer/{ns}OfferListing/'
                           '{ns}Price/{ns}Amount')
         img = xfind('.//{ns}LargeImage/{ns}URL')
         url = xfind('.//{ns}DetailPageURL')
@@ -82,7 +82,7 @@ class SearchProduct(FeedProduct):
     def from_prosperent(prod):
         return SearchProduct(title=prod.get('keyword'),
                              description=prod.get('description'),
-                             price=int(100*float(prod.get('price'))),
+                             price=(int(100*float(prod.get('price_sale'))) if prod.get('price_sale').isdigit() else int(100*float(prod.get('price')))),
                              img=prod.get('image_url'),
                              url=prod.get('affiliate_url'),
                              retailer=prod.get('merchant'),
@@ -328,7 +328,7 @@ def price_filter(product):
     if product.retailer == 'butter LONDON':
         return product.price > 3998
     else:
-        return product.price > 7498
+        return product.price > 9998
 
 
 def score_price(price):

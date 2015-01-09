@@ -33,7 +33,6 @@
                 </div>
                 <div class="product-details">
                     <h4 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h4>
-                    <p class="retailer">From {{product.retailer}}</p>
                     <p class="description" ng-bind-html="product.description"></p>
                     <p class="price block">${{product.price / 100 | number : 2}}</p>
                 </div>
