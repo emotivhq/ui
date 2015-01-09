@@ -14,7 +14,7 @@
         <form name="campaignForm" novalidate>
             <h2>Name Your Campaign</h2>
             <label for="campaign-title">Create a name that represents the theme of the gift.</label>
-            <input type="text" id="campaign-title" name="title" placeholder="&quot;Grillin' is Awesome Yo&quot;" ng-model="title" required=""/>
+            <input type="text" id="campaign-title" name="title" placeholder="Enter campaign name..." ng-model="title" required=""/>
             <div ng-show="campaignForm.$submitted || campaignForm.title.$touched" class="errorWrapper">
                 <div ng-show="campaignForm.title.$error.required">
                     <div class="arrowUp"></div>
@@ -26,7 +26,7 @@
 
             <h2>Tell your story</h2>
             <label for="campaign-description">Make it fun!  Why should your friends join in on this GiftStarter?  Excite them!</label>
-            <textarea id="campaign-description" name="description" placeholder="&quot;Yo yo yo-Jim just got a house.  He needs to have a grill-and then invite us over for the SeaFair party of the year since he's right there with the best view on the block!&quot;" maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
+            <textarea id="campaign-description" name="description" placeholder="Enter your story..." maxlength="2000" ng-model="description" ng-blur="onDescriptionBlur()" required=""></textarea>
             <div ng-show="campaignForm.$submitted || campaignForm.description.$touched" class="errorWrapper">
                 <div ng-show="campaignForm.description.$error.required">
                     <div class="arrowUp"></div>
