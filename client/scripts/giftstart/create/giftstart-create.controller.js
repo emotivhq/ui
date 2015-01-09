@@ -122,7 +122,7 @@
             $scope.updateOverlay();
         };
 
-        $scope.moreParts = function() {
+        $scope.moreParts = function(event) {
             Analytics.track('campaign', 'number of parts changed');
             if ($scope.selectedXYSet < $scope.xySets.length - 1) {
                 $scope.selectedXYSet += 1;
@@ -130,9 +130,11 @@
                 $scope.y = $scope.xySets[$scope.selectedXYSet][1];
                 $scope.updateOverlay();
             }
+
+            event.preventDefault();
         };
 
-        $scope.fewerParts = function() {
+        $scope.fewerParts = function(event) {
             Analytics.track('campaign', 'number of parts changed');
             if ($scope.selectedXYSet > 0) {
                 $scope.selectedXYSet -= 1;
@@ -140,6 +142,8 @@
                 $scope.y = $scope.xySets[$scope.selectedXYSet][1];
                 $scope.updateOverlay();
             }
+
+            event.preventDefault();
         };
 
         $scope.updateOverlay = function() {
@@ -200,7 +204,30 @@
                 $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
+        $scope.hideValidationError = {
+            title: true,
+            description: true,
+            shippingState: true,
+            shippingZip: true,
+            shippingName: true,
+            shippingEmail: true,
+            campaignEndDate: true,
+            gcEmail: true
+        };
+
+        $scope.validationTrigger = {
+            createButtonClicked: false
+        }
+
+        $scope.createButtonClicked = false;
+
         $scope.next = function() {
+            var keys = Object.keys($scope.hideValidationError)
+            keys.forEach(function (key) {
+                $scope.hideValidationError[key] = false;
+            })
+            $scope.validationTrigger.createButtonClicked = true;
+
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
             GiftStartService.productUrl = ProductService.product.product_url;
