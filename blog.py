@@ -5,6 +5,10 @@ import webapp2
 import logging
 import re
 
+class WeddingHandler(webapp2.RequestHandler):
+    def get(self):
+        self.redirect("/blog/weddings")
+
 class BlogRootHandler(webapp2.RequestHandler):
     def get(self):
         urlfetch.set_default_fetch_deadline(30)
@@ -60,4 +64,5 @@ handler = webapp2.WSGIApplication([
     ('/blog/.*', BlogHandler),
     ('/press', PressRootHandler),
     ('/press/', PressRootHandler),
+    ('/wedding.*', WeddingHandler),
 ])
