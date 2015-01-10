@@ -56,8 +56,10 @@ gs-product-search
   $product-block-width: 12em
   section.products
     text-align: left
-    margin: 2em auto
-    max-width: 500px
+    margin-top: 2em
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin: 2em auto
+      max-width: 500px
     div.page-buttons
       text-align: center
       margin-top: 1em
