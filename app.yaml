@@ -115,6 +115,9 @@ handlers:
 - url: /press/
   script: blog.handler
   secure: always
+- url: /wedding.*
+  script: blog.handler
+  secure: always
 
 # Catch all other urls
 - url: /admin.*
