@@ -17,6 +17,66 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
 
     $scope.loggedIn = UserService.loggedIn;
 
+    $scope.emailFormModel = {
+        isLogin: true,
+        isLoginCreate: false,
+        isForgotPassword: false,
+        isEmailLogin: false,
+        errorMessage: '',
+        email: '',
+        password: '',
+        passwordConfirm: ''
+    };
+
+    var mode = 'login';
+
+    $scope.emailFormActions = {
+        createLoginMode: function (event) {
+            $scope.emailFormModel.errorMessage = '';
+            $scope.emailFormModel.isLoginCreate = true;
+            $scope.emailFormModel.isForgotPassword = false;
+            $scope.emailFormModel.isLogin = false;
+            event.preventDefault();
+        },
+        forgotPasswordMode: function (event) {
+            $scope.emailFormModel.errorMessage = '';
+            $scope.emailFormModel.isLoginCreate = false;
+            $scope.emailFormModel.isForgotPassword = true;
+            $scope.emailFormModel.isLogin = false;
+            event.preventDefault();
+        },
+        submit: function () {
+            if ($scope.emailLoginForm.$valid) {
+                console.log("submitting " + mode);
+            }
+        },
+        createLogin: function () {
+            //Analytics.track('user', 'create email login');
+            mode = 'createLogin';
+            if ($scope.emailFormModel.password === $scope.emailFormModel.passwordConfirm) {
+                $scope.emailLoginForm.$setValidity('confirmPassword', true);
+            } else {
+                $scope.emailLoginForm.$setValidity('confirmPassword', false);
+            }
+        },
+        forgotPassword: function () {
+            //Analytics.track('user', 'forgot login password');
+            mode = 'forgotPassword';
+        },
+        login: function () {
+            mode = 'logon';
+            //$scope.emailFormModel.errorMessage = '';
+            if ($scope.emailFormModel.email && $scope.emailFormModel.password) {
+                //Analytics.track('user', 'login attempt with email');
+                //AppStateService.setPath($location.path());
+
+                //$scope.emailFormModel.errorMessage = 'There was a problem with your login.  Please try again.';
+            }
+
+            //$scope.emailFormModel.errorMessage = 'Make sure email or password is not missing.'
+        }
+    };
+
     // Check if user is logged in already
     if (UserService.loggedIn) {loginComplete()}
 
