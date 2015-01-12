@@ -22,8 +22,8 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
         isLoginCreate: false,
         isForgotPassword: false,
         isEmailLogin: false,
-        errorMessage: '',
         email: '',
+        emailConfirm: '',
         password: '',
         passwordConfirm: ''
     };
@@ -32,14 +32,12 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
 
     $scope.emailFormActions = {
         createLoginMode: function (event) {
-            $scope.emailFormModel.errorMessage = '';
             $scope.emailFormModel.isLoginCreate = true;
             $scope.emailFormModel.isForgotPassword = false;
             $scope.emailFormModel.isLogin = false;
             event.preventDefault();
         },
         forgotPasswordMode: function (event) {
-            $scope.emailFormModel.errorMessage = '';
             $scope.emailFormModel.isLoginCreate = false;
             $scope.emailFormModel.isForgotPassword = true;
             $scope.emailFormModel.isLogin = false;
@@ -57,6 +55,12 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
                 $scope.emailLoginForm.$setValidity('confirmPassword', true);
             } else {
                 $scope.emailLoginForm.$setValidity('confirmPassword', false);
+            }
+
+            if ($scope.emailFormModel.email === $scope.emailFormModel.emailConfirm) {
+                $scope.emailLoginForm.$setValidity('confirmEmail', true);
+            } else {
+                $scope.emailLoginForm.$setValidity('confirmEmail', false);
             }
         },
         forgotPassword: function () {

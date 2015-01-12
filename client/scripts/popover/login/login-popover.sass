@@ -31,15 +31,21 @@ div.login-popover
         width: 100%
         border: none
         color: #000
-    div.loginButton
-      margin: 10px auto
-      input[type=submit]
+      span
+        display: block
+      span.or
+        margin-bottom: 10px
+        text-align: center
+    div
+      input[type=submit], input[type=button]
         font-family: BlanchCondensed, sans-serif
         background-color: #fff
         color: $primary-color
         font-size: 1.5em
         padding: 5px
         font-weight: bold
+    div.loginButton
+      margin: 10px auto
     div.errorMsg
       color: #fff
     a
