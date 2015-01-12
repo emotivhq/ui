@@ -51,6 +51,11 @@ handlers:
   script: reports.handler
   login: admin
 
+# Login
+- url: /login/.*
+  script: login.login_api.handler
+  secure: always
+
 # Email
 - url: /email/.*
   script: gs_email.gs_email_api.handler

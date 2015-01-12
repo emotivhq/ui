@@ -1,12 +1,12 @@
 <div class="login-popover" ng-controller="LoginPopoverController">
     <h1 class="white">Login</h1>
     <!--<p>Log in so they'll know who to thank!</p>-->
-    <div class="block">
+    <!-- <div class="block">
         <p>No need to memorize yet another username and password - you can use any of these networks to create and access your GiftStarts.</p>
         <p>And we solemnly swear to never post on your behalf, share your information, or stalk your friends.</p>
-    </div>
+    </div> -->
     <div class="block">
-        <!--<div class="login-button" ng-click="emailFormModel.isEmailLogin = !emailFormModel.isEmailLogin" ng-hide="emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_email.png" /></div>
+        <!-- --><div class="login-button" ng-click="emailFormModel.isEmailLogin = !emailFormModel.isEmailLogin" ng-hide="emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_email.png" /></div>
         <form name="emailLoginForm" ng-show="emailFormModel.isEmailLogin" class="emailLogin" ng-submit="emailFormActions.submit()" novalidate>
             <div>
                 <input type="email" name="email" placeholder="Enter your email." ng-model="emailFormModel.email" required/>
@@ -41,7 +41,7 @@
                 <a href="#" ng-click="emailFormActions.forgotPasswordMode($event)" class="forgotPwdLink">Forgot password.</a>
                 <div style="clear: both"></div>
             </div>
-        </form>-->
+        </form><!-- -->
         <div class="login-button facebook" ng-click="facebookLogin()" ng-show="!emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_facebook2.png" /></div>
         <div class="login-button twitter" ng-click="twitterLogin()" ng-show="!emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_twitter2.png" /></div>
         <div class="login-button googleplus" ng-click="googleLogin()" ng-show="!emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_google2.png" /></div>
