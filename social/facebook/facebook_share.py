@@ -53,7 +53,7 @@ class FacebookShareHandler(webapp2.RequestHandler):
             logging.error("facebook_share: Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
             return
 
-        if uid[0] not in ['f', 'g', 't']:
+        if uid[0] not in ['f', 'g', 't', 'e']:
             self.response.set_status(400, "Invalid user id")
             logging.error("facebook_share: Invalid User id "+uid)
             return

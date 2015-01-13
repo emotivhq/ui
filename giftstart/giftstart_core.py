@@ -75,7 +75,8 @@ def does_user_exist(uid, token):
         return False
     token_map = {'f': lambda u: u.facebook_token_set.access_token,
                  'g': lambda u: u.googleplus_token_set.access_token,
-                 't': lambda u: u.twitter_token_set.access_token}
+                 't': lambda u: u.twitter_token_set.access_token,
+                 'e': lambda u: u.emaillogin_token_set.access_token}
 
     user = ndb.Key('User', uid).get()
 

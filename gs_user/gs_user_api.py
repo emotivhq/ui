@@ -62,7 +62,7 @@ class SubscribeHandler(webapp2.RequestHandler):
 class UserHandler(webapp2.RequestHandler):
     def get(self):
         uid = self.request.path.split('/')[-1]
-        if uid[0] not in ['f', 'g', 't']:
+        if uid[0] not in ['f', 'g', 't', 'e']:
             self.response.set_status(400, "Invalid user id")
         else:
             user = get_user(uid)
