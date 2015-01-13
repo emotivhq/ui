@@ -268,9 +268,6 @@
                     PopoverService.setPopover('login');
                 }
             }
-            /* For testing only
-            PopoverService.setPopover('login');
-             */
         };
 
         $scope.onDescriptionBlur = function() {

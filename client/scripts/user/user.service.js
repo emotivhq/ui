@@ -5,11 +5,11 @@
  */
 
 GiftStarterApp.service('UserService', ['$http','$rootScope','$cookieStore',
-    '$window','FacebookService','TwitterService','GooglePlusService',
+    '$window','FacebookService','TwitterService','GooglePlusService', 'emailLoginService',
     'Analytics', UserService]);
 
 function UserService($http,  $rootScope,  $cookieStore,  $window,
-                     FacebookService,  TwitterService,  GooglePlusService,
+                     FacebookService,  TwitterService,  GooglePlusService, emailLoginService,
                      Analytics) {
     this.uid = -1;
     this.loggedIn = false;
@@ -64,6 +64,8 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
             TwitterService.logout();
         } else if (self.loginService === 'googleplus') {
             GooglePlusService.logout();
+        } else if (self.loginService === 'email') {
+            emailLoginService.logout();
         }
         self.registerLogout();
     };
@@ -113,9 +115,20 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
             GooglePlusService.has_pitched_in);
     }
 
+    $rootScope.$on('email-login-success', emailLoggedIn);
+    function emailLoggedIn () {
+        Analytics.track('user', 'logged in with email');
+        self.loginService = 'email';
+        self.registerLogin(emailLoginService.uuid,
+            '', '',
+            false, 'Email User',
+            emailLoginService.has_pitched_in);
+    }
+
     $rootScope.$on('facebook-logout-success', self.registerLogout);
     $rootScope.$on('twitter-logout-success', self.registerLogout);
     $rootScope.$on('googleplus-logout-success', self.registerLogout);
+    $rootScope.$on('email-logout-success', self.registerLogout);
 
     if ($window.loginDeets) {
         // base64 decode the name - for unicode chars in names

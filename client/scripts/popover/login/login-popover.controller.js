@@ -4,16 +4,16 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('LoginPopoverController', ['$scope','UserService',
+GiftStarterApp.controller('LoginPopoverController', ['$scope', '$http', '$cookieStore', 'UserService',
     'PopoverService','GiftStartService','TwitterService','FacebookService',
-    '$location','GooglePlusService','Analytics','AppStateService',
+    '$location','GooglePlusService','Analytics','AppStateService', 'emailLoginService',
     LoginPopoverController]);
 
 
-function LoginPopoverController($scope,  UserService,  PopoverService,
+function LoginPopoverController($scope, $http, $cookieStore, UserService,  PopoverService,
                                 GiftStartService,  TwitterService,
                                 FacebookService,  $location, GooglePlusService,
-                                Analytics,  AppStateService) {
+                                Analytics,  AppStateService, emailLoginService) {
 
     $scope.loggedIn = UserService.loggedIn;
 
@@ -25,32 +25,60 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
         email: '',
         emailConfirm: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        message: ''
     };
 
-    var mode = 'login';
+    var mode = 'login',
+        loginUrl = '';
 
     $scope.emailFormActions = {
         createLoginMode: function (event) {
             $scope.emailFormModel.isLoginCreate = true;
             $scope.emailFormModel.isForgotPassword = false;
             $scope.emailFormModel.isLogin = false;
-            event.preventDefault();
+            event && event.preventDefault();
         },
         forgotPasswordMode: function (event) {
             $scope.emailFormModel.isLoginCreate = false;
             $scope.emailFormModel.isForgotPassword = true;
             $scope.emailFormModel.isLogin = false;
-            event.preventDefault();
+            event && event.preventDefault();
+        },
+        loginMode: function (event) {
+            $scope.emailFormModel.isLoginCreate = false;
+            $scope.emailFormModel.isForgotPassword = false;
+            $scope.emailFormModel.isLogin = true;
+            event && event.preventDefault();
         },
         submit: function () {
             if ($scope.emailLoginForm.$valid) {
+                AppStateService.setPath($location.path());
+                emailLoginService.login(
+                    mode,
+                    $scope.emailFormModel.email,
+                    $scope.emailFormModel.password,
+                    '').
+                    then(function () {
+                        if (mode === 'create') {
+                            // Switch to login mode
+                            $scope.emailFormModel.email = '';
+                            $scope.emailFormModel.password = '';
+                            $scope.emailFormActions.loginMode();
+                        } else if (mode === 'forgotPassword') {
+                            $scope.emailFormModel.message = 'An instruction has been sent to your email address.';
+                        }
+
+                    }, function (errMsg) {
+                        $scope.emailFormModel.message = errMsg;
+                    });
+
                 console.log("submitting " + mode);
             }
         },
         createLogin: function () {
-            //Analytics.track('user', 'create email login');
-            mode = 'createLogin';
+            Analytics.track('user', 'create email login');
+            mode = 'create';
             if ($scope.emailFormModel.password === $scope.emailFormModel.passwordConfirm) {
                 $scope.emailLoginForm.$setValidity('confirmPassword', true);
             } else {
@@ -64,20 +92,16 @@ function LoginPopoverController($scope,  UserService,  PopoverService,
             }
         },
         forgotPassword: function () {
-            //Analytics.track('user', 'forgot login password');
+            Analytics.track('user', 'forgot login password');
             mode = 'forgotPassword';
         },
+        reser: function () {
+            Analytics.track('user', 'reset login password');
+            mode = 'reset';
+        },
         login: function () {
-            mode = 'logon';
-            //$scope.emailFormModel.errorMessage = '';
-            if ($scope.emailFormModel.email && $scope.emailFormModel.password) {
-                //Analytics.track('user', 'login attempt with email');
-                //AppStateService.setPath($location.path());
-
-                //$scope.emailFormModel.errorMessage = 'There was a problem with your login.  Please try again.';
-            }
-
-            //$scope.emailFormModel.errorMessage = 'Make sure email or password is not missing.'
+            Analytics.track('user', 'login attempt with email');
+            mode = 'login';
         }
     };
 
