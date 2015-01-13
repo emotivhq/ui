@@ -19,8 +19,8 @@ import logging
 
 class CreateHandler(webapp2.RequestHandler):
     def get(self):
-        self.put()
-    def put(self):
+        self.post()
+    def post(self):
         time.sleep(1)  # crude anti-hacking
         email = self.request.get("email","").strip()
         password = self.request.get("password","").strip()
@@ -49,8 +49,8 @@ class CreateHandler(webapp2.RequestHandler):
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
-        self.put()
-    def put(self):
+        self.post()
+    def post(self):
         time.sleep(1)  # crude anti-hacking
         email = self.request.get("email","").strip()
         password = self.request.get("password","").strip()
@@ -76,8 +76,8 @@ class LoginHandler(webapp2.RequestHandler):
 
 class RequestResetHandler(webapp2.RequestHandler):
     def get(self):
-        self.put()
-    def put(self):
+        self.post()
+    def post(self):
         time.sleep(1)  # crude anti-hacking
         self.response.write({
             'ok': 'An email has been sent.  If you do not receive it, double-check that you are using the correct email'
@@ -86,8 +86,8 @@ class RequestResetHandler(webapp2.RequestHandler):
 
 class ResetHandler(webapp2.RequestHandler):
     def get(self):
-        self.put()
-    def put(self):
+        self.post()
+    def post(self):
         time.sleep(1)  # crude anti-hacking
         self.response.write({
             'error': 'Unable to reset your password (perhaps you are using the wrong code or email address?).  If you'
