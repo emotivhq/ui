@@ -6,14 +6,14 @@
 
 GiftStarterApp.controller('LoginPopoverController', ['$scope', '$http', '$cookieStore', 'UserService',
     'PopoverService','GiftStartService','TwitterService','FacebookService',
-    '$location','GooglePlusService','Analytics','AppStateService', 'emailLoginService',
+    '$location','GooglePlusService','Analytics','AppStateService', 'emailLoginService', '$routeParams',
     LoginPopoverController]);
 
 
 function LoginPopoverController($scope, $http, $cookieStore, UserService,  PopoverService,
                                 GiftStartService,  TwitterService,
                                 FacebookService,  $location, GooglePlusService,
-                                Analytics,  AppStateService, emailLoginService) {
+                                Analytics,  AppStateService, emailLoginService, $routeParams) {
 
     $scope.loggedIn = UserService.loggedIn;
 
@@ -22,6 +22,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
         isLoginCreate: false,
         isForgotPassword: false,
         isEmailLogin: false,
+        isReset: false,
         email: '',
         emailConfirm: '',
         password: '',
@@ -29,7 +30,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
         message: ''
     };
 
-    var mode = 'login',
+    var mode = ($routeParams.resetCode) ? 'reset' : 'login',
         loginUrl = '';
 
     $scope.emailFormActions = {
@@ -37,19 +38,29 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
             $scope.emailFormModel.isLoginCreate = true;
             $scope.emailFormModel.isForgotPassword = false;
             $scope.emailFormModel.isLogin = false;
+            $scope.emailFormModel.isReset = false;
             event && event.preventDefault();
         },
         forgotPasswordMode: function (event) {
             $scope.emailFormModel.isLoginCreate = false;
             $scope.emailFormModel.isForgotPassword = true;
             $scope.emailFormModel.isLogin = false;
+            $scope.emailFormModel.isReset = false;
             event && event.preventDefault();
         },
         loginMode: function (event) {
             $scope.emailFormModel.isLoginCreate = false;
             $scope.emailFormModel.isForgotPassword = false;
             $scope.emailFormModel.isLogin = true;
+            $scope.emailFormModel.isReset = false;
             event && event.preventDefault();
+        },
+        resetMode: function () {
+            $scope.emailFormModel.isEmailLogin = true;
+            $scope.emailFormModel.isLoginCreate = false;
+            $scope.emailFormModel.isForgotPassword = false;
+            $scope.emailFormModel.isLogin = false;
+            $scope.emailFormModel.isReset = true;
         },
         submit: function () {
             if ($scope.emailLoginForm.$valid) {
@@ -58,14 +69,14 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                     mode,
                     $scope.emailFormModel.email,
                     $scope.emailFormModel.password,
-                    '').
-                    then(function () {
+                    $routeParams.resetCode).
+                    then(function (okMsg) {
                         if (mode === 'create') {
                             // Automatically log the user in
                             $scope.emailFormActions.login();
                             $scope.emailFormActions.submit();
                         } else if (mode === 'forgotPassword') {
-                            $scope.emailFormModel.message = 'An instruction has been sent to your email address.';
+                            $scope.emailFormModel.message = okMsg;
                         }
 
                     }, function (errMsg) {
@@ -94,7 +105,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
             Analytics.track('user', 'forgot login password');
             mode = 'forgotPassword';
         },
-        reser: function () {
+        reset: function () {
             Analytics.track('user', 'reset login password');
             mode = 'reset';
         },
@@ -103,6 +114,10 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
             mode = 'login';
         }
     };
+
+    if (mode === 'reset') {
+        $scope.emailFormActions.resetMode();
+    }
 
     // Check if user is logged in already
     if (UserService.loggedIn) {loginComplete()}

@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $routeParams) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -92,6 +92,11 @@
                 }
             }
         }
+
+        if ($routeParams.resetCode) {
+            login();
+            $scope.actions.menuItemClicked(true);
+        }
     };
 
     app.controller('HeaderController', [
@@ -102,6 +107,7 @@
         'PopoverService',
         '$rootScope',
         '$interval',
+        '$routeParams',
         HeaderController]);
 
 }(angular.module('GiftStarterApp')));
