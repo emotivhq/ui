@@ -71,10 +71,14 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                     $scope.emailFormModel.password,
                     $routeParams.resetCode).
                     then(function (okMsg) {
-                        if (mode === 'create') {
+                        if (mode === 'create' || mode === 'reset') {
                             // Automatically log the user in
-                            $scope.emailFormActions.login();
-                            $scope.emailFormActions.submit();
+                            $scope.emailFormModel.message = okMsg;
+
+                            $timeout(function () {
+                                $scope.emailFormActions.login();
+                                $scope.emailFormActions.submit();
+                            }, 1000);
                         } else if (mode === 'forgotPassword') {
                             $scope.emailFormModel.message = okMsg;
                         }
