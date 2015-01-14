@@ -40,6 +40,8 @@ EMAIL_TEMPLATES = {
         "thank_you_notification.html"),
     "gc_pitchin_notification": JINJA_ENVIRONMENT.get_template(
         "gc_pitchin_notification.html"),
+    "emaillogin_reset": JINJA_ENVIRONMENT.get_template(
+        "emaillogin_reset.html"),
     "base_frame": JINJA_ENVIRONMENT.get_template(
         "base_frame.html"),
     "campaign_ending_1_day_giver": JINJA_ENVIRONMENT.get_template(
