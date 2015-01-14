@@ -38,6 +38,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
         .when('/add-the-button',
         {templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
+        .when('/reset/:resetCode',
+        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/:path*', {
             controller: 'ContentRouteController',
             reloadOnSearch: false,

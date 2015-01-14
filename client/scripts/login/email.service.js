@@ -16,7 +16,7 @@
             },
             uuid = '';
 
-        var login = function (mode, email, password, code) {
+        var login = function (mode, email, password, resetCode) {
             var deferred = $q.defer();
 
             uuid = email;
@@ -25,7 +25,7 @@
                 urls[mode], {
                     email: email,
                     password: password,
-                    code: code
+                    code: resetCode
                 }).
                 success(function (response) {
                     var resObj = response;
@@ -33,7 +33,7 @@
                         if (mode === 'login') {
                             $rootScope.$broadcast('email-login-success');
                         }
-                        deferred.resolve();
+                        deferred.resolve(resObj['ok']);
                     } else {
                         deferred.reject(resObj['error']);
                     }
