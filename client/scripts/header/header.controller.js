@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $routeParams) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -93,10 +93,10 @@
             }
         }
 
-        if ($routeParams.resetCode) {
+        $rootScope.$on('password-reset-requested', function () {
             login();
             $scope.actions.menuItemClicked(true);
-        }
+        });
     };
 
     app.controller('HeaderController', [
@@ -107,7 +107,6 @@
         'PopoverService',
         '$rootScope',
         '$interval',
-        '$routeParams',
         HeaderController]);
 
 }(angular.module('GiftStarterApp')));

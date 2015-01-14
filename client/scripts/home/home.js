@@ -6,9 +6,9 @@
 
 GiftStarterApp.controller('HomeController', [
             '$scope','Analytics','$window','$http','$timeout','AppStateService',
-            '$location','ToastService','$interval',
+            '$location','ToastService','$interval', '$routeParams', '$rootScope',
     function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
-             $location, ToastService,  $interval) {
+             $location, ToastService,  $interval, $routeParams, $rootScope) {
         Analytics.track('client', 'loaded home');
         if (AppStateService.state) {
             if (AppStateService.state.gsid) {
@@ -16,6 +16,10 @@ GiftStarterApp.controller('HomeController', [
             } else if (AppStateService.state.createSession) {
                 $location.path('/create');
             }
+        }
+
+        if ($routeParams.resetCode) {
+            $rootScope.$broadcast('password-reset-requested');
         }
 
         $scope.topCampaigns = {};
