@@ -5,6 +5,8 @@ __author__ = 'stuart'
 import requests
 import yaml
 import imghdr
+import logging
+import hashlib
 
 config = yaml.load(open('config.yaml'))
 
@@ -18,8 +20,13 @@ key = {
 
 
 def cache_user_image_from_url(uid, img_url):
+    logging.info("Getting image for {0} form {1}".format(uid, img_url))
     img = requests.get(img_url).content
+    logging.info("Got {0} bytes for image, md5: {1}".format(len(img), hashlib.md5(img)))
     extension = '.' + img_url.split('.')[-1].split('?')[0]
+    if extension not in {'.jpg', '.jpeg', '.png', '.gif'}:
+        extension = ''
+    logging.info("Saving as {0}".format(uid + extension))
     return save_picture_to_gcs(uid + extension, 'u/', img)
 
 

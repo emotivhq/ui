@@ -39,7 +39,7 @@
                         if (mode === 'login') {
                             var data = resObj['ok'];
                             self.uid = data['uid'];
-                            self.usr_img = data['img_url'];
+                            self.usr_img = data['usr_img'];
                             self.name = data['name'];
                             self.token = data['token'];
                             self.subscribed = data['on_mailing_list'];
