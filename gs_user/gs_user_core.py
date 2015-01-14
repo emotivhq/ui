@@ -35,7 +35,7 @@ def subscribe_user_to_mailing_list(uid, email=None, double_opt_in=True):
 
 def subscribe_to_mailing_list(email, double_opt_in=True):
     subscribe_list_id = 'c0f44e11c0'
-    mailchimp_api_key = '0a6a663ef69cb19532a41a7582c7b5e1-us8'
+    mailchimp_api_key = '59ebc76ea5b3707e6439a35c3b41251f-us8'#'0a6a663ef69cb19532a41a7582c7b5e1-us8'
     mailchimp_url = 'https://us8.api.mailchimp.com/2.0/lists/subscribe.json'
 
     post_data = json.dumps({
