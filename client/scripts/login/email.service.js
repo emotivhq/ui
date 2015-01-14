@@ -7,7 +7,7 @@
 (function (app) {
     'use strict';
 
-    var EmailLoginService = function ($http, $q) {
+    var EmailLoginService = function ($http, $q, $rootScope) {
         var urls = {
                 create: '/login/email/create',
                 forgotPassword: '/login/email/requestreset',
@@ -55,5 +55,5 @@
         this.has_pitched_in = false;
     };
 
-    app.service('emailLoginService', ['$http', '$q', EmailLoginService])
+    app.service('emailLoginService', ['$http', '$q', '$rootScope', EmailLoginService])
 }(angular.module('GiftStarterApp')));
