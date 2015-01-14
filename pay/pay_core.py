@@ -51,8 +51,11 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     user = gs_user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
 
-    if subscribe_to_mailing_lits:
-        gs_user_core.subscribe_user_to_mailing_list(uid, email=email_address)
+    try:
+        if subscribe_to_mailing_lits:
+            gs_user_core.subscribe_user_to_mailing_list(uid, email=email_address)
+    except Exception, e:
+        logging.error(e.message)
 
     if not parts_available(parts, gsid):
         return {'result': 'error', 'error': 'One or more requested parts have '
