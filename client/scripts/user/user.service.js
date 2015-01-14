@@ -64,7 +64,7 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
             TwitterService.logout();
         } else if (self.loginService === 'googleplus') {
             GooglePlusService.logout();
-        } else if (self.loginService === 'email') {
+        } else if (self.loginService === 'emaillogin') {
             emailLoginService.logout();
         }
         self.registerLogout();
@@ -118,9 +118,9 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
     $rootScope.$on('email-login-success', emailLoggedIn);
     function emailLoggedIn () {
         Analytics.track('user', 'logged in with email');
-        self.loginService = 'email';
-        self.registerLogin(emailLoginService.uuid,
-            '', '',
+        self.loginService = 'emaillogin';
+        self.registerLogin(emailLoginService.uid,
+            '', 'token:' + emailLoginService.uid,
             false, 'Email User',
             emailLoginService.has_pitched_in);
     }
@@ -134,6 +134,6 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
         // base64 decode the name - for unicode chars in names
         $window.loginDeets[4] =  decodeURIComponent(escape(atob($window.loginDeets[4])));
         self.registerLogin.apply(this, $window.loginDeets);
-        self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
+        self.loginService = {f: 'facebook', t:'twitter', g:'googleplus', e:'emaillogin'}[$window.loginDeets[0][0]];
     }
 }

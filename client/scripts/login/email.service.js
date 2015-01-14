@@ -14,12 +14,12 @@
                 login: '/login/email/login',
                 reset: '/login/email/reset'
             },
-            uuid = '';
+            uid = '';
 
         var login = function (mode, email, password, resetCode) {
             var deferred = $q.defer();
 
-            uuid = email;
+            uid = 'e:' + email;
 
             $http.post(
                 urls[mode], {
@@ -51,7 +51,7 @@
 
         this.login = login;
         this.logout = logout;
-        this.uuid = uuid;
+        this.uid = uid;
         this.has_pitched_in = false;
     };
 

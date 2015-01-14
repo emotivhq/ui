@@ -6,14 +6,14 @@
 
 GiftStarterApp.controller('LoginPopoverController', ['$scope', '$http', '$cookieStore', 'UserService',
     'PopoverService','GiftStartService','TwitterService','FacebookService',
-    '$location','GooglePlusService','Analytics','AppStateService', 'emailLoginService', '$routeParams',
+    '$location','GooglePlusService','Analytics','AppStateService', 'emailLoginService', '$routeParams', '$timeout',
     LoginPopoverController]);
 
 
 function LoginPopoverController($scope, $http, $cookieStore, UserService,  PopoverService,
                                 GiftStartService,  TwitterService,
                                 FacebookService,  $location, GooglePlusService,
-                                Analytics,  AppStateService, emailLoginService, $routeParams) {
+                                Analytics,  AppStateService, emailLoginService, $routeParams, $timeout) {
 
     $scope.loggedIn = UserService.loggedIn;
 
@@ -73,7 +73,10 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                     then(function (okMsg) {
                         if (mode === 'create' || mode === 'reset') {
                             // Automatically log the user in
-                            $scope.emailFormModel.message = okMsg;
+
+                            if (mode === 'reset') {
+                                $scope.emailFormModel.message = okMsg;
+                            }
 
                             $timeout(function () {
                                 $scope.emailFormActions.login();
