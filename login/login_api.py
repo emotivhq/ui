@@ -22,8 +22,9 @@ class CreateHandler(webapp2.RequestHandler):
         self.post()
     def post(self):
         time.sleep(1)  # crude anti-hacking
-        email = self.request.get("email","").strip()
-        password = self.request.get("password","").strip()
+        params = json.loads(self.request.body)
+        email = params['email'].strip()
+        password = params['password'].strip()
         if email is "":
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
             return
@@ -52,8 +53,9 @@ class LoginHandler(webapp2.RequestHandler):
         self.post()
     def post(self):
         time.sleep(1)  # crude anti-hacking
-        email = self.request.get("email","").strip()
-        password = self.request.get("password","").strip()
+        params = json.loads(self.request.body)
+        email = params['email'].strip()
+        password = params['password'].strip()
         if email is "":
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
             return
