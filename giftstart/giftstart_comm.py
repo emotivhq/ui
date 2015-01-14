@@ -102,6 +102,22 @@ def send_day_left_warning(gsid):
                      }))
 
 
+
+def send_emaillogin_reset(email):
+    email_kwargs = {
+        'reset_link': 'https://giftstarter.co/reset/'+email
+    }
+    requests.put(config['email_url'],
+                 data=json.dumps({
+                     'subject': "Can't remember your password?",
+                     'template_name':
+                         "emaillogin_reset",
+                     'template_kwargs': email_kwargs,
+                     'sender': "giftconcierge@giftstarter.co",
+                     'mime_type': 'html',
+                     'to': email,
+                 }))
+
 def check_if_complete(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
