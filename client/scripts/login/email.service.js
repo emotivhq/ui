@@ -28,8 +28,7 @@
                     code: code
                 }).
                 success(function (response) {
-                    //alert((JSON.stringify(response, null, 4)));
-                    var resObj = JSON.parse(response);
+                    var resObj = response;
                     if (resObj['ok']) {
                         if (mode === 'login') {
                             $rootScope.$broadcast('email-login-success');
