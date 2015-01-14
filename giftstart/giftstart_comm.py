@@ -12,7 +12,7 @@ from google.appengine.api import taskqueue
 from gs_util import gs_util_link
 from thank import thank_core
 from gs_user.User import User
-import hashlib
+from login import login_core
 
 config = yaml.load(open('config.yaml'))
 team_notification_email = config['team_notification_email']
@@ -103,11 +103,9 @@ def send_day_left_warning(gsid):
                      }))
 
 
-email_reset_salt = '5_MEA@ott@dVx>9m+z!dY;|+>*G!!5:kTT&>K|LKbs3c(XKe|bc.W~`=|mn6C.;J'
-
 def send_emaillogin_reset(email):
     email_kwargs = {
-        'reset_link': config['app_url']+'/reset/'+hashlib.sha256(email+email_reset_salt).hexdigest()
+        'reset_link': config['app_url']+'/reset/'+login_core.generate_reset_code(email)
     }
     requests.put(config['email_url'],
                  data=json.dumps({

@@ -6,10 +6,12 @@ __author__ = 'GiftStarter'
 
 import webapp2
 import time
-import login.login_core
+from login import login_core
 import gs_user.gs_user_core
 from gs_user import User
 from giftstart import giftstart_comm
+import EmailLoginPair
+import hashlib
 from gs_user.gs_user_referral import UserReferral
 from google.appengine.ext import ndb
 import json
@@ -26,15 +28,15 @@ class CreateHandler(webapp2.RequestHandler):
         params = json.loads(self.request.body)
         email = params['email'].strip()
         password = params['password'].strip()
-        if email is "":
+        if len(email) is 0:
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
             return
-        if password is "":
+        if len(password) is 0:
             self.response.write(json.dumps({'error':'password cannot be blank'}))
             return
-        token_set = login.login_core.get_email_token_set(email=email, password=password)
+        token_set = login_core.get_email_token_set(email=email, password=password)
         try:
-            uid = login.login_core.get_uid(token_set)
+            uid = login_core.get_uid(token_set)
         except ValueError:
             uid = True
         if uid:
@@ -57,15 +59,15 @@ class LoginHandler(webapp2.RequestHandler):
         params = json.loads(self.request.body)
         email = params['email'].strip()
         password = params['password'].strip()
-        if email is "":
+        if len(email) is 0:
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
             return
-        if password is "":
+        if len(password) is 0:
             self.response.write(json.dumps({'error':'password cannot be blank'}))
             return
-        token_set = login.login_core.get_email_token_set(email=email, password=password)
+        token_set = login_core.get_email_token_set(email=email, password=password)
         try:
-            uid = login.login_core.get_uid(token_set)
+            uid = login_core.get_uid(token_set)
         except ValueError:
             uid = False
         if uid:
@@ -84,21 +86,59 @@ class RequestResetHandler(webapp2.RequestHandler):
         time.sleep(1)  # crude anti-hacking
         params = json.loads(self.request.body)
         email = params['email'].strip()
-        giftstart_comm.send_emaillogin_reset(email)
-        self.response.write(json.dumps({
-            'ok': 'An email has been sent.  If you do not receive it, double-check that you are using the correct email'
-                  ' address, and that the message is not in "spam" or "junk".'
-        }))
+        if len(email) is 0:
+            self.response.write(json.dumps({'error':'Email cannot be blank'}))
+            return
+        if len(User.query(User.emaillogin_token_set.email == email).fetch(1)) > 0:
+            giftstart_comm.send_emaillogin_reset(email)
+            self.response.write(json.dumps({
+                'ok': 'An email has been sent.  If you do not receive it, double-check that you are using the correct email'
+                      ' address, and that the message is not in "spam" or "junk".'
+            }))
+        else:
+            self.response.write(json.dumps({
+                'error': 'It looks like you\'ve never logged in with that email address; perhaps you were using'
+                         ' Facebook, Twitter, or Google Plus?'
+            }))
+
 
 class ResetHandler(webapp2.RequestHandler):
     def get(self):
         self.post()
     def post(self):
         time.sleep(1)  # crude anti-hacking
-        self.response.write(json.dumps({
-            'error': 'Unable to reset your password (perhaps you are using the wrong code or email address?).  If you'
-                    ' continue to have problems, please contact the Gift Concierge.'
-        }))
+        params = json.loads(self.request.body)
+        email = params['email'].strip()
+        password = params['password'].strip()
+        code = params['code'].strip()
+        if len(email) is 0:
+            self.response.write(json.dumps({'error':'Email cannot be blank'}))
+            return
+        if len(password) is 0:
+            self.response.write(json.dumps({'error':'password cannot be blank'}))
+            return
+        if len(code) is 0:
+            self.response.write(json.dumps({'error':'reset code not provided'}))
+            return
+        users = User.query(User.emaillogin_token_set.email == email).fetch(1)
+        if len(users) > 0:
+            if code != login_core.generate_reset_code(email):
+                self.response.write(json.dumps({
+                    'error': 'Unable to reset your password (it looks like you\'re using the wrong email address for'
+                             ' that reset link!).  If you continue to have problems, please contact the Gift Concierge.'
+                }))
+            else:
+                user = users[0]
+                user.emaillogin_token_set = EmailLoginPair.EmailLoginPair().populate(email=email, password=password)
+                user.put()
+                self.response.write(json.dumps({
+                    'ok': 'Your password has been changed.'
+                }))
+        else:
+            self.response.write(json.dumps({
+                'error': 'Unable to reset your password (perhaps you are using the wrong code or email address?).  If you'
+                        ' continue to have problems, please contact the Gift Concierge.'
+            }))
 
 handler = webapp2.WSGIApplication([
                                       ('/login/email/create', CreateHandler),

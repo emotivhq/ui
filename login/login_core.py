@@ -4,7 +4,6 @@ from gs_user import User
 import EmailLoginPair
 from uuid import uuid4
 import hashlib
-import logging
 
 def get_uid(token_set, create=False):
     """
@@ -39,3 +38,9 @@ def get_img_url(token_set):
 def get_user_info(user):
     #no automatic names for users yet
     return user
+
+
+email_reset_salt = '5_MEA@ott@dVx>9m+z!dY;|+>*G!!5:kTT&>K|LKbs3c(XKe|bc.W~`=|mn6C.;J'
+
+def generate_reset_code(email):
+    return hashlib.sha256(email+email_reset_salt).hexdigest()
