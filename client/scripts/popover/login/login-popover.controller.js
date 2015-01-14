@@ -61,10 +61,9 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                     '').
                     then(function () {
                         if (mode === 'create') {
-                            // Switch to login mode
-                            $scope.emailFormModel.email = '';
-                            $scope.emailFormModel.password = '';
-                            $scope.emailFormActions.loginMode();
+                            // Automatically log the user in
+                            $scope.emailFormActions.login();
+                            $scope.emailFormActions.submit();
                         } else if (mode === 'forgotPassword') {
                             $scope.emailFormModel.message = 'An instruction has been sent to your email address.';
                         }
