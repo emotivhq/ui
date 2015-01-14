@@ -8,6 +8,14 @@
     'use strict';
 
     var EmailLoginService = function ($http, $q, $rootScope) {
+
+        var self = this;
+
+        this.uid = -1;
+        this.usr_img = '';
+        this.name = '';
+        this.token = '';
+
         var urls = {
                 create: '/login/email/create',
                 forgotPassword: '/login/email/requestreset',
@@ -19,8 +27,6 @@
         var login = function (mode, email, password, resetCode) {
             var deferred = $q.defer();
 
-            uid = 'e:' + email;
-
             $http.post(
                 urls[mode], {
                     email: email,
@@ -31,6 +37,13 @@
                     var resObj = response;
                     if (resObj['ok']) {
                         if (mode === 'login') {
+                            var data = resObj['ok'];
+                            self.uid = data['uid'];
+                            self.usr_img = data['img_url'];
+                            self.name = data['name'];
+                            self.token = data['token'];
+                            self.subscribed = data['on_mailing_list'];
+                            self.has_pitched_in = data['has_pitched_in'];
                             $rootScope.$broadcast('email-login-success');
                         }
                         deferred.resolve(resObj['ok']);
@@ -51,8 +64,6 @@
 
         this.login = login;
         this.logout = logout;
-        this.uid = uid;
-        this.has_pitched_in = false;
     };
 
     app.service('emailLoginService', ['$http', '$q', '$rootScope', EmailLoginService])

@@ -158,7 +158,7 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
 
 
 def save_card(user, stripe_response):
-    stripe.Card.refresh()
+    #stripe.Card.refresh()
     if user.stripe_id is None:
         # User does not have a stripe customer yet
         customer = stripe.Customer.create(
@@ -168,10 +168,12 @@ def save_card(user, stripe_response):
         user.stripe_id = customer['id']
         user.put()
         card = customer['cards']['data'][0]
+        card.refresh()
     else:
         # User has a stripe customer, add a card to it
         customer = stripe.Customer.retrieve(user.stripe_id)
         card = customer.cards.create(card=stripe_response['id'])
+        card.refresh()
 
     return customer, card
 

@@ -132,7 +132,7 @@ token_pointer_map = {
     'f': lambda user: user.facebook_token_set.access_token,
     't': lambda user: user.twitter_token_set.access_token,
     'g': lambda user: user.googleplus_token_set.access_token,
-    'e': lambda user: user.emaillogin_token_set.access_token,
+    'e': lambda user: user.emaillogin_token_set.email,
 }
 
 

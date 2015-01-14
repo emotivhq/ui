@@ -17,7 +17,7 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
     this.profileImageUrl  = '';
     this.isStripeCustomer = false;
     this.loginService = '';
-    this.onMailinList = false;
+    this.onMailingList = false;
     this.email = '';
     this.referrer = {};
     this.hasPitchedIn = false;
@@ -120,8 +120,8 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
         Analytics.track('user', 'logged in with email');
         self.loginService = 'emaillogin';
         self.registerLogin(emailLoginService.uid,
-            '', 'token:' + emailLoginService.uid,
-            false, 'Email User',
+            emailLoginService.usr_img, emailLoginService.token,
+            emailLoginService.subscribed, emailLoginService.name,
             emailLoginService.has_pitched_in);
     }
 

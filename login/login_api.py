@@ -11,6 +11,7 @@ import gs_user.gs_user_core
 from gs_user import User
 from giftstart import giftstart_comm
 import EmailLoginPair
+from gs_user import UserLogin
 import hashlib
 from gs_user.gs_user_referral import UserReferral
 from google.appengine.ext import ndb
@@ -47,7 +48,14 @@ class CreateHandler(webapp2.RequestHandler):
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))
             user = gs_user.gs_user_core.login_emaillogin_user(email, password, referrer)
             self.response.write(json.dumps({
-                'ok': user.jsonify()
+                'ok': {
+                        'uid': user.uid,
+                        'usr_img': user.cached_profile_image_url,
+                        'on_mailing_list': user.subscribed_to_mailing_list,
+                        'token': user.emaillogin_token_set.email,
+                        'name': user.name,
+                        'has_pitched_in': user.has_pitched_in,
+                    }
             }))
 
 
@@ -71,8 +79,17 @@ class LoginHandler(webapp2.RequestHandler):
         except ValueError:
             uid = False
         if uid:
+            user = User.query(User.uid == uid).fetch(1)[0]
+            #UserLogin.register_login(user.uid, data['location'])
             self.response.write(json.dumps({
-                'ok': User.query(User.uid == uid).fetch(1)[0].jsonify()
+                'ok': {
+                        'status': 'logged-in', 'uid': user.uid,
+                        'usr_img': user.cached_profile_image_url,
+                        'on_mailing_list': user.subscribed_to_mailing_list,
+                        'token': user.emaillogin_token_set.email,
+                        'name': user.name,
+                        'has_pitched_in': user.has_pitched_in,
+                    }
             }))
         else:
             self.response.write(json.dumps({

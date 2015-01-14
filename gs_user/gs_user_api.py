@@ -19,6 +19,7 @@ import uuid
 import stripe
 import yaml
 from social.facebook import facebook_share
+import urllib
 
 stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
@@ -128,7 +129,7 @@ class ImageUploadHandler(webapp2.RequestHandler):
         json_body = json.loads(self.request.body)
         content_type = self.request.headers.get('Content-Type').split('/')
         hdr_uid = str(self.request.cookies.get('uid')).replace('%22', '')
-        token = str(self.request.cookies.get('token')).replace('%22', '')
+        token = urllib.unquote(str(self.request.cookies.get('token')).replace('%22', ''))
 
         if uid != hdr_uid:
             logging.warning("Received profile image upload for wrong uid")
@@ -173,7 +174,7 @@ class StripeCardsHandler(webapp2.RequestHandler):
 
     def get(self):
         uid = self.request.cookies.get('uid', '').replace('%22', '')
-        token = self.request.cookies.get('token', '').replace('%22', '')
+        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
 
         if not all([bool(thing) for thing in [uid, token]]):
             logging.warning("Invalid data used for stripe token request:"
