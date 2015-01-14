@@ -13,6 +13,7 @@ from gs_util import gs_util_link
 from thank import thank_core
 from gs_user.User import User
 import hashlib
+import logging
 
 config = yaml.load(open('config.yaml'))
 team_notification_email = config['team_notification_email']
@@ -107,9 +108,9 @@ email_reset_salt = '5_MEA@ott@dVx>9m+z!dY;|+>*G!!5:kTT&>K|LKbs3c(XKe|bc.W~`=|mn6
 
 def send_emaillogin_reset(email):
     email_kwargs = {
-        'reset_link': 'https://giftstarter.co/reset/'+hashlib.md5(email+email_reset_salt)
+        'reset_link': 'https://giftstarter.co/reset/'+hashlib.md5(email+email_reset_salt).hexdigest()
     }
-    requests.put(config['email_url'],
+    resp = requests.put(config['email_url'],
                  data=json.dumps({
                      'subject': "Can't remember your password?",
                      'template_name':
@@ -119,6 +120,8 @@ def send_emaillogin_reset(email):
                      'mime_type': 'html',
                      'to': email,
                  }))
+    logging.info("{0}".format(resp))
+
 
 def check_if_complete(gsid):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
