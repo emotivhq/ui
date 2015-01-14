@@ -70,7 +70,7 @@ def hot_campaigns(num_campaigns):
 
 
 def does_user_exist(uid, token):
-    login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter'}
+    login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter', 'e': 'emaillogin'}
     if uid[0] not in login_service_map.keys():
         return False
     token_map = {'f': lambda u: u.facebook_token_set.access_token,
