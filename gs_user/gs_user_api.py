@@ -4,7 +4,7 @@ import webapp2
 from social import twitter, googleplus, facebook
 import json
 from gs_user_core import update_or_create, get_user, \
-    subscribe_to_mailing_list, validate, get_card_tokens
+    subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens
 from gs_user_stats import get_stats
 from UserLogin import UserLogin
 from render_app import render_app
@@ -39,6 +39,27 @@ class UserPageHandler(webapp2.RequestHandler):
         """
         self.response.write(render_app(self.request))
 
+class SweepstakesSubscribeHandler(webapp2.RequestHandler):
+    def put(self):
+        data = json.loads(self.request.body)
+        email = data.get('email')
+        firstname = data.get('firstname')
+        lastname = data.get('lastname')
+        if email is None:
+            self.response.write(json.dumps({
+                'error': 'Please provide an email address'
+            }))
+            return
+        try:
+            subscribe_to_sweepstakes(email, firstname, lastname)
+            self.response.write(json.dumps({
+                'ok': "Your entry has been recorded. Thank you!"
+            }))
+        except Exception:
+            self.response.write(json.dumps({
+                'error': "Either your email is mistyped, or you've already entered. If not, please contact the Gift"
+                         " Concierge."
+            }))
 
 class SubscribeHandler(webapp2.RequestHandler):
     def put(self):
@@ -197,6 +218,7 @@ class StripeCardsHandler(webapp2.RequestHandler):
 
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
+                               ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
                                ('/users/.*/cards.json', StripeCardsHandler),
