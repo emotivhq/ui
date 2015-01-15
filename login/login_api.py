@@ -16,10 +16,13 @@ import hashlib
 from gs_user.gs_user_referral import UserReferral
 from google.appengine.ext import ndb
 import json
+import re
 from storage import image_cache
 from uuid import uuid4
 import logging
 
+def validate_password_complexity(password):
+    return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$&+=]).*$',password)
 
 class CreateHandler(webapp2.RequestHandler):
     def get(self):
@@ -30,10 +33,13 @@ class CreateHandler(webapp2.RequestHandler):
         email = params['email'].strip()
         password = params['password'].strip()
         if len(email) is 0:
-            self.response.write(json.dumps({'error':'Email cannot be blank'}))
+            self.response.write(json.dumps({'error': 'Email cannot be blank'}))
             return
         if len(password) is 0:
-            self.response.write(json.dumps({'error':'password cannot be blank'}))
+            self.response.write(json.dumps({'error': 'Password cannot be blank'}))
+            return
+        if not validate_password_complexity(password):
+            self.response.write(json.dumps({'error': 'Password does not meet minimum requirements. Please try again.'}))
             return
         token_set = login_core.get_email_token_set(email=email, password=password)
         try:
@@ -132,7 +138,10 @@ class ResetHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
             return
         if len(password) is 0:
-            self.response.write(json.dumps({'error':'password cannot be blank'}))
+            self.response.write(json.dumps({'error':'Password cannot be blank'}))
+            return
+        if not validate_password_complexity(password):
+            self.response.write(json.dumps({'error': 'Password does not meet minimum requirements. Please try again.'}))
             return
         if len(code) is 0:
             self.response.write(json.dumps({'error':'reset code not provided'}))
