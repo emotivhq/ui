@@ -27,7 +27,7 @@
             </div>
             <div ng-show="emailFormModel.isLoginCreate || emailFormModel.isReset">
                 <input type="password" name="passwordConfirm" placeholder="Confirm your password." ng-model="emailFormModel.passwordConfirm" ng-required="emailFormModel.isLoginCreate"/>
-                <span>Your password must be at least 8 characters, including one uppercase letter, one lowercase letter, and a number.</span>
+                <span>Your password must be at least 8 characters, including an uppercase letter, a lowercase letter, and a number.</span>
                 <span ng-show="emailLoginForm.$submitted && emailLoginForm.passwordConfirm.$error.required">Confirm password required.</span>
                 <span ng-show="emailLoginForm.$submitted && (emailFormModel.password !== emailFormModel.passwordConfirm)">Passwords do not match.</span>
             </div>
