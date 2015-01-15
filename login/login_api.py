@@ -22,7 +22,8 @@ from uuid import uuid4
 import logging
 
 def validate_password_complexity(password):
-    return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$&+=]).*$',password)
+    #return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$&+=]).*$',password)
+    return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$',password)
 
 class CreateHandler(webapp2.RequestHandler):
     def get(self):
