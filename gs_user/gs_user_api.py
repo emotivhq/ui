@@ -40,6 +40,8 @@ class UserPageHandler(webapp2.RequestHandler):
         self.response.write(render_app(self.request))
 
 class SweepstakesSubscribeHandler(webapp2.RequestHandler):
+    def post(self):
+        self.put()
     def put(self):
         data = json.loads(self.request.body)
         email = data.get('email')
