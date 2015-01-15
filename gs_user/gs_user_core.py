@@ -3,6 +3,7 @@ __author__ = 'stuart'
 from google.appengine.ext import ndb
 from gs_user.User import User
 from social import facebook, twitter, googleplus
+import login.login_core
 import storage.image_cache
 import json
 import requests
@@ -64,23 +65,29 @@ def fetch_fb_image(uid, tok):
 
 cache_fns = {'facebook': lambda uid, tok: fetch_fb_image(uid, tok),
              'twitter': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid, twitter.get_img_url(tok)),
-             'googleplus': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,googleplus.get_img_url(tok))}
+             'googleplus': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,googleplus.get_img_url(tok)),
+             'emaillogin': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,login.login_core.get_img_url(tok)),}
 
 
 def cache_profile_image(uid, service, token_set):
     return cache_fns[service](uid, token_set)
 
+service_prefix = {'facebook':'f',
+                  'twitter':'t',
+                  'googleplus':'g',
+                  'emaillogin':'e'}
 
 uid_fns = {'facebook': lambda tok: facebook.get_uid(tok),
            'twitter': lambda tok: twitter.get_uid(tok),
-           'googleplus': lambda tok: googleplus.get_uid(tok)}
+           'googleplus': lambda tok: googleplus.get_uid(tok),
+           'emaillogin': lambda tok: login.login_core.get_uid(tok,create=True)}
 
 
 def update_or_create(service, token_set, referral):
     if service not in uid_fns:
-        raise ValueError("Invalid service!  Must be facebook, googleplus, or twitter.")
+        raise ValueError("Invalid service!  Must be facebook, googleplus, twitter, or emaillogin.")
 
-    uid = service[0] + uid_fns[service](token_set)
+    uid = service_prefix[service] + uid_fns[service](token_set)
     user_key = ndb.Key('User', uid)
     user = user_key.get()
 
@@ -88,10 +95,11 @@ def update_or_create(service, token_set, referral):
         img_url = cache_profile_image(uid, service, token_set)
         user = User(key=user_key, uid=uid, logged_in_with=service,
                     cached_profile_image_url=img_url)
-        user.referrer_channel = referral.channel
-        user.referrer_type = referral.type
-        user.referrer_uid = str(referral.uid)
-        user.referrer_uuid = referral.uuid
+        if (referral is not None):
+            user.referrer_channel = referral.channel
+            user.referrer_type = referral.type
+            user.referrer_uid = str(referral.uid)
+            user.referrer_uuid = referral.uuid
     else:
         # Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
         if service == 'googleplus':
@@ -108,7 +116,8 @@ def update_or_create(service, token_set, referral):
 
 info_map = {'f': lambda u: facebook.get_user_info(u),
             't': lambda u: twitter.get_user_info(u),
-            'g': lambda u: googleplus.get_user_info(u)}
+            'g': lambda u: googleplus.get_user_info(u),
+            'e': lambda u: login.login_core.get_user_info(u)}
 
 
 def get_user_info(user):
@@ -123,6 +132,7 @@ token_pointer_map = {
     'f': lambda user: user.facebook_token_set.access_token,
     't': lambda user: user.twitter_token_set.access_token,
     'g': lambda user: user.googleplus_token_set.access_token,
+    'e': lambda user: user.emaillogin_token_set.email,
 }
 
 
@@ -144,6 +154,10 @@ def validate(uid, token, path):
 
     return result
 
+
+def login_emaillogin_user(email, password, referrer):
+    token_set = login.login_core.get_email_token_set(email,password)
+    return update_or_create('emaillogin', token_set, referrer)
 
 def login_googleplus_user(code, redirect_url, referrer):
     token_set = googleplus.submit_code(code, redirect_url)

@@ -4,6 +4,7 @@ from google.appengine.ext import ndb
 from social.facebook import FacebookTokenSet
 from social.twitter import TwitterTokenSet
 from social.googleplus import GooglePlusTokenSet
+from login import EmailLoginPair
 import json
 
 
@@ -14,6 +15,9 @@ class User(ndb.Model):
     name = ndb.StringProperty()
 
     logged_in_with = ndb.StringProperty(required=True)
+
+    emaillogin_uid = ndb.StringProperty()
+    emaillogin_token_set = ndb.StructuredProperty(EmailLoginPair.EmailLoginPair)
 
     twitter_uid = ndb.StringProperty()
     twitter_token_set = ndb.StructuredProperty(TwitterTokenSet)

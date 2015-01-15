@@ -5,11 +5,11 @@
  */
 
 GiftStarterApp.service('UserService', ['$http','$rootScope','$cookieStore',
-    '$window','FacebookService','TwitterService','GooglePlusService',
+    '$window','FacebookService','TwitterService','GooglePlusService', 'emailLoginService',
     'Analytics', UserService]);
 
 function UserService($http,  $rootScope,  $cookieStore,  $window,
-                     FacebookService,  TwitterService,  GooglePlusService,
+                     FacebookService,  TwitterService,  GooglePlusService, emailLoginService,
                      Analytics) {
     this.uid = -1;
     this.loggedIn = false;
@@ -17,7 +17,7 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
     this.profileImageUrl  = '';
     this.isStripeCustomer = false;
     this.loginService = '';
-    this.onMailinList = false;
+    this.onMailingList = false;
     this.email = '';
     this.referrer = {};
     this.hasPitchedIn = false;
@@ -64,6 +64,8 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
             TwitterService.logout();
         } else if (self.loginService === 'googleplus') {
             GooglePlusService.logout();
+        } else if (self.loginService === 'emaillogin') {
+            emailLoginService.logout();
         }
         self.registerLogout();
     };
@@ -113,14 +115,25 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
             GooglePlusService.has_pitched_in);
     }
 
+    $rootScope.$on('email-login-success', emailLoggedIn);
+    function emailLoggedIn () {
+        Analytics.track('user', 'logged in with email');
+        self.loginService = 'emaillogin';
+        self.registerLogin(emailLoginService.uid,
+            emailLoginService.usr_img, emailLoginService.token,
+            emailLoginService.subscribed, emailLoginService.name,
+            emailLoginService.has_pitched_in);
+    }
+
     $rootScope.$on('facebook-logout-success', self.registerLogout);
     $rootScope.$on('twitter-logout-success', self.registerLogout);
     $rootScope.$on('googleplus-logout-success', self.registerLogout);
+    $rootScope.$on('email-logout-success', self.registerLogout);
 
     if ($window.loginDeets) {
         // base64 decode the name - for unicode chars in names
         $window.loginDeets[4] =  decodeURIComponent(escape(atob($window.loginDeets[4])));
         self.registerLogin.apply(this, $window.loginDeets);
-        self.loginService = {f: 'facebook', t:'twitter', g:'googleplus'}[$window.loginDeets[0][0]];
+        self.loginService = {f: 'facebook', t:'twitter', g:'googleplus', e:'emaillogin'}[$window.loginDeets[0][0]];
     }
 }

@@ -1,14 +1,60 @@
 <div class="login-popover" ng-controller="LoginPopoverController">
-    <h1 class="white">Login</h1>
+    <h1 class="white" ng-show="emailFormModel.isLogin">Log In</h1>
+    <h1 class="white" ng-show="emailFormModel.isLoginCreate">Create Account</h1>
+    <h1 class="white" ng-show="emailFormModel.isForgotPassword || emailFormModel.isReset">Reset Password</h1>
     <!--<p>Log in so they'll know who to thank!</p>-->
-    <div class="block">
+    <!-- <div class="block">
         <p>No need to memorize yet another username and password - you can use any of these networks to create and access your GiftStarts.</p>
         <p>And we solemnly swear to never post on your behalf, share your information, or stalk your friends.</p>
-    </div>
+    </div> -->
     <div class="block">
-        <div class="login-button facebook" ng-click="facebookLogin()"><img class="login-button" src="/assets/login_facebook2.png" /></div>
-        <div class="login-button twitter" ng-click="twitterLogin()"><img class="login-button" src="/assets/login_twitter2.png" /></div>
-        <div class="login-button googleplus" ng-click="googleLogin()"><img class="login-button" src="/assets/login_google2.png" /></div>
+
+        <div class="login-button" ng-click="emailFormModel.isEmailLogin = !emailFormModel.isEmailLogin" ng-hide="emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_email.png" /></div>
+
+        <form name="emailLoginForm" ng-show="emailFormModel.isEmailLogin" class="emailLogin" ng-submit="emailFormActions.submit()" novalidate>
+            <div>
+                <input type="email" name="email" placeholder="Enter your email." ng-model="emailFormModel.email" required/>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.email.$error.required">Email required.</span>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.email.$error.email">Invalid email.</span>
+            </div>
+            <div ng-show="emailFormModel.isLoginCreate">
+                <input type="email" name="emailConfirm" placeholder="Confirm your email." ng-model="emailFormModel.emailConfirm" ng-required="emailFormModel.isLoginCreate"/>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.emailConfirm.$error.required">Confirm email required.</span>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.emailConfirm.$error.email">Invalid email.</span>
+                <span ng-show="emailLoginForm.$submitted && (emailFormModel.email !== emailFormModel.emailConfirm)">Emails do not match.</span>
+            </div>
+            <div ng-hide="emailFormModel.isForgotPassword">
+                <input type="password" name="password" placeholder="Enter your password." ng-model="emailFormModel.password" ng-required="emailFormModel.isLogin || emailFormModel.isLoginCreate"/>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.password.$error.required">Password required.</span>
+            </div>
+            <div ng-show="emailFormModel.isLoginCreate || emailFormModel.isReset">
+                <input type="password" name="passwordConfirm" placeholder="Confirm your password." ng-model="emailFormModel.passwordConfirm" ng-required="emailFormModel.isLoginCreate"/>
+                <span>Your password must be at least 8 characters, including an uppercase letter, a lowercase letter, and a number.</span>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.passwordConfirm.$error.required">Confirm password required.</span>
+                <span ng-show="emailLoginForm.$submitted && (emailFormModel.password !== emailFormModel.passwordConfirm)">Passwords do not match.</span>
+            </div>
+            <div class="loginButton">
+                <input type="submit" value="Login" ng-click="emailFormActions.login()" ng-show="emailFormModel.isLogin">
+                <input type="submit" value="Create" ng-click="emailFormActions.createLogin()" ng-show="emailFormModel.isLoginCreate">
+                <input type="submit" value="Get password" ng-click="emailFormActions.forgotPassword()" ng-show="emailFormModel.isForgotPassword">
+                <input type="submit" value="Reset password" ng-click="emailFormActions.reset()" ng-show="emailFormModel.isReset">
+            </div>
+            <div ng-show="!emailFormModel.isLoginCreate && !emailFormModel.isForgotPassword && !emailFormModel.isReset">
+                <span class="or">or</span>
+                <input type="button" class="createLogin" ng-click="emailFormActions.createLoginMode($event)" value="Create login" />
+            </div>
+            <div ng-show="!emailFormModel.isLoginCreate && !emailFormModel.isForgotPassword && !emailFormModel.isReset">
+                <a href="#" ng-click="emailFormActions.forgotPasswordMode($event)" class="forgotPwdLink">Forgot password.</a>
+                <div style="clear: both"></div>
+            </div>
+
+            <div>
+                {{emailFormModel.message}}
+            </div>
+        </form>
+        <div class="login-button facebook" ng-click="facebookLogin()" ng-show="!emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_facebook2.png" /></div>
+        <div class="login-button twitter" ng-click="twitterLogin()" ng-show="!emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_twitter2.png" /></div>
+        <div class="login-button googleplus" ng-click="googleLogin()" ng-show="!emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_google2.png" /></div>
     </div>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

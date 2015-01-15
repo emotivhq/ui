@@ -70,12 +70,13 @@ def hot_campaigns(num_campaigns):
 
 
 def does_user_exist(uid, token):
-    login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter'}
+    login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter', 'e': 'emaillogin'}
     if uid[0] not in login_service_map.keys():
         return False
     token_map = {'f': lambda u: u.facebook_token_set.access_token,
                  'g': lambda u: u.googleplus_token_set.access_token,
-                 't': lambda u: u.twitter_token_set.access_token}
+                 't': lambda u: u.twitter_token_set.access_token,
+                 'e': lambda u: u.emaillogin_token_set.email}
 
     user = ndb.Key('User', uid).get()
 

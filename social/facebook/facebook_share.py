@@ -41,7 +41,7 @@ class FacebookShareHandler(webapp2.RequestHandler):
             return
 
         sessionUid = self.request.cookies.get('uid', '').replace('%22', '')
-        sessionToken = self.request.cookies.get('token', '').replace('%22', '')
+        sessionToken = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
 
         if not validate(sessionUid,sessionToken,self.request.path):
             self.response.set_status(400, "Invalid session token")
@@ -53,7 +53,7 @@ class FacebookShareHandler(webapp2.RequestHandler):
             logging.error("facebook_share: Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
             return
 
-        if uid[0] not in ['f', 'g', 't']:
+        if uid[0] not in ['f', 'g', 't', 'e']:
             self.response.set_status(400, "Invalid user id")
             logging.error("facebook_share: Invalid User id "+uid)
             return

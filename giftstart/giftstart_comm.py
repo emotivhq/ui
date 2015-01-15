@@ -12,6 +12,7 @@ from google.appengine.api import taskqueue
 from gs_util import gs_util_link
 from thank import thank_core
 from gs_user.User import User
+from login import login_core
 
 config = yaml.load(open('config.yaml'))
 team_notification_email = config['team_notification_email']
@@ -100,6 +101,22 @@ def send_day_left_warning(gsid):
                          'mime_type': 'html',
                          'to': emails,
                      }))
+
+
+def send_emaillogin_reset(email):
+    email_kwargs = {
+        'reset_link': config['app_url']+'/reset/'+login_core.generate_reset_code(email)
+    }
+    requests.put(config['email_url'],
+                 data=json.dumps({
+                     'subject': "Can't remember your password?",
+                     'template_name':
+                         "emaillogin_reset",
+                     'template_kwargs': email_kwargs,
+                     'sender': "giftconcierge@giftstarter.co",
+                     'mime_type': 'html',
+                     'to': email,
+                 }))
 
 
 def check_if_complete(gsid):

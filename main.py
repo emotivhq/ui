@@ -8,6 +8,7 @@ from giftstart import giftstart_create
 import json
 import base64
 import logging
+import urllib
 
 
 secrets = yaml.load(open('secret.yaml'))
@@ -18,11 +19,9 @@ class MainHandler(webapp2.RequestHandler):
     @handle_login
     def get(self):
         if self.request.cookies.get('uid'):
-            self.response.set_cookie('uid', self.request.cookies['uid']
-                                     .replace('%22', ''))
+            self.response.set_cookie('uid', self.request.cookies['uid'].replace('%22', ''))
         if self.request.cookies.get('token'):
-            self.response.set_cookie('token', self.request.cookies['token']
-                                     .replace('%22', ''))
+            self.response.set_cookie('token', urllib.unquote(self.request.cookies['token'].replace('%22', '')))
 
         # Check for create redirect
         if self.request.get('state'):

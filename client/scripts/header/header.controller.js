@@ -92,6 +92,11 @@
                 }
             }
         }
+
+        $rootScope.$on('password-reset-requested', function () {
+            login();
+            $scope.actions.menuItemClicked(true);
+        });
     };
 
     app.controller('HeaderController', [

@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 import os
 from giftstart import giftstart_comm, giftstart_core
 import storage.image_cache
-import math
+import urllib
 import logging
 
 MIN_GIFTSTART_CAMPAIGN_DAYS = 2
@@ -35,9 +35,10 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
             try:
                 self.create_giftstart()
             except ValueError as e:
-                logging.error("Expected valid UUID or uid")
+                logging.error("Expected valid UUID or uid: "+e.message)
                 self.response.set_status(400, "Expected valid UUID or uid")
             except AuthError as e:
+                logging.error("Invalid credentials: "+e.message)
                 self.response.set_status(403, "Invalid credentials")
 
     def str_param_valid(self, param):
@@ -99,12 +100,12 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         giftstart = self.request.giftstart
 
         uid = self.request.cookies.get('uid', 'none').replace('%22', '')
-        token = self.request.cookies.get('token', 'none').replace('%22', '')
+        token = urllib.unquote(self.request.cookies.get('token', 'none').replace('%22', ''))
         if (giftstart.get('staging_uuid')) is None:
             # Then there must be valid uid/token sent
             if uid is not None:
                 if not giftstart_core.does_user_exist(uid, token):
-                    raise AuthError('Invalid uid/token')
+                    raise AuthError('Invalid uid/token: {0} / {1}'.format(uid, token))
             else:
                 raise ValueError('No staging uuid supplied in absence of uid')
 

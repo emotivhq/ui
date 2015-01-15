@@ -140,13 +140,14 @@ def render_app_with_giftstart(request):
 
 def remember_user(cookies, path):
     js_insert = ''
-    if 'uid' in cookies:
+    if 'uid' in cookies and 'token' in cookies:
         # Strip url encoded double quotes
         uid = cookies['uid'].replace('%22', '')
         token = cookies['token'].replace('%22', '')
-        user_deets = gs_user.validate(uid, token, path)
-        if user_deets:
-            js_insert = "window.loginDeets = ['{uid}', '{img_url}', " \
-                        "'{token}', '{on_mailing_list}', '{name}', " \
-                        "'{has_pitched_in}'];".format(**user_deets)
+        if len(uid)>0:
+            user_deets = gs_user.validate(uid, token, path)
+            if user_deets:
+                js_insert = "window.loginDeets = ['{uid}', '{img_url}', " \
+                            "'{token}', '{on_mailing_list}', '{name}', " \
+                            "'{has_pitched_in}'];".format(**user_deets)
     return js_insert

@@ -252,7 +252,6 @@
 
             if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
                 dateChosenValid()) {
-
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
