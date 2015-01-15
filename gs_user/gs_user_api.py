@@ -59,8 +59,8 @@ class SweepstakesSubscribeHandler(webapp2.RequestHandler):
             }))
         except Exception:
             self.response.write(json.dumps({
-                'error': "Either your email is mistyped, or you've already entered. If not, please contact the Gift"
-                         " Concierge."
+                'error': "We can't seem to process your entry (perhaps your email is mistyped?).  If you continue to"
+                         " receive this error, please contact the Gift Concierge."
             }))
 
 class SubscribeHandler(webapp2.RequestHandler):
