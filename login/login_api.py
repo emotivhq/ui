@@ -117,7 +117,7 @@ class RequestResetHandler(webapp2.RequestHandler):
             giftstart_comm.send_emaillogin_reset(email)
             self.response.write(json.dumps({
                 'ok': 'An email has been sent.  If you do not receive it, double-check that you are using the correct email'
-                      ' address, and that the message is not in "spam" or "junk".'
+                      ' address, and that the message is not in "spam" or "junk."'
             }))
         else:
             self.response.write(json.dumps({
