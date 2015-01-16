@@ -6,9 +6,17 @@
 
 GiftStarterApp.controller('HomeController', [
             '$scope','Analytics','$window','$http','$timeout','AppStateService',
-            '$location','ToastService','$interval', '$routeParams', '$rootScope',
+            '$location','ToastService','$interval', '$routeParams', '$rootScope', 'PopoverService', '$cookies',
     function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
-             $location, ToastService,  $interval, $routeParams, $rootScope) {
+             $location, ToastService,  $interval, $routeParams, $rootScope, PopoverService, $cookies) {
+
+
+        //if (document.cookie.indexOf('sweepsDisplayed')  === -1) {
+            // Showing per browser session
+            PopoverService.setPopover('sweepstakes');
+            document.cookie = 'sweepsDisplayed=1';
+        //}
+
         Analytics.track('client', 'loaded home');
         if (AppStateService.state) {
             if (AppStateService.state.gsid) {

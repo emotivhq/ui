@@ -1,0 +1,49 @@
+<div class="sweeps-popover">
+    <div class="close" ng-click="close()">X</div>
+    <div class="logoArea">
+
+    </div>
+    <div class="content">
+        <div class="arrow-down"></div>
+        <h1>Enter to Win - Our Gift to You</h1>
+        <p class="intro">
+            Want to experience GiftStarter yourself? Simple provide your name and email address below
+            and you'll be entered to win your choice of a Go Pro HERO3 White Edition Action Camera
+            ($200 value) or Gears & Gadgets Trunk from butter LONDON ($150 value).<sup>*</sup>
+        </p>
+        <div class="prizes">
+            <div class="sweepsBL"></div>
+            <div class="sweepsGP"></div>
+            <div style="clear: both; height: 0;"></div>
+        </div>
+        <form name="sweepForm" ng-submit="submit()" novalidate>
+            <div>
+                <input type="text" name="first" class="name" ng-model="model.first" placeholder="First Name" required/>
+                <input type="text" name="last" class="name" ng-model="model.last" placeholder="Last Name" required/>
+            </div>
+            <div>
+                <span ng-show="sweepForm.$submitted && sweepForm.first.$error.required">First name is required.</span>
+                <span ng-show="sweepForm.$submitted && sweepForm.last.$error.required">Last name is required.</span>
+            </div>
+            <div>
+                <input type="email" name="email" class="email" ng-model="model.email" placeholder="Email Address" required/>
+            </div>
+            <div>
+                <span ng-show="sweepForm.$submitted && sweepForm.email.$error.required">Email is required.</span>
+                <span ng-show="sweepForm.$submitted && sweepForm.email.$error.email">Invalid email.</span>
+            </div>
+            <div>
+                <input type="submit" value="Submit" />
+            </div>
+            <div>
+                {{model.message}}
+            </div>
+        </form>
+        <p class="disclaimer">
+            * All entries must be received by 11:59pm PT on Saturday, February 16, 2015. By entering,
+            you are agreeing to receive email communication from GiftStarter. Employees of GiftStarter
+            and their families are not eligible to participate.
+        </p>
+    </div>
+
+</div>
