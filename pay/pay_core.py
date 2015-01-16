@@ -146,8 +146,7 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
         'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
     }
 
-    data = json.dumps({'subject': "Someone Pitched In on \"" +
-                                  giftstart.giftstart_title + "\"!",
+    data = json.dumps({'subject': "Someone Pitched In!",
                        'sender': "giftconcierge@giftstarter.co",
                        'to': [giftstart.gc_email],
                        'template_name': "gc_pitchin_notification",

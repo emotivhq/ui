@@ -46,8 +46,7 @@ def send_create_notification(giftstart):
     }
     requests.put(config['email_url'],
                  data=json.dumps({
-                     'subject': "GiftStarter Campaign \"" +
-                                giftstart.giftstart_title + "\" Created!",
+                     'subject': "Let the Pitching In Begin!",
                      'sender': "giftconcierge@giftstarter.co",
                      'to': [giftstart.gc_email],
                      'mime_type': 'html',
