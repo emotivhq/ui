@@ -55,7 +55,7 @@ class SweepstakesSubscribeHandler(webapp2.RequestHandler):
         try:
             subscribe_to_sweepstakes(email, firstname, lastname)
             self.response.write(json.dumps({
-                'ok': "Your entry has been recorded. Thank you!"
+                'ok': "Your entry has been recorded. Thank you! (click here to close)"
             }))
         except Exception:
             self.response.write(json.dumps({
