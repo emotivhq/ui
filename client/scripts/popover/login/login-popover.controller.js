@@ -23,6 +23,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
         isForgotPassword: false,
         isEmailLogin: false,
         isReset: false,
+        emailname: '',
         email: '',
         emailConfirm: '',
         password: '',
@@ -67,6 +68,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                 AppStateService.setPath($location.path());
                 emailLoginService.login(
                     mode,
+                    $scope.emailFormModel.emailname,
                     $scope.emailFormModel.email,
                     $scope.emailFormModel.password,
                     $routeParams.resetCode).

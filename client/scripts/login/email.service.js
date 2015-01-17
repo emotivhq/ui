@@ -24,11 +24,12 @@
             },
             uid = '';
 
-        var login = function (mode, email, password, resetCode) {
+        var login = function (mode, emailname, email, password, resetCode) {
             var deferred = $q.defer();
 
             $http.post(
                 urls[mode], {
+                    emailname: emailname,
                     email: email,
                     password: password,
                     code: resetCode

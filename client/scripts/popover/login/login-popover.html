@@ -12,6 +12,10 @@
         <div class="login-button" ng-click="emailFormModel.isEmailLogin = !emailFormModel.isEmailLogin" ng-hide="emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_email.png" /></div>
 
         <form name="emailLoginForm" ng-show="emailFormModel.isEmailLogin" class="emailLogin" ng-submit="emailFormActions.submit()" novalidate>
+            <div ng-show="emailFormModel.isLoginCreate">
+                <input type="text" name="emailname" placeholder="Enter your name." ng-model="emailFormModel.emailname" required/>
+                <span ng-show="emailLoginForm.$submitted && emailLoginForm.emailname.$error.required">Name required.</span>
+            </div>
             <div>
                 <input type="email" name="email" placeholder="Enter your email." ng-model="emailFormModel.email" required/>
                 <span ng-show="emailLoginForm.$submitted && emailLoginForm.email.$error.required">Email required.</span>
