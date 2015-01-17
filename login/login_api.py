@@ -11,15 +11,8 @@ import gs_user.gs_user_core
 from gs_user import User
 from giftstart import giftstart_comm
 import EmailLoginPair
-from gs_user import UserLogin
-import hashlib
-from gs_user.gs_user_referral import UserReferral
-from google.appengine.ext import ndb
 import json
 import re
-from storage import image_cache
-from uuid import uuid4
-import logging
 
 def validate_password_complexity(password):
     #return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$&+=]).*$',password)
@@ -56,7 +49,6 @@ class CreateHandler(webapp2.RequestHandler):
                 'error': 'It appears you\'ve already set a password... please go back and click "login" instead!'
             }))
         else:
-            #logging.info("Creating {0}, {1}".format(name,email))
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))
             user = gs_user.gs_user_core.login_emaillogin_user(email, password, referrer)
             user.name = name
@@ -94,7 +86,6 @@ class LoginHandler(webapp2.RequestHandler):
             uid = False
         if uid:
             user = User.query(User.uid == uid).fetch(1)[0]
-            #logging.info("Login {0}".format(user.jsonify()))
             #UserLogin.register_login(user.uid, data['location'])
             self.response.write(json.dumps({
                 'ok': {
