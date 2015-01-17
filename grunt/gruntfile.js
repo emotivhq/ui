@@ -83,6 +83,7 @@ module.exports = function(grunt) {
           '../client//scripts/popover/thanks/thanks-popover.directive.js',
           '../client//scripts/popover/email-share/email-share-popover.controller.js',
           '../client//scripts/popover/email-share/email-share-popover.directive.js',
+          '../client//scripts/popover/sweepstakes/sweepstakes-popover.directive.js',
           '../client//scripts/utilities/image-upload/image-upload.directive.js',
           '../client//scripts/utilities/local-storage.service.js',
           '../client//scripts/utilities/uservoice.js',

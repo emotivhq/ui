@@ -16,7 +16,7 @@ class EmailPreviewHandler(webapp2.RequestHandler):
             extensions=['jinja2.ext.autoescape'],
             autoescape=True)
         template = jinja2_env.get_template(template_name)
-        body = template.render()
+        body = template.render(self.request.params)
         frame_template = jinja2_env.get_template('base_frame.html')
         email_rendered = frame_template.render({'body': body})
         self.response.write(email_rendered)

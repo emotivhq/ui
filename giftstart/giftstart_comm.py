@@ -46,8 +46,7 @@ def send_create_notification(giftstart):
     }
     requests.put(config['email_url'],
                  data=json.dumps({
-                     'subject': "GiftStarter Campaign \"" +
-                                giftstart.giftstart_title + "\" Created!",
+                     'subject': "Let the Pitching In Begin!",
                      'sender': "giftconcierge@giftstarter.co",
                      'to': [giftstart.gc_email],
                      'mime_type': 'html',
@@ -70,8 +69,7 @@ def send_day_left_warning(gsid):
         }
         requests.put(config['email_url'],
                      data=json.dumps({
-                         'subject': "GiftStart \"" + giftstart.giftstart_title
-                                    + "\" Ending Soon!",
+                         'subject': "One Day Left to Pitch In!",
                          'template_name':
                              "campaign_ending_1_day_user",
                          'template_kwargs': email_kwargs,
@@ -92,8 +90,7 @@ def send_day_left_warning(gsid):
         }
         requests.put(config['email_url'],
                      data=json.dumps({
-                         'subject': "GiftStart \"" + giftstart.giftstart_title
-                                    + "\" Ending Soon!",
+                         'subject': "One Day Left to Pitch In!",
                          'template_name':
                              "campaign_ending_1_day_giver",
                          'template_kwargs': email_kwargs,

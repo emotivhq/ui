@@ -33,16 +33,29 @@ def subscribe_user_to_mailing_list(uid, email=None, double_opt_in=True):
     return
 
 
+def subscribe_to_sweepstakes(email, firstname, lastname):
+    sweepstakes_list_id = '6af5c8298a'
+    return subscribe_mailchimp_h(sweepstakes_list_id, email, firstname=firstname, lastname=lastname, double_opt_in=False)
+
 def subscribe_to_mailing_list(email, double_opt_in=True):
     subscribe_list_id = 'c0f44e11c0'
+    return subscribe_mailchimp_h(subscribe_list_id, email)
+
+def subscribe_mailchimp_h(list_id, email, firstname='', lastname='', double_opt_in=True):
+    if list_id is None:
+            raise Exception("Failed to subscribe user! No List ID provided")
     mailchimp_api_key = '59ebc76ea5b3707e6439a35c3b41251f-us8'#'0a6a663ef69cb19532a41a7582c7b5e1-us8'
     mailchimp_url = 'https://us8.api.mailchimp.com/2.0/lists/subscribe.json'
 
     post_data = json.dumps({
         'apikey': mailchimp_api_key,
-        'id': subscribe_list_id,
+        'id': list_id,
         'email': {
             'email': email
+        },
+        'merge_vars': {
+            'FNAME': firstname,
+            'LNAME': lastname
         },
         'double_optin': double_opt_in,
     })

@@ -11,15 +11,8 @@ import gs_user.gs_user_core
 from gs_user import User
 from giftstart import giftstart_comm
 import EmailLoginPair
-from gs_user import UserLogin
-import hashlib
-from gs_user.gs_user_referral import UserReferral
-from google.appengine.ext import ndb
 import json
 import re
-from storage import image_cache
-from uuid import uuid4
-import logging
 
 def validate_password_complexity(password):
     #return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$&+=]).*$',password)
@@ -29,10 +22,14 @@ class CreateHandler(webapp2.RequestHandler):
     def get(self):
         self.post()
     def post(self):
-        time.sleep(1)  # crude anti-hacking
+        time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
+        name = params['emailname'].strip()
         email = params['email'].strip()
         password = params['password'].strip()
+        if len(name) is 0:
+            self.response.write(json.dumps({'error': 'Name cannot be blank'}))
+            return
         if len(email) is 0:
             self.response.write(json.dumps({'error': 'Email cannot be blank'}))
             return
@@ -54,6 +51,8 @@ class CreateHandler(webapp2.RequestHandler):
         else:
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))
             user = gs_user.gs_user_core.login_emaillogin_user(email, password, referrer)
+            user.name = name
+            user.put()
             self.response.write(json.dumps({
                 'ok': {
                         'uid': user.uid,
@@ -70,7 +69,7 @@ class LoginHandler(webapp2.RequestHandler):
     def get(self):
         self.post()
     def post(self):
-        time.sleep(1)  # crude anti-hacking
+        time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
         email = params['email'].strip()
         password = params['password'].strip()
@@ -107,7 +106,7 @@ class RequestResetHandler(webapp2.RequestHandler):
     def get(self):
         self.post()
     def post(self):
-        time.sleep(1)  # crude anti-hacking
+        time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
         email = params['email'].strip()
         if len(email) is 0:
@@ -130,7 +129,7 @@ class ResetHandler(webapp2.RequestHandler):
     def get(self):
         self.post()
     def post(self):
-        time.sleep(1)  # crude anti-hacking
+        time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
         email = params['email'].strip()
         password = params['password'].strip()
