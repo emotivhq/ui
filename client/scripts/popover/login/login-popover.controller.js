@@ -46,8 +46,10 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
     };
 
     var resetForm = function () {
-        $scope.emailLoginForm.$setPristine();
-        $scope.emailFormModel.message = '';
+        if ($scope.emailLoginForm) {
+            $scope.emailLoginForm.$setPristine();
+            $scope.emailFormModel.message = '';
+        }
 
     };
 
