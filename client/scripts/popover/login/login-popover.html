@@ -8,9 +8,7 @@
         <p>And we solemnly swear to never post on your behalf, share your information, or stalk your friends.</p>
     </div> -->
     <div class="block">
-
         <div class="login-button" ng-click="emailFormModel.isEmailLogin = !emailFormModel.isEmailLogin" ng-hide="emailFormModel.isEmailLogin"><img class="login-button" src="/assets/login_email.png" /></div>
-
         <form name="emailLoginForm" ng-show="emailFormModel.isEmailLogin" class="emailLogin" ng-submit="emailFormActions.submit()" novalidate>
             <div ng-show="emailFormModel.isLoginCreate">
                 <input type="text" name="emailname" placeholder="Enter your name" ng-model="emailFormModel.emailname" ng-required="emailFormModel.isLoginCreate"/>
@@ -28,20 +26,20 @@
                 <span ng-show="emailLoginForm.$submitted && (emailFormModel.email !== emailFormModel.emailConfirm)">Emails do not match.</span>
             </div>
             <div ng-hide="emailFormModel.isForgotPassword">
-                <input type="password" name="password" placeholder="Enter your password" ng-model="emailFormModel.password" ng-required="emailFormModel.isLogin || emailFormModel.isLoginCreate"/>
+                <input type="password" name="password" placeholder="Enter your password" ng-model="emailFormModel.password" ng-required="emailFormModel.isLogin || emailFormModel.isLoginCreate || emailFormModel.isReset"/>
                 <span ng-show="emailLoginForm.$submitted && emailLoginForm.password.$error.required">Password required.</span>
             </div>
             <div ng-show="emailFormModel.isLoginCreate || emailFormModel.isReset">
-                <input type="password" name="passwordConfirm" placeholder="Confirm your password" ng-model="emailFormModel.passwordConfirm" ng-required="emailFormModel.isLoginCreate"/>
-                <span>Your password must be at least 8 characters, including an uppercase letter, a lowercase letter, and a number.</span>
+                <input type="password" name="passwordConfirm" placeholder="Confirm your password" ng-model="emailFormModel.passwordConfirm" ng-required="emailFormModel.isLoginCreate || emailFormModel.isReset"/>
                 <span ng-show="emailLoginForm.$submitted && emailLoginForm.passwordConfirm.$error.required">Confirm password required.</span>
                 <span ng-show="emailLoginForm.$submitted && (emailFormModel.password !== emailFormModel.passwordConfirm)">Passwords do not match.</span>
+                <span>(Your password must be at least 8 characters, including an uppercase letter, a lowercase letter, and a number.)</span>
             </div>
             <div class="loginButton">
-                <input type="submit" value="Login" ng-click="emailFormActions.login()" ng-show="emailFormModel.isLogin">
-                <input type="submit" value="Create" ng-click="emailFormActions.createLogin()" ng-show="emailFormModel.isLoginCreate">
-                <input type="submit" value="Get password" ng-click="emailFormActions.forgotPassword()" ng-show="emailFormModel.isForgotPassword">
-                <input type="submit" value="Reset password" ng-click="emailFormActions.reset()" ng-show="emailFormModel.isReset">
+                <input type="submit" value="Login" ng-class="{loading: emailFormModel.loginInProgress}" ng-click="emailFormActions.login()" ng-show="emailFormModel.isLogin">
+                <input type="submit" value="Create"  ng-class="{loading: emailFormModel.createInProgress}" ng-click="emailFormActions.createLogin()" ng-show="emailFormModel.isLoginCreate">
+                <input type="submit" value="Get password" class="getPw" ng-class="{loading: emailFormModel.getPwInProgress}" ng-click="emailFormActions.forgotPassword()" ng-show="emailFormModel.isForgotPassword">
+                <input type="submit" value="Reset" ng-class="{loading: emailFormModel.resetInProgress}" ng-click="emailFormActions.reset()" ng-show="emailFormModel.isReset">
             </div>
             <div ng-show="!emailFormModel.isLoginCreate && !emailFormModel.isForgotPassword && !emailFormModel.isReset">
                 <span class="or">or</span>
@@ -51,7 +49,6 @@
                 <a href="#" ng-click="emailFormActions.forgotPasswordMode($event)" class="forgotPwdLink">Forgot password.</a>
                 <div style="clear: both"></div>
             </div>
-
             <div>
                 {{emailFormModel.message}}
             </div>
