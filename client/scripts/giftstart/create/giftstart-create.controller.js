@@ -326,7 +326,7 @@
             if ($location.search().promo == 'dress-for-success') {
                 $scope.title = 'Gift a Start Collection';
                 $scope.description = 'Give the gift of confidence this holiday season with this curated assortment of beautiful basics. butter LONDON is proud to partner with Dress for Success to gift a new start to women in need. Dress for Success is a not-for-profit organization dedicated to helping women get back on their feet and back into the workforce. For these women giving something as simple as a lipstick can make an impact. Help deliver a new start this holiday season by starting a GiftStart for our Gift A Start Collection.';
-                $scope.shippingZip = '98101';
+                $scope.shippingZip = '98118';
                 $scope.shippingState = 'WA';
                 $scope.shippingChanged();
                 $location.search('promo', null);
@@ -374,7 +374,7 @@
             // special for ghostruck: auto zip and state
             if (/ghostruck/.test(referral.source.toLowerCase())) {
                 $scope.shippingState = 'WA';
-                $scope.shippingZip = '98101';
+                $scope.shippingZip = '98118';
                 $scope.shippingChanged();
             }
 
