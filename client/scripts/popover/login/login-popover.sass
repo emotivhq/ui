@@ -1,7 +1,15 @@
 @import "../../base"
 
+body.popoverShown
+  overflow: hidden
 div.login-popover
-
+  .loading
+    background: url(/assets/loading.gif) no-repeat
+    background-size: 20px 20px
+  input[type=submit].loading
+    background-position: 125px 6px
+  input[type=submit].getPw.loading
+    background-position: 150px 6px
   div.block
     text-align: left
     width: 18em

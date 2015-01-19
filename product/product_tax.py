@@ -25,11 +25,11 @@ TAX_CLOUD_SOAP_TEMPLATE = JINJA_ENVIRONMENT.from_string("""<?xml version="1.0" e
         </CartItem>
       </cartItems>
       <origin>
-        <Address1>801 Dexter Ave N #438</Address1>
+        <Address1>PO Box 18284</Address1>
         <Address2></Address2>
         <City>Seattle</City>
         <State>WA</State>
-        <Zip5>98109</Zip5>
+        <Zip5>98118</Zip5>
         <Zip4></Zip4>
       </origin>
       <destination>

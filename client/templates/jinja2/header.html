@@ -29,24 +29,13 @@
                     <a href="/blog" ng-click="actions.menuItemClicked()" target="_self">BLOG</a>
                 </li>
                 <li class="login">
+                    <a ng-href="{{header.userProfileUrl}}">
+                        <img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/>
+                    </a>
                     <button id="login_button" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">Log In</button>
                     <button id="logout_button" ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Log Out</button>
                 </li>
             </ul>
-
-
-           <!--
-           <li>
-                    <a ng-show="header.loggedIn">
-                        <h2 class="logout navitem" ng-click="header.logout()">Logout</h2>
-                    </a>
-                </li>
-           <a ng-href="{{header.userProfileUrl}}">
-                <img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn"/>
-            </a>
-            <a ng-hide="header.loggedIn || header.creating">
-                <h2 class="login navitem" ng-click="header.login()">Login</h2>
-            </a>-->
         </div>
     </div>
     <gs-it-header></gs-it-header>
