@@ -356,8 +356,7 @@ def congratulate_givers(gsid, funded):
         }
         requests.put(config['email_url'],
                      data=json.dumps({
-                         'subject': "GiftStart \"" + giftstart.giftstart_title
-                                    + "\" Complete!",
+                         'subject': "Your GiftStart has Ended",
                          'mime_type': 'html',
                          'template_name': "campaign_complete_giver_not_funded",
                          'template_kwargs': email_kwargs,
