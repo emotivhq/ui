@@ -223,9 +223,7 @@ def check_if_complete(gsid):
                 }
                 requests.put(config['email_url'],
                              data=json.dumps({
-                                 'subject': "GiftStart \"" +
-                                            giftstart.giftstart_title +
-                                            "\" Complete!",
+                                 'subject': "Your GiftStart has Ended",
                                  'template_name':
                                      "campaign_complete_user_not_funded",
                                  'template_kwargs': email_kwargs,
