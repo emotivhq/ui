@@ -1,6 +1,5 @@
 {% raw %}
 <header ng-controller="HeaderController as header">
-    <gs-subscribe-header></gs-subscribe-header>
     <div id="header">
         <div class="wrapper" ng-class="{big: header.thisRoute == '/', small: header.thisRoute != '/'}">
             <div class="headerLogoWrapper">
@@ -11,19 +10,19 @@
             </div>
             <ul class="headerNav">
                 <li>
+                    <a href="/"  ng-click="actions.menuItemClicked()">HOW IT WORKS</a>
+                </li>
+                <!-- li>
+                    <a href="/giftideas"  ng-click="actions.menuItemClicked()">GIFT IDEAS</a>
+                </li -->
+                <li>
                     <a href="/concierge"  ng-click="actions.menuItemClicked()">GIFT CONCIERGE</a>
                 </li>
                 <li>
-                    <a href="/about" ng-click="actions.menuItemClicked()">ABOUT</a>
+                    <a href="/partners" ng-click="actions.menuItemClicked()">PARTNERS</a>
                 </li>
                 <li>
                     <a href="/faq" ng-click="actions.menuItemClicked()">FAQ</a>
-                </li>
-                <li>
-                    <a href="/press" ng-click="actions.menuItemClicked()" target="_self">PRESS</a>
-                </li>
-                <li>
-                    <a href="/partners" ng-click="actions.menuItemClicked()">PARTNERS</a>
                 </li>
                 <li>
                     <a href="/blog" ng-click="actions.menuItemClicked()" target="_self">BLOG</a>
@@ -36,6 +35,11 @@
                     <button id="logout_button" ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Log Out</button>
                 </li>
             </ul>
+            <!-- div class="search wrapper" style="text-align:center">
+                <span class="inputs">
+                    <input id="product-search-input" style="width: 320px;" class="text-input" type="text" name="product-link" placeholder="Search here for the perfect gift..." ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>&nbsp;&nbsp;<button id="product-search-button" class="submit" ng-click="submit()">Shop</button>
+                </span>
+            </div -->
         </div>
     </div>
     <gs-it-header></gs-it-header>

@@ -47,6 +47,7 @@ module.exports = function(grunt) {
           '../client//scripts/home/scroll-play.directive.js',
           '../client//scripts/static-pages/about/about.controller.js',
           '../client//scripts/static-pages/faq/faq.controller.js',
+          '../client//scripts/static-pages/giftideas/giftideas.controller.js',
           '../client//scripts/static-pages/partners/partners.controller.js',
           '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
           '../client//scripts/home/home.js',

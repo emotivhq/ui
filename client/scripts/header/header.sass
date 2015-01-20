@@ -4,7 +4,7 @@
   background-size: cover
   width: 100%
   position: fixed
-  top: 48px
+  top: 0
   left: 0
   right: 0
   z-index: 1000
@@ -45,13 +45,15 @@
 
     ul.headerNav.expanded
       top: 75px
+      padding-left: 0px
     ul.headerNav
-      padding-top: 35px
       text-align: center
       font-family: "Roboto"
+      padding-top: 10px
       @media screen and (max-width: $phone-tablet-boundary)
         position: absolute
         padding: 10px 20px
+        margin-left: 20px
         background-color: #eaeaea
         text-align: left
         top: -380px
@@ -61,7 +63,7 @@
       li.login
         position: absolute
         right: 20px
-        margin-top: -7px
+        margin-top: 10px
         @media screen and (max-width: $phone-tablet-boundary)
           position: static
           margin: auto
@@ -75,7 +77,7 @@
         a
           text-decoration: none
           color: #000
-          font-size: 16pt
+          font-size: 12pt
           @media screen and (max-width: $phone-tablet-boundary)
             font-size: 14pt
 
@@ -112,5 +114,5 @@
   
 #header-profile-picture
   border-radius: 50%
-  height: 2em
-  margin: -0.7em 0 -0.9em -0.8em
+  height: 2.5em
+  margin: 0 0 -0.9em -0.8em

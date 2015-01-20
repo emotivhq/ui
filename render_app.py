@@ -42,14 +42,16 @@ def render_app(request):
     page_titles = {
         '/':'GiftStarter: Group Gifting Made Easy',
         '/about':'Meet the GiftStarter Team and our Mission',
-        '/faq':'GiftStarter - Learn how to easily group gift with friends and family',
-        '/partners':'GiftStarter - Social Commerce for brands',
-        '/concierge':'Gift Concierge - Personal Gifting Service and Gift Inspiration'
+        '/faq':'GiftStarter: Learn how to easily group gift with friends and family',
+        '/giftideas':'GiftStarter: Gift Ideas',
+        '/partners':'GiftStarter: Social Commerce for brands',
+        '/concierge':'Gift Concierge: Personal Gifting Service and Gift Inspiration'
     }
     page_descriptions = {
         '/':'Group Gifts: GiftStarter divides the perfect gift into "tiles," giving friends and family the ability to purchase as much or as little as they wish.',
         '/about':'GiftStarter is a Seattle based start-up intent on changing the way people give gifts by making it easy to group gift anything.',
         '/faq':'Giving group gifts with GiftStarter is easy, but in case you have any questions, find out more here',
+        '/giftideas':'Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we\'ll take care of shipping it, including a handmade card.',
         '/partners':'Partner with GiftStarter, the best group gifting service for brands. Our seamless social commerce platform uses patent-pending technology to give your customers a better way to gift, together.',
         '/concierge':'Gift Concierge provides fast and friendly gift help to make your group gift campaign a success.'
     }
