@@ -201,9 +201,9 @@ def check_if_complete(gsid):
                     'sender': "giftconcierge@giftstarter.co",
                     'to': [giftstart.shipping_email]
                 })
-                taskqueue.add(url=send_path, method='PUT',
-                              eta=datetime.now() + timedelta(days=10),
-                              payload=payload)
+                # taskqueue.add(url=send_path, method='PUT',
+                #               eta=datetime.now() + timedelta(days=10),
+                #               payload=payload)
 
         elif giftstart.deadline < datetime.now():
             giftstart.giftstart_complete = True
@@ -279,9 +279,9 @@ def check_if_complete(gsid):
                         'sender': "giftconcierge@giftstarter.co",
                         'to': [giftstart.shipping_email]
                     })
-                    taskqueue.add(url=send_path, method='PUT',
-                                  eta=datetime.now() + timedelta(days=10),
-                                  payload=payload)
+                    # taskqueue.add(url=send_path, method='PUT',
+                    #               eta=datetime.now() + timedelta(days=10),
+                    #               payload=payload)
 
             else:
                 # Send email of regret to gift champion

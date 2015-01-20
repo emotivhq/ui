@@ -26,6 +26,11 @@
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://www.giftstarter.co/giftideas/</loc>
+  <changefreq>daily</changefreq>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://www.giftstarter.co/partners/</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
