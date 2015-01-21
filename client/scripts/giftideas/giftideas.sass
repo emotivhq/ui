@@ -1,0 +1,36 @@
+@import ../base
+
+#giftideas
+  text-align: center
+  width: 100%
+  max-width: 1280px
+  margin: 0 auto
+  #categories
+    .group
+      width: 50%
+      margin: 0 0
+      padding: 0 0
+      @media screen and (max-width: $phone-boundary)
+        width: 100%
+    .left
+      float: left
+    .right
+      float: right
+    .categorytile
+      display: inline-block
+      width: 49%
+      margin: 0 0
+      padding: 10px 10px
+      text-align: center
+      img
+        margin: 0 auto
+        display: block
+        clear: both
+        height: auto
+        width: 100% !important
+
+  @media screen and (max-width: $phone-tablet-boundary)
+    width: 100%
+
+  @media screen and (max-width: $phone-boundary)
+    width: 100%
