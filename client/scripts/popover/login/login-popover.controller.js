@@ -120,6 +120,10 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                             }, 1000);
                         } else if (mode === 'forgotPassword') {
                             $scope.emailFormModel.message = okMsg;
+
+                            $timeout(function () {
+                                PopoverService.hidePopover();
+                            }, 5000);
                         }
 
                         $scope.emailFormModel.loginInProgress = false;
