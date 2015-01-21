@@ -41,8 +41,10 @@
             <div class="loginButton">
                 <input type="submit" value="Login" ng-class="{loading: emailFormModel.loginInProgress}" ng-click="emailFormActions.login()" ng-show="emailFormModel.isLogin">
                 <input type="submit" value="Create"  ng-class="{loading: emailFormModel.createInProgress}" ng-click="emailFormActions.createLogin()" ng-show="emailFormModel.isLoginCreate">
-                <input type="submit" value="Get password" class="getPw" ng-class="{loading: emailFormModel.getPwInProgress}" ng-click="emailFormActions.forgotPassword()" ng-show="emailFormModel.isForgotPassword">
+                <input type="submit" value="Get password" class="getPw" ng-class="{loading: emailFormModel.getPwInProgress}" ng-click="emailFormActions.forgotPassword()" ng-show="emailFormModel.isForgotPassword && !emailFormModel.showOk">
                 <input type="submit" value="Reset" ng-class="{loading: emailFormModel.resetInProgress}" ng-click="emailFormActions.reset()" ng-show="emailFormModel.isReset">
+                <input type="button" value="Ok" ng-click="hidePopover()" ng-show="emailFormModel.showOk">
+
             </div>
             <div ng-show="!emailFormModel.isLoginCreate && !emailFormModel.isForgotPassword && !emailFormModel.isReset">
                 <span class="or">or</span>
