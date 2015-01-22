@@ -11,7 +11,7 @@ function GiftideasController($scope, $http, $location,  $timeout) {
     $scope.location = $location;
     $scope.path = $location.path();
 
-    var pathParts = $scope.path.split('/');
+    var pathParts = $scope.path.replace('//','/').split('/');
     var category = pathParts.length>2?pathParts[2]:false;
     var product = pathParts.length>3?pathParts[3]:false;
 

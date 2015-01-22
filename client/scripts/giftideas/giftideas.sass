@@ -5,11 +5,15 @@
   width: 100%
   max-width: 1280px
   margin: 0 auto
-
   .products, .singleproduct
     display: block
     clear: both
     width: 95%
+    .grid
+      .tile
+        border: 1px solid #BBB
+        border-radius: 15px
+        margin: 5px 5px
     .textleft
       text-align: left
       margin-left: 10px
@@ -51,21 +55,23 @@
       font-size: 16px
       line-height: 18px
       padding-top: 20px
-
+      font-family: Roboto
   .grid
     .group
       width: 50%
       margin: 0 0
-      padding: 10px 0
+      padding: 0 0
       @media screen and (max-width: $phone-boundary)
         width: 100%
     .left
       float: left
+      .tile
+        float: right
     .right
       float: right
     .tile
       display: inline-block
-      width: 49%
+      width: 45%
       float: left
       margin: 0 0
       padding: 0px 10px
@@ -79,10 +85,17 @@
         display: block
         clear: both
         height: auto
-        width: 100% !important
+        width: 90% !important
       .tilelabel
         height: 50px
-
+        font-family: "Roboto Condensed"
+        font-weight: 600
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+        max-width: 98%
+        .price
+          font-weight: 300
   .button
     display: inline-block
     padding: 8px auto
@@ -115,6 +128,10 @@
 
   @media screen and (max-width: $phone-boundary)
     width: 100%
+    .grid
+      .group
+        .tile
+          float: none
     .singleproduct
       .hero
         float: none

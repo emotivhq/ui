@@ -1,6 +1,6 @@
 <div id="giftideas">
 
-    <h1 ng-show="showCategories">Top Categories for Group Gifting</h1>
+    <h1 ng-show="!category">Top Categories for Group Gifting</h1>
 
     <div ng-show="!category" class="grid categories">
         <div class="group left">
@@ -26,7 +26,7 @@
         </div>
         <div class="grid">
             <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
-                <div ng-repeat="product in group" class="tile"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel">{{product.productName}}</div></a></div>
+                <div ng-repeat="product in group" class="tile" title="{{product.productName}}"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel">{{product.productName}}<br/><span class="price">${{product.productPrice}}</span></div></a></div>
             </div>
         </div>
     </div>
