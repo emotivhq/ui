@@ -16,13 +16,14 @@
     <div ng-show="category && !product" class="products">
         <div class="head">
             <div class="hero">
-                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
+                <img src="/assets/giftideas/category/{{category.categorySlug}}-hero.jpg">
             </div>
             <div class="titles">
                 <h1>{{category.categoryName}}</h1>
                 <h3>Our Favorite Gifts & Most Popular GiftStarts</h3>
+                <p>{{category.categoryBlurb}}<p>
             </div>
-            <p>{{category.categoryBlurb}}<p>
+            <p></p>
         </div>
         <div class="grid">
             <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
