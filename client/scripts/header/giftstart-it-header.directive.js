@@ -8,6 +8,7 @@ angular.module('GiftStarterApp').directive('gsItHeader', ['$interval',
     '$window', '$location', 'Analytics', gsItHeader]);
 
 function gsItHeader($interval, $window, $location, Analytics) {
+
     var $scope,
         shown = $location.path().indexOf('/giftstart') != 0;
 

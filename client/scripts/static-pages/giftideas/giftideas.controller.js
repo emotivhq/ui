@@ -4,10 +4,12 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location','$timeout',
+GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location','$sce',
     GiftideasController]);
 
-function GiftideasController($scope, $http, $location,  $timeout) {
+//app.filter('html', function($sce) { return $sce.trustAsHtml; });
+
+function GiftideasController($scope, $http, $location,  $sce) {
     $scope.location = $location;
     $scope.path = $location.path();
 
@@ -28,13 +30,24 @@ function GiftideasController($scope, $http, $location,  $timeout) {
     //    $timeout($scope.scrollToSearch, 700);
     //});
 
+    function addStrippedName(value) {
+        value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
+    }
+
     this.populateCategory = function(category, $http) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             $scope.groups = [];
             $scope.category = data;
             var prior=null;
             angular.forEach(data.productList, function (value, key) {
+                addStrippedName(value);
                 if(prior!=null) {
+                    //angular.forEach(value, function (value, key) {
+                    //    //console.log(value);
+                    //    console.log(key);
+                    //    value.productName=$sce.trustAsHtml(value.productName);
+                    //    value.productNameShort=$sce.trustAsHtml(value.productNameShort);
+                    //});
                     $scope.groups.push([prior,value]);
                     prior=null;
                 } else {
@@ -51,6 +64,7 @@ function GiftideasController($scope, $http, $location,  $timeout) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             angular.forEach(data.productList, function (value, key) {
                 if(value.productSlug==product) {
+                    addStrippedName(value);
                     $scope.product=value;
                 }
             });

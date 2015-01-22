@@ -19,15 +19,15 @@
                 <img src="/assets/giftideas/category/{{category.categorySlug}}-hero.jpg">
             </div>
             <div class="titles">
-                <h1>{{category.categoryName}}</h1>
+                <h1><span ng-bind-html="category.categoryName"></span></h1>
                 <h3>Our Favorite Gifts & Most Popular GiftStarts</h3>
-                <p>{{category.categoryBlurb}}<p>
+                <p><span ng-bind-html="category.categoryBlurb"></span><p>
             </div>
             <p></p>
         </div>
         <div class="grid">
             <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
-                <div ng-repeat="product in group" class="tile" title="{{product.productName}}"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel">{{product.productName}}<br/><span class="price">${{product.productPrice}}</span></div></a></div>
+                <div ng-repeat="product in group" class="tile" title="{{product.productNameStripped}}"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel"><span ng-bind-html="product.productNameShort"></span><br/><span class="price">${{product.productPrice}}</span></div></a></div>
             </div>
         </div>
     </div>
@@ -38,9 +38,9 @@
                 <img src="/assets/giftideas/category{{product.productImage}}" alt="{{product.imageAltText}}">
             </div>
             <div class="titles">
-                <h1 class="textleft">{{product.productName}}</h1>
+                <h1 class="textleft"><span ng-bind-html="product.productName"></span></h1>
                 <h5 class="textleft">${{product.productPrice}}</h5>
-                <h4 class="textleft">{{product.productDescription}}</h4>
+                <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
                 <a href="{{product.giftStartLink}}" class="button main rounded">GIFTSTART IT!</a>
             </div>
             <p>&nbsp;</p>

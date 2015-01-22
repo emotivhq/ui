@@ -1,197 +1,216 @@
-{
+{  
    "categoryName":"Gift Ideas for Baby",
    "categorySlug":"Baby",
    "categoryBlurb":"Is your best friend or co-worker having a baby? Or perhaps you’re becoming an aunt or uncle for the first time? At GiftStarter, we know that it can be a challenge to find the perfect baby gift. Yes, there are traditional gift registries...but how exciting really is the onesie or set of bottles? Let’s welcome that new baby into the world with a bigger, better gift. To make it easy, we have curated our favorite group gift ideas for baby. And rest assured, they are all mom (and baby) approved.",
-   "productList":[
-      {
-         "productName":"nuna LEAF curv Seat",
+   "productList":[  
+      {  
+         "productName":"nuna LEAF&#8482; curv",
+         "productNameShort":"nuna LEAF&#8482; curv",
+         "productSlug":"nuna-LEAF-curv-Baby-Seat",
          "productPrice":"230.00",
          "productDescription":"This award winning seat is so much more than your standard baby bouncer. In fact, the word “baby” isn’t even in the title, because this seat will hold a kid (or parent!) up to 130 POUNDS! Typical bouncers will top out between 15-20 pounds which for some kids means the seat is only usable for the first few months before it gets packed away in storage. The nuna LEAF will sway at the slightest touch, gently rocking the baby to sleep. For feeding time or use by older kids, the seat position can be locked. Bonus: no batteries, cords, buzz or noise! Accessories available for the seat and sold separately include a toy bar and the nuna wind, a motorized box that will make the seat sway continually (much like an infant swing).",
          "productImage":"/baby/nunaLeaf.jpg",
          "productThumb":"/baby/nunaLeafThumb.jpg",
          "imageAltText":"GiftStarter nuna LEAF curv Seat",
-         "giftStartLink":"http://bit.ly/1Cd2v3l",
-         "productSlug":"nunaLEAF"
+         "giftStartLink":"http://bit.ly/1Cd2v3l"
       },
-      {
-         "productName":"Peg Perego Primo Viagio 4-35 Car Seat",
+      {  
+         "productName":"Peg Perego Primo Viagio 4-35",
+         "productNameShort":"Peg Perego Primo Viagio 4-35",
+         "productSlug":"Peg-Perego-Primo-Viagio-4-35-Car-Seat",
          "productPrice":"279.00",
          "productDescription":"This infant seat has outstanding safety features including adjustable Side Impact Protection (SIP) and an anti-rebound bar. The anti-rebound bar minimizes the movement of the carseat up toward the seat back after the initial impact of a crash. The base has easy and secure install with either the LATCH system or car seat belt to ensure proper installation. The sleek modern design with breathable fabric keeps baby comfortable. This seat can be used  with or without the base, with travel systems, and in aircrafts.",
          "productImage":"/baby/pegPeregoPrimoViagio.jpg",
          "productThumb":"/baby/pegPeregoPrimoViagioThumb.jpg",
          "imageAltText":"GiftStarter Peg Perego Primo Viagio 4-35 Car Seat",
-         "giftStartLink":"http://bit.ly/1Cd4O6n",
-         "productSlug":"PrimoViagio"
+         "giftStartLink":"http://bit.ly/1Cd4O6n"
       },
-      {
-         "productName":"4moms Breeze Play Yard",
+      {  
+         "productName":"4moms&reg; Breeze&reg;",
+         "productNameShort":"4moms&reg; Breeze&reg;",
+         "productSlug":"4moms-Breeze-Playard",
          "productPrice":"299.99",
          "productDescription":"There’s a reason this playard has won so many awards. It. Is. Simple. Set up and take down are literally a breeze — just push down on the floor center to set up, and pull up on the floor center to take down. No repeatedly shaking the rails to get them to lock into place, no fumbling with the sides to keep them upright while securing the floor… there is no competition when it comes to ease of use. It comes with the infant bassinet and a bag to secure it all for traveling.",
          "productImage":"/baby/4momsBreeze.jpg",
          "productThumb":"/baby/4momsBreezeThumb.jpg",
          "imageAltText":"Giftsarter 4moms Breeze Play Yard",
-         "giftStartLink":"http://bit.ly/1ypfX3v",
-         "productSlug":"4momsBreeze"
+         "giftStartLink":"http://bit.ly/1ypfX3v"
       },
-      {
-         "productName":"4moms mamaRoo",
+      {  
+         "productName":"4moms&reg; mamaRoo&reg;",
+         "productNameShort":"4moms&reg; mamaRoo&reg;",
+         "productSlug":"4moms-mamaRoo-Infant-Seat",
          "productPrice":"269.99",
          "productDescription":"This swing is so much more than a swing. It has five unique motions that mimic the movements moms and dads make, including the magical “bounce and sway” and even one that imitates the feeling of being in a car. With multiple recline positions, five speeds, four built-in sounds, and the option to connect a personal music device, this swing is sure to soothe. Added bonus - mom and dad can control the sound and motion via Bluetooth enabled smart device!",
          "productImage":"/baby/mamaroo.jpg",
          "productThumb":"/baby/mamarooThumb.jpg",
          "imageAltText":"GiftStarter 4moms mamaRoo",
-         "giftStartLink":"http://bit.ly/1G44PzP",
-         "productSlug":"mamaRoo"
+         "giftStartLink":"http://bit.ly/1G44PzP"
       },
-      {
+      {  
          "productName":"Petunia Pickle Bottom Diaper Bag",
+         "productNameShort":"Petunia Pickle Bottom Bag",
+         "productSlug":"Petunia-Pickle-Bottom-Diaper-Bag",
          "productPrice":"189.00",
          "productDescription":"This popular brand of diaper bag is as versatile as it is stylish. It has several organizational pockets, a built-in changing station, and more than enough room for all the odds and ends required for a day out. The coated cotton canvas is easy to clean and the bag can be carried over the shoulder or as a backpack. Once baby is older, this bag can still be used without looking like a diaper bag!",
          "productImage":"/baby/ppbDiaperBag.jpg",
          "productThumb":"/baby/ppbDiaperBagThumb.jpg",
          "imageAltText":"GiftStarter Petunia Pickle Bottom Diaper Bag",
-         "giftStartLink":"http://bit.ly/152Z4lD",
-         "productSlug":"diaperBag"
+         "giftStartLink":"http://bit.ly/152Z4lD"
       },
-      {
-         "productName":"Ergo Baby 360 Four Position Carrier",
+      {  
+         "productName":"Ergobaby 360 Four Position Carrier",
+         "productNameShort":"Ergobaby 360 Carrier",
+         "productSlug":"Ergobaby-360-Four-Position-Carrier",
          "productPrice":"160.00",
          "productDescription":"This newest model of the ergo baby carrier does it all, and it does it with comfort and safety at it’s core. The carrier offers four ways to carry infants and toddlers up to 33 pounds: front-inward, front-outward, hip, and back. the wide seat ensures ergonomic hip positioning for child, and the wide straps and supportive waistband ensure optimal comfort for parents. The attached hood provides shade from sunny days, shelter in a drizzle, and privacy when baby is sleeping or nursing.",
          "productImage":"/baby/ergo360.jpg",
          "productThumb":"/baby/ergo360Thumb.jpg",
          "imageAltText":"GiftStarter Ergo Baby 360 Four Position Carrier",
-         "giftStartLink":"http://bit.ly/1DJ1cx9",
-         "productSlug":"ergo360"
+         "giftStartLink":"http://bit.ly/1DJ1cx9"
       },
-      {
+      {  
          "productName":"Motorola Digital 3.5” Video Baby Monitor - MBP36S",
+         "productNameShort":"Motorola Video Baby Monitor",
+         "productSlug":"Motorola-Digital-3.5-Video-Baby-Monitor-MBP36S",
          "productPrice":"239.99",
          "productDescription":"This top selling monitor is loaded with features to keep parents connected with their children. The parent unit has a large color display wit easy to use buttons to pan and tilt the camera—very handy for keeping babies who move around in bed in view! There is also a talk back feature that lets parents’ voices soothe baby from the other room (this feature is also perfect if one parents is putting baby to sleep and wants the other parent to bring up another bottle or turn down the tv—it’s like a walkie talkie!)",
          "productImage":"/baby/motorollaMonitor.jpg",
          "productThumb":"/baby/motorollaMonitorThumb.jpg",
          "imageAltText":"GiftStarter Motorola Digital 3.5” Video Baby Monitor - MBP36S",
-         "giftStartLink":"http://bit.ly/1yo5zea",
-         "productSlug":"motorollaMonitior"
+         "giftStartLink":"http://bit.ly/1yo5zea"
       },
-      {
+      {  
          "productName":"Angel Care AC1200 Video, Movement and Sound Monitor for Smartphone",
+         "productNameShort":"Angel Care Monitor for Smartphone",
+         "productSlug":"Angel-Care-AC1200-Video-Movement-and-Sound-Monitor-for-Smartphone",
          "productPrice":"299.99",
          "productDescription":"All new parents worry about new babies when they sleep at night. This unit not only gives parents audio and visual monitoring, it includes a motion monitor as well. The under-the-mattress sensor pad will sound an alarm if infant doesn’t move for 20 seconds (sensitivity adjustable). The true genius of this monitor is it’s accessible from any smart device. This means mom and dad can check in on baby from the next room, the office, or even across the country on a business trip.",
          "productImage":"/baby/angelCareMonitor.jpg",
          "productThumb":"/baby/angelCareMonitorThumb.jpg",
          "imageAltText":"GiftStarter Angel Care AC1200 Video, Movement and Sound Monitor for Smartphone",
-         "giftStartLink":"http://bit.ly/1KOLlzd",
-         "productSlug":"angelCareMonitor"
+         "giftStartLink":"http://bit.ly/1KOLlzd"
       },
-      {
-         "productName":"Chicco Activ3 Jogging Stroller",
+      {  
+         "productName":"Chicco Activ3&#8482; Jogging Stroller",
+         "productNameShort":"Chicco Activ3&#8482; Stroller",
+         "productSlug":"Chicco-Activ3&#8482;-Jogging-Stroller",
          "productPrice":"299.99",
          "productDescription":"This is the lightest jogging stroller on the market. It comes fully equipped with a large storage basket, adjustable shocks, lockable front swivel wheel, and real rubber wheels with deep tread to make this a true all-terrain stroller. The sun shade can be unzipped to extend all the way down to the removable arm bar. A simple pinch of the clip on the back of the seat will recline it to infinite degrees. It can be folded with one hand and stands upright, or all the wheels can be quickly removed and the handle can be folded down for a minimum storage footprint. This stroller is compatible with any Chicco Keyfit infant car seat as well!",
          "productImage":"/baby/chiccoStroller.jpg",
          "productThumb":"/baby/chiccoStrollerThumb.jpg",
          "imageAltText":"GiftStarter Chicco Activ3 Jogging Stroller",
-         "giftStartLink":"http://bit.ly/1Ct01hu",
-         "productSlug":"chiccoStroller"
+         "giftStartLink":"http://bit.ly/1Ct01hu"
       },
-      {
+      {  
          "productName":"Britax Boulevard ClickTight Convertible Car Seat",
+         "productNameShort":"Britax Boulevard ClickTight",
+         "productSlug":"Britax-Boulevard-ClickTight-Convertible-Car-Seat",
          "productPrice":"369.99",
          "productDescription":"The “click tight” feature of this car seat is perhaps the best thing to happen for car seat installation since the LATCH system. The front of the car seat lifts up to expose the belt path; Once the seat belt is buckled, closing the front of the seat ensures the belt is tight and a secure and proper installation is finished! The seat is equipped with Side Impact Protection (SIP), a quick adjust 14-position harness, 7 recline positions, and a 65 lbs weight limit, this seat is will grow with and comfortably protect any child for many years.",
          "productImage":"/baby/britaxBoulevard.jpg",
          "productThumb":"/baby/britaxBoulevardThumb.jpg",
          "imageAltText":"GiftStarter Britax Boulevard ClickTight Convertible Car Seat",
-         "giftStartLink":"http://bit.ly/17NfeAK",
-         "productSlug":"britaxBoulevard"
+         "giftStartLink":"http://bit.ly/17NfeAK"
       },
-      {
-         "productName":"oeuf Pure & Simple Organic & Natural Crib Mattress",
+      {  
+         "productName":"oeuf&reg; Pure & Simple Organic & Natural Crib Mattress",
+         "productNameShort":"oeuf&reg; Organic Mattress",
+         "productSlug":"oeuf-Pure-Simple-Organic-Natural-Crib-Mattress",
          "productPrice":"395.00",
          "productDescription":"Contrary to popular belief, babies actually spend most of their days sleeping. This mattress is made with all-natural and organic materials to keep baby resting in a healthy, chemical-free environment. The firm surface provides the appropriate levels of support and comfort for safe infant sleep.",
          "productImage":"/baby/oeufMattress.jpg",
          "productThumb":"/baby/oeufMattressThumb.jpg",
          "imageAltText":"GiftStarter oeuf Pure & Simple Organic & Natural Crib Mattress",
-         "giftStartLink":"http://bit.ly/1533J7a",
-         "productSlug":"oeufMattress"
+         "giftStartLink":"http://bit.ly/1533J7a"
       },
-      {
-         "productName":"oeuf Classic Crib",
+      {  
+         "productName":"oeuf&reg; Classic Crib",
+         "productNameShort":"oeuf&reg; Classic Crib",
+         "productSlug":"oeuf-Classic-Crib",
          "productPrice":"970.00",
          "productDescription":"Parent-designed and highly contemporary, this crib is a beautiful centerpiece to any nursery. It’s solid wood construction makes it not only extremely safe, but durable and sure to last when converted into a toddler bed.",
          "productImage":"/baby/oeufCrib.jpg",
          "productThumb":"/baby/oeufCribThumb.jpg",
          "imageAltText":"GiftStarter oeuf Classic Crib",
-         "giftStartLink":"http://bit.ly/1ByXaW2",
-         "productSlug":"oeufCrib"
+         "giftStartLink":"http://bit.ly/1ByXaW2"
       },
-      {
-         "productName":"HALO Bassinest Swivel Sleeper",
+      {  
+         "productName":"HALO&#8482; Bassinest&#8482; Swivel Sleeper",
+         "productName":"HALO&#8482; Bassinest&#8482; Swivel Sleeper",
+         "productSlug":"HALO-Bassinest-Swivel-Sleeper",
          "productPrice":"249.99",
          "productDescription":"The mother of all bassinets, the Bassinest keeps baby close and safe, and easy to pick up! The side wall can be pushed down so scooping up that bundle of newborn isn’t so awkward. The whole nest is height adjustable, so it can fit over nearly any bed, and it can be swiveled on it’s base to make it easier for mom or dad to get in and out of bed (no more “bassinet-scoot!”). The soothing center includes 3 songs, 3 soothing sounds, 2 levels of vibration, a nightlight, and a nursing timer.",
          "productImage":"/baby/haloBassinest.jpg",
          "productThumb":"/baby/haloBassinestThumb.jpg",
          "imageAltText":"GiftStarter HALO Bassinest Swivel Sleeper",
-         "giftStartLink":"http://bit.ly/1B8isej",
-         "productSlug":"haloBassinest"
+         "giftStartLink":"http://bit.ly/1B8isej"
       },
-      {
-         "productName":"Graco Blossom DLX 4-in-1 Seating System",
+      {  
+         "productName":"Graco&reg; Blossom&#8482; DLX 4-in-1 Seating System",
+         "productNameShort":"Graco&reg; Blossom&#8482; DLX 4-in-1",
+         "productSlug":"Graco-Blossom-DLX-4-in-1-Seating-System",
          "productPrice":"199.00",
          "productDescription":"A highly versatile high chair that can grow with baby and even seat two children at once, the Graco Blossom 4-in-1 seating system is a lot of bang for your buck. When baby is small, it functions as a traditional high chair or the seat can be removed and used as a space-saver high chair when strapped onto a standard dining room table chair. As a toddler, the booster seat can be used on the high chair legs or a standard dining room table chair. For older kids, the high chair base can be used as a youth chair at the table. The tray can be removed with one hand and the insert is dishwasher safe, making clean up a breeze. The chair is complete with lockable wheels, 6 height adjustments, and 3 recline positions.",
          "productImage":"/baby/gracoHighchair.jpg",
          "productThumb":"/baby/gracoHighchairThumb.jpg",
          "imageAltText":"GiftStarter Graco Blossom DLX 4-in-1 Seating System",
-         "giftStartLink":"http://bit.ly/1xuH8Gj",
-         "productSlug":"gracoHighchair"
+         "giftStartLink":"http://bit.ly/1xuH8Gj"
       },
-      {
-         "productName":"Gro-via Hybrid Live Cloth Diaper Bundle",
+      {  
+         "productName":"Gro-via&reg; Hybrid Live Cloth Diaper Bundle",
+         "productNameShort":"Gro-via&reg; Cloth Diaper Bundle",
+         "productSlug":"Gro-via-Hybrid-Live-Cloth-Diaper-Bundle",
          "productPrice":"404.82",
          "productDescription":"These are not your mama’s cloth diapers. The hook and loop or snap closures on the breathable yet waterproof PUL covers eliminate the need for pins and plastic pants. The super absorbent inserts snap into the covers, making diaper changes a breeze. All pieces are machine washable and dryer safe, and can be re-used safely again and again—even for multiple kids! The typical family spends over $2000 on disposable diapers and wipes per child, and the typical disposable diapers takes hundreds of years to decompose. Give the gift that keeps on giving, and ensures a brighter, healthier environment for the future.",
          "productImage":"/baby/groviaDiapers.jpg",
          "productThumb":"/baby/groviaDiapersThumb.jpg",
          "imageAltText":"GiftStarter Gro-via Hybrid Live Cloth Diaper Bundle",
-         "giftStartLink":"http://bit.ly/1IF6BVV",
-         "productSlug":"groviaDiapers"
+         "giftStartLink":"http://bit.ly/1IF6BVV"
       },
-      {
-         "productName":"Fisher-Price Go Wild Jumperoo",
+      {  
+         "productName":"Fisher-Price&reg; Go Wild Jumperoo&#8482;",
+         "productNameShort":"Fisher-Price&reg; Jumperoo&#8482;",
+         "productSlug":"Fisher-Price-Go-Wild-Jumperoo",
          "productPrice":"139.99",
          "productDescription":"Stand alone jumpers make it easy and safe of babies to exercise and entertain themselves away from the potential dangers of corners that typical doorway jumpers are near. They are also a great solution for homes that do not have molding around the doorway. This Jumper has three adjustable heights, two learning modes, and plenty of activities and toys baby can reach from the spinning seat.",
          "productImage":"/baby/jumparoo.jpg",
          "productThumb":"/baby/jumparooThumb.jpg",
          "imageAltText":"GiftStarter Fisher-Price Go Wild Jumperoo",
-         "giftStartLink":"http://bit.ly/1G4Bsxr",
-         "productSlug":"jumparoo"
+         "giftStartLink":"http://bit.ly/1G4Bsxr"
       },
-      {
-         "productName":"Medela Pump in Style Advanced Breastpump",
+      {  
+         "productName":"Medela&reg; Pump in Style&reg; Advanced Breastpump",
+         "productNameShort":"Medela&reg; Breastpump",
+         "productSlug":"Medela-Pump-in-Style-Advanced-Breastpump",
          "productPrice":"349.99",
          "productDescription":"Medela is the most trusted name in breast pumps, helping many moms maintain sufficient supply even when pumping exclusively. The Pump In Style double electric pump uses 2-Phase Expression which is more like nursing and maximizes expression. This pump comes in a fashionable bag, along with a cooler that fits inside to keep expressed milk cool.",
          "productImage":"/baby/medelaPump.jpg",
          "productThumb":"/baby/medelaPumpThumb.jpg",
          "imageAltText":"GiftStarter Medela Pump in Style Advanced Breastpump",
-         "giftStartLink":"http://bit.ly/1G4CyZZ",
-         "productSlug":"medelaPump"
+         "giftStartLink":"http://bit.ly/1G4CyZZ"
       },
-      {
-         "productName":"Dyson Air Multiplier AM07 40-Inch Bladeless Tower Fan",
+      {  
+         "productName":"Dyson Air Multiplier&#8482; AM07 40-Inch Bladeless Tower Fan",
+         "productNameShort":"Dyson Bladeless Fan",
+         "productSlug":"Dyson-Air-Multiplier-AM07-40-Inch-Bladeless-Tower-Fan",
          "productPrice":"399.99",
          "productDescription":"Air circulation is important, but fan blades can be dangerous to little wandering hands. The Dyson Blameless tower fan provides quiet, powerful air flow without spinning blades or grills that collect dust and allergens. Features include oscillation. tilt, programmable power-off, and a remote that can be magnetically stored on the fan itself.",
          "productImage":"/baby/dysonFan.jpg",
          "productThumb":"/baby/dysonFanThumb.jpg",
          "imageAltText":"GiftStarter Dyson Air Multiplier AM07 40-Inch Bladeless Tower Fan",
-         "giftStartLink":"http://bit.ly/1zkYX1r",
-         "productSlug":"dysonFan"
+         "giftStartLink":"http://bit.ly/1zkYX1r"
       },
-      {
-         "productName":"California Baby Super Deluxe Newborn Gift Basket",
+      {  
+         "productName":"California Baby&reg; Super Deluxe Newborn Gift Basket",
+         "productNameShort":"California Baby&reg; Basket",
+         "productSlug":"California-Baby-Super-Deluxe-Newborn-Gift-Basket",
          "productPrice":"220.04",
          "productDescription":"Newborn skin is so delicate and sensitive, typical lotions and soaps can be too harsh and drying. California Baby products are formulated with organic ingredients, free of gluten, soy, oat, dairy, sulfates, DEA, phthalates, BPA, peanuts, and tree nuts. Additionally, they are vegan and not tested on animals. This basket contains everything to care for infants, and the whole family, in a healthy, environmentally friendly way!",
          "productImage":"/baby/californiaBaby.jpg",
          "productThumb":"/baby/californiaBabyThumb.jpg",
          "imageAltText":"GiftStarter California Baby Super Deluxe Newborn Gift Basket",
-         "giftStartLink":"http://bit.ly/1sF1u4a",
-         "productSlug":"californiaBaby"
+         "giftStartLink":"http://bit.ly/1sF1u4a"
       }
    ]
 }
