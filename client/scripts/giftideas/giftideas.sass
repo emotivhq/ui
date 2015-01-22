@@ -5,11 +5,58 @@
   width: 100%
   max-width: 1280px
   margin: 0 auto
+
+  .products, .singleproduct
+    display: block
+    clear: both
+    width: 95%
+    .textleft
+      text-align: left
+      margin-left: 10px
+    .head
+      width: 80%
+      margin: 0 auto
+      .button
+        width: 100%
+        margin-left: 10px
+    .hero
+      float: left
+      width: 35%
+      text-align: right
+      img
+        width: 90%
+    .titles
+      float: right
+      width: 65%
+      h1
+        font-size: 34px
+        font-weight: 900
+      h3
+        font-size: 24px
+        font-style: italic
+        margin-top: 5px
+      h4
+        font-size: 18px
+        line-height: 20px
+        margin-top: 20px
+        margin-bottom: 20px
+      h5
+        font-size: 15px
+        line-height: 16px
+        margin-top: 0px
+    p
+      display: block
+      clear: both
+      width: 100%
+      font-size: 16px
+      line-height: 18px
+      padding-top: 20px
+
   .grid
     .group
       width: 50%
       margin: 0 0
-      padding: 0 0
+      padding: 10px 0
       @media screen and (max-width: $phone-boundary)
         width: 100%
     .left
@@ -20,9 +67,8 @@
       display: inline-block
       width: 49%
       float: left
-
       margin: 0 0
-      padding: 10px 10px
+      padding: 0px 10px
       text-align: center
       a
         font-family: "Roboto" !important
@@ -34,9 +80,38 @@
         clear: both
         height: auto
         width: 100% !important
+      .tilelabel
+        height: 50px
+
+  .button
+    display: inline-block
+    padding: 8px auto
+    border-radius: 3px
+    -webkit-transition: all 0.3s ease-in-out
+    -moz-transition: all 0.3s ease-in-out
+    transition: all 0.3s ease-in-out
+    font: $button-font
+    font-size: 28px
+    vertical-align: top
+    background: $primary-color
+    border: solid $primary-color 2px
+    color: #fff
+    cursor: pointer
+    +transition(all, 0.2s)
+    &:hover
+      background-color: #fd5257
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)"
+      filter: alpha(opacity = 70)
+      zoom: 1
 
   @media screen and (max-width: $phone-tablet-boundary)
     width: 100%
+    .products
+      .hero
+        display: none
+      .titles
+        float: none
+        width: 100%
 
   @media screen and (max-width: $phone-boundary)
     width: 100%

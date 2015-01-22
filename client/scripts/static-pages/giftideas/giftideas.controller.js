@@ -9,9 +9,6 @@ GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location','
 
 function GiftideasController($scope, $http, $location,  $timeout) {
     $scope.location = $location;
-    $scope.showCategories = true;
-    $scope.showProducts = false;
-    $scope.showSingleProduct = false;
     $scope.path = $location.path();
 
     var pathParts = $scope.path.split('/');
@@ -31,12 +28,10 @@ function GiftideasController($scope, $http, $location,  $timeout) {
     //    $timeout($scope.scrollToSearch, 700);
     //});
 
-    this.populateCategories = function(category, $http) {
+    this.populateCategory = function(category, $http) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             $scope.groups = [];
-            $scope.categoryName = data.categoryName;
-            $scope.categorySlug = data.categorySLug;
-            $scope.categoryBlurb = data.categoryBlurb;
+            $scope.category = data;
             var prior=null;
             angular.forEach(data.productList, function (value, key) {
                 if(prior!=null) {
@@ -52,11 +47,22 @@ function GiftideasController($scope, $http, $location,  $timeout) {
         });
     };
 
+    this.populateProduct = function(category, product, $http) {
+        $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
+            angular.forEach(data.productList, function (value, key) {
+                if(value.productSlug==product) {
+                    $scope.product=value;
+                }
+            });
+        });
+    };
+
     if(category) {
-        $scope.showCategories = false;
-        $scope.showProducts = true;
-        $scope.showSingleProduct = false;
-        this.populateCategories(category, $http);
+        this.populateCategory(category, $http);
+    }
+
+    if(product) {
+        this.populateProduct(category, product, $http);
     }
 
 }

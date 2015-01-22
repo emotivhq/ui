@@ -2,23 +2,47 @@
 
     <h1 ng-show="showCategories">Top Categories for Group Gifting</h1>
 
-    <div ng-show="showCategories" class="grid">
+    <div ng-show="!category" class="grid categories">
         <div class="group left">
-            <div class="tile"><a href="/giftideas/birthday"><img src="/assets/giftideas/category/birthday.jpg" /><span class="categorylabel">Birthdays</span></a></div>
-            <div class="tile"><a href="/giftideas/wedding"><img src="/assets/giftideas/category/wedding.jpg" /><span class="categorylabel">Wedding</span></a></div>
+            <div class="tile"><a href="/giftideas/birthday"><img src="/assets/giftideas/category/Birthday.jpg" /><div class="tilelabel">Birthdays</div></a></div>
+            <div class="tile"><a href="/giftideas/wedding"><img src="/assets/giftideas/category/Wedding.jpg" /><div class="tilelabel">Wedding</div></a></div>
         </div>
         <div class="group right">
-            <div class="tile"><a href="/giftideas/baby"><img src="/assets/giftideas/category/baby.jpg" /><span class="categorylabel">Baby Shower</span></a></div>
-            <div class="tile"><a href="/giftideas/office"><img src="/assets/giftideas/category/office.jpg" /><span class="categorylabel">For the Office</span></a></div>
+            <div class="tile"><a href="/giftideas/baby"><img src="/assets/giftideas/category/Baby.jpg" /><div class="tilelabel">Baby Shower</div></a></div>
+            <div class="tile"><a href="/giftideas/office"><img src="/assets/giftideas/category/Office.jpg" /><div class="tilelabel">For the Office</div></a></div>
         </div>
     </div>
 
-    <div ng-show="showProducts" class="grid">
-        <h3>Gift Ideas for {{categoryName}}</h3>
-        <h4>Our Favorite Gifts & Most Popular GiftStarts</h4>
-        <h3>{{categoryBlurb}}</h3>
-        <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
-            <div ng-repeat="product in group" class="tile"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productImage}}" /><span class="categorylabel">{{product.productName}}</span></a></div>
+    <div ng-show="category && !product" class="products">
+        <div class="head">
+            <div class="hero">
+                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
+            </div>
+            <div class="titles">
+                <h1>{{category.categoryName}}</h1>
+                <h3>Our Favorite Gifts & Most Popular GiftStarts</h3>
+            </div>
+            <p>{{category.categoryBlurb}}<p>
+        </div>
+        <div class="grid">
+            <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
+                <div ng-repeat="product in group" class="tile"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel">{{product.productName}}</div></a></div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="product" class="singleproduct">
+        <div class="head">
+            <div class="hero">
+                <img src="/assets/giftideas/category{{product.productImage}}" alt="{{product.imageAltText}}">
+            </div>
+            <div class="titles">
+                <h1 class="textleft">{{product.productName}}</h1>
+                <h5 class="textleft">${{product.productPrice}}</h5>
+                <h4 class="textleft">{{product.productDescription}}</h4>
+                <a href="{{product.giftStartLink}}" class="button main rounded">GIFTSTART IT!</a>
+            </div>
+            <p>&nbsp;</p>
         </div>
     </div>
 
