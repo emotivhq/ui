@@ -10,7 +10,7 @@ GiftStarterApp.controller('HomeController', [
     function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
              $location, ToastService,  $interval, $routeParams, $rootScope, PopoverService) {
 
-        if (!device.mobile() && !$window.sessionStorage.getItem('seenSweeps')) {
+        if (!device.mobile() && !$window.sessionStorage.getItem('seenSweeps') && !$routeParams.searchTerm) {
             // Showing per browser session
             PopoverService.setPopover('sweepstakes');
             $window.sessionStorage.setItem('seenSweeps', 'yes')
@@ -27,6 +27,13 @@ GiftStarterApp.controller('HomeController', [
 
         if ($routeParams.resetCode) {
             $rootScope.$broadcast('password-reset-requested');
+        }
+
+        if ($routeParams.searchTerm) {
+            $timeout(function () {
+                $window.sessionStorage.setItem('searchTermFromUrl', $routeParams.searchTerm);
+                $rootScope.$broadcast('performSearchFromUrl');
+            }, 200);
         }
 
         $scope.topCampaigns = {};

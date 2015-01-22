@@ -37,7 +37,15 @@
             </ul>
             <div class="search wrapper header" style="text-align:center">
                 <span class="inputs">
-                    <input id="product-search-input-head" class="text-input" type="text" name="product-link" placeholder="Search here for the perfect gift..." />&nbsp;&nbsp;<button id="product-search-button-head" class="submit">Shop</button>
+                    <input id="product-search-input-head"
+                           class="text-input"
+                           type="text"
+                           name="product-link"
+                           placeholder="Search here for the perfect gift..."
+                           ng-model="headerSearchTerm"
+                           ng-keyup="$event.keyCode == 13 ? actions.search() : null" />&nbsp;&nbsp;
+
+                    <button id="product-search-button-head" class="submit" ng-click="actions.search()">Shop</button>
                 </span>
             </div>
         </div>

@@ -7,7 +7,7 @@
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
 function gsProductSearch(ProductService, $location, Analytics, $window,
-                         $timeout) {
+                         $timeout, $rootScope) {
     function link(scope, element) {
         scope.loading = false;
         scope.failed = false;
@@ -168,19 +168,21 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         };
 
         var performHeadSearch = function () {
-            scope.product_url = $('#product-search-input-head').val();
             scope.submit();
             $('html, body').animate({
                 scrollTop: $('#product-search-anchor').offset().top
             }, 200);
-        }
+        };
 
-        $('#product-search-input-head').on('keyup', function (event) {
-            if (event.keyCode === 13) {
-                performHeadSearch();
-            }
+        $rootScope.$on('performSearchFromHeader', function () {
+            scope.product_url = $('#product-search-input-head').val();
+            performHeadSearch();
         });
-        $('#product-search-button-head').on('click', performHeadSearch);
+
+        $rootScope.$on('performSearchFromUrl', function () {
+            scope.product_url = $window.sessionStorage.getItem('searchTermFromUrl');
+            performHeadSearch();
+        });
     }
 
     return {
