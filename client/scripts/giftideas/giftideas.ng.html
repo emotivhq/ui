@@ -1,20 +1,24 @@
-<div id="giftideas">
+<div id="giftideas" ng-show="showCategories">
     <div id="categories">
         <div class="group left">
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">Wedding</span></div>
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">Anniversary</span></div>
+            <div class="categorytile"><a href="/giftideas/birthday"><img src="/assets/giftideas/category/birthday.jpg" /><span class="categorylabel">Birthdays</span></a></div>
+            <div class="categorytile"><a href="/giftideas/wedding"><img src="/assets/giftideas/category/wedding.jpg" /><span class="categorylabel">Wedding</span></a></div>
         </div>
         <div class="group right">
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">For Him</span></div>
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">For Her</span></div>
-        </div>
-        <div class="group left">
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">Wedding1</span></div>
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">Anniversary1</span></div>
-        </div>
-        <div class="group right">
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">For Him1</span></div>
-            <div class="categorytile"><img src="/assets/giftideas/weddings.jpg" /><span class="categorylabel">For Her1</span></div>
+            <div class="categorytile"><a href="/giftideas/baby"><img src="/assets/giftideas/category/baby.jpg" /><span class="categorylabel">Baby Shower</span></a></div>
+            <div class="categorytile"><a href="/giftideas/office"><img src="/assets/giftideas/category/office.jpg" /><span class="categorylabel">For the Office</span></a></div>
         </div>
     </div>
 </div>
+
+<div>
+    <h3>{{categoryName}}</h3>
+    <h3>{{categoryBlurb}}</h3>
+    <ul>
+        <li ng-repeat="product in products">{{product.productName}}</li>
+    </ul>
+</div>
+
+
+<script type="application/javascript">
+</script>
