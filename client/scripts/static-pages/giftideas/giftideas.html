@@ -1,28 +1,19 @@
 <div class="giftideas wrapper" ng-controller="GiftideasController">
     <!-- ==== HEADERWRAP ==== -->
     <div id="headerwrap" id="home" name="home" title="GiftStarter Team">
-        <p>Find the perfect gift.</p>
+        <h2>Find the perfect gift.</h2>
         <br>
         <h3>It's that easy.  Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it... including a handmade card.</h3>
     </div><!-- /headerwrap -->
 
+    <div id="categories">
+        <h1 class="centered">Top Categories for Group Gifting</h1>
+        <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
+    </div>
 
-    <!-- ==== CALL TO ACTION -->
-    <section class="section-divider textdivider divider3">
-        <div class="container">
-            <h1>Top Categories for Group Gifting</h1>
-            <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
-        </div><!-- container -->
-    </section><!-- section -->
-
-
-
-    <!-- ==== CALL TO ACTION -->
-    <section class="section-divider textdivider divider3">
-        <div class="container">
-            <h3>Looking for something else?</h3>
-            <gs-product-search></gs-product-search>
-        </div>
-    </section><!-- section -->
+    <div>
+        <h3 class="centered">Looking for something else?</h3>
+        <gs-product-search></gs-product-search>
+    </div>
 
 </div>
