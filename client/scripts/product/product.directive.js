@@ -166,6 +166,21 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
                 scope.selectedProducts[index].imgUrl
             );
         };
+
+        var performHeadSearch = function () {
+            scope.product_url = $('#product-search-input-head').val();
+            scope.submit();
+            $('html, body').animate({
+                scrollTop: $('#product-search-anchor').offset().top
+            }, 200);
+        }
+
+        $('#product-search-input-head').on('keyup', function (event) {
+            if (event.keyCode === 13) {
+                performHeadSearch();
+            }
+        });
+        $('#product-search-button-head').on('click', performHeadSearch);
     }
 
     return {
