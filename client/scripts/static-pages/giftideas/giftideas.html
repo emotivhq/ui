@@ -1,15 +1,12 @@
 <div class="giftideas wrapper" ng-controller="GiftideasController">
     <!-- ==== HEADERWRAP ==== -->
-    <div id="headerwrap" id="home" name="home" title="GiftStarter Team">
+    <div id="headerwrap" id="home" name="home" title="GiftStarter Team" ng-show="showCategories">
         <h2>Find the perfect gift.</h2>
         <br>
         <h3>It's that easy.  Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it... including a handmade card.</h3>
     </div><!-- /headerwrap -->
 
-    <div id="categories">
-        <h1 class="centered">Top Categories for Group Gifting</h1>
-        <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
-    </div>
+    <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
 
     <div>
         <p>&nbsp;</p>
