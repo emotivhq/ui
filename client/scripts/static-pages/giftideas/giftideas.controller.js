@@ -33,7 +33,6 @@ function GiftideasController($scope, $http, $location,  $timeout) {
             $scope.categoryBlurb = data.categoryBlurb;
             angular.forEach(data.productList, function (value, key) {
                 $scope.showCategories = false;
-                console.log(value)
                 $scope.products.push(value);
             });
         });
