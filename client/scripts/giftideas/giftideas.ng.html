@@ -13,8 +13,22 @@
         </div>
     </div>
 
-    <div ng-show="category && !product" class="products">
+    <div ng-show="product" class="singleproduct">
         <div class="head">
+            <div class="hero">
+                <img src="/assets/giftideas/category{{product.productImage}}" alt="{{product.imageAltText}}">
+            </div>
+            <div class="titles">
+                <h1 class="textleft"><span ng-bind-html="product.productName"></span></h1>
+                <h5 class="textleft">${{product.productPrice}}</h5>
+                <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
+                <a href="{{product.giftStartLink}}" class="button main rounded">GIFTSTART IT!</a>
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="category" class="products">
+        <div class="head" ng-show="!product">
             <div class="hero">
                 <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
             </div>
@@ -27,24 +41,11 @@
         </div>
         <div class="grid">
             <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
-                <div ng-repeat="product in group" class="tile" title="{{product.productNameStripped}}"><a href="{{path}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel"><span ng-bind-html="product.productNameShort"></span><br/><span class="price">${{product.productPrice}}</span></div></a></div>
+                <div ng-repeat="product in group" class="tile" title="{{product.productNameStripped}}"><a href="{{categoryPath}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel"><span ng-bind-html="product.productNameShort"></span><br/><span class="price">${{product.productPrice}}</span></div></a></div>
             </div>
         </div>
     </div>
 
-    <div ng-show="product" class="singleproduct">
-        <div class="head">
-            <div class="hero">
-                <img src="/assets/giftideas/category{{product.productImage}}" alt="{{product.imageAltText}}">
-            </div>
-            <div class="titles">
-                <h1 class="textleft"><span ng-bind-html="product.productName"></span></h1>
-                <h5 class="textleft">${{product.productPrice}}</h5>
-                <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
-                <a href="{{product.giftStartLink}}" class="button main rounded">GIFTSTART IT!</a>
-            </div>
-            <p>&nbsp;</p>
-        </div>
-    </div>
+    <p>&nbsp;</p>
 
 </div>

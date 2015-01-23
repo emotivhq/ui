@@ -14,6 +14,7 @@ function GiftideasController($scope, $http, $location,  $sce) {
     $scope.path = $location.path();
 
     var pathParts = $scope.path.replace('//','/').split('/');
+    $scope.basePath = pathParts[1];
     var category = pathParts.length>2?pathParts[2]:false;
     var product = pathParts.length>3?pathParts[3]:false;
 
@@ -38,6 +39,7 @@ function GiftideasController($scope, $http, $location,  $sce) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             $scope.groups = [];
             $scope.category = data;
+            $scope.categoryPath = $scope.basePath+'/'+category;
             var prior=null;
             angular.forEach(data.productList, function (value, key) {
                 addStrippedName(value);

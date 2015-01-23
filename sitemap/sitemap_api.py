@@ -16,7 +16,7 @@ class GiftideasHandler(webapp2.RequestHandler):
     def post(self):
         config = yaml.load(open('config.yaml'))
         app_url = config['app_url']#.replace("https://","http://")
-        categories = ['baby','forhim']
+        categories = ['baby','wedding','forhim','forher']
 
         head = '<?xml version="1.0" encoding="UTF-8"?>' \
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' \
