@@ -22,7 +22,8 @@
                 <h1 class="textleft"><span ng-bind-html="product.productName"></span></h1>
                 <h5 class="textleft">${{product.productPrice}}</h5>
                 <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
-                <a href="{{product.giftStartLink}}" class="button main rounded">GIFTSTART IT!</a>
+                <a href="{{product.giftStartLink}}" class="button main rounded" ng-show="product.hasPrice">GIFTSTART IT!</a>
+                <a href="#" onclick="olark('api.box.expand')" class="button main rounded" ng-show="!product.hasPrice">Contact the Gift Concierge</a>
             </div>
         </div>
     </div>

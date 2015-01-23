@@ -31,8 +31,9 @@ function GiftideasController($scope, $http, $location,  $sce) {
     //    $timeout($scope.scrollToSearch, 700);
     //});
 
-    function addStrippedName(value) {
-        value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
+    function addCalculatedVars(product) {
+        product.productNameStripped = String(product.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
+        product.hasPrice = !isNaN(product.productPrice);
     }
 
     this.populateCategory = function(category, $http) {
@@ -42,7 +43,7 @@ function GiftideasController($scope, $http, $location,  $sce) {
             $scope.categoryPath = $scope.basePath+'/'+category;
             var prior=null;
             angular.forEach(data.productList, function (value, key) {
-                addStrippedName(value);
+                addCalculatedVars(value);
                 if(prior!=null) {
                     //angular.forEach(value, function (value, key) {
                     //    //console.log(value);
@@ -66,7 +67,7 @@ function GiftideasController($scope, $http, $location,  $sce) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             angular.forEach(data.productList, function (value, key) {
                 if(value.productSlug==product) {
-                    addStrippedName(value);
+                    addCalculatedVars(value);
                     $scope.product=value;
                 }
             });
