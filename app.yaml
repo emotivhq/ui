@@ -5,6 +5,11 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+
+# Dynamic Sitemaps
+- url: /sitemap-giftideas.xml
+  script: sitemap.sitemap_api.handler
+
 # Product
 - url: /products/urls/.*.json
   script: product.product_api.handler
@@ -85,6 +90,7 @@ handlers:
   secure: always
 - url: /assets
   static_dir: client/assets
+  application_readable: true
   secure: always
 - url: /templates/angular
   static_dir: client/templates/angular
