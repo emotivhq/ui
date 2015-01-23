@@ -35,7 +35,7 @@ function gsItHeader($interval, $window, $location, Analytics) {
 
         scope.$on('$routeChangeStart', hideButtonHeader);
 
-        var interval = $interval(onScroll, 3000);
+        var interval = $interval(onScroll, 2000);
     }
 
     return {
