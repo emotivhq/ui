@@ -25,7 +25,12 @@ class GiftideasHandler(webapp2.RequestHandler):
         for category_path in categories:
             path = os.path.join(os.path.dirname(__file__), '../client/assets/giftideas/'+category_path+'.json')
             category_json = json.load(file(path))
-            category_slug = category_json['categorySlug']+'/'
+            category_slug = category_json['categorySlug'].lower()+'/'
+            body += '<url>' \
+                    '<loc>{0}/giftideas/{1}</loc>' \
+                    '<changefreq>daily</changefreq>' \
+                    '<priority>0.80</priority>' \
+                    '</url>'.format(app_url,category_slug)
             for product in category_json['productList']:
                 body += '<url>' \
                         '<loc>{0}/giftideas/{1}{2}</loc>' \
