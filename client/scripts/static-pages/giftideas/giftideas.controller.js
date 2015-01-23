@@ -66,7 +66,6 @@ function GiftideasController($scope, $http, $location,  $sce) {
     this.populateProduct = function(category, product, $http) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             angular.forEach(data.productList, function (value, key) {
-                console.log('"'+value.productSlug+'"=="'+product+': '+(value.productSlug==product))
                 if(value.productSlug==product) {
                     addCalculatedVars(value);
                     $scope.product=value;
