@@ -6,9 +6,9 @@
    "productList":[  
       {  
          "productName":"Weber&reg; Spirit E210 Liquid Propane Gas Grill",
-         "productNameShort":"Weber Spirit Propane Grill",
+         "productNameShort":"Weber&reg; Spirit Propane Grill",
          "productSlug":"Weber-Spirit-E210-Liquid-Propane-Gas-Grill",
-         "productPrice":"499.00",
+         "productPrice":"399.00",
          "productDescription":"This is Weber’s grill completely re-imagined, and the proof is visible in features throughout the grill. With the control panel moved to the front, two stainless steel tables fold down to allow for maneuverability and easy storage – a boon for grillers with small patios, decks or balconies. While compact, the grill is also roomy enough to cook a 20-pound turkey or roast meats and vegetables at the same time.  Porcelain-enameled cast-iron cooking grates offer superior heat retention and quick clean up, and the porcelain-enameled shroud will not fade, peel or rust.  This is a must-have for newlyweds – to keep the meal choices and meal preparation tasks open.",
          "productImage":"/wedding/weberGrill.jpg",
          "productThumb":"/wedding/weberGrillThumb.jpg",
@@ -35,7 +35,7 @@
          "productImage":"/wedding/dysonVacuum.jpg",
          "productThumb":"/wedding/dysonVacuumThumb.jpg",
          "imageAltText":"GiftStarter Dyson Handheld Dc34",
-         "giftStartLink":"http://bit.ly/1x65bey"
+         "giftStartLink":"http://bit.ly/1wsLGwM"
       },
       {  
          "productName":"Zojirushi Neuro Fuzzy&reg; 5.5-Cup Rice Cooker &amp; Warmer",
@@ -64,7 +64,7 @@
          "productNameShort":"Fat Cork&reg; Wine Gift Set",
          "productSlug":"Fat-Cork-Wine-Gift-Set",
          "productPrice":"149.00",
-         "productDescription":"3 Bottles, 1 to celebrate each anniversary with for the next 3 years. In Year 1: Alexandre Lenique Cuvée Excellence Pur Noir is 100% Pinot Noir, but completely star bright in color. It holds a bead of extremely fine and abundant bubbles, while delivering aromas of raspberry, red apple, a spicy character, and apple skin. In Year 2: Gimonnet-Oger Blanc de Blancs Premier Cru is 100% Chardonnay cuvée is based on the excellent 2005 vintage– meaning this wine has been aged for 7 years! The palate is rich and expressive with the gorgeous chardonnay showing off for your senses. And finally, Year 3 is the Didier-Ducos Fils Absolu Meunier which is 100% Pinot Meunier comes from only the oldest Ducos family vines. The palate is bold, and almost thick with fresh cream and hints of spice.",
+         "productDescription":"3 Bottles, 1 to celebrate each anniversary with for the next 3 years. In Year 1: Alexandre Lenique Cuvée Excellence Pur Noir is 100% Pinot Noir, but completely star bright in color. It holds a bead of extremely fine and abundant bubbles, while delivering aromas of raspberry, red apple, and spicy character. In Year 2: Gimonnet-Oger Blanc de Blancs Premier Cru is 100% Chardonnay cuvée is based on the excellent 2005 vintage– meaning this wine has been aged for 7 years! The palate is rich and expressive with the gorgeous chardonnay showing off for your senses. And finally, Year 3 is the Didier-Ducos Fils Absolu Meunier which is 100% Pinot Meunier, coming from only the oldest Ducos family vines. The palate is bold, and almost thick with fresh cream and hints of spice.",
          "productImage":"/wedding/fatCork.jpg",
          "productThumb":"/wedding/fatCorkThumb.jpg",
          "imageAltText":"GiftStarter Fat Cork Wine Gift Set",
@@ -118,7 +118,7 @@
          "productName":"Experience",
          "productNameShort":"Experience",
          "productSlug":"experience",
-         "productPrice":"varies",
+         "productPrice":" varies",
          "productDescription":"Give the gift of flight, driving an exotic car, or a spa package. Experience the serenity and breath-taking views as you float effortlessly thousands of feet above ground.  There is nothing like an experience gift. Afterall, you know what they say - experiences are the only gifts that actually make a person richer.  They make an incredible gift!  You can gift other unique experiences, such as a holiday, flight lessons, a fishing charter, or tickets and accommodation to a special event. Dream up the gift, we can make it happen. Contact the <a href=\"#\" onclick=\"olark('api.box.expand')\">Gift Concierge</a>",
          "productImage":"/wedding/hotAirBalloon.jpg",
          "productThumb":"/wedding/hotAirBalloonThumb.jpg",

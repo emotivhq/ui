@@ -1,5 +1,6 @@
 {  
    "categoryName":"Gift Ideas for Baby",
+   "categoryNameShort":"Baby",
    "categorySlug":"Baby",
    "categoryBlurb":"Is your best friend or co-worker having a baby? Or perhaps you’re becoming an aunt or uncle for the first time? At GiftStarter, we know that it can be a challenge to find the perfect baby gift. Yes, there are traditional gift registries...but how exciting really is the onesie or set of bottles? Let’s welcome that new baby into the world with a bigger, better gift. To make it easy, we have curated our favorite group gift ideas for baby. And rest assured, they are all mom (and baby) approved.",
    "productList":[  
@@ -7,7 +8,7 @@
          "productName":"nuna LEAF&#8482; curv",
          "productNameShort":"nuna LEAF&#8482; curv",
          "productSlug":"nuna-LEAF-curv-Baby-Seat",
-         "productPrice":"230.00",
+         "productPrice":"229.95",
          "productDescription":"This award winning seat is so much more than your standard baby bouncer. In fact, the word “baby” isn’t even in the title, because this seat will hold a kid (or parent!) up to 130 POUNDS! Typical bouncers will top out between 15-20 pounds which for some kids means the seat is only usable for the first few months before it gets packed away in storage. The nuna LEAF will sway at the slightest touch, gently rocking the baby to sleep. For feeding time or use by older kids, the seat position can be locked. Bonus: no batteries, cords, buzz or noise! Accessories available for the seat and sold separately include a toy bar and the nuna wind, a motorized box that will make the seat sway continually (much like an infant swing).",
          "productImage":"/baby/nunaLeaf.jpg",
          "productThumb":"/baby/nunaLeafThumb.jpg",
@@ -18,12 +19,12 @@
          "productName":"Peg Perego Primo Viagio 4-35",
          "productNameShort":"Peg Perego Primo Viagio 4-35",
          "productSlug":"Peg-Perego-Primo-Viagio-4-35-Car-Seat",
-         "productPrice":"279.00",
+         "productPrice":"279.99",
          "productDescription":"This infant seat has outstanding safety features including adjustable Side Impact Protection (SIP) and an anti-rebound bar. The anti-rebound bar minimizes the movement of the carseat up toward the seat back after the initial impact of a crash. The base has easy and secure install with either the LATCH system or car seat belt to ensure proper installation. The sleek modern design with breathable fabric keeps baby comfortable. This seat can be used  with or without the base, with travel systems, and in aircrafts.",
          "productImage":"/baby/pegPeregoPrimoViagio.jpg",
          "productThumb":"/baby/pegPeregoPrimoViagioThumb.jpg",
          "imageAltText":"GiftStarter Peg Perego Primo Viagio 4-35 Car Seat",
-         "giftStartLink":"http://bit.ly/1Cd4O6n"
+         "giftStartLink":"http://bit.ly/1CZPsD5"
       },
       {  
          "productName":"4moms&reg; Breeze&reg;",
@@ -34,7 +35,7 @@
          "productImage":"/baby/4momsBreeze.jpg",
          "productThumb":"/baby/4momsBreezeThumb.jpg",
          "imageAltText":"Giftsarter 4moms Breeze Play Yard",
-         "giftStartLink":"http://bit.ly/1ypfX3v"
+         "giftStartLink":"http://bit.ly/1GISocW"
       },
       {  
          "productName":"4moms&reg; mamaRoo&reg;",
@@ -94,7 +95,7 @@
       {  
          "productName":"Chicco Activ3&#8482; Jogging Stroller",
          "productNameShort":"Chicco Activ3&#8482; Stroller",
-         "productSlug":"Chicco-Activ3&#8482;-Jogging-Stroller",
+         "productSlug":"Chicco-Activ3-Jogging-Stroller",
          "productPrice":"299.99",
          "productDescription":"This is the lightest jogging stroller on the market. It comes fully equipped with a large storage basket, adjustable shocks, lockable front swivel wheel, and real rubber wheels with deep tread to make this a true all-terrain stroller. The sun shade can be unzipped to extend all the way down to the removable arm bar. A simple pinch of the clip on the back of the seat will recline it to infinite degrees. It can be folded with one hand and stands upright, or all the wheels can be quickly removed and the handle can be folded down for a minimum storage footprint. This stroller is compatible with any Chicco Keyfit infant car seat as well!",
          "productImage":"/baby/chiccoStroller.jpg",
@@ -137,7 +138,7 @@
       },
       {  
          "productName":"HALO&#8482; Bassinest&#8482; Swivel Sleeper",
-         "productName":"HALO&#8482; Bassinest&#8482; Swivel Sleeper",
+         "productNameShort":"HALO&#8482; Bassinest&#8482;",
          "productSlug":"HALO-Bassinest-Swivel-Sleeper",
          "productPrice":"249.99",
          "productDescription":"The mother of all bassinets, the Bassinest keeps baby close and safe, and easy to pick up! The side wall can be pushed down so scooping up that bundle of newborn isn’t so awkward. The whole nest is height adjustable, so it can fit over nearly any bed, and it can be swiveled on it’s base to make it easier for mom or dad to get in and out of bed (no more “bassinet-scoot!”). The soothing center includes 3 songs, 3 soothing sounds, 2 levels of vibration, a nightlight, and a nursing timer.",
@@ -150,7 +151,7 @@
          "productName":"Graco&reg; Blossom&#8482; DLX 4-in-1 Seating System",
          "productNameShort":"Graco&reg; Blossom&#8482; DLX 4-in-1",
          "productSlug":"Graco-Blossom-DLX-4-in-1-Seating-System",
-         "productPrice":"199.00",
+         "productPrice":"199.99",
          "productDescription":"A highly versatile high chair that can grow with baby and even seat two children at once, the Graco Blossom 4-in-1 seating system is a lot of bang for your buck. When baby is small, it functions as a traditional high chair or the seat can be removed and used as a space-saver high chair when strapped onto a standard dining room table chair. As a toddler, the booster seat can be used on the high chair legs or a standard dining room table chair. For older kids, the high chair base can be used as a youth chair at the table. The tray can be removed with one hand and the insert is dishwasher safe, making clean up a breeze. The chair is complete with lockable wheels, 6 height adjustments, and 3 recline positions.",
          "productImage":"/baby/gracoHighchair.jpg",
          "productThumb":"/baby/gracoHighchairThumb.jpg",
@@ -166,7 +167,7 @@
          "productImage":"/baby/groviaDiapers.jpg",
          "productThumb":"/baby/groviaDiapersThumb.jpg",
          "imageAltText":"GiftStarter Gro-via Hybrid Live Cloth Diaper Bundle",
-         "giftStartLink":"http://bit.ly/1IF6BVV"
+         "giftStartLink":"http://bit.ly/1Cmv9RI"
       },
       {  
          "productName":"Fisher-Price&reg; Go Wild Jumperoo&#8482;",
