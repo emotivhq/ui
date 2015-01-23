@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -94,6 +94,7 @@
                 }
             },
             search: function () {
+                $window.sessionStorage.setItem('fromSearch', 'yes');
                 $location.path('/');
                 $timeout(function () {
                     $rootScope.$broadcast('performSearchFromHeader');
@@ -116,6 +117,7 @@
         '$rootScope',
         '$interval',
         '$timeout',
+        '$window',
         HeaderController]);
 
 }(angular.module('GiftStarterApp')));

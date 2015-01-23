@@ -172,6 +172,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
             $('html, body').animate({
                 scrollTop: $('#product-search-anchor').offset().top
             }, 200);
+            $window.sessionStorage.setItem('fromSearch', null);
         };
 
         $rootScope.$on('performSearchFromHeader', function () {
