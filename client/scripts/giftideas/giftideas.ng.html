@@ -5,18 +5,18 @@
     <div ng-show="!category" class="grid categories">
         <div class="group left">
             <div class="tile"><a href="/giftideas/wedding"><img src="/assets/giftideas/category/Wedding.jpg" /><div class="tilelabel">Wedding</div></a></div>
-            <div class="tile"><a href="/giftideas/baby"><img src="/assets/giftideas/category/Baby.jpg" /><div class="tilelabel">Baby Shower</div></a></div>
+            <div class="tile"><a href="/giftideas/baby"><img src="/assets/giftideas/category/Baby.jpg" /><div class="tilelabel">Baby</div></a></div>
         </div>
         <div class="group right">
-            <div class="tile"><a href="/giftideas/forhim"><img src="/assets/giftideas/category/Forhim.jpg" /><div class="tilelabel">For Him</div></a></div>
-            <div class="tile"><a href="/giftideas/forhim"><img src="/assets/giftideas/category/Forher.jpg" /><div class="tilelabel">For Her</div></a></div>
+            <div class="tile"><a href="/giftideas/forhim"><img src="/assets/giftideas/category/forHim.jpg" /><div class="tilelabel">For Him</div></a></div>
+            <div class="tile"><a href="/giftideas/forher"><img src="/assets/giftideas/category/forHer.jpg" /><div class="tilelabel">For Her</div></a></div>
         </div>
     </div>
 
     <div ng-show="category && !product" class="products">
         <div class="head">
             <div class="hero">
-                <img src="/assets/giftideas/category/{{category.categorySlug}}-hero.jpg">
+                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
             </div>
             <div class="titles">
                 <h1><span ng-bind-html="category.categoryName"></span></h1>
