@@ -45,12 +45,6 @@ function GiftideasController($scope, $http, $location,  $sce) {
             angular.forEach(data.productList, function (value, key) {
                 addCalculatedVars(value);
                 if(prior!=null) {
-                    //angular.forEach(value, function (value, key) {
-                    //    //console.log(value);
-                    //    console.log(key);
-                    //    value.productName=$sce.trustAsHtml(value.productName);
-                    //    value.productNameShort=$sce.trustAsHtml(value.productNameShort);
-                    //});
                     $scope.groups.push([prior,value]);
                     prior=null;
                 } else {
