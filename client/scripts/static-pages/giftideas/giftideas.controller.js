@@ -7,8 +7,6 @@
 GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location',
     GiftideasController]);
 
-//app.filter('html', function($sce) { return $sce.trustAsHtml; });
-
 function GiftideasController($scope, $http, $location) {
 
     $scope.location = $location;
