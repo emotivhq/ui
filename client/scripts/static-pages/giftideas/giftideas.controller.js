@@ -18,19 +18,6 @@ function GiftideasController($scope, $http, $location,  $sce) {
     var category = pathParts.length>2?pathParts[2]:false;
     var product = pathParts.length>3?pathParts[3]:false;
 
-    //$scope.scrollToSearch = function() {
-    //    if (Object.keys($location.search()).length) {
-    //        var selector = document.querySelector('#'+Object.keys($location.search())[0]);
-    //        var element = angular.element(selector);
-    //        element[0].scrollIntoView();
-    //    }
-    //};
-
-    //$scope.$watch('location.search()', function() {
-    //    $timeout($scope.scrollToSearch, 400);
-    //    $timeout($scope.scrollToSearch, 700);
-    //});
-
     function addCalculatedVars(product) {
         product.productNameStripped = String(product.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
         product.hasPrice = !isNaN(product.productPrice);
