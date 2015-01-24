@@ -42,7 +42,9 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/search/:searchTerm',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
-        .when('/:giftideas*',
+        .when('/giftideas',
+        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        .when('/giftideas/:term*',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/:path*', {
             controller: 'ContentRouteController',
