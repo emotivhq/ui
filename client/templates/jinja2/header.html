@@ -42,10 +42,9 @@
                            type="text"
                            name="product-link"
                            placeholder="Search here for the perfect gift..."
-                           ng-model="headerSearchTerm"
-                           ng-keyup="$event.keyCode == 13 ? actions.search() : null" />&nbsp;&nbsp;
+                           onkeypress="if(event.keyCode==13){jQuery('#product-search-button-head').click();}" />&nbsp;&nbsp;
 
-                    <button id="product-search-button-head" class="submit" ng-click="actions.search()">Shop</button>
+                    <button id="product-search-button-head" class="submit" onclick="window.location='/search/'+jQuery('#product-search-input-head').val()">Shop</button>
                 </span>
             </div>
         </div>
