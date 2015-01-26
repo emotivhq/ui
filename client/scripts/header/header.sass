@@ -99,7 +99,9 @@
   position: absolute
   top: 20px
   left: 20px
-  display: inline-block
+  display: none
+  @media screen and (max-width: $phone-tablet-boundary)
+    display: inline-block
   cursor: pointer
   img
     height: 40px
