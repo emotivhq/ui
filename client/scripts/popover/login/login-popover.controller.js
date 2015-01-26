@@ -140,7 +140,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
 
             confirmPasswordCheck();
 
-            if ($scope.emailFormModel.email === $scope.emailFormModel.emailConfirm) {
+            if ($scope.emailFormModel.email.toLowerCase() === $scope.emailFormModel.emailConfirm.toLowerCase()) {
                 $scope.emailLoginForm.$setValidity('confirmEmail', true);
             } else {
                 $scope.emailLoginForm.$setValidity('confirmEmail', false);
