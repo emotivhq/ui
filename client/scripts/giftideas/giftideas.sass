@@ -18,6 +18,9 @@
     display: block
     clear: both
     width: 95%
+    margin-left: auto !important
+    margin-right: auto !important
+    padding-bottom: 25px
     .grid
       .tile
         border: 1px solid #BBB
@@ -80,10 +83,9 @@
         float: right
     .right
       float: right
-    .group:last-child
-      .left
-        .tile:only-child
-          float: none !important
+    .group.left
+      .tile.last
+        float: none !important
     .tile
       display: inline-block
       width: 45%

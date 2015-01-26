@@ -34,6 +34,7 @@ function GiftideasController($scope, $http, $location) {
                 if(product && value.productSlug==product) {
                     $scope.product=value;
                 }
+                $scope.lastProduct=value;
             });
             if(prior!=null) {
                 $scope.groups.push([prior]);
