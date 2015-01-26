@@ -4,6 +4,10 @@ from gs_user import User
 import EmailLoginPair
 from uuid import uuid4
 import hashlib
+import yaml
+
+config = yaml.load(open('config.yaml'))
+noUserImgUrl = config['app_url'] + "/assets/noUserImage.png"
 
 def get_uid(token_set, create=False):
     """
@@ -31,8 +35,9 @@ def get_email_token_set(email, password):
 
 
 def get_img_url(token_set):
-    gravatar_hash = hashlib.md5(token_set.email.strip().lower()).hexdigest()
-    return "http://www.gravatar.com/avatar/"+gravatar_hash
+    # gravatar_hash = hashlib.md5(token_set.email.strip().lower()).hexdigest()
+    # return "http://www.gravatar.com/avatar/"+gravatar_hash
+    return noUserImgUrl
 
 
 def get_user_info(user):
