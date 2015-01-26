@@ -99,7 +99,7 @@ class LoginHandler(webapp2.RequestHandler):
             }))
         else:
             self.response.write(json.dumps({
-                'error': 'We couldn\'t find that email address and password combination; please try again.'+email+':'+password
+                'error': 'We couldn\'t find that email address and password combination; please try again.'
             }))
 
 class RequestResetHandler(webapp2.RequestHandler):
