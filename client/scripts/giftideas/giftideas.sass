@@ -138,14 +138,17 @@
   @media screen and (max-width: $phone-tablet-boundary)
     width: 100%
     .products
-      .hero
-        display: none
       .titles
         float: none
         width: 100%
+        h3
+          display: table-cell
 
   @media screen and (max-width: $phone-boundary)
     width: 100%
+    .products
+      .hero
+        width: 30%
     .grid
       .group
         .tile
