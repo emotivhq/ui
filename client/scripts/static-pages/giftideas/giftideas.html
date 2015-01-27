@@ -1,37 +1,21 @@
 <div class="giftideas wrapper" ng-controller="GiftideasController">
     <!-- ==== HEADERWRAP ==== -->
-    <div id="headerwrap" id="home" name="home" title="GiftStarter Team">
-        <p>Find the perfect gift.</p>
+    <div id="headerwrap" id="home" name="home" title="GiftStarter Team" ng-show="!category">
+        <h2>FIND THE PERFECT GIFT.</h2>
         <br>
         <h3>It's that easy.  Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it... including a handmade card.</h3>
     </div><!-- /headerwrap -->
 
+    <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
 
+    <div class="clear">
+        <p>&nbsp;</p>
+        <h3 class="centered">Looking for something else?</h3>
+        <gs-product-search></gs-product-search>
+    </div>
 
-    <!-- ==== CALL TO ACTION -->
-    <section class="section-divider textdivider divider3">
-        <div class="container">
-            <h3>Already Know What You Want?</h3>
-            <gs-product-search></gs-product-search>
-        </div>
-        <div class="container">
-            <h1>Top Categories for Group Gifting</h1>
-            <hr>
-            <p>
-                Anniversary<br/>
-                Baby<br/>
-                Gifts for Him<br/>
-                Gifts for Her<br/>
-                Boss<br/>
-                Farewell<br/>
-                Gadgets<br/>
-                Gear / Outdoor<br/>
-                Graduation<br/>
-                Teacher<br/>
-                Wedding<br/>
-                Birthday<br/>
-            </p>
+    <div ng-show="category || product" id="disclaimer">
+        If the item you GiftStart has color, size or other options, please contact the Gift Concierge to ensure you get the item that best meets your specifications or if you have any other questions regarding your product selection.
+    </div>
 
-        </div><!-- container -->
-    </section><!-- section -->
 </div>

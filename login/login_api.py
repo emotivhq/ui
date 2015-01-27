@@ -25,7 +25,7 @@ class CreateHandler(webapp2.RequestHandler):
         time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
         name = params['emailname'].strip()
-        email = params['email'].strip()
+        email = params['email'].strip().lower()
         password = params['password'].strip()
         if len(name) is 0:
             self.response.write(json.dumps({'error': 'Name cannot be blank'}))
@@ -71,7 +71,7 @@ class LoginHandler(webapp2.RequestHandler):
     def post(self):
         time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
-        email = params['email'].strip()
+        email = params['email'].strip().lower()
         password = params['password'].strip()
         if len(email) is 0:
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
@@ -108,7 +108,7 @@ class RequestResetHandler(webapp2.RequestHandler):
     def post(self):
         time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
-        email = params['email'].strip()
+        email = params['email'].strip().lower()
         if len(email) is 0:
             self.response.write(json.dumps({'error':'Email cannot be blank'}))
             return
@@ -131,7 +131,7 @@ class ResetHandler(webapp2.RequestHandler):
     def post(self):
         time.sleep(.5)  # crude anti-hacking
         params = json.loads(self.request.body)
-        email = params['email'].strip()
+        email = params['email'].strip().lower()
         password = params['password'].strip()
         code = params['code'].strip()
         if len(email) is 0:

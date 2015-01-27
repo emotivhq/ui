@@ -28,8 +28,6 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/concierge/concierge.html', reloadOnSearch: false})
         .when('/faq',
         {templateUrl: '/scripts/static-pages/faq/faq.html', reloadOnSearch: false})
-        .when('/giftideas',
-        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/partners',
         {templateUrl: '/scripts/static-pages/partners/partners.html', reloadOnSearch: false})
         .when('/terms',
@@ -42,6 +40,12 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
         .when('/reset/:resetCode',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        .when('/search/:searchTerm',
+        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        .when('/giftideas',
+        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        .when('/giftideas/:term*',
+        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/:path*', {
             controller: 'ContentRouteController',
             reloadOnSearch: false,

@@ -1,0 +1,53 @@
+<div id="giftideas">
+
+    <div ng-show="product" class="singleproduct">
+        <div class="head">
+            <div class="hero">
+                <img src="/assets/giftideas/category{{product.productImage}}" alt="{{product.imageAltText}}">
+            </div>
+            <div class="titles">
+                <h1 class="textleft"><span ng-bind-html="product.productName"></span></h1>
+                <h5 class="textleft">${{product.productPrice}}</h5>
+                <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
+                <a href="{{product.giftStartLink}}" class="button main rounded" ng-show="product.hasPrice">GIFTSTART IT!</a>
+                <a href="#" onclick="olark('api.box.expand')" class="button main rounded" ng-show="!product.hasPrice">Contact the Gift Concierge</a>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <div ng-show="category" class="products">
+        <div class="head" ng-show="!product">
+            <div class="hero">
+                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
+            </div>
+            <div class="titles">
+                <h1><span ng-bind-html="category.categoryName"></span></h1>
+                <h3>Our Favorite Gifts & Most Popular GiftStarts</h3>
+                <div><span ng-bind-html="category.categoryBlurb"></span></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="grid">
+            <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
+                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='tile' title="{{product.productNameStripped}}"><a href="{{categoryPath}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel"><span ng-bind-html="product.productNameShort"></span><br/><span class="price">${{product.productPrice}}</span></div></a></div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+    <h1>Top Categories for Group Gifting</h1>
+
+    <div class="grid categories">
+        <div class="group left">
+            <div class="tile"><a href="/giftideas/wedding"><img src="/assets/giftideas/category/Wedding.jpg" /><div class="tilelabel">Wedding</div></a></div>
+            <div class="tile"><a href="/giftideas/baby"><img src="/assets/giftideas/category/Baby.jpg" /><div class="tilelabel">Baby</div></a></div>
+        </div>
+        <div class="group right">
+            <div class="tile"><a href="/giftideas/forhim"><img src="/assets/giftideas/category/forHim.jpg" /><div class="tilelabel">For Him</div></a></div>
+            <div class="tile"><a href="/giftideas/forher"><img src="/assets/giftideas/category/forHer.jpg" /><div class="tilelabel">For Her</div></a></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</div>

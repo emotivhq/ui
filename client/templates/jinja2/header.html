@@ -3,18 +3,18 @@
     <div id="header">
         <div class="wrapper" ng-class="{big: header.thisRoute == '/', small: header.thisRoute != '/'}">
             <div class="headerLogoWrapper">
-                <div id="header-menu-button" ng-show="header.mobile">
+                <div id="header-menu-button">
                     <img src="/assets/hamburgerGrey.png" ng-click="actions.toggleMobileMenu()"/>
                 </div>
-                <a href="/"><img id="header-logo" src="/assets/GSlogo_web_large.png" alt="GiftStarter - Group Gifting Made Easy"/></a>
+                <a href="/" id="header-logo"></a>
             </div>
             <ul class="headerNav">
                 <li>
                     <a href="/"  ng-click="actions.menuItemClicked()">HOME</a>
                 </li>
-                <!-- li>
+                <li>
                     <a href="/giftideas"  ng-click="actions.menuItemClicked()">GIFT IDEAS</a>
-                </li -->
+                </li>
                 <li>
                     <a href="/concierge"  ng-click="actions.menuItemClicked()">GIFT CONCIERGE</a>
                 </li>
@@ -35,11 +35,18 @@
                     <button id="logout_button" ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">Log Out</button>
                 </li>
             </ul>
-            <!-- div class="search wrapper" style="text-align:center">
+            <div class="search wrapper header" style="text-align:center">
                 <span class="inputs">
-                    <input id="product-search-input" style="width: 320px;" class="text-input" type="text" name="product-link" placeholder="Search here for the perfect gift..." ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>&nbsp;&nbsp;<button id="product-search-button" class="submit" ng-click="submit()">Shop</button>
+                    <input id="product-search-input-head"
+                           class="text-input"
+                           type="text"
+                           name="product-link"
+                           placeholder="Search here for the perfect gift..."
+                           onkeypress="if(event.keyCode==13){jQuery('#product-search-button-head').click();}" />&nbsp;&nbsp;
+
+                    <button id="product-search-button-head" class="submit" onclick="window.location='/search/'+jQuery('#product-search-input-head').val()">Shop</button>
                 </span>
-            </div -->
+            </div>
         </div>
     </div>
     <gs-it-header></gs-it-header>

@@ -32,7 +32,8 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
         loginInProgress: false,
         createInProgress: false,
         resetInProgress: false,
-        getPwInProgress: false
+        getPwInProgress: false,
+        showOk: false
     };
 
     var mode = ($routeParams.resetCode) ? 'reset' : 'login',
@@ -120,6 +121,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
                             }, 1000);
                         } else if (mode === 'forgotPassword') {
                             $scope.emailFormModel.message = okMsg;
+                            $scope.emailFormModel.showOk = true;
                         }
 
                         $scope.emailFormModel.loginInProgress = false;
@@ -138,7 +140,7 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
 
             confirmPasswordCheck();
 
-            if ($scope.emailFormModel.email === $scope.emailFormModel.emailConfirm) {
+            if ($scope.emailFormModel.email.toLowerCase() === $scope.emailFormModel.emailConfirm.toLowerCase()) {
                 $scope.emailLoginForm.$setValidity('confirmEmail', true);
             } else {
                 $scope.emailLoginForm.$setValidity('confirmEmail', false);

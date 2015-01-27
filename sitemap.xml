@@ -11,4 +11,7 @@
     <sitemap>
         <loc>https://www.giftstarter.co/blog/sitemap.xml</loc>
     </sitemap>
+    <sitemap>
+        <loc>https://www.giftstarter.co/sitemap-giftideas.xml</loc>
+    </sitemap>
 </sitemapindex>

@@ -446,7 +446,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         AppStateService.setPath($location.path());
         self.pitchInsInitialized = false;
         var path = $location.path();
-        if (path.split('/').length > 1) {
+        if (path.indexOf("/giftstart/")>=0) {
             var urlTitle = path.split('/')[2];
             if (urlTitle != undefined) {
                 self.fetchGiftStart(urlTitle);

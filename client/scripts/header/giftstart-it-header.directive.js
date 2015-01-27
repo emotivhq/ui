@@ -8,6 +8,7 @@ angular.module('GiftStarterApp').directive('gsItHeader', ['$interval',
     '$window', '$location', 'Analytics', gsItHeader]);
 
 function gsItHeader($interval, $window, $location, Analytics) {
+
     var $scope,
         shown = $location.path().indexOf('/giftstart') != 0;
 
@@ -34,7 +35,7 @@ function gsItHeader($interval, $window, $location, Analytics) {
 
         scope.$on('$routeChangeStart', hideButtonHeader);
 
-        var interval = $interval(onScroll, 3000);
+        var interval = $interval(onScroll, 2000);
     }
 
     return {

@@ -17,15 +17,23 @@
     top: 0
 
   #header-logo
+    background-image: url(/assets/GSlogo_web_large.png)
+    background-repeat: no-repeat
+    background-size: ($header-height*2.42) $header-height
+    width: $header-height*2.42
     height: $header-height
     position: absolute
     left: 20px
     top: 0
     @media screen and (max-width: $phone-tablet-boundary)
+      background-image: url(/assets/logo_square_nobg.png)
+      background-repeat: no-repeat
+      background-size: $header-height-mobile $header-height-mobile
       height: $header-height-mobile
+      width: $header-height-mobile
       left: auto
       right: 20px
-      top: 5px
+      top: 15px
 
   > div.wrapper
     margin: 0 auto
@@ -45,7 +53,6 @@
 
     ul.headerNav.expanded
       top: 75px
-      padding-left: 0px
     ul.headerNav
       text-align: center
       font-family: "Roboto"
@@ -53,7 +60,6 @@
       @media screen and (max-width: $phone-tablet-boundary)
         position: absolute
         padding: 10px 20px
-        margin-left: 20px
         background-color: #eaeaea
         text-align: left
         top: -380px
@@ -93,7 +99,9 @@
   position: absolute
   top: 20px
   left: 20px
-  display: inline-block
+  display: none
+  @media screen and (max-width: $phone-tablet-boundary)
+    display: inline-block
   cursor: pointer
   img
     height: 40px
@@ -116,3 +124,16 @@
   border-radius: 50%
   height: 2.5em
   margin: 0 0 -0.9em -0.8em
+
+div.header.search
+  @media screen and (max-width: $phone-tablet-boundary)
+    margin-top: -60px
+  .inputs
+    margin-left: 40px
+    @media screen and (max-width: $phone-tablet-boundary)
+      margin-left: 0
+    .text-input
+      width: 380px
+      @media screen and (max-width: $phone-boundary)
+        width: 35%
+

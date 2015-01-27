@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -70,6 +70,8 @@
 
         var hideMenu = device.mobile() || device.tablet();
 
+        $scope.headerSearchTerm = '';
+
         $scope.actions = {
             toggleMobileMenu: function () {
                 hideMenu = !hideMenu;
@@ -90,8 +92,15 @@
                     angular.element('ul.headerNav').removeClass('expanded');
                     hideMenu = true;
                 }
+            },
+            search: function () {
+                $window.sessionStorage.setItem('fromSearch', 'yes');
+                $location.path('/');
+                $timeout(function () {
+                    $rootScope.$broadcast('performSearchFromHeader');
+                }, 100);
             }
-        }
+        };
 
         $rootScope.$on('password-reset-requested', function () {
             login();
@@ -107,6 +116,8 @@
         'PopoverService',
         '$rootScope',
         '$interval',
+        '$timeout',
+        '$window',
         HeaderController]);
 
 }(angular.module('GiftStarterApp')));

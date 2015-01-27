@@ -4,22 +4,42 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('GiftideasController', ['$scope','$location','$timeout',
+GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location',
     GiftideasController]);
 
-function GiftideasController($scope,  $location,  $timeout) {
+function GiftideasController($scope, $http, $location) {
+
     $scope.location = $location;
+    $scope.path = $location.path();
+    var pathParts = $scope.path.replace('//','/').split('/');
+    $scope.basePath = pathParts[1];
+    var category = pathParts.length>2?pathParts[2]:false;
+    var product = pathParts.length>3?pathParts[3]:false;
 
-    $scope.scrollToSearch = function() {
-        if (Object.keys($location.search()).length) {
-            var selector = document.querySelector('#'+Object.keys($location.search())[0]);
-            var element = angular.element(selector);
-            element[0].scrollIntoView();
-        }
-    };
+    if(category) {
+        $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
+            $scope.groups = [];
+            $scope.category = data;
+            $scope.categoryPath = $scope.basePath+'/'+category;
+            var prior=null;
+            angular.forEach(data.productList, function (value, key) {
+                value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
+                value.hasPrice = !isNaN(value.productPrice);
+                if(prior!=null) {
+                    $scope.groups.push([prior,value]);
+                    prior=null;
+                } else {
+                    prior=value;
+                }
+                if(product && value.productSlug==product) {
+                    $scope.product=value;
+                }
+                $scope.lastProduct=value;
+            });
+            if(prior!=null) {
+                $scope.groups.push([prior]);
+            }
+        });
+    }
 
-    $scope.$watch('location.search()', function() {
-        $timeout($scope.scrollToSearch, 400);
-        $timeout($scope.scrollToSearch, 700);
-    });
 }
