@@ -4,8 +4,8 @@
             <img id="profile-image" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
             <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
             <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
-            <button class="edit" ng-show="editable && !editMode" ng-click="editMode=true;"><img class="edit" src="/assets/edit_button_white.png"/></button>
-            <button class="upload" ng-click="submit()" ng-show="editMode" ng-class="{disabled: !imageSet}"></button>
+            <button class="edit" ng-show="editable && !editMode" ng-click="editMode=true;">EDIT</button>
+            <button class="upload" ng-click="submit()" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button>
         </div>
         <h1>{{user.name}}</h1>
     </header>
