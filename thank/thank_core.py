@@ -48,8 +48,7 @@ def send_emails(key):
 
     url = config['email_url']
 
-    data = json.dumps({'subject': "You Received a Thank You for \"" +
-                                  gs.giftstart_title + "\"!",
+    data = json.dumps({'subject': "You Received a Thank You",
                        'mime_type': 'html',
                        'sender': "giftconcierge@giftstarter.co",
                        'to': [pi.email for pi in pis],
