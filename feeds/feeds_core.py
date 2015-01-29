@@ -11,6 +11,7 @@ import json
 from google.appengine.ext import ndb
 from uuid import uuid4
 import csv
+from lxml import html
 import logging
 
 
@@ -86,6 +87,24 @@ def make_b_and_h_product(feed_line, headers):
         return 'http://static.bhphoto.com/images/images500x500/{id_num}'\
             .format(id_num=id_num)
 
+    def scrape_product_description(product_url):
+        """
+        :type product_url: str
+        :rtype: str
+        """
+        try:
+            page = requests.get(product_url)
+            tree = html.fromstring(page.text)
+            for elem in tree.xpath('//div[@data-selenium="promoBannerZone"]'):
+                elem.getparent().remove(elem)
+            for elem in tree.xpath('//div[@data-selenium="sectionHeaders"]'):
+                elem.getparent().remove(elem)
+            desc = tree.xpath('//div[@id="Overview"]')
+            return html.tostring(desc[0]).strip()
+        except Exception as e:
+            logging.error("Unable to scrape description for {0}: {1}".format(product_url, e))
+            return ""
+
     bh_product = {k: v for k, v in zip(headers, feed_line)}
     try:
         if 'Y' in bh_product.get('Stock'):
@@ -99,7 +118,7 @@ def make_b_and_h_product(feed_line, headers):
                 thumbnail=bh_product['image URL'],
                 url=bh_product['Item URL'],
                 retailer='B&H Photo Video',
-                description=bh_product['Item Name'],
+                description=scrape_product_description(bh_product['Item URL']),
                 keywords='camera, photo, video',
                 sku='BH SKU',
             )

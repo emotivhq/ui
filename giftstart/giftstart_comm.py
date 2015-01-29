@@ -145,9 +145,7 @@ def check_if_complete(gsid):
             }
             requests.put(config['email_url'],
                          data=json.dumps({
-                             'subject': "GiftStart \"" +
-                                        giftstart.giftstart_title +
-                                        "\" Complete!",
+                             'subject': "One Day Left to Pitch In!",
                              'mime_type': 'html',
                              'template_name': "campaign_complete_user_funded",
                              'template_kwargs': email_kwargs,
@@ -292,9 +290,7 @@ def check_if_complete(gsid):
                 }
                 requests.put(config['email_url'],
                              data=json.dumps({
-                                 'subject': 'GiftStart "' +
-                                            giftstart.giftstart_title +
-                                            '" has ended',
+                                 'subject': 'Your GiftStart has Ended',
                                  'template_name':
                                      'campaign_complete_user_zero_funding',
                                  'template_kwargs': email_kwargs,
@@ -334,8 +330,7 @@ def congratulate_givers(gsid, funded):
         }
         requests.put(config['email_url'],
                      data=json.dumps({
-                         'subject': "GiftStart \"" + giftstart.giftstart_title
-                                    + "\" Complete!",
+                         'subject': "Your GiftStart has Ended",
                          'template_name': "campaign_complete_giver_funded",
                          'template_kwargs': email_kwargs,
                          'mime_type': 'html',
