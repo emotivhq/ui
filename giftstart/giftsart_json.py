@@ -5,6 +5,7 @@ from google.appengine.ext import ndb
 import json
 import giftstart_core
 import logging
+import urllib
 
 
 class GiftStartJsonHandler(webapp2.RequestHandler):
@@ -31,12 +32,11 @@ class GiftStartJsonHandler(webapp2.RequestHandler):
         url_title = self.request.path.split('/')[2][:-5]
         # Check if they have permissions!
         if giftstart_core.does_user_exist(
-                self.request.cookies['uid'].replace('%22', ''),
-                self.request.cookies['token'].replace('%22', '')):
+                urllib.unquote(self.request.cookies['uid'].replace('%22', '')),
+                urllib.unquote(self.request.cookies['token'].replace('%22', ''))):
             ndbgs = ndb.Key('GiftStart', url_title).get()
             if ndbgs is not None:
-                if ndbgs.gift_champion_uid == self.request.cookies['uid']\
-                        .replace('%22', ''):
+                if ndbgs.gift_champion_uid == urllib.unquote(self.request.cookies['uid'].replace('%22', '')):
                     gs = giftstart_core.update(gs, url_title)
                     self.response.write(gs.jsonify())
                 else:

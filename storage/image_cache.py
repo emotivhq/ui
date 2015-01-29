@@ -21,7 +21,7 @@ key = {
 
 def cache_user_image_from_url(uid, img_url):
     logging.info("Getting image for {0} form {1}".format(uid, img_url))
-    img = requests.get(img_url).content
+    img = requests.get(img_url,verify=False).content
     logging.info("Got {0} bytes for image, md5: {1}".format(len(img), hashlib.md5(img)))
     extension = '.' + img_url.split('.')[-1].split('?')[0]
     if extension not in {'.jpg', '.jpeg', '.png', '.gif'}:
