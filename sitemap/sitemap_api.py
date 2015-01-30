@@ -20,7 +20,7 @@ class GiftideasHandler(webapp2.RequestHandler):
         json_path = '../client/assets/giftideas/'
         json_dir = os.path.join(os.path.dirname(__file__), json_path)
         category_files = []
-        for json_file in os.listdir(json_dir):
+        for json_file in sorted(os.listdir(json_dir)):
             if json_file.endswith(".json"):
                 category_files.append(os.path.join(json_dir, json_file))
 
