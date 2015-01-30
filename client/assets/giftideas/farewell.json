@@ -1,5 +1,5 @@
 {
-   "categoryNameLong":"Gift Ideas to Say Farewell",
+   "categoryName":"Gift Ideas to Say Farewell",
    "categoryNameShort":"Farewell",
    "categorySlug":"Farewell",
    "categoryBlurb":"Sometimes the time comes for your colleague to pursue a new opportunity - or your best friend to move states for his or her dream job. There’s no better time to let them know how much they’ll be missed than with a group gift from GiftStarter. We know that it can be a challenge to find the perfect gift. To make it easy, we’ve curated our favorite ideas for group gifting the best farewell ever. Bring friends and colleagues together for a bigger, better group gift with GiftStarter.",
@@ -9,7 +9,7 @@
          "productNameShort":"Experience",
          "productSlug":"experience",
          "productPrice":" varies",
-         "productDescription":"Give the gift of flight, driving an exotic car, or a spa package. Experience the serenity and breath-taking views as you float effortlessly thousands of feet above ground.  There is nothing like an experience gift. Afterall, you know what they say - experiences are the only gifts that actually make a person richer.  They make an incredible gift!  You can gift other unique experiences, such as a holiday, flight lessons, a fishing charter, or tickets and accommodation to a special event. Dream up the gift, we can make it happen. Contact the <a href=\"#\" onclick=\"olark('api.box.expand')\">Gift Concierge</a>",
+         "productDescription":"Give the gift of flight, driving an exotic car, or a spa package. Experience the serenity and breath-taking views as you float effortlessly thousands of feet above ground.  There is nothing like an experience gift. After all, you know what they say - experiences are the only gifts that actually make a person richer.  They make an incredible gift!  You can gift other unique experiences, such as a holiday, flight lessons, a fishing charter, or tickets and accommodation to a special event. Dream up the gift, we can make it happen.",
          "productImage":"/farewell/hotAirBalloon.jpg",
          "productThumb":"/farewell/hotAirBalloonThumb.jpg",
          "imageAltText":"GiftStarter Experience",
