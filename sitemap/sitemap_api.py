@@ -16,15 +16,20 @@ class GiftideasHandler(webapp2.RequestHandler):
     def post(self):
         config = yaml.load(open('config.yaml'))
         app_url = config['app_url']#.replace("https://","http://")
-        categories = ['baby','wedding','forhim','forher']
+        # categories = ['baby','wedding','forhim','forher']
+        json_path = '../client/assets/giftideas/'
+        json_dir = os.path.join(os.path.dirname(__file__), json_path)
+        category_files = []
+        for json_file in os.listdir(json_dir):
+            if json_file.endswith(".json"):
+                category_files.append(os.path.join(json_dir, json_file))
 
         head = '<?xml version="1.0" encoding="UTF-8"?>' \
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' \
                ''
         body = ''
-        for category_path in categories:
-            path = os.path.join(os.path.dirname(__file__), '../client/assets/giftideas/'+category_path+'.json')
-            category_json = json.load(file(path))
+        for category_file in category_files:
+            category_json = json.load(file(category_file))
             category_slug = category_json['categorySlug'].lower()+'/'
             body += '<url>' \
                     '<loc>{0}/giftideas/{1}</loc>' \
