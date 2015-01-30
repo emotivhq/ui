@@ -1,9 +1,8 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 import feeds_core
 from google.appengine.api import taskqueue
-from google.appengine.ext import ndb
 from feeds.feeds_upload import SturtevantsUploadHandler, \
     SturtevantsDeleteHandler, ManualUploadHandler, ManualDeleteHandler
 

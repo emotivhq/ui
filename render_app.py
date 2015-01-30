@@ -7,6 +7,7 @@ import gs_user
 import os
 import analytics
 import abtest
+import urllib
 
 secrets = yaml.load(open('secret.yaml'))
 config = yaml.load(open('config.yaml'))
@@ -144,8 +145,8 @@ def remember_user(cookies, path):
     js_insert = ''
     if 'uid' in cookies and 'token' in cookies:
         # Strip url encoded double quotes
-        uid = cookies['uid'].replace('%22', '')
-        token = cookies['token'].replace('%22', '')
+        uid = urllib.unquote(cookies['uid'].replace('%22', ''))
+        token = urllib.unquote(cookies['token'].replace('%22', ''))
         if len(uid)>0:
             user_deets = gs_user.validate(uid, token, path)
             if user_deets:

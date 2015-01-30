@@ -151,7 +151,7 @@ class ImageUploadHandler(webapp2.RequestHandler):
         uid = self.request.path.split('/')[2]
         json_body = json.loads(self.request.body)
         content_type = self.request.headers.get('Content-Type').split('/')
-        hdr_uid = str(self.request.cookies.get('uid')).replace('%22', '')
+        hdr_uid = urllib.unquote(str(self.request.cookies.get('uid')).replace('%22', ''))
         token = urllib.unquote(str(self.request.cookies.get('token')).replace('%22', ''))
 
         if uid != hdr_uid:
@@ -196,7 +196,7 @@ class StripeCardsHandler(webapp2.RequestHandler):
     """ Handles requests for stripe tokens """
 
     def get(self):
-        uid = self.request.cookies.get('uid', '').replace('%22', '')
+        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
         token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
 
         if not all([bool(thing) for thing in [uid, token]]):

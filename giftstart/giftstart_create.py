@@ -99,7 +99,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         """ Create giftstart """
         giftstart = self.request.giftstart
 
-        uid = self.request.cookies.get('uid', 'none').replace('%22', '')
+        uid = urllib.unquote(self.request.cookies.get('uid', 'none').replace('%22', ''))
         token = urllib.unquote(self.request.cookies.get('token', 'none').replace('%22', ''))
         if (giftstart.get('staging_uuid')) is None:
             # Then there must be valid uid/token sent

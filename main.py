@@ -19,7 +19,7 @@ class MainHandler(webapp2.RequestHandler):
     @handle_login
     def get(self):
         if self.request.cookies.get('uid'):
-            self.response.set_cookie('uid', self.request.cookies['uid'].replace('%22', ''))
+            self.response.set_cookie('uid', urllib.unquote(self.request.cookies['uid'].replace('%22', '')))
         if self.request.cookies.get('token'):
             self.response.set_cookie('token', urllib.unquote(self.request.cookies['token'].replace('%22', '')))
 
@@ -37,7 +37,7 @@ class MainHandler(webapp2.RequestHandler):
                              .format(gss))
 
                 if len(gss):
-                    uid = self.request.cookies['uid'].replace('%22', '')
+                    uid = urllib.unquote(self.request.cookies['uid'].replace('%22', ''))
                     giftstart_create.complete_campaign_creation(uid, gss[0])
                     self.redirect('/giftstart/' + gss[0].giftstart_url_title)
                     return
