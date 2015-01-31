@@ -16,7 +16,6 @@ class GiftideasHandler(webapp2.RequestHandler):
     def post(self):
         config = yaml.load(open('config.yaml'))
         app_url = config['app_url']#.replace("https://","http://")
-        # categories = ['baby','wedding','forhim','forher']
         json_path = '../client/assets/giftideas/'
         json_dir = os.path.join(os.path.dirname(__file__), json_path)
         category_files = []
