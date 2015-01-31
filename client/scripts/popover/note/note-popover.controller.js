@@ -37,6 +37,8 @@
                     GiftStartService.saveNote($scope.noteText);
                     PopoverService.nextPopover();
                 }
+                $scope.skipNote = false;
+                $scope.noteText = '';
             }
         }
     };
