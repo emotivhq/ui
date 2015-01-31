@@ -46,6 +46,14 @@ class PayHandler(webapp2.RequestHandler):
                     self.response.set_status(400)
             self.response.write(json.dumps(result))
 
+        elif data['action'] == 'pitch-in-note-update':
+            payment = data['payment']
+            logging.info("setting note for {0}",payment)
+            result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
+                                       payment['parts'],
+                                       payment['note'])
+            self.response.write(json.dumps(result))
+
         elif data['action'] == 'get-pitch-ins':
             pitchin_dicts = pay_core.get_pitch_in_dicts(data['gsid'])
             self.response.write(json.dumps(pitchin_dicts))
