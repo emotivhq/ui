@@ -93,7 +93,9 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         Analytics.track('pitchin', 'payment succeeded',
             GiftStartService.giftStart.gsid.toString(),
             $scope.currentCharge);
-        PopoverService.nextPopover();
+        if(PopoverService.currentLocation=='pay') {
+            PopoverService.nextPopover();
+        }
         $scope.pitchingIn = false;
     });
 

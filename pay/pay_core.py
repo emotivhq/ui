@@ -19,6 +19,16 @@ from gs_util import gs_util_link
 config = yaml.load(open('config.yaml'))
 
 
+def set_note_for_pitchin(uid,gsid,parts,note):
+    pitch_ins = PitchIn.query(PitchIn.gsid == gsid, PitchIn.uid == uid).fetch()
+    for pitchin in pitch_ins:
+        if pitchin.parts==parts:
+            pitchin.note=note
+            pitchin.put()
+            return pitchin
+    logging.error("No pitch-in with gsid={0}, uid={1}, parts={2}".format(gsid,uid,parts))
+    return None
+
 def add_name_to_pitchin(pitchin):
     if pitchin['name'] == '':
         user = gs_user_core.get_user(pitchin['uid'])

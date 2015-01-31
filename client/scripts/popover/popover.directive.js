@@ -49,7 +49,7 @@ function gsPopover(PopoverService, $compile, $document) {
         }
 
         // Hide if they click outside of popover
-        element.on('click', PopoverService.hidePopover);
+        //element.on('click', PopoverService.hidePopover);
 
         // Prevent hiding if they click inside popover
         templateContainer.on('click', function(e) {e.stopPropagation()});

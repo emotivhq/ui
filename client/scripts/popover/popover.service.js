@@ -12,7 +12,7 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
     this.template = '';
     var self = this;
     this.currentLocation = '';
-    this.validHashes = ['login', 'note', 'pay', 'thanks'];
+    this.validHashes = ['login', 'pay', 'note', 'thanks'];
 
     this.setPopover = function(popoverName) {
         LocalStorage.set('/PopoverService/current', popoverName);
