@@ -145,7 +145,7 @@ def check_if_complete(gsid):
             }
             requests.put(config['email_url'],
                          data=json.dumps({
-                             'subject': "One Day Left to Pitch In!",
+                             'subject': "Your GiftStart was a Success!",
                              'mime_type': 'html',
                              'template_name': "campaign_complete_user_funded",
                              'template_kwargs': email_kwargs,
