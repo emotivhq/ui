@@ -1,0 +1,17 @@
+@import "../../base"
+
+$profile-popover-width: 42em
+
+div.profile-popover
+  width: 100%
+  @media screen and (min-width: $profile-popover-width)
+    width: $profile-popover-width
+
+  img.profile-picture
+    vertical-align: top
+    width: 18%
+    margin-bottom: 0.7em
+    +border-radius(50%)
+
+  button
+    margin-top: 20px
