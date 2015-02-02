@@ -11,6 +11,13 @@ GiftStarterApp.controller('PayPopoverController', ['$scope','GiftStartService',
 function PayPopoverController($scope, GiftStartService, PopoverService,
                               UserService,  Analytics, CardService) {
 
+    CardService.fetch();
+
+    // Now that user is logged in, create giftstart in server
+    if (!GiftStartService.giftStart.gsid) {
+        GiftStartService.createGiftStart()
+    }
+
     $scope.currentCharge = GiftStartService.giftStart.totalSelection;
     $scope.emailSubscribe = true;
     $scope.saveCreditCard = true;
@@ -20,6 +27,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
 
     $scope.cards = CardService.cards;
     $scope.putNew = !(CardService.cards.length > 0);
+    $scope.cardsLoading = !(CardService.cards.length > 0);
 
     $scope.errorMessage = '';
 
@@ -101,12 +109,19 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
 
     $scope.$on('cards-fetch-success', cardsFetched);
 
+    $scope.$on('cards-fetch-failure', cardsFetchFailed);
+
+    function cardsFetchFailed() {
+        $scope.cardsLoading = false;
+    }
+
     function cardsFetched() {
         $scope.cards = CardService.cards;
         if ($scope.cards.length > 0) {
             $scope.selectCard.apply({card: $scope.cards[0]});
         }
         $scope.putNew = !(CardService.cards.length > 0);
+        $scope.cardsLoading = false;
     }
 
     $scope.deselectCards = deselectCards;
@@ -119,9 +134,11 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         }
     }
 
-    $scope.selectCard = function() {
+    $scope.selectCard = function(allowToggle) {
         if (this.card.fingerprint == $scope.selectedCard) {
             deselectCards();
+            //auto-select first card
+            $scope.selectCard.apply({card: $scope.cards[0]});
         } else {
             deselectCards(this.card.fingerprint);
             this.card.selected = true;
@@ -129,5 +146,5 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         }
     };
 
-    cardsFetched();
+    //cardsFetched();
 }
