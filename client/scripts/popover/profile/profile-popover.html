@@ -1,14 +1,20 @@
 <div class="profile-popover" ng-controller="ProfilePopoverController" >
-    <h1 class="white">Upload your Photo!</h1>
-    <p>Your picture will show up on the tiles you purchased and next to your message on the group card that will be hand-made and mailed to the recipient.</p>
-    <div class="profile-wrapper">
-        <img class="profile-picture" ng-disabled="profilePicture!=campaignPicture" ng-src="{{profilePicture}}">
-        <img class="profile-picture" ng-disabled="profilePicture==campaignPicture" ng-src="{{campaignPicture}}">
+    <div class="leftcol">
+        <h1 class="white">Upload your Photo!</h1>
+        <p>Your picture will show up on the tiles you purchased and next to your message on the group card that will be hand-made and mailed to the recipient.</p>
+        <img src="/assets/cardExample.png"><img src="/assets/gridExample.png">
     </div>
-    <div>
-        <input id="useAsProfilePicture" type="checkbox" ng-model="useAsProfilePicture">
-        <label for="useAsProfilePicture">Also use this as my profile image<sup>*</sup><br/><sup>*</sup>By default, your image will only be changed for this campaign.</label>
+    <div class="rightcol">
+        <div class="profile-wrapper">
+            <img class="profile-picture" ng-show="profilePicture==campaignPicture" ng-src="{{profilePicture}}">
+            <img class="profile-picture" ng-show="profilePicture!=campaignPicture" ng-src="{{campaignPicture}}">
+        </div>
+        <div>
+            <input id="useAsProfilePicture" type="checkbox" ng-model="useAsProfilePicture">
+            <label for="useAsProfilePicture">Also use this as my profile image<span class="sup">*</span></label>
+            <br/><label class="smalltext"><span class="sup">*</span>By default, your image will only be changed for this campaign.</label>
+        </div>
+        <button class="large white-border" ng-click="action.submit()" Xng-disabled="profilePicture==campaignPicture" Xng-class="{disabled: profilePicture==campaignPicture}">Submit Photo</button>
+        <div class="cancel-button"><p class="cancel-button" ng-click="cancel()">Cancel</p></div>
     </div>
-    <button class="large white-border" ng-click="action.submit()" ng-disabled="profilePicture==campaignPicture" ng-class="{disabled: profilePicture==campaignPicture}">Submit Photo</button>
-    <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

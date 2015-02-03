@@ -18,6 +18,10 @@
             $scope.noteText = '';
         };
 
+        $scope.editPhoto = function () {
+            PopoverService.setPopover('profile');
+        };
+
         $scope.skipNote = false;
 
         $scope.action = {

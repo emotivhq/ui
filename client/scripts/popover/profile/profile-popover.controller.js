@@ -13,19 +13,20 @@
         $scope.campaignPicture = UserService.profileImageUrl;
         $scope.useAsProfilePicture = false;
 
-        $scope.hidePopover = function () {
-            PopoverService.hidePopover();
+        $scope.cancel = function () {
+            PopoverService.setPopover('note');
         };
 
         $scope.action = {
             submit: function () {
+                console && console.log && console.log("Pic Changed: "+($scope.profilePicture!=$scope.campaignPicture)+", Use for Profile: "+$scope.useAsProfilePicture)
                 if ($scope.profilePicture!=$scope.campaignPicture) {
                     Analytics.track('pitchin', 'user pitchin image '+($scope.useAsProfilePicture?'and profile image ':'')+'changed');
-                    self.setPopover('note');
+                    PopoverService.setPopover('note');
                 } else {
                     Analytics.track('pitchin', 'user image not changed');
                     //todo: GiftStartService.saveUserImage($scope.campaignPicture);
-                    self.setPopover('note');
+                    PopoverService.setPopover('note');
                 }
             }
         }
