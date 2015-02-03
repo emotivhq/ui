@@ -9,9 +9,10 @@
 
     var profilePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
 
-        $scope.profilePicture = UserService.profileImageUrl;
+        $scope.profilePicture = "http://localhost:8080/assets/about/img/jon.png";//UserService.profileImageUrl;
         $scope.campaignPicture = UserService.profileImageUrl;
         $scope.useAsProfilePicture = false;
+        $scope.editMode = false;
 
         $scope.cancel = function () {
             PopoverService.setPopover('note');
