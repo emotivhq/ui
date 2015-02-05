@@ -227,7 +227,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.saveNote = function(noteText) {
-        self.payment.note = noteText
+        self.payment.note = noteText;
         var data = {payment: self.payment, action: 'pitch-in-note-update',
             uid: UserService.uid};
         $http({method: 'POST', url: '/pay',
