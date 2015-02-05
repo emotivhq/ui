@@ -9,7 +9,7 @@
             <!-- img class="profile-picture" ng-show="profilePicture==campaignPicture" ng-src="{{profilePicture}}">
             <img class="profile-picture" ng-show="profilePicture!=campaignPicture" ng-src="{{campaignPicture}}" -->
             <div id="profile-image-container" ng-class="{edit: editMode}">
-                <img id="profile-image" ng-src="{{profilePicture}}" ng-hide="editMode" src=""/>
+                <img id="profile-image" ng-src="{{campaignPicture}}" ng-hide="editMode" src=""/>
                 <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
                 <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
                 <button class="edit" ng-show="!editMode" ng-click="editMode=true;">EDIT</button>
