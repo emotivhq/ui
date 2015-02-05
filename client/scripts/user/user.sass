@@ -44,14 +44,18 @@
 div.user-wrapper
   margin: 0 auto
   width: 100%
-  padding: 3%
+  padding: 1% 3%
   @media screen and (min-width: 60em)
     width: 60em
   header
+    text-align: center
     margin-top: 2em
     margin-left: 2em
     h1
-      display: inline
+      font-family: Roboto
+      font-size: 2.25em
+      display: block
+      margin-top: 25px
 
     gs-image-upload
       div.image-upload.wrapper
@@ -64,28 +68,41 @@ div.user-wrapper
       +border-radius(50%)
 
   section
+    text-align: center
+    padding-top: 25px
     margin: 0 10%
     article
       display: inline-block
       width: 44%
       margin: 2.5%
       vertical-align: top
+      h2
+        text-transform: capitalize
+        background-color: #BBBBBB
+        border: 1px outset #dddddd
+        color: #ffffff
+        font-family: Roboto
+        font-size: 1.5em
       div.giftstarts, div.pitchins
-        max-height: 20em
-        overflow-y: auto
+        text-align: left
+        margin: 25px 15%
+        //max-height: 20em
+        //overflow-y: auto
         a
+          font-family: Roboto
           text-decoration: none
           color: black
         p
+          font-family: Roboto
           cursor: pointer
           overflow: hidden
           -webkit-line-clamp: 3
           -webkit-box-orient: vertical
-          max-height: 4.5em
+          height: 4.5em
           text-overflow: ellipsis
           span.title
             +transition(all, 0.2s)
-            text-decoration: underline
+            //text-decoration: underline
             font-weight: 600
         p:hover
           span.title
