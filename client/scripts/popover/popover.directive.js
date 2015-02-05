@@ -34,7 +34,7 @@ function gsPopover(PopoverService, $compile, $document) {
         // When something hides via the popover service, this needs to react
         scope.$on('popover-hidden', popoverHidden);
         function popoverHidden() {
-            scope.popoverShown = false
+            scope.popoverShown = false;
             bodyElement.removeClass('popoverShown');
             bodyElement.off('touchmove', noScroll);
         }
@@ -42,7 +42,7 @@ function gsPopover(PopoverService, $compile, $document) {
         // When something shows via the popover service, this needs to react
         scope.$on('popover-shown', popoverShown);
         function popoverShown() {
-            scope.popoverShown = true
+            scope.popoverShown = true;
             bodyElement.addClass('popoverShown');
             scope.topPosition = bodyElement.scrollTop() - 150;
             bodyElement.on('touchmove', noScroll);

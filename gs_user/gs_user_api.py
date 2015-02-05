@@ -170,7 +170,7 @@ class ImageUploadHandler(webapp2.RequestHandler):
                         content_type[1] != 'png':
             logging.warning("Received profile image upload with invalid "
                             "content type")
-            self.response.set_status(400, 'Invalid image incoding, only jpg '
+            self.response.set_status(400, 'Invalid image encoding, only jpg '
                                           'and png are acceptable')
         else:
             try:
