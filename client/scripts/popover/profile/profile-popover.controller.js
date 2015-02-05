@@ -9,8 +9,7 @@
 
     var profilePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
 
-        $scope.profilePicture = "http://localhost:8080/assets/about/img/jon.png";//UserService.profileImageUrl;
-        $scope.campaignPicture = $scope.profilePicture;
+        $scope.profilePicture = UserService.profileImageUrl;//"http://localhost:8080/assets/about/img/jon.png";
         $scope.useAsProfilePicture = false;
         $scope.editMode = false;
 
@@ -21,18 +20,15 @@
         $scope.imageSet = false;
 
         $scope.imageUpdated = imageUpdated;
-        $scope.submit = submit;
 
         function imageUpdated(data) {
             $scope.imageSet = true;
             imageData = data;
         }
 
-        function submit() {
+        function saveProfilePhoto() {
             UserService.uploadProfileImage(imageData)
                 .success(function(newImageUrl) {
-                    //$scope.user.img_url = newImageUrl;
-                    $scope.campaignPicture = newImageUrl;
                     $scope.editMode = false;
                 })
                 .error(function(reason) {
@@ -47,13 +43,16 @@
 
         $scope.action = {
             submit: function () {
-                console && console.log && console.log("Pic Changed: "+($scope.profilePicture!=$scope.campaignPicture)+", Use for Profile: "+$scope.useAsProfilePicture)
-                if ($scope.profilePicture!=$scope.campaignPicture) {
+                console && console.log && console.log("Pic Changed: "+$scope.imageUpdated+", Use for Profile: "+$scope.useAsProfilePicture)
+                if ($scope.imageUpdated) {
+                    if($scope.useAsProfilePicture) {
+                        saveProfilePhoto()
+                    }
+                    //GiftStartService.saveUserImage($scope.campaignPicture);
                     Analytics.track('pitchin', 'user pitchin image '+($scope.useAsProfilePicture?'and profile image ':'')+'changed');
                     PopoverService.setPopover('note');
                 } else {
                     Analytics.track('pitchin', 'user image not changed');
-                    //todo: GiftStartService.saveUserImage($scope.campaignPicture);
                     PopoverService.setPopover('note');
                 }
             }

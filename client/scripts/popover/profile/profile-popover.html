@@ -9,11 +9,11 @@
             <!-- img class="profile-picture" ng-show="profilePicture==campaignPicture" ng-src="{{profilePicture}}">
             <img class="profile-picture" ng-show="profilePicture!=campaignPicture" ng-src="{{campaignPicture}}" -->
             <div id="profile-image-container" ng-class="{edit: editMode}">
-                <img id="profile-image" ng-src="{{campaignPicture}}" ng-hide="editMode" src=""/>
-                <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
+                <img id="profile-image" ng-src="{{profilePicture}}" ng-hide="editMode" src=""/>
+                <gs-image-upload ng-show="editMode" ng-src="{{profilePicture}}" on-image-updated="imageUpdated"></gs-image-upload>
                 <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
                 <button class="edit" ng-show="!editMode" ng-click="editMode=true;">EDIT</button>
-                <button class="upload" ng-click="submit()" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button>
+                <!-- button class="upload" ng-click="submit()" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button -->
             </div>
         </div>
         <div>
@@ -21,7 +21,7 @@
             <label for="useAsProfilePicture">Also use this as my profile image<span class="sup">*</span></label>
             <br/><label class="smalltext"><span class="sup">*</span>By default, your image will only be changed for this campaign.</label>
         </div>
-        <button class="large white-border" ng-click="action.submit()" Xng-disabled="profilePicture==campaignPicture" Xng-class="{disabled: profilePicture==campaignPicture}">Submit Photo</button>
+        <button class="large white-border" ng-click="action.submit()" ng-class="{disabled: !imageSet}">Submit Photo</button>
         <div class="cancel-button"><p class="cancel-button" ng-click="cancel()">Cancel</p></div>
     </div>
 </div>
