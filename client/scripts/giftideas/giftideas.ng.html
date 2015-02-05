@@ -16,12 +16,10 @@
         <div class="clear"></div>
     </div>
 
+    <audio ng-src="{{category.categoryAudio}}" autoplay="autoplay"></audio>
     <div ng-show="category" class="products">
         <div class="head" ng-show="!product">
             <div class="hero">
-
-<audio ng-show="category.categorySlug=='baby'" src="/assets/allie.mp3" autoplay="true"></audio>
-
                 <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
             </div>
             <div class="titles">

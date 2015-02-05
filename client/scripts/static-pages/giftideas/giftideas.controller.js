@@ -20,6 +20,7 @@ function GiftideasController($scope, $http, $location) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             $scope.groups = [];
             $scope.category = data;
+            $scope.category.categoryAudio = ($scope.category.categorySlug=="Baby"&&!product)?"/assets/allie.mp3":"";
             $scope.categoryPath = $scope.basePath+'/'+category;
             var prior=null;
             angular.forEach(data.productList, function (value, key) {
