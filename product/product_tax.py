@@ -53,6 +53,8 @@ TAX_CLOUD_API_KEY = '80807DAF-22F1-487A-B0B8-3E103C855637'
 def lookup(address, city, state, zipcode, is_gift_card):
     if is_gift_card:
         return 0
+    if not state:
+        state=" "
 
     request = TAX_CLOUD_SOAP_TEMPLATE.render({
         'api_id': TAX_CLOUD_API_ID,
@@ -69,6 +71,7 @@ def lookup(address, city, state, zipcode, is_gift_card):
     tax_amount = 0
     try:
         tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
+        logging.info("Found tax {4} for {0}, {1}, {2}, {3}".format(address,city,state,zipcode,tax_amount))
     except IndexError:
-        logging.error("Bad response from TaxCloud for {0}, {1}, {2}, {3}".format(address,city,state,zipcode))
+        logging.error("Bad response from TaxCloud for {0}, {1}, {2}, {3}: {4}".format(address,city,state,zipcode,response.content))
     return tax_amount
