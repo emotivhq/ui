@@ -33,7 +33,7 @@
                     .success(function (newImageUrl) {
                         GiftStartService.saveImage(newImageUrl);
                         UserService.profileImageUrl = newImageUrl;
-                        $scope.$parent.$broadcast('profile-image-changed');
+                        $scope.$parent.$broadcast('pitchin-image-changed',newImageUrl);
                     })
                     .error(function (reason) {
                         console && console.log && console.log('Failed to update profile image', reason);
@@ -42,6 +42,7 @@
                 GiftStartService.uploadImage(imageData)
                     .success(function (newImageUrl) {
                         GiftStartService.saveImage(newImageUrl);
+                        $scope.$parent.$broadcast('pitchin-image-changed',newImageUrl);
                     })
                     .error(function (reason) {
                         console && console.log && console.log('Failed to update pitch-in image', reason);

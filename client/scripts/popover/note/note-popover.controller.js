@@ -12,8 +12,8 @@
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
 
-        $scope.$on('profile-image-changed', function () {
-            $scope.profilePicture = UserService.profileImageUrl;
+        $scope.$on('pitchin-image-changed', function (event,imgUrl) {
+            $scope.profilePicture = imgUrl;
         });
 
         $scope.hidePopover = function () {

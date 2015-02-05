@@ -230,18 +230,20 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.payment.note = noteText;
         var data = {payment: self.payment, action: 'pitch-in-note-update',
             uid: UserService.uid};
-        $http({method: 'POST', url: '/pay',
-            data: data})
+        return $http({method: 'POST', url: '/pay', data: data})
     };
 
     this.saveImage = function(imageUrl) {
-        //takes image URL, sets it as image for this pitch-in
-        alert('Need to implement giftstart.service#saveImage')
+        var data = {payment: self.payment, action: 'pitch-in-img-update',
+            uid: UserService.uid, imgurl:imageUrl};
+        return $http({method: 'POST', url: '/pay', data: data})
     };
 
     this.uploadImage = function(imageData) {
-        //takes image data, stores it in AppEngine, returns URL
-        alert('Need to implement giftstart.service#uploadImage modeled after user.service#uploadProfileImage')
+        var contentType = imageData.split(';')[0].replace('data:', '');
+        var data = {payment: self.payment, action: 'pitch-in-img-upload',
+            uid: UserService.uid, contenttype: contentType, imgdata: imageData};
+        return $http({method: 'POST', url: '/pay', data: data})
     };
 
     this.attachStripeResponse = function(response) {
