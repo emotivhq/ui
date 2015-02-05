@@ -234,6 +234,16 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             data: data})
     };
 
+    this.saveImage = function(imageUrl) {
+        //takes image URL, sets it as image for this pitch-in
+        alert('Need to implement giftstart.service#saveImage')
+    };
+
+    this.uploadImage = function(imageData) {
+        //takes image data, stores it in AppEngine, returns URL
+        alert('Need to implement giftstart.service#uploadImage modeled after user.service#uploadProfileImage')
+    };
+
     this.attachStripeResponse = function(response) {
         self.payment.stripeResponse = response;
         self.payment.gsid = self.giftStart.gsid;

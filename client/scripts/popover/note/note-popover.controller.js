@@ -12,6 +12,10 @@
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
 
+        $scope.$on('profile-image-changed', function () {
+            $scope.profilePicture = UserService.profileImageUrl;
+        });
+
         $scope.hidePopover = function () {
             PopoverService.hidePopover();
             $scope.skipNote = false;

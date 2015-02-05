@@ -6,14 +6,11 @@
     </div>
     <div class="rightcol">
         <div class="profile-wrapper">
-            <!-- img class="profile-picture" ng-show="profilePicture==campaignPicture" ng-src="{{profilePicture}}">
-            <img class="profile-picture" ng-show="profilePicture!=campaignPicture" ng-src="{{campaignPicture}}" -->
             <div id="profile-image-container" ng-class="{edit: editMode}">
                 <img id="profile-image" ng-src="{{profilePicture}}" ng-hide="editMode" src=""/>
-                <gs-image-upload ng-show="editMode" ng-src="{{profilePicture}}" on-image-updated="imageUpdated"></gs-image-upload>
+                <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
                 <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
-                <button class="edit" ng-show="!editMode" ng-click="editMode=true;">EDIT</button>
-                <!-- button class="upload" ng-click="submit()" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button -->
+                <button class="edit" ng-show="!editMode" ng-click="editMode=true;" onclick="$('#profile-image-container gs-image-upload div div button.image').click()">EDIT</button>
             </div>
         </div>
         <div>

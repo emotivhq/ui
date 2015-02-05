@@ -2,6 +2,19 @@
 
 $profile-popover-width: 42em
 
+#profile-image-container
+  height: 200px
+  width: 200px
+  //gs-image-upload
+  //  div.image-upload.wrapper
+  //    div.uploader
+  //      bottom: 0
+  //      @media screen and (max-width: $phone-tablet-boundary)
+  //        left: 0
+  canvas
+    //margin-bottom: -100%
+    +border-radius(50%)
+
 div.profile-popover
   width: 100%
   @media screen and (min-width: $profile-popover-width)

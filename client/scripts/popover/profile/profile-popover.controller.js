@@ -22,19 +22,31 @@
         $scope.imageUpdated = imageUpdated;
 
         function imageUpdated(data) {
+            console && console.log && console.log("imageUpdated: "+data);
             $scope.imageSet = true;
             imageData = data;
         }
 
-        function saveProfilePhoto() {
-            UserService.uploadProfileImage(imageData)
-                .success(function(newImageUrl) {
-                    $scope.editMode = false;
-                })
-                .error(function(reason) {
-                    console && console.log && console.log('Failed to update profile image', reason);
-                    $scope.editMode = false;
-                });
+        function saveUpdatedImage() {
+            if($scope.useAsProfilePicture) {
+                UserService.uploadProfileImage(imageData)
+                    .success(function (newImageUrl) {
+                        GiftStartService.saveImage(newImageUrl);
+                        UserService.profileImageUrl = newImageUrl;
+                        $scope.$parent.$broadcast('profile-image-changed');
+                    })
+                    .error(function (reason) {
+                        console && console.log && console.log('Failed to update profile image', reason);
+                    });
+            } else {
+                GiftStartService.uploadImage(imageData)
+                    .success(function (newImageUrl) {
+                        GiftStartService.saveImage(newImageUrl);
+                    })
+                    .error(function (reason) {
+                        console && console.log && console.log('Failed to update pitch-in image', reason);
+                    });
+            }
         }
 
         $scope.cancel = function () {
@@ -43,18 +55,15 @@
 
         $scope.action = {
             submit: function () {
-                console && console.log && console.log("Pic Changed: "+$scope.imageUpdated+", Use for Profile: "+$scope.useAsProfilePicture)
                 if ($scope.imageUpdated) {
-                    if($scope.useAsProfilePicture) {
-                        saveProfilePhoto()
-                    }
-                    //GiftStartService.saveUserImage($scope.campaignPicture);
+                    saveUpdatedImage();
                     Analytics.track('pitchin', 'user pitchin image '+($scope.useAsProfilePicture?'and profile image ':'')+'changed');
                     PopoverService.setPopover('note');
                 } else {
                     Analytics.track('pitchin', 'user image not changed');
                     PopoverService.setPopover('note');
                 }
+                $scope.editMode = false;
             }
         }
     };
