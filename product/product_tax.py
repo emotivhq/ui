@@ -71,8 +71,7 @@ def lookup(address, city, state, zipcode, is_gift_card):
     tax_amount = 0
     try:
         tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
-        logging.info("{0}".format(request))
-        logging.info("Found tax {4} for {0}, {1}, {2}, {3}: {5}".format(address,city,state,zipcode,tax_amount,response.content))
+        logging.info("Found tax {4} for {0}, {1}, {2}, {3}".format(address,city,state,zipcode,tax_amount))
     except IndexError:
         logging.error("Bad response from TaxCloud for {0}, {1}, {2}, {3}: {4}".format(address,city,state,zipcode,response.content))
     return tax_amount
