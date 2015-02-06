@@ -7,11 +7,19 @@ div.note-popover
   @media screen and (min-width: $note-popover-width)
     width: $note-popover-width
 
+  div.profile-picture-wrapper
+    width: 18%
+    float: left
+
   img.profile-picture
     vertical-align: top
-    width: 18%
+    width: 90%
     margin-bottom: 0.7em
     +border-radius(50%)
+
+  button.edit-picture-button
+    margin: 1px auto
+    font-size: 18px
 
   textarea:focus
     +box-shadow(rgba(0, 0, 0, 0), 0, 0, 0)

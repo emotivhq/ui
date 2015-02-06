@@ -14,18 +14,23 @@ function gsImageUpload($timeout, $window) {
         var canvasEle = element.children()[0].children[0];
         var ctx = canvasEle.getContext('2d');
         var aspect = attrs.aspect;
+        var gsElement = element[0];
 
         scope.openImageDialog = function () {
             inputEle.click()
         };
 
         // Size canvas to container
-        canvasEle.width = element[0].parentElement.offsetWidth * 2;
-        if (aspect) {
-            canvasEle.height = element[0].offsetWidth * 2 / aspect;
-        } else {
-            canvasEle.height = element[0].offsetHeight * 2;
+        function resizeCanvas() {
+            canvasEle.width = gsElement.parentElement.offsetWidth * 2;
+            if (aspect) {
+                canvasEle.height = gsElement.offsetWidth * 2 / aspect;
+            } else {
+                canvasEle.height = gsElement.offsetHeight * 2;
+            }
         }
+
+        resizeCanvas();
 
         // Initialize image from localStorage
         if ($window.localStorage.getItem('thank-you-image')) {
@@ -36,7 +41,6 @@ function gsImageUpload($timeout, $window) {
 
         // Callback for uploading file
         var reader;
-        var binaryReader;
         scope.putImage = function putImage(file) {
             reader = new FileReader();
             reader.onloadend = fileLoaded;
@@ -58,6 +62,8 @@ function gsImageUpload($timeout, $window) {
         }
 
         function makeImage(imageData) {
+
+            resizeCanvas();
             var tempImg = new Image();
             tempImg.src = imageData;
 

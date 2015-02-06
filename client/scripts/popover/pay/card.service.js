@@ -29,7 +29,9 @@ function cardService($rootScope, $http, UserService, Analytics) {
             '/cards.json'})
             .success(handleCardResponse)
             .error(function(reason) {
+                $rootScope.$broadcast('cards-fetch-failure');
                 Analytics.track('client', 'user cards fetch failed');
+
             });
     }
 

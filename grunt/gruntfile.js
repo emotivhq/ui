@@ -77,6 +77,8 @@ module.exports = function(grunt) {
           '../client//scripts/popover/login/login-popover.directive.js',
           '../client//scripts/popover/note/note-popover.controller.js',
           '../client//scripts/popover/note/note-popover.directive.js',
+          '../client//scripts/popover/profile/profile-popover.controller.js',
+          '../client//scripts/popover/profile/profile-popover.directive.js',
           '../client//scripts/popover/pay/pay-popover.controller.js',
           '../client//scripts/popover/pay/pay-popover.directive.js',
           '../client//scripts/popover/pay/card.service.js',

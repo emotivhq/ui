@@ -227,11 +227,23 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.saveNote = function(noteText) {
-        self.payment.note = noteText
+        self.payment.note = noteText;
         var data = {payment: self.payment, action: 'pitch-in-note-update',
             uid: UserService.uid};
-        $http({method: 'POST', url: '/pay',
-            data: data})
+        return $http({method: 'POST', url: '/pay', data: data})
+    };
+
+    this.saveImage = function(imageUrl) {
+        var data = {payment: self.payment, action: 'pitch-in-img-update',
+            uid: UserService.uid, imgurl:imageUrl};
+        return $http({method: 'POST', url: '/pay', data: data})
+    };
+
+    this.uploadImage = function(imageData) {
+        var contentType = imageData.split(';')[0].replace('data:', '');
+        var data = {payment: self.payment, action: 'pitch-in-img-upload',
+            uid: UserService.uid, contenttype: contentType, imgdata: imageData};
+        return $http({method: 'POST', url: '/pay', data: data})
     };
 
     this.attachStripeResponse = function(response) {

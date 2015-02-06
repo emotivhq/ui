@@ -7,25 +7,26 @@
 (function (app) {
     'use strict';
 
-    var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics, CardService) {
+    var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
 
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
+
+        $scope.$on('pitchin-image-changed', function (event,imgUrl) {
+            $scope.profilePicture = imgUrl;
+        });
 
         $scope.hidePopover = function () {
             PopoverService.hidePopover();
             $scope.skipNote = false;
             $scope.noteText = '';
-        }
+        };
+
+        $scope.editPhoto = function () {
+            PopoverService.setPopover('profile');
+        };
 
         $scope.skipNote = false;
-
-        CardService.fetch();
-
-        // Now that user is logged in, create giftstart in server
-        if (!GiftStartService.giftStart.gsid) {
-            GiftStartService.createGiftStart()
-        }
 
         $scope.action = {
             submit: function () {
@@ -43,6 +44,6 @@
         }
     };
 
-    app.controller('NotePopoverController', ['$scope','UserService', 'PopoverService','GiftStartService','Analytics', 'CardService', notePopoverController]);
+    app.controller('NotePopoverController', ['$scope','UserService', 'PopoverService','GiftStartService','Analytics', notePopoverController]);
 }(angular.module('GiftStarterApp')));
 

@@ -2,7 +2,10 @@
     <h1 class="white">Sign the Card!</h1>
     <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
     <div class="note-wrapper">
-        <img class="profile-picture" ng-src="{{profilePicture}}">
+        <div class="profile-picture-wrapper">
+            <img class="profile-picture" ng-src="{{profilePicture}}">
+            <button class="small white-border edit-picture-button" ng-click="editPhoto()">Edit Photo</button>
+        </div>
         <div class="note">
             <textarea class="note" ng-model="noteText" maxlength="500"></textarea>
             <p class="chars-left" ng-show="noteText.length > 140" ng-class="{warning: (noteText.length > 450)}">{{500 - noteText.length}}</p>

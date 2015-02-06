@@ -286,6 +286,7 @@ def check_if_complete(gsid):
                 email_kwargs = {
                     'campaign_link': config['app_url'] + '/giftstart/' +
                                      giftstart.giftstart_url_title,
+                    'campaign_name': giftstart.giftstart_title,
                     'frame': 'base_frame',
                 }
                 requests.put(config['email_url'],
