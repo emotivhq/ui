@@ -25,12 +25,12 @@ TAX_CLOUD_SOAP_TEMPLATE = JINJA_ENVIRONMENT.from_string("""<?xml version="1.0" e
         </CartItem>
       </cartItems>
       <origin>
-        <Address1>PO Box 18284</Address1>
+        <Address1>6555 Seward Park Ave S</Address1>
         <Address2></Address2>
         <City>Seattle</City>
         <State>WA</State>
         <Zip5>98118</Zip5>
-        <Zip4></Zip4>
+        <Zip4>3447</Zip4>
       </origin>
       <destination>
         <Address1>{{ address }}</Address1>
@@ -71,7 +71,8 @@ def lookup(address, city, state, zipcode, is_gift_card):
     tax_amount = 0
     try:
         tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
-        logging.info("Found tax {4} for {0}, {1}, {2}, {3}".format(address,city,state,zipcode,tax_amount))
+        logging.info("{0}".format(request))
+        logging.info("Found tax {4} for {0}, {1}, {2}, {3}: {5}".format(address,city,state,zipcode,tax_amount,response.content))
     except IndexError:
         logging.error("Bad response from TaxCloud for {0}, {1}, {2}, {3}: {4}".format(address,city,state,zipcode,response.content))
     return tax_amount
