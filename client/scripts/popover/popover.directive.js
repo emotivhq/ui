@@ -44,7 +44,7 @@ function gsPopover(PopoverService, $compile, $document) {
         function popoverShown() {
             scope.popoverShown = true;
             bodyElement.addClass('popoverShown');
-            scope.topPosition = bodyElement.scrollTop() - 150;
+            scope.topPosition = $(window).scrollTop() - 150;
             bodyElement.on('touchmove', noScroll);
         }
 
