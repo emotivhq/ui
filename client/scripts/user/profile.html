@@ -11,7 +11,8 @@
     </header>
     <section>
         <article class="giftstarts">
-            <h2>{{user.giftstarts.length}} GiftStarts</h2>
+            <div><img src="/assets/giftstartRibbon.png"></div>
+            <div class="ribbontext">{{user.giftstarts.length}}</div>
             <div class="giftstarts">
                 <div class="giftstart" ng-repeat="gs in user.giftstarts">
                     <a ng-href="/giftstart/{{gs.giftstart_url_title}}">
@@ -21,7 +22,8 @@
             </div>
         </article>
         <article class="pitchins">
-            <h2>{{user.pitchins.length}} Pitch-Ins</h2>
+            <div><img src="/assets/pitchinRibbon.png"></div>
+            <div class="ribbontext">{{user.pitchins.length}}</div>
             <div class="pitchins">
                 <div class="pitchin" ng-repeat="pi in user.pitchins">
                     <a ng-href="/giftstart/{{pi.giftstart_url_title}}">
