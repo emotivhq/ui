@@ -14,6 +14,7 @@ LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
                                            hours=datetime.now().hour,
                                            minutes=datetime.now().minute,
                                            seconds=datetime.now().second)
+DATES = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
 
 
 def build_row(row):
@@ -24,6 +25,20 @@ def build_hdr(row):
     return "<tr><th>" + "</th><th>".join([str(v) for v in row]) + "</th></tr>"
 
 
+
+def show_dates():
+    def format_date(date):
+        return str(date.year)+"-"+str(date.month)+"-"+str(date.day)
+
+    day_fmt = [format_date(d) for d in DATES]
+
+    result = "<table border=\"2\">"
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(day_fmt))])
+    result += build_row(['Ends'] + day_fmt)
+    result += "</table>"
+
+    return result
+
 def user_growth():
     base_users = User.query().count() - User.query(User.timestamp < LAST_WK_START).count()
 
@@ -33,8 +48,7 @@ def user_growth():
         """
         return base_users + User.query(User.timestamp < date).count()
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
-    total_users = [num_users_by(d) for d in dates]
+    total_users = [num_users_by(d) for d in DATES]
     new_users = [0] + [total_users[wk] - total_users[wk-1]
                        for wk in range(1, NUM_WEEKS)]
     users_growth = [1] + [new_users[i] / float(new_users[i-1])
@@ -63,16 +77,14 @@ def mau_growth():
         unique_logins = {login.uid for login in logins}
         return len(unique_logins)
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
-
-    mau = [num_logins_between(week-timedelta(days=30), week) for week in dates]
+    mau = [num_logins_between(week-timedelta(days=30), week) for week in DATES]
     mau_delta = [0] + [mau[i] - mau[i-1] for i in range(1, NUM_WEEKS)]
     mau_growth_values = [1] + [mau[i] / float(mau[i-1])
                                if mau[i-1] > 0 else 1
                                for i in range(1, NUM_WEEKS)]
 
     result = "<table border=\"2\">"
-    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(dates))])
+    result += build_hdr(['Week'] + [i-NUM_WEEKS for i in range(len(DATES))])
     result += build_row(['MAU'] + mau)
     result += build_row(['Delta'] + mau_delta)
     result += build_row(['% Growth'] + ["{0:.1%}".format(v-1) for v in mau_growth_values])
@@ -89,8 +101,7 @@ def giftstart_growth():
     def num_giftstarts_by(date):
         return base_giftstarts + GiftStart.query(GiftStart.timestamp < date).count()
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
-    total_giftstarts = [num_giftstarts_by(d) for d in dates]
+    total_giftstarts = [num_giftstarts_by(d) for d in DATES]
     new_giftstarts = [0] + [total_giftstarts[wk] - total_giftstarts[wk-1]
                             for wk in range(1, NUM_WEEKS)]
     giftstarts_growth = [1] + [new_giftstarts[i] / float(new_giftstarts[i-1])
@@ -115,9 +126,7 @@ def transactions_per_week():
     def num_pitchins_by(date):
         return base_pitchins + PitchIn.query(PitchIn.timestamp < date).count()
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk
-             for wk in range(NUM_WEEKS-1, -1, -1)]
-    total_pitchins = [num_pitchins_by(d) for d in dates]
+    total_pitchins = [num_pitchins_by(d) for d in DATES]
     new_pitchins = [0] + [total_pitchins[wk] - total_pitchins[wk-1]
                           for wk in range(1, NUM_WEEKS)]
     pitchins_growth = [1] + [new_pitchins[i] / float(new_pitchins[i-1])
@@ -140,8 +149,7 @@ def dollars_per_week():
         get_amt = lambda pi: json.loads(pi.stripe_charge_json)['amount']/100.0
         return sum([get_amt(p) for p in pis])
 
-    dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
-    total_dollars = [amt_pitchins_by(d) for d in dates]
+    total_dollars = [amt_pitchins_by(d) for d in DATES]
     new_dollars = [0] + [total_dollars[wk] - total_dollars[wk-1]
                          for wk in range(1, NUM_WEEKS)]
     dollars_growth = [1] + [new_dollars[i] / float(new_dollars[i-1])
@@ -193,7 +201,8 @@ def campaign_success_rate():
 class ReportsHandler(webapp2.RequestHandler):
 
     def get(self):
-        template = '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
+        template = '<div class="metric"><h3>Dates</h3><p>{show_dates}</p></div>' \
+                   '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Monthly Active Users Growth</h3><p>{mau_growth}</p></div>' \
                    '<div class="metric"><h3>Wk/wk New GiftStart Growth</h3><p>{campaign_growth}</p></div>' \
                    '<div class="metric"><h3>Percent Campaigns Funded Fully</h3><p>{campaign_success_rate}</p></div>' \
@@ -202,6 +211,7 @@ class ReportsHandler(webapp2.RequestHandler):
 
 
         template_kwargs = {
+            'show_dates': show_dates(),
             'user_growth': user_growth(),
             'mau_growth': mau_growth(),
             'campaign_growth': giftstart_growth(),

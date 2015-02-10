@@ -190,6 +190,8 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
 
 def complete_campaign_creation(uid, gs):
+    if(gs.gift_champion_uid == uid):
+        return;
     user = ndb.Key('User', uid).get()
     gs.gc_name = user.name
     gs.gift_champion_uid = uid

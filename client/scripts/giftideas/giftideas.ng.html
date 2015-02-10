@@ -16,11 +16,11 @@
         <div class="clear"></div>
     </div>
 
-    <audio ng-src="{{category.categoryAudio}}" autoplay="autoplay"></audio>
+    <audio ng-src="{{category.categoryAudio}}" autoplay="autoplay" id="categoryAudio"></audio>
     <div ng-show="category" class="products">
         <div class="head" ng-show="!product">
             <div class="hero">
-                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg">
+                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg" onclick="$('#categoryAudio').load()">
             </div>
             <div class="titles">
                 <h1><span ng-bind-html="category.categoryName"></span></h1>
