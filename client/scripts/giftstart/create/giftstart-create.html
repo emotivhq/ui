@@ -245,6 +245,7 @@
                        ng-model="gcEmail"
                        ng-focus="hideValidationError.gcEmail = true"
                        ng-blur="hideValidationError.gcEmail = false"
+                       onkeypress="return event.keyCode==13?false:true"
                        required="">
                 <div ng-show="(campaignForm.$submitted || campaignForm.gcEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.gcEmail" class="errorWrapper">
                     <div ng-show="campaignForm.gcEmail.$error.required">
