@@ -259,11 +259,9 @@
                     clearCreateData();
                 } else {
                     var uuid = $scope.makeUUID();
-                    // Send giftstart to staging
-                    $http.post('/giftstart/create.json',
-                        stagedGiftStart(uuid));
+                    //stash staged giftstart for later use by login-popover.controller
                     AppStateService.set('staging_uuid', uuid);
-
+                    AppStateService.set('staged_giftstart', stagedGiftStart(uuid));
                     PopoverService.giftstartCreateLogin = true;
                     PopoverService.setPopover('login');
                 }

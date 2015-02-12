@@ -183,19 +183,33 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
     // Check if user is logged in already
     if (UserService.loggedIn) {loginComplete()}
 
+    function storeStagedGiftstart() {
+        $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'));
+        AppStateService.remove('staged_giftstart');
+    }
+
     // If they aren't, they'll need to log in
-    $scope.facebookLogin = function() {
+    $scope.facebookLogin = function () {
+        // Send giftstart to staging
+        storeStagedGiftstart();
+        // Send user to social login site
         Analytics.track('user', 'login attempt with facebook');
         AppStateService.setPath($location.path());
         FacebookService.login();
     };
     $scope.twitterLogin = function() {
+        // Send giftstart to staging
+        storeStagedGiftstart();
+        // Send user to social login site
         Analytics.track('user', 'login attempt with twitter');
         AppStateService.setPath($location.path());
         console && console.log && console.log("Setting path", AppStateService.path);
         TwitterService.login();
     };
     $scope.googleLogin  = function() {
+        // Send giftstart to staging
+        storeStagedGiftstart();
+        // Send user to social login site
         Analytics.track('user', 'login attempt with googleplus');
         AppStateService.setPath($location.path());
         GooglePlusService.login();
