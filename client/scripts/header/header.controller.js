@@ -106,6 +106,20 @@
             login();
             $scope.actions.menuItemClicked(true);
         });
+
+
+        var producturl = decodeURIComponent($location.search().producturl);
+        console.log("producturl: "+producturl);
+        if(producturl&&producturl!="true"&&producturl!="undefined") {
+            var parser = document.createElement('a');
+            parser.href = producturl;
+            olark('api.box.expand');
+            olark('api.chat.sendMessageToVisitor', {
+                body: "Welcome!  Can I help you gift this product from "+parser.hostname+"?"
+            });
+            console.log("set Olark message: "+parser.hostname);
+        }
+
     };
 
     app.controller('HeaderController', [
