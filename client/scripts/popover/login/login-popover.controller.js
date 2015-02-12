@@ -183,7 +183,10 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
     // Check if user is logged in already
     if (UserService.loggedIn) {loginComplete()}
 
+
+    //move staged giftstart from browser to server
     function storeStagedGiftstart() {
+        console&&console.log&&console.log("staged-create: "+AppStateService.get('staged_giftstart')['staging_uuid']);
         $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'));
         AppStateService.remove('staged_giftstart');
     }

@@ -261,7 +261,9 @@
                     var uuid = $scope.makeUUID();
                     //stash staged giftstart for later use by login-popover.controller
                     AppStateService.set('staging_uuid', uuid);
+                    console&&console.log&&console.log("staging: "+stagedGiftStart(uuid)['staging_uuid']);
                     AppStateService.set('staged_giftstart', stagedGiftStart(uuid));
+                    console&&console.log&&console.log("staged: "+AppStateService.get('staged_giftstart')['staging_uuid']);
                     PopoverService.giftstartCreateLogin = true;
                     PopoverService.setPopover('login');
                 }
