@@ -110,7 +110,6 @@
 
         var producturl = decodeURIComponent($location.search().producturl);
         if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {
-            console.log("producturl: "+producturl);
             var parser = document.createElement('a');
             parser.href = producturl;
             olark('api.box.expand');
