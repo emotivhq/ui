@@ -1,0 +1,129 @@
+{  
+   "categoryName":"Gift Ideas for Employee Appreciation",
+   "categoryNameShort":"Employee Appreciation",
+   "categorySlug":"employee",
+   "categoryBlurb":"Employee Appreciation Day is coming up - March 6, 2015. Whether your budget is big or small, this is a great time let your most valuable assets know that you’re glad they are on the team. Finding gifts from the group and for the team can be particularly challenging, so we’ve curated our favorite gift ideas to let your employees know you truly care.",
+   "productList":[  
+      {  
+         "productName":"Bowling Party",
+         "productNameShort":"Bowling Party",
+         "productSlug":"Bowling-Party",
+         "productPrice":"varies",
+         "productDescription":"There’s no better way to blow off some steam than with a little bowling. Treat your team to an afternoon out of the office -complete with snacks, beverages, and a little healthy competition. <br> Minimum order of $250",
+         "productImage":"/employee/bowling.jpg",
+         "productThumb":"/employee/bowlingThumb.jpg",
+         "imageAltText":"GiftStarter Bowling Party",
+         "giftStartLink":" "
+      },
+      {  
+         "productName":"Starbucks Gift Cards",
+         "productNameShort":"Starbucks Gift Cards",
+         "productSlug":"Starbucks-Gift-Cards",
+         "productPrice":"varies",
+         "productDescription":"A latte a day can get expensive. Why not treat your team by helping them fund their daily coffee habit with gift cards from Starbucks. It’s one way to ensure they feel appreciated - and caffeinated - all week long.<br> Minimum order of $250",
+         "productImage":"/employee/starbucksLogo.jpg",
+         "productThumb":"/employee/starbucksLogoThumb.jpg",
+         "imageAltText":"GiftStarter Starbucks Gift Cards",
+         "giftStartLink":" "
+      },
+      {  
+         "productName":"”Free” Lunch",
+         "productNameShort":"”Free” Lunch",
+         "productSlug":"Free-Lunch",
+         "productPrice":"varies",
+         "productDescription":"Yes, there is such a thing as “free” lunch - and it’s a great way to appreciate your team. Order in their favorite foods - or send them out for a long lunch at their favorite eatery. <br> Minimum order of $250",
+         "productImage":"/employee/lunch.jpg",
+         "productThumb":"/employee/lunchThumb.jpg",
+         "imageAltText":"GiftStarter ”Free” Lunch",
+         "giftStartLink":" "
+      },
+      {  
+         "productName":"Kegerator",
+         "productNameShort":"Kegerator",
+         "productSlug":"Kegerator",
+         "productPrice":"1857.52",
+         "productDescription":"Show your appreciation every week. Make ”Beer Fridays” a tradition in your office with the classic Kegerator. It has a durable stainless steel cabinet and countertop, plus a refrigeration system that keeps temperatures between 33-38 degrees F",
+         "productImage":"/employee/kegerator.jpg",
+         "productThumb":"/employee/kegeratorThumb.jpg",
+         "imageAltText":"GiftStarter Kegerator",
+         "giftStartLink":"http://bit.ly/1DlNyyx"
+      },
+      {  
+         "productName":"Set of 4 Iittala Krouvi Beer Mugs",
+         "productNameShort":"Iittala Krouvi Beer Mugs",
+         "productSlug":"Set-of-4-Iittala-Krouvi-Beer-Mugs",
+         "productPrice":"179.70",
+         "productDescription":"Don’t spend another “Beer Friday” drinking out of the office coffee mugs. Celebrate the comeback of this Scandinavian quaffing classic. Iittala's textured Finnish beer mug designed by Oiva Toikka in 1973 features a friendly broad shape, smooth polished rim and embossed measurements. Put beer mugs in the freezer for especially frosty brews. Use for cold beverages only. Dishwasher-safe.",
+         "productImage":"/employee/iittalaKrouvi.jpg",
+         "productThumb":"/employee/iittalaKrouviThumb.jpg",
+         "imageAltText":"GiftStarter Set of 4 Iittala Krouvi Beer Mugs",
+         "giftStartLink":"http://bit.ly/1z9ogik "
+      },
+      {  
+         "productName":"32 Bottle Dual Zone Stainless Steel Wine Cooler",
+         "productNameShort":"Stainless Steel Wine Cooler",
+         "productSlug":"32-Bottle-Dual-Zone-Stainless-Steel-Wine-Cooler",
+         "productPrice":"419.99",
+         "productDescription":"No everyone is a beer drinker, so show your wine-drinking employees some love by adding wine to the “Beer Fridays” tradition. Holding up to 32 bottles, this wine fridge has two 2 independently controlled zones - one for whites and one for reds - with digital temperature controls and an LED display.",
+         "productImage":"/employee/wineCooler.jpg",
+         "productThumb":"/employee/wineCoolerThumb.jpg",
+         "imageAltText":"GiftStarter 32 Bottle Dual Zone Stainless Steel Wine Cooler",
+         "giftStartLink":"http://bit.ly/1uKR18u"
+      },
+      {  
+         "productName":"3 Sets of 8 Riedel Stemless Wine Glasses - Red &amp; White",
+         "productNameShort":"Riedel Stemless Wine Glasses",
+         "productSlug":"3-Sets-of-8-Riedel-Stemless-Wine-Glasses-Red-White",
+         "productPrice":"299.40",
+         "productDescription":"Instead of toasting the end of a long week using the office coffee cups, keep these classic stemless Riedels on hand. Set include 12 glasses for red wine and 12 glasses for white.",
+         "productImage":"/employee/riedelSet.jpg",
+         "productThumb":"/employee/riedelSetThumb.jpg",
+         "imageAltText":"GiftStarter 3 Sets of 8 Riedel Stemless Wine Glasses - Red and White",
+         "giftStartLink":"http://bit.ly/1KNTsJp"
+      },
+      {  
+         "productName":"Stiga STS 185 Indoor Table Tennis Table",
+         "productNameShort":"Stiga STS 185 Table Tennis",
+         "productSlug":"Stiga-STS-185-Indoor-Table-Tennis-Table",
+         "productPrice":"549.99",
+         "productDescription":"Dotcoms and startups have long known the value of having table tennis in the office. Follow their lead with the Stiga&reg; STS 185 for superior stability and performance - and you’ll have employees who know they are appreciated. It has a 3/4-inch playing surface and provides quick response as you battle it out for each point. Its 2-inch steel legs create a solid foundation during intense play and feature self-opening technology to help open and close the table safely. The STS 185 table tennis table has a mag wheel design that allows you to roll it from room to room or store away when it is not in use.",
+         "productImage":"/employee/tableTennis.jpg",
+         "productThumb":"/employee/tableTennisThumb.jpg",
+         "imageAltText":"GiftStarter Stiga STS 185 Indoor Table Tennis Table",
+         "giftStartLink":"http://bit.ly/1CiYWXZ"
+      },
+      {  
+         "productName":"Keurig&reg; K45 Elite Brewing System",
+         "productNameShort":"Keurig&reg; Brewing System",
+         "productSlug":"Keurig-K45-Elite-Brewing-System",
+         "productPrice":"119.99",
+         "productDescription":"First cup. Fourth cup – with Keurig, it’s always a fresh cup. The Elite Brewing System brews a perfect cup of coffee, tea, hot cocoa or iced beverage in under one minute at the touch of a button. With the choice of three cup sizes, the Elite brewer offers a removable drip tray to accommodate travel mugs. The newlyweds will love this gift year after year, morning after morning, and guest after guest.",
+         "productImage":"/employee/keurig.jpg",
+         "productThumb":"/employee/keurigThumb.jpg",
+         "imageAltText":"GiftStarter Keurig&reg; K45 Elite Brewing System",
+         "giftStartLink":"http://bit.ly/1ADzVe8"
+      },
+      {  
+         "productName":"Pac Man Arcade Machine",
+         "productNameShort":"Pac Man Arcade",
+         "productSlug":"Pac-Man-Arcade-Machine",
+         "productPrice":"2895.00",
+         "productDescription":"If you love a classic arcade game, you’ll flip for Pac-Man’s Arcade Party Cabaret. This upright model comes packed with 13 classic arcade games: Pac-Man, Ms. Pac-Man, Galaga, Rally X, Mappy, Xevious, Galaxian, Pac-Mania, Rolling Thunder, Bosconian, Dragon Spirit, Galaga 88 and Dig Dug! They’re just like you’d find in your favorite arcade, with upgraded 19” diagonal LCD, authentic arcade controls and commercial grade construction. Relive the genuine classic arcade game experience in your own home.",
+         "productImage":"/employee/arcade.jpg",
+         "productThumb":"/employee/arcadeThumb.jpg",
+         "imageAltText":"GiftStarter Pac Man Arcade Machine",
+         "giftStartLink":"http://bit.ly/1CD9B4Y"
+      },
+      {  
+         "productName":"9 Foot Shuffleboard",
+         "productNameShort":"9 Foot Shuffleboard",
+         "productSlug":"9-Foot-Shuffleboard",
+         "productPrice":"699.99",
+         "productDescription":"Enjoy smooth and fast puck action right in the comfort of your own home with 9-Foot Shuffleboard. This arcade-style table game has a poly-coated, solid play surface and stands on a laminated cabinet. Pedestal legs feature levelers for maximum stability. Keeping track of the score is easy, thanks to an abacus-style scoring system. Includes eight pucks and shuffleboard wax. Full assembly required.",
+         "productImage":"/employee/shuffleBoard.jpg",
+         "productThumb":"/employee/shuffleBoardThumb.jpg",
+         "imageAltText":"GiftStarter 9 Foot Shuffleboard",
+         "giftStartLink":"http://bit.ly/1zHr20v"
+      }
+   ]
+}
