@@ -109,13 +109,13 @@
 
 
         var producturl = decodeURIComponent($location.search().producturl);
-        console.log("producturl: "+producturl);
-        if(producturl&&producturl!="true"&&producturl!="undefined") {
+        if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {
+            console.log("producturl: "+producturl);
             var parser = document.createElement('a');
             parser.href = producturl;
             olark('api.box.expand');
             olark('api.chat.sendMessageToVisitor', {
-                body: "Welcome!  Can I help you gift this product from "+parser.hostname+"?"
+                body: "Welcome!  Can I help you gift this product from "+(parser.hostname=="localhost"?"another site":parser.hostname)+"?"
             });
             console.log("set Olark message: "+parser.hostname);
         }
