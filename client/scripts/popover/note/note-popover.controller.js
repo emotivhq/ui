@@ -32,6 +32,7 @@
             submit: function () {
                 if ($scope.skipNote) {
                     Analytics.track('pitchin', 'no note submitted');
+                    GiftStartService.saveNote(' ');
                     PopoverService.nextPopover();
                 } else {
                     Analytics.track('pitchin', 'note submitted');
