@@ -72,7 +72,9 @@
                             ng-change="shippingChanged()"
                             ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
                             ng-focus="hideValidationError.shippingState = true"
-                            ng-blur="hideValidationError.shippingState = false">
+                            ng-blur="hideValidationError.shippingState = false"
+                            onkeypress="return event.keyCode==13?false:true"
+                            >
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
                         <option value="AZ">AZ</option>
