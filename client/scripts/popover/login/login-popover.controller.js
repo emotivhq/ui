@@ -184,36 +184,41 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
     if (UserService.loggedIn) {loginComplete()}
 
 
+    // Send user to social login site
+    function completeLogin(socialService) {
+        Analytics.track('user', 'login attempt with ' + socialService);
+        AppStateService.setPath($location.path());
+        console && console.log && console.log("Setting path", AppStateService.path);
+        switch (socialService) {
+            case "facebook": FacebookService.login(); break;
+            case "twitter": TwitterService.login(); break;
+            case "googleplus": GooglePlusService.login(); break;
+        }
+    }
+
     //move staged giftstart from browser to server
-    function storeStagedGiftstart(socialService) {
+    function doLogin(socialService) {
         if(AppStateService.get('staged_giftstart')) {
             console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
             $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'))
                 .success(function (response) {
                     AppStateService.remove('staged_giftstart');
-                    // Send user to social login site
-                    Analytics.track('user', 'login attempt with '+socialService);
-                    AppStateService.setPath($location.path());
-                    console && console.log && console.log("Setting path", AppStateService.path);
-                    switch(socialService) {
-                        case "facebook": FacebookService.login(); break;
-                        case "twitter": TwitterService.login(); break;
-                        case "googleplus": GooglePlusService.login(); break;
-                    }
-
+                    completeLogin(socialService);
                 })
                 .error(function () {
                     console && console.log && console.log("Error while staging GiftStart; retrying...");
-                    storeStagedGiftstart(socialService);
+                    doLogin(socialService);
                 });
 
+        } else {
+            completeLogin(socialService);
         }
     }
 
     // If they aren't, they'll need to log in
-    $scope.facebookLogin = function () {storeStagedGiftstart("facebook")};
-    $scope.twitterLogin = function() {storeStagedGiftstart("twitter");};
-    $scope.googleLogin  = function() {storeStagedGiftstart("googleplus");};
+    $scope.facebookLogin = function () {doLogin("facebook")};
+    $scope.twitterLogin = function() {doLogin("twitter");};
+    $scope.googleLogin  = function() {doLogin("googleplus");};
 
     $scope.hidePopover = PopoverService.hidePopover;
 
