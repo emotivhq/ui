@@ -203,7 +203,8 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
 
                 })
                 .error(function () {
-                    alert("severe error - please try again")
+                    console && console.log && console.log("Error while staging GiftStart; retrying...");
+                    storeStagedGiftstart(socialService);
                 });
 
         }
