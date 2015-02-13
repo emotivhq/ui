@@ -186,9 +186,11 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
 
     //move staged giftstart from browser to server
     function storeStagedGiftstart() {
-        console&&console.log&&console.log("staged-create: "+AppStateService.get('staged_giftstart')['staging_uuid']);
-        $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'));
-        AppStateService.remove('staged_giftstart');
+        if(AppStateService.get('staged_giftstart')) {
+            console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
+            $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'));
+            AppStateService.remove('staged_giftstart');
+        }
     }
 
     // If they aren't, they'll need to log in
