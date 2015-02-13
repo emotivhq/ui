@@ -9,6 +9,7 @@ import json
 import base64
 import logging
 import urllib
+import time
 
 
 secrets = yaml.load(open('secret.yaml'))
@@ -31,12 +32,16 @@ class MainHandler(webapp2.RequestHandler):
             staging_uuid = state.get('staging_uuid')
             logging.info("Found staging UUID: {0}".format(staging_uuid))
             if bool(staging_uuid) and bool(self.request.cookies['uid']):
-                gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid)\
-                    .fetch(1)
-                logging.info("Fetched giftstart with staging uuid:\n{0}"
-                             .format(gss))
-
+                gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid).fetch(1)
+                if(not len(gss)):
+                    # eventual consistency: sometimes fails to get an element that was just created
+                    logging.info("Failed to fetch giftstart with staging uuid:\n{0}; retrying...".format(staging_uuid))
+                    time.sleep(5)
+                    gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid).fetch(1)
+                if(not len(gss)):
+                    logging.info("Failed to fetch giftstart with staging uuid:\n{0}".format(staging_uuid))
                 if len(gss):
+                    logging.info("Fetched giftstart with staging uuid:\n{0}".format(staging_uuid))
                     uid = urllib.unquote(self.request.cookies['uid'].replace('%22', ''))
                     giftstart_create.complete_campaign_creation(uid, gss[0])
                     self.redirect('/giftstart/' + gss[0].giftstart_url_title)

@@ -13,19 +13,19 @@
                     <a href="/"  ng-click="actions.menuItemClicked()">HOME</a>
                 </li>
                 <li>
-                    <a href="/giftideas"  ng-click="actions.menuItemClicked()">GIFT IDEAS</a>
+                    <a href="/giftideas"  ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/giftideas')==0}">GIFT IDEAS</a>
                 </li>
                 <li>
-                    <a href="/concierge"  ng-click="actions.menuItemClicked()">GIFT CONCIERGE</a>
+                    <a href="/concierge"  ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/concierge')==0}">GIFT CONCIERGE</a>
                 </li>
                 <li>
-                    <a href="/partners" ng-click="actions.menuItemClicked()">PARTNERS</a>
+                    <a href="/partners" ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/partners')==0}">PARTNERS</a>
                 </li>
                 <li>
-                    <a href="/faq" ng-click="actions.menuItemClicked()">FAQ</a>
+                    <a href="/faq" ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/faq')==0}">FAQ</a>
                 </li>
                 <li>
-                    <a href="/blog" ng-click="actions.menuItemClicked()" target="_self">BLOG</a>
+                    <a href="/blog" ng-click="actions.menuItemClicked()" target="_self" ng-class="{currentpage: header.thisRoute == '/:path*'}">BLOG</a>
                 </li>
                 <li class="login">
                     <a ng-href="{{header.userProfileUrl}}">

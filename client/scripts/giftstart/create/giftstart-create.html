@@ -21,6 +21,7 @@
                    ng-model="title"
                    ng-focus="hideValidationError.title = true"
                    ng-blur="hideValidationError.title = false"
+                   onkeypress="return event.keyCode==13?false:true"
                    required=""/>
             <div ng-show="(campaignForm.$submitted || campaignForm.title.$touched || validationTrigger.createButtonClicked) && !hideValidationError.title" class="errorWrapper">
                 <div ng-show="campaignForm.title.$error.required">
@@ -71,7 +72,9 @@
                             ng-change="shippingChanged()"
                             ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
                             ng-focus="hideValidationError.shippingState = true"
-                            ng-blur="hideValidationError.shippingState = false">
+                            ng-blur="hideValidationError.shippingState = false"
+                            onkeypress="return event.keyCode==13?false:true"
+                            >
                         <option value="AL">AL</option>
                         <option value="AK">AK</option>
                         <option value="AZ">AZ</option>
@@ -144,7 +147,8 @@
                            ng-change="shippingChanged()"
                            ng-model-options="{ updateOn: 'default blur', debounce: { default: 500, blur: 0 } }"
                            ng-focus="hideValidationError.shippingZip = true"
-                           ng-blur="hideValidationError.shippingZip = false" />
+                           ng-blur="hideValidationError.shippingZip = false"
+                           onkeypress="return event.keyCode==13?false:true" />
                     <div ng-show="(campaignForm.$submitted || campaignForm.shippingZip.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingZip" class="errorWrapper">
                         <div ng-show="campaignForm.shippingZip.$error.required">
                             <div class="arrowUp"></div>
@@ -162,6 +166,7 @@
                            name="shippingName"
                            ng-focus="hideValidationError.shippingName = true"
                            ng-blur="hideValidationError.shippingName = false"
+                           onkeypress="return event.keyCode==13?false:true"
                            required="" />
                     <div ng-show="(campaignForm.$submitted || campaignForm.shippingName.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingName " class="errorWrapper">
                         <div ng-show="campaignForm.shippingName.$error.required">
@@ -180,6 +185,7 @@
                            placeholder="recipient@mail.com"
                            ng-focus="hideValidationError.shippingEmail = true"
                            ng-blur="hideValidationError.shippingEmail = false"
+                           onkeypress="return event.keyCode==13?false:true"
                            required="" />
                     <div ng-show="(campaignForm.$submitted || campaignForm.shippingEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingEmail" class="errorWrapper">
                         <div ng-show="campaignForm.shippingEmail.$error.required">
@@ -245,6 +251,7 @@
                        ng-model="gcEmail"
                        ng-focus="hideValidationError.gcEmail = true"
                        ng-blur="hideValidationError.gcEmail = false"
+                       onkeypress="return event.keyCode==13?false:true"
                        required="">
                 <div ng-show="(campaignForm.$submitted || campaignForm.gcEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.gcEmail" class="errorWrapper">
                     <div ng-show="campaignForm.gcEmail.$error.required">

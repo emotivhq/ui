@@ -190,12 +190,14 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
 
 def complete_campaign_creation(uid, gs):
-    if(gs.gift_champion_uid == uid):
-        return;
+    if bool(gs.gsid) & (gs.gc_name!=None) & len(GiftStart.query(GiftStart.gsid == gs.gsid).fetch()):
+        logging.info("Not re-completing {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
+        return
     user = ndb.Key('User', uid).get()
     gs.gc_name = user.name
     gs.gift_champion_uid = uid
     gs.put()
+    logging.info("Saved {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
 
     giftstart_comm.send_create_notification(gs)
 

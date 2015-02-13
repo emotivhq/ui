@@ -183,23 +183,37 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
     // Check if user is logged in already
     if (UserService.loggedIn) {loginComplete()}
 
+
+    //move staged giftstart from browser to server
+    function storeStagedGiftstart(socialService) {
+        if(AppStateService.get('staged_giftstart')) {
+            console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
+            $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'))
+                .success(function (response) {
+                    AppStateService.remove('staged_giftstart');
+                    // Send user to social login site
+                    Analytics.track('user', 'login attempt with '+socialService);
+                    AppStateService.setPath($location.path());
+                    console && console.log && console.log("Setting path", AppStateService.path);
+                    switch(socialService) {
+                        case "facebook": FacebookService.login(); break;
+                        case "twitter": TwitterService.login(); break;
+                        case "googleplus": GooglePlusService.login(); break;
+                    }
+
+                })
+                .error(function () {
+                    console && console.log && console.log("Error while staging GiftStart; retrying...");
+                    storeStagedGiftstart(socialService);
+                });
+
+        }
+    }
+
     // If they aren't, they'll need to log in
-    $scope.facebookLogin = function() {
-        Analytics.track('user', 'login attempt with facebook');
-        AppStateService.setPath($location.path());
-        FacebookService.login();
-    };
-    $scope.twitterLogin = function() {
-        Analytics.track('user', 'login attempt with twitter');
-        AppStateService.setPath($location.path());
-        console && console.log && console.log("Setting path", AppStateService.path);
-        TwitterService.login();
-    };
-    $scope.googleLogin  = function() {
-        Analytics.track('user', 'login attempt with googleplus');
-        AppStateService.setPath($location.path());
-        GooglePlusService.login();
-    };
+    $scope.facebookLogin = function () {storeStagedGiftstart("facebook")};
+    $scope.twitterLogin = function() {storeStagedGiftstart("twitter");};
+    $scope.googleLogin  = function() {storeStagedGiftstart("googleplus");};
 
     $scope.hidePopover = PopoverService.hidePopover;
 
