@@ -1,3 +1,4 @@
+"""handle uploads of manual or Sturtevants feed files, or the deletion thereof"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -9,11 +10,26 @@ from google.appengine.ext import ndb
 import logging
 from uuid import uuid4
 from urlparse import parse_qs
-from google.appengine.api import search
 
 
 class ManualUploadHandler(webapp2.RequestHandler):
+    """parse an uploaded manual feed file"""
     def post(self):
+        """accept a manual-format feed file of the following format:
+        TITLE
+        [giftstartersplit]
+        DESCRIPTION
+        [giftstartersplit]
+        IMAGE_URL
+        [giftstartersplit]
+        PRODUCT_URL
+        [giftstartersplit]
+        PRICE
+        [giftstartersplit]
+        RETAILER
+        [giftstartersplit]
+        [giftstarterendline]
+        """
         data = self.request.body
 
         line_split = '[giftstartersplit]'
@@ -49,7 +65,21 @@ class ManualUploadHandler(webapp2.RequestHandler):
         ndb.put_multi(products)
 
 class SturtevantsUploadHandler(webapp2.RequestHandler):
+    """parse an uploaded Sturtevants feed file"""
     def post(self):
+        """accept a Sturtevants feed file of the following format:
+        TITLE
+        [giftstartersplit]
+        DESCRIPTION
+        [giftstartersplit]
+        IMAGE_URL
+        [giftstartersplit]
+        PRODUCT_URL
+        [giftstartersplit]
+        PRICE
+        [giftstartersplit]
+        [giftstarterendline]
+        """
         data = self.request.body
 
         line_split = '[giftstartersplit]'
@@ -80,8 +110,9 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
 
 
 class ManualDeleteHandler(webapp2.RequestHandler):
-
+    """delete products by a specified retailer"""
     def post(self):
+        """delete products by the specified param 'retailer'"""
         data = parse_qs(self.request.body)
         retailer = data.get("retailer")[0]
         if len(retailer)>5:
@@ -97,7 +128,7 @@ class ManualDeleteHandler(webapp2.RequestHandler):
                 ndb.delete_multi([prod.key for prod in prods])
 
 class SturtevantsDeleteHandler(webapp2.RequestHandler):
-
+    """delete all Sturtevants products"""
     def post(self):
         remaining = 1
         while remaining > 0:

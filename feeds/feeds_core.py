@@ -1,3 +1,5 @@
+"""ingest products from automatic feeds; filter based on price"""
+
 __author__ = 'GiftStarter'
 
 import requests
@@ -16,9 +18,10 @@ import logging
 
 
 def cache(partner, url):
-    """ cache('B-and-H', 'http://bhphotovideo.com/feed') -> None
-    Downloads a feed at a given url and caches all valid products, removing
-    all prior products
+    """
+    Downloads a feed at a given url and caches all valid products, removing all prior products
+    @param partner: the known name of the retailer
+    @param url: the URL of the feed to parse
     """
     feed_resp = requests.get(url)
     clear_feed(partner)
@@ -35,8 +38,9 @@ def cache(partner, url):
 
 
 def clear_feed(partner):
-    """ clear_feed('B&H') -> None
+    """
     Removes all products for this retailer from the feed and the Index
+    @param partner: the known name of the retailer
     """
     partner_key = ndb.Key('Partner', partner)
     logging.info("Found partner_key {0} for {1}".format(partner_key, partner))
@@ -53,8 +57,11 @@ def clear_feed(partner):
 
 
 def normalize_products(partner, response_content):
-    """ normalize_products('B&H', '{...}') -> [FeedProduct, ...]
-    Normalizes and filters a given feed response
+    """
+    parses feeds into products
+    @param partnet: the known name of the retailer
+    @param content: a response from the feed
+    @rtype: an unfiltered list of FeedProducts
     """
     if partner == 'butter-LONDON':
         products = normalize_butter_products(response_content)
@@ -66,6 +73,11 @@ def normalize_products(partner, response_content):
 
 
 def normalize_b_and_h_products(content):
+    """
+    parses the B&H feed into products
+    @param content: a response from the B&H feed
+    @rtype: an unfiltered list of FeedProducts
+    """
     feed_file = csv.reader(content.splitlines())
     headers = feed_file.next()
     products = [make_b_and_h_product(feed_line=line, headers=headers)
@@ -75,13 +87,13 @@ def normalize_b_and_h_products(content):
 
 def make_b_and_h_product(feed_line, headers):
     """ make_b_and_h_product({...}) -> FeedProduct
-    :type bh_product: dict
-    :rtype: FeedProduct
+    @type bh_product: dict
+    @rtype: FeedProduct
     """
     def make_img_url(thumbnail_url):
         """
-        :type thumbnail_url: str
-        :rtype: str
+        @type thumbnail_url: str
+        @rtype: str
         """
         id_num = thumbnail_url.split('/')[-1]
         return 'http://static.bhphoto.com/images/images500x500/{id_num}'\
@@ -89,8 +101,8 @@ def make_b_and_h_product(feed_line, headers):
 
     def scrape_product_description(product_url):
         """
-        :type product_url: str
-        :rtype: str
+        @type product_url: str
+        @rtype: str
         """
         try:
             page = requests.get(product_url)
@@ -152,9 +164,10 @@ def make_butter_product(bl_product):
 
 
 def normalize_butter_products(response_content):
-    """ normalize_butter_products([{...}, ...]) -> [FeedProduct, ...]
-    Parses a response from the butter feed and produces an unfiltered list of
-    FeedProducts
+    """
+    parses the butter feed into products
+    @param content: a response from the butter feed
+    @rtype: an unfiltered list of FeedProducts
     """
     feed = json.loads(response_content)
     products = feed.get('products')

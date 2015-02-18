@@ -51,7 +51,7 @@ class SearchProduct(FeedProduct):
         """ parse_amazon_item(<Element Item ...>) -> {'title': 'xbox 1', ...}
         Parses an lxml element into a product
 
-        :type tree etree
+        @type tree: etree
         """
         def xfind(path):
             """ xfind('.//{ns}Tag/{ns}ChildTag') -> 'first child text' | None
@@ -100,8 +100,8 @@ class SearchProduct(FeedProduct):
     @staticmethod
     def from_search_result(search_result):
         """
-        :type search_result: search.Document
-        :rtype SearchProduct
+        @type search_result: search.Document
+        @rtype: SearchProduct
         """
         fields = {field.name: field.value for field in search_result.fields}
         fields['price'] = int(fields['price'])
@@ -111,8 +111,8 @@ class SearchProduct(FeedProduct):
     def jsonify_product_list(product_list):
         """
         Returns a json object for the list of SearchProducts passed in
-        :type product_list [SearchProduct]
-        :rtype str
+        @type product_list: [SearchProduct]
+        @rtype: str
         """
         dict_list = [product.dictify() for product in product_list]
         return json.dumps(dict_list)
@@ -130,7 +130,7 @@ def product_search(query):
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
     index = get_product_index()
 
-    """ :type products [SearchProduct] """
+    """ @type products: [SearchProduct] """
     dynamic_products = []
     logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
     dynamic_products += [product for product in search_amazon(query)]
@@ -294,9 +294,9 @@ def search_products(index, keywords):
     """ search_products(Index, 'xbox 1') -> [Product...]
     Searches the passed in index for the supplied keywords, with scoring
 
-    :type index search.Index
-    :type keywords str
-    :rtype list of [SearchProduct]
+    @type index: search.Index
+    @type keywords: str
+    @rtype: list of [SearchProduct]
     """
     sort_opts = search.SortOptions(
         match_scorer=search.MatchScorer(),)
@@ -314,8 +314,8 @@ def search_products(index, keywords):
 
 def get_preferred_products(scored_results):
     """
-    :type scored_results search.SearchResults
-    :return:
+    @type scored_results: search.SearchResults
+    @return:
     """
     for i in range(len(scored_results.results)):
         scored_results.results[i] = apply_preference(scored_results.results[i])
@@ -334,8 +334,8 @@ def price_filter(product):
 def score_price(price):
     """ Calculates the search score for a given price - don't want too much
     expensive stuff clogging the first results!
-    :type price: int
-    :rtype: float
+    @type price: int
+    @rtype: float
     """
     if price < 40000:
         return 1
@@ -347,11 +347,11 @@ def score_price(price):
 
 def apply_preference(scored_result):
     """
-    :type scored_result search.ScoredDocument
-    :rtype: search.ScoredDocument
+    @type scored_result: search.ScoredDocument
+    @rtype: search.ScoredDocument
     """
     for field in scored_result.fields:
-        """ :type field search.Field """
+        """ @type field: search.Field """
         if field.name == 'retailer':
             if field.value in PARTNERS:
                 scored_result.sort_scores[0] *= 2
