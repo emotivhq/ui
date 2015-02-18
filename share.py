@@ -1,3 +1,4 @@
+"""send emails to share a GiftStart"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -11,8 +12,10 @@ config = yaml.load(open('config.yaml'))
 
 
 class EmailShareHandler(webapp2.RequestHandler):
+    """handle JSON requests to share a GiftStart"""
 
     def put(self):
+        """accept JSON {to,sender,message,gsid,sender_name,share_url,sender_uid} and send a sharing email"""
         json_body = json.loads(self.request.body)
         to = json_body['to']
         sender = json_body['from']
@@ -26,6 +29,16 @@ class EmailShareHandler(webapp2.RequestHandler):
 
 
 def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
+    """
+    enqueue an email to share the specified giftstart with someone
+    @param to:
+    @param sender:
+    @param message:
+    @param gsid:
+    @param sender_name:
+    @param share_url:
+    @param sender_uid:
+    """
     gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     if sender_uid != -1 and sender_uid:
         sender_img = User.query(User.uid == sender_uid).fetch()[0].cached_profile_image_url
