@@ -1,7 +1,7 @@
 """ Renders card for convenient printing!
 """
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 import jinja2

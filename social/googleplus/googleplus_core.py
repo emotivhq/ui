@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 import json
 from datetime import datetime, timedelta

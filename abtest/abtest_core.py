@@ -27,7 +27,7 @@ Test spec format:
 }...]
 """
 
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import hashlib
 import json

@@ -1,7 +1,7 @@
 """ Helper functions for the thank API
 """
 
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import skip32
 from pay.PitchIn import PitchIn

@@ -1,4 +1,4 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 from product.product_search import SearchProduct

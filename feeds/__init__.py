@@ -1,3 +1,3 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 from FeedProduct import FeedProduct

@@ -2,7 +2,7 @@
 API for email sending service.
 """
 
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 
 import webapp2

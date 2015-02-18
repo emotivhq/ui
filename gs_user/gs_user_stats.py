@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn

@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 from social import twitter, googleplus, facebook

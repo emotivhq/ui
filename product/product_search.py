@@ -3,7 +3,7 @@ Product search - searches partner product feeds for user queries, sorting
 by relevance.
 """
 
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import requests
 import urllib

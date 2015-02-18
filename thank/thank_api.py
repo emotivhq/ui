@@ -2,7 +2,7 @@
  that page with the secret attached in query params
 """
 
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 import thank_core

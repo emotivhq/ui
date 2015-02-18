@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
 from gs_user.User import User

@@ -2,4 +2,4 @@
 pitchin data for giftstarts.
 """
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'

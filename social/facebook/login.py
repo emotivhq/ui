@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 from facebook_core import FacebookTokenSet
 import requests

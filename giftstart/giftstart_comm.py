@@ -1,5 +1,5 @@
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 
 from GiftStart import GiftStart

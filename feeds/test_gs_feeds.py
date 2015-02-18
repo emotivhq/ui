@@ -1,4 +1,4 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 # Change execution path to project root
 import os
