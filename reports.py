@@ -1,3 +1,5 @@
+"""provide a set of reports showing the last several weeks of data (#giftstarts, #transactions, $, etc)"""
+
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -9,6 +11,7 @@ from gs_user.UserLogin import UserLogin
 import json
 
 NUM_WEEKS = 10
+"""how many historical weeks of data should be shown?"""
 
 LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
                                            hours=datetime.now().hour,
@@ -199,8 +202,19 @@ def campaign_success_rate():
 
 
 class ReportsHandler(webapp2.RequestHandler):
+    """provide an HTML view of all reports"""
 
     def get(self):
+        """
+        show a simple set of HTML tables for historic data:
+        User Growth,
+        Monthly Active Users,
+        New Giftstart Growth,
+        Percent Campaigns Funded Fully,
+        Transactions Growth,
+        $ Transacted Growth
+        """
+
         template = '<div class="metric"><h3>Dates</h3><p>{show_dates}</p></div>' \
                    '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Monthly Active Users Growth</h3><p>{mau_growth}</p></div>' \
