@@ -25,7 +25,7 @@ function GiftideasController($scope, $http, $location) {
             var prior=null;
             angular.forEach(data.productList, function (value, key) {
                 value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
-                value.hasPrice = !isNaN(value.productPrice);
+                value.hasPrice = /^\d.*/.test(value.productPrice);
                 if(prior!=null) {
                     $scope.groups.push([prior,value]);
                     prior=null;
