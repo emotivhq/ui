@@ -1,4 +1,4 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import os
 #os.chdir('/Users/Stuart/Projects/GiftStarter/app')

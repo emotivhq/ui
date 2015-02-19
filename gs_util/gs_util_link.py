@@ -1,4 +1,4 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import yaml
 import urllib
@@ -8,8 +8,8 @@ config = yaml.load(open('config.yaml'))
 
 def make_giftstart_it_url(giftstart):
     """ Creates a link pointing to /create with all product details
-    :type giftstart: giftstart.GiftStart.GiftStart
-    :rtype: str
+    @type giftstart: giftstart.GiftStart.GiftStart
+    @rtype: str
     """
     return '{app_url}/create?{query}'.format(**{
         'app_url': config['app_url'],

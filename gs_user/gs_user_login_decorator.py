@@ -1,4 +1,4 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 from functools import wraps
 import gs_user_core

@@ -1,6 +1,6 @@
 import stripe
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 # Change execution path to project root
 import os
@@ -247,9 +247,9 @@ class UserStatsTestHandler(unittest.TestCase):
 
     def put_image(self, uid, data, extension, tok=None):
         """ Puts image and returns handler response
-        :type uid: string
-        :type data: string
-        :rtype: webapp2.Response
+        @type uid: string
+        @type data: string
+        @rtype: webapp2.Response
         """
         request = webapp2.Request.blank('/users/{0}/img/new.json'.format(uid))
         request.method = 'PUT'

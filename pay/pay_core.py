@@ -2,7 +2,7 @@
 """
 import stripe
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 from google.appengine.api import taskqueue
 from google.appengine.ext import ndb

@@ -1,4 +1,5 @@
-__author__ = 'Stuart'
+"""unit tests for product creation from Feeds handler"""
+__author__ = 'GiftStarter'
 
 # Change execution path to project root
 import os
@@ -11,6 +12,7 @@ import main
 
 
 class FeedsTestHandler(unittest.TestCase):
+    """unit test for product creation from Feeds handler"""
 
     def setUp(self):
         self.testbed = testbed.Testbed()

@@ -1,4 +1,5 @@
-__author__ = 'Stuart'
+"""test ingestion of product feeds"""
+__author__ = 'GiftStarter'
 
 # Change execution path to project root
 import os
@@ -21,6 +22,7 @@ MOCK_URLS = feeds_api.FEEDS.values()
 
 
 class BUTTER_FEED_MOCK:
+    """ButterLONDON test data"""
     def __init__(self):
         self.status_code = 200
         self.content = json.dumps({
@@ -124,6 +126,7 @@ class BUTTER_FEED_MOCK:
 
 
 class BUTTER_FEED_MOCK2:
+    """ButterLONDON test data"""
     def __init__(self):
         self.status_code = 200
         self.content = json.dumps({
@@ -247,6 +250,7 @@ class BUTTER_FEED_MOCK2:
 
 
 class B_AND_H_FEED_MOCK:
+    """B&H test data"""
     def __init__(self):
         self.status_code = 200
         with open('feeds/bh_test_data.txt') as feed_file:
@@ -254,6 +258,7 @@ class B_AND_H_FEED_MOCK:
 
 
 class FeedsTestHandler(unittest.TestCase):
+    """unit tests for feeds"""
 
     def setUp(self):
         self.testbed = testbed.Testbed()

@@ -1,10 +1,12 @@
-__author__ = 'Stuart'
+"""A product extracted from a feed: includes name, price, image, etc"""
+__author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
 import json
 
 
 class FeedProduct(ndb.Model):
+    """A product extracted from a feed: includes name, price, image, etc"""
     title = ndb.StringProperty(required=True)
     timestamp = ndb.TimeProperty(auto_now_add=True)
     price = ndb.IntegerProperty(required=True)

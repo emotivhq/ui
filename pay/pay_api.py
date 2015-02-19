@@ -1,7 +1,7 @@
 """ API for payment endpoint.
 """
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 from google.appengine.ext import ndb

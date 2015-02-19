@@ -1,3 +1,3 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 from abtest_core import get_tests

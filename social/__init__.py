@@ -1,3 +1,3 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 from OAuthTokenPair import OAuthTokenPair

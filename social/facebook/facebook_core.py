@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 from . import GraphAPI
 from datetime import datetime, timedelta

@@ -1,4 +1,4 @@
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 
 def webapp_add_wsgi_middleware(app):

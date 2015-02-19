@@ -2,7 +2,7 @@
 API for the giftstart endpoint
 """
 
-__author__ = 'stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 import giftstart_comm

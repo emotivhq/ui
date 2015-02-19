@@ -1,3 +1,4 @@
+"""enqueue, ingest, and delete product feeds"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -12,18 +13,25 @@ FEEDS = {
                      'WnPaSx',
     'B-and-H': 'http://74.113.190.28/dataaf/giftstart_19923.csv',
 }
+"""known named feeds"""
 
 
 class CronHandler(webapp2.RequestHandler):
-
+    """handle cron requests to enqueue feed updates"""
     def get(self):
+        """enqueue all feeds for update"""
         for name, url in FEEDS.items():
             taskqueue.add(url='/feeds/{name}/update'.format(name=name),
                           method='POST')
 
 
 class FeedsHandler(webapp2.RequestHandler):
+    """handle requests to parse named feeds"""
     def post(self):
+        """
+        handle requests to parse a named feed
+        return status 400 if feed name is invalid
+        """
         try:
             feed_name = self.request.path.split('/')[2]
             feeds_core.cache(feed_name, FEEDS[feed_name])
@@ -41,3 +49,6 @@ handler = webapp2.WSGIApplication([('/feeds/update', CronHandler),
                                    ('/feeds/delete/sturtevants',
                                     SturtevantsDeleteHandler)],
                                   debug=True)
+"""handle requests to update specific automatic feeds (/feeds/.*/update),
+        or to upload a feed file (/feeds/upload/.*),
+        or to delete specific feed data (/feeds/delete/.*)"""

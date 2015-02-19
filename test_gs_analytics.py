@@ -1,5 +1,5 @@
-__author__ = 'Stuart'
-
+"""unit tests for Analytics"""
+__author__ = 'GiftStarter'
 
 # Change execution path to project root
 import os
@@ -40,6 +40,7 @@ example_event = {
 
 
 class AnalyticsTestHandler(unittest.TestCase):
+    """unit test for Analytics"""
 
     def setUp(self):
         self.testbed = testbed.Testbed()

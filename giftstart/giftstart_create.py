@@ -1,4 +1,4 @@
-__author__ = 'Stuart'
+__author__ = 'GiftStarter'
 
 import webapp2
 import json
@@ -44,9 +44,9 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
     def str_param_valid(self, param):
         """ Check if the parameter in the received json object is a non ''
         string
-        :param param: name of parameter to check
-        :type param: str
-        :rtype: bool
+        @param param: name of parameter to check
+        @type param: str
+        @rtype: bool
         """
         value = self.request.giftstart.get(param)
         valid = value is not None
@@ -57,16 +57,16 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
     def coerce_int_param(self, param):
         """ Tries to make numeric params ints, reports first non-intable param
-        :param param: name of parameter to check
-        :type param: str
-        :rtype: bool
+        @param param: name of parameter to check
+        @type param: str
+        @rtype: bool
         """
         return int(self.request.giftstart.get(param))
 
     def find_invalid_param(self):
         """ Finds and returns the name of the first invalid parameter
-        :return: name of first invalid parameter
-        :rtype: str
+        @return: name of first invalid parameter
+        @rtype: str
         """
         str_params = ['title', 'description', 'gc_email', 'product_url',
                       'product_img_url', 'product_title', 'shipping_zip',
