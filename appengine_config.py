@@ -1,3 +1,4 @@
+"""configure Google AppEngine"""
 __author__ = 'GiftStarter'
 
 

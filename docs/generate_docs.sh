@@ -3,6 +3,7 @@ cd $(dirname $0)
 #export PATH=$PATH:/usr/local/google_appengine/lib/webapp2-2.5.2/webapp2.py
 epydoc -v -n GiftStarter -u http://giftstarter.co --show-imports --include-log \
 ../analytics.py \
+../appengine_config.py \
 ../blog.py \
 ../main.py \
 ../render_app.py \
