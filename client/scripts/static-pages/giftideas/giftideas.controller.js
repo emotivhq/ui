@@ -52,7 +52,7 @@ function GiftideasController($scope, $http, $location) {
             });
             if(!setmeta) {
                 var metatitle=data.categoryName;
-                var metadesc=data.categoryMetaDescription?data.categoryMetaDescription:data.categoryDescription;
+                var metadesc=data.categoryMetaDescription?data.categoryMetaDescription:data.categoryBlurb;
                 setMeta(metatitle, metadesc);
             }
             if(prior!=null) {
