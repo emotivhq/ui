@@ -2,14 +2,14 @@
   "name": "client",
   "version": "0.0.0",
   "authors": [
-    "Stuart Owen <stuart.owen@gmail.com>"
+    "GiftStarter <concierge@giftstarter.co>"
   ],
   "description": "GiftStarter Client App",
   "keywords": [
     "giftstarter",
     "client"
   ],
-  "license": "MIT",
+  "license": "None",
   "homepage": "giftstarter.co",
   "private": true,
   "ignore": [
