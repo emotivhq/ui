@@ -1,3 +1,4 @@
+"""pass-through and translate content from external blog"""
 __author__ = 'GiftStarter'
 
 from google.appengine.api import urlfetch
@@ -6,20 +7,29 @@ import logging
 import re
 
 class WeddingHandler(webapp2.RequestHandler):
+    """redirect /wedding.* to /blog/weddings"""
     def get(self):
         self.redirect("/blog/weddings")
 
 class BlogRootHandler(webapp2.RequestHandler):
+    """pass-through requests to /blog as if they were for /blog/category/blog/"""
     def get(self):
         urlfetch.set_default_fetch_deadline(30)
         self.response.write(urlfetch.fetch(self.request.host_url+"/blog/category/blog/", validate_certificate=False).content)
 
 class PressRootHandler(webapp2.RequestHandler):
+    """pass-through requests to /press as if they were for /blog/category/press/"""
     def get(self):
         urlfetch.set_default_fetch_deadline(30)
         self.response.write(urlfetch.fetch(self.request.host_url+"/blog/category/press/", validate_certificate=False).content)
 
 class BlogHandler(webapp2.RequestHandler):
+    """
+    fetch and translate content from offsite blog:
+    replace links with pass-through URLs,
+    handle sitemap translation,
+    modify headers
+    """
     def get(self):
         blog_subdomain="content"
         blog_path_notrail = "/blog"
