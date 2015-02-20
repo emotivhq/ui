@@ -80,8 +80,8 @@
             setImageVals();
         }
         function setImageVals() {
-            $('#image').val('/'+$('#catslug').val()+'/'+$('#slug').val()+'.jpg');
-            $('#imagethumb').val('/'+$('#catslug').val()+'/'+$('#slug').val()+'Thumb.jpg');
+            $('#image').val('/'+$('#catslug').val().toLowerCase()+'/'+$('#slug').val()+'.jpg');
+            $('#imagethumb').val('/'+$('#catslug').val().toLowerCase()+'/'+$('#slug').val()+'Thumb.jpg');
         }
 
         function get_html_translation_table(table, quote_style) {
@@ -304,13 +304,13 @@
     </script>
     <div>
         <div><img id="prodimg" style="float:right;width:40%;"></div>
-        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="category" onchange="setImageVals()"/><br>
+        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" onchange="setImageVals()"/><br>
         <label for="url">Product URL</label> <input type="text" id="url" required="" /><br>
         <label for="title">Product Title</label> <input type="text" id="title" required="" onchange="setShortTitle()"/><br>
         <label style="color:#999999" for="titleshort">Short Title*</label> <input type="text" id="titleshort" required="" onchange="setProductSlug()"/><br>
         <label style="color:#999999" for="slug">Product Slug*</label> <input type="text" id="slug" required="" onchange="setImageVals()"/><br>
-        <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="30" value="/categoryslug/___.jpg"/><br>
-        <label for="imagethumb">Product Thumbnail URL</label> <input type="text" id="imagethumb" required="" size="30" value="/categoryslug/___Thumb.jpg"/><br>
+        <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="30" value=""/><br>
+        <label for="imagethumb">Product Thumbnail URL</label> <input type="text" id="imagethumb" required="" size="30" value=""/><br>
         <label style="color:#999999" for="alttext">Image ALT text*</label> <input type="text" id="alttext" required="" /><br>
         <label for="price">Product Price</label> <input type="text" id="price" required="" /><br>
         <label style="color:#999999;vertical-align:top" for="description">Description*</label> <textarea type="text" id="description" required="" rows="5" cols="30"> </textarea><br>
