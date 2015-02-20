@@ -36,8 +36,8 @@ def send_emails(key):
     pis = PitchIn.query(ancestor=ndb.Key('GiftStart', key)).fetch()
 
     email_kwargs = {
-        'giftstart_name': gs.giftstart_title,
-        'giftstart_link': config['app_url'] + '/giftstart/' +
+        'campaign_name': gs.giftstart_title,
+        'campaign_link': config['app_url'] + '/giftstart/' +
                           gs.giftstart_url_title,
         'frame': 'base_frame',
     }
