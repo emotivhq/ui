@@ -16,6 +16,14 @@ function GiftideasController($scope, $http, $location) {
     var category = pathParts.length>2?pathParts[2]:false;
     var product = pathParts.length>3?pathParts[3]:false;
 
+    function setMeta(metatitle, metadesc) {
+        metatitle = "GiftStarter: "+metatitle;
+        $('html head title').text(metatitle);
+        $('html head meta[property="og:title"]').attr("content", metatitle);
+        $('html head meta[name=description]').attr("content", metadesc);
+        $('html head meta[property="og:description"]').attr("content", metadesc);
+    }
+
     if(category) {
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             $scope.groups = [];
@@ -35,16 +43,18 @@ function GiftideasController($scope, $http, $location) {
                 }
                 if(product && value.productSlug==product) {
                     $scope.product=value;
-                    $('html head title').text(value.productName);
-                    $('html head meta[property="og:title"]').attr("content", value.productName);
+                    var metatitle=value.productName;
                     var metadesc=value.productMetaDescription?value.productMetaDescription:value.productDescription;
-                    $('html head meta[name=description]').attr("content", metadesc);
-                    $('html head meta[property="og:description"]').attr("content", metadesc);
+                    setMeta(metatitle, metadesc);
                     setmeta=true;
                 }
                 $scope.lastProduct=value;
             });
-            if(!setmeta)
+            if(!setmeta) {
+                var metatitle=data.categoryName;
+                var metadesc=data.categoryMetaDescription?data.categoryMetaDescription:data.categoryDescription;
+                setMeta(metatitle, metadesc);
+            }
             if(prior!=null) {
                 $scope.groups.push([prior]);
             }
