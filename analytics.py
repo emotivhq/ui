@@ -1,3 +1,4 @@
+"""log analytics events on Brand Buttons and Share links; provide CSV dumps of GiftStart, User, and PitchIn data"""
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
@@ -13,6 +14,7 @@ from pay.PitchIn import PitchIn
 
 
 class ShareClick(ndb.Model):
+    """record of a clickthrough on a social or email share link"""
     type = ndb.StringProperty()
     uid = ndb.StringProperty()
     channel = ndb.StringProperty()
@@ -21,13 +23,13 @@ class ShareClick(ndb.Model):
 
 
 def store_if_referral(request):
+    """if request contains a JSON-encoded 're' object (created by a social or email share link), record a ShareClick"""
     referral = json.loads(base64.b64decode(request.get('re')))\
         if request.get('re') else {}
     referer_url = request.headers.get('referer')
 
     if referral == {} and not bool(referer_url) or is_scraper(request):
         return
-
 
     shareclick = ShareClick()
     shareclick.type = referral.get('type')
@@ -42,8 +44,7 @@ def store_if_referral(request):
 
 
 def is_scraper(request):
-    """ Determine if the request is coming from a scraper (like fb or g+)
-    """
+    """Determine if the request is coming from a scraper (like fb or g+)"""
     useragent = request.headers.get('User-Agent')
 
     if 'facebookexternalhit' in useragent:
@@ -56,6 +57,7 @@ def is_scraper(request):
 
 
 class ButtonAnalyticsEvent(ndb.Model):
+    """record of an event on a Button (usually from a brand site)"""
     domain = ndb.StringProperty()
     path = ndb.StringProperty()
     uuid = ndb.StringProperty()
@@ -91,6 +93,7 @@ class ButtonAnalyticsEvent(ndb.Model):
 
 
 class ButtonAnalyticsHandler(webapp2.RequestHandler):
+    """record ButtonAnalyticsEvents for calls to /a/* (usu by Buttons on a brand site via /client/scripts/button scripts)"""
 
     def get(self):
         logging.info('Received button analytics event')
@@ -108,7 +111,7 @@ class ButtonAnalyticsHandler(webapp2.RequestHandler):
 
 
 class GiftStartCsvHandler(webapp2.RequestHandler):
-
+    """provide a dump of all GiftStart objects"""
     def get(self):
         logging.info("Received request for giftstart data dump")
         gss = GiftStart.query().fetch()
@@ -116,7 +119,7 @@ class GiftStartCsvHandler(webapp2.RequestHandler):
 
 
 class UserCsvHandler(webapp2.RequestHandler):
-
+    """provide a dump of all User objects"""
     def get(self):
         logging.info("Received request for users data dump")
         users = User.query().fetch()
@@ -124,7 +127,7 @@ class UserCsvHandler(webapp2.RequestHandler):
 
 
 class PitchInCsvHandler(webapp2.RequestHandler):
-
+    """provide a dump of all PitchIn objects"""
     def get(self):
         logging.info("Received request for pitchins data dump")
         pis = PitchIn.query().fetch()
@@ -132,6 +135,11 @@ class PitchInCsvHandler(webapp2.RequestHandler):
 
 
 def write_ds_items(ds_items, response):
+    """
+    convert a set of datastore objects to CSV, write them to response with Content-Type=application/csv
+    @param ds_items: Objects from cloud datastore
+    @param response: response into which CSV should be written
+    """
     response.headers['Content-Type'] = 'application/csv'
 
     header = set()
