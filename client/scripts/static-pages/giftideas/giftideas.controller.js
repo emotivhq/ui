@@ -23,6 +23,7 @@ function GiftideasController($scope, $http, $location) {
             $scope.category.categoryAudio = ($scope.category.categorySlug=="Baby"&&!product)?"/assets/allie.mp3":"";
             $scope.categoryPath = $scope.basePath+'/'+category;
             var prior=null;
+            var setmeta=false;
             angular.forEach(data.productList, function (value, key) {
                 value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
                 value.hasPrice = /^\d.*/.test(value.productPrice);
@@ -34,9 +35,16 @@ function GiftideasController($scope, $http, $location) {
                 }
                 if(product && value.productSlug==product) {
                     $scope.product=value;
+                    $('html head title').text(value.productName);
+                    $('html head meta[property="og:title"]').attr("content", value.productName);
+                    var metadesc=value.productMetaDescription?value.productMetaDescription:value.productDescription;
+                    $('html head meta[name=description]').attr("content", metadesc);
+                    $('html head meta[property="og:description"]').attr("content", metadesc);
+                    setmeta=true;
                 }
                 $scope.lastProduct=value;
             });
+            if(!setmeta)
             if(prior!=null) {
                 $scope.groups.push([prior]);
             }
