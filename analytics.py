@@ -10,7 +10,11 @@ import logging
 import csv
 from giftstart.GiftStart import GiftStart
 from gs_user.User import User
+from gs_user.UserLogin import UserLogin
 from pay.PitchIn import PitchIn
+from feeds.FeedProduct import FeedProduct
+from social.OAuthTokenPair import OAuthTokenPair
+from product.product_search import SearchProduct
 
 
 class ShareClick(ndb.Model):
@@ -115,7 +119,7 @@ class GiftStartCsvHandler(webapp2.RequestHandler):
     def get(self):
         logging.info("Received request for giftstart data dump")
         gss = GiftStart.query().fetch()
-        write_ds_items(gss, self.response)
+        write_ds_items_csv(gss, self.response)
 
 
 class UserCsvHandler(webapp2.RequestHandler):
@@ -123,7 +127,7 @@ class UserCsvHandler(webapp2.RequestHandler):
     def get(self):
         logging.info("Received request for users data dump")
         users = User.query().fetch()
-        write_ds_items(users, self.response)
+        write_ds_items_csv(users, self.response)
 
 
 class PitchInCsvHandler(webapp2.RequestHandler):
@@ -131,10 +135,32 @@ class PitchInCsvHandler(webapp2.RequestHandler):
     def get(self):
         logging.info("Received request for pitchins data dump")
         pis = PitchIn.query().fetch()
-        write_ds_items(pis, self.response)
+        write_ds_items_csv(pis, self.response)
 
 
-def write_ds_items(ds_items, response):
+class DataModelHandler(webapp2.RequestHandler):
+    """provide crude HTML diagram of all DataTypes used by the app"""
+    def get(self):
+        types=[ButtonAnalyticsEvent,FeedProduct,GiftStart,OAuthTokenPair,PitchIn,SearchProduct,ShareClick,User,UserLogin]
+        logging.info("Received request for DataModel dump")
+        self.response.headers['Content-Type'] = 'text/html'
+        # pis = PitchIn.query().fetch(limit=1)
+        for t in sorted(types):
+            write_ds_type_fields_html(t, self.response)
+
+def write_ds_type_fields_html(ds_type, response):
+    """
+    convert a datastore type's fields to HTML, write them to response
+    @param ds_type: Objects from cloud datastore
+    @param response: response into which HTML should be written
+    """
+    response.write('<table style="float:left; margin:10px;"><tr><th colspan="2" style="border-bottom:1px solid black"><b>'+ds_type.__name__+'</b></th></tr>')
+    for p in sorted(ds_type._properties):
+        attr=getattr(ds_type,p)
+        response.write('<tr><td>'+p+"</td><td>"+type(attr).__name__.split('Property')[0]+('[]' if attr._repeated else '')+('*' if attr._required else '')+(' = '+str(attr._default) if attr._default!=None else '')+'</td></tr>')
+    response.write('</table>')
+
+def write_ds_items_csv(ds_items, response):
     """
     convert a set of datastore objects to CSV, write them to response with Content-Type=application/csv
     @param ds_items: Objects from cloud datastore
@@ -177,4 +203,5 @@ handler = webapp2.WSGIApplication([
     ('/dump/giftstarts.csv', GiftStartCsvHandler),
     ('/dump/users.csv', UserCsvHandler),
     ('/dump/pitchins.csv', PitchInCsvHandler),
+    ('/dump/datamodel', DataModelHandler),
 ])
