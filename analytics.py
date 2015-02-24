@@ -151,7 +151,7 @@ class DataModelHandler(webapp2.RequestHandler):
         self.response.write('<div style="margin:0 auto; clear:both; border-top: 1px dashed red;">')
         rows = []
         for t in sorted(types):
-            rows.append([t.__name__,str(t._properties)])
+            rows.append(['<b>'+t.__name__+'</b>',str(t._properties)+"<hr/>"])
         write_html_table("Raw Type Data:", rows, self.response)
         self.response.write("</div>")
 
@@ -172,7 +172,7 @@ def write_ds_type_fields_html(ds_type, response):
 
 def write_html_table(header, rows, response):
     response.write(
-        '<table style="float:left; margin:10px;"><tr><th colspan="2" style="border-bottom:1px solid black"><b>' + header + '</b></th></tr>')
+        '<table style="border: 1px solid grey; float:left; margin:10px;"><tr><th colspan="2" style="border-bottom:1px solid black"><b>' + header + '</b></th></tr>')
     for row in rows:
         response.write('<tr><td valign="top">' + row[0] + '</td><td valign="top">' + row[1] + '</td></tr>')
     response.write('</table>')
