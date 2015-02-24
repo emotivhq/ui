@@ -144,9 +144,17 @@ class DataModelHandler(webapp2.RequestHandler):
         types=[ButtonAnalyticsEvent,FeedProduct,GiftStart,OAuthTokenPair,PitchIn,SearchProduct,ShareClick,User,UserLogin]
         logging.info("Received request for DataModel dump")
         self.response.headers['Content-Type'] = 'text/html'
-        # pis = PitchIn.query().fetch(limit=1)
-        for t in sorted(types):
+        self.response.write('<div style="margin:0 auto; clear:both; ">')
+        for t in sorted(types,key=lambda t: t.__name__):
             write_ds_type_fields_html(t, self.response)
+        self.response.write("</div>")
+        self.response.write('<div style="margin:0 auto; clear:both; border-top: 1px dashed red;">')
+        rows = []
+        for t in sorted(types):
+            rows.append([t.__name__,str(t._properties)])
+        write_html_table("Raw Type Data:", rows, self.response)
+        self.response.write("</div>")
+
 
 def write_ds_type_fields_html(ds_type, response):
     """
@@ -154,11 +162,21 @@ def write_ds_type_fields_html(ds_type, response):
     @param ds_type: Objects from cloud datastore
     @param response: response into which HTML should be written
     """
-    response.write('<table style="float:left; margin:10px;"><tr><th colspan="2" style="border-bottom:1px solid black"><b>'+ds_type.__name__+'</b></th></tr>')
+    header = ds_type.__name__
+    rows = []
     for p in sorted(ds_type._properties):
         attr=getattr(ds_type,p)
-        response.write('<tr><td>'+p+"</td><td>"+type(attr).__name__.split('Property')[0]+('[]' if attr._repeated else '')+('*' if attr._required else '')+(' = '+str(attr._default) if attr._default!=None else '')+'</td></tr>')
+        rows.append([p,type(attr).__name__.split('Property')[0]+('[]' if attr._repeated else '')+('*' if attr._required else '')+(' = '+str(attr._default) if attr._default!=None else '')])
+    write_html_table(header, rows, response)
+
+
+def write_html_table(header, rows, response):
+    response.write(
+        '<table style="float:left; margin:10px;"><tr><th colspan="2" style="border-bottom:1px solid black"><b>' + header + '</b></th></tr>')
+    for row in rows:
+        response.write('<tr><td valign="top">' + row[0] + '</td><td valign="top">' + row[1] + '</td></tr>')
     response.write('</table>')
+
 
 def write_ds_items_csv(ds_items, response):
     """
