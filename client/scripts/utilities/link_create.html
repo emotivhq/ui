@@ -25,6 +25,7 @@
             var url = makeUrl($('#url').val(), $('#title').val(),
                     $('#price').val(), $('#image').val(), $('#source').val());
             $('#result').val(url);
+            $('#prodimglink').attr("href",$('#image').val());
             $('#prodimg').attr("src",$('#image').val());
             setBitlyUrl(url);
         }
@@ -303,8 +304,7 @@
 }
 
     </script>
-    <div>
-        <div><img id="prodimg" style="float:right;width:40%;"></div>
+    <div style="display:inline-block; float:left; min-width:750px; white-space: nowrap">
         <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" onchange="setImageVals()"/><br>
         <label for="url">Product URL</label> <input type="text" id="url" required="" size="80"/><br>
         <label for="title">Product Title</label> <input type="text" id="title" required="" size="80" onchange="setShortTitle()"/><br>
@@ -322,5 +322,6 @@
         <label for="shortlink">Short </label><input id="shortlink"/><br>
         <textarea id="json" rows="10" cols="80"></textarea>
     </div>
+    <div><a id="prodimglink" href="/assets/link_create_preview.png" target="prodimg"><img id="prodimg" style="display:inline-block; float:left; width:500px; border: 0px;" src="/assets/link_create_preview.png"></a></div>
 </body>
 </html>
