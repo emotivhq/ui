@@ -82,6 +82,10 @@ handlers:
 - url: /stylesheets
   static_dir: client/stylesheets
   secure: always
+- url: /scripts/utilities/link_create.html
+  static_files: client/scripts/utilities/link_create.html
+  upload: link_create.html
+  secure: never
 - url: /scripts
   static_dir: client/scripts
   secure: always
