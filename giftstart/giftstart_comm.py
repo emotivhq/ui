@@ -1,4 +1,4 @@
-
+"""routines to effect requests (usu from cron) to email and update campaigns"""
 __author__ = 'GiftStarter'
 
 
@@ -19,6 +19,7 @@ team_notification_email = config['team_notification_email']
 
 
 def send_create_notification(giftstart):
+    """notify creator that campaign has been created"""
     email_kwargs = {
         'campaign_link': config['app_url'] +
                          '/giftstart/' +
@@ -56,6 +57,7 @@ def send_create_notification(giftstart):
 
 
 def send_day_left_warning(gsid):
+    """notify creator and all givers that campaign has one day left"""
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     if not giftstart.giftstart_complete:
@@ -101,6 +103,7 @@ def send_day_left_warning(gsid):
 
 
 def send_emaillogin_reset(email):
+    """send email-login reset code"""
     email_kwargs = {
         'reset_link': config['app_url']+'/reset/'+login_core.generate_reset_code(email)
     }
@@ -117,6 +120,7 @@ def send_emaillogin_reset(email):
 
 
 def check_if_complete(gsid):
+    """check if given campaign is complete; if so, update gs, email creator & givers, and enqueue later cron tasks such as congrats emails"""
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     pitch_in_parts = []

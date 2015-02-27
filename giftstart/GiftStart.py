@@ -1,3 +1,4 @@
+"""a GiftStart (aka Campaign)"""
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb

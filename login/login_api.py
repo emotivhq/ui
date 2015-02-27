@@ -1,6 +1,4 @@
-""" Finds the campaign for supplied thanks secret, and redirects user to
- that page with the secret attached in query params
-"""
+"""Handle requests to create, reset, or login with email-based credentials"""
 
 __author__ = 'GiftStarter'
 
@@ -19,6 +17,7 @@ def validate_password_complexity(password):
     return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$',password)
 
 class CreateHandler(webapp2.RequestHandler):
+    """handle creation of a new email-based User identity; validate uniqueness of Email; check password complexity"""
     def get(self):
         self.post()
     def post(self):
@@ -66,6 +65,7 @@ class CreateHandler(webapp2.RequestHandler):
 
 
 class LoginHandler(webapp2.RequestHandler):
+    """handle an email-login request: validate email/password combo, return token"""
     def get(self):
         self.post()
     def post(self):
@@ -103,6 +103,7 @@ class LoginHandler(webapp2.RequestHandler):
             }))
 
 class RequestResetHandler(webapp2.RequestHandler):
+    """handle requests to send a password-reset code to an email address"""
     def get(self):
         self.post()
     def post(self):
@@ -126,6 +127,7 @@ class RequestResetHandler(webapp2.RequestHandler):
 
 
 class ResetHandler(webapp2.RequestHandler):
+    """handle password-reset requests: validate reset code and store new password"""
     def get(self):
         self.post()
     def post(self):
