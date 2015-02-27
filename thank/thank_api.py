@@ -1,7 +1,4 @@
-""" Finds the campaign for supplied thanks secret, and redirects user to
- that page with the secret attached in query params
-"""
-
+"""handlers for redirecting a linked user to the appropriate thank-you edit page, and JSON endpoints for same"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -15,8 +12,10 @@ import logging
 
 
 class ThankHandler(webapp2.RequestHandler):
+    """handlers for redirecting a linked user to the appropriate thank-you edit page, and JSON endpoints for same"""
 
     def get(self):
+        """Finds the campaign for supplied thanks secret, and redirects user to that page with the secret attached in query params"""
         gsid = thank_core.decode_secret(self.request.path.split('-')[-1])
         gss = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
         if len(gss) > 0:
@@ -29,6 +28,7 @@ class ThankHandler(webapp2.RequestHandler):
             self.response.set_status(403, "Not Allowed")
 
     def put(self):
+        """JSON endpoint for getting/editing Thanks details"""
         data = json.loads(self.request.body)
         if len(self.request.path.split('-')) > 1:
             gsid = thank_core.decode_secret(self.request.path.split('-')[-1])
@@ -77,13 +77,19 @@ class ThankHandler(webapp2.RequestHandler):
 
 
 def cache_thanks_img(gsid, image):
+    """
+    add supplied thank-you image to datastore
+    @param gsid: relevant giftstart ID
+    @param image: base64 encoded image
+    @return: URL of image
+    """
     if image is None:
         return None
     content_type = image.split(';')[0].split(':')[1]
     base64data = ','.join(image.split(',')[1:])
     img_data = base64data.decode('base64', 'strict')
     filename = str(uuid4())
-    return image_cache.cache_thanks_image(img_data, filename, gsid, content_type)
+    return image_cache.cache_thanks_image(img_data, filename, content_type)
 
 
 

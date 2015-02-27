@@ -1,4 +1,7 @@
-"""enqueue, ingest, and delete product feeds"""
+"""
+enqueue, ingest, and delete product feeds
+@undocumented:FEEDS
+"""
 __author__ = 'GiftStarter'
 
 import webapp2

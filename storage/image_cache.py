@@ -1,3 +1,6 @@
+"""
+routines for storing images into cloud datastore
+@undocumented:key"""
 import cloudstorage
 
 __author__ = 'GiftStarter'
@@ -20,6 +23,12 @@ key = {
 
 
 def cache_user_image_from_url(uid, img_url):
+    """
+    store an external image into the app datastore, for use as a user's avatar
+    @param uid: user for whom this is the avatar
+    @param img_url: external image URL
+    @return: stored image's URL
+    """
     logging.info("Getting image for {0} form {1}".format(uid, img_url))
     img = requests.get(img_url,verify=False).content
     logging.info("Got {0} bytes for image, md5: {1}".format(len(img), hashlib.md5(img)))
@@ -31,27 +40,51 @@ def cache_user_image_from_url(uid, img_url):
 
 
 def cache_user_image(uid, img, extension):
+    """
+    store an external image into the app datastore, for use as a user's avatar
+    @param uid: user for whom this is the avatar
+    @param img: binary/octet-stream image data
+    @param extension: filetype extension
+    @return: stored image's URL
+    """
     return save_picture_to_gcs(uid + '.' + extension, 'u/', str(img))
 
 
 def cache_product_image(img_url, gsid):
+    """
+    store an external image into the app datastore, for use as giftstart's product image
+    @param img_url: URL of external image
+    @param gsid: relevant giftstart ID
+    @return: stored image's URL
+    """
     request = requests.get(img_url)
     img = request.content
     return save_picture_to_gcs(gsid + extract_extension_from_content(img),
                                'p/', img)
 
 
-def cache_thanks_image(img, filename, gsid,
-                       content_type='binary/octet-stream'):
+def cache_thanks_image(img, filename, content_type='binary/octet-stream'):
+    """
+    store an external image into the app datastore, for use as giftstart's thank-you image
+    @param img: image data
+    @param filename: name of file (no extension)
+    @param content_type: encoding type of image data
+    @return: stored image's URL
+    """
     extension = extract_extension_from_content(img)
     if extension:
         content_type = 'image/' + extension[1:]
-    return save_picture_to_gcs(filename + extension, 'thanks/', img,
-                               content_type)
+    return save_picture_to_gcs(filename + extension, 'thanks/', img, content_type)
 
 
-def cache_user_uploaded_image(img, filename, gsid,
-                              content_type='binary/octet-stream'):
+def cache_user_uploaded_image(img, gsid, content_type='binary/octet-stream'):
+    """
+    store provided image, for use as giftstart's product image
+    @param img: image data
+    @param gsid: associated giftstart
+    @param content_type: encoding type of image data
+    @return: stored image's URL
+    """
     extension = extract_extension_from_content(img)
     if extension:
         content_type = 'image/' + extension[1:]
@@ -59,15 +92,27 @@ def cache_user_uploaded_image(img, filename, gsid,
 
 
 def _save_picture_to_gcs_http(filename, folder, data):
+    """
+    Upload provided file into datastore via HTTP POST
+    @param filename: name of file to use in datastore
+    @param folder: folder of file to use in datastore
+    @param data: image data
+    @return: URL of stored file
+    """
     file_url = 'https://storage.googleapis.com' + config['storage_url']
-    response = requests.post(file_url + '?key=' + config['storage_key'] + '&uploadType=media&name=' + folder + filename,
-                             data=data)
+    requests.post(file_url + '?key=' + config['storage_key'] + '&uploadType=media&name=' + folder + filename, data=data)
     return file_url
 
 
-def save_picture_to_gcs(filename, folder, data,
-                         content_type='binary/octet-stream'):
-    # Open cloud storage file for writing
+def save_picture_to_gcs(filename, folder, data, content_type='binary/octet-stream'):
+    """
+    Upload provided file into datastore via cloudstorage file write
+    @param filename: name of file to use in datastore
+    @param folder: folder of file to use in datastore
+    @param data: image data
+    @param content_type: encoding type of provided image data
+    @return: URL of stored file
+    """
     file_url = config['storage_url'] + folder + filename
     cs_file = cloudstorage.open(file_url, mode='w', content_type=content_type,
                                 options={'x-goog-acl': 'public-read'})
@@ -77,5 +122,10 @@ def save_picture_to_gcs(filename, folder, data,
 
 
 def extract_extension_from_content(img_data):
+    """
+    examine image and attempt to determine filetype extension
+    :param img_data: image
+    :return: file extension, or None if unrecognizable
+    """
     extension = '.' + imghdr.what('', img_data)
     return extension

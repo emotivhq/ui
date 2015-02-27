@@ -1,3 +1,7 @@
+"""
+@undocumented:TAX_CLOUD_API_ID
+@undocumented:TAX_CLOUD_API_KEY
+"""
 __author__ = 'GiftStarter'
 
 import jinja2

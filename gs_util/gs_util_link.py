@@ -1,3 +1,4 @@
+""" Creates a link pointing to /create with all product details"""
 __author__ = 'GiftStarter'
 
 import yaml
