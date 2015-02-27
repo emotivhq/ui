@@ -9,6 +9,33 @@
 
     var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
 
+        var google_conversion_struct = {
+            google_conversion_id: 961290155,
+            google_conversion_language: "en",
+            google_conversion_format: "2",
+            google_conversion_color: "ffffff",
+            google_conversion_label: "mwFzCO75mlgQq7-wygM",
+            google_conversion_value: GiftStartService.giftStart.totalSelection,
+            google_conversion_currency: "USD",
+            google_remarketing_only: false
+        }
+
+        window.google_trackConversion(google_conversion_struct);
+        console && console.log && console.log('google - converted: ');
+        console && console.log && console.log(google_conversion_struct);
+
+        window.uetq = window.uetq || [];
+        var data = {
+            ec: 'PitchInThankYou',
+            ea: 'PitchInSuccess',
+            el: 'PurchaseConfirmation',
+            ev: GiftStartService.giftStart.totalSelection,
+            gv: GiftStartService.giftStart.totalSelection
+        };
+        window.uetq.push(data);
+        console && console.log && console.log('bing - converted: ');
+        console && console.log && console.log(data);
+
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
 
