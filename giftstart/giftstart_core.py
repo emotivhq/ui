@@ -1,3 +1,4 @@
+"""routines for retrieving and updating giftstarts (campaigns)"""
 __author__ = 'GiftStarter'
 
 import time
@@ -10,6 +11,7 @@ import logging
 
 
 def update(new_gs, url_title):
+    """locate a giftstart with the provided url_title, and update it with the data in new_gs"""
     # giftstart = GiftStart.query(GiftStart.gsid == new_gs['gsid']).fetch(1)[0]
     giftstart = ndb.Key('GiftStart', url_title).get()
 
@@ -38,15 +40,19 @@ def update(new_gs, url_title):
 
 
 def get_by_id(giftstart_id):
+    """fetch a giftstart with the provided id"""
     results = GiftStart.query(GiftStart.gsid == giftstart_id).fetch(1)
     result = results[0] if len(results) > 0 else None
     return result
 
 
 def hot_campaigns(num_campaigns):
-    # Criteria for hotness:
-    #   1. ends a week ago or later
-    #   2. most pitchins
+    """
+    return hot pitch-ins and campaigns
+     Criteria for hotness:
+       1. ends a week ago or later
+       2. most pitchins
+    """
 
     recent_campaigns = GiftStart.query(GiftStart.deadline > datetime.now() - timedelta(days=7)).fetch()
     campaigns_dict = {c.gsid: c for c in recent_campaigns}
@@ -70,6 +76,7 @@ def hot_campaigns(num_campaigns):
 
 
 def does_user_exist(uid, token):
+    """validate that UID exists and matches provided access token"""
     login_service_map = {'f': 'facebook', 'g': 'googleplus', 't': 'twitter', 'e': 'emaillogin'}
     if uid[0] not in login_service_map.keys():
         return False

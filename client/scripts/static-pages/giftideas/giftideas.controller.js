@@ -35,6 +35,7 @@ function GiftideasController($scope, $http, $location) {
             angular.forEach(data.productList, function (value, key) {
                 value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
                 value.hasPrice = /^\d.*/.test(value.productPrice);
+                value.productDescription=value.productDescription.replace(/<\/p>\s*(<br\s*\/>)*(<p>\s*&nbsp;\s*<\/p>)*(<br\s*\/>)*\s*<p>/g,'</p><p>');
                 if(prior!=null) {
                     $scope.groups.push([prior,value]);
                     prior=null;
@@ -43,7 +44,7 @@ function GiftideasController($scope, $http, $location) {
                 }
                 if(product && value.productSlug==product) {
                     $scope.product=value;
-                    var metatitle=value.productName;
+                    var metatitle=value.productName.replace(/&[a-zA-Z0-9]{1,5};/g,'');
                     var metadesc=value.productMetaDescription?value.productMetaDescription:value.productDescription;
                     setMeta(metatitle, metadesc);
                     setmeta=true;

@@ -1,3 +1,4 @@
+"""unit tests for thank-you"""
 __author__ = 'GiftStarter'
 
 import os

@@ -1,3 +1,4 @@
+"""Skip32 cypher implementation"""
 __author__ = 'GiftStarter'
 
 import struct

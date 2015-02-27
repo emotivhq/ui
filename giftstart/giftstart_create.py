@@ -1,3 +1,4 @@
+"""JSON endpoints to handle campaign creation"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -25,6 +26,7 @@ class AuthError(Exception):
 class GiftStartCreateHandler(webapp2.RequestHandler):
 
     def post(self):
+        """create a campaign based on provided JSON params (only if user is currently logged in)"""
         self.request.giftstart = json.loads(self.request.body)
         broken_param = self.find_invalid_param()
         if broken_param:
@@ -133,6 +135,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
     @staticmethod
     def create_title_url(giftstart):
+        """provide a URL-compatible version of the title"""
         def name_ok(name):
             gs = ndb.Key(GiftStart, name).get()
             return gs is None
@@ -190,6 +193,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
 
 def complete_campaign_creation(uid, gs):
+    """if not already set, update gc_name and gift_champion_uid for campaign and schedule crons"""
     if bool(gs.gsid) & (gs.gc_name!=None) & len(GiftStart.query(GiftStart.gsid == gs.gsid).fetch()):
         logging.info("Not re-completing {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
         return

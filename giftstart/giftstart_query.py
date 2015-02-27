@@ -1,3 +1,4 @@
+"""provide JSON for any number of giftstarts"""
 __author__ = 'GiftStarter'
 
 import webapp2

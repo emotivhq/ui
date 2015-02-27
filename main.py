@@ -1,4 +1,4 @@
-
+"""Primary entry point for app: handle /.* requests which are not caught by other handlers, plus /giftstart/.*"""
 import webapp2
 import yaml
 from render_app import render_app, render_app_with_giftstart
@@ -17,6 +17,7 @@ config = yaml.load(open('config.yaml'))
 
 
 class MainHandler(webapp2.RequestHandler):
+    """Handle requests to /.* (if a staging UUID is present, extract and redirect to /giftstart/...)"""
     @handle_login
     def get(self):
         if self.request.cookies.get('uid'):
@@ -52,6 +53,7 @@ class MainHandler(webapp2.RequestHandler):
 
 
 class GiftStartMainHandler(webapp2.RequestHandler):
+    """handle all requests to /giftstart/.*"""
     def get(self):
         self.response.write(render_app_with_giftstart(self.request))
 

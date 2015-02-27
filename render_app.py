@@ -1,3 +1,4 @@
+"""primary rendering routines for app homepage and extant giftstarts"""
 __author__ = 'GiftStarter'
 
 import yaml
@@ -23,7 +24,7 @@ frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
 
 
 def render_app(request):
-
+    """render primary page container and content"""
     hide_header = False
     hide_body = request.path == '/header'
     hide_footer = request.path == '/header'
@@ -87,6 +88,7 @@ def render_app(request):
 
 
 def render_app_with_giftstart(request):
+    """retrieve campaign data and render campaign page"""
     analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
@@ -142,6 +144,7 @@ def render_app_with_giftstart(request):
 
 
 def remember_user(cookies, path):
+    """extract user id from cookie, provide javascript to inject user info (loginDeets) into page"""
     js_insert = ''
     if 'uid' in cookies and 'token' in cookies:
         # Strip url encoded double quotes

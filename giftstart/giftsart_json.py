@@ -1,3 +1,4 @@
+"""endpoints to retrieve and update campaign data as JSON"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -10,6 +11,7 @@ import urllib
 
 class GiftStartJsonHandler(webapp2.RequestHandler):
     def get(self):
+        """retrieve a campaign's JSON by title"""
         url_title = self.request.path[11:-5]
         if url_title != 'undefined':
             logging.info("Checking for campaign with url_title {0}"
@@ -28,6 +30,7 @@ class GiftStartJsonHandler(webapp2.RequestHandler):
             self.response.set_status(404)
 
     def post(self):
+        """retrieve a campaign's JSON by title, validate user privvs, and update its info"""
         gs = json.loads(self.request.body)
         url_title = self.request.path.split('/')[2][:-5]
         # Check if they have permissions!

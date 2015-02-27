@@ -1,5 +1,4 @@
-""" Renders card for convenient printing!
-"""
+""" Renders card for convenient printing! """
 
 __author__ = 'GiftStarter'
 

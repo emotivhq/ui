@@ -1,6 +1,4 @@
-"""
-API for the giftstart endpoint
-"""
+"""giftstart endpoint: provide campaigns as JSON, handle triggers (usu from cron) to email and update campaigns"""
 
 __author__ = 'GiftStarter'
 
@@ -18,6 +16,7 @@ from giftstart.giftstart_query import GiftStartQueryHandler
 class GiftStartHandler(webapp2.RequestHandler):
 
     def get(self):
+        """return JSON of given campaign ID"""
         gsid = self.request.get('gs-id')
         campaigns = GiftStart.query(GiftStart.gsid == gsid).fetch()
         if len(campaigns) == 1:
@@ -26,6 +25,7 @@ class GiftStartHandler(webapp2.RequestHandler):
             self.response.set_status(404, "That campaign doesn't exist.")
 
     def post(self):
+        """handle JSON requests to create a campaign or to process a trigger (usu from cron)"""
         data = json.loads(self.request.body)
         if data['action'] == 'create':
             try:
@@ -47,6 +47,7 @@ class GiftStartHandler(webapp2.RequestHandler):
 
 
 class HotCampaignsHandler(webapp2.RequestHandler):
+    """provides current set of hot campaigns over JSON"""
 
     def get(self):
         try:
@@ -60,6 +61,7 @@ class HotCampaignsHandler(webapp2.RequestHandler):
 
 
 def get_campaign_by_id(gsid):
+    """retrieve campaign with the given ID"""
     campaigns = GiftStart.query(GiftStart.gsid == gsid).fetch()
     if len(campaigns) > 0:
         return campaigns[0]
@@ -68,7 +70,7 @@ def get_campaign_by_id(gsid):
 
 
 def find_campaign(campaign):
-    # Returns 0 for nonexistent campaign, returns campaign for existing
+    # return campaign with matching title, description, champion, columns, and rows
     gs = GiftStart()
     gs = giftstart_core.populate_giftstart(gs, campaign)
     giftstart = GiftStart.query(GiftStart.giftstart_title == gs.giftstart_title,
