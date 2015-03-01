@@ -1,3 +1,4 @@
+"""provide stats about User: list their campaigns and pitchins"""
 __author__ = 'GiftStarter'
 
 from giftstart import GiftStart

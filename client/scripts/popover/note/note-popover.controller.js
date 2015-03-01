@@ -8,7 +8,7 @@
     'use strict';
 
     var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
-
+        
         $scope.noteText = '';
         $scope.profilePicture = UserService.profileImageUrl;
 

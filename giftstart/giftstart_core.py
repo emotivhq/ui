@@ -29,9 +29,9 @@ def update(new_gs, url_title):
         content_type = image['data'].split(';')[0].split(':')[1]
         base64data = ','.join(image['data'].split(',')[1:])
         img_data = base64data.decode('base64', 'strict')
-        filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
+        # filename = image['filename'] + '?' + "?{0:.0f}".format(time.time()*1000)
         giftstart.product_img_url = \
-            storage.image_cache.cache_user_uploaded_image(img_data, filename,
+            storage.image_cache.cache_user_uploaded_image(img_data,
                                                           url_title,
                                                           content_type)
 

@@ -1,3 +1,4 @@
+"""unit tests for sending email"""
 __author__ = 'GiftStarter'
 
 # Change execution path to project root

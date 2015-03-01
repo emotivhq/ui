@@ -1,3 +1,6 @@
+"""
+@undocumented:email_reset_salt
+"""
 __author__ = 'GiftStarter'
 
 from gs_user import User

@@ -1,5 +1,5 @@
 """
-API for email sending service.
+PUT endpoints for triggering raw emails, or templated emails, with supplied params
 """
 
 __author__ = 'GiftStarter'
@@ -29,6 +29,7 @@ class SentEmail(ndb.Model):
 
 
 class SendHandler(webapp2.RequestHandler):
+    """PUT handler to send an abstract email; see EMAIL_PARAMS"""
     def get(self):
         self.response.set_status(405, "GET not allowed, only PUT is valid.")
 
@@ -70,7 +71,7 @@ class SendHandler(webapp2.RequestHandler):
 
 
 class FromQueueHandler(webapp2.RequestHandler):
-
+    """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""
     def put(self):
         params = json.loads(self.request.body)
         if 'template_name' in params:
