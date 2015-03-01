@@ -1,3 +1,4 @@
+"""a User of the application"""
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
@@ -9,6 +10,7 @@ import json
 
 
 class User(ndb.Model):
+    """a User of the application: UID, name, login tokens, avatar, email, phone, referrer, CC token, etc"""
     uid = ndb.StringProperty(required=True)
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
 

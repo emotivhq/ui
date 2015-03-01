@@ -1,3 +1,4 @@
+"""send raw emails, and emails from jinja2 templates, using mandrill"""
 __author__ = 'GiftStarter'
 
 import requests
@@ -53,6 +54,7 @@ EMAIL_TEMPLATES = {
     "recipient_thankyou_notification": JINJA_ENVIRONMENT.get_template(
         "recipient_thankyou_notification.html"),
 }
+"""map of all named templates to their html files"""
 
 
 def send(subject, body, sender, to, cc=None, bcc=None, mime_type='plain',
@@ -108,6 +110,17 @@ def send_mandrill(sender, to, subject, message_text, cc=None, bcc=None,
 
 def send_from_template(subject, template_name, template_kwargs, sender, to,
                        cc=None, bcc=None, mime_type='plain', img_url=None):
+    """
+    fill in the specified template with a set of params, and send it as an email
+    @param subject: email subject
+    @param template_name: name of template from EMAIL_TEMPLATES
+    @param template_kwargs: map of params to fill in template
+    @param sender: email REPLYTO
+    @param to: email TO
+    @param cc: email CC
+    @param bcc: email BCC
+    @param mime_type: plain or html
+    """
     if template_name not in EMAIL_TEMPLATES:
         raise Exception("Ivalid template name: {tname}\n"
                         "Valid template names:\n{valid_names}".format(**{

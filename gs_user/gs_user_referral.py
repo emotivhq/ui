@@ -1,3 +1,4 @@
+"""a record of how the user was referred (channel,type,id); used as a temp object to populate user.referrer_*"""
 __author__ = 'GiftStarter'
 
 
