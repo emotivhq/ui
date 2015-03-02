@@ -70,7 +70,7 @@ def parts_available(parts, gsid):
     Verify that none of these parts have been bought yet
     @param parts: parts of the giftstart
     @param gsid: giftstart ID
-    @rtype: Boolean
+    @rtype: bool
     """
     pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     bought_parts = {part for pitchin in pitchins for part in pitchin.parts}

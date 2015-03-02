@@ -23,6 +23,7 @@ from google.appengine.ext import ndb
 
 
 class SearchProduct(FeedProduct):
+    """a searchable representation of a product, usually extracted from a FeedProduct"""
     doc_id = ndb.StringProperty(required=True)
 
     def to_search_document(self, doc_id=None):
@@ -325,6 +326,7 @@ def get_preferred_products(scored_results):
 
 
 def price_filter(product):
+    """return True only for products over $99.98 ($39.98 for butter LONDON) """
     if product.retailer == 'butter LONDON':
         return product.price > 3998
     else:

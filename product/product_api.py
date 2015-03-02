@@ -1,3 +1,4 @@
+"""provide JSON-encoded product data (from keyword search or from a known provider's URL), and tax percentage data lookups"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -8,6 +9,8 @@ import product_search
 import urllib
 
 class ProductHandler(webapp2.RequestHandler):
+
+    """provide JSON-encoded data for a specific product, or provide tax percentage for given zip code"""
 
     def post(self):
         data = json.loads(self.request.body)
@@ -32,6 +35,7 @@ class ProductHandler(webapp2.RequestHandler):
 
 
 class ProductUrlHandler(webapp2.RequestHandler):
+    """extract product info from known provider's website and return as JSON [product{price,title,logo,imgs,title}]"""
 
     def get(self):
         url = urllib.unquote(
@@ -43,6 +47,7 @@ class ProductUrlHandler(webapp2.RequestHandler):
 
 
 class ProductSearchHandler(webapp2.RequestHandler):
+    """perform a keyword search and return as JSON [{price,retailer,imgUrl,description,title,url}]"""
 
     def get(self):
         query = urllib.unquote(self.request.path[10:-5])
