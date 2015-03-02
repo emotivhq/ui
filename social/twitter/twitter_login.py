@@ -1,3 +1,4 @@
+"""provide redirection URLs and verification for Twitter login service"""
 __author__ = 'GiftStarter'
 
 import json
@@ -16,6 +17,7 @@ APP_URL = yaml.load(open('config.yaml'))['app_url']
 
 
 def get_auth_url(current_url):
+    """gets redirection URL for Twitter login"""
     url = 'https://api.twitter.com/oauth/request_token'
     auth = OAuth1(client_key=APP_KEY, client_secret=APP_SECRET,
                   callback_uri=current_url)
@@ -35,6 +37,10 @@ def get_auth_url(current_url):
 
 
 def submit_verifier(oauth_token, oauth_verifier):
+    """
+    exchange an OAuth Request Token for an OAuth Access Token
+    as per https://dev.twitter.com/oauth/reference/post/oauth/access_token
+    """
     url = 'https://api.twitter.com/oauth/access_token'
     oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token ==
                                         oauth_token).fetch(1)[0].oauth_secret
@@ -47,6 +53,7 @@ def submit_verifier(oauth_token, oauth_verifier):
 
 
 def is_logged_in(token_set):
+    """verifies that current user is logged in with Twitter"""
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
     auth = OAuth1(APP_KEY, APP_SECRET,
                   resource_owner_key=token_set.access_token,

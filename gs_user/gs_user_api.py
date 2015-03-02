@@ -1,3 +1,4 @@
+"""endpoints and user-facing pages for user metadata, login and subscription handlers, and credit-card tokens"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -25,6 +26,7 @@ stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
 
 class StatsHandler(webapp2.RequestHandler):
+    """JSON-formatted metadata about User (list of giftstarts and pitchins)"""
     def get(self):
         """
         Gets stats for passed in user.
@@ -34,12 +36,14 @@ class StatsHandler(webapp2.RequestHandler):
 
 
 class UserPageHandler(webapp2.RequestHandler):
+    """user-facing page for User metadata"""
     def get(self):
         """ A request for data about a specific user
         """
         self.response.write(render_app(self.request))
 
 class SweepstakesSubscribeHandler(webapp2.RequestHandler):
+    """handle requests to subscribe to sweepstakes list"""
     def post(self):
         self.put()
     def put(self):
@@ -64,6 +68,7 @@ class SweepstakesSubscribeHandler(webapp2.RequestHandler):
             }))
 
 class SubscribeHandler(webapp2.RequestHandler):
+    """handle requests to subscribe to mailing lists"""
     def put(self):
         data = json.loads(self.request.body)
         email = data.get('email')
@@ -84,6 +89,7 @@ class SubscribeHandler(webapp2.RequestHandler):
 
 
 class UserHandler(webapp2.RequestHandler):
+    """provide User JSON data, and handle POSTs for login services"""
     def get(self):
         uid = self.request.path.split('/')[-1]
         if uid[0] not in ['f', 'g', 't', 'e']:
@@ -146,6 +152,7 @@ class UserHandler(webapp2.RequestHandler):
 
 
 class ImageUploadHandler(webapp2.RequestHandler):
+    """puts an uploaded image into the datastore and associates it with the provided UID"""
 
     def put(self):
         uid = self.request.path.split('/')[2]
