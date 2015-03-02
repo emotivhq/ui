@@ -1,3 +1,4 @@
+"""routines for managing Twitter logins"""
 __author__ = 'GiftStarter'
 
 from twitter_login import get_auth_url, submit_verifier, is_logged_in

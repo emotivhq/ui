@@ -1,3 +1,4 @@
+"""defunct code to provide local copies of callback JS for social logins """
 __author__ = 'GiftStarter'
 
 import webapp2
