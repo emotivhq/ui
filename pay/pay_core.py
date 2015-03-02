@@ -1,5 +1,4 @@
-""" Core functions for pitchins
-"""
+""" Core functions for pitchins """
 import stripe
 
 __author__ = 'GiftStarter'
@@ -20,6 +19,7 @@ config = yaml.load(open('config.yaml'))
 
 
 def set_note_for_pitchin(uid,gsid,parts,note):
+    """set note for the given parts"""
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid, PitchIn.uid == uid).fetch()
     for pitchin in pitch_ins:
         if pitchin.parts==parts:
@@ -30,6 +30,7 @@ def set_note_for_pitchin(uid,gsid,parts,note):
     return None
 
 def set_img_for_pitchin(uid,gsid,parts,imgUrl):
+    """set image for the given parts"""
     if not imgUrl:
         logging.error("Empty imgUrl set for pitch-in with gsid={0}, uid={1}, parts={2}".format(gsid,uid,parts))
         return None
@@ -43,6 +44,7 @@ def set_img_for_pitchin(uid,gsid,parts,imgUrl):
     return None
 
 def add_name_to_pitchin(pitchin):
+    """set pitchin's name, if empty, to that of the User who pitched in"""
     if pitchin['name'] == '':
         user = gs_user_core.get_user(pitchin['uid'])
         if user is not None:
@@ -54,6 +56,7 @@ def add_name_to_pitchin(pitchin):
 
 
 def get_pitch_in_dicts(gsid):
+    """get pitch-in data: [{parts,note,gsid,timestamp,giftstart_url_title,name,img,uid}]"""
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch(use_cache=False)
     pitch_in_dicts = [pi.ext_dictify() for pi in pitch_ins]
 
@@ -63,19 +66,36 @@ def get_pitch_in_dicts(gsid):
 
 
 def parts_available(parts, gsid):
-    # Verify that none of these parts have been bought yet
+    """
+    Verify that none of these parts have been bought yet
+    @param parts: parts of the giftstart
+    @param gsid: giftstart ID
+    @rtype: Boolean
+    """
     pitchins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     bought_parts = {part for pitchin in pitchins for part in pitchin.parts}
     return not any([part in bought_parts for part in parts])
 
 
 def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
-             subscribe_to_mailing_lits, save_this_card):
+             subscribe_to_mailing_list, save_this_card):
+    """
+    Process a pitch-in, charge & save card, send notifications
+    @param uid: User ID
+    @param gsid: relevant giftstart
+    @param parts: parts of the giftstart that are covered by this pitchin
+    @param email_address: email address of person pitching in
+    @param note: public-facing note to put on card
+    @param stripe_response: response from Stripe call
+    @param subscribe_to_mailing_list: should the User be subscribed to the mailing list?
+    @param save_this_card: should the Stripe card be saved for this User?
+    @return: {result, purchased-parts|error|stripe-error}
+    """
     user = gs_user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
 
     try:
-        if subscribe_to_mailing_lits:
+        if subscribe_to_mailing_list:
             gs_user_core.subscribe_user_to_mailing_list(uid, email=email_address)
     except Exception, e:
         logging.error(e.message)
@@ -124,13 +144,14 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
 
 
 def set_user_pitched_in(user):
+    """update user.pitched_in"""
     if not user.has_pitched_in:
         user.has_pitched_in = True
         user.put()
 
 
-def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
-                              usr_img):
+def send_pitchin_notification(giftstart, charge, last_four, email, note, name, usr_img):
+    """email a receipt to the user who pitched in, and a notification to the gift champion"""
     taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': giftstart.gsid}), countdown=30)
 
@@ -179,7 +200,12 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name,
 
 
 def save_card(user, stripe_response):
-    #stripe.Card.refresh()
+    """
+    attach the provided Stripe Card to the given User, setting their Stripe ID if needed
+    :param user: User
+    :param stripe_response: response from Stripe call
+    @return: (Stripe Customer, Card)
+    """
     if user.stripe_id is None:
         # User does not have a stripe customer yet
         customer = stripe.Customer.create(
@@ -200,6 +226,12 @@ def save_card(user, stripe_response):
 
 
 def get_card_by_fingerprint(fingerprint, user):
+    """
+    get the Stripe Customer & Card for a given User and Fingerprint
+    @param fingerprint:Stripe card  fingerprint
+    @param user: User
+    @return: (Stripe Customer, Card)
+    """
     result = None
     customer = stripe.Customer.retrieve(user.stripe_id)
     cards = customer.cards.all()
@@ -211,6 +243,15 @@ def get_card_by_fingerprint(fingerprint, user):
 
 
 def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe):
+    """
+    Pay for a set of parts of a giftstart via a Stripe card fingerprint
+    @param fingerprint: Stripe card fingerprint
+    @param uid: user ID
+    @param gsid: ID of giftstart
+    @param parts: which parts of giftstart does this payment cover?
+    @param note: user-facing note for pitch-in
+    @param subscribe: (ignored)
+    """
     user = ndb.Key('User', uid).get()
 
     if not parts_available(parts, gsid):

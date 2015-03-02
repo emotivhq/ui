@@ -1,3 +1,4 @@
+"""unit tests for pitch-ins / payments"""
 import stripe
 
 __author__ = 'GiftStarter'
