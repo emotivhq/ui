@@ -8,7 +8,7 @@ handlers:
 
 # GiftStarter v2
 
-#homepage and catchall
+#homepage
 - url: /neu(/)*
   static_files: client/v2/index.htm
   upload: client/v2/index\.htm
