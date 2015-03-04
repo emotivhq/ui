@@ -6,9 +6,19 @@ threadsafe: yes
 
 handlers:
 
+# GiftStarter v2
+- url: /neu.*
+  static_files: client/v2/index.htm
+  upload: client/v2/index\.htm
+  login: admin
+
+
+# GiftStarter v1
+
 # Dynamic Sitemaps
 - url: /sitemap-giftideas.xml
   script: sitemap.sitemap_api.handler
+  secure: always
 
 # Product
 - url: /products/urls/.*.json
