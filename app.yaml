@@ -7,9 +7,16 @@ threadsafe: yes
 handlers:
 
 # GiftStarter v2
-- url: /neu.*
+
+#homepage and catchall
+- url: /neu(/)*
   static_files: client/v2/index.htm
   upload: client/v2/index\.htm
+  login: admin
+#catchall
+- url: /neu/(.*)
+  static_files: client/v2/404.htm
+  upload: client/v2/404\.htm
   login: admin
 
 
