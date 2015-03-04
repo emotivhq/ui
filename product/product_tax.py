@@ -1,4 +1,5 @@
 """
+use Tax Cloud API to find tax percentages by zip code
 @undocumented:TAX_CLOUD_API_ID
 @undocumented:TAX_CLOUD_API_KEY
 """
@@ -55,6 +56,16 @@ TAX_CLOUD_API_KEY = '80807DAF-22F1-487A-B0B8-3E103C855637'
 
 
 def lookup(address, city, state, zipcode, is_gift_card):
+    """
+    look up zip code in Tax Cloud and return tax percentage
+    @param address:
+    @param city:
+    @param state:
+    @param zipcode:
+    @param is_gift_card:
+    @return: tax percentage (0 if not found or is gift card)
+    @rtype: float
+    """
     if is_gift_card:
         return 0
     if not state:

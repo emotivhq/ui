@@ -1,4 +1,5 @@
 """
+provide an OAuth-like token pattern for email logins (see L{social.OAuthTokenPair})
 @undocumented:emaillogin_salt
 """
 __author__ = 'GiftStarter'

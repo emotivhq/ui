@@ -1,6 +1,4 @@
-"""
-API for the giftstart endpoint
-"""
+"""handle requests to share a giftstart on FaceBook"""
 
 __author__ = 'jon'
 
@@ -24,8 +22,10 @@ import giftstart
 #if error, log and respond 400 or 403
 
 class FacebookShareHandler(webapp2.RequestHandler):
+    """share a specific giftstart on Facebook"""
 
     def post(self):
+        """share a specific giftstart on Facebook"""
 
         uid = self.request.path.split('/')[2]
         gift_path = self.request.path.split('/')[6]
@@ -81,6 +81,15 @@ class FacebookShareHandler(webapp2.RequestHandler):
 
     @staticmethod
     def publish_share(access_token, gift_path, message, tags=None, deny=None):
+        """
+        publish a message on FaceBook
+        @param access_token: FB access token
+        @param gift_path: URI under /giftstart/ of giftstart
+        @param message: message for Post
+        @param tags: FB tags
+        @param deny: FB privacy['deny']
+        :return:
+        """
         gift_url = "https://www.giftstarter.co/giftstart/"+gift_path
         post_url = "https://graph.facebook.com/me/dev-giftstarter:invite"
         privacy = {'value': 'CUSTOM', 'friends': 'FRIENDS_OF_FRIENDS'}

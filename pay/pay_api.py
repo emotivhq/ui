@@ -1,6 +1,4 @@
-""" API for payment endpoint.
-"""
-
+""" Handle payment requests and serve pitchin data for giftstarts via JSON POST"""
 __author__ = 'GiftStarter'
 
 import webapp2
@@ -19,8 +17,7 @@ stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
 
 
 class PayHandler(webapp2.RequestHandler):
-    """ Handles payment requests and serves pitchin data for giftstarts.
-    """
+    """ Handle payment requests and serve pitchin data for giftstarts via JSON POST"""
 
     @ndb.toplevel
     def post(self):

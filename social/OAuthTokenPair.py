@@ -1,3 +1,4 @@
+"""an OAuth token set"""
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb

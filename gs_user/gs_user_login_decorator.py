@@ -1,3 +1,5 @@
+""" Handles authentication for a webapp2 RequestHandler, fulfilling OAuth
+flow and storing uid and token in cookies."""
 __author__ = 'GiftStarter'
 
 from functools import wraps

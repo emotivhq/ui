@@ -1,3 +1,4 @@
+"""Token Set representing a Google Plus login, and routines to get user info"""
 __author__ = 'GiftStarter'
 
 import json
@@ -11,6 +12,7 @@ secret = yaml.load(open('secret.yaml'))
 
 
 class GooglePlusTokenSet(ndb.Model):
+    """googleplus token set: (access_token, refresh_token, expires, token_type)"""
     access_token = ndb.StringProperty()
     refresh_token = ndb.StringProperty()
     expires = ndb.DateTimeProperty()
@@ -41,6 +43,7 @@ UID_QRY_URL = 'https://www.googleapis.com/plus/v1/people/me'
 
 
 def _request_with_refresh(url, token_set):
+    """access provided googleplus URL with provided token; attempt to refresh token in the process"""
     if token_set.refresh_token:
         oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
                               token=token_set.to_token(),
@@ -54,12 +57,14 @@ def _request_with_refresh(url, token_set):
 
 
 def get_uid(token_set):
+    """get googleplus ID for user"""
     response = json.loads(_request_with_refresh(UID_QRY_URL,
                                                 token_set).content)
     return response['id']
 
 
 def get_img_url(token_set):
+    """get URL of avatar for user"""
     response = _request_with_refresh(IMG_QRY_URL, token_set)
     # Strip default image sizing, add our own
     img_url = json.loads(response.content)['image']['url'].split('?')[0] + \
@@ -72,12 +77,13 @@ def token_saver(token):
 
 
 def get_user_info(user):
+    """attempt to retrieve user info (name) from googleplus; update User"""
     try:
         response = _request_with_refresh("https://www.googleapis.com/plus/v1/people/" + user.uid[1:],
                                          user.googleplus_token_set)
         gplus_user = json.loads(response.content)
         user.name = gplus_user['displayName']
     except:
-        logging.error("Daaaamn failed to get google user info for {uid}."
+        logging.error("Failed to get google user info for {uid}."
                       .format(uid=user.uid))
     return user

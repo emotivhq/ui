@@ -1,3 +1,4 @@
+"""routines for managing googleplus logins"""
 __author__ = 'GiftStarter'
 
 from googleplus_login import submit_code

@@ -1,3 +1,4 @@
+"""Token Set representing a FB login, and routines to get user info"""
 __author__ = 'GiftStarter'
 
 from . import GraphAPI
@@ -7,6 +8,7 @@ import logging
 
 
 class FacebookTokenSet(ndb.Model):
+    """googleplus token set: (access_token, expires)"""
     access_token = ndb.StringProperty()
     expires = ndb.DateTimeProperty()
 
@@ -17,17 +19,19 @@ class FacebookTokenSet(ndb.Model):
 
 
 def get_uid(token_set):
+    """get FB ID for User"""
     graph = GraphAPI(token_set.access_token)
     fb_user = graph.get_object('me')
     return fb_user['id']
 
 
 def get_user_info(user):
+    """attempt to retrieve user info (name) from Facebook; update User"""
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         fb_user = graph.get_object(user.uid[1:])
         user.name = fb_user['name']
     except:
-        logging.error("Daaaamn failed to get facebook user info for {uid}."
+        logging.error("Failed to get facebook user info for {uid}."
                       .format(uid=user.uid))
     return user

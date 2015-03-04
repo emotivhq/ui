@@ -1,3 +1,4 @@
+"""provide login tokens for googleplus login service"""
 __author__ = 'GiftStarter'
 
 import requests
@@ -14,6 +15,12 @@ REDIRECT_URI = config['app_url'] + '/oauth-callback/googleplus?appstate='
 
 
 def submit_code(code, redirect_url):
+    """
+    exchange a googleplus code for a login token, and  as per https://developers.google.com/youtube/v3/guides/authentication
+    @param code: auth code provided by https://accounts.google.com/o/oauth2/auth
+    @param redirect_url: may need to be registered in https://code.google.com/apis/console#access
+    @rtype: GooglePlusTokenSet
+    """
     base_url = 'https://accounts.google.com/o/oauth2/token'
     params = {
         'code': code,

@@ -1,6 +1,4 @@
-"""
-API for the giftstart endpoint
-"""
+"""sitemap for giftideas"""
 
 __author__ = 'GiftStarter'
 
@@ -10,6 +8,7 @@ import os
 import yaml
 
 class GiftideasHandler(webapp2.RequestHandler):
+    """dynamically generate a sitemap for giftideas: load JSON files, extract categories and product URLs"""
 
     def get(self):
         return self.post()

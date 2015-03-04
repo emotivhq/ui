@@ -1,3 +1,4 @@
+"""extract product info (price,title,logo,imgs,title) from known provider's website"""
 __author__ = 'GiftStarter'
 
 import requests

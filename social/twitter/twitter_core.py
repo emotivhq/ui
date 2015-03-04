@@ -1,3 +1,4 @@
+"""Token Set representing a Twitter login, and routines to get user info"""
 __author__ = 'GiftStarter'
 
 import json
@@ -15,6 +16,7 @@ APP_URL = yaml.load(open('config.yaml'))['app_url']
 
 
 class TwitterTokenSet(ndb.Model):
+    """Twitter token set: (access_token, access_secret)"""
     access_token = ndb.StringProperty()
     access_secret = ndb.StringProperty()
 
@@ -25,6 +27,7 @@ class TwitterTokenSet(ndb.Model):
 
 
 def get_uid(token_set):
+    """get Twitter ID for user"""
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
     auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
@@ -35,6 +38,7 @@ def get_uid(token_set):
 
 
 def get_img_url(token_set):
+    """get URL of avatar for user"""
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
     auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
@@ -45,6 +49,7 @@ def get_img_url(token_set):
 
 
 def get_user_info(user):
+    """attempt to retrieve user info (name) from Twitter; update User"""
     try:
         auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=user.twitter_token_set.access_token,
                       resource_owner_secret=user.twitter_token_set.access_secret)
@@ -53,6 +58,6 @@ def get_user_info(user):
         twitter_user = json.loads(response.content)
         user.name = twitter_user['name']
     except:
-        logging.error("Daaaamn failed to get twitter user info for {uid}."
+        logging.error("Failed to get twitter user info for {uid}."
                       .format(uid=user.uid))
     return user

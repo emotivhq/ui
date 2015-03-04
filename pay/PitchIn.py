@@ -1,3 +1,7 @@
+"""
+PitchIn: a contribution to specific parts of a giftstart:
+(uid, gsid, giftstart_url_title, name, email, img_url, note, parts, timestamp, last_four, stripe_charge_id, stripe_charge_json)
+"""
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
