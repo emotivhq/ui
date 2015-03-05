@@ -8,15 +8,28 @@ handlers:
 
 # GiftStarter v2
 
+#scripts
+- url: /neu/js
+  static_dir: client/v2/js/
+  secure: always
+  login: admin
+#all ng.html files
+- url: /neu/(.*)\.ng\.html
+  static_files: client/v2/\1.ng.html
+  upload: client/v2/.*\.ng\.html
+  secure: always
+  login: admin
 #homepage
 - url: /neu(/)*
   static_files: client/v2/index.html
   upload: client/v2/index\.html
+  secure: always
   login: admin
 #catchall
 - url: /neu/(.*)
   static_files: client/v2/404.html
   upload: client/v2/404\.html
+  secure: always
   login: admin
 
 
