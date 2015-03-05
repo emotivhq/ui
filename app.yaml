@@ -10,13 +10,13 @@ handlers:
 
 #homepage
 - url: /neu(/)*
-  static_files: client/v2/index.htm
-  upload: client/v2/index\.htm
+  static_files: client/v2/index.html
+  upload: client/v2/index\.html
   login: admin
 #catchall
 - url: /neu/(.*)
-  static_files: client/v2/404.htm
-  upload: client/v2/404\.htm
+  static_files: client/v2/404.html
+  upload: client/v2/404\.html
   login: admin
 
 
