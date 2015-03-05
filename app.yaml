@@ -6,41 +6,6 @@ threadsafe: yes
 
 handlers:
 
-# GiftStarter v2
-
-#scripts
-- url: /neu/js
-  static_dir: client/v2/js/
-  secure: always
-  login: admin
-#stylesheets
-- url: /neu/css/all\.css
-  static_files: client/v2/css/all.css
-  upload: client/v2/css/all\.css
-  secure: always
-  login: admin
-#all ng.html files
-- url: /neu/(.*)\.ng\.html
-  static_files: client/v2/\1.ng.html
-  upload: client/v2/.*\.ng\.html
-  secure: always
-  login: admin
-#homepage
-- url: /neu(/)*
-  static_files: client/v2/index.html
-  upload: client/v2/index\.html
-  secure: always
-  login: admin
-#catchall
-- url: /neu/(.*)
-  static_files: client/v2/404.html
-  upload: client/v2/404\.html
-  secure: always
-  login: admin
-
-
-# GiftStarter v1
-
 # Dynamic Sitemaps
 - url: /sitemap-giftideas.xml
   script: sitemap.sitemap_api.handler
@@ -186,6 +151,33 @@ handlers:
   script: main.app
   secure: always
 
+# GiftStarter v2
+## if this gets re-enabled, comment out skip_files: - client/bower_components/*
+#- url: /neu/js #scripts
+#  static_dir: client/v2/js/
+#  secure: always
+#  login: admin
+#- url: /neu/css/all\.css #stylesheets
+#  static_files: client/v2/css/all.css
+#  upload: client/v2/css/all\.css
+#  secure: always
+#  login: admin
+#- url: /neu/(.*)\.ng\.html #all ng.html files
+#  static_files: client/v2/\1.ng.html
+#  upload: client/v2/.*\.ng\.html
+#  secure: always
+#  login: admin
+#- url: /neu(/)* #homepage
+#  static_files: client/v2/index.html
+#  upload: client/v2/index\.html
+#  secure: always
+#  login: admin
+#- url: /neu/(.*) #catchall
+#  static_files: client/v2/404.html
+#  upload: client/v2/404\.html
+#  secure: always
+#  login: admin
+
 builtins:
   - admin_redirect: on
   - appstats: on
@@ -212,5 +204,5 @@ skip_files:
 - ^(.*/)?\..*$
 - client/stylesheets/^(?!compiled)
 - client/test/*
-#- client/bower_components/*
+- client/bower_components/*
 - client/scripts/^(?!out)
