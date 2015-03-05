@@ -13,6 +13,12 @@ handlers:
   static_dir: client/v2/js/
   secure: always
   login: admin
+#stylesheets
+- url: /neu/css/all\.css
+  static_files: client/v2/css/all.css
+  upload: client/v2/css/all\.css
+  secure: always
+  login: admin
 #all ng.html files
 - url: /neu/(.*)\.ng\.html
   static_files: client/v2/\1.ng.html
@@ -206,5 +212,5 @@ skip_files:
 - ^(.*/)?\..*$
 - client/stylesheets/^(?!compiled)
 - client/test/*
-- client/bower_components/*
+#- client/bower_components/*
 - client/scripts/^(?!out)
