@@ -35,25 +35,11 @@ div.giftstart.wrapper
     @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
       width: 40%
 
-  div.block.join-in
-    float: right
-    text-align: center
-    padding-bottom: 0
-    @media screen and (min-width: $tablet-computer-boundary)
-      margin-bottom: -1em
-    a.what-is-it
-      color: $primary-color
-
-    @media screen and (max-width: $phone-tablet-boundary)
-      width: 100%
-    @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
-      width: 60%
-
   div.block.overlay
     width: $column-width
     text-align: center
     padding: 0
-    float: right
+    float: left
     margin: $margin-vert 0
 
     @media screen and (max-width: $phone-tablet-boundary)
@@ -61,29 +47,25 @@ div.giftstart.wrapper
     @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
       width: 60%
       max-width: 500px
-      margin-right: 5%
-
-    h3.step-two
-      margin-bottom: 0
-
-    img.share
-      width: 2.75em
-      margin-right: 0.5em
-      margin-top: 0.5em
-      position: relative
-      cursor: pointer
-      display: inline-block
-    img.share:last-of-type
-      margin-right: 0
-    img.share:first-of-type
-      margin-right: 0.5em
-    img.share:hover
-      +filter-brightness(1.2)
-    img.share:active
-      +filter-brightness(1.6)
+      margin-left: 5%
 
     div.image-upload
       margin-bottom: 0.5em
+
+  div.block.fullwidth
+    width: 100%
+    max-width: 1200px
+    margin: 0 auto
+
+    div.title
+      margin: 15px auto 0 auto
+      text-align: center
+      vertical-align: top
+      color: #444
+      text-decoration: none
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
 
   div.block.description
     float: left
@@ -91,10 +73,20 @@ div.giftstart.wrapper
       margin-left: 5%
     button
       margin: 0.1em
+    a.title
+      margin: 0
+      text-align: center
+      vertical-align: top
+      color: #444
+      overflow: hidden
+      text-decoration: none
+      text-overflow: ellipsis
+      white-space: nowrap
+      font-weight: 700
+      font-size: 110%
     div.title
       position: relative
       overflow: hidden
-
       h1.title
         text-align: center
       span.title.edit
@@ -104,27 +96,10 @@ div.giftstart.wrapper
     div.save
       float: right
 
-    a.title
-      p
-        margin: 0
-        text-align: center
-        vertical-align: top
-        color: #444
-        text-decoration: underline
-        overflow: hidden
-        text-overflow: ellipsis
-        white-space: nowrap
-      div
-        text-align: center
-        img
-          max-width: 25%
-          max-height: 6em
-          display: inline-block
-          margin: 0.5em
-
     div.description
       position: relative
       overflow: hidden
+      padding-top: 2em
       padding-bottom: 2em
 
     button.edit
@@ -166,17 +141,43 @@ div.giftstart.wrapper
       line-height: 1.5
       font-weight: 300
 
-  div.block.price
+    div.pitch-instructions
+      margin-top: 35px
+      p
+        font-size: 125%
+        .ordinal
+          color: #DF484B
+
+    button.pitch-in
+      margin-top: 5px
+
+    h3.invite-friends
+      margin-top: 35px
+
+    img.share
+      width: 2.75em
+      margin-right: 0.5em
+      margin-top: 0.5em
+      position: relative
+      cursor: pointer
+      display: inline-block
+    img.share:last-of-type
+      margin-right: 0
+    img.share:first-of-type
+      margin-right: 0.5em
+    img.share:hover
+      +filter-brightness(1.2)
+    img.share:active
+      +filter-brightness(1.6)
+
+  div.block.prices
     @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
       margin-left: 5%
     h1
       color: black
     div.price
       display: inline-block
-      width: 49%
-
-    h1.countdown
-      text-align: center
+      width: 48%
 
   div.block.comments
     display: inline-block
