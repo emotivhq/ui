@@ -30,8 +30,8 @@
             </div>
             <div class="buttons">
                 <div class="pitch-instructions">
-                    <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="circle step">1</span> Click on the tiles you want to purchase</p>
-                    <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="circle step">2</span> Pitch in!</p>
+                    <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
+                    <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
                 </div>
                 <button class="pitch-in button" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pay ${{giftStart.totalSelection / 100 | number : 2}} Now</button>
                 <!-- button class="pitch-in button" ng-show="secondsLeft <= 0"">Giftstart It</button -->
