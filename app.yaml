@@ -93,12 +93,12 @@ handlers:
 - url: /bower_components
   static_dir: client/bower_components
   secure: always
+- url: /assets/giftideas/category/forhim/
+  static_dir: client/assets/giftideas/category/forHim/
+  secure: always
 - url: /assets
   static_dir: client/assets
   application_readable: true
-  secure: always
-- url: /assets/giftideas/category/forhim/
-  static_dir: client/assets/giftideas/category/forHim/
   secure: always
 - url: /pet-lovers/
   static_dir: client/assets/giftideas/category/pet-lovers/
