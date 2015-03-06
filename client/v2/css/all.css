@@ -1,0 +1,12 @@
+#mainwrap {
+    max-width: 1200px;
+    margin: 0px auto;
+}
+#headerwrap {
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+#footerwrap {
+    border-top: 1px solid black;
+    text-align: center;
+}

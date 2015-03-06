@@ -9,6 +9,7 @@ handlers:
 # Dynamic Sitemaps
 - url: /sitemap-giftideas.xml
   script: sitemap.sitemap_api.handler
+  secure: always
 
 # Product
 - url: /products/urls/.*.json
@@ -149,6 +150,33 @@ handlers:
 - url: /.*
   script: main.app
   secure: always
+
+# GiftStarter v2
+## if this gets re-enabled, comment out skip_files: - client/bower_components/*
+#- url: /neu/js #scripts
+#  static_dir: client/v2/js/
+#  secure: always
+#  login: admin
+#- url: /neu/css/all\.css #stylesheets
+#  static_files: client/v2/css/all.css
+#  upload: client/v2/css/all\.css
+#  secure: always
+#  login: admin
+#- url: /neu/(.*)\.ng\.html #all ng.html files
+#  static_files: client/v2/\1.ng.html
+#  upload: client/v2/.*\.ng\.html
+#  secure: always
+#  login: admin
+#- url: /neu(/)* #homepage
+#  static_files: client/v2/index.html
+#  upload: client/v2/index\.html
+#  secure: always
+#  login: admin
+#- url: /neu/(.*) #catchall
+#  static_files: client/v2/404.html
+#  upload: client/v2/404\.html
+#  secure: always
+#  login: admin
 
 builtins:
   - admin_redirect: on

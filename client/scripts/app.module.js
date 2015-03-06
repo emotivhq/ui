@@ -8,8 +8,6 @@ var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
         'ngSanitize', 'ngAB', 'ngResource', 'ui.date']);
 
-console && console.log && console.log("ver54");
-
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
     function($location,  $window,  $rootScope) {

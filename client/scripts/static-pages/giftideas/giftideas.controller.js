@@ -45,7 +45,7 @@ function GiftideasController($scope, $http, $location) {
                 if(product && value.productSlug==product) {
                     $scope.product=value;
                     var metatitle=value.productName.replace(/&[a-zA-Z0-9]{1,5};/g,'');
-                    var metadesc=value.productMetaDescription?value.productMetaDescription:value.productDescription;
+                    var metadesc=value.productMetaDescription&&value.productMetaDescription.trim()!=""?value.productMetaDescription:value.productDescription;
                     setMeta(metatitle, metadesc);
                     setmeta=true;
                 }
@@ -53,7 +53,7 @@ function GiftideasController($scope, $http, $location) {
             });
             if(!setmeta) {
                 var metatitle=data.categoryName;
-                var metadesc=data.categoryMetaDescription?data.categoryMetaDescription:data.categoryBlurb;
+                var metadesc=data.categoryMetaDescription&&data.categoryMetaDescription.trim()!=""?data.categoryMetaDescription:data.categoryBlurb;
                 setMeta(metatitle, metadesc);
             }
             if(prior!=null) {

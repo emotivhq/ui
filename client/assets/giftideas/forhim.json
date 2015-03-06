@@ -3,6 +3,7 @@
    "categoryNameShort":"For Him",
    "categorySlug":"forHim",
    "categoryBlurb":"Looking for the perfect gift for the man who has everything? At GiftStarter, we know that it can be a challenge when it comes to finding the perfect gift for your dad or brother or best friend. Whether it’s for a birthday, anniversary, or just because... it’s time to bring everyone together to get a bigger, better gift. And we can help. To make it easy, we have curated our favorite ideas for group gifting for the man in your life.  Let them know from their community of family and friends how special they are with a group gift from GiftStarter.",
+   "categoryMetaDescription":" ",
    "productList":[ 
       {  
          "productName":"Xbox One with Kinect",
@@ -179,6 +180,114 @@
          "productThumb":"/forHim/spencerPoolTableThumb.jpg",
          "imageAltText":"GiftStarter SPENCER Marston Potenza Pool Table",
          "giftStartLink":"http://bit.ly/1C8TNoP"
-      }
+      },
+      {
+         "productName":"Words Of Wisdom Print By The Dalai Lama",
+         "productNameShort":"Words Of Wisdom Print",
+         "productSlug":"Words-Of-Wisdom-Print",
+         "productPrice":"395.00",
+         "productDescription":"A centering quote from the Dalai Lama, printed on luan plywood and hand framed in recycled pine. Made by Rebecca Puig in USA. 24&quot;W x 2&quot;D x 36&quot;H.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/words-of-wisdom-print.jpg",
+         "productThumb":"/forHim/words-of-wisdom-print-thumb.jpg",
+         "imageAltText":"Words Of Wisdom Print",
+         "giftStartLink":"http://bit.ly/1G2DrxL"
+     },
+     {
+         "productName":"New School Shoes",
+         "productNameShort":"New School Shoes",
+         "productSlug":"New-School-Shoes",
+         "productPrice":"228.00",
+         "productDescription":"The comfort of a sneaker but so much more. Leather uppers, rubber soles, suede insoles, cool contrast stitching and a flash of sole color. Imported. Euro whole sizes 41 to 47. 41 (US 8), 42 (US 9), 43 (US 9.5), 44 (US 10), 45 (US 11), 46 (US 12), 47 (13).",
+         "productMetaDescription":"",
+         "productImage":"/forHim/new-school-shoes.jpg",
+         "productThumb":"/forHim/new-school-shoes-thumb.jpg",
+         "imageAltText":"New School Shoes",
+         "giftStartLink":"http://bit.ly/1G2EbCW"
+     },
+     {
+         "productName":"Fits Like A Glove iPad Case",
+         "productNameShort":"Fits Like A Glove iPad Case",
+         "productSlug":"Fits-Like-A-Glove-iPad-Case",
+         "productPrice":"175.00",
+         "productDescription":"Made from the same type of leather used in crafting professional-grade baseball mitts. American steerhide with bengaline lining. Tab closure. USA. Catalog exclusive. 7-1/2&quot;W x 3/4&quot;D x 9-3/4&quot;H, holds iPad or iPad Air.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/fits-like-a-glove-ipad-case.jpg",
+         "productThumb":"/forHim/fits-like-a-glove-ipad-case-thumb.jpg",
+         "imageAltText":"Fits Like A Glove iPad Case",
+         "giftStartLink":"http://bit.ly/1G2ENZt"
+     },
+     {
+         "productName":"Filson Tin Cloth Cruiser - Alaska Fit",
+         "productNameShort":"Filson Tin Cloth Cruise",
+         "productSlug":"Filson-Tin-Cloth-Cruise",
+         "productPrice":"260",
+         "productDescription":"Filson&rsquo;s classic Cruiser, made of abrasion- and wind-resistant, water-repellent Tin Cloth. With a reinforced yoke and arms, snap-adjustable cuffs and multiple pockets, it's perfect for use in the field when the weather is unpredictable. FEATURES: Snap-front closure, 4 utility pockets, 1 slotted patch pocket, 1 patch pocket, 2 handwarmer pockets, dual-access rear map pocket, 1 interior utility pocket, adjustable snap-closure cuffs, reinforced arms and yoke for added protection, Classic Cruiser multi-pocket design, wind- and abrasion-resistant, water-repellent fabric.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/filson-tin-cloth-cruise.jpg",
+         "productThumb":"/forHim/filson-tin-cloth-cruise-thumb.jpg",
+         "imageAltText":"Filson Tin Cloth Cruise",
+         "giftStartLink":"http://bit.ly/1G2FhPa"
+     },
+     {
+         "productName":"Filson Soft-Sided Cooler",
+         "productNameShort":"Filson Soft-Sided Cooler",
+         "productSlug":"Filson-Soft-Sided-Cooler",
+         "productPrice":"275.00",
+         "productDescription":"A soft-sided, insulated cooler with rustproof hardware. ",
+         "productMetaDescription":"",
+         "productImage":"/forHim/filson-soft-sided-cooler.jpg",
+         "productThumb":"/forHim/filson-soft-sided-cooler-thumb.jpg",
+         "imageAltText":"Filson Soft-Sided Cooler",
+         "giftStartLink":"http://bit.ly/1G2GaY4"
+     },
+     {
+         "productName":"Filson Rolling Carry-On",
+         "productNameShort":"Filson Rolling Carry-On",
+         "productSlug":"Filson-Rolling-Carry-On",
+         "productPrice":"495.00",
+         "productDescription":"Lightweight, rolling carry-on with U-zipper for full access.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/filson-rolling-carry-on.jpg",
+         "productThumb":"/forHim/filson-rolling-carry-on-thumb.jpg",
+         "imageAltText":"Filson Rolling Carry-On",
+         "giftStartLink":"http://bit.ly/1G2GqGA"
+     },
+     {
+         "productName":"Patagonia Men’s Ultralight Down Jacket",
+         "productNameShort":"Men’s Ultralight Down Jacket",
+         "productSlug":"Men-s-Ultralight-Down-Jacket",
+         "productPrice":"299.00",
+         "productDescription":"When sun-kissed days turn cold, reach for a simple solution without excess: this Ultralight Down Jacket warms. It features 800-fill-power 100% Traceable Down (European goose down that can be traced back to birds that were never force-fed, never live-plucked) and an ultralight nylon ripstop shell fabric that&rsquo;s nearly half the weight and twice the strength of other down shell fabrics. The sewn-through construction, tight channel pattern and just the right amount of down increase versatility for use in more moderate temperatures and diverse activities, while a DWR (durable water repellent) finish sheds snow. A slim silhouette maximizes thermal efficiency and suits its ideal uses: belay jacket over light layers at shaded crags, minimalist summer alpine bivies and unmatched warmth layered under a shell. Pockets include two zippered handwarmers and one zippered chest. A drawcord hem keeps in the heat. Stuffsack included.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/men-s-ultralight-down-jacket.jpg",
+         "productThumb":"/forHim/men-s-ultralight-down-jacket-thumb.jpg",
+         "imageAltText":"Men’s Ultralight Down Jacket",
+         "giftStartLink":"http://bit.ly/1G2GMgb"
+     },
+     {
+         "productName":"Patagonia Black Hole Wheeled Duffel 100L",
+         "productNameShort":"Black Hole Wheeled Duffel",
+         "productSlug":"Black-Hole-Wheeled-Duffel",
+         "productPrice":"349.00",
+         "productDescription":"Patagonia decided the wheel was a pretty good invention after all, so they added two of them to their rugged Black Hole bags and created this super burly, smooth-rolling duffel. Highly weather-resistant, it will protect your gear from rough handling and hold everything you need for an extended trip. Its main compartment is accessed by a zippered U-shaped lid, which has a pair of zippered mesh pockets on the underside to hold small items. A zippered exterior pocket provides a secure, easy-access place for your boarding pass, energy bar or paperback. The sturdy frame sheet protects the duffel from baggage-handler abuse and keeps your Black Hole upright, even when it&rsquo;s loaded to the max. Oversized wheels deliver a smooth ride, whether you&rsquo;re crossing the tarmac or following a cobblestone street. Carrying options include the main webbing handles (with snap closure), a telescoping handle or the two haul loops on either end. You can lash additional gear to the outside with the four corner-mounted daisy chains. Made from 14.7-oz 1,200-denier polyester (50% solution-dyed) with a TPU-film laminate and a DWR (durable water repellent) finish.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/black-hole-wheeled-duffel.jpg",
+         "productThumb":"/forHim/black-hole-wheeled-duffel-thumb.jpg",
+         "imageAltText":"Black Hole Wheeled Duffel",
+         "giftStartLink":"http://bit.ly/1G2HBps"
+     },
+     {
+         "productName":"Patagonia Men’s Skeena River Waders – Regular",
+         "productNameShort":"Men’s Skeena River Waders",
+         "productSlug":"Men-s-Skeena-River-Waders",
+         "productPrice":"399.00",
+         "productDescription":"Whether you&rsquo;re scrambling up small, high-gradient freestones or doing the cast-step-mend steelhead dance in deep water, Patagonia&rsquo;s Skeena River Waders strike an ideal balance between lightweight and tough. These highly versatile fly-fishing waders are built from varying weights of tough 4-layer polyester microfiber with their proprietary waterproof/breathable H2No&reg; barrier and NanoSphere&reg; DWR (durable water repellent) finish. Single Seam Construction (SSC) increases durability and freedom of movement. They&rsquo;re also loaded with fishing-friendly features: waist-mounted EZ-Lock suspenders easily convert from chest to waist height and provide quick relief without having to remove your jacket; internal, welded-TPU waterproof pocket keeps camera or phone dry; chest handwarmer pockets with water-resistant zips protect your off hand from the elements; additional upper storage pockets and 100% nylon utility keeper secure essential tools. The custom-fit left and right booties are made from 3mm neoprene with abrasion-resistant soles. Field repair kit included.",
+         "productMetaDescription":"",
+         "productImage":"/forHim/men-s-skeena-river-waders.jpg",
+         "productThumb":"/forHim/men-s-skeena-river-waders-thumb.jpg",
+         "imageAltText":"Men’s Skeena River Waders",
+         "giftStartLink":"http://bit.ly/1G2IzBW"
+     }
    ]
 }
