@@ -5,6 +5,12 @@
 div.giftstart.wrapper
   margin: 0 auto
 
+  .giftstart-this
+    background-color: #ccc
+    text-align: center
+    padding: 10px 5px
+    border-radius: 3px
+
   button.share
     width: 4em
     margin: 0.5em
@@ -14,6 +20,9 @@ div.giftstart.wrapper
   button.pitch-in
     width: 7em
     margin: 0.5em
+
+  .giftstart-this-link:hover
+    text-decoration: none
 
   @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
@@ -51,6 +60,10 @@ div.giftstart.wrapper
 
     div.image-upload
       margin-bottom: 0.5em
+
+  div.invite.block
+    width: 100%
+    text-align: center
 
   div.block.fullwidth
     width: 100%
@@ -139,14 +152,16 @@ div.giftstart.wrapper
       font-weight: 300
 
     div.pitch-instructions
-      margin-top: 35px
+      display: block
+      margin: 35px auto 0 auto
       p
         font-size: 125%
         .ordinal
           color: #DF484B
 
     button.pitch-in
-      margin-top: 5px
+      display: block
+      margin: 5px auto 0 auto
 
     h3.invite-friends
       margin-top: 35px

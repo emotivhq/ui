@@ -1,7 +1,5 @@
 <div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
 
-    <gs-thanks></gs-thanks>
-
     <div class="fullwidth block">
         <div class="title">
             <h1 class="title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
@@ -24,7 +22,7 @@
             </div>
             <div class="signature">
                 <p class="name" ng-show="!editMode"><span ng-show="giftStart.gc_name.length > 0">&mdash; </span>{{giftStart.gc_name}}</p><input class="gc-name" ng-model="newGcName" ng-show="editMode"/>
-                <button class="edit" ng-show="campaignEditable && !editMode" ng-click="editMode=true;">EDIT</button>
+                <button class="edit" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">EDIT</button>
                 <div class="save"><button class="save" ng-click="updateCampaign();" ng-show="editMode">Save</button><button class="save" ng-click="editMode=false;" ng-show="editMode">X</button></div>
                 <p ng-show="giftStart.gc_name.length > 0 || editMode" class="gift-champion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion</p>
             </div>
@@ -34,12 +32,17 @@
                     <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
                 </div>
                 <button class="pitch-in button" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pay ${{giftStart.totalSelection / 100 | number : 2}} Now</button>
-                <!-- button class="pitch-in button" ng-show="secondsLeft <= 0"">Giftstart It</button -->
-                <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
-                <img class="share" src="/assets/share_email.png" ng-click="emailShare();" />
-                <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();"/>
-                <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
-                <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />
+                <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
+                    Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
+                    <a class="giftstart-this-link" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GiftStart It</button></a>
+                </div>
+                <div class="invite block">
+                    <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
+                    <img class="share" src="/assets/share_email.png" ng-click="emailShare();" />
+                    <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();"/>
+                    <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
+                    <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />
+                </div>
             </div>
         </div>
     </div>
@@ -61,6 +64,8 @@
             <div><h1 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h1></div>
         </div>
     </div>
+
+    <gs-thanks></gs-thanks>
 
     <div class="comments block">
         <h3 class="black">Group Card</h3>
