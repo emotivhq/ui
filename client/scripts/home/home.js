@@ -10,10 +10,10 @@ GiftStarterApp.controller('HomeController', [
     function($scope,  Analytics,  $window,  $http,  $timeout,  AppStateService,
              $location, ToastService,  $interval, $routeParams, $rootScope, PopoverService) {
 
-        if (new Date().getTime()<1427871599000 && !device.mobile() && !$window.sessionStorage.getItem('seenSweeps2') && !$routeParams.searchTerm && !$window.sessionStorage.getItem('fromSearch')) {
+        if (new Date().getTime()<1427871599000 && !device.mobile() && !$window.sessionStorage.getItem('seenSweepsMarch') && !$routeParams.searchTerm && !$window.sessionStorage.getItem('fromSearch')) {
             // Showing per browser session
             PopoverService.setPopover('sweepstakes');
-            $window.sessionStorage.setItem('seenSweeps2', 'yes')
+            $window.sessionStorage.setItem('seenSweepsMarch', 'yes')
         }
 
         Analytics.track('client', 'loaded home');
