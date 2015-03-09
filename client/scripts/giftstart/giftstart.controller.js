@@ -130,6 +130,26 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         $scope.secondsLeftTimer = null;
     }
 
+    $scope.giftstartThisUrl = function() {
+        return '/create?' + urlSerialize({
+                product_url: GiftStartService.giftStart.product_url,
+                title: GiftStartService.giftStart.product_title,
+                price: GiftStartService.giftStart.price,
+                img_url: GiftStartService.giftStart.product_img_url,
+                source: 'GiftStarter'
+            });
+    };
+
+    var urlSerialize = function(obj) {
+        var str = [];
+        for(var p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" +
+                encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    };
+
 
     $scope.emailShare = function() {
         Analytics.track('campaign', 'email share from campaign');
