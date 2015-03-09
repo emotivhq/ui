@@ -48,7 +48,7 @@ def subscribe_user_to_mailing_list(uid, email=None, double_opt_in=True):
 
 def subscribe_to_sweepstakes(email, firstname, lastname):
     """subscribe user to the sweepstakes mailing list"""
-    sweepstakes_list_id = '6af5c8298a'
+    sweepstakes_list_id = 'b9314c9150'
     return subscribe_mailchimp_h(sweepstakes_list_id, email, firstname=firstname, lastname=lastname, double_opt_in=False)
 
 def subscribe_to_mailing_list(email, double_opt_in=True):
@@ -77,6 +77,8 @@ def subscribe_mailchimp_h(list_id, email, firstname='', lastname='', double_opt_
     })
 
     response = requests.post(mailchimp_url, post_data)
+    print post_data
+    print response.content
     if response.status_code != 200:
         if json.loads(response.content)['code'] != 214:
             # Make sure the error is not related to user already being
