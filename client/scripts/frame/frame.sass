@@ -1,7 +1,12 @@
 @import "../base"
 
+html
+  background-color: #f2f2f2
+
 body
-  margin: 0
+  margin: 0 auto
+  max-width: 1200px
+  background-color: #FFFFFF
 
 body *
   +box-sizing(border-box)
@@ -140,7 +145,7 @@ h4
   //overflow: auto
   margin-bottom: 2em
   margin-top: $header-height - 1
-  overflow-x: hidden
+  //overflow-x: hidden
   @media screen and (max-width: $phone-tablet-boundary)
     margin: 65px auto 0 auto
 

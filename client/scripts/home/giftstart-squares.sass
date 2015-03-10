@@ -3,20 +3,23 @@
 
 #giftstart-squares
   text-align: center
-  width: 100vw
-  margin-left: -0.3vw
+  width: 100%
+  //max-width: 1200px
+  margin-left: -0.3%
   //+transform(translateX(-50%))
   div.column
     float: left
   div.column.one
-    width: 16.6666666vw
+    width: 16.6666666%
   div.column.two
-    width: 33.333333vw
+    width: 33.333333%
   div.column.three
-    width: 50vw
+    width: 50%
+    div.giftstart-square
+      width: 33%
   div.giftstart-square.big
     height: 32vw
-    width: 32vw
+    width: 100%
     p
       font-size: 1.5em
   div.giftstart-square
@@ -24,7 +27,7 @@
     padding: 0.25em
     position: relative
     height: 16vw
-    width: 16vw
+    width: 100%
     float: left
 
     div.square-overlay
@@ -56,9 +59,9 @@
       @media screen and (max-width: $phone-tablet-boundary)
         overflow: hidden
 
-@media screen and (min-width: $tablet-computer-boundary)
-  #giftstart-squares
-    margin-left: -27vw
+//@media screen and (min-width: $tablet-computer-boundary)
+//  #giftstart-squares
+//    margin-left: -27vw
 
 @media screen and (max-width: $phone-tablet-boundary)
   #giftstart-squares
