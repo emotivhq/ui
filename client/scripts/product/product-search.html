@@ -29,7 +29,7 @@
             <div class="product">
                 <div class="image-container">
                     <span class="vert-align-helper"></span>
-                    <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}"/>
+                    <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
                 </div>
                 <div class="product-details">
                     <h4 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h4>
@@ -49,3 +49,18 @@
     <p class="need-help-concierge" ng-hide="products.length || results_empty || failed">Can't find it? Simply contact our <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you.</p>
     <p class="need-help-concierge" ng-show="products.length && !results_empty && !failed">Not finding what you’re looking for? Our gift concierge would love to help! Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
 </div>
+
+<script>
+//$( document ).load(
+//    $('#search-products-section div.product-container div div.image-container img').each(function(){
+//        var i = $(this);
+//        if(this.complete) {
+//            if(i.width()<250) {
+//                i.attr('src', i.attr('src').replace('500x500', '250x250'));
+//            }
+//        } else {
+//            alert('incomplete');
+//        }
+//    })
+//);
+</script>
