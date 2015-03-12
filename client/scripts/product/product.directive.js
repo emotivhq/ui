@@ -150,6 +150,15 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
             });
         };
 
+        scope.fixImage = function(img) {
+            var jImg = $(img);
+            if(jImg.width()<250) {
+                var newSrc = jImg.attr('src').replace('500x500', '250x250');
+                jImg.attr('src', newSrc);
+                scope.products[jImg.attr('index')].imgUrl=newSrc;
+            }
+        };
+
         scope.goToProduct = function($index, $event) {
             if (scope.selectedProduct == $index) {
                 //$window.open(scope.selectedProducts[$index].url, '_blank');

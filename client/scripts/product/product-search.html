@@ -29,7 +29,7 @@
             <div class="product">
                 <div class="image-container">
                     <span class="vert-align-helper"></span>
-                    <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}"/>
+                    <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
                 </div>
                 <div class="product-details">
                     <h4 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h4>
