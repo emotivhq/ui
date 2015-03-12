@@ -48,6 +48,22 @@
             return $scope.xySets.length - 1;
         }
 
+        $scope.createStep = 1;
+
+        $scope.isCreateStepTiles = function() {return $scope.createStep==1;};
+
+        $scope.isCreateStepStory = function() {return $scope.createStep==2;};
+
+        $scope.isCreateStepShipping = function() {return $scope.createStep==3;};
+
+        $scope.nextStep = function() {
+            $scope.createStep=Math.min($scope.createStep+1,3);
+        };
+
+        $scope.prevStep = function() {
+            $scope.createStep=Math.max($scope.createStep-1,1);
+        };
+
         $scope.shippingName = '';
         $scope.shippingEmail = '';
         $scope.shippingZip = '';
@@ -204,6 +220,17 @@
                 $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
+        $scope.validationCreateStep = {
+            title: 2,
+            description: 2,
+            shippingState: 3,
+            shippingZip: 3,
+            shippingName: 3,
+            shippingEmail: 3,
+            campaignEndDate: 3,
+            gcEmail: 2
+        }
+
         $scope.hideValidationError = {
             title: true,
             description: true,
@@ -217,15 +244,17 @@
 
         $scope.validationTrigger = {
             createButtonClicked: false
-        }
+        };
 
         $scope.createButtonClicked = false;
 
         $scope.next = function() {
             var keys = Object.keys($scope.hideValidationError)
             keys.forEach(function (key) {
-                $scope.hideValidationError[key] = false;
-            })
+                if($scope.validationCreateStep[key]==$scope.createStep) {
+                    $scope.hideValidationError[key] = false;
+                }
+            });
             $scope.validationTrigger.createButtonClicked = true;
 
             GiftStartService.title = $scope.title;
