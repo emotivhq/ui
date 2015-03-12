@@ -92,15 +92,18 @@
           @media screen and (max-width: $phone-tablet-boundary)
             width: 100%
 
-  img.progress
-    max-width: 30em
-    height: auto
-    @media screen and (max-width: $phone-boundary)
-      max-width: 90%
+  .progress-nav
     display: block
     margin: 2em auto
-    background-color: transparent
-    box-shadow: none
+    vertical-align: top
+    img
+      max-width: 30em
+      height: auto
+      margin: 0 50px
+      @media screen and (max-width: $phone-boundary)
+        display: none
+      background-color: transparent
+      box-shadow: none
   div.image-container
     margin-top: 1.5em
   button.float-right
@@ -111,6 +114,9 @@
     margin-top: 0.5em
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
+  button.prev
+    background: $disabled-color
+    border-color: $disabled-color
   button.circle
     @media screen and (max-width: $phone-tablet-boundary)
       font-size: 1.4em
