@@ -4,6 +4,8 @@
 #giftstart-contact-wrapper
   text-align: center
   padding: 1px
+  .invisible
+    visibility: hidden
   .state-title
     margin-top: 20px
     font-size: 34px
@@ -96,27 +98,46 @@
     display: block
     margin: 2em auto
     vertical-align: top
+    //img
+    //  max-width: 30em
+    //  height: auto
+    //  margin: 0 50px
+    //  @media screen and (max-width: $phone-boundary)
+    //    display: none
+    //  background-color: transparent
+    //  box-shadow: none
+  .step-indicator
+    vertical-align: top
+    display: inline-block
+    font-size: 12px
+    line-height: 12px
+    text-transform: uppercase
+    width: 60px
+    white-space: nowrap
+    text-align: center
     img
-      max-width: 30em
-      height: auto
-      margin: 0 50px
-      @media screen and (max-width: $phone-boundary)
-        display: none
-      background-color: transparent
-      box-shadow: none
+      padding-bottom: 5px
+  .step-indicator-divider
+    vertical-align: top
+    margin-top: 19px
   div.image-container
     margin-top: 1.5em
   button.float-right
     float: right
   button.help
     display: none
-  button.prev, button.next, button.help
-    margin-top: 0.5em
+  button.help
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
-  button.prev
-    background: $disabled-color
-    border-color: $disabled-color
+  button.next
+    margin: 0 0 0 40px
+  img.prev
+    margin-right: 40px
+  img.linky
+    &:hover
+      opacity: 0.6
+      cursor: pointer
+
   button.circle
     @media screen and (max-width: $phone-tablet-boundary)
       font-size: 1.4em

@@ -3,9 +3,9 @@
 
     <ng-include ng-show="fromReferral" src="'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"></ng-include>
 
-    <div ng-show="isCreateStepTiles()"><h2 class="state-title">Adjust the pitch-in tiles</h2><div class="state-subtitle">Create campaign: step 1 of 3</div></div>
-    <div ng-show="isCreateStepStory()"><h2 class="state-title">Tell the story</h2><div class="state-subtitle">Create campaign: step 2 of 3</div></div>
-    <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping details</h2><div class="state-subtitle">Create campaign: step 3 of 3</div></div>
+    <div ng-show="isCreateStepTiles()"><h2 class="state-title">Adjust the pitch-in tiles</h2><div class="state-subtitle">Create campaign: step 2 of 4</div></div>
+    <div ng-show="isCreateStepStory()"><h2 class="state-title">Tell the story</h2><div class="state-subtitle">Create campaign: step 3 of 4</div></div>
+    <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping details</h2><div class="state-subtitle">Create campaign: step 4 of 4</div></div>
 
     <div class="block image">
         <div class="image-container">
@@ -309,10 +309,10 @@
     </div>
 
     <div class="progress-nav">
-    <button id="giftstart-create-prev" class="prev" ng-hide="isCreateStepTiles()" ng-click="prevStep()">Previous Step</button>
-    <img src="/assets/progress_bar_2_of_3.png" ng-hide="fromReferral"/>
-    <button id="giftstart-create-next" class="next" ng-hide="isCreateStepShipping()" ng-click="nextStep()">Next Step</button>
-    <button id="giftstart-create-submit" class="next" ng-show="isCreateStepShipping()" ng-click="next()">Next Step</button>
+        <img id="giftstart-create-prev" class="linky prev" ng-class="{'invisible': isCreateStepTiles()}" ng-click="prevStep()" src="/assets/circle_black_lt.png">
+        <div class="step-indicator"><img src="/assets/circle_green_check.png" alt="Find a gift"/><br/>Find<br/>a gift</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_black.png" alt="Adjust the tiles"/><img ng-show="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(1)" alt="Adjust the tiles" /><br/>Adjust<br/>the tiles</div><img src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepShipping()" src="/assets/circle_black.png" alt="Tell the story"/><img ng-show="isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(2)" alt="Tell the story" /><br/>Tell the<br/>story</div><img src="/assets/hbar_black.png" alt="Shipping datails"/><div class="step-indicator"><img src="/assets/circle_black.png" /><br/>Shipping<br/>details</div>
+        <button id="giftstart-create-next" class="next" ng-hide="isCreateStepShipping()" ng-click="nextStep()">Next Step</button>
+        <button id="giftstart-create-submit" class="next" ng-show="isCreateStepShipping()" ng-click="next()">Next Step</button>
     </div>
 
 </div>
