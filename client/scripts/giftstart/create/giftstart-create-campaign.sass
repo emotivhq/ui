@@ -61,10 +61,20 @@
         span.state
           vertical-align: top
           margin-right: 1em
+          select
+            height: 2em
+            background-color: transparent
         span.zip
           margin-right: 1em
           input
             width: 5em
+            height: 2em
+        span.name
+          input
+            width: 23.75em
+            margin-bottom: 1em
+            @media screen and (max-width: $phone-tablet-boundary)
+              width: 100%
         span.email
           input
             width: 23.75em
@@ -156,6 +166,10 @@
     max-width: 100%
   img.loading
     height: 2em
+
+  div.campaign-length
+    h2
+      margin-top: 2rem
 
   input.hasDatepicker
     width: 23.75em
