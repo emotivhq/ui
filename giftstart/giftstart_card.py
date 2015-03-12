@@ -73,6 +73,7 @@ class CardHandler(webapp2.RequestHandler):
 
         for giver in givers:
             if giver['uid'] == gc['uid']:
+                gc['img_url'] = giver['img_url']
                 gc['comment'] = giver['comment']
                 gc['no_comment'] = not bool(gc['comment'])
                 givers.remove(giver)
