@@ -100,16 +100,19 @@ div.user-wrapper
           font-family: Roboto
           cursor: pointer
           overflow: hidden
-          -webkit-line-clamp: 3
+          display: -webkit-box
           -webkit-box-orient: vertical
-          height: 6.5em
           padding-top: .15em
           text-overflow: ellipsis
-          span.title
-            +transition(all, 0.2s)
-            //text-decoration: underline
-            font-weight: 900
-            font-size: 16px
+        p.title
+          -webkit-line-clamp: 1
+          height: 1.6em
+          font-weight: 900
+          font-size: 16px
+          margin-bottom: 2px
+        p.description
+          -webkit-line-clamp: 3
+          height: 5em
         p:hover
           span.title
             color: $primary-color

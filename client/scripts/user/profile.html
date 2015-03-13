@@ -16,7 +16,7 @@
             <div class="giftstarts">
                 <div class="giftstart" ng-repeat="gs in user.giftstarts">
                     <a ng-href="/giftstart/{{gs.giftstart_url_title}}">
-                        <p><span class="title">{{gs.title}}</span><br/>{{gs.description}}</p>
+                        <p class="title">{{gs.title}}</p><p class="description">{{gs.description}}</p>
                     </a>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="pitchins">
                 <div class="pitchin" ng-repeat="pi in user.pitchins">
                     <a ng-href="/giftstart/{{pi.giftstart_url_title}}">
-                        <p><span class="title">{{pi.gs_title}}</span><br/>{{pi.note}}</p>
+                        <p class="title">{{pi.gs_title}}</p><p class="description">{{pi.note}}</p>
                     </a>
                 </div>
             </div>
