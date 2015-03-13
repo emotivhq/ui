@@ -106,7 +106,7 @@
     //    display: none
     //  background-color: transparent
     //  box-shadow: none
-  .step-indicator
+  .back-indicator, .step-indicator
     vertical-align: top
     display: inline-block
     font-size: 12px
@@ -115,10 +115,13 @@
     width: 60px
     white-space: nowrap
     text-align: center
-    @media screen and (max-width: $phone-boundary)
-      display: none
     img
       padding-bottom: 5px
+  .back-indicator
+    margin-right: 40px
+  .step-indicator
+    @media screen and (max-width: $phone-boundary)
+      display: none
   .step-indicator-divider
     vertical-align: top
     margin-top: 19px
@@ -135,8 +138,6 @@
       width: 100%
   button.next
     margin: 0 0 0 40px
-  img.prev
-    margin-right: 40px
   img.linky
     &:hover
       opacity: 0.6
