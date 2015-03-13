@@ -115,11 +115,15 @@
     width: 60px
     white-space: nowrap
     text-align: center
+    @media screen and (max-width: $phone-boundary)
+      display: none
     img
       padding-bottom: 5px
   .step-indicator-divider
     vertical-align: top
     margin-top: 19px
+    @media screen and (max-width: $phone-boundary)
+      display: none
   div.image-container
     margin-top: 1.5em
   button.float-right
