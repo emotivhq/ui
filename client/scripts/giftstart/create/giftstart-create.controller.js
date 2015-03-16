@@ -258,7 +258,7 @@
 
         $scope.goToStep = function(i) {
             $scope.createStep=Math.max(Math.min(i,3),1)
-            $('html,body').animate({scrollTop: $('#giftstart-contact-wrapper').offset().top-100}, 500);
+            $('html,body').animate({scrollTop: $('#giftstart-create-controls').offset().top-100}, 500);
         };
 
         $scope.prevStep = function() {
