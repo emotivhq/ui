@@ -42,14 +42,14 @@ class PayHandler(webapp2.RequestHandler):
                                            payment.get('saveCreditCard', False))
                 if 'error' in result.keys():
                     self.response.set_status(400)
-            self.response.write(json.dumps(result if result is None else result.ext_dictify()))
+            self.response.write(json.dumps(result))
 
         elif data['action'] == 'pitch-in-note-update':
             payment = data['payment']
             logging.info("setting note for "+payment['gsid'])
             result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
                                        payment['parts'], payment['note'])
-            self.response.write(json.dumps(result if result is None else result.ext_dictify()))
+            self.response.write(json.dumps(result if result is None else result))
 
         elif data['action'] == 'pitch-in-img-update':
             payment = data['payment']
