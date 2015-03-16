@@ -19,11 +19,14 @@
 
             <div ng-show="isCreateStepTiles()">
 
-                <h2>Minimum Pitch In</h2>
-                <label>Consider the number of participants and how much each might want to contribute.  Keep in mind participants can always give more than one part if they wish!</label>
                 <div id="num-part-selection">
-                    <button class="circle" id="less-parts" ng-click="fewerParts($event)">&lt;</button><span class="parts-control"><span class="money"> {{x*y}} </span> parts at <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} </span><img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each</span><button class="circle" id="more-parts" ng-click="moreParts($event)">&gt;</button>
-                    <button class="help float-right" ng-click="help()">Help</button>
+                    <div class="more-parts">More<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
+                    <div class="fewer-parts-mobile">Less<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
+                    <span class="parts-control"><span class="numtiles"> {{x*y}} Tiles</span>
+                    <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span></span>
+                    <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Less</div>
+                    <!-- button class="help float-right" ng-click="help()">Help</button -->
+                    <span class="disclaimer">* Price includes fees, shipping, handling, and a personalized card.  Does not include taxes or expedited charges.</span>
                 </div>
 
             </div>

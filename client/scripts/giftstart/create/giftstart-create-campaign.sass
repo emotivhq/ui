@@ -37,8 +37,6 @@
     text-align: left
   div.block.image
     text-align: center
-    button.circle:first-of-type
-      margin-right: 0.5em
   input, textarea
     width: 100%
   label
@@ -143,17 +141,41 @@
       opacity: 0.6
       cursor: pointer
 
-  button.circle
-    @media screen and (max-width: $phone-tablet-boundary)
-      font-size: 1.4em
-  .money
-    font: $h1-font
-    margin: 0.1em
+  span.numtiles
+    font-size: 24px
+    margin: 0
+    display: block
+  span.money
+    font-size: 14px
+    margin: 0
+    display: block
   span.parts-control
     width: 12em
-    display: inline-block
+    display: block
+    margin: 15px auto
     text-align: center
     vertical-align: bottom
+    text-transform: uppercase
+  .more-parts, .fewer-parts, .fewer-parts-mobile
+    display: block
+    margin: 0 auto
+    text-align: center
+  .fewer-parts
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: none
+  .fewer-parts-mobile
+    display: none
+    @media screen and (max-width: $phone-tablet-boundary)
+      float: left
+      padding-left: 25%
+      display: block
+  .more-parts
+    @media screen and (max-width: $phone-tablet-boundary)
+      float: right
+      padding-right: 25%
+  .cost
+    @media screen and (max-width: $phone-tablet-boundary)
+      z-index: 99
   div.price-block, div.total-price-block
     display: inline-block
     width: 43%
@@ -198,6 +220,14 @@
     height: 5em
   #num-part-selection
     margin-top: 0.5em
+    .tax-note
+      font-size: 10px
+    .disclaimer
+      display: block
+      margin: 25px 25%
+      font-size: 10px
+      text-transform: uppercase
+      text-align: center
   #price
     width: 8em
   #selected-image
