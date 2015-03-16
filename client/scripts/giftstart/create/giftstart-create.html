@@ -17,22 +17,17 @@
 
         <form name="campaignForm" novalidate>
 
-            <div ng-show="isCreateStepTiles()">
-
-                <div id="num-part-selection">
-                    <div class="more-parts">More<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
-                    <div class="fewer-parts-mobile">Less<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
-                    <span class="parts-control"><span class="numtiles"> {{x*y}} Tiles</span>
-                    <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span></span>
-                    <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Less</div>
-                    <!-- button class="help float-right" ng-click="help()">Help</button -->
-                    <span class="disclaimer">* Price includes fees, shipping, handling, and a personalized card.  Does not include taxes or expedited charges.</span>
-                </div>
-
+            <div ng-show="isCreateStepTiles()" id="num-part-selection">
+                <div class="more-parts">More<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
+                <div class="fewer-parts-mobile">Less<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
+                <span class="parts-control"><span class="numtiles"> {{x*y}} Tiles</span>
+                <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span></span>
+                <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Less</div>
+                <!-- button class="help float-right" ng-click="help()">Help</button -->
+                <span class="disclaimer">* Price includes fees, shipping, handling, and a personalized card.  Does not include taxes or expedited charges.</span>
             </div>
 
             <div ng-show="isCreateStepStory()">
-
                 <h2>1. Give your Campaign a Title</h2>
                 <input type="text"
                        id="campaign-title"
@@ -106,11 +101,9 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div ng-show="isCreateStepShipping()">
-
                 <h2>1. Who is the Gift for?</h2>
                 <!-- label>All prices include taxes, shipping, and handling, based on destination.</label -->
                 <div class="shipping-details">
@@ -303,9 +296,7 @@
                     <label>Incl. taxes, shipping, and handling.</label>
                     <div class="money" ng-hide="fetchingTaxRate || !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
                 </div>
-
             </div>
-
 
         </form>
 
