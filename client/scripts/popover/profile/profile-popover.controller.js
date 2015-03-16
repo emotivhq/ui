@@ -34,6 +34,7 @@
                         GiftStartService.saveImage(newImageUrl);
                         UserService.profileImageUrl = newImageUrl;
                         $scope.$parent.$broadcast('pitchin-image-changed',newImageUrl);
+                        $scope.$parent.$broadcast('profile-image-changed',newImageUrl);
                     })
                     .error(function (reason) {
                         console && console.log && console.log('Failed to update profile image', reason);
