@@ -46,7 +46,7 @@ class PayHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'pitch-in-note-update':
             payment = data['payment']
-            logging.info("setting note for {0}",payment)
+            logging.info("setting note for "+payment['gsid'])
             result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
                                        payment['parts'], payment['note'])
             self.response.write(json.dumps(result if result is None else result.ext_dictify()))
@@ -54,7 +54,7 @@ class PayHandler(webapp2.RequestHandler):
         elif data['action'] == 'pitch-in-img-update':
             payment = data['payment']
             imgUrl = data['imgurl']
-            logging.info("setting image for {0} to {1}",payment,imgUrl)
+            logging.info("setting image for "+payment['gsid'])
             result = pay_core.set_img_for_pitchin(data['uid'], payment['gsid'],
                                        payment['parts'], imgUrl)
             self.response.write(json.dumps(result if result is None else result.ext_dictify()))
