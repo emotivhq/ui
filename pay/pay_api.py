@@ -42,14 +42,14 @@ class PayHandler(webapp2.RequestHandler):
                                            payment.get('saveCreditCard', False))
                 if 'error' in result.keys():
                     self.response.set_status(400)
-            self.response.write(json.dumps(result))
+            self.response.write(json.dumps(result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-note-update':
             payment = data['payment']
             logging.info("setting note for {0}",payment)
             result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
                                        payment['parts'], payment['note'])
-            self.response.write(json.dumps(result))
+            self.response.write(json.dumps(result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-update':
             payment = data['payment']
@@ -57,7 +57,7 @@ class PayHandler(webapp2.RequestHandler):
             logging.info("setting image for {0} to {1}",payment,imgUrl)
             result = pay_core.set_img_for_pitchin(data['uid'], payment['gsid'],
                                        payment['parts'], imgUrl)
-            self.response.write(json.dumps(result))
+            self.response.write(json.dumps(result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-upload':
             content_type = data['contenttype'].split('/')
