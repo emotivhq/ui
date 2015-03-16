@@ -36,6 +36,7 @@ class BlogHandler(webapp2.RequestHandler):
         blog_path=blog_path_notrail+"/"
         blog_subdomain_url = "http://"+blog_subdomain+".giftstarter.co/"
         blog_path_url = self.request.host_url+blog_path
+        blog_path_url_noprotocol = re.sub("https?://","",blog_path_url)
         fetch_url = self.request.path.replace(blog_path_notrail,blog_subdomain_url,1)
         #get remote page
         urlfetch.set_default_fetch_deadline(30)
@@ -46,6 +47,7 @@ class BlogHandler(webapp2.RequestHandler):
         content = fetched.content
         #replace all subdomain links
         content = re.sub("(<a|<link rel=\"canonical\"|<link rel=\"alternate\"|<atom:link)( [^>]*href\s*=\s*['\"])(https?://"+blog_subdomain+"\.giftstarter\.co)/?", "\\1\\2"+blog_path_url,content)
+        content = re.sub("(<a class=\"ssba[^>]*)"+blog_subdomain+"\.giftstarter\.co/?", "\\1"+blog_path_url_noprotocol,content)
         content = content.replace('<meta property="og:url" content="http://'+blog_subdomain+'.giftstarter.co/','<meta property="og:url" content="'+blog_path_url)
         content = content.replace('<link>http://'+blog_subdomain+'.giftstarter.co','<link>'+blog_path_url)
         content = content.replace('<comments>http://'+blog_subdomain+'.giftstarter.co','<comments>'+blog_path_url)
