@@ -7,9 +7,13 @@
 (function (app) {
     'use strict';
 
+    var noteText = '';
+    var skipNote = false;
+
     var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
         
-        $scope.noteText = '';
+        $scope.noteText = noteText;
+        $scope.skipNote = skipNote;
         $scope.profilePicture = UserService.profileImageUrl;
 
         $scope.$on('pitchin-image-changed', function (event,imgUrl) {
@@ -18,15 +22,13 @@
 
         $scope.hidePopover = function () {
             PopoverService.hidePopover();
-            $scope.skipNote = false;
-            $scope.noteText = '';
         };
 
         $scope.editPhoto = function () {
+            noteText = $scope.noteText;
+            skipNote = $scope.skipNote;
             PopoverService.setPopover('profile');
         };
-
-        $scope.skipNote = false;
 
         $scope.action = {
             submit: function () {
@@ -39,8 +41,8 @@
                     GiftStartService.saveNote($scope.noteText);
                     PopoverService.nextPopover();
                 }
-                $scope.skipNote = false;
-                $scope.noteText = '';
+                $scope.skipNote = skipNote = false;
+                $scope.noteText = noteText = '';
             }
         }
     };
