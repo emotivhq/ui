@@ -20,6 +20,17 @@ function ThanksPopoverController($scope,  PopoverService,  GiftStartService,
     $scope.mailBody= "I thought you might be interested in pitching in on this GiftStarter campaign:%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
         + GiftStartService.giftStart.gsid;
 
+
+    $scope.emailShare = function() {
+        Analytics.track('campaign', 'email share from campaign');
+        if (device.desktop()) {
+            PopoverService.setPopover('email-share');
+        } else {
+            $window.location.href = "mailto:?subject=" + $scope.mailSubject +
+                "&body=" + $scope.mailBody();
+        }
+    };
+
     $scope.facebookShare = function() {
         Analytics.track('campaign', 'facebook share from thanks');
         FacebookService.inviteFriends(UserService.uid);
