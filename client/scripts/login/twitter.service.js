@@ -32,7 +32,7 @@ GiftStarterApp.service('TwitterService', [
             ga('send', 'event', 'share campaign', 'twitter');
             var shareUrl = 'https://twitter.com/share';
             var parameters = "?url=" + encodeURIComponent($location.absUrl().split('#')[0]) +
-                "&text=Check out this GiftStarter campaign!  It's the bees knees! #GiftStarter cc @GiftChampion";
+                "&text="+encodeURIComponent("Help us gift #together on @GiftStarter! It's easy! Simply purchase 1 or more tiles on the #gift. #GiftsMatter");
             $window.open(shareUrl + parameters);
         };
 

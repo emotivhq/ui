@@ -43,7 +43,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         $location.search('gs-id', null);
     }
 
-    $scope.mailSubject = encodeURIComponent("Check out this awesome GiftStarter!");
+    $scope.mailSubject = encodeURIComponent("Join us on a gift together");
     $scope.mailBody= function() {
         $location.search('re', btoa(JSON.stringify({
             type: 'consumer',
@@ -54,7 +54,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
                 return v.toString(16);
             })
         })));
-        var url = encodeURIComponent("Seriously, it's the bee's knees.\n\n" + $location.absUrl());
+        var url = encodeURIComponent("I thought you might be interested in pitching in on this GiftStarter campaign:\n\n" + $location.absUrl());
         $location.search('re', null);
         return url;
     };

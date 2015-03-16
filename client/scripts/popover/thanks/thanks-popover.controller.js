@@ -16,8 +16,8 @@ function ThanksPopoverController($scope,  PopoverService,  GiftStartService,
 
     $scope.close = function(){PopoverService.hidePopover()};
 
-    $scope.mailSubject = "Check out this awesome GiftStarter campaign!";
-    $scope.mailBody= "Seriously, it's the bee's knees.%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
+    $scope.mailSubject = "Join us on a gift together";
+    $scope.mailBody= "I thought you might be interested in pitching in on this GiftStarter campaign:%0D%0A%0D%0Ahttp://www.giftstarter.co/giftstart?gs-id="
         + GiftStartService.giftStart.gsid;
 
     $scope.facebookShare = function() {
