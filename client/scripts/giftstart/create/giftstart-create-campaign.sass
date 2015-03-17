@@ -4,6 +4,14 @@
 #giftstart-contact-wrapper
   text-align: center
   padding: 1px
+  .invisible
+    visibility: hidden
+  .state-title
+    margin-top: 20px
+    font-size: 34px
+  .state-subtitle
+    text-transform: uppercase
+    font-size: 12px
   div.gsintro
     +border-radius(1em)
     border: 1px solid #bbbbbb
@@ -29,8 +37,6 @@
     text-align: left
   div.block.image
     text-align: center
-    button.circle:first-of-type
-      margin-right: 0.5em
   input, textarea
     width: 100%
   label
@@ -61,10 +67,20 @@
         span.state
           vertical-align: top
           margin-right: 1em
+          select
+            height: 2em
+            background-color: transparent
         span.zip
           margin-right: 1em
           input
             width: 5em
+            height: 2em
+        span.name
+          input
+            width: 23.75em
+            margin-bottom: 1em
+            @media screen and (max-width: $phone-tablet-boundary)
+              width: 100%
         span.email
           input
             width: 23.75em
@@ -76,36 +92,90 @@
           @media screen and (max-width: $phone-tablet-boundary)
             width: 100%
 
-  img.progress
-    max-width: 30em
-    height: auto
-    @media screen and (max-width: $phone-boundary)
-      max-width: 90%
+  .progress-nav
     display: block
     margin: 2em auto
-    background-color: transparent
-    box-shadow: none
+    vertical-align: top
+    //img
+    //  max-width: 30em
+    //  height: auto
+    //  margin: 0 50px
+    //  @media screen and (max-width: $phone-boundary)
+    //    display: none
+    //  background-color: transparent
+    //  box-shadow: none
+  .back-indicator, .step-indicator
+    vertical-align: top
+    display: inline-block
+    font-size: 12px
+    line-height: 12px
+    text-transform: uppercase
+    width: 60px
+    white-space: nowrap
+    text-align: center
+    img
+      padding-bottom: 5px
+  .back-indicator
+    margin-right: 40px
+  .step-indicator
+    @media screen and (max-width: $phone-boundary)
+      display: none
+  .step-indicator-divider
+    vertical-align: top
+    margin-top: 19px
+    @media screen and (max-width: $phone-boundary)
+      display: none
   div.image-container
     margin-top: 1.5em
   button.float-right
     float: right
   button.help
     display: none
-  button.next, button.help
-    margin-top: 0.5em
+  button.help
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
-  button.circle
-    @media screen and (max-width: $phone-tablet-boundary)
-      font-size: 1.4em
-  .money
-    font: $h1-font
-    margin: 0.1em
+  button.next
+    margin: 0 0 0 40px
+  img.linky
+    &:hover
+      opacity: 0.6
+      cursor: pointer
+
+  span.numtiles
+    font-size: 24px
+    margin: 0
+    display: block
+  span.money
+    font-size: 14px
+    margin: 0
+    display: block
   span.parts-control
     width: 12em
-    display: inline-block
+    display: block
+    margin: 15px auto
     text-align: center
     vertical-align: bottom
+    text-transform: uppercase
+  .more-parts, .fewer-parts, .fewer-parts-mobile
+    display: block
+    margin: 0 auto
+    text-align: center
+  .fewer-parts
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: none
+  .fewer-parts-mobile
+    display: none
+    @media screen and (max-width: $phone-tablet-boundary)
+      float: left
+      padding-left: 25%
+      display: block
+  .more-parts
+    @media screen and (max-width: $phone-tablet-boundary)
+      float: right
+      padding-right: 25%
+  .cost
+    @media screen and (max-width: $phone-tablet-boundary)
+      z-index: 99
   div.price-block, div.total-price-block
     display: inline-block
     width: 43%
@@ -149,13 +219,28 @@
   #special-notes
     height: 5em
   #num-part-selection
-    margin-top: 0.5em
+    margin-top: 15px
+    .tax-note
+      font-size: 10px
+    .disclaimer
+      display: block
+      margin: 25px 25%
+      font-size: 10px
+      text-transform: uppercase
+      text-align: center
+    @media screen and (min-width: $phone-tablet-boundary)
+      margin-top: 65px
+      margin-right: 15%
   #price
     width: 8em
   #selected-image
     max-width: 100%
   img.loading
     height: 2em
+
+  div.campaign-length
+    h2
+      margin-top: 2rem
 
   input.hasDatepicker
     width: 23.75em

@@ -14,8 +14,12 @@
         <input id="fromEmail" type="email" ng-model="fromEmail" placeholder="you@email.com" name="email"/>
     </div>
     <div>
-        <textarea class="message" ng-model="message" placeholder="Check out this baller campaign!">
+        <textarea class="message" ng-model="message" placeholder="">
         </textarea>
+        <div class="message-sub">
+        {{gsName}}<br/>
+        - {{userSvcName}}
+        </div>
     </div>
     <span class="error" ng-hide="formValid">Invalid email!</span>
     <button class="large white-border" ng-click="submit()">Send!</button>

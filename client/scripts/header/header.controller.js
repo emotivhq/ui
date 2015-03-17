@@ -30,6 +30,7 @@
         $scope.$on('login-success', updateLogin);
         $scope.$on('logout-success', updateLogin);
         $scope.$on('$routeChangeStart', routeChangeListener);
+        $scope.$on('profile-image-changed', updateLogin);
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {

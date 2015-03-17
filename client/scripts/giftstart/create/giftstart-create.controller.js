@@ -48,6 +48,8 @@
             return $scope.xySets.length - 1;
         }
 
+        $scope.createStep = 1;
+
         $scope.shippingName = '';
         $scope.shippingEmail = '';
         $scope.shippingZip = '';
@@ -204,6 +206,17 @@
                 $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
+        $scope.validationCreateStep = {
+            title: 2,
+            description: 2,
+            shippingState: 3,
+            shippingZip: 3,
+            shippingName: 3,
+            shippingEmail: 3,
+            campaignEndDate: 3,
+            gcEmail: 2
+        };
+
         $scope.hideValidationError = {
             title: true,
             description: true,
@@ -217,16 +230,50 @@
 
         $scope.validationTrigger = {
             createButtonClicked: false
-        }
+        };
 
         $scope.createButtonClicked = false;
 
-        $scope.next = function() {
+        $scope.runValidation = function() {
             var keys = Object.keys($scope.hideValidationError)
+            var hasErrors = false;
             keys.forEach(function (key) {
-                $scope.hideValidationError[key] = false;
-            })
+                if ($scope.validationCreateStep[key] == $scope.createStep) {
+                    $scope.hideValidationError[key] = false;
+                }
+                switch($scope.createStep) {
+                    case 2: hasErrors = $scope.campaignForm.title.$error.required||$scope.campaignForm.description.$error.required||$scope.campaignForm.gcEmail.$error.required; break;
+                    case 3: hasErrors = $scope.campaignForm.shippingState.$error.required||$scope.campaignForm.shippingZip.$error.required||$scope.campaignForm.shippingName.$error.required||$scope.campaignForm.shippingEmail.$error.required||$scope.campaignForm.campaignEndDate.$error.required; break;
+                }
+            });
             $scope.validationTrigger.createButtonClicked = true;
+            return !hasErrors;
+        };
+
+        $scope.isCreateStepTiles = function() {return $scope.createStep==1;};
+
+        $scope.isCreateStepStory = function() {return $scope.createStep==2;};
+
+        $scope.isCreateStepShipping = function() {return $scope.createStep==3;};
+
+        $scope.goToStep = function(i) {
+            $scope.createStep=Math.max(Math.min(i,3),1)
+            $('html,body').animate({scrollTop: $('#giftstart-create-controls').offset().top-100}, 500);
+        };
+
+        $scope.prevStep = function() {
+            $scope.goToStep($scope.createStep-1);
+        };
+
+        $scope.nextStep = function() {
+            if($scope.runValidation()) {
+                $scope.goToStep($scope.createStep + 1);
+            }
+        };
+
+        $scope.next = function() {
+
+            $scope.runValidation();
 
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;

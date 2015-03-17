@@ -54,12 +54,16 @@
 
         $scope.toEmails = '';
         $scope.fromEmail = UserService.email;
-        $scope.message = "Hey, check out this GiftStart, it's the bee's knees!\n\n" + UserService.name;
+        $scope.userSvcName = UserService.name;
+        $scope.gsName = GiftStartService.giftStart.title
+        $scope.formValid = true;
+        $scope.message = "I thought you might be interested in pitching in on this GiftStarter campaign:";
         $scope.formValid = true;
         $scope.emailUrl = "mailto:?subject=" +
-                          encodeURI("Check out this awesome GiftStarter campaign!") +
+                          encodeURI("Join us on a gift together") +
                           "&body=" +
-                          encodeURI("Check out this awesome GiftStarter campaign, it's the bee's knees!\n\n" + $location.absUrl());
+                          encodeURI("I thought you might be interested in pitching in on this GiftStarter campaign:\n\n" +
+                          $location.absUrl());
 
         $scope.sending = false;
 

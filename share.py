@@ -46,7 +46,7 @@ def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
         sender_img = None
     requests.put(config['email_url'],
                  data=json.dumps({
-                     'subject': "Check Out This Awesome GiftStart!",
+                     'subject': "Join us on a gift together",
                      'sender': sender, 'to': to,
                      'template_name': "campaign_share_email",
                      'mime_type': 'html',
@@ -55,14 +55,9 @@ def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
                          'message': message,
                          'sender_name': sender_name,
                          'sender_email': sender,
-                         'sender_img': sender_img,
-                         'gs_title': gs.giftstart_title,
-                         'gs_image': gs.product_img_url,
-                         'gs_description': gs.giftstart_description,
-                         'gs_link': share_url,
+                         'campaign_name': gs.giftstart_title,
                          'campaign_link': share_url,
-                         'frame': 'base_frame',
-                         'product_img_url': gs.product_img_url,
+                         'frame': 'base_frame'
                      }
                  }))
 
