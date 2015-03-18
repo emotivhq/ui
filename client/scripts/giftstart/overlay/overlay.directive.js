@@ -11,6 +11,7 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
         var overlayElement = angular.element('gs-overlay div.overlay');
 
         function drawGrid() {
+            console&&console.log&&console.log('drawGrid');
             // Add artificial delay so the DOM elements have time to settle.
             $timeout(function () {
                 var overlayHeight = overlayElement.height();
@@ -51,6 +52,10 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
         drawGrid();
 
         angular.element(overlayElement).bind('load', drawGrid);
+        console&&console.log&&console.log('binding to: '+jQuery(overlayElement));
+        $( window ).resize(function() {
+            drawGrid();
+        });
         scope.$on('overlay-updated', drawGrid);
         scope.$on('giftstart-loaded', drawGrid);
     }
