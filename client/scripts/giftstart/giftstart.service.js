@@ -77,8 +77,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     var linkReplacerRegex = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([-\w\/_\.]*(\?\S+)?)?)?))/g;
 
     this.makeLinks = function() {
-        $('.makelinks').each(function() {
-            $(this).html($(this).html().replace(linkReplacerRegex, "<a href=\"$1\" title=\"\" target=\"_blank\">$1</a>"));
+        jQuery('.makelinks').each(function() {
+            var thishtml=jQuery(this).html();
+            if(thishtml.indexOf('<a')<0) {
+                jQuery(this).html(thishtml.replace(linkReplacerRegex, "<a href=\"$1\" title=\"\" target=\"_blank\">$1</a>"));
+            }
         })
     };
 
@@ -231,7 +234,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
         self.syncPitchIns('GiftStartService');
 
-        self.makeLinks();
+        setTimeout(self.makeLinks,2000);
 
         $rootScope.$broadcast('giftstart-loaded');
     };
