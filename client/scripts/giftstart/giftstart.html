@@ -18,7 +18,7 @@
 
             <div class="description">
                 <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
-                <span class="description" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
+                <span class="description makelinks" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
             </div>
             <div class="signature">
                 <p class="name" ng-show="!editMode"><span ng-show="giftStart.gc_name.length > 0">&mdash; </span>{{giftStart.gc_name}}</p><input class="gc-name" ng-model="newGcName" ng-show="editMode"/>
