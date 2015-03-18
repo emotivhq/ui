@@ -74,6 +74,17 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     var self = this;
 
+    var linkReplacerRegex = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([-\w\/_\.]*(\?\S+)?)?)?))/g;
+
+    this.makeLinks = function() {
+        jQuery('.makelinks').each(function() {
+            var thishtml=jQuery(this).html();
+            if(thishtml.indexOf('<a')<0) {
+                jQuery(this).html(thishtml.replace(linkReplacerRegex, "<a href=\"$1\" title=\"\" target=\"_blank\">$1</a>"));
+            }
+        })
+    };
+
     this.createGiftStart = function() {
         Analytics.track('campaign', 'created');
         // Check to see that name is populated (for fb-login it is not yet)
@@ -222,6 +233,8 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         }
 
         self.syncPitchIns('GiftStartService');
+
+        setTimeout(self.makeLinks,2000);
 
         $rootScope.$broadcast('giftstart-loaded');
     };
