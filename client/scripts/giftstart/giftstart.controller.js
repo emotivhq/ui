@@ -10,9 +10,6 @@ GiftStarterApp.controller('GiftStartController', [
             'UserService','$window', 'PopoverService','LocalStorage',
     GiftStartController]);
 
-
-var linkReplacerRegex = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([-\w\/_\.]*(\?\S+)?)?)?))/g;
-
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
          UserService,  $window, PopoverService, LocalStorage) {
@@ -133,12 +130,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         $scope.secondsLeftTimer = null;
     }
 
-    function makeLinks() {
-        $('.makelinks').each(function() {
-            $(this).html($(this).html().replace(linkReplacerRegex, "<a href=\"$1\" title=\"\" target=\"_blank\">$1</a>"));
-        })
-    }
-
     $scope.giftstartThisUrl = function() {
         return '/create?' + urlSerialize({
                 product_url: GiftStartService.giftStart.product_url,
@@ -242,7 +233,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         $scope.giftStart = GiftStartService.giftStart;
         $scope.secondsLeft = GiftStartService.giftStart.deadline -
             (new Date()).getTime()/1000;
-        makeLinks();
         startSecondsLeftTimer();
     });
     $scope.$on('giftstart-updated', function() {
