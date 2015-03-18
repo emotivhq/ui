@@ -49,21 +49,21 @@ div.giftstart.wrapper
     text-align: center
     padding: 0
     float: left
-    margin: $margin-vert 0
-
+    margin: 0 0 $margin-vert 0
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
+      padding-top: 2em
     @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
       width: 60%
       max-width: 500px
       margin-left: 5%
-
     div.image-upload
       margin-bottom: 0.5em
 
   div.invite.block
     width: 100%
     text-align: center
+    padding-top: 0px
 
   div.block.fullwidth
     width: 100%
@@ -80,10 +80,15 @@ div.giftstart.wrapper
       text-overflow: ellipsis
       white-space: nowrap
 
-  div.block.description
-    float: left
-    @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
-      margin-left: 5%
+  div.block.col2
+    float: right
+    padding-top: 0px
+    margin-right: 4%
+    @media screen and (max-width: $phone-tablet-boundary - 1)
+      float: left
+      padding: 0 2%
+      margin-left: 0%
+      margin-right: 2%
     button
       margin: 0.1em
     a.title
@@ -105,12 +110,14 @@ div.giftstart.wrapper
         float: left
     div.save
       float: right
-
     div.description
       position: relative
       overflow: hidden
       padding-top: 2em
       padding-bottom: 2em
+      @media screen and (max-width: $phone-tablet-boundary - 1)
+        padding-top: 0.5em
+        padding-bottom: 0.5em
 
     button.edit
       position: absolute
@@ -154,8 +161,12 @@ div.giftstart.wrapper
     div.pitch-instructions
       display: block
       margin: 35px auto 0 auto
+      @media screen and (max-width: $phone-tablet-boundary - 1)
+        margin-top: 15px
       p
         font-size: 125%
+        @media screen and (max-width: $phone-tablet-boundary - 1)
+          margin-bottom: 0
         .ordinal
           color: #DF484B
 
@@ -183,13 +194,22 @@ div.giftstart.wrapper
       +filter-brightness(1.6)
 
   div.block.prices
-    @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
-      margin-left: 5%
+    @media screen and (min-width: $phone-tablet-boundary)
+      width: 47%
+      margin-left: 2.5%
     h1
       color: black
     div.price
       display: inline-block
       width: 48%
+    div.price.remaining
+      text-align: right
+
+  div.block.completion
+    text-align: center
+    @media screen and (min-width: $phone-tablet-boundary)
+      width: 47%
+      margin-left: 2.5%
 
   div.block.comments
     display: inline-block
