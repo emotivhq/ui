@@ -11,7 +11,7 @@ GiftStarterApp.controller('GiftStartController', [
     GiftStartController]);
 
 
-var linkReplacerRegex = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([\w/_\.]*(\?\S+)?)?)?))/g;
+var linkReplacerRegex = /(https?:\/\/(([-\w\.]+)+(:\d+)?(\/([-\w\/_\.]*(\?\S+)?)?)?))/g;
 
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
@@ -134,7 +134,9 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     }
 
     function makeLinks() {
-        $('.makelinks').replace(linkReplacerRegex, "<a href=\"$1\" title=\"\" target=\"_blank\">$1</a>");
+        $('.makelinks').each(function() {
+            $(this).html($(this).html().replace(linkReplacerRegex, "<a href=\"$1\" title=\"\" target=\"_blank\">$1</a>"));
+        })
     }
 
     $scope.giftstartThisUrl = function() {
