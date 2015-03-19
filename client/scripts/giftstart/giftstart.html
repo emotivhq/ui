@@ -28,7 +28,7 @@
             <button class="pitch-in button" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pay ${{giftStart.totalSelection / 100 | number : 2}} Now</button>
             <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
-                <a class="giftstart-this-link" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GiftStart It</button></a>
+                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GiftStart It</button></a>
             </div>
         </div>
         <div class="overlay block">
