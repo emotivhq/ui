@@ -235,7 +235,7 @@
         }
         resetValidationErrors();
 
-        jQuery('form[name=campaignForm]').fadeIn();
+        $scope.isSubmittingData = false;
 
         $scope.validationTrigger = {
             createButtonClicked: false
@@ -304,13 +304,12 @@
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
-                dateChosenValid()) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) && dateChosenValid()) {
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
                     GiftStartService.createGiftStart();
-                    jQuery('form[name=campaignForm]').fadeOut();
+                    $scope.isSubmittingData = true;
                     clearCreateData();
                     resetValidationErrors();
                 } else {
