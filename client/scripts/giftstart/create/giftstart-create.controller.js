@@ -19,7 +19,7 @@
                                AppStateService) {
         var campaignLength = 10;
 
-        $scope.inputPrice = ProductService.product.price/100;
+        $scope.inputPrice = ProductService.product.price / 100;
         $scope.totalPrice = 0;
         $scope.campaignEndDate = null;
         $scope.getCampaignLength = function (date) {
@@ -72,59 +72,63 @@
 
         $scope.dateChosenValid = dateChosenValid;
 
-        $scope.shippingChanged = function() {
+        $scope.shippingChanged = function () {
             if ($scope.shippingZip.length == 5) {
                 Analytics.track('campaign', 'shipping updated');
                 $scope.fetchingTaxRate = true;
                 $scope.shippingDetailsSubmitted = true;
 
-                $http({method: 'POST', url: '/product',
-                    data: {action: 'get-tax-and-shipping',
+                $http({
+                    method: 'POST', url: '/product',
+                    data: {
+                        action: 'get-tax-and-shipping',
                         shipping_address: 'street', shipping_city: 'city',
                         title: ProductService.product.title,
                         shipping_state: $scope.shippingState,
-                        shipping_zip: $scope.shippingZip}})
-                    .success(function(result) {
+                        shipping_zip: $scope.shippingZip
+                    }
+                })
+                    .success(function (result) {
                         Analytics.track('product', 'tax and shipping fetch success');
                         $scope.salesTaxRate = result.tax;
                         $scope.fetchingTaxRate = false;
                         $scope.priceChanged();
                     })
-                    .error(function(reason) {
+                    .error(function (reason) {
                         $scope.fetchingTaxRate = false;
                         Analytics.track('product', 'tax and shipping fetch failed');
                     });
             }
         };
 
-        $scope.nextImage = function() {
+        $scope.nextImage = function () {
             $scope.imgIndex = ($scope.imgIndex + 1) % $scope.product.imgs.length;
             $scope.selectedImg = $scope.product.imgs[$scope.imgIndex];
             $scope.updateGiftStartImage();
         };
 
-        $scope.previousImage = function() {
+        $scope.previousImage = function () {
             $scope.imgIndex = ($scope.imgIndex + $scope.product.imgs.length - 1) % $scope.product.imgs.length;
             $scope.selectedImg = $scope.product.imgs[$scope.imgIndex];
             $scope.updateGiftStartImage();
         };
 
-        $scope.updateGiftStartImage = function() {
+        $scope.updateGiftStartImage = function () {
             Analytics.track('campaign', 'selected image changed');
             GiftStartService.giftStart.product_img_url = $scope.selectedImg;
         };
 
-        $scope.priceChanged = function() {
+        $scope.priceChanged = function () {
             Analytics.track('campaign', 'price changed');
             $scope.salesTax = $scope.salesTaxRate * $scope.inputPrice * 100;
             $scope.serviceFee = 0.08 * $scope.inputPrice * 100;
             $scope.shipping = 0.045 * $scope.inputPrice * 100;
             $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax +
-                $scope.serviceFee + $scope.shipping;
+            $scope.serviceFee + $scope.shipping;
             $scope.updateOverlay();
         };
 
-        $scope.moreParts = function(event) {
+        $scope.moreParts = function (event) {
             Analytics.track('campaign', 'number of parts changed');
             if ($scope.selectedXYSet < $scope.xySets.length - 1) {
                 $scope.selectedXYSet += 1;
@@ -136,7 +140,7 @@
             event.preventDefault();
         };
 
-        $scope.fewerParts = function(event) {
+        $scope.fewerParts = function (event) {
             Analytics.track('campaign', 'number of parts changed');
             if ($scope.selectedXYSet > 0) {
                 $scope.selectedXYSet -= 1;
@@ -148,7 +152,7 @@
             event.preventDefault();
         };
 
-        $scope.updateOverlay = function() {
+        $scope.updateOverlay = function () {
             GiftStartService.giftStart.columns = $scope.x;
             GiftStartService.giftStart.rows = $scope.y;
             GiftStartService.giftStart.total_price = $scope.totalPrice;
@@ -157,9 +161,9 @@
             $scope.$broadcast('overlay-updated');
         };
 
-        $scope.makeUUID = function() {
-            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        $scope.makeUUID = function () {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         };
@@ -170,7 +174,7 @@
                 'description': $scope.description,
                 'product_url': ProductService.product.product_url,
                 'product_img_url': $scope.selectedImg,
-                'product_price': $scope.inputPrice*100,
+                'product_price': $scope.inputPrice * 100,
                 'product_title': ProductService.product.title,
                 'sales_tax': $scope.salesTax,
                 'shipping': $scope.shipping,
@@ -203,7 +207,7 @@
 
         function dateChosenValid() {
             return !($scope.getCampaignLength($scope.campaignEndDate) > 29 ||
-                $scope.getCampaignLength($scope.campaignEndDate) < 2);
+            $scope.getCampaignLength($scope.campaignEndDate) < 2);
         }
 
         $scope.validationCreateStep = {
@@ -217,22 +221,25 @@
             gcEmail: 2
         };
 
-        $scope.hideValidationError = {
-            title: true,
-            description: true,
-            shippingState: true,
-            shippingZip: true,
-            shippingName: true,
-            shippingEmail: true,
-            campaignEndDate: true,
-            gcEmail: true
-        };
+        function resetValidationErrors() {
+            $scope.hideValidationError = {
+                title: true,
+                description: true,
+                shippingState: true,
+                shippingZip: true,
+                shippingName: true,
+                shippingEmail: true,
+                campaignEndDate: true,
+                gcEmail: true
+            };
+        }
+        resetValidationErrors();
+
+        $scope.isSubmittingData = false;
 
         $scope.validationTrigger = {
             createButtonClicked: false
         };
-
-        $scope.createButtonClicked = false;
 
         $scope.runValidation = function() {
             var keys = Object.keys($scope.hideValidationError)
@@ -297,13 +304,14 @@
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
 
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) &&
-                dateChosenValid()) {
+            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) && dateChosenValid()) {
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
                     GiftStartService.createGiftStart();
+                    $scope.isSubmittingData = true;
                     clearCreateData();
+                    resetValidationErrors();
                 } else {
                     var uuid = $scope.makeUUID();
                     //stash staged giftstart for later use by login-popover.controller
@@ -333,11 +341,11 @@
             GiftStartService.giftStart.gsid = 0;
             GiftStartService.giftStart = GiftStartService.buildGiftStart();
         } else {
-            $scope.inputPrice = GiftStartService.productPrice/100;
-            $scope.shippingZip = GiftStartService.shippingZip;
-            $scope.shippingState = GiftStartService.shippingState;
-            $scope.title = GiftStartService.title;
-            $scope.description = GiftStartService.description;
+            //$scope.inputPrice = GiftStartService.productPrice/100;
+            //$scope.shippingZip = GiftStartService.shippingZip;
+            //$scope.shippingState = GiftStartService.shippingState;
+            //$scope.title = GiftStartService.title;
+            //$scope.description = GiftStartService.description;
             $scope.specialNotes = GiftStartService.specialNotes;
             $scope.giftStart = GiftStartService.giftStart;
         }
@@ -381,7 +389,7 @@
         }
 
         function restoreFromSession(session) {
-            // This function doesn't seem to in use
+            // This function doesn't seem to be in use
             $scope.title = session.title;
             $scope.description = session.description;
             ProductService.product.product_url = session.productUrl;

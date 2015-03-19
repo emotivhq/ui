@@ -51,6 +51,8 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
         drawGrid();
 
         angular.element(overlayElement).bind('load', drawGrid);
+        console&&console.log&&console.log('binding to: '+jQuery(overlayElement));
+        jQuery( window ).resize(drawGrid);
         scope.$on('overlay-updated', drawGrid);
         scope.$on('giftstart-loaded', drawGrid);
     }
