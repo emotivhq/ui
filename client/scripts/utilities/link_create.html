@@ -41,7 +41,7 @@
                         product_url: url,
                         title: title,
                         price: 100*price,
-                        img_url: img,
+                        img_url: '/assets/giftideas/category'+img,
                         source: source
                     });
         }
@@ -307,7 +307,7 @@
 
     </script>
     <div style="display:inline-block; float:left; min-width:750px; white-space: nowrap">
-        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" onchange="setImageVals()"/><br>
+        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" onchange="this.value=this.value.toLowerCase();setImageVals()"/><br>
         <label for="url">Product URL</label> <input type="text" id="url" required="" size="80"/><br>
         <label for="title">Product Title</label> <input type="text" id="title" required="" size="80" onchange="setShortTitle()"/><br>
         <label style="color:#999999" for="titleshort">Short Title*</label> <input type="text" id="titleshort" required="" size="40" maxlength="28" onchange="setProductSlug()"/> (max 28 chars)<br>
