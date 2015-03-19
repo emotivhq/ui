@@ -8,7 +8,7 @@ config = yaml.load(open('config.yaml'))
 
 
 def make_giftstart_it_url(giftstart):
-    """ Creates a link pointing to /create with all product details; make sure to use target="_self" for local links
+    """ Creates a link pointing to /create with all product details; make sure to use target='_self' for local links
     @type giftstart: giftstart.GiftStart.GiftStart
     @rtype: str
     """
