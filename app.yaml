@@ -122,6 +122,10 @@ handlers:
   static_dir: client/assets/giftideas/category/giftcard/
   application_readable: true
   secure: always
+- url: /giftCard/
+  static_dir: client/assets/giftideas/category/giftcard/
+  application_readable: true
+  secure: always
   # end yuck
 - url: /templates/angular
   static_dir: client/templates/angular
