@@ -341,11 +341,11 @@
             GiftStartService.giftStart.gsid = 0;
             GiftStartService.giftStart = GiftStartService.buildGiftStart();
         } else {
-            $scope.inputPrice = GiftStartService.productPrice/100;
-            $scope.shippingZip = GiftStartService.shippingZip;
-            $scope.shippingState = GiftStartService.shippingState;
-            $scope.title = GiftStartService.title;
-            $scope.description = GiftStartService.description;
+            //$scope.inputPrice = GiftStartService.productPrice/100;
+            //$scope.shippingZip = GiftStartService.shippingZip;
+            //$scope.shippingState = GiftStartService.shippingState;
+            //$scope.title = GiftStartService.title;
+            //$scope.description = GiftStartService.description;
             $scope.specialNotes = GiftStartService.specialNotes;
             $scope.giftStart = GiftStartService.giftStart;
         }
@@ -389,7 +389,7 @@
         }
 
         function restoreFromSession(session) {
-            // This function doesn't seem to in use
+            // This function doesn't seem to be in use
             $scope.title = session.title;
             $scope.description = session.description;
             ProductService.product.product_url = session.productUrl;
