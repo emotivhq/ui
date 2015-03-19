@@ -109,6 +109,7 @@ handlers:
   static_dir: client/assets
   application_readable: true
   secure: always
+  # yuck: link creator was broken for a while, so had to create some aliases instead of editing a billion bitly links
 - url: /pet-lovers/
   static_dir: client/assets/giftideas/category/pet-lovers/
   application_readable: true
@@ -117,6 +118,11 @@ handlers:
   static_dir: client/assets/giftideas/category/sympathy/
   application_readable: true
   secure: always
+- url: /giftcard/
+  static_dir: client/assets/giftideas/category/giftcard/
+  application_readable: true
+  secure: always
+  # end yuck
 - url: /templates/angular
   static_dir: client/templates/angular
   secure: always
