@@ -73,7 +73,7 @@
         $scope.dateChosenValid = dateChosenValid;
 
         $scope.shippingChanged = function () {
-            if ($scope.shippingZip.length == 5) {
+            if ($scope.shippingZip&&$scope.shippingZip.length == 5) {
                 Analytics.track('campaign', 'shipping updated');
                 $scope.fetchingTaxRate = true;
                 $scope.shippingDetailsSubmitted = true;
