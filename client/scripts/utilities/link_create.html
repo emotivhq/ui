@@ -41,7 +41,7 @@
                         product_url: url,
                         title: title,
                         price: 100*price,
-                        img_url: '/assets/giftideas/category'+img,
+                        img_url: (img.toLowerCase().indexOf('http')==0?img:('/assets/giftideas/category'+img)),
                         source: source
                     });
         }
