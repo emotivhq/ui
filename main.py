@@ -36,11 +36,11 @@ class MainHandler(webapp2.RequestHandler):
                 gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid).fetch(1)
                 if(not len(gss)):
                     # eventual consistency: sometimes fails to get an element that was just created
-                    logging.info("Failed to fetch giftstart with staging uuid:\n{0}; retrying...".format(staging_uuid))
+                    logging.info("Failed to fetch giftstart with staging uuid: {0}; retrying...".format(staging_uuid))
                     time.sleep(5)
                     gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid).fetch(1)
                 if(not len(gss)):
-                    logging.info("Failed to fetch giftstart with staging uuid:\n{0}".format(staging_uuid))
+                    logging.info("Failed to fetch giftstart with staging uuid: {0}".format(staging_uuid))
                 if len(gss):
                     logging.info("Fetched giftstart with staging uuid:\n{0}".format(staging_uuid))
                     uid = urllib.unquote(self.request.cookies['uid'].replace('%22', ''))

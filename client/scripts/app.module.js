@@ -54,6 +54,7 @@ angular.module('GiftStarterApp').service('AppStateService', [
             state.path = self.path;
             state.app_url = $window.location.protocol + '//' +
                 $window.location.host + '/';
+            console && console.log && console.log('encoding state', state);
             return btoa(JSON.stringify(state));
         }
 
@@ -73,8 +74,7 @@ angular.module('GiftStarterApp').service('AppStateService', [
             $location.search('state', null);
             if (state.title_url) {
                 $location.path('/giftstart/' + state.title_url);
-            }
-            if (state.path) {
+            } else if (state.path) {
                 $location.path(state.path);
             }
             $rootScope.$broadcast('state-parsed');
