@@ -86,6 +86,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.createGiftStart = function() {
+        console&&console.log&&console.log("createGiftStart");
         Analytics.track('campaign', 'created');
         // Check to see that name is populated (for fb-login it is not yet)
         if (!self.gcName) {self.gcName = UserService.name}
@@ -206,7 +207,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.fetchGiftStart = function(url_title) {
-        console && console.log && console.log(url_title);
+        console && console.log && console.log("fetchGiftStart: "+url_title);
         function fetchSuccess(data) {self.inflateGiftStart(data)}
         function fetchError(reason) {Analytics.track('campaign',
             'campaign fetch failed')}
@@ -217,7 +218,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.inflateGiftStart = function(giftstart) {
-        console && console.log && console.log(giftstart);
+        console && console.log && console.log("inflateGiftStart "+giftstart.giftstart_url_title);
         Analytics.track('campaign', 'campaign enabled');
 
         self.giftStart = giftstart;

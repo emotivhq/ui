@@ -131,6 +131,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
             logging.info("No user found, stashing campaign")
             gs.put()
 
+        logging.info("giftstart created: "+gs.jsonify())
         self.response.write(gs.jsonify())
 
     @staticmethod
@@ -151,12 +152,17 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
     @staticmethod
     def populate_giftstart(ndbgs, giftstart, uid='none', uuid='none'):
+        idMissing = True
         if uid != 'none':
             ndbgs.gift_champion_uid = uid
-        elif uuid != 'none':
+            idMissing = False
+        if uuid != 'none':
             ndbgs.staging_uuid = uuid
-        else:
+            idMissing = False
+        if(idMissing):
             raise ValueError('Either uid or uuid must be supplied')
+        if(uid!='none' and uuid!='none'):
+            logging.info('Both uid {0} and uuid {1} supplied during populate_giftstart'.format(uid, uuid))
         ndbgs.giftstart_title = giftstart['title']
         ndbgs.giftstart_description = giftstart['description']
 
@@ -194,7 +200,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
 
 def complete_campaign_creation(uid, gs):
     """if not already set, update gc_name and gift_champion_uid for campaign and schedule crons"""
-    if bool(gs.gsid) & (gs.gc_name!=None) & len(GiftStart.query(GiftStart.gsid == gs.gsid).fetch()):
+    if bool(gs.gsid) & (gs.gc_name!=None) & (gs.gift_champion_uid!=None) & len(GiftStart.query(GiftStart.gsid == gs.gsid).fetch()):
         logging.info("Not re-completing {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
         return
     user = ndb.Key('User', uid).get()
