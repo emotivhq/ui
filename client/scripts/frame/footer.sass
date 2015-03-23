@@ -22,7 +22,8 @@ footer
       width: 40px
       height: 40px
     &.left
-      width: 79%
+      width: 73%
+      margin-left: 5%
       .footcol
         height: 100px
         @media screen and (max-width: $phone-tablet-boundary)
@@ -30,6 +31,7 @@ footer
       @media screen and (max-width: $phone-tablet-boundary)
         text-align: center
         width: 100%
+        margin-left: 0
     &.right
       width: 19%
       font-size: 10px
@@ -63,17 +65,21 @@ footer
       line-height: 14px
       color: #222
     button
-      padding: 4px 13px 2px 13px
-      font-size: 14px
+      padding: 2px
+      width: 120px
+      font-size: 11px
+      font-family: "Roboto Condensed", sans-serif
       line-height: 16px
       text-transform: uppercase
-      color: #666
-      background-color: #bbb
+      color: #fff
+      background-color: #333
     a
       font: $p-font
       color: #333
       text-decoration: none
       display: inline-block
+      white-space: nowrap
+    .nobr
       white-space: nowrap
 
   div.patent-pending
