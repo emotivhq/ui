@@ -5,7 +5,71 @@ $footer-column-width: 37.3em
 $wrapper-padding: 1em
 
 footer
-  background-color: $footer-bg-color
+  background-color: #eee
+
+  .footblock
+    display: inline-block
+    vertical-align: top
+    margin: 0 0 15px 0
+    padding: 0
+    color: #333
+    font-size: 12px
+    line-height: 13px
+    .logo
+      width: 40px
+      height: 40px
+    &.left
+      width: 79%
+      .footcol
+        height: 100px
+        @media screen and (max-width: $phone-tablet-boundary)
+          margin: 0 1% 20px 1%
+      @media screen and (max-width: $phone-tablet-boundary)
+        text-align: center
+        width: 100%
+    &.right
+      width: 19%
+      text-align: center
+      vertical-align: bottom
+      @media screen and (max-width: $phone-tablet-boundary)
+        width: 100%
+  .footcol
+    display: inline-block
+    width: 14%
+    margin: 0 0 0 5%
+    text-align: left
+    vertical-align: top
+    text-transform: capitalize
+    color: #333
+    @media screen and (max-width: $phone-boundary)
+      width: 30%
+    .colhead
+      display: block
+      margin-bottom: 10px
+      font-size: 14px
+      text-transform: uppercase
+    input, button
+      margin: 2px 0
+      vertical-align: middle
+      border: 1px solid #666 !important
+    input
+      padding: 2px 4px
+      font-size: 12px
+      line-height: 14px
+      color: #222
+    button
+      padding: 4px 15px 2px 15px
+      font-size: 14px
+      line-height: 16px
+      text-transform: uppercase
+      color: #666
+      background-color: #bbb
+    a
+      font: $p-font
+      color: #333
+      text-decoration: none
+      display: inline-block
+      white-space: nowrap
 
   div.patent-pending
     text-align: center
