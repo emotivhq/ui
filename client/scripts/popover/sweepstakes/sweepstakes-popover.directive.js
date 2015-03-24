@@ -27,6 +27,7 @@
                     })
                     .success(function (res) {
                         scope.model.message = res['ok'];
+                        PopoverService.hidePopover();
                     })
                     .error(function (res) {
                         scope.model.message = res['error'];
