@@ -49,6 +49,7 @@ module.exports = function(grunt) {
           '../client//scripts/static-pages/faq/faq.controller.js',
           '../client//scripts/static-pages/giftideas/giftideas.controller.js',
           '../client//scripts/static-pages/partners/partners.controller.js',
+          '../client//scripts/static-pages/press/press.controller.js',
           '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
           '../client//scripts/home/home.js',
           '../client//scripts/giftstart/thanks/thanked-campaigns.directive.js',
