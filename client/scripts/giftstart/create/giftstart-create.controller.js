@@ -17,6 +17,10 @@
                                $timeout,
                                Analytics,
                                AppStateService) {
+
+        var serviceFeeRate = 0.08;
+        var shippingRate = 0; //0.045;
+
         var campaignLength = 10;
 
         $scope.inputPrice = ProductService.product.price / 100;
@@ -121,8 +125,8 @@
         $scope.priceChanged = function () {
             Analytics.track('campaign', 'price changed');
             $scope.salesTax = $scope.salesTaxRate * $scope.inputPrice * 100;
-            $scope.serviceFee = 0.08 * $scope.inputPrice * 100;
-            $scope.shipping = 0.045 * $scope.inputPrice * 100;
+            $scope.serviceFee = serviceFeeRate * $scope.inputPrice * 100;
+            $scope.shipping = shippingRate * $scope.inputPrice * 100;
             $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax +
             $scope.serviceFee + $scope.shipping;
             $scope.updateOverlay();
