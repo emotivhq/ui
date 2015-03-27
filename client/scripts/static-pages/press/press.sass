@@ -1,5 +1,45 @@
 @import "../../base"
 
+$debug-css: false
+$phone-portrait-width: 375px
+$phone-landscape-width: 667px
+$tablet-portrait-width: 768px
+$tablet-landscape-width: 1024px
+$phone-in-portrait-query: "only screen and (max-width: $phone-portrait-width) and (orientation: portrait)"
+
+=apply-at-size($device, $orientation: none)
+  @if $debug-css
+    border: 1px dotted grey
+  @if $orientation == none
+    @if $device == "phone"
+      @media only screen and (max-width: $phone-landscape-width)
+        @content
+    @else if $device == "tablet"
+      @media only screen and (min-width: $phone-landscape-width + 1) and (max-width: $tablet-landscape-width)
+        @content
+  @if $device == "phone"
+    @if $orientation == "landscape"
+      @media only screen and (max-width: $phone-landscape-width) and (orientation: landscape)
+        @content
+        @if $debug-css
+          border: 1px solid blue
+    @else
+      @media only screen and (max-width: $phone-portrait-width) and (orientation: portrait)
+        @content
+        @if $debug-css
+          border: 1px dashed blue
+  @else if $device == "tablet"
+    @if $orientation == "landscape"
+      @media only screen and (min-width: $phone-landscape-width + 1) and (max-width: $tablet-landscape-width) and (orientation: landscape)
+        @content
+        @if $debug-css
+          border: 1px solid purple
+    @else
+      @media only screen and (min-width: $phone-portrait-width + 1) and (max-width: $tablet-portrait-width) and (orientation: portrait)
+        @content
+        @if $debug-css
+          border: 1px dashed purple
+
 div.presspage
   color: white
   font-family: "Roboto", sans-serif !important
@@ -17,15 +57,19 @@ div.presspage
 
     h1
       color: white
-      font: 700 50px "Roboto Condensed"
+      font: 700 3.125em "Roboto Condensed"
       letter-spacing: 3px
       -webkit-font-smoothing: antialiased
 
     p
-      font: 24px "Roboto", sans-serif
+      font: 1.5em "Roboto", sans-serif
+      @include  apply-at-size("phone", "portrait")
+        font-size: 0.9em
       letter-spacing: 1px
-      margin: 0px auto 10px auto
-      width: 710px
+      margin: 0px auto 15px auto
+      width: 60%
+      @include apply-at-size("phone")
+        width: 80%
       -webkit-font-smoothing: antialiased
 
   a.button
@@ -34,13 +78,13 @@ div.presspage
     border-radius: 4px
     clear: left
     color: white
-    font: 18px "Roboto", sans-serif
+    font: 1.125em "Roboto", sans-serif
     padding: 12px 53px 12px 53px
     text-decoration: none
 
   h2
     color: rgb(51, 51, 51)
-    font: 36px "Roboto", sans-serif
+    font: 2.25em "Roboto", sans-serif
     padding-bottom: 50px
 
   .main
@@ -54,9 +98,9 @@ div.presspage
       text-align: center
       width: 24%
       vertical-align: top
-      @media (-webkit-min-device-pixel-ratio: 2)
+      @include apply-at-size("tablet")
         width: 49%
-      @media screen and (max-width: $phone-tablet-boundary)
+      @include apply-at-size("phone")
         width: 99%
 
       img
@@ -65,7 +109,7 @@ div.presspage
 
       p
         color: rgb(85, 85, 85)
-        font: 300 16px "Roboto", sans-serif
+        font: 300 1em "Roboto", sans-serif
         margin: 35px 0 25px 0
 
   #bottom
