@@ -1,6 +1,4 @@
 @import "../../base"
-//@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed)
-//@import url(http://fonts.googleapis.com/css?family=Roboto:300,400)
 
 div.presspage
   color: white
@@ -51,12 +49,15 @@ div.presspage
     h2
       text-align: center
     .press-item
-      //@media screen and (
       display: inline-block
       padding: 20px
       text-align: center
       width: 24%
       vertical-align: top
+      @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+        width: 49%
+      @media screen and (max-width: $phone-tablet-boundary)
+        width: 99%
 
       img
         max-height: 100%
@@ -65,4 +66,10 @@ div.presspage
       p
         color: rgb(85, 85, 85)
         font: 300 16px "Roboto", sans-serif
-        margin: 35px 0px 25px 0px
+        margin: 35px 0 25px 0
+
+  #bottom
+    hr
+      margin: -20px 0 50px 0
+    h2
+      padding: 10px 0 40px 0
