@@ -39,6 +39,9 @@ $phone-in-portrait-query: "only screen and (max-width: $phone-portrait-width) an
         @content
         @if $debug-css
           border: 1px dashed purple
+  @else if $device == "desktop"
+    @media only screen and (min-width: $tablet-landscape-width + 1)
+      @content
 
 div.presspage
   color: white
@@ -71,6 +74,9 @@ div.presspage
       @include apply-at-size("phone")
         width: 80%
       -webkit-font-smoothing: antialiased
+      span
+        @include apply-at-size("desktop")
+          display: block
 
   a.button
     background-color: rgb(223, 72, 76)
