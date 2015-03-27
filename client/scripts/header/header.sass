@@ -21,16 +21,18 @@
     top: 0
 
   #header-logo
-    background-image: url(/assets/GSlogo_web_large.png)
+    background-image: url(/assets/GSlogo_web_large_reg.png)
     background-repeat: no-repeat
-    background-size: ($header-height*2.42) $header-height
-    width: $header-height*2.42
-    height: $header-height
+    background-size: 238px 98px //($header-height*2.42) $header-height
+    width: 238px //$header-height*2.42
+    height: 98px //$header-height
     position: absolute
-    left: 20px
     top: 0
+    left: 20px
+    @media screen and (max-width: $phone-tablet-boundary+50)
+      left: 1%
     @media screen and (max-width: $phone-tablet-boundary)
-      background-image: url(/assets/logo_square_nobg.png)
+      background-image: url(/assets/logo_square_nobg_reg.png)
       background-repeat: no-repeat
       background-size: $header-height-mobile $header-height-mobile
       height: $header-height-mobile

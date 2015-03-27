@@ -155,12 +155,12 @@ handlers:
 - url: /blog/.*
   script: blog.handler
   secure: always
-- url: /press
-  script: blog.handler
-  secure: always
-- url: /press/
-  script: blog.handler
-  secure: always
+#- url: /press
+#  script: blog.handler
+#  secure: always
+#- url: /press/
+#  script: blog.handler
+#  secure: always
 - url: /wedding.*
   script: blog.handler
   secure: always
