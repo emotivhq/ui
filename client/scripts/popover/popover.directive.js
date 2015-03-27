@@ -17,6 +17,10 @@ function gsPopover(PopoverService, $compile, $document) {
         var currentTemplate = '';
         var bodyElement = angular.element($document.find('body')[0]);
 
+        var fixPosition = function() {
+            scope.topPosition = $(window).scrollTop();
+        };
+
         var noScroll = function (event) {
             event.preventDefault();
         };
@@ -44,8 +48,12 @@ function gsPopover(PopoverService, $compile, $document) {
         function popoverShown() {
             scope.popoverShown = true;
             bodyElement.addClass('popoverShown');
-            scope.topPosition = $(window).scrollTop() - 150;
-            bodyElement.on('touchmove', noScroll);
+            if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
+                $(window).on("orientationchange",fixPosition);
+            } else {
+                bodyElement.on('touchmove', noScroll);
+            }
+            fixPosition();
         }
 
         // Hide if they click outside of popover
