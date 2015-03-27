@@ -37,6 +37,7 @@ module.exports = function(grunt) {
           '../client//scripts/utilities/ng-ab/ng-ab.service.js',
           '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
           '../client//scripts/utilities/ng-ab/ng-ab.config.js',
+          '../client//scripts/viewport-units-buggyfill.js',
           '../client//scripts/app.module.js',
           '../client//scripts/app.config.js',
           '../client//scripts/app.run.js',
