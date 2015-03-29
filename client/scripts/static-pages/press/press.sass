@@ -1,55 +1,12 @@
 @import "../../base"
 
-$debug-css: false
-$phone-portrait-width: 375px
-$phone-landscape-width: 667px
-$tablet-portrait-width: 768px
-$tablet-landscape-width: 1024px
-$phone-in-portrait-query: "only screen and (max-width: $phone-portrait-width) and (orientation: portrait)"
-
-=apply-at-size($device, $orientation: none)
-  @if $debug-css
-    border: 1px dotted grey
-  @if $orientation == none
-    @if $device == "phone"
-      @media only screen and (max-width: $phone-landscape-width)
-        @content
-    @else if $device == "tablet"
-      @media only screen and (min-width: $phone-landscape-width + 1) and (max-width: $tablet-landscape-width)
-        @content
-  @if $device == "phone"
-    @if $orientation == "landscape"
-      @media only screen and (max-width: $phone-landscape-width) and (orientation: landscape)
-        @content
-        @if $debug-css
-          border: 1px solid blue
-    @else
-      @media only screen and (max-width: $phone-portrait-width) and (orientation: portrait)
-        @content
-        @if $debug-css
-          border: 1px dashed blue
-  @else if $device == "tablet"
-    @if $orientation == "landscape"
-      @media only screen and (min-width: $phone-landscape-width + 1) and (max-width: $tablet-landscape-width) and (orientation: landscape)
-        @content
-        @if $debug-css
-          border: 1px solid purple
-    @else
-      @media only screen and (min-width: $phone-portrait-width + 1) and (max-width: $tablet-portrait-width) and (orientation: portrait)
-        @content
-        @if $debug-css
-          border: 1px dashed purple
-  @else if $device == "desktop"
-    @media only screen and (min-width: $tablet-landscape-width + 1)
-      @content
-
 div.presspage
   color: white
   font-family: "Roboto", sans-serif !important
   text-align: center
   padding-bottom: 50px
 
-  #headerwrap
+  .headerwrap
     background: url("/assets/press/press-bg.png") no-repeat center top
     color: white
     margin: 0px auto 50px auto
@@ -118,7 +75,7 @@ div.presspage
         font: 300 1em "Roboto", sans-serif
         margin: 35px 0 25px 0
 
-  #bottom
+  .bottom
     hr
       margin: -20px 0 50px 0
     h2
