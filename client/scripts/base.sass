@@ -116,7 +116,6 @@ $debug-css: false
     @else
       @media only screen and (min-width: $phone-portrait-width + 1) and (max-width: $tablet-portrait-width) and (orientation: portrait)
         @content
-        @debug "hey there"
         @if $debug-css
           border: 1px dashed purple
   @else if $device == "desktop"
