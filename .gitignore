@@ -12,6 +12,7 @@
 grunt/node_modules
 requests_oauthlib
 stripe
+paypalrestsdk
 cloudstorage
 oauthlib
 
