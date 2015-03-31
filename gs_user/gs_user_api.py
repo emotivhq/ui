@@ -18,11 +18,17 @@ from gs_user.User import User
 from google.appengine.ext import ndb
 import uuid
 import stripe
+import paypalrestsdk
 import yaml
 from social.facebook import facebook_share
 import urllib
 
-stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
+secrets = yaml.load(open('secret.yaml'))
+stripe.api_key = secrets['stripe_auth']['app_secret']
+paypalrestsdk.configure({
+  "endpoint": secrets['paypal_auth']['endpoint'],
+  "client_id": secrets['paypal_auth']['client_id'],
+  "client_secret": secrets['paypal_auth']['client_secret']})
 
 
 class StatsHandler(webapp2.RequestHandler):
