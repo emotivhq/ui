@@ -278,7 +278,7 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
                     "payer_id":user.paypal_vault_payer_id}}]},
         "transactions": [{
             "amount": {
-                "total": str(charge_amount_cents/100.0),
+                "total": format(charge_amount_cents/100.0, '.2f'),
                 "currency": currency},
             "description": description}]}
     logging.error(payment_struct)
