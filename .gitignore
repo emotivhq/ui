@@ -32,6 +32,7 @@ mock-*.*
 mock.py
 npm-debug.log
 oauthlib-*.*
+paypalrestsdk
 pkg_resources.py
 requests_*.*
 requests-*.*
