@@ -10,7 +10,9 @@ import json
 import requests
 from UserLogin import UserLogin
 import base64
+import yaml
 import stripe
+from pay import paypalapi
 
 
 def save_email(uid, email):
@@ -256,21 +258,24 @@ def login_twitter_user(oauth_token, oauth_verifier, referrer):
     return update_or_create('twitter', token_set, referrer)
 
 
-def get_card_tokens(customer_id):
+def get_card_tokens(user):
     """
-    get card fingerprints from Stripe
-    @param customer_id: Stripe customer ID
+    get card fingerprints from Stripe or PayPal
+    @param customer: User
     @return:[{last_four,brand,fingerprint}]
     """
+
     results = []
-    if customer_id is None:
-        return []
-    cards = stripe.Customer.retrieve(customer_id).cards.all()
-    card_set = set()
-    for card in cards['data']:
-        if card['fingerprint'] not in card_set:
-            results.append({'last_four': card.get('last4'),
-                            'brand': card.get('brand'),
-                            'fingerprint': card.get('fingerprint')})
-            card_set.add(card['fingerprint'])
+    is_stripe = paypalapi.is_stripe()
+    customer_id = user.stripe_id if is_stripe else user.paypal_vault_payer_id
+    if customer_id is not None:
+        cards = stripe.Customer.retrieve(customer_id).cards.all() if is_stripe else paypalapi.getCards(customer_id)
+
+        card_set = set()
+        for card in cards['data' if is_stripe else 'items']:
+            if card['fingerprint' if is_stripe else 'id'] not in card_set:
+                results.append({'last_four': card.get('last4') if is_stripe else card.get('number')[-4:],
+                                'brand': card.get('brand' if is_stripe else 'type'),
+                                'fingerprint': card.get('fingerprint' if is_stripe else 'id')})
+                card_set.add(card['fingerprint' if is_stripe else 'id'])
     return results

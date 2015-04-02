@@ -12,12 +12,19 @@ function cardService($rootScope, $http, UserService, Analytics) {
 
     var brandImgMap = {
         'Visa': '/assets/visa_card.png',
+        'visa': '/assets/visa_card.png',
         'American Express': '/assets/amex_card.png',
+        'amex': '/assets/amex_card.png',
         'MasterCard': '/assets/mastercard_card.png',
+        'mastercard': '/assets/mastercard_card.png',
         'Discover': '/assets/discover_card.png',
+        'discover': '/assets/discover_card.png',
         'JCB': '/assets/jcb_card.png',
+        'jcb': '/assets/jcb_card.png',
         'Diners Club': '/assets/dinersclub_card.png',
-        'Unknown': '/assets/unknown_card.png'
+        'diners': '/assets/dinersclub_card.png',
+        'Unknown': '/assets/unknown_card.png',
+        'unknown': '/assets/unknown_card.png'
     };
 
     this.cards = [];

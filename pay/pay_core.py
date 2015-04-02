@@ -5,6 +5,7 @@ __author__ = 'GiftStarter'
 
 from google.appengine.api import taskqueue
 from google.appengine.ext import ndb
+from google.appengine.api import urlfetch
 import json, yaml
 from gs_user import gs_user_core
 from giftstart.GiftStart import GiftStart
@@ -14,9 +15,19 @@ import logging
 from stripe.error import CardError, InvalidRequestError, AuthenticationError, \
     APIConnectionError, StripeError
 from gs_util import gs_util_link
+import paypalrestsdk
+import paypalapi
+import uuid
+import re
 
 config = yaml.load(open('config.yaml'))
 
+AMEX_CC_RE = re.compile(r"^3[47][0-9]{13}$")
+VISA_CC_RE = re.compile(r"^4[0-9]{12}(?:[0-9]{3})?$")
+MASTERCARD_CC_RE = re.compile(r"^5[1-5][0-9]{14}$")
+DISCOVER_CC_RE = re.compile(r"^6(?:011|5[0-9]{2})[0-9]{12}$")
+
+CC_MAP = {"amex": AMEX_CC_RE, "visa": VISA_CC_RE, "mastercard": MASTERCARD_CC_RE, "discover": DISCOVER_CC_RE}
 
 def set_note_for_pitchin(uid,gsid,parts,note):
     """set note for the given parts"""
@@ -77,7 +88,7 @@ def parts_available(parts, gsid):
     return not any([part in bought_parts for part in parts])
 
 
-def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
+def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
              subscribe_to_mailing_list, save_this_card):
     """
     Process a pitch-in, charge & save card, send notifications
@@ -87,9 +98,10 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
     @param email_address: email address of person pitching in
     @param note: public-facing note to put on card
     @param stripe_response: response from Stripe call
+    @param card_data: credit card data (e.g., if using PayPal)
     @param subscribe_to_mailing_list: should the User be subscribed to the mailing list?
     @param save_this_card: should the Stripe card be saved for this User?
-    @return: {result, purchased-parts|error|stripe-error}
+    @return: {result, purchased-parts|error|payment-error}
     """
     user = gs_user_core.save_email(uid, email_address)
     usr_img = user.cached_profile_image_url
@@ -109,35 +121,60 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response,
                    giftstart.overlay_rows / giftstart.overlay_columns
 
     desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+
+    is_stripe = paypalapi.is_stripe()
     try:
-        if save_this_card:
-            customer, card = save_card(user, stripe_response)
-            charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                          customer=customer['id'],
-                                          card=card['id'], description=desc)
+        if is_stripe:
+            if save_this_card:
+                customer, card = save_card_stripe(user, stripe_response['id'])
+                charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                              customer=customer['id'],
+                                              card=card['id'], description=desc)
+            else:
+                charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                              card=stripe_response['id'],
+                                              description=desc)
         else:
-            charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                          card=stripe_response['id'],
-                                          description=desc)
+            card_token = save_card_paypal_vault(user,card_data)
+            try:
+                urlfetch.set_default_fetch_deadline(30)
+                payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
+                if(not save_this_card):
+                    delete_card_paypal_vault(card_token)
+            except Exception as ex:
+                delete_card_paypal_vault(card_token)
+                raise ex
+            finally:
+                urlfetch.set_default_fetch_deadline(None)
+
+
+
     except (CardError, InvalidRequestError, AuthenticationError,
             APIConnectionError, StripeError) as e:
         logging.error(e)
-        return {'result': 'error', 'stripe-error': e.json_body}
+        return {'result': 'error', 'payment-error': e.json_body.error.message if e.json_body else e.message}
 
     # Make pitch in
+    charge_id = charge['id'] if is_stripe else payment.id
+    charge_amount = charge['amount'] if is_stripe else total_charge
     pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
-                     'PitchIn', charge['id'])
+                     'PitchIn', charge_id)
+    card_last_four = stripe_response['card']['last4'] if is_stripe else payment.payer.funding_instruments[0].credit_card_token.last4
+    charge_json = json.dumps(charge if is_stripe else payment.to_dict())
     pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
                  giftstart_url_title=giftstart.giftstart_url_title,
-                 stripe_charge_id=charge['id'], email=email_address,
-                 stripe_charge_json=json.dumps(charge),
-                 last_four=stripe_response['card']['last4'], img_url=usr_img,
+                 stripe_charge_id=charge_id if is_stripe else "",
+                 paypal_charge_id="" if is_stripe else charge_id,
+                 email=email_address,
+                 stripe_charge_json=charge_json if is_stripe else "",
+                 paypal_charge_json="" if is_stripe else charge_id,
+                 last_four=card_last_four, img_url=usr_img,
                  name=user.name if user.name else '')
     pi.put()
 
     set_user_pitched_in(user)
-    send_pitchin_notification(giftstart, charge,
-                              stripe_response['card']['last4'], email_address,
+    send_pitchin_notification(giftstart, charge_id, charge_amount,
+                              card_last_four, email_address,
                               note, user.name, usr_img)
 
     return {'result': 'success', 'purchased-parts': parts}
@@ -150,7 +187,7 @@ def set_user_pitched_in(user):
         user.put()
 
 
-def send_pitchin_notification(giftstart, charge, last_four, email, note, name, usr_img):
+def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_four, email, note, name, usr_img):
     """email a receipt to the user who pitched in, and a notification to the gift champion"""
     taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': giftstart.gsid}), countdown=30)
@@ -160,8 +197,8 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name, u
         'campaign_name': giftstart.giftstart_title,
         'campaign_link': config['app_url'] + '/giftstart/' +
                          giftstart.giftstart_url_title,
-        'pitchin_charge': '$' + str(charge['amount']/100.0),
-        'pitchin_id': charge['id'],
+        'pitchin_charge': '$' + str(charge_amount_cents/100.0),
+        'pitchin_id': charge_id,
         'pitchin_last_four': last_four,
         'frame': 'base_frame',
         'product_img_url': giftstart.product_img_url,
@@ -199,17 +236,77 @@ def send_pitchin_notification(giftstart, charge, last_four, email, note, name, u
     requests.put(config['email_url'], data=data)
 
 
-def save_card(user, stripe_response):
+def ensure_paypal_vault_id(user):
+    if user.paypal_vault_payer_id is None:
+        user.paypal_vault_payer_id = str(uuid.uuid1())
+        user.put()
+
+def delete_card_paypal_vault(card_token):
+    try:
+        paypalrestsdk.CreditCard.find(card_token).delete()
+    except Exception:
+        return
+
+def save_card_paypal_vault(user, card_data):
+    """
+    attach the provided Credit Card to the given User, setting their Stripe ID if needed
+    :param user: User
+    :param card_data: Credit Card with number,cvc,expiry,zip
+    @return: credit_card_id
+    """
+    ensure_paypal_vault_id(user)
+    card_struct = {"type": get_card_type(card_data['number']), "number": card_data['number'],
+           "expire_month": str(int(card_data['expiry'][:2])), "expire_year": card_data['expiry'][-4:],
+           "cvv2": card_data['cvc'], "external_customer_id": user.paypal_vault_payer_id}
+    logging.error(card_struct)
+    credit_card = paypalrestsdk.CreditCard(card_struct)
+    if credit_card.create():
+        print("CreditCard[%s] created successfully" % (credit_card.id))
+        return credit_card.id
+    else:
+        raise StripeError(str(credit_card.error['details'][0]['issue']))
+
+def charge_card_paypal(user, charge_amount_cents, currency, card_token, description):
+    ensure_paypal_vault_id(user)
+    payment_struct = {
+        "intent": "sale",
+        "payer": {
+            "payment_method": "credit_card",
+            "funding_instruments": [{
+                "credit_card_token": {
+                    "credit_card_id": card_token,
+                    "payer_id":user.paypal_vault_payer_id}}]},
+        "transactions": [{
+            "amount": {
+                "total": str(charge_amount_cents/100.0),
+                "currency": currency},
+            "description": description}]}
+    logging.error(payment_struct)
+    payment = paypalrestsdk.Payment(payment_struct)
+    if payment.create():
+        print("Payment[%s] created successfully" % (payment.id))
+        return payment
+    else:
+        raise StripeError(str(payment.error['details'][0]['issue']))
+
+
+def get_card_type(cc_number):
+    for type, regexp in CC_MAP.items():
+        if regexp.match(str(cc_number)):
+            return type
+    raise StripeError("Unable to determine card type")
+
+def save_card_stripe(user, stripe_response_id):
     """
     attach the provided Stripe Card to the given User, setting their Stripe ID if needed
     :param user: User
-    :param stripe_response: response from Stripe call
+    :param stripe_response_id: id from response from Stripe call
     @return: (Stripe Customer, Card)
     """
     if user.stripe_id is None:
         # User does not have a stripe customer yet
         customer = stripe.Customer.create(
-            card=stripe_response['id'],
+            card=stripe_response_id,
             description="user {0}".format(user.uid)
         )
         user.stripe_id = customer['id']
@@ -219,7 +316,7 @@ def save_card(user, stripe_response):
     else:
         # User has a stripe customer, add a card to it
         customer = stripe.Customer.retrieve(user.stripe_id)
-        card = customer.cards.create(card=stripe_response['id'])
+        card = customer.cards.create(card=stripe_response_id)
         card.refresh()
 
     return customer, card
@@ -242,7 +339,7 @@ def get_card_by_fingerprint(fingerprint, user):
     return customer, result
 
 
-def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe):
+def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_mailing_list):
     """
     Pay for a set of parts of a giftstart via a Stripe card fingerprint
     @param fingerprint: Stripe card fingerprint
@@ -261,31 +358,48 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe):
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = giftstart.total_price * len(parts) / \
                    giftstart.overlay_rows / giftstart.overlay_columns
-
-    customer, card = get_card_by_fingerprint(fingerprint, user)
     desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+
+    is_stripe = paypalapi.is_stripe()
+
     try:
-        charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                      card=card['id'], customer=customer,
-                                      description=desc)
+        if is_stripe:
+            customer, card = get_card_by_fingerprint(fingerprint, user)
+            charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                          card=card['id'], customer=customer,
+                                          description=desc)
+        else:
+            card_token = fingerprint
+            try:
+                urlfetch.set_default_fetch_deadline(30)
+                payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
+            finally:
+                urlfetch.set_default_fetch_deadline(None)
     except (CardError, InvalidRequestError, AuthenticationError,
             APIConnectionError, StripeError) as e:
         logging.error(e)
-        return {'result': 'error', 'stripe-error': e.json_body}
+        return {'result': 'error', 'payment-error': e.json_body.error.message if e.json_body else e.message}
 
 
     # Make pitch in
+    charge_id = charge['id'] if is_stripe else payment.id
+    charge_amount = charge['amount'] if is_stripe else total_charge
     pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
-                     'PitchIn', charge['id'])
+                     'PitchIn', charge_id)
+    card_last_four = card['last4'] if is_stripe else payment.payer.funding_instruments[0].credit_card_token.last4
+    charge_json = json.dumps(charge if is_stripe else payment.to_dict())
     pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
                  giftstart_url_title=giftstart.giftstart_url_title,
-                 stripe_charge_id=charge['id'], email=user.email,
-                 stripe_charge_json=json.dumps(charge),
-                 last_four=card['last4'],
+                 stripe_charge_id=charge_id if is_stripe else "",
+                 paypal_charge_id="" if is_stripe else charge_id,
+                 email=user.email,
+                 stripe_charge_json=charge_json if is_stripe else "",
+                 paypal_charge_json="" if is_stripe else charge_id,
+                 last_four=card_last_four,
                  img_url=user.cached_profile_image_url,
                  name=user.name if user.name else '')
     pi.put()
 
-    send_pitchin_notification(giftstart, charge,
-                              card['last4'], user.email, note, user.name,
+    send_pitchin_notification(giftstart, charge_id, charge_amount,
+                              card_last_four, user.email, note, user.name,
                               user.cached_profile_image_url)

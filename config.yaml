@@ -20,3 +20,5 @@ prosperent:
 
 heap:
   key:                    '4144879771'
+
+cardprocessor:            'paypal'
