@@ -10,14 +10,18 @@ div.about
   .main
     text-align: left
 
-    h2
-      text-align: center
+  h2
+    text-align: center
 
   .member-item
     display: inline-block
     padding: 20px
     text-align: center
     width: 24.6%
+    @include apply-at-size("tablet")
+      width: 32.5%
+    @include apply-at-size("phone")
+      width: 49%
     vertical-align: top
 
     img
@@ -26,6 +30,12 @@ div.about
     h4
       font-size: 1em
 
+  .threeup
+    .member-item
+      width: 32.5%
+      @include apply-at-size("phone")
+        width: 49%
+
   .mission
     font-family: "Roboto", sans-serif
     font-size: 1em
@@ -33,11 +43,18 @@ div.about
   .milestones
     table
       margin: 0 auto
+      max-width: 80%
       text-align: left
 
       td
         font-size: 1.125em
         padding: 10px
+
+      td:first-child
+        white-space: nowrap
+
+  .investors
+    text-align: left
 
   .font
     font-family: "Roboto", sans-serif
