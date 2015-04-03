@@ -104,7 +104,7 @@ module.exports = function(grunt) {
         src: '../client//bower_components/jquery/dist/jquery.min.map',
         dest: '../client/scripts/out/jquery.min.map'
       }
-    },
+    },// without concat
     sass: {
         dist: {
             files: [{
