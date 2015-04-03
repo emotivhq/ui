@@ -94,6 +94,7 @@ module.exports = function(grunt) {
           '../client//scripts/utilities/uservoice.js',
           '../client//scripts/button/campaign-giftstart-it.directive.js',
           '../client//scripts/header/giftstart-it-header.directive.js',
+          '../client//scripts/header/subscribe-header.directive.js',
           '../client//scripts/header/subscribe-header.directive.js'
         ],
         dest: '../client/scripts/out/app.js'
@@ -101,7 +102,18 @@ module.exports = function(grunt) {
       build2: {
         src: '../client//bower_components/jquery/dist/jquery.min.map',
         dest: '../client/scripts/out/jquery.min.map'
-      }
+      },
+    css: {
+        src: ['../client/scripts/**/*.sass'],
+        dest: '../client/stylesheets/build.sass'
+    }
+    },
+    sass: {
+        dist: {
+            files: {
+                '../client/stylesheets/compiled.css' : '../client/stylesheets/build.sass'
+            }
+        }
     },
     uglify: {
       build: {
@@ -111,13 +123,14 @@ module.exports = function(grunt) {
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-remove');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-angular-templates');
+    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-remove');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
-  // Default task(s).
-  grunt.registerTask('default', ['remove', 'ngtemplates', 'concat']);
+    // Default task(s).
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'concat', 'sass']);
 
 };
