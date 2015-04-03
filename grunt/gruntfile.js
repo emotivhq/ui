@@ -3,6 +3,14 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    sass: {
+        dist: {
+            files: {
+                '../client/scripts/out/base.css': '../client/scripts/base.sass',
+                '../client/scripts/out/static-pages.css': '../client/scripts/static-pages/static-pages.sass'
+            }
+        }
+    },
     remove: {
       fileList: ['../client/scripts/out/*.js']
     },
@@ -111,13 +119,14 @@ module.exports = function(grunt) {
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
+  // Load the plugins
   grunt.loadNpmTasks('grunt-remove');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-contrib-sass');
 
   // Default task(s).
-  grunt.registerTask('default', ['remove', 'ngtemplates', 'concat']);
+  grunt.registerTask('default', ['sass','remove', 'ngtemplates', 'concat']);
 
 };
