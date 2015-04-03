@@ -3,14 +3,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    sass: {
-        dist: {
-            files: {
-                '../client/scripts/out/base.css': '../client/scripts/base.sass',
-                '../client/scripts/out/static-pages.css': '../client/scripts/static-pages/static-pages.sass'
-            }
-        }
-    },
+
     remove: {
       fileList: ['../client/scripts/out/*.js']
     },
@@ -110,17 +103,17 @@ module.exports = function(grunt) {
       build2: {
         src: '../client//bower_components/jquery/dist/jquery.min.map',
         dest: '../client/scripts/out/jquery.min.map'
-      },
-    css: {
-        src: ['../client/scripts/**/*.sass'],
-        dest: '../client/stylesheets/build.sass'
-    }
+      }
     },
     sass: {
         dist: {
-            files: {
-                '../client/stylesheets/compiled.css' : '../client/stylesheets/build.sass'
-            }
+            files: [{
+                expand: true,
+                cwd: '../client',
+                src: 'scripts/**/*.sass',
+                dest: '../client/stylesheets/',
+                ext: '.css'
+            }]
         }
     },
     uglify: {
@@ -130,7 +123,7 @@ module.exports = function(grunt) {
       }
     }
   });
-    
+
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-remove');
     grunt.loadNpmTasks('grunt-contrib-concat');
