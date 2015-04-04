@@ -103,20 +103,30 @@ module.exports = function(grunt) {
       build2: {
         src: '../client//bower_components/jquery/dist/jquery.min.map',
         dest: '../client/scripts/out/jquery.min.map'
+      },
+      css: {
+          src: '../client/scripts/out/**/*.css',
+          dest: '../client/stylesheets/compiled.css'
       }
-    },// without concat
+    },
     sass: {
         dist: {
             files: [{
                 expand: true,
                 cwd: '../client',
                 src: 'scripts/**/*.sass',
-                dest: '../client/stylesheets/',
+                dest: '../client/scripts/out',
                 ext: '.css'
             }]
         }
     },
-    uglify: {
+      clean: {
+          options: {
+              force: true
+          },
+          src: ["../client/scripts/out/"]
+      },
+      uglify: {
       build: {
         src: '../client/scripts/out/app.js',
         dest: '../client/scripts/out/app.min.js'
@@ -130,9 +140,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Default task(s).
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'concat', 'sass']);
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'concat', 'sass', 'clean']);
 
 
 };
