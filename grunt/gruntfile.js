@@ -116,7 +116,8 @@ module.exports = function(grunt) {
         dest: '../client/scripts/out/jquery.min.map'
       },
       css: {
-          src: '../client/scripts/out/css/**/*.css',
+          src: ['../client/assets/bootstrap.css','../client/scripts/out/css/**/*.css'],
+
           dest: '../client/stylesheets/compiled.css'
       }
     },
@@ -143,7 +144,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Default task(s).
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat',  'clean']);
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
 
 
 };
