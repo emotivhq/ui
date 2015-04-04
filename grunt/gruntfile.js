@@ -105,8 +105,8 @@ module.exports = function(grunt) {
         dest: '../client/scripts/out/jquery.min.map'
       },
       css: {
-          src: '../client/scripts/out/**/*.css',
-          dest: '../client/stylesheets/compiled.css'
+          src: '../client/scripts/out/css/**/*.css',
+          dest: '../client/stylesheets/out/compiled.css'
       }
     },
     sass: {
@@ -115,7 +115,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: '../client',
                 src: 'scripts/**/*.sass',
-                dest: '../client/scripts/out',
+                dest: '../client/scripts/out/css',
                 ext: '.css'
             }]
         }
@@ -124,8 +124,9 @@ module.exports = function(grunt) {
           options: {
               force: true
           },
-          src: ["../client/scripts/out/"]
+          src: ["../client/scripts/out/css"]
       },
+
       uglify: {
       build: {
         src: '../client/scripts/out/app.js',
