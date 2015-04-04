@@ -117,7 +117,6 @@ module.exports = function(grunt) {
       },
       css: {
           src: ['../client/assets/bootstrap.css','../client/scripts/out/css/**/*.css'],
-
           dest: '../client/stylesheets/compiled.css'
       }
     },
@@ -144,7 +143,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Default task(s).
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
-
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean'])
 
 };
