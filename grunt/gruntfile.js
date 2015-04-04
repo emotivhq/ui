@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         dest: '../client/scripts/out/jquery.min.map'
       },
       css: {
-          src: ['../client/assets/bootstrap.css','../client/scripts/out/css/**/*.css'],
+          src: ['../client/assets/bootstrap.css','../client/scripts/out/css/**/*.css','../client/bower_components/angucomplete/angucomplete.css','../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
           dest: '../client/stylesheets/compiled.css'
       }
     },
