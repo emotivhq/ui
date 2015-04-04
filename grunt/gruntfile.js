@@ -17,6 +17,17 @@ module.exports = function(grunt) {
         dest:     '../client/scripts/out/angular-template.js'
       }
     },
+   sass: {
+       dist: {
+            files: [{
+                expand: true,
+                cwd: '../client',
+                src: 'scripts/**/*.sass',
+                dest: '../client/scripts/out/css',
+                ext: '.css'
+            }]
+        }
+    },
     concat: {
       build: {
         src: [
@@ -106,19 +117,8 @@ module.exports = function(grunt) {
       },
       css: {
           src: '../client/scripts/out/css/**/*.css',
-          dest: '../client/stylesheets/out/compiled.css'
+          dest: '../client/stylesheets/compiled.css'
       }
-    },
-    sass: {
-        dist: {
-            files: [{
-                expand: true,
-                cwd: '../client',
-                src: 'scripts/**/*.sass',
-                dest: '../client/scripts/out/css',
-                ext: '.css'
-            }]
-        }
     },
       clean: {
           options: {
@@ -126,7 +126,6 @@ module.exports = function(grunt) {
           },
           src: ["../client/scripts/out/css"]
       },
-
       uglify: {
       build: {
         src: '../client/scripts/out/app.js',
@@ -144,7 +143,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
 
     // Default task(s).
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'concat', 'sass', 'clean']);
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat',  'clean']);
 
 
 };
