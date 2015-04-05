@@ -71,23 +71,19 @@
             <h3 class="title__name">Group Card</h3>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
         </div>
-        <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'row', false: 'data'}[$index % 3 == 0 && !$first]" class="myclass">
-
-        </div>
-        <div class="contributors">
-            <div class="contributors__full" >
-                <div class="contributors__figure">
-                    <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
-                        <img class="contributors__img" src="https://lh3.googleusercontent.com/-wJDtbaGEBng/UqjQ8zMkyVI/AAAAAAAAAF4/P8jKPErJ-6E/w140-h140-p/2.jpg"/>
-                    </a>
-                </div>
-                <div class="contributors__info">
-                    <p class="contributors__info">{{pitchIn.note}}</p>
-                    <p class="contributors__name">{{pitchIn.name}}</p>
-                </div>
+        <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="h--hide"></div>
+        <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
+            <div class="contributors__figure">
+                <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
+                    <img class="contributors__img" src="https://lh3.googleusercontent.com/-wJDtbaGEBng/UqjQ8zMkyVI/AAAAAAAAAF4/P8jKPErJ-6E/w140-h140-p/2.jpg"/>
+                </a>
+            </div>
+            <div class="contributors__info">
+                <h3 class="contributors__name">{{pitchIn.name}}</h3>
+                <p class="contributors__info">{{pitchIn.note}}</p>
             </div>
         </div>
-        <div ng-repeat-end class="myclass2"></div>
+        <div ng-repeat-end class="h--hide"></div>
         <p class="groupcard__nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
 </div>

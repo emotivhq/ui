@@ -225,37 +225,45 @@ div.giftstart.wrapper
       margin: 0 4%
 
     .title--groupcard
-      margin: 0 auto 1rem
+      margin: 0 auto 2rem
       display: table-caption
 
     .contributors
       display: table-cell
       width: 33%
+      vertical-align: top
 
-      &:nth-child(2n+1)
+      &--row
+        display: table-row
+
+      &:nth-child(even)
         background: $contibutors-even
+        position: relative
 
-      &:nth-child(2n)
+      &:nth-child(odd)
         background: $contibutors-odd
+        position: relative
 
-      &__full
-        vertical-align: top
+      &--only
+        width: 33%
+        display: block
+        margin: 0 auto
+
+      &__info
+        text-align: justify
+        padding: 0 10% 3%
+        +hyphenate()
+
+      &__name
+        text-align: center
 
       &__img
         width: 26%
+        margin: 5% 0 1%
         +border-radius(50%)
+        border: 2px solid #111
         vertical-align: top
         cursor: pointer
-
-    .myclass
-      display: none
-
-    .row
-      display: table-row
-      height: 1px
-
-      &:first-of-type
-        color: #ff0000 !important
 
     div.comment
       position: relative
@@ -281,6 +289,7 @@ div.giftstart.wrapper
 
         p
           margin-top: 0
+
         //p.name
         //  margin-top: 4px
         //  text-align: right
