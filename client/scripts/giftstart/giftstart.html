@@ -66,12 +66,28 @@
 
     <gs-thanks></gs-thanks>
 
-    <div class="comments block">
-        <h3 class="black">Group Card</h3>
-        <div class="comment" ng-repeat="pitchIn in pitchIns">
-            <a ng-href="/users/{{pitchIn.uid}}"><img ng-src="{{pitchIn.img}}"/></a>
-            <div><p>{{pitchIn.note}}</p><p class="name">{{pitchIn.name}}</p></div>
+    <div class="groupcard">
+        <div class="title title--groupcard">
+            <h3 class="title__name">Group Card</h3>
+            <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
         </div>
-        <p class="no-contributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
+        <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'row', false: 'data'}[$index % 3 == 0 && !$first]" class="myclass">
+
+        </div>
+        <div class="contributors">
+            <div class="contributors__full" >
+                <div class="contributors__figure">
+                    <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
+                        <img class="contributors__img" src="https://lh3.googleusercontent.com/-wJDtbaGEBng/UqjQ8zMkyVI/AAAAAAAAAF4/P8jKPErJ-6E/w140-h140-p/2.jpg"/>
+                    </a>
+                </div>
+                <div class="contributors__info">
+                    <p class="contributors__info">{{pitchIn.note}}</p>
+                    <p class="contributors__name">{{pitchIn.name}}</p>
+                </div>
+            </div>
+        </div>
+        <div ng-repeat-end class="myclass2"></div>
+        <p class="groupcard__nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
 </div>

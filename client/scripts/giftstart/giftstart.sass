@@ -213,20 +213,49 @@ div.giftstart.wrapper
       width: 47%
       margin-left: 2.5%
 
-  div.block.comments
-    display: inline-block
-    vertical-align: top
+  .groupcard
     width: 100%
-    border: 1px solid #bbb
-    padding: 3%
-    border-radius: 1em
+    clear: both
+    padding: 0
+    margin: 0
+    text-align: center
+    display: table
     @media screen and (max-width: $tablet-computer-boundary)
       width: 96%
-      margin: 0 2%
+      margin: 0 4%
 
-    h3
-      margin-top: 0
-      margin-bottom: 1em
+    .title--groupcard
+      margin: 0 auto 1rem
+      display: table-caption
+
+    .contributors
+      display: table-cell
+      width: 33%
+
+      &:nth-child(2n+1)
+        background: $contibutors-even
+
+      &:nth-child(2n)
+        background: $contibutors-odd
+
+      &__full
+        vertical-align: top
+
+      &__img
+        width: 26%
+        +border-radius(50%)
+        vertical-align: top
+        cursor: pointer
+
+    .myclass
+      display: none
+
+    .row
+      display: table-row
+      height: 1px
+
+      &:first-of-type
+        color: #ff0000 !important
 
     div.comment
       position: relative
@@ -238,12 +267,6 @@ div.giftstart.wrapper
         width: 45%
         margin-right: 5%
         margin-bottom: 1em
-
-      img
-        width: 16%
-        +border-radius(50%)
-        vertical-align: top
-        cursor: pointer
 
       div
         position: relative
@@ -258,15 +281,15 @@ div.giftstart.wrapper
 
         p
           margin-top: 0
-        p.name
-          margin-top: 4px
-          text-align: right
-          font-size: 85%
-          display: block
-          color: #555
+        //p.name
+        //  margin-top: 4px
+        //  text-align: right
+        //  font-size: 85%
+        //  display: block
+        //  color: #555
 
-    p.no-contributors
-      color: #aaa
-      font-size: 1.3em
-      text-align: center
+    //p.no-contributors
+    //  color: #aaa
+    //  font-size: 1.3em
+    //  text-align: center
 
