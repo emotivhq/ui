@@ -75,7 +75,7 @@
         <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
             <div class="contributors__figure">
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
-                    <img class="contributors__img" src="https://lh3.googleusercontent.com/-wJDtbaGEBng/UqjQ8zMkyVI/AAAAAAAAAF4/P8jKPErJ-6E/w140-h140-p/2.jpg"/>
+                    <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                 </a>
             </div>
             <div class="contributors__info">
@@ -84,6 +84,6 @@
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
-        <p class="groupcard__nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
+        <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
 </div>
