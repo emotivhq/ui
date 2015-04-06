@@ -225,8 +225,8 @@ function LoginPopoverController($scope, $http, $cookieStore, UserService,  Popov
     function loginComplete() {
         Analytics.track('user', 'login succeeded');
         if (/\/create(\/|$)/.test($location.path())) {
-            PopoverService.hidePopover();
-            GiftStartService.createGiftStart();
+            //give login time to propagate
+            setTimeout(function() {GiftStartService.createGiftStart();PopoverService.hidePopover();},500);
         } else if (($location.path().search('giftstart?') != -1) && PopoverService.contributeLogin) {
             PopoverService.contributeLogin = false;
             PopoverService.nextPopover();
