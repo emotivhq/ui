@@ -29,14 +29,18 @@ def cache_user_image_from_url(uid, img_url):
     @param img_url: external image URL
     @return: stored image's URL
     """
-    logging.info("Getting image for {0} form {1}".format(uid, img_url))
-    img = requests.get(img_url,verify=False).content
-    logging.info("Got {0} bytes for image, md5: {1}".format(len(img), hashlib.md5(img)))
-    extension = '.' + img_url.split('.')[-1].split('?')[0]
-    if extension not in {'.jpg', '.jpeg', '.png', '.gif'}:
-        extension = ''
-    logging.info("Saving as {0}".format(uid + extension))
-    return save_picture_to_gcs(uid + extension, 'u/', img)
+    try:
+        logging.info("Getting image for {0} from {1}".format(uid, img_url))
+        img = requests.get(img_url,verify=False).content
+        logging.info("Got {0} bytes for image, md5: {1}".format(len(img), hashlib.md5(img)))
+        extension = '.' + img_url.split('.')[-1].split('?')[0]
+        if extension not in {'.jpg', '.jpeg', '.png', '.gif'}:
+            extension = ''
+        logging.info("Saving as {0}".format(uid + extension))
+        return save_picture_to_gcs(uid + extension, 'u/', img)
+    except Exception as x:
+        logging.error("Unable to cache user image {0} from {1}: {2}".format(uid, img_url, x))
+        return ""
 
 
 def cache_user_image(uid, img, extension):
