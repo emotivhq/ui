@@ -11,6 +11,10 @@ handlers:
   script: sitemap.sitemap_api.handler
   secure: always
 
+#PDF Creator
+- url: /pdfify
+  script: pdf.pdf_api.handler
+
 # Product
 - url: /products/urls/.*.json
   script: product.product_api.handler
