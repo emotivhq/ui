@@ -62,6 +62,7 @@ module.exports = function(grunt) {
           '../client//scripts/static-pages/faq/faq.controller.js',
           '../client//scripts/static-pages/giftideas/giftideas.controller.js',
           '../client//scripts/static-pages/howitworks/howitworks.controller.js',
+          '../client//scripts/static-pages/oldbrowser/oldbrowser.controller.js',
           '../client//scripts/static-pages/partners/partners.controller.js',
           '../client//scripts/static-pages/press/press.controller.js',
           '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
@@ -125,7 +126,7 @@ module.exports = function(grunt) {
           options: {
               force: true
           },
-          src: ["../client/scripts/out/css"]
+          src: ["../client/scripts/out/css*"]
       },
       uglify: {
       build: {
@@ -156,7 +157,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Dev task.
-    grunt.registerTask('dev', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
     // Prod task
-    grunt.registerTask('prod', ['uglify', 'cssmin']);
+    //grunt.registerTask('prod', ['uglify', 'cssmin']);
 };
