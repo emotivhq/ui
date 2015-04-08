@@ -6,6 +6,68 @@
         </span>
     </div>
 
+    <div id="categories-container">
+      <div class="categories">
+        <p><strong>SEARCH BRANDS:</strong></p>
+        <ul>
+          <li><a href="https://www.giftstarter.co/search/butter%20london">butter LONDON</a></li>
+          <li><a href="https://www.giftstarter.co/search/fat%20cork">Fat Cork</a></li>
+          <li><a href="https://www.giftstarter.co/search/sturtevants">Sturtevant Sports</a></li>
+          <li><a href="https://www.giftstarter.co/search/cuisinart">Cuisinart</a></li>
+          <li><a href="https://www.giftstarter.co/search/icpooch">iCPooch</a></li>
+          <li><a href="https://www.giftstarter.co/search/dyson%20vacuum">Dyson</a></li>
+          <li><a href="https://www.giftstarter.co/search/apple">Apple</a></li>
+          <li><a href="https://www.giftstarter.co/search/samsung">Samsung</a></li>
+          <li><a href="https://www.giftstarter.co/search/bose">Bose</a></li>
+          <li><a href="https://www.giftstarter.co/search/frends">Frends</a></li>
+        </ul>
+      </div>
+      <div class="categories">
+        <p><strong>SEARCH BABY GIFTS:</strong></p>
+        <ul>
+          <li><a href="https://www.giftstarter.co/search/stroller">Stroller</a></li>
+          <li><a href="https://www.giftstarter.co/search/high%20chair">High Chair</a></li>
+          <li><a href="https://www.giftstarter.co/search/diaper%20bag">Diaper Bag</a></li>
+          <li><a href="https://www.giftstarter.co/search/crib%20bedding">Crib Bedding</a></li>
+          <li><a href="https://www.giftstarter.co/search/baby%20crib">Baby Crib</a></li>
+          <li><a href="https://www.giftstarter.co/search/cradle">Cradle</a></li>
+          <li><a href="https://www.giftstarter.co/search/bassinet">Bassinet</a></li>
+          <li><a href="https://www.giftstarter.co/search/playard">Playard</a></li>
+          <li><a href="https://www.giftstarter.co/search/rocking+chair">Rocking Chair</a></li>
+        </ul>
+      </div>
+      <div class="categories">
+        <p><strong>SEARCH ELECTRONIC GIFTS:</strong></p>
+        <ul>
+          <li><a href="https://www.giftstarter.co/search/ipad">iPad</a></li>
+          <li><a href="https://www.giftstarter.co/search/iphone">iPhone</a></li>
+          <li><a href="https://www.giftstarter.co/search/ipod">iPod</a></li>
+          <li><a href="https://www.giftstarter.co/search/macbook">Macbook</a></li>
+          <li><a href="https://www.giftstarter.co/search/home%20theater">Home Theater</a></li>
+          <li><a href="https://www.giftstarter.co/search/camera">Camera</a></li>
+          <li><a href="https://www.giftstarter.co/search/television">Television</a></li>
+          <li><a href="https://www.giftstarter.co/search/xbox">xBox</a></li>
+          <li><a href="https://www.giftstarter.co/search/microsoft+office">Microsoft Office</a></li>
+          <li><a href="https://www.giftstarter.co/search/wireless+speaker">Wireless Speakers</a></li>
+        </ul>
+      </div>
+      <div class="categories">
+        <p><strong>SEARCH HOME + WEDDING GIFTS:</strong></p>
+        <ul>
+          <li><a href="https://www.giftstarter.co/search/rug">Rugs</a></li>
+          <li><a href="https://www.giftstarter.co/search/sofa">Sofa</a></li>
+          <li><a href="https://www.giftstarter.co/search/toaster+oven">Toaster Oven</a></li>
+          <li><a href="https://www.giftstarter.co/search/Vitamix">Vitamix</a></li>
+          <li><a href="https://www.giftstarter.co/search/lawn+mower">Lawn Mower</a></li>
+          <li><a href="https://www.giftstarter.co/search/barbecue+grill">Barbecue Grill</a></li>
+          <li><a href="https://www.giftstarter.co/search/keurig">Keurig</a></li>
+          <li><a href="https://www.giftstarter.co/search/dog%20bed">Dog Bed</a></li>
+          <li><a href="https://www.giftstarter.co/search/fish+tank">Fish Tank</a></li>
+          <li><a href="https://www.giftstarter.co/search/duvet">Duvet</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="loading" ng-show="loading">
         <img src="/assets/loading.gif"/>
     </div>
@@ -46,6 +108,6 @@
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>
-    <p class="need-help-concierge" ng-hide="products.length || results_empty || failed">Can't find it? Simply contact our <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you.</p>
+    <p class="need-help-concierge" ng-hide="products.length || results_empty || failed">Can't find the gift you want? Simply contact our <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p>
     <p class="need-help-concierge" ng-show="products.length && !results_empty && !failed">Not finding what you’re looking for? Our gift concierge would love to help! Email <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.co</a>!</p>
 </div>
