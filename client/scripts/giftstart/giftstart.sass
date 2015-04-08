@@ -34,7 +34,7 @@ div.giftstart.wrapper
   span.circle
     margin-right: 0.4em
 
-  div.block
+  .block
     width: $column-width
     display: inline-block
     padding: $margin-vert $margin-horz
@@ -222,12 +222,18 @@ div.giftstart.wrapper
     text-align: center
     display: table
     @media screen and (max-width: $tablet-computer-boundary)
-      width: 96%
-      margin: 0 4%
+      width: 92%
+      margin: 0 4% 5rem 4%
+      border-top: 1px solid #eee
 
-    .title--groupcard
-      margin: 0 auto 2rem
-      display: table-caption
+
+    .title
+      &--groupcard
+        margin: 0 auto 5rem
+        display: table-caption
+
+      &__name
+        font-size: 3.2rem
 
     .contributors
       display: table-cell
@@ -251,7 +257,6 @@ div.giftstart.wrapper
         margin: 0 auto
 
       &__info
-        text-align: justify
         padding: 0 10% 3%
         +hyphenate()
 
@@ -262,7 +267,7 @@ div.giftstart.wrapper
         width: 26%
         margin: 8% 0 1%
         +border-radius(50%)
-        border: 2px solid #111
+        border: 2px solid #fff
         vertical-align: top
         cursor: pointer
 
@@ -270,6 +275,10 @@ div.giftstart.wrapper
       color: #aaa
       font-size: 1.3em
       text-align: center
+      
+  .fullwidth--last
+    border-bottom: 1px solid #eee
+    padding-bottom: 1.5rem
 
     div.comment
       position: relative
