@@ -30,6 +30,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/faq/faq.html', reloadOnSearch: false})
         .when('/howitworks',
         {templateUrl: '/scripts/static-pages/howitworks/howitworks.html', reloadOnSearch: false})
+        .when('/oldbrowser',
+        {templateUrl: '/scripts/static-pages/oldbrowser/oldbrowser.html', reloadOnSearch: false})
         .when('/partners',
         {templateUrl: '/scripts/static-pages/partners/partners.html', reloadOnSearch: false})
         .when('/press',
