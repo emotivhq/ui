@@ -117,8 +117,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
                                             'already been bought.'}
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    total_charge = giftstart.total_price * len(parts) / \
-                   giftstart.overlay_rows / giftstart.overlay_columns
+    total_charge = calculate_total_price(giftstart, parts)
 
     desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
 
@@ -339,6 +338,16 @@ def get_card_by_fingerprint(fingerprint, user):
     return customer, result
 
 
+def calculate_total_price(giftstart, parts):
+    """
+    find total cost of the selected parts, round down individual parts to the whole cent before summing (will result in total being a few pennies short, but unsurprised customers)
+    :param giftstart:
+    :param parts: array of parts numbers being purchased
+    :return:
+    """
+    return giftstart.total_price * int(len(parts) / giftstart.overlay_rows / giftstart.overlay_columns)
+
+
 def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_mailing_list):
     """
     Pay for a set of parts of a giftstart via a Stripe card fingerprint
@@ -356,8 +365,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
                                             'already been bought.'}
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    total_charge = giftstart.total_price * len(parts) / \
-                   giftstart.overlay_rows / giftstart.overlay_columns
+    total_charge = calculate_total_price(giftstart, parts)
     desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
 
     is_stripe = paypalapi.is_stripe()

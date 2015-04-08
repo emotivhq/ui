@@ -62,6 +62,7 @@ module.exports = function(grunt) {
           '../client//scripts/static-pages/faq/faq.controller.js',
           '../client//scripts/static-pages/giftideas/giftideas.controller.js',
           '../client//scripts/static-pages/howitworks/howitworks.controller.js',
+          '../client//scripts/static-pages/oldbrowser/oldbrowser.controller.js',
           '../client//scripts/static-pages/partners/partners.controller.js',
           '../client//scripts/static-pages/press/press.controller.js',
           '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
@@ -125,12 +126,23 @@ module.exports = function(grunt) {
           options: {
               force: true
           },
-          src: ["../client/scripts/out/css"]
+          src: ["../client/scripts/out/css*"]
       },
       uglify: {
       build: {
         src: '../client/scripts/out/app.js',
         dest: '../client/scripts/out/app.min.js'
+      }
+    },
+      cssmin: {
+        options: {
+            shorthandCompacting: false,
+            roundingPrecision: -1
+        },
+        target: {
+            files: {
+                '../client/scripts/out/compiled.min.css': '../client/stylesheets/compiled.css'
+        }
       }
     }
   });
@@ -142,8 +154,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    // Default task(s).
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean'])
-
+    // Dev task.
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
+    // Prod task
+    //grunt.registerTask('prod', ['uglify', 'cssmin']);
 };
