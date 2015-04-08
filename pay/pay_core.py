@@ -257,7 +257,7 @@ def save_card_paypal_vault(user, card_data):
     card_struct = {"type": get_card_type(card_data['number']), "number": card_data['number'],
            "expire_month": str(int(card_data['expiry'][:2])), "expire_year": card_data['expiry'][-4:],
            "cvv2": card_data['cvc'], "external_customer_id": user.paypal_vault_payer_id}
-    logging.error(card_struct)
+    # logging.error(card_struct)
     credit_card = paypalrestsdk.CreditCard(card_struct)
     if credit_card.create():
         print("CreditCard[%s] created successfully" % (credit_card.id))
@@ -266,6 +266,10 @@ def save_card_paypal_vault(user, card_data):
         raise StripeError(str(credit_card.error['details'][0]['issue']))
 
 def charge_card_paypal(user, charge_amount_cents, currency, card_token, description):
+    truncated_desc = False
+    if len(description)>127:
+        truncated_desc = description
+        description = description[:126]
     ensure_paypal_vault_id(user)
     payment_struct = {
         "intent": "sale",
@@ -280,9 +284,11 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
                 "total": format(charge_amount_cents/100.0, '.2f'),
                 "currency": currency},
             "description": description}]}
-    logging.error(payment_struct)
+    # logging.error(payment_struct)
     payment = paypalrestsdk.Payment(payment_struct)
     if payment.create():
+        if truncated_desc:
+            logging.warn("Truncated description for payment [{0}] from: {1}".format(payment.id, truncated_desc))
         print("Payment[%s] created successfully" % (payment.id))
         return payment
     else:
@@ -345,7 +351,7 @@ def calculate_total_price(giftstart, parts):
     :param parts: array of parts numbers being purchased
     :return:
     """
-    return giftstart.total_price * int(len(parts) / giftstart.overlay_rows / giftstart.overlay_columns)
+    return len(parts) * int(giftstart.total_price / giftstart.overlay_rows / giftstart.overlay_columns)
 
 
 def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_mailing_list):
@@ -366,7 +372,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = calculate_total_price(giftstart, parts)
-    desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+    desc = "GiftStarter #{0} parts {1}".format(gsid, ",".join(str(x) for x in parts))
 
     is_stripe = paypalapi.is_stripe()
 
