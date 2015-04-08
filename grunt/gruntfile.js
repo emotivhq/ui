@@ -142,9 +142,9 @@ module.exports = function(grunt) {
         target: {
             files: {
                 '../client/scripts/out/compiled.min.css': '../client/stylesheets/compiled.css'
+        }
+      }
     }
-  }
-}
   });
 
     // Load the plugin that provides the "uglify" task.
