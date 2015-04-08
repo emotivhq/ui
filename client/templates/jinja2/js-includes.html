@@ -21,9 +21,6 @@
         //no iOS7 Safari
         if(is_safari) {
             disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
-        } else {
-            //no iOS Chrome
-            disallow_browser = is_chrome
         }
     } else {
         if (is_safari) {
