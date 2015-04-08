@@ -234,6 +234,8 @@
     height: 5em
   #num-part-selection
     margin-top: 15px
+    .desc
+
     .tax-note
       font-size: 10px
     .disclaimer
@@ -243,7 +245,7 @@
       text-transform: uppercase
       text-align: center
     @media screen and (min-width: $phone-tablet-boundary)
-      margin-top: 65px
+      margin-top: 25px
       margin-right: 15%
   #price
     width: 8em
@@ -301,10 +303,28 @@
     letter-spacing: 3px
     -webkit-font-smoothing: antialiased
 
+
+  p
+    font: 1.688em "Roboto", sans-serif
+    @include  apply-at-size("phone", "portrait")
+      font-size: 0.9em
+    letter-spacing: 1px
+    line-height: 35px
+    margin: 10px auto 3px auto
+    width: 60%
+    @include apply-at-size("phone")
+      width: 80%
+    -webkit-font-smoothing: antialiased
+
   div
     margin: 0px auto 50px auto
     img.welcome
       height: 6em
+
+  span
+    font: 1.688em "Roboto Condensed", sans-serif
+    letter-spacing: 2px
+    vertical-align: middle
 
 #ui-datepicker-div
   font-family: "Roboto Condensed", sans-serif
