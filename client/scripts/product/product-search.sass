@@ -227,7 +227,6 @@ gs-product-search
           -moz-box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5)
           box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5)
 
-
 #categories-container
   margin: 0 auto
   padding-top: 20px
@@ -237,6 +236,8 @@ gs-product-search
     display: inline-block
     text-align: left
     width: 24.5%
+    @include apply-at-size("phone")
+      width: 49.5%
     vertical-align: top
     li
       list-style-type: none
