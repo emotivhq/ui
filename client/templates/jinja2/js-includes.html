@@ -28,10 +28,10 @@
     } else {
         if (is_safari) {
             //minimum Safari desktop version: 8
-            disallow_browser = window.navigator.userAgent.match(/version\/[34567]/i);
+            disallow_browser = window.navigator.userAgent.match(/version\/[1234567]/i);
         } else if (is_explorer) {
             //minimum Internet Explorer desktop version: 8
-            disallow_browser = userAgent.match(/MSIE [0-7]{1,}/);
+            disallow_browser = userAgent.match(/MSIE [1234567]/);
         }
     }
     if(disallow_browser && document.location.href.indexOf('/oldbrowser')<0) {
