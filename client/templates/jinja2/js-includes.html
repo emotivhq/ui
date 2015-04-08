@@ -19,8 +19,8 @@
     disallow_browser = false;
     if (userAgent.match(/(iPod|iPhone|iPad)/)) {
         //no iOS7 Safari
-        if(userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/)) {
-            disallow_browser = is_safari;
+        if(is_safari) {
+            disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
         } else {
             //no iOS Chrome
             disallow_browser = is_chrome
