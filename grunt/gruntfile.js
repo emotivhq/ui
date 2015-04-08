@@ -131,7 +131,18 @@ module.exports = function(grunt) {
         src: '../client/scripts/out/app.js',
         dest: '../client/scripts/out/app.min.js'
       }
+    },
+      cssmin: {
+        options: {
+            shorthandCompacting: false,
+            roundingPrecision: -1
+        },
+        target: {
+            files: {
+                '../client/scripts/out/compiled.min.css': '../client/stylesheets/compiled.css'
     }
+  }
+}
   });
 
     // Load the plugin that provides the "uglify" task.
@@ -141,8 +152,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-angular-templates');
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    // Default task(s).
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean'])
-
+    // Dev task.
+    grunt.registerTask('dev', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
+    // Prod task
+    grunt.registerTask('prod', ['uglify', 'cssmin']);
 };
