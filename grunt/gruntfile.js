@@ -131,7 +131,7 @@ module.exports = function(grunt) {
         uglify: {
             build: {
                 src: '../client/scripts/out/app.js',
-                dest: '../client/scripts/out/app.min.js'
+                dest: '../client/scripts/out/app.js'
             }
         },
         cssmin: {
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
             },
             target: {
                 files: {
-                    '../client/scripts/out/compiled.min.css': '../client/stylesheets/compiled.css'
+                    '../client/stylesheets/compiled.css': '../client/stylesheets/compiled.css'
                 }
             }
         }
