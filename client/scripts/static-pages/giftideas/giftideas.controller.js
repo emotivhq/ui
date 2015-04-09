@@ -16,6 +16,11 @@ function GiftideasController($scope, $http, $location) {
     var category = pathParts.length>2?pathParts[2]:false;
     var product = pathParts.length>3?pathParts[3]:false;
 
+    // hack for mailing list error where we linked to the wrong category
+    if(category && !product && category=="pisces" && $location.search()['utm_campaign']=="18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015") {
+        category=false;
+    }
+
     function setMeta(metatitle, metadesc) {
         metatitle = "GiftStarter: "+metatitle;
         $('html head title').text(metatitle);
