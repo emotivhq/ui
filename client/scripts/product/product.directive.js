@@ -119,7 +119,10 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
                     (scope.selectedPage - 1) * scope.pageSize,
                     scope.selectedPage * scope.pageSize);
             scope.hideProductDetails();
-            element[0].scrollIntoView();
+            $('html, body').animate({
+                scrollTop: $('#search-products-section').offset().top-300
+                //$('#product-search-anchor').offset().top
+            }, 200);
         };
 
         scope.showProductDetails = function(index) {
@@ -179,7 +182,8 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         var performHeadSearch = function () {
             scope.submit();
             $('html, body').animate({
-                scrollTop: $('#product-search-anchor').offset().top
+                scrollTop: $('#search-products-section').offset().top-300
+                //$('#product-search-anchor').offset().top
             }, 200);
             $window.sessionStorage.setItem('fromSearch', null);
         };

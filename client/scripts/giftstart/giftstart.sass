@@ -221,16 +221,19 @@ div.giftstart.wrapper
     margin: 0
     text-align: center
     display: table
-    @media screen and (max-width: $tablet-computer-boundary)
-      width: 92%
-      margin: 0 4% 5rem 4%
-      border-top: 1px solid #eee
+    width: 92%
+    margin: 0 4% 5rem 4%
+    border-top: 1px solid #eee
+    @include apply-at-size("phone")
+      display: block
 
 
     .title
       &--groupcard
         margin: 0 auto 5rem
         display: table-caption
+        @include apply-at-size("phone")
+          display: block
 
       &__name
         font-size: 3.2rem
@@ -239,9 +242,19 @@ div.giftstart.wrapper
       display: table-cell
       width: 33%
       vertical-align: top
+      @include apply-at-size("phone")
+        display: block
+        width: 100%
 
       &--row
         display: table-row
+        @include apply-at-size("tablet", "portrait")
+          display: none
+
+      &--pre
+        &:nth-child(2n)
+          @include apply-at-size("tablet", "portrait")
+            display: table-row
 
       &:nth-child(even)
         background: $contibutors-even
@@ -255,6 +268,10 @@ div.giftstart.wrapper
         width: 33%
         display: block
         margin: 0 auto
+        @include apply-at-size("tablet", "portrait")
+            width: 50%
+        @include apply-at-size("phone")
+            width: 100%
 
       &__info
         padding: 0 10% 3%

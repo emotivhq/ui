@@ -71,7 +71,7 @@
             <h3 class="title__name">Group Card</h3>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
         </div>
-        <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="h--hide"></div>
+        <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
         <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
             <div class="contributors__figure">
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">

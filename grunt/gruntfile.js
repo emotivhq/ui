@@ -126,7 +126,7 @@ module.exports = function(grunt) {
           options: {
               force: true
           },
-          src: ["../client/scripts/out/css*"]
+          src: ["../client/scripts/out/css"]
       },
       uglify: {
       build: {
