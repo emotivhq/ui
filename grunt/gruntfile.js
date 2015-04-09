@@ -124,10 +124,14 @@ module.exports = function(grunt) {
             css: {
                 options: {
                     sourceMap: true,
-                    sourceMapName: "../client/stylesheets/compiled.css.map"
-                    //sourceMapStyle: "link"
+                    sourceMapName: "../client/stylesheets/compiled.css.map",
+                    sourceMapStyle: "link"
                 },
-                src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
+                src: ['../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
+                dest: '../client/stylesheets/compiled.css'
+            },
+            css2: {
+                src: ['../client/assets/bootstrap.css', '../client/stylesheets/compiled.css'],
                 dest: '../client/stylesheets/compiled.css'
             }
         },
@@ -166,8 +170,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Dev task.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
     // Prod task
-    //grunt.registerTask('default', ['uglify', 'cssmin']);
+    //grunt.registerTask('default', ['clean', 'uglify', 'cssmin']);
 
 };
