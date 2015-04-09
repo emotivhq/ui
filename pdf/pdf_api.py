@@ -1,4 +1,4 @@
-"""generate PDF version of provided path"""
+"""generate PDF version of provided relative 'path' or 'html'; uses html2pdfrocket"""
 
 __author__ = 'GiftStarter'
 
@@ -14,7 +14,7 @@ app_url = yaml.load(open('config.yaml'))['app_url']
 pdf_service_url = 'http://api.html2pdfrocket.com/pdf'
 
 class PdfHandler(webapp2.RequestHandler):
-    """dynamically generate a PDF for a provided path"""
+    """dynamically generate a PDF for a provided relative 'path' or 'html'; uses html2pdfrocket"""
 
     def get(self):
         return self.post()
