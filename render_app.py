@@ -32,8 +32,8 @@ def render_app(request):
     analytics.store_if_referral(request)
     js_insert = remember_user(request.cookies, request.path + '?' +
                               request.query_string)
-    js_insert += "try{Stripe.setPublishableKey('" + \
-                 secrets['stripe_auth']['app_key'] + "');}catch(err_stripe){console&&console.log&&console.log(err_stripe);}"
+    # js_insert += "try{Stripe.setPublishableKey('" + \
+    #              secrets['stripe_auth']['app_key'] + "');}catch(err_stripe){console&&console.log&&console.log(err_stripe);}"
     js_insert += "window.fbAppId = '" + \
                  secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + \

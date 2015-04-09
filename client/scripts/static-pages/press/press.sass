@@ -1,54 +1,13 @@
-@import "../../base"
+@import "../static-pages"
 
 div.presspage
-  color: white
-  font-family: "Roboto", sans-serif !important
-  text-align: center
-  padding-bottom: 50px
 
   .headerwrap
     background: url("/assets/press/press-bg.png") no-repeat center top
-    color: white
-    margin: 0px auto 50px auto
-    height: 300px
-    padding-top: 30px
-    text-align: center
-    width: 100%
-
-    h1
-      color: white
-      font: 700 3.125em "Roboto Condensed"
-      letter-spacing: 3px
-      -webkit-font-smoothing: antialiased
-
     p
-      font: 1.5em "Roboto", sans-serif
-      @include  apply-at-size("phone", "portrait")
-        font-size: 0.9em
-      letter-spacing: 1px
-      margin: 0px auto 15px auto
-      width: 60%
-      @include apply-at-size("phone")
-        width: 80%
-      -webkit-font-smoothing: antialiased
       span
         @include apply-at-size("desktop")
           display: block
-
-  a.button
-    background-color: rgb(223, 72, 76)
-    border: 0px solid
-    border-radius: 4px
-    clear: left
-    color: white
-    font: 1.125em "Roboto", sans-serif
-    padding: 12px 53px 12px 53px
-    text-decoration: none
-
-  h2
-    color: rgb(51, 51, 51)
-    font: 2.25em "Roboto", sans-serif
-    padding-bottom: 50px
 
   .main
     padding: 0px 30px 50px 30px
@@ -77,6 +36,6 @@ div.presspage
 
   .bottom
     hr
-      margin: -20px 0 50px 0
+      margin-top: -20px
     h2
       padding: 10px 0 40px 0

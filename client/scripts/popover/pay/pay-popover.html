@@ -1,6 +1,6 @@
 <div class="pay-popover" ng-controller="PayPopoverController">
     <h1 class="white">Pitch In!</h1>
-    <div class="powered">Powered by <img src="/assets/powered_by_stripe.png"></div>
+     <div class="powered">Powered by <img src="/assets/powered_by_paypal.png"></div>
 
     <div class="saved-cards" ng-show="cards.length > 0" ng-class="{hidden: putNew}">
         <span ng-repeat="card in cards" class="card">
@@ -14,7 +14,7 @@
 
     <div class="loading" ng-show="cardsLoading"><img src="../../../assets/loading_transparent.gif" width="14px" height="14px"> Loading saved cards</div>
 
-    <form stripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">
+    <form xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">
 
         <input id="new-credit-card-cb" type="checkbox" ng-model="putNew" ng-change="deselectCards()"><label for="new-credit-card-cb"><span class="arrow" ng-class="{down: putNew && !cardsLoading}">&#x25BC;</span><span>Use New Card</span></label>
 
@@ -27,7 +27,7 @@
                 <input type="text" id="card-cvc" ng-disabled="!putNew" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc"/>
             </div><div class="expiry">
                 <img ng-src="{{expiryImgUrl}}"/>
-                <input type="text" id="card-expiry" ng-disabled="!putNew" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()" name="zip"/>
+                <input type="text" id="card-expiry" ng-disabled="!putNew" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM / YY" ng-change="updateFormValidity()" name="expiry"/>
             </div><div class="zip" ng-class="{invalidzip: (addressZip.length < 5)}">
                 <img ng-src="{{zipImgUrl}}">
                 <input type="text" id="card-zip" ng-disabled="!putNew" ng-model="addressZip" maxlength="5" placeholder="ZIP" ng-change="updateFormValidity()" name="zip"/>
@@ -44,7 +44,7 @@
 
         <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 
-        <button class="large white-border pay" ng-class="{disabled: pitchingIn}">Pay ${{currentCharge / 100 | number : 2}} <img ng-show="pitchingIn" src="/assets/loading_transparent.gif" height="28px" width="28px"></button>
+        <button class="large white-border pay" ng-click="paypalSubmit()" ng-class="{disabled: pitchingIn}">Pay ${{currentCharge / 100 | number : 2}} <img ng-show="pitchingIn" src="/assets/loading_transparent.gif" height="28px" width="28px"></button>
     </form>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 </div>

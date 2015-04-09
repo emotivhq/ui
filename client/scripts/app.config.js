@@ -28,6 +28,10 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/concierge/concierge.html', reloadOnSearch: false})
         .when('/faq',
         {templateUrl: '/scripts/static-pages/faq/faq.html', reloadOnSearch: false})
+        .when('/howitworks',
+        {templateUrl: '/scripts/static-pages/howitworks/howitworks.html', reloadOnSearch: false})
+        .when('/oldbrowser',
+        {templateUrl: '/scripts/static-pages/oldbrowser/oldbrowser.html', reloadOnSearch: false})
         .when('/partners',
         {templateUrl: '/scripts/static-pages/partners/partners.html', reloadOnSearch: false})
         .when('/press',
@@ -44,6 +48,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/search/:searchTerm',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        .when('/search/',
+        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas/:term*',

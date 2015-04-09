@@ -81,6 +81,45 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         console && console.log && console.log(data);
     };
 
+    $scope.paypalSubmit = function() {
+        // 1. User submits card details in field
+        // 4. Client app sends response with card id to server app
+        // 5. Server app attempts to charge card, responds with result (success/fail)
+        $scope.submitted = true;
+        $scope.updateFormValidity();
+        GiftStartService.payment.subscribe = $scope.emailSubscribe;
+        if ($scope.selectedCard) {
+            GiftStartService.payWithFingerprint($scope.selectedCard)
+                .success(function (data) {
+                    $scope.pitchingIn = false;
+                    if (data['payment-error']) {
+                        $scope.errorMessage = data['payment-error'];
+                    } else {
+                        $scope.trackConversion();
+                    }
+                })
+                .error(function(data) {
+                    $scope.pitchingIn = false;
+                });
+        } else {
+            // Got stripe token, attach it to the current giftstart payment
+            Analytics.track('pitchin', 'payment submitted',
+                GiftStartService.giftStart.gsid.toString(),
+                $scope.currentCharge);
+            GiftStartService.attachCardData($scope.number,$scope.cvc,$scope.expiry,$scope.addressZip);
+            GiftStartService.payment.emailAddress = $scope.email;
+            GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
+            GiftStartService.sendPayment(function (data) {
+                $scope.pitchingIn = false;
+                if (data['payment-error']) {
+                    $scope.errorMessage = data['payment-error'];
+                } else {
+                    $scope.trackConversion();
+                }
+            });
+        }
+    };
+
     $scope.stripeSubmit = function(status, response) {
         // Charge process!
         // 1. User submits card details in field
@@ -95,8 +134,8 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
                     $scope.pitchingIn = false;
-                    if (data['stripe-error']) {
-                        $scope.errorMessage = data['stripe-error'].error.message;
+                    if (data['payment-error']) {
+                        $scope.errorMessage = data['payment-error'];
                     } else {
                         $scope.trackConversion();
                     }
@@ -117,8 +156,8 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 $scope.pitchingIn = false;
-                if (data['stripe-error']) {
-                    $scope.errorMessage = data['stripe-error'].error.message;
+                if (data['payment-error']) {
+                    $scope.errorMessage = data['payment-error'];
                 } else {
                     $scope.trackConversion();
                 }

@@ -19,7 +19,9 @@ class PitchIn(ndb.Model):
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
     last_four = ndb.StringProperty(required=True)
     stripe_charge_id = ndb.StringProperty(required=True)
+    paypal_charge_id = ndb.StringProperty(required=True)
     stripe_charge_json = ndb.JsonProperty(required=True)
+    paypal_charge_json = ndb.JsonProperty(required=True)
 
     def ext_dictify(self):
         return {

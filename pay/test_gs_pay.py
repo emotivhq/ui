@@ -161,8 +161,8 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(response.status_code, 200,
                          "Should accept payment, expected 200, response was " +
                          str(response.status_code))
-        self.assertNotIn('stripe-error', response.json,
-                         "Should accept payment, expected 'stripe-error' not "
+        self.assertNotIn('payment-error', response.json,
+                         "Should accept payment, expected 'payment-error' not "
                          "to be in response, response was " +
                          str(response.json))
 
@@ -212,8 +212,8 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(response.status_code, 200,
                          "Should accept payment, expected 200, response was " +
                          str(response.status_code))
-        self.assertNotIn('stripe-error', response.json,
-                         "Should accept payment, expected 'stripe-error' not "
+        self.assertNotIn('payment-error', response.json,
+                         "Should accept payment, expected 'payment-error' not "
                          "to be in response, response was " +
                          str(response.json))
 
@@ -252,8 +252,8 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(response.status_code, 200,
                          "Should accept payment, expected 200, response was " +
                          str(response.status_code))
-        self.assertNotIn('stripe-error', response.json,
-                         "Should accept payment, expected 'stripe-error' not to"
+        self.assertNotIn('payment-error', response.json,
+                         "Should accept payment, expected 'payment-error' not to"
                          " be in response, response was " + str(response.json))
 
         # Verify pitchin
@@ -452,8 +452,8 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(response.status_code, 200,
                          "Should accept payment, expected 200, response was " +
                          str(response.status_code))
-        self.assertNotIn('stripe-error', response.json,
-                         "Should accept payment, expected 'stripe-error' not "
+        self.assertNotIn('payment-error', response.json,
+                         "Should accept payment, expected 'payment-error' not "
                          "to be in response, response was " +
                          str(response.json))
 
@@ -488,7 +488,7 @@ class PayTestHandlers(unittest.TestCase):
         self.assertEqual(response.status_code, 200,
                          "Should refuse payment and send 200, response was " +
                          str(response.status_code))
-        self.assertIn('stripe-error', response.json,
-                      "Should refuse payment, expected 'stripe-error' "
+        self.assertIn('payment-error', response.json,
+                      "Should refuse payment, expected 'payment-error' "
                       "to be in response, response was " +
                       str(response.json))

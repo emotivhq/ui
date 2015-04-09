@@ -10,7 +10,7 @@ import json
 
 
 class User(ndb.Model):
-    """a User of the application: UID, name, login tokens, avatar, email, phone, referrer, CC token, etc"""
+    """a User of the application: UID, name, login tokens, avatar, email, phone, referrer, CC processor ids, etc"""
     uid = ndb.StringProperty(required=True)
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
 
@@ -43,6 +43,8 @@ class User(ndb.Model):
     has_pitched_in = ndb.BooleanProperty(default=False)
 
     stripe_id = ndb.StringProperty()
+
+    paypal_vault_payer_id = ndb.StringProperty()
 
     def jsonify(self):
         return json.dumps({

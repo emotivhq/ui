@@ -22,7 +22,8 @@ import yaml
 from social.facebook import facebook_share
 import urllib
 
-stripe.api_key = yaml.load(open('secret.yaml'))['stripe_auth']['app_secret']
+secrets = yaml.load(open('secret.yaml'))
+stripe.api_key = secrets['stripe_auth']['app_secret']
 
 
 class StatsHandler(webapp2.RequestHandler):
@@ -199,15 +200,15 @@ class ImageUploadHandler(webapp2.RequestHandler):
                 self.response.set_status(400, "Invalid image data")
 
 
-class StripeCardsHandler(webapp2.RequestHandler):
-    """ Handles requests for stripe tokens """
+class PaymentCardsHandler(webapp2.RequestHandler):
+    """ Handles requests for payment tokens """
 
     def get(self):
         uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
         token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
 
         if not all([bool(thing) for thing in [uid, token]]):
-            logging.warning("Invalid data used for stripe token request:"
+            logging.warning("Invalid data used for payment cards request:"
                             "\n{0}".format(self.request.body))
             self.response.set_status(400, "Invalid data")
             return
@@ -222,7 +223,7 @@ class StripeCardsHandler(webapp2.RequestHandler):
             self.response.set_status(403)
             return
 
-        charge_tokens = get_card_tokens(user.stripe_id)
+        charge_tokens = get_card_tokens(user)
         self.response.write(json.dumps(charge_tokens))
 
 
@@ -230,7 +231,7 @@ api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
-                               ('/users/.*/cards.json', StripeCardsHandler),
+                               ('/users/.*/cards.json', PaymentCardsHandler),
                                ('/users/.*.json', StatsHandler),
                                ('/users/.*', UserPageHandler),
                                ('/users.*', UserHandler),

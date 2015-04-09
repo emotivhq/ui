@@ -3,6 +3,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     remove: {
       fileList: ['../client/scripts/out/*.js']
     },
@@ -15,6 +16,17 @@ module.exports = function(grunt) {
         src:      'scripts/**/*.html',
         dest:     '../client/scripts/out/angular-template.js'
       }
+    },
+   sass: {
+       dist: {
+            files: [{
+                expand: true,
+                cwd: '../client',
+                src: 'scripts/**/*.sass',
+                dest: '../client/scripts/out/css',
+                ext: '.css'
+            }]
+        }
     },
     concat: {
       build: {
@@ -49,6 +61,8 @@ module.exports = function(grunt) {
           '../client//scripts/static-pages/about/about.controller.js',
           '../client//scripts/static-pages/faq/faq.controller.js',
           '../client//scripts/static-pages/giftideas/giftideas.controller.js',
+          '../client//scripts/static-pages/howitworks/howitworks.controller.js',
+          '../client//scripts/static-pages/oldbrowser/oldbrowser.controller.js',
           '../client//scripts/static-pages/partners/partners.controller.js',
           '../client//scripts/static-pages/press/press.controller.js',
           '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
@@ -94,6 +108,7 @@ module.exports = function(grunt) {
           '../client//scripts/utilities/uservoice.js',
           '../client//scripts/button/campaign-giftstart-it.directive.js',
           '../client//scripts/header/giftstart-it-header.directive.js',
+          '../client//scripts/header/subscribe-header.directive.js',
           '../client//scripts/header/subscribe-header.directive.js'
         ],
         dest: '../client/scripts/out/app.js'
@@ -101,23 +116,48 @@ module.exports = function(grunt) {
       build2: {
         src: '../client//bower_components/jquery/dist/jquery.min.map',
         dest: '../client/scripts/out/jquery.min.map'
+      },
+      css: {
+          src: ['../client/assets/bootstrap.css','../client/scripts/out/css/**/*.css','../client/bower_components/angucomplete/angucomplete.css','../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
+          dest: '../client/stylesheets/compiled.css'
       }
     },
-    uglify: {
+      clean: {
+          options: {
+              force: true
+          },
+          src: ["../client/scripts/out/css"]
+      },
+      uglify: {
       build: {
         src: '../client/scripts/out/app.js',
         dest: '../client/scripts/out/app.min.js'
       }
+    },
+      cssmin: {
+        options: {
+            shorthandCompacting: false,
+            roundingPrecision: -1
+        },
+        target: {
+            files: {
+                '../client/scripts/out/compiled.min.css': '../client/stylesheets/compiled.css'
+        }
+      }
     }
   });
 
-  // Load the plugin that provides the "uglify" task.
-  grunt.loadNpmTasks('grunt-remove');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-angular-templates');
+    // Load the plugin that provides the "uglify" task.
+    grunt.loadNpmTasks('grunt-remove');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-sass');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-  // Default task(s).
-  grunt.registerTask('default', ['remove', 'ngtemplates', 'concat']);
-
+    // Dev task.
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
+    // Prod task
+    //grunt.registerTask('prod', ['uglify', 'cssmin']);
 };

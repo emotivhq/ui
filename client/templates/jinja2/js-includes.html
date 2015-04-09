@@ -1,6 +1,42 @@
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<!-- script type="text/javascript" src="https://js.stripe.com/v2/"></script -->
 <script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
 <script src="/scripts/out/app.js"></script>
+
+<!-- browser detect -->
+<script type="text/javascript">
+
+    //$.browser.msie deprecated as of jQuery 1.9
+    //$.browser.safari deprecated as of jQuery 1.9
+    //$.browser.version deprecated as of jQuery 1.9
+    var userAgent = window.navigator.userAgent;
+    var is_chrome = userAgent.indexOf('Chrome') > -1;
+    var is_explorer = userAgent.indexOf('MSIE') > -1;
+    var is_firefox = userAgent.indexOf('Firefox') > -1;
+    var is_safari = userAgent.indexOf('Safari') > -1;
+    var is_opera = userAgent.toLowerCase().indexOf("op") > -1;
+    if ((is_chrome)&&(is_safari)) {is_safari=false;}
+    if ((is_chrome)&&(is_opera)) {is_chrome=false;}
+    disallow_browser = false;
+    if (userAgent.match(/(iPod|iPhone|iPad)/)) {
+        //no iOS7 Safari
+        if(is_safari) {
+            disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
+        }
+    } else {
+        if (is_safari) {
+            //minimum Safari desktop version: 8
+            disallow_browser = window.navigator.userAgent.match(/version\/[1234567]/i);
+        } else if (is_explorer) {
+            //minimum Internet Explorer desktop version: 8
+            disallow_browser = userAgent.match(/MSIE [1234567]/);
+        }
+    }
+    if(disallow_browser && document.location.href.indexOf('/oldbrowser')<0) {
+        document.location.href = '/oldbrowser';
+    } else if(document.location.href.indexOf('/oldbrowser')>=0 && !disallow_browser) {
+        document.location.href = '/';
+    }
+</script>
 
 <!-- PINGDOM -->
 <script>

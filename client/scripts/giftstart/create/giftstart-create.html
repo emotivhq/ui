@@ -3,9 +3,9 @@
 
     <ng-include ng-show="fromReferral" src="'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"></ng-include>
 
-    <div ng-show="isCreateStepTiles()"><h2 class="state-title">Adjust the pitch-in tiles</h2><div class="state-subtitle">Create campaign: step 2 of 4</div></div>
-    <div ng-show="isCreateStepStory()"><h2 class="state-title">Tell the story</h2><div class="state-subtitle">Create campaign: step 3 of 4</div></div>
-    <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping details</h2><div class="state-subtitle">Create campaign: step 4 of 4</div></div>
+    <div ng-show="isCreateStepTiles()"><h2 class="state-title">How many pitch-in tiles do you want?</h2><div class="state-subtitle">Create Your Gifting Event: step 2 of 4</div></div>
+    <div ng-show="isCreateStepStory()"><h2 class="state-title">Your Gifting Event</h2><div class="state-subtitle">Create Your Gifting Event: step 3 of 4</div></div>
+    <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping details</h2><div class="state-subtitle">Create Your Gifting Event: step 4 of 4</div></div>
 
     <div class="block image">
         <div class="image-container">
@@ -18,21 +18,22 @@
         <form name="campaignForm" novalidate>
 
             <div ng-show="isCreateStepTiles()" id="num-part-selection">
-                <div class="more-parts">More<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
-                <div class="fewer-parts-mobile">Less<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
+                <div class="desc"><strong>Things to consider:<br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?</strong></div>
+                <div class="more-parts">Add Tiles<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
+                <div class="fewer-parts-mobile">Remove Tiles<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
                 <span class="parts-control"><span class="numtiles"> {{x*y}} Tiles</span>
                 <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span></span>
-                <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Less</div>
+                <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Remove Tiles</div>
                 <!-- button class="help float-right" ng-click="help()">Help</button -->
-                <span class="disclaimer">* Price includes fees, shipping, handling, and a personalized card.  Does not include taxes or expedited charges.</span>
+                <span class="disclaimer">* Shipping is included.</span>
             </div>
 
             <div ng-show="isCreateStepStory()">
-                <h2>1. Give your Campaign a Title</h2>
+                <h2>1. What's the gifting event called?</h2>
                 <input type="text"
                        id="campaign-title"
                        name="title"
-                       placeholder="Campaign Title"
+                       placeholder="What's the occasion?"
                        maxlength="140"
                        ng-model="title"
                        ng-focus="hideValidationError.title = true"
@@ -48,10 +49,10 @@
                         </div>
                     </div>
                 </div>
-                <h2>2. Give your Campaign a Description</h2>
+                <h2>2. Describe your gifting event real quick.</h2>
                 <textarea id="campaign-description"
                           name="description"
-                          placeholder="Campaign Story"
+                          placeholder="Who's the gift for? What's your relationship? Why this gift?"
                           maxlength="500"
                           ng-focus="hideValidationError.description = true"
                           ng-blur="hideValidationError.description = false"
@@ -129,7 +130,7 @@
                         <input type="email"
                                ng-model="shippingEmail"
                                name="shippingEmail"
-                               placeholder="Email address*"
+                               placeholder="Email Address*"
                                ng-focus="hideValidationError.shippingEmail = true"
                                ng-blur="hideValidationError.shippingEmail = false"
                                onkeypress="return event.keyCode!=13"
@@ -247,8 +248,8 @@
                     </span>
                 </div>
                 <div class="campaign-length">
-                    <h2>3. How Long Should this GiftStart Run?</h2>
-                    <label>Max: 29 days.  Be sure to end your GiftStart at least 7 days before it should arrive.</label>
+                    <h2>3. When do you need the gift by?</h2>
+                    <label>Max: 29 days.  Add one week for gift processing and shipping.</label>
                     <input ui-date
                            type="text"
                            class="endDate"
@@ -263,17 +264,17 @@
                         <div ng-show="campaignForm.campaignEndDate.$error.required">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Your campaign must be between 2 and 29 days!
+                                Your campaign must be between 3 and 29 days!
                             </div>
                         </div>
                         <div ng-show="!dateChosenValid()">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Your campaign must be between 2 and 29 days!
+                                Your campaign must be between 3 and 29 days!
                             </div>
                         </div>
                     </div>
-                    <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)}} Days</label>
+                    <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)+1}} Days</label>
                 </div>
                 <div class="price-block">
                     <h2>Price</h2>
@@ -284,7 +285,7 @@
                             <span class="tooltip-icon">
                                 ?
                                 <span class="tooltip">
-                                    The price of the gift at the time of campaign creation will be used to determine the "base price."
+                                    The price of the gift at the time of creation will be used to determine the gift "base price."
                                 </span>
                             </span>
                         </label>
@@ -293,7 +294,7 @@
                 </div>
                 <div class="total-price-block">
                     <h2>Total Price</h2>
-                    <label>Incl. taxes, shipping, and handling.</label>
+                    <label>Including all fees and taxes. Shipping is free!</label>
                     <div class="money" ng-hide="fetchingTaxRate || !shippingDetailsSubmitted">${{ totalPrice/100 | number : 2 }}</div><div class="money" ng-hide="shippingDetailsSubmitted">...</div><img class="loading" src="/assets/loading.gif" ng-show="fetchingTaxRate"/>
                 </div>
             </div>

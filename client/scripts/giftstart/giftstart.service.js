@@ -271,6 +271,18 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         }
     };
 
+    this.attachCardData = function(number,cvc,expiry,addressZip) {
+        console.log(number+"|"+cvc+"|"+expiry+"|"+addressZip)
+        self.payment.cardData = {number:number,cvc:cvc,expiry:expiry,zip:addressZip};
+        self.payment.gsid = self.giftStart.gsid;
+        self.payment.parts = [];
+        for (var i=0; i < self.giftStart.parts.length; i++) {
+            if (self.giftStart.parts[i].selected) {
+                self.payment.parts.push(self.giftStart.parts[i].part_id);
+            }
+        }
+    };
+
     this.sendPayment = function(callback) {
         var data = {payment: self.payment, action: 'pitch-in',
             uid: UserService.uid};
@@ -306,7 +318,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.hideOverlay = function() {$rootScope.$broadcast('hide-overlay');};
 
     this.paymentSuccess = function(data) {
-        if (!data['stripe-error']) {
+        if (!data['payment-error']) {
             self.syncPitchIns('GiftStartService');
             self.updateSelected();
             $rootScope.$broadcast('payment-success');
