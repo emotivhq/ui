@@ -119,7 +119,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
                     (scope.selectedPage - 1) * scope.pageSize,
                     scope.selectedPage * scope.pageSize);
             scope.hideProductDetails();
-            element[0].scrollIntoView();
+            $('body').scrollTop($('#search-products-section').offset().top-100)
         };
 
         scope.showProductDetails = function(index) {
