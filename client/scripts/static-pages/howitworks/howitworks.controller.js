@@ -12,5 +12,5 @@ GiftStarterApp.controller('HowItWorksController', ['$scope','$location','$timeou
 
 function HowItWorksController($scope,  $location,  $timeout) {
     $scope.location = $location;
-    $scope.sectionShown = "glossary";
+    $scope.sectionShown = "welcome";
 }
