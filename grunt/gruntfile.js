@@ -18,6 +18,10 @@ module.exports = function(grunt) {
             }
         },
         sass: {
+            //options: {
+            //    sourceMap: true,
+            //    sourceMapStyle: 'link'
+            //},
             dist: {
                 files: [{
                     expand: true,
@@ -127,11 +131,7 @@ module.exports = function(grunt) {
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
-                dest: '../client/stylesheets/compiled.css'
-            },
-            css2: {
-                src: ['../client/assets/bootstrap.css', '../client/stylesheets/compiled.css'],
+                src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
                 dest: '../client/stylesheets/compiled.css'
             }
         },
