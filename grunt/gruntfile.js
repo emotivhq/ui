@@ -30,6 +30,10 @@ module.exports = function(grunt) {
         },
         concat: {
             build: {
+                options: {
+                    sourceMap: true,
+                    sourceMapStyle: "link"
+                },
                 src: [
                     '../client//bower_components/jquery/dist/jquery.min.js',
                     '../client//bower_components/jquery-ui/jquery-ui.min.js',
@@ -44,7 +48,7 @@ module.exports = function(grunt) {
                     '../client//bower_components/angular-resource/angular-resource.min.js',
                     '../client//bower_components/devicejs/lib/device.min.js',
                     '../client//bower_components/angular-ui-date/src/date.js',
-                    '../client//bower_components/bootstrap/dist/bootstrap.min..js',
+                    //'../client//bower_components/bootstrap/dist/js/bootstrap.min.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.module.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.service.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
@@ -118,7 +122,16 @@ module.exports = function(grunt) {
                 dest: '../client/scripts/out/jquery.min.map'
             },
             css: {
-                src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
+                options: {
+                    sourceMap: true,
+                    sourceMapName: "../client/stylesheets/compiled.css.map",
+                    sourceMapStyle: "link"
+                },
+                src: ['../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
+                dest: '../client/stylesheets/compiled.css'
+            },
+            css2: {
+                src: ['../client/assets/bootstrap.css', '../client/stylesheets/compiled.css'],
                 dest: '../client/stylesheets/compiled.css'
             }
         },
@@ -157,8 +170,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Dev task.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'clean']);
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
     // Prod task
-    grunt.registerTask('default', ['uglify', 'cssmin']);
+    //grunt.registerTask('prod', ['uglify', 'cssmin']);
 
 };
