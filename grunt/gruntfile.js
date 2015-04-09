@@ -129,10 +129,10 @@ module.exports = function(grunt) {
           src: ["../client/scripts/out/css"]
       },
       uglify: {
-      build: {
-        src: '../client/scripts/out/app.js',
-        dest: '../client/scripts/out/app.min.js'
-      }
+          build: {
+            src: '../client/scripts/out/app.js',
+            dest: '../client/scripts/out/app.min.js'
+          }
     },
       cssmin: {
         options: {
