@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             build: {
                 options: {
                     sourceMap: true,
-                    sourceMapStyle: "link"
+                    sourceMapStyle: 'link'
                 },
                 src: [
                     '../client//bower_components/jquery/dist/jquery.min.js',
@@ -124,8 +124,8 @@ module.exports = function(grunt) {
             css: {
                 options: {
                     sourceMap: true,
-                    sourceMapName: "../client/stylesheets/compiled.css.map",
-                    sourceMapStyle: "link"
+                    sourceMapName: '../client/stylesheets/compiled.css.map',
+                    sourceMapStyle: 'link'
                 },
                 src: ['../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
                 dest: '../client/stylesheets/compiled.css'
@@ -139,9 +139,14 @@ module.exports = function(grunt) {
             options: {
                 force: true
             },
-            src: ["../client/scripts/out/css"]
+            src: ['../client/scripts/out/css','../client/stylesheets/**/*.map','../client/scripts/out/*.map']
+
         },
         uglify: {
+            options: {
+                mangle: false,
+                compress: true
+            },
             build: {
                 src: '../client/scripts/out/app.js',
                 dest: '../client/scripts/out/app.js'
@@ -160,7 +165,7 @@ module.exports = function(grunt) {
         }
     });
 
-    // Load the plugin that provides the "uglify" task.
+    // Load the plugins
     grunt.loadNpmTasks('grunt-remove');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
