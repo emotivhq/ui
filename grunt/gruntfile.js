@@ -172,6 +172,6 @@ module.exports = function(grunt) {
     // Dev task.
     grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
     // Prod task
-    //grunt.registerTask('prod', ['uglify', 'cssmin']);
+    grunt.registerTask('default', ['clean', 'uglify', 'cssmin']);
 
 };
