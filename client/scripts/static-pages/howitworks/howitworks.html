@@ -8,33 +8,35 @@
 
   <div class="main">
     <div class="menu">
-      <div class="menu-item">
-        Gift Campaigns
+      <div class="menu-item" ng-click="sectionShown = 'welcome'">
+        Welcome
       </div>
-      <div class="menu-item">
-        Gift Board
+      <div class="menu-item" ng-click="sectionShown = 'group-gifting'">
+        Group Gifting
       </div>
-      <div class="menu-item">
-        Bundles
-      </div>
-      <div class="menu-item">
-        Find a Gift
-      </div>
-      <div class="menu-item">
+      <div class="menu-item" ng-click="sectionShown = 'concierge'">
         Gift Concierge
       </div>
       <div class="menu-item" ng-click="sectionShown = 'search'">
         Search
       </div>
-      <div class="menu-item">
+      <div class="menu-item" ng-click="sectionShown = 'glossary'">
         Glossary
       </div>
     </div>
 
     <div class="content">
+      <div id="welcome" ng-show="sectionShown == 'welcome'">
+        <h2>Welcome to GiftStarter!</h2>
+        <h4>Start amazing gifts here -- one you are proud to give, and they're happy to get.</h4>
+        <p>
+          GiftStarter is the best way to bring family and friends together to give an amazing gift. You start it -- and we help you with the rest. When you use GiftStarter, you don't have to collect the money or chase people down for cash.<br />It only takes a couple minutes to launch a campaign for your gift.
+          <br />Start an amazing gift today! Once it is complete, we handle ensuring the card with everyone's messages and the gift is shipped!
+        </p>
+      </div>
       <div id="glossary" ng-show="sectionShown == 'glossary'">
         <h2>Giftstarter Glossary</h2>
-        <h3>GiftStarter is a new gifting movement bringing people committed to giving amazing gifts.</h3>
+        <h4>GiftStarter is a new gifting movement bringing people committed to giving amazing gifts.</h4>
         <p>
           Welcome to GiftStarter! Here's a glossary of gifting words to help you in our gifting community:
         </p>
@@ -67,7 +69,7 @@
       </div>
       <div id="search" ng-show="sectionShown == 'search'">
         <h2>Find an Amazing Gift</h2>
-        <h3>GiftStarter helps you give amazing gifts you are proud to give and they are happy to get.</h3>
+        <h4>GiftStarter helps you give amazing gifts you are proud to give and they are happy to get.</h4>
         <p>Let's get you started on finding that amazing gift! We have tools here to help you:</p>
         <table>
           <tr>
@@ -83,6 +85,55 @@
             <td>Simply browse any of our curated gift ideas and categories to discover amazing gifts. Gift ideas like:</td>
           </tr>
         </table>
+      </div>
+      <div id="concierge" ng-show="sectionShown == 'concierge'">
+        <h2>Gift Concierge</h2>
+        <h4>Fast, fun, and no pressure personal shopper to help you find that perfect gift. Can't find it? We can help. Can't think of an idea? We can help.</h4>
+        <h3>Contact the Gift Concierge!</h3>
+        <p>We'll get back to you same day if possible -- definitely within 24 hours.</p>
+        <table>
+          <tr>
+            <td>EMAIL</td>
+            <td><a href="mailto:giftconcierge@giftstarter.co">giftconcierge@giftstarter.co</a></td>
+          </tr>
+          <tr>
+            <td>ONLINE CHAT</td>
+            <td>Look in the bottom right corner! Click here if you don't see it.<br />*During regular work hours (west coast time).</td>
+          </tr>
+          <tr>
+            <td>ONLINE FORM</td>
+            <td>Fill out the quick form about your gifting needs and we'll get on it ASAP! Click here to go to the form.</td>
+          </tr>
+        </table>
+        <p>Or you can just plain call us: 206-486-4849.</p>
+      </div>
+      <div id="group-gifting" ng-show="sectionShown == 'group-gifting'">
+        <h2>Group Gifting Starts Here</h2>
+        <h4>GiftStarter is a new gifting movement focused on bringing people together in a community that loves giving amazing gifts.</h4>
+        <p>Our patent-pending technology divides gift(s) into perfect tiles, giving family and friends the ability to purchase as many or as few as they wish. Any product available online can be gifted -- we take care of everything for you from helping collect the money, creating a special card with everyone's messages, to ensuring the gift is shipped!</p>
+        <table>
+          <tr>
+            <td>Find Gift</td>
+            <td>Search for gift<br />You can also contact our Gift Concierge or discover gifts on our Gift Ideas page.</td>
+          </tr>
+          <tr>
+            <td>Select Gift</td>
+            <td>Click the GiftStart button to start your group gift.</td>
+          </tr>
+          <tr>
+            <td>Tiles</td>
+            <td>Size the tiles!<br />Press '+' to add tiles.<br />Press '-' to remove tiles.<br />Think about the size and who you will invite. Some people will buy one tiles, some may buy more.</td>
+          </tr>
+          <tr>
+            <td>Your Gifting Event</td>
+            <td>Describe your event<br />What is it called?<br/>Who's it for?<br/>Why?</td>
+          </tr>
+          <tr>
+            <td>The Gift!</td>
+            <td>Where's the gift going and by when?<br />Note, standard shipping is always FREE with GiftStarter.</td>
+          </tr>
+        </table>
+        <p>There you go! Your group gift is started and ready to go. We help you end to end, and help send the card and the gift too! Give an amazing gift today!</p>
       </div>
     </div>
     <div class="clear">
