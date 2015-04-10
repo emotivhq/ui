@@ -21,7 +21,7 @@
         <div class="card-entry" ng-class="{'put-new': putNew && !cardsLoading}">
             <div class="number">
                 <img ng-src="{{numberImgUrl}}"/>
-                <input type="text" id="card-number" ng-disabled="!putNew" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" gs-focus="true" name="cc-number"/>
+                <input type="text" id="card-number" ng-disabled="!putNew" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" name="cc-number"/>
             </div><div class="cvc">
                 <img ng-src="{{cvcImgUrl}}"/>
                 <input type="text" id="card-cvc" ng-disabled="!putNew" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc"/>
