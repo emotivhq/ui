@@ -9,28 +9,31 @@
     overflow: hidden
 
   .menu
-    background-color: $disabled-color
-    float: left
     height: 99%
     margin: 0 50px
-    text-align: left
+    text-align: center
 
     .menu-item
       @extend .linky
+      background-color: $disabled-color
+      border: 1px solid black
+      display: inline-block
+      height: 50px
       margin: 20px
+      vertical-align: middle
+      width: 150px
 
   .content
-    float: right
     font: 1em "Roboto", sans-serif
-    margin: 0px 50px 50px 0px
+    margin: 0 auto
     text-align: left
-    width: 75%
+    width: 85%
     h2
-      padding-bottom: 0px
+      padding-bottom: 0
     h3, h4
-      margin-top: 0px
+      margin-top: 0
     p
-      font-family: Roboto
+      font-family: Roboto, sans-serif
     td
       padding: 10px
       vertical-align: top

@@ -306,10 +306,14 @@
 
   p
     font: 1.688em "Roboto", sans-serif
-    @include  apply-at-size("phone", "portrait")
-      font-size: 0.9em
-    letter-spacing: 1px
     line-height: 35px
+    @include apply-at-size("phone", "portrait")
+      font-size: 0.9em
+      line-height: 18px
+    @include apply-at-size("phone", "landscape")
+      font-size: 1.25em
+      line-height: 26px
+    letter-spacing: 1px
     margin: 10px auto 3px auto
     width: 60%
     @include apply-at-size("phone")
@@ -319,12 +323,7 @@
   div
     margin: 0px auto 50px auto
     img.welcome
-      height: 6em
-
-  span
-    font: 1.688em "Roboto Condensed", sans-serif
-    letter-spacing: 2px
-    vertical-align: middle
+      max-width: 60%
 
 #ui-datepicker-div
   font-family: "Roboto Condensed", sans-serif
