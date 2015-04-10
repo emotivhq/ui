@@ -25,13 +25,15 @@
     h1
       color: white
       font: 700 3.5em "Roboto Condensed"
+      @include apply-at-size("phone")
+        font-size: 2em
       letter-spacing: 3px
       -webkit-font-smoothing: antialiased
 
     p
       font: 1.688em "Roboto", sans-serif
       @include  apply-at-size("phone", "portrait")
-        font-size: 0.9em
+        font-size: 1em
         line-height: 18px
       @include  apply-at-size("phone", "landscape")
         font-size: 1.25em
