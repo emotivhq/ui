@@ -7,12 +7,12 @@
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'UserService','$window', 'PopoverService','LocalStorage',
+            'UserService','$window', '$http', '$compile', 'PopoverService','LocalStorage',
     GiftStartController]);
 
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         UserService,  $window, PopoverService, LocalStorage) {
+         UserService,  $window, $http, $compile, PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -181,6 +181,13 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.goToUserPage = function(uid) {
         Analytics.track('client', 'go to user page from comments');
         GiftStartService.goToUserPage(uid);
+    };
+
+    $scope.getPdf = function() {
+        $http.get('/scripts/giftstart/giftstart__print.html').then(function(response) {
+            $responseHTML = $compile(response.data)($scope);
+            console.log($responseHTML);
+        });
     };
 
     $scope.$on('login-success', function() {
