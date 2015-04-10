@@ -8,7 +8,7 @@ config = yaml.load(open('config.yaml'))
 
 is_stripe_cardprocessor = config['cardprocessor'] == 'stripe'
 
-get_cards_url = 'https://api'+('.sandbox' if secrets['paypal_auth']['mode']=='test' else '')+'.paypal.com/v1/vault/credit-cards?external_customer_id='
+get_cards_url = 'https://api'+('.sandbox' if secrets['paypal_auth']['mode']=='sandbox' else '')+'.paypal.com/v1/vault/credit-cards?external_customer_id='
 
 paypalapi = paypalrestsdk.configure({
   "mode": secrets['paypal_auth']['mode'],
