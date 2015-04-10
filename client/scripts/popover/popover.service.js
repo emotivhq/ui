@@ -15,7 +15,7 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
     this.validHashes = ['login', 'pay', 'note', 'thanks'];
 
     this.setPopover = function(popoverName) {
-        LocalStorage.set('/PopoverService/current', popoverName);
+        //LocalStorage.set('/PopoverService/current', popoverName);
         console && console.log && console.log('setting popover', popoverName);
         if (popoverName === '' || popoverName === null) {
             this.hidePopover();
@@ -38,7 +38,7 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
 
     this.hidePopover = function() {
         $timeout(function() {
-            LocalStorage.remove('/PopoverService/current');
+            //LocalStorage.remove('/PopoverService/current');
             self.contributeLogin = false;
             LocalStorage.set('/GiftStartService/contributeLogin', false);
             $rootScope.$broadcast('popover-hidden');
@@ -56,6 +56,7 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
         if (device.mobile()) {
             olark('api.box.hide');
         }
+        //window.setTimeout("var el=jQuery('.popover-container').first();alert('top: '+el.position().top+', left: '+el.position().left+', h: '+el.height()+', w: '+el.width())",1000);
         $rootScope.$broadcast('popover-shown');
     };
 
