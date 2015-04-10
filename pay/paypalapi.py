@@ -2,11 +2,14 @@
 import paypalrestsdk
 import yaml
 
-get_cards_url = 'https://api.sandbox.paypal.com/v1/vault/credit-cards?external_customer_id='
-
-is_stripe_cardprocessor = yaml.load(open('config.yaml'))['cardprocessor'] == 'stripe'
 
 secrets = yaml.load(open('secret.yaml'))
+config = yaml.load(open('config.yaml'))
+
+is_stripe_cardprocessor = config['cardprocessor'] == 'stripe'
+
+get_cards_url = 'https://api'+('.sandbox' if secrets['paypal_auth']['mode']=='test' else '')+'.paypal.com/v1/vault/credit-cards?external_customer_id='
+
 paypalapi = paypalrestsdk.configure({
   "mode": secrets['paypal_auth']['mode'],
   "client_id": secrets['paypal_auth']['client_id'],
