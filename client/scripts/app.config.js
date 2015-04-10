@@ -20,6 +20,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
         .when('/giftstart/:title/:object/:attr',
         {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
+        .when('/giftstart/:title/print',
+        {templateUrl: '/scripts/giftstart/giftstart__print.html', reloadOnSearch: false})
         .when('/users/:uid',
         {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
         .when('/about',
