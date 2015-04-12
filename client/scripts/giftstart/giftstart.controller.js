@@ -203,8 +203,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
     });
 
-
-
     $scope.showOverlay = GiftStartService.showOverlay;
     $scope.hideOverlay = GiftStartService.hideOverlay;
 
