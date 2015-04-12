@@ -195,11 +195,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         window.open('/pdfify?page=' + $location.path().slice(1) + '/print');
     };
 
-    $scope.setBitlyUrlforPirnt = function() {
-        var currentUrl = $location.absUrl();
-        GiftStartService.giftStart.giftstartUrl = 123;
-    };
-
     $scope.$on('login-success', function() {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
         $scope.newUser = !UserService.hasPitchedIn;
