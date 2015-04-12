@@ -7,12 +7,12 @@
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'UserService','$window', '$http', '$compile', 'PopoverService','LocalStorage',
+            'UserService','$window', '$document', 'PopoverService','LocalStorage',
     GiftStartController]);
 
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         UserService,  $window, $http, $compile, PopoverService, LocalStorage) {
+         UserService,  $window, $document,  PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -77,6 +77,14 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
             GiftStartService.giftStart.totalSelection) /
             GiftStartService.giftStart.total_price * 100).toString() + '%';
     };
+
+    $document.bind('keyup keydown', function(event) {
+        if(event.ctrlKey && event.keyCode == 80) {
+            window.open('/pdfify?page=' + $location.path().slice(1) + '/print');
+            event.preventDefault();
+            return false;
+        }
+    });
 
     $scope.$on('pitch-ins-initialized', function() {
         $scope.pitchInsInitialized = true;
@@ -174,7 +182,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         GooglePlusService.share(UserService.uid);
     };
 
-    $scope.productLinkClicked = function() {
+    $scope.productLinkClicked = function(){
         Analytics.track('campaign', 'product link clicked');
     };
 
@@ -183,11 +191,13 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         GiftStartService.goToUserPage(uid);
     };
 
-    $scope.getPdf = function() {
-        $http.get('/scripts/giftstart/giftstart__print.html').then(function(response) {
-            $responseHTML = $compile(response.data)($scope);
-            console.log($responseHTML);
-        });
+    $scope.toPDFPage = function() {
+        window.open('/pdfify?page=' + $location.path().slice(1) + '/print');
+    };
+
+    $scope.setBitlyUrlforPirnt = function() {
+        var currentUrl = $location.absUrl();
+        GiftStartService.giftStart.giftstartUrl = 123;
     };
 
     $scope.$on('login-success', function() {
@@ -197,6 +207,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.$on('logout-success', function() {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
     });
+
+
 
     $scope.showOverlay = GiftStartService.showOverlay;
     $scope.hideOverlay = GiftStartService.hideOverlay;

@@ -10,7 +10,7 @@
         <div class="col2 block">
             <h3 class="title" target="_blank">
                 {{giftStart.product_title}}</h3>
-            <div>
+            <div class="desc">
                 GiftStarter is a Gifting Experience Service. Our mission is to focus on the gifting experience, using technology as an enabler. We enable the experience that captures giving between the recipient and those that give.<br/><br/>
 
                 Search for and select a product using the search bar on the homepage, fill out the GiftStart information to share your story on why this is important to you or your gift recipient, and bring others along on the giving journey. We let your family and friends choose their pieces of the gift to give, we send an awesome hand-crafted group card to remember the experience, and the gift too. <br/>
@@ -44,12 +44,10 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion
             </p>
             <div class="contributor__link">
-                <p class="contributor__campaign">
+                <p class="contributor__campaign" >
                     View the Campaign
                 </p>
-                <p class="contributor__href">
-                    {{giftStart.currentProducturl}}
-                </p>
+                <gs-print-url class="contributor__href"></gs-print-url>
             </div>
         </div>
     </div>
@@ -95,6 +93,15 @@
 
     .col2 {
         margin-right: 0 !important;
+        width: 40% !important;
+        margin-right: 3%;
+        float: right !important;
+    }
+
+    .contributors__photo:only-child {
+        display: block;
+        position: relative;
+        left: 33%;
     }
 
     .title--groupcard {
@@ -113,11 +120,15 @@
     .contributor__campaign {
         font-size: 21px;
         color: #686868;
-        margin-bottom: 10px;
+        margin: 0 0 15px;
     }
 
     .contributors__photo {
         width: 25%;
+    }
+
+    .desc {
+        font-family: 'Roboto Condensed', sans-serif;
     }
 
     .contributors__img {
@@ -125,8 +136,9 @@
     }
 
     .contributor__imageset {
-        width: 56%;
+        width: 53%;
         min-height: 200px;
+        margin-left: 3%;
     }
 
     .contributor__description {
@@ -136,9 +148,13 @@
 
     .contributor__link {
         background: #efefef;
-        width: 100%;
-        padding: 5% 0;
+        width: 95%;
+        padding: 6% 0 7%;
         margin-top: 5%;
+    }
+    
+    .contributor__href {
+        color: #444;
     }
 
     .gift-champion {
