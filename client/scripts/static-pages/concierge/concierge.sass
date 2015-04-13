@@ -1,9 +1,28 @@
 @import "../static-pages"
 
 .concierge
-  font-family: Roboto, sans-serif
+
+  p
+    font-family: Roboto, sans-serif
 
   .headerwrap
     background: url("/assets/concierge/img/gift.png") no-repeat center
     a
       font-size: 1em
+
+  .main
+    input
+      width: 300px
+      max-width: 100%
+    .info-item
+      display: inline-block
+      padding: 20px
+      width: 32.5%
+      @include apply-at-size("phone")
+        width: 99%
+      vertical-align: top
+      img
+        height: 70px
+        width: 70px
+        max-height: 100%
+        max-width: 100%
