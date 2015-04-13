@@ -40,7 +40,7 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
         $timeout(function() {
             //LocalStorage.remove('/PopoverService/current');
             self.contributeLogin = false;
-            LocalStorage.set('/GiftStartService/contributeLogin', false);
+            //LocalStorage.set('/GiftStartService/contributeLogin', false);
             $rootScope.$broadcast('popover-hidden');
             self.currentLocation = '';
 
@@ -71,10 +71,10 @@ function PopoverService($rootScope,  $timeout,  Analytics, LocalStorage) {
     };
 
     // Ensure they don't navigate directly to a popover
-    if (LocalStorage.get('/PopoverService/contributeLogin')) {
-        self.contributeLogin = LocalStorage
-            .get('/PopoverService/contributing');
-    } else {
+    //if (LocalStorage.get('/PopoverService/contributeLogin')) {
+    //    self.contributeLogin = LocalStorage
+    //        .get('/PopoverService/contributing');
+    //} else {
         self.contributeLogin = Boolean(self.contributeLogin);
-    }
+    //}
 }
