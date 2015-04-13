@@ -60,6 +60,7 @@ def send_day_left_warning(gsid):
     """notify creator and all givers that campaign has one day left"""
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
+    check_if_complete(gsid)
     if not giftstart.giftstart_complete:
         # Notify giftstarter
         email_kwargs = {
