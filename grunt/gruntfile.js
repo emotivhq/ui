@@ -77,6 +77,7 @@ module.exports = function(grunt) {
                     '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
                     '../client//scripts/home/home.js',
                     '../client//scripts/giftstart/thanks/thanked-campaigns.directive.js',
+                    '../client//scripts/giftstart/print/print.directive.js',
                     '../client//scripts/header/header.controller.js',
                     '../client//scripts/utilities/toast.service.js',
                     '../client//scripts/utilities/toast.directive.js',
