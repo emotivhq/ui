@@ -9,24 +9,26 @@
     overflow: hidden
 
   .menu
-    height: 99%
-    margin: 0 50px
+    border-spacing: 20px
+    display: table
+    margin: 0 auto
     text-align: center
 
     .menu-item
       @extend .linky
       background-color: $disabled-color
       border: 1px solid black
-      display: inline-block
+      display: table-cell
       height: 50px
       margin: 20px
+      padding: 20px
       vertical-align: middle
       width: 150px
 
   .content
     font: 1em "Roboto", sans-serif
     margin: 0 auto
-    text-align: left
+    text-align: center
     width: 85%
     h2
       padding-bottom: 0
@@ -34,11 +36,22 @@
       margin-top: 0
     p
       font-family: Roboto, sans-serif
+    table
+      background-color: white
     td
       padding: 10px
       vertical-align: top
     td:first-child
       white-space: nowrap
+
+    .concierge-item
+      background-color: #d3d3d3
+      border: 20px solid white
+      padding: 20px
+      text-align: center
+      width: 33%
+      &:first-child
+        white-space: normal
 
   .clear
     clear: both
