@@ -69,6 +69,7 @@ module.exports = function(grunt) {
                     '../client//scripts/static-pages/about/about.controller.js',
                     '../client//scripts/static-pages/faq/faq.controller.js',
                     '../client//scripts/static-pages/giftideas/giftideas.controller.js',
+                    '../client//scripts/static-pages/concierge/concierge.controller.js',
                     '../client//scripts/static-pages/howitworks/howitworks.controller.js',
                     '../client//scripts/static-pages/oldbrowser/oldbrowser.controller.js',
                     '../client//scripts/static-pages/partners/partners.controller.js',
