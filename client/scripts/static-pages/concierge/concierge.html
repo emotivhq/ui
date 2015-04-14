@@ -8,21 +8,24 @@
 
   <div class="main">
     <h2>Give an Amazing Gift</h2>
-    <p>An amazing gift you're proud to give and they're happy to get. Bring people together to give a gift they've always wanted.<br /><br />If you want to learn more about how the Gift Concerige works.</p>
-    <a class="button" href="/howitworks">LEARN MORE</a>
-    <hr />
-    <h2>Start an Amazing Gift!</h2>
-    <p>Here's a quick form to get you going: We'll get back to you same day if possible (under 24 hours).</p>
-    <div>
-      <form ng-submit="sendMsg()">
-        <input type="text" name="title" ng-model="title" placeholder="What's the event called?" /><br/>
-        <input type="text" name="budget" ng-model="budget" placeholder="Is there a budget you want to stay within?" /><br/>
-        <input type="text" name="url" ng-model="url" placeholder="URL" /><br/>
-        <input type="email" name="email" ng-model="email" placeholder="Your email address" /><br/>
-        <button type="submit" class="button">SUBMIT</button>
-      </form>
+    <div class="concierge-item intro">
+      <p>Give them a gift you're proud to give - and they're happy to get. By bringing people together with GiftStarter, you can give the gift they won't be able to stop talking about.<br /><br />The Gift Concierge is here to help you make it happen. See all the ways the Gift Concierge can assist you.</p>
+      <a class="button" href="/howitworks">LEARN MORE</a>
     </div>
-    <p>{{msg}}</p>
+    <div class="concierge-item form">
+      <p>Fill out the form below and we'll get back to you the same day (if possible) or within 24 hours guaranteed.</p>
+      <div id="concierge-form">
+        <form ng-submit="sendMsg()">
+          <input type="text" name="title" ng-model="title" placeholder="What event is the gift for?" /><br/>
+          <input type="text" name="budget" ng-model="budget" placeholder="Is there a budget you want to stay within?" /><br/>
+          <input type="text" name="url" ng-model="url" placeholder="URL to the gift you're thinking of" /><br/>
+          <input type="email" name="email" ng-model="email" placeholder="Your email address (required)" /><br/>
+          <input type="text" name="comments" ng-model="comments" placeholder="Additional Comments" /><br/>
+          <button type="submit" class="button">SUBMIT</button>
+        </form>
+      </div>
+      <p>{{msg}}</p>
+    </div>
     <hr />
     <h2>Give the perfect group gift, every time.</h2>
     <div class="info">
