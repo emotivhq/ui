@@ -1,9 +1,8 @@
 @import "../base"
 @import "../frame/column"
 
-$step-margin-width: 4em
-$landing-page-padding-horz: 1.5em
-$step-width: (2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
+$landing-page-padding-horz: 1.3125em
+$step-width: 210px //(2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
 
 div.landing-page
   padding: 0.75em $landing-page-padding-horz
@@ -28,7 +27,7 @@ div.landing-page
     clear: both
 
   button
-    font-family: BlanchCondensed
+    font-family: Gotham, sans-serif
 
   div.horizontalBar
     border-color: $primary-color
@@ -152,8 +151,7 @@ div.landing-page
   @media screen and (min-width: $phone-tablet-boundary)
     div.process
       div.step
-        margin-left: 2em
-        margin-right: 2em
+        margin: 0 28px
 
     @media screen and (min-width: $tablet-computer-boundary)
       div.step.one
