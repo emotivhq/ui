@@ -1,0 +1,131 @@
+@import "../base"
+
+.userlogin
+  min-height: 70rem
+  padding-top: 2rem
+
+  &__title
+    text-align: center
+    color: #000
+    font-family: "Roboto", sans-serif
+    font-size: 2.25em
+
+  &__logo
+    background-image: url("/assets/giftstarter.png")
+    background-size: 5rem 5rem
+    background-repeat: no-repeat
+    width: 5rem
+    height: 5rem
+    margin: 1.5rem auto
+
+  &__form
+    text-align: center
+    margin-top: 3rem
+
+  &__email,
+  &__password,
+  &__name,
+  &__surname,
+  &__reentermail,
+  &__reenterpassword
+    border-radius: 0
+    border: 1px solid #000
+    width: 24%
+    margin-top: 1rem
+    @include apply-at-size("phone")
+      display: block
+      width: 70%
+      margin: 1rem auto
+      padding: 1rem 0.5rem
+
+  br
+    @include apply-at-size("phone")
+      display: none
+
+  &__email
+    margin-right: 2%
+    @include apply-at-size("phone")
+      margin-right: auto
+
+
+  &__surname,
+  &__reenterpassword
+    margin-left: 2%
+    @include apply-at-size("phone")
+      margin-left: auto
+
+
+  &__remember,
+  &__rememberlabel,
+  &__forgot
+    position: relative
+    float: left
+    top: 1rem
+    display: block
+
+  &__remember
+    left: 25%
+    -ms-transform: scale(1.5)
+    -moz-transform: scale(1.5)
+    -webkit-transform: scale(1.5)
+    -o-transform: scale(1.5)
+    @include apply-at-size("phone")
+      left: 15%
+
+  &__rememberlabel,
+  &__forgot,
+  &__createacclink
+    text-transform: uppercase
+    color: #333
+
+  &__rememberlabel
+    left: 26%
+    @include apply-at-size("phone")
+      left: 17%
+
+    &:hover
+      text-decoration: underline
+
+  &__forgot
+    top: 1.1rem
+    left: 1.5%
+    float: none
+    display: inline-block
+    @include apply-at-size("phone")
+      left: 5%
+
+    &:hover
+      color: #333
+
+  &__loginbtn
+    clear: both
+    display: block
+    margin: 0 auto
+    position: relative
+    top: 3rem
+    font-size: 2.5rem
+    padding: 0 3rem
+
+
+  &__createacc
+    position: relative
+    top: 5.5rem
+    text-align: center
+
+  &__createacclink
+    text-decoration: underline
+    &:hover
+      color: #333
+
+  &__sociallogin
+    position: relative
+    top: 9rem
+    text-align: center
+
+  &__socialiconsset
+    margin: 1rem 0 2rem
+
+  &__socialicons
+    width: 3.6rem
+    height: 3.6rem
+    margin-left: 1rem

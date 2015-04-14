@@ -4,6 +4,7 @@ __author__ = 'GiftStarter'
 from giftstart import GiftStart
 from pay.PitchIn import PitchIn
 from google.appengine.ext import ndb
+import logging
 
 
 def filter_giftstarts(uid, giftstarts):
@@ -26,8 +27,13 @@ def filter_pitchins(uid, pitchins):
 
 def pitchin_attach_title(pitchin_dict, giftstarts):
     gsid = pitchin_dict.get('gsid')
-    gs = filter(lambda g: g.gsid == gsid, giftstarts)[0]
-    return dict(pitchin_dict.items() + [('gs_title', gs.giftstart_title)])
+    found_gs = filter(lambda g: g.gsid == gsid, giftstarts)
+    if(len(found_gs)==0):
+        logging.error("No matching GS found for GSID {0} at pitchin_attach_title".format(gsid))
+        title= '(campaign title missing)'
+    else:
+        title = found_gs[0].giftstart_title
+    return dict(pitchin_dict.items() + [('gs_title', title)])
 
 
 def get_stats(uids):
