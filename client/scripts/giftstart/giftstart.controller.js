@@ -79,7 +79,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     };
 
     $document.bind('keyup keydown', function(event) {
-        if(event.ctrlKey && event.keyCode == 80) {
+        if(event.ctrlKey && event.keyCode === 80) {
             window.open('/pdfify?page=' + $location.path().slice(1) + '/print');
             event.preventDefault();
             return false;
