@@ -185,7 +185,7 @@ token_pointer_map = {
 }
 
 
-def validate(uid, token, path):
+def validate(uid, token, path=None):
     """
     validate user token and record login
     @param uid: user ID
@@ -199,7 +199,8 @@ def validate(uid, token, path):
         if user.name is None:
             user.name = ''
         if token_pointer_map[uid[0]](user) == token:
-            UserLogin.register_login(uid, path)
+            if path:
+                UserLogin.register_login(uid, path)
             result = {
                 'uid': uid, 'img_url': user.cached_profile_image_url,
                 'token': token,

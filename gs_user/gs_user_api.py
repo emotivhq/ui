@@ -36,6 +36,27 @@ class StatsHandler(webapp2.RequestHandler):
         self.response.write(json.dumps(get_stats(uid)))
 
 
+class UserProfileHandler(webapp2.RequestHandler):
+    """JSON-formatted User"""
+    def get(self):
+        """
+        Gets user as JSON (including protected data if signed in as self)
+        """
+        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
+        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
+        allow_protected_data = uid and validate(uid, token, self.request.path)
+
+        uid = self.request.path.split('/')[3][:-5]
+        if uid[0] not in ['f', 'g', 't', 'e']:
+            self.response.set_status(400, "Invalid user id")
+        else:
+            user = get_user(uid)
+            if user is None:
+                self.response.set_status(400, "Invalid user id")
+            else:
+                self.response.write(user.jsonify(allow_protected_data))
+
+
 class UserPageHandler(webapp2.RequestHandler):
     """user-facing page for User metadata"""
     def get(self):
@@ -229,6 +250,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
+                               ('/users/profile/.*.json', UserProfileHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
                                ('/users/.*/cards.json', PaymentCardsHandler),

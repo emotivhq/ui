@@ -40,15 +40,38 @@ class User(ndb.Model):
     referrer_uid = ndb.StringProperty()
     referrer_uuid = ndb.StringProperty()
 
+    shipping_address = ndb.StringProperty()
+    shipping_city = ndb.StringProperty()
+    shipping_state = ndb.StringProperty()
+    shipping_zip = ndb.StringProperty()
+
+    birth_day = ndb.IntegerProperty()
+    birth_month = ndb.IntegerProperty()
+
     has_pitched_in = ndb.BooleanProperty(default=False)
 
     stripe_id = ndb.StringProperty()
 
     paypal_vault_payer_id = ndb.StringProperty()
 
-    def jsonify(self):
-        return json.dumps({
-            'uid': self.uid,
-            'name': self.name,
-            'img_url': self.cached_profile_image_url
-        })
+    def jsonify(self, include_protected_data=False):
+        if(include_protected_data):
+            return json.dumps({
+                'uid': self.uid,
+                'name': self.name,
+                'img_url': self.cached_profile_image_url,
+                'email': self.email,
+                'phone': self.phone_number,
+                'birth_day': self.birth_day,
+                'birth_month': self.birth_month,
+                'shipping_address': self.shipping_address,
+                'shipping_city': self.shipping_city,
+                'shipping_state': self.shipping_state,
+                'shipping_zip': self.shipping_zip,
+            })
+        else :
+            return json.dumps({
+                'uid': self.uid,
+                'name': self.name,
+                'img_url': self.cached_profile_image_url
+            })
