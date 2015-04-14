@@ -39,7 +39,7 @@
       .button
         display: block
         margin: 10px auto
-        width: 210px
+        width: 220px
       button
         font: 1em Roboto, sans-serif
         padding: 10px 30px
@@ -49,7 +49,12 @@
     .intro
       padding-right: 60px
       width: 64.5%
+      @include apply-at-size("phone")
+        padding-right: 0
+        width: 100%
       .button
         margin-top: 20px
     .form
       width: 34.5%
+      @include apply-at-size("phone")
+        width: 100%
