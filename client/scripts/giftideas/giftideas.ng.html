@@ -12,8 +12,8 @@
                     <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
                 </div>
                 <div class="gsbuttons">
-                    <a href="{{product.giftStartLink}}" class="button main rounded" target="_self" ng-show="product.hasPrice">GIFTSTART IT!</a>
-                    <a href="#" onclick="olark('api.box.expand')" class="button main rounded" ng-show="!product.hasPrice">Contact the Gift Concierge</a>
+                    <a href="{{product.giftStartLink}}" target="_self" class="button" ng-show="product.hasPrice">GIFTSTART IT!</a>
+                    <a href="#" onclick="olark('api.box.expand')" class="button" ng-show="!product.hasPrice">Contact the Gift Concierge</a>
                 </div>
             </div>
         </div>
