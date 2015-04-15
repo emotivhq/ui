@@ -30,6 +30,12 @@ class User(ndb.Model):
     googleplus_id = ndb.StringProperty()
     googleplus_token_set = ndb.StructuredProperty(GooglePlusTokenSet)
 
+    link_facebook = ndb.StringProperty()
+    link_twitter = ndb.StringProperty()
+    link_linkedin = ndb.StringProperty()
+    link_googleplus = ndb.StringProperty()
+    link_website = ndb.StringProperty()
+
     cached_profile_image_url = ndb.StringProperty()
     email = ndb.StringProperty()
     subscribed_to_mailing_list = ndb.BooleanProperty(default=False)
@@ -60,6 +66,11 @@ class User(ndb.Model):
                 'uid': self.uid,
                 'name': self.name,
                 'img_url': self.cached_profile_image_url,
+                'link_facebook': self.link_facebook,
+                'link_twitter': self.link_twitter,
+                'link_linkedin': self.link_linkedin,
+                'link_googleplus': self.link_googleplus,
+                'link_website': self.link_website,
                 'email': self.email,
                 'phone': self.phone_number,
                 'birth_day': self.birth_day,
@@ -73,5 +84,10 @@ class User(ndb.Model):
             return json.dumps({
                 'uid': self.uid,
                 'name': self.name,
-                'img_url': self.cached_profile_image_url
+                'img_url': self.cached_profile_image_url,
+                'link_facebook': self.link_facebook,
+                'link_twitter': self.link_twitter,
+                'link_linkedin': self.link_linkedin,
+                'link_googleplus': self.link_googleplus,
+                'link_website': self.link_website
             })
