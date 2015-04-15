@@ -10,6 +10,7 @@ class GiftStart(ndb.Model):
     giftstart_title = ndb.StringProperty(required=True)
     giftstart_url_title = ndb.StringProperty()
     giftstart_description = ndb.TextProperty(required=True)
+    coupon = ndb.TextProperty()
     giftstart_special_notes = ndb.TextProperty()
     gift_champion_uid = ndb.StringProperty()
     staging_uuid = ndb.StringProperty()

@@ -13,7 +13,7 @@
     text-transform: uppercase
     font-size: 12px
   div.gsintro
-    +border-radius(1em)
+    //+border-radius(1em)
     border: 1px solid #bbbbbb
     text-align: left
     position: relative
@@ -98,6 +98,12 @@
             @media screen and (max-width: $phone-tablet-boundary)
               width: 100%
       div.email
+        input
+          width: 23.75em
+          @media screen and (max-width: $phone-tablet-boundary)
+            width: 100%
+
+      div.coupon
         input
           width: 23.75em
           @media screen and (max-width: $phone-tablet-boundary)
@@ -218,7 +224,7 @@
       padding-left: 0.4em
       padding-right: 0.5em
       cursor: pointer
-      +border-radius(50%)
+      //+border-radius(50%)
       background: $primary-color
     input#tooltip-checkbox + label span.tooltip
       display: none
@@ -278,7 +284,7 @@
       padding: 10px
       background-color: $primary-color
       color: #fff
-      border-radius: 10px
+      //border-radius: 10px
       margin-left: 10px
       margin-top: -1px
 
