@@ -1,8 +1,10 @@
 @import "../base"
 
 .userlogin
-  min-height: 70rem
+  min-height: 46rem
   padding-top: 2rem
+  @include apply-at-size("phone")
+    min-height: 50rem
 
   &__title
     text-align: center
@@ -28,7 +30,6 @@
   &__surname,
   &__reentermail,
   &__reenterpassword
-    //border-radius: 0
     border: 1px solid #000
     width: 24%
     margin-top: 1rem
@@ -70,7 +71,8 @@
     -webkit-transform: scale(1.5)
     -o-transform: scale(1.5)
     @include apply-at-size("phone")
-      left: 15%
+      left: 0
+      top: 1.8rem
 
   &__rememberlabel,
   &__forgot,
@@ -81,18 +83,28 @@
   &__rememberlabel
     left: 26%
     @include apply-at-size("phone")
-      left: 17%
+      left: 0.4rem
+      top: 1.8rem
 
     &:hover
       text-decoration: underline
 
+  &__wrapper
+    @include apply-at-size("phone")
+      position: relative
+      width: 70%
+      margin: 0 auto
+
   &__forgot
-    top: 1.1rem
+    top: 1rem
     left: 1.5%
     float: none
     display: inline-block
+    font-size: 14px
     @include apply-at-size("phone")
-      left: 5%
+      position: absolute
+      top: 0
+      left: 0
 
     &:hover
       color: #333
@@ -103,9 +115,10 @@
     margin: 0 auto
     position: relative
     top: 3rem
-    font-size: 2.5rem
-    padding: 0 3rem
-
+    font-size: 1.7rem
+    padding: 0.8rem 2.5rem
+    @include apply-at-size("phone")
+      top: 4rem
 
   &__createacc
     position: relative
