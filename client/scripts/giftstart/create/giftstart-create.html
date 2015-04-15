@@ -276,6 +276,19 @@
                     </div>
                     <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)+1}} Days</label>
                 </div>
+                <div class="coupon-code">
+                    <h2>4. Do you have a coupon code?</h2>
+                    <input type="text"
+                           id="coupon"
+                           name="coupon"
+                           placeholder="Enter your code"
+                           maxlength="20"
+                           ng-model="coupon"
+                           ng-focus="hideValidationError.code = true"
+                           ng-blur="hideValidationError.code = false;"
+                           onkeypress="return event.keyCode==13?false:true"
+                           ng-change="priceChanged()"/>
+                </div>
                 <div class="price-block">
                     <h2>Price</h2>
                     <label>

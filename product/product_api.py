@@ -5,6 +5,7 @@ import webapp2
 import json
 import product_fetch
 import product_tax
+import product_fees
 import product_search
 import urllib
 
@@ -32,6 +33,11 @@ class ProductHandler(webapp2.RequestHandler):
                                              shipping_state, shipping_zip,
                                              is_gift_card)
             self.response.write(json.dumps({'tax': tax_percent}))
+
+        elif data.get('action') == 'get-service-fee':
+            coupon = data['coupon'] if 'coupon' in data else ''
+            self.response.write(json.dumps({'fee': product_fees.lookup(coupon)}))
+
 
 
 class ProductUrlHandler(webapp2.RequestHandler):
