@@ -9,6 +9,10 @@ storage_url:              '/giftstarter-pictures/'
 facebook_app:             'giftstarterapp'
 facebook_app_id:          '301135316704582'
 
+baseServiceFeeRate:       0.08
+
+couponCode:               'GiftMe!'
+
 googleanalytics:
   key:                    'UA-51616127-2'
 
