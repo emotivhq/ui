@@ -49,18 +49,18 @@
     <div class="fullwidth block fullwidth--last">
         <div class="prices block">
             <div class="price funded">
-                <h2>Gifted!</h2>
-                <h1>$<span class="giftstart product contribution">{{giftStart.funded / 100 | number : 2}}</span></h1>
+                <h3>Gifted!</h3>
+                <h2>$<span class="giftstart product contribution">{{giftStart.funded / 100 | number : 2}}</span></h2>
             </div>
             <div class="price remaining">
-                <h2>Amount Needed</h2>
-                <h1>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h1>
+                <h3>Amount Needed</h3>
+                <h2>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h2>
             </div>
             <gs-funding-bar></gs-funding-bar>
         </div>
         <div class="completion block">
-            <div><h2>Time Left in GiftStart</h2></div>
-            <div><h1 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h1></div>
+            <div><h3>Time Left in GiftStart</h3></div>
+            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2></div>
         </div>
     </div>
 
