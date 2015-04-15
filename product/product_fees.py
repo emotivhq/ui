@@ -16,7 +16,7 @@ def lookup(coupon):
     look up service fee rate based on coupon code (if any)
     @param coupon:
     """
-    if coupon == config['couponCode']:
+    if coupon != None and coupon.lower() == config['couponCode'].lower():
         return 0
     else:
         return config['baseServiceFeeRate']
