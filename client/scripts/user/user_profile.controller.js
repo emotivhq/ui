@@ -38,15 +38,4 @@ function UserprofileController($scope, UserService, $location, $http) {
                 $scope.editMode = false;
             });
     }
-
-    $scope.checkAJAX = function() {
-        var req = {
-            method: 'POST',
-            url: '/users',
-            data: { test: 'test' }
-        }
-        $http(req).success(function(response){
-            console.log(response)
-        });
-    }
 }
