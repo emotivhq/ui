@@ -97,18 +97,6 @@ handlers:
 - url: /bower_components
   static_dir: client/bower_components
   secure: always
-- url: /assets/giftideas/category/forher/
-  static_dir: client/assets/giftideas/category/forHer/
-  secure: always
-- url: /assets/giftideas/category/forHer/
-  static_dir: client/assets/giftideas/category/forHer/
-  secure: always
-- url: /assets/giftideas/category/forhim/
-  static_dir: client/assets/giftideas/category/forHim/
-  secure: always
-- url: /assets/giftideas/category/forHim/
-  static_dir: client/assets/giftideas/category/forHim/
-  secure: always
 - url: /assets
   static_dir: client/assets
   application_readable: true
@@ -129,6 +117,18 @@ handlers:
 - url: /giftCard/
   static_dir: client/assets/giftideas/category/giftcard/
   application_readable: true
+  secure: always
+- url: /assets/giftideas/category/forher/
+  static_dir: client/assets/giftideas/category/forHer/
+  secure: always
+- url: /assets/giftideas/category/forHer/
+  static_dir: client/assets/giftideas/category/forHer/
+  secure: always
+- url: /assets/giftideas/category/forhim/
+  static_dir: client/assets/giftideas/category/forHim/
+  secure: always
+- url: /assets/giftideas/category/forHim/
+  static_dir: client/assets/giftideas/category/forHim/
   secure: always
   # end yuck
 - url: /templates/angular
