@@ -20,6 +20,11 @@ module.exports = function(grunt) {
             }
         },
         sass: {
+            // This doesn't work.  Bleh.
+            // options: {
+            //    sourceMap: createSourceMaps,
+            //    sourceMapStyle: 'link'
+            //},
             dist: {
                 files: [{
                     expand: true,
