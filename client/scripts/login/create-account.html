@@ -1,8 +1,3 @@
-<div class="userlogin">
-    <div class="userlogin__logo"></div>
-    <h2 class="userlogin__title">
-        Join our gifting movement
-    </h2>
     <div class="userlogin__form">
         <input class="userlogin__name" type="text" name="name" placeholder="First name" required />
         <input class="userlogin__surname" type="email" name="surname" placeholder="Last name" required />
@@ -17,32 +12,5 @@
     </div>
     <div class="userlogin__createacc">
         <span>Already have an account? </span>
-        <span>
-            <a href="/login" class="userlogin__createacclink">
-                Login
-            </a>
-        </span>
+        <span><a ng-click="$parent.showCreate=false" href="#"  class="userlogin__createacclink">Login</a></span>
     </div>
-    <div class="userlogin__sociallogin">
-        <span>
-            Or create an account using soical media
-        </span>
-        <div class="userlogin__socialiconsset">
-            <span class="nobr">
-                <a href="#">
-                    <img class="userlogin__socialicons" src="/assets/facebookicon.png">
-                </a>
-                <a href="#">
-                    <img class="userlogin__socialicons" src="/assets/twittericon.png">
-                </a>
-                <a href="#">
-                    <img class="userlogin__socialicons" src="/assets/linkedInicon.png">
-                </a>
-                <a href="#">
-                    <img class="userlogin__socialicons" src="/assets/googleicon.png">
-                </a>
-            </span>
-        </div>
-    </div>
-
-</div>
