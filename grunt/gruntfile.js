@@ -1,3 +1,5 @@
+createSourceMaps = false;
+
 module.exports = function(grunt) {
 
     // Project configuration.
@@ -30,10 +32,10 @@ module.exports = function(grunt) {
         },
         concat: {
             build: {
-                //options: {
-                //    sourceMap: true,
-                //    sourceMapStyle: 'link'
-                //},
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapStyle: 'link'
+                },
                 src: [
                     '../client//bower_components/jquery/dist/jquery.min.js',
                     '../client//bower_components/jquery-ui/jquery-ui.min.js',
@@ -124,11 +126,11 @@ module.exports = function(grunt) {
                 dest: '../client/scripts/out/jquery.min.map'
             },
             css: {
-                //options: {
-                    //sourceMap: true,
-                    //sourceMapName: '../client/stylesheets/compiled.css.map',
-                    //sourceMapStyle: 'link'
-                //},
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapName: '../client/stylesheets/compiled.css.map',
+                    sourceMapStyle: 'link'
+                },
                 src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
                 dest: '../client/stylesheets/compiled.css'
             }
