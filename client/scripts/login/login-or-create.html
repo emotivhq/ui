@@ -1,0 +1,29 @@
+<div class="userlogin" ng-controller="LoginOrCreateController">
+    <div class="userlogin__logo"></div>
+    <h2 class="userlogin__title">
+        Join our gifting movement
+    </h2>
+    <div ng-show="showLogin"><ng-include src="'/scripts/login/login.html'"></ng-include></div>
+    <div ng-hide="showLogin"><ng-include src="'/scripts/login/create-account.html'"></ng-include></div>
+    <div class="userlogin__sociallogin">
+        <span>
+            Or {{showLogin?"login":"create an account"}} using social media
+        </span>
+        <div class="userlogin__socialiconsset">
+            <span class="nobr">
+                <a href="#">
+                    <img class="userlogin__socialicons" src="/assets/facebookicon.png">
+                </a>
+                <a href="#">
+                    <img class="userlogin__socialicons" src="/assets/twittericon.png">
+                </a>
+                <a href="#">
+                    <img class="userlogin__socialicons" src="/assets/linkedInicon.png">
+                </a>
+                <a href="#">
+                    <img class="userlogin__socialicons" src="/assets/googleicon.png">
+                </a>
+            </span>
+        </div>
+    </div>
+</div>
