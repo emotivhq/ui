@@ -126,7 +126,43 @@ class UserHandler(webapp2.RequestHandler):
     def post(self):
         data = json.loads(self.request.body)
 
-        if data['action'] == 'is-logged-in':
+        if data['action'] == 'update-profile':
+            uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
+            token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
+            if(uid and validate(uid, token, self.request.path) and uid==data['uid']):
+                user = ndb.Key('User', uid).get()
+                try:
+                    logging.warning("Setting info for {0}".format(user.jsonify(True)))
+                    user.name=data['name']
+                    user.link_facebook=data['link_facebook']
+                    user.link_twitter=data['link_twitter']
+                    user.link_linkedin=data['link_linkedin']
+                    user.link_googleplus=data['link_googleplus']
+                    user.link_website=data['link_website']
+                    user.email=data['email']
+                    user.phone=data['phone']
+                    user.birth_day=data['birth_day']
+                    user.birth_month=data['birth_month']
+                    user.shipping_address=data['shipping_address']
+                    user.shipping_city=data['shipping_city']
+                    user.shipping_state=data['shipping_state']
+                    user.shipping_zip=data['shipping_zip']
+                    user.put()
+                    logging.warning("New info is {0}".format(user.jsonify(True)))
+                    self.response.write(json.dumps({
+                        'ok': 'User updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in your '+x.message
+                    }))
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s profile.'
+                }))
+        elif data['action'] == 'is-logged-in':
             if data['service'] == 'twitter':
                 self.response.write(twitter.is_logged_in(data['uid']))
 
