@@ -155,12 +155,12 @@ class UserHandler(webapp2.RequestHandler):
                 except KeyError as x:
                     self.response.set_status(400, "Invalid user id")
                     self.response.write(json.dumps({
-                        'error': 'Please provide an email address'
+                        'error': 'Please fill in your '+x.message
                     }))
             else:
                 self.response.set_status(400, "Invalid user id")
                 self.response.write(json.dumps({
-                    'error': 'Please provide an email address'
+                    'error': 'It looks like you\'re trying to edit someone else\'s profile.'
                 }))
         elif data['action'] == 'is-logged-in':
             if data['service'] == 'twitter':

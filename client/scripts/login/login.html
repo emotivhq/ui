@@ -1,45 +1,35 @@
-<div class="userlogin">
-    <div class="userlogin__logo"></div>
-    <h2 class="userlogin__title">
-        Join our gifting movement
-    </h2>
-    <div class="userlogin__form">
-        <input class="userlogin__email" type="email" name="email" placeholder="Enter your email" required />
-        <input class="userlogin__password" type="password" name="password" placeholder="Enter your password" required>
-        <br />
-        <div class="userlogin__wrapper">
-            <input class="userlogin__remember" type="checkbox" name="remember" id="remember" required>
-            <label for="remember" class="userlogin__rememberlabel">Remember me</label>
-            <a href="#" class="userlogin__forgot">Forgot password</a>
-        </div>
-        <button class="btn userlogin__loginbtn">Log In</button>
+<div class="userlogin__form">
+    <input class="userlogin__email" type="email" name="email" placeholder="Enter your email" required />
+    <input class="userlogin__password" type="password" name="password" placeholder="Enter your password" required>
+    <br />
+    <div class="userlogin__wrapper">
+        <input class="userlogin__remember" type="checkbox" name="remember" id="remember" required>
+        <label for="remember" class="userlogin__rememberlabel">Remember me</label>
+        <a href="#" class="userlogin__forgot">Forgot password</a>
     </div>
-    <div class="userlogin__createacc">
-        <span>Don't have an account? </span>
-        <span>
-            <a href="/create-account" class="userlogin__createacclink">
-                Create account
-            </a>
-        </span>
+    <button class="btn userlogin__loginbtn">Log In</button>
+</div>
+<div class="userlogin__createacc">
+    <span>Don't have an account? </span>
+   <span><a ng-click="$parent.showLogin=false" href="#" class="userlogin__createacclink">Create account</a></span>
+</div>
+</div>
+<div class="userlogin__sociallogin">
+    <span>
+        Or login using soical media
+    </span>
+    <div class="social">
+        <a class="social__link" href="#">
+            <img class="social__icons" src="/assets/facebookicon.png">
+        </a>
+        <a class="social__link" href="#">
+            <img class="social__icons" src="/assets/twittericon.png">
+        </a>
+        <a class="social__link" href="#">
+            <img class="social__icons" src="/assets/linkedInicon.png">
+        </a>
+        <a class="social__link" href="#">
+            <img class="social__icons" src="/assets/googleicon.png">
+        </a>
     </div>
-    <div class="userlogin__sociallogin">
-        <span>
-            Or login using soical media
-        </span>
-        <div class="social">
-            <a class="social__link" href="#">
-                <img class="social__icons" src="/assets/facebookicon.png">
-            </a>
-            <a class="social__link" href="#">
-                <img class="social__icons" src="/assets/twittericon.png">
-            </a>
-            <a class="social__link" href="#">
-                <img class="social__icons" src="/assets/linkedInicon.png">
-            </a>
-            <a class="social__link" href="#">
-                <img class="social__icons" src="/assets/googleicon.png">
-            </a>
-        </div>
-    </div>
-
 </div>
