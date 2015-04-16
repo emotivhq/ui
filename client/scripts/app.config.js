@@ -28,6 +28,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/login/create-account.html', reloadOnSearch: false})
         .when('/users/:uid',
         {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
+        .when('/user/:uid',
+        {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
         .when('/about',
         {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
         .when('/concierge',

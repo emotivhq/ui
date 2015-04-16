@@ -1,0 +1,30 @@
+<div class="userprofile" ng-controller="UserprofileController">
+        <div class="userprofile__info">
+            <div class="userprofile__image">
+               <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
+            </div>
+            <div class="userprofile__name">
+                <h2 class="userprofile__title">
+                    {{user.name}}
+                </h2>
+            </div>
+            <div class="userprofile__social">
+                <div class="social">
+                    <p class="social__desc">Social profiles</p>
+                    <a href="#">
+                        <img class="social__icons" src="/assets/facebookicon.png">
+                    </a>
+                    <a href="#">
+                        <img class="social__icons" src="/assets/twittericon.png">
+                    </a>
+                    <a href="#">
+                        <img class="social__icons" src="/assets/linkedInicon.png">
+                    </a>
+                    <a href="#">
+                        <img class="social__icons" src="/assets/googleicon.png">
+                    </a>
+                </div>
+            </div>
+       </div>
+        <button ng-click="checkAJAX()"> test </button>
+</div>
