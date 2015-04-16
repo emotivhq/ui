@@ -15,7 +15,10 @@
         $scope.loggedIn = UserService.loggedIn;
         $scope.showCreate = false;
         $scope.doLoginFacebook = FacebookService.login;
-        $scope.doLoginTwitter = TwitterService.login;
+        $scope.doLoginTwitter = function() {
+            TwitterService.getAuthUrl();
+            TwitterService.login();
+        }
         $scope.doLoginGoogleplus = GooglePlusService.login;
         $scope.doLoginEmail = function() {
             emailLoginService.login(
