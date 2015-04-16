@@ -1,35 +1,19 @@
 <div class="userlogin__form">
-    <input class="userlogin__email" type="email" name="email" placeholder="Enter your email" required />
-    <input class="userlogin__password" type="password" name="password" placeholder="Enter your password" required>
-    <br />
-    <div class="userlogin__wrapper">
-        <input class="userlogin__remember" type="checkbox" name="remember" id="remember" required>
-        <label for="remember" class="userlogin__rememberlabel">Remember me</label>
-        <a href="#" class="userlogin__forgot">Forgot password</a>
+    <form ng-submit="doLoginEmail()">
+        <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email" required />
+        <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter your password" required>
+        <br />
+        <div class="userlogin__wrapper">
+            <input class="userlogin__remember" type="checkbox" name="remember" id="remember" required>
+            <label for="remember" class="userlogin__rememberlabel">Remember me</label>
+                <a href="#" class="userlogin__forgot">Forgot password</a>
+            </div>
+            <button class="btn userlogin__loginbtn">Log In</button>
+        </form>
     </div>
-    <button class="btn userlogin__loginbtn">Log In</button>
 </div>
+
 <div class="userlogin__createacc">
     <span>Don't have an account? </span>
-   <span><a ng-click="$parent.showLogin=false" href="#" class="userlogin__createacclink">Create account</a></span>
-</div>
-</div>
-<div class="userlogin__sociallogin">
-    <span>
-        Or login using soical media
-    </span>
-    <div class="social">
-        <a class="social__link" href="#">
-            <img class="social__icons" src="/assets/facebookicon.png">
-        </a>
-        <a class="social__link" href="#">
-            <img class="social__icons" src="/assets/twittericon.png">
-        </a>
-        <a class="social__link" href="#">
-            <img class="social__icons" src="/assets/linkedInicon.png">
-        </a>
-        <a class="social__link" href="#">
-            <img class="social__icons" src="/assets/googleicon.png">
-        </a>
-    </div>
+   <span><a ng-click="$parent.showCreate=true" href="#" class="userlogin__createacclink">Create account</a></span>
 </div>
