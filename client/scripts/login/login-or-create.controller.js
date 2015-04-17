@@ -10,6 +10,7 @@
                                             FacebookService, GooglePlusService, emailLoginService, Analytics, AppStateService) {
 
         $scope.showCreate = false;
+        $scope.showForgot = false;
         $scope.email;
         $scope.password;
 
@@ -27,14 +28,17 @@
         };
         $scope.doLoginGoogleplus = GooglePlusService.login;
         $scope.doLoginEmail = function() {
+            Analytics.track('user', 'login attempt with email');
             emailLoginService.login('login','',$scope.email,$scope.password,'');
         };
 
         $scope.doCreateEmail = function() {
             alert('Not Yet Implemented');
         };
+
         $scope.doForgotPassword = function() {
-            alert('Not Yet Implemented');
+            Analytics.track('user', 'forgot login password');
+            emailLoginService.login('forgotPassword','',$scope.email,'','');
         };
 
         $scope.$on('logout-success', function() {
