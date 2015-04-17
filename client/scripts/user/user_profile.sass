@@ -23,9 +23,48 @@
 
   &__social,
   &__month,
+  &__text,
   &__date
     text-align: center
 
+  &__text
+    font-family: Gotham, sans-serif
+    font-size: 1rem
+
+  &__fields
+    width: 80%
+    margin: 0 auto
+
+  .userprofileform
+
+    &__phone
+      clear: both
+
+    &__usermail,
+    &__userphone,
+    &__usershipping,
+    &__labelmail,
+    &__labelphone,
+    &__labelshipping
+      float: left
+      font-family: Gotham, sans-serif
+
+    &__labelmail,
+    &__labelphone,
+    &__labelshipping
+      margin: 0
+      font-size: 1.3rem
+      text-transform: uppercase
+
+    &__usermail,
+    &__userphone,
+    &__usershipping
+      margin-left: 10px
+      width: 18rem
+      padding: 9px 0 6px 5px
+
+    &__labelshipping
+      margin-left: 10px
 
   .calendar
     padding-bottom: 1rem
@@ -56,3 +95,4 @@
       background: #fff
       padding: 0.5rem 0
       font-size: 1.7rem
+

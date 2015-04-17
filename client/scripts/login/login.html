@@ -1,16 +1,15 @@
 <div class="userlogin__form">
-    <form ng-submit="doLoginEmail()">
+    <form ng-submit="$parent.doLoginEmail()">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email" required />
         <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter your password" required>
         <br />
         <div class="userlogin__wrapper">
-            <input class="userlogin__remember" type="checkbox" name="remember" id="remember" required>
-            <label for="remember" class="userlogin__rememberlabel">Remember me</label>
-                <a href="#" class="userlogin__forgot">Forgot password</a>
-            </div>
-            <button class="btn userlogin__loginbtn">Log In</button>
-        </form>
-    </div>
+            <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
+            <!--<label for="remember" class="userlogin__rememberlabel">Remember me</label>-->
+            <a href="#" class="userlogin__forgot" ng-click="$parent.doForgotPassword()">Forgot password</a>
+        </div>
+        <button class="btn userlogin__loginbtn">Log In</button>
+    </form>
 </div>
 
 <div class="userlogin__createacc">
