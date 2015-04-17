@@ -1,3 +1,5 @@
+createSourceMaps = false;
+
 module.exports = function(grunt) {
 
     // Project configuration.
@@ -18,8 +20,9 @@ module.exports = function(grunt) {
             }
         },
         sass: {
-            //options: {
-            //    sourceMap: true,
+            // This doesn't work.  Bleh.
+            // options: {
+            //    sourceMap: createSourceMaps,
             //    sourceMapStyle: 'link'
             //},
             dist: {
@@ -35,7 +38,7 @@ module.exports = function(grunt) {
         concat: {
             build: {
                 options: {
-                    sourceMap: true,
+                    sourceMap: createSourceMaps,
                     sourceMapStyle: 'link'
                 },
                 src: [
@@ -52,7 +55,6 @@ module.exports = function(grunt) {
                     '../client//bower_components/angular-resource/angular-resource.min.js',
                     '../client//bower_components/devicejs/lib/device.min.js',
                     '../client//bower_components/angular-ui-date/src/date.js',
-                    //'../client//bower_components/bootstrap/dist/js/bootstrap.min.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.module.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.service.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
@@ -127,7 +129,7 @@ module.exports = function(grunt) {
             },
             css: {
                 options: {
-                    sourceMap: true,
+                    sourceMap: createSourceMaps,
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
