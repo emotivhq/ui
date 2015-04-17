@@ -9,28 +9,42 @@
     var LoginOrCreateController = function ($scope,  $location, $routeParams, $timeout, UserService, TwitterService,
                                             FacebookService, GooglePlusService, emailLoginService, Analytics, AppStateService) {
 
-        $scope.email = '';
-        $scope.password = '';
+        $scope.showCreate = false;
+        $scope.email;
+        $scope.password;
+
+        resetForm = function() {
+            $scope.email = '';
+            $scope.password = '';
+        };
+        resetForm();
 
         $scope.loggedIn = UserService.loggedIn;
-        $scope.showCreate = false;
         $scope.doLoginFacebook = FacebookService.login;
         $scope.doLoginTwitter = function() {
             TwitterService.getAuthUrl();
             TwitterService.login();
-        }
+        };
         $scope.doLoginGoogleplus = GooglePlusService.login;
         $scope.doLoginEmail = function() {
-            emailLoginService.login(
-                    'login','',$scope.email,$scope.password,'')
-        }
+            emailLoginService.login('login','',$scope.email,$scope.password,'');
+        };
+
+        $scope.doCreateEmail = function() {
+            alert('Not Yet Implemented');
+        };
+        $scope.doForgotPassword = function() {
+            alert('Not Yet Implemented');
+        };
 
         $scope.$on('logout-success', function() {
             $scope.loggedIn = false;
+            resetForm();
         });
 
         $scope.$on('login-success', function() {
             $scope.loggedIn = true;
+            resetForm();
         });
 
 
