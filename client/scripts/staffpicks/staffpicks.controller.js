@@ -47,8 +47,8 @@ function StaffPicksController($scope, $timeout) {
             jQuery('.product-item.second').fadeOut(1000, function() {
                 $scope.$apply(function() {$scope.secondProduct = $scope.products[(n+1)%$scope.products.length]});
             });
-            jQuery('.product-item.first').fadeIn(1000);
-            jQuery('.product-item.second').fadeIn(1000);
+            jQuery('.product-item.first').fadeIn(2000);
+            jQuery('.product-item.second').fadeIn(2000);
             timer = $timeout(rotate, 5000);
         });
     };
