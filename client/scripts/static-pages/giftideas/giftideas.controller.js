@@ -41,6 +41,7 @@ function GiftideasController($scope, $http, $location) {
                 value.productNameStripped = String(value.productName).replace(/<[^>]+>/g, '').replace(/&([a-zA-Z0-9#]{2,7});/g, '');
                 value.hasPrice = /^\d.*/.test(value.productPrice);
                 value.productDescription=value.productDescription.replace(/<\/p>\s*(<br\s*\/>)*(<p>\s*&nbsp;\s*<\/p>)*(<br\s*\/>)*\s*<p>/g,'</p><p>');
+                value.productDescription=value.productDescription.replace(/&quot;/g,'"');
                 if(prior!=null) {
                     $scope.groups.push([prior,value]);
                     prior=null;
