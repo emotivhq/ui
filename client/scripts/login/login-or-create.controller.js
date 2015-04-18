@@ -13,10 +13,12 @@
         $scope.showForgot = false;
         $scope.email;
         $scope.password;
+        $scope.message;
 
         resetForm = function() {
             $scope.email = '';
             $scope.password = '';
+            $scope.message = '';
         };
         resetForm();
 
@@ -29,7 +31,12 @@
         $scope.doLoginGoogleplus = GooglePlusService.login;
         $scope.doLoginEmail = function() {
             Analytics.track('user', 'login attempt with email');
-            emailLoginService.login('login','',$scope.email,$scope.password,'');
+            emailLoginService.login('login','',$scope.email,$scope.password,'').
+                then(function (okMsg) {
+                    resetForm();
+                }, function (errMsg) {
+                    $scope.message=errMsg;
+                });
         };
 
         $scope.doCreateEmail = function() {
@@ -38,9 +45,13 @@
 
         $scope.doForgotPassword = function() {
             Analytics.track('user', 'forgot login password');
-            emailLoginService.login('forgotPassword','',$scope.email,'','');
-            alert('tbd: message');
-            $scope.showForgot = false;
+            emailLoginService.login('forgotPassword','',$scope.email,'','').
+                then(function (okMsg) {
+                    $scope.message=okMsg;
+                    $scope.showForgot = false;
+                }, function (errMsg) {
+                    $scope.message=errMsg;
+                });
         };
 
         $scope.$on('logout-success', function() {
