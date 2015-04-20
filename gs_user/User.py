@@ -60,28 +60,8 @@ class User(ndb.Model):
 
     paypal_vault_payer_id = ndb.StringProperty()
 
-    def jsonify(self, include_protected_data=False):
-        if(include_protected_data):
-            return json.dumps({
-                'uid': self.uid,
-                'name': self.name,
-                'img_url': self.cached_profile_image_url,
-                'link_facebook': self.link_facebook,
-                'link_twitter': self.link_twitter,
-                'link_linkedin': self.link_linkedin,
-                'link_googleplus': self.link_googleplus,
-                'link_website': self.link_website,
-                'email': self.email,
-                'phone': self.phone_number,
-                'birth_day': self.birth_day,
-                'birth_month': self.birth_month,
-                'shipping_address': self.shipping_address,
-                'shipping_city': self.shipping_city,
-                'shipping_state': self.shipping_state,
-                'shipping_zip': self.shipping_zip,
-            })
-        else :
-            return json.dumps({
+    def jsonify_raw(self, include_protected_data=False):
+        json_data = {
                 'uid': self.uid,
                 'name': self.name,
                 'img_url': self.cached_profile_image_url,
@@ -90,4 +70,17 @@ class User(ndb.Model):
                 'link_linkedin': self.link_linkedin,
                 'link_googleplus': self.link_googleplus,
                 'link_website': self.link_website
-            })
+            }
+        if include_protected_data:
+            json_data['email'] = self.email
+            json_data['phone'] = self.phone_number
+            json_data['birth_day'] = self.birth_day
+            json_data['birth_month'] = self.birth_month
+            json_data['shipping_address'] = self.shipping_address
+            json_data['shipping_city'] = self.shipping_city
+            json_data['shipping_state'] = self.shipping_state
+            json_data['shipping_zip'] = self.shipping_zip
+        return json_data
+
+    def jsonify(self, include_protected_data=False):
+        return json.dumps(self.jsonify_raw(include_protected_data))
