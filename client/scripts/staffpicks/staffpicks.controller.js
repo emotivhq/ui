@@ -44,7 +44,7 @@ function StaffPicksController($scope, $timeout) {
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
             "$299.99",
             "UPPAbaby Vista Stroller 2015 (Maya)",
-            "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features. Typical tandem strollers require two kids in them to function properly and not look foolish (i.e. one kid has outgrown it, and now only one child needs a stroller)",
+            "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features. Typical tandem strollers require two kids in them to function properly and not look foolish",
             "/assets/about/img/christie.png",
             "#"
         ),
@@ -74,7 +74,7 @@ function StaffPicksController($scope, $timeout) {
         ),
         new product(
             "/assets/staffpicks/deathadder-gaming-mouse-thumb.jpg",
-            "$159.99",
+            "$59.99",
             "Razer Gaming Mouse",
             "This is the ultimate mouse for gaming and everyday use and it's ergonomic, too!!",
             "/assets/about/img/sharon.png",

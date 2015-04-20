@@ -10,49 +10,56 @@
     display: inline-block
     @include apply-at-size("phone")
       display: none
-    height: 300px
+    height: 320px
     padding: 10px
     position: relative
     margin: 10px
     text-align: left
-    width: 500px
+    width: 520px
     white-space: normal
     vertical-align: top
     -webkit-font-smoothing: antialiased
     .left-col
       float: left
-      height: 280px
+      height: 300px
       margin-right: 10px
 
     .title
       font-size: 1.125em
+      line-height: 90%
+      margin: 5px
 
     .avatar
+      border: 3px solid rgb(224, 224, 224)
+      border-radius: 50%
       display: block
       @include apply-at-size("phone")
         display: none
       position: relative
       margin: 0 auto
-      width: 100px
+      width: 75px
       z-index: 2
 
     hr
-      margin: 10px
+      margin: 5px
 
     .corner-box
       background-color: rgb(166, 166, 166)
       position: absolute
       right: 0
       top: 0
-      height: 75px
+      height: 50px
       width: 210px
       z-index: 1
+
+    p
+      font-size: 0.7em
 
   .rotate
     float: right
     overflow: hidden
-    height: 310px
-    width: 69.5%
+    height: 330px
+    width: 75.5%
     white-space: nowrap
     vertical-align: top
 
@@ -60,10 +67,10 @@
     background-color: #b1b830
     color: white
     float: left
-    height: 300px
+    height: 320px
     margin: 10px 0
     text-align: left
-    width: 29%
+    width: 24%
     vertical-align: top
     #top
       background-color: #d6d642
@@ -76,7 +83,7 @@
       margin: 0
       padding-left: 20px
     #fav
-      font-size: 2em
+      font-size: 3em
 
   #clear
     clear: both
