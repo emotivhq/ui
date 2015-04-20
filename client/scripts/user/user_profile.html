@@ -1,5 +1,5 @@
 <div class="userprofile" ng-controller="UserprofileController">
-        <div class="userprofile__info">
+        <form class="userprofile__info" name="userprofilInfo">
             <div class="userprofile__image">
                <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
             </div>
@@ -30,29 +30,43 @@
             </div>
             <div class="calendar">
                 <p class="calendar__calendartext">Upcoming important dates</p>
-                <div class="calendar__month">
-                    May
+                <input ng-show="visibleCalendar" type="text" ui-date />
+                    <div class="calendar__month">
+                    {{ user.birth_month }}
                 </div>
                 <div class="calendar__date">
-                    17
+                    {{ user.birth_day }}
                 </div>
             </div>
-       </div>
-        <div class="userprofile__fields">
+            <div class="editlink editlink--white">
+                <gs-user-edit fieldisable="fieldisable" user="user" userinfo="true"  ></gs-user-edit>
+            </div>
+       </form>
+        <div class="userprofile__fields" ng-show="editable">
+
             <p class="userprofile__text">This information will not be visible on your public profile. Your friends will recieve notifications for your important dates, and the address will be used as your shipping address </p>
-            <div class="userprofileform">
+            <form class="userprofileform" name="userProfileform">
                 <div class="userprofileform__email">
                     <p class="userprofileform__labelmail">Email</p>
-                    <div contenteditable='true' class="userprofileform__usermail" data-ph="your@mail.com"></div>
+                    <input type="email" class="userprofileform__usermail" ng-disabled="fieldisable" ng-model="user.email"  placeholder="{{ user.email }}" name="userEmail" required />
+                    <span class="invalid invalid--email" ng-show="userProfileform.userEmail.$error.required">
+                        Please fill in your email
+                    </span>
+                    <span class="invalid invalid--email" ng-show="userProfileform.userEmail.$error.email">
+                        Please fill in valid email
+                    </span>
                 </div>
                  <div class="userprofileform__shipping">
                     <p class="userprofileform__labelshipping">Shipping Address</p>
-                    <div contenteditable='true' class="userprofileform__usershipping" data-ph="Kiev Ukraine"></div>
-                </div>
+                    <input type="text" class="userprofileform__usershipping" ng-disabled="fieldisable" ng-model="user.shipping_address" disabled placeholder="{{ user.shipping_address }}" name="shippingaddress" required  />
+                 </div>
                  <div class="userprofileform__phone">
                     <p class="userprofileform__labelphone">Phone</p>
-                    <div contenteditable='true' class="userprofileform__userphone" data-ph="0936010962"></div>
+                    <input type="text" class="userprofileform__userphone" ng-disabled="fieldisable" ng-model="user.phone" placeholder="{{user.phone}}" name="phone" required />
                 </div>
-            </div>
+                <div class="editlink">
+                    <gs-user-edit fieldisable="fieldisable" user="user"></gs-user-edit>
+                </div>
+            </form>
         </div>
 </div>

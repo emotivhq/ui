@@ -22,6 +22,7 @@ function ProfileController($scope,  UserService,  $location) {
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;
 
+
     function imageUpdated(data) {
         $scope.imageSet = true;
         imageData = data;

@@ -88,6 +88,7 @@ module.exports = function(grunt) {
                     '../client//scripts/user/user.service.js',
                     '../client//scripts/user/profile.controller.js',
                     '../client//scripts/user/user_profile.controller.js',
+                    '../client//scripts/user/user_profile.directive.js',
                     '../client//scripts/login/facebook.service.js',
                     '../client//scripts/login/twitter.service.js',
                     '../client//scripts/login/googleplus.service.js',

@@ -8,13 +8,16 @@ GiftStarterApp.controller('UserprofileController', ['$scope','UserService',
     '$location', '$http', 'Analytics', UserprofileController]);
 
 function UserprofileController($scope, UserService, $location, $http) {
-    $scope.user = {};
+
+    $http({
+        method: 'GET',
+        url: ' /users/profile/' + UserService.uid + '.json'
+    }).success(function(response){
+        $scope.user = response;
+    });
 
     var thisUser = $location.path().replace('/user/', '');
     var imageData;
-
-    UserService.getUser(thisUser,
-        function(data) {$scope.user = data[Object.keys(data)[0]]});
 
     $scope.editable = thisUser == UserService.uid;
     $scope.imageSet = false;
@@ -26,6 +29,8 @@ function UserprofileController($scope, UserService, $location, $http) {
         $scope.imageSet = true;
         imageData = data;
     }
+
+    $scope.fieldisable = true;
 
     function submit() {
         UserService.uploadProfileImage(imageData)
