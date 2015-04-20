@@ -5,7 +5,7 @@
   </div>
   <div class="rotate">
     <div class="product-item first">
-      <img class="left-col" ng-src="{{firstProduct.image}}"/>
+      <a ng-href="{{firstProduct.link}}"><img class="left-col" ng-src="{{firstProduct.image}}"/></a>
       <div class="corner-box"></div>
       <img class="avatar" ng-src="{{firstProduct.avatar}}"/>
       <p>{{firstProduct.desc}}</p>
@@ -14,7 +14,7 @@
       <p>{{firstProduct.price}}</p>
     </div>
     <div class="product-item second">
-      <img class="left-col" ng-src="{{secondProduct.image}}"/>
+      <a ng-href="{{secondProduct.link}}"><img class="left-col" ng-src="{{secondProduct.image}}"/></a>
       <div class="corner-box"></div>
       <img class="avatar" ng-src="{{secondProduct.avatar}}"/>
       <p>{{secondProduct.desc}}</p>
