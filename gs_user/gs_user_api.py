@@ -156,7 +156,7 @@ class UserHandler(webapp2.RequestHandler):
                     user.link_googleplus=data['link_googleplus']
                     user.link_website=data['link_website']
                     user.email=data['email']
-                    user.phone=data['phone']
+                    user.phone_number=data['phone']
                     user.birth_day=data['birth_day']
                     user.birth_month=data['birth_month']
                     user.shipping_address=data['shipping_address']
