@@ -45,7 +45,7 @@ class UserProfileHandler(webapp2.RequestHandler):
         uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
         token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
         allow_protected_data = uid and validate(uid, token, self.request.path)
-
+        extended_attribs = self.request.params['ext'] if 'ext' in self.request.params else [];
         uid = self.request.path.split('/')[3][:-5]
         if uid[0] not in ['f', 'g', 't', 'e']:
             self.response.set_status(400, "Invalid user id")
@@ -54,7 +54,23 @@ class UserProfileHandler(webapp2.RequestHandler):
             if user is None:
                 self.response.set_status(400, "Invalid user id")
             else:
-                self.response.write(user.jsonify(allow_protected_data))
+                response_data = user.jsonify_raw(allow_protected_data)
+                if('giftideas' in extended_attribs):
+                    response_data['giftideas'] = [
+                        {"url": "http://www.amazon.com/Canon-6-3MP-Digital-Rebel-Camera/dp/B0000C8VU8",
+                         "title": "Canon EOS 6.3MP Digital Rebel Camera",
+                         "description": "Description would go here",
+                         "imgUrl": "http://ecx.images-amazon.com/images/I/61iKKHMwQtL._SL1000_.jpg",
+                         "retailer": "Amazon",
+                         "price": 7690},
+                        {"url": "http://www.amazon.com/Canon-Rebel-Digital-Camera-Body/dp/B00BW6LW7G",
+                         "title": "Canon EOS Rebel T5i",
+                         "description": "Description would go here",
+                         "imgUrl": "http://ecx.images-amazon.com/images/I/51soj2YVq5L.jpg",
+                         "retailer": "Amazon",
+                         "price": 64900}
+                    ]
+                self.response.write(json.dumps(response_data))
 
 
 class UserPageHandler(webapp2.RequestHandler):
