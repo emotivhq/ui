@@ -42,6 +42,7 @@ function GiftideasController($scope, $http, $location) {
                 value.hasPrice = /^\d.*/.test(value.productPrice);
                 value.productDescription=value.productDescription.replace(/<\/p>\s*(<br\s*\/>)*(<p>\s*&nbsp;\s*<\/p>)*(<br\s*\/>)*\s*<p>/g,'</p><p>');
                 value.productDescription=value.productDescription.replace(/&quot;/g,'"');
+                value.productDescription=value.productDescription.replace(/<a /g,'<a target="_new" ');
                 if(prior!=null) {
                     $scope.groups.push([prior,value]);
                     prior=null;
