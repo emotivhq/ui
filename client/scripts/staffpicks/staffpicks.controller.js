@@ -93,10 +93,10 @@ function StaffPicksController($scope, $timeout) {
             });
             jQuery('.product-item.first').fadeIn(2000);
             jQuery('.product-item.second').fadeIn(2000);
-            timer = $timeout(rotate, 5000);
+            timer = $timeout(rotate, 8000);
         });
     };
-    var timer = $timeout(rotate, 4000);
+    var timer = $timeout(rotate, 8000);
 
     $scope.$on('$destroy', function() {$timeout.cancel(timer);});
 }
