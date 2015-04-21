@@ -30,25 +30,21 @@
             </div>
             <div class="calendar">
                 <p class="calendar__calendartext">Upcoming important dates</p>
-                <input ng-show="visibleCalendar" type="text" ui-date />
-                    <div class="calendar__month">
-                    {{ user.birth_month }}
+                <div class="calendar__monthwrap">
+                    <select ng-disabled="blocked" class="calendar__month" ng-model="user.birth_month" ng-options="birthMonth for birthMonth in months"></select>
                 </div>
-                <div class="calendar__date">
-                    {{ user.birth_day }}
-                </div>
+                <input type="number" name="date" min="1" max="31" class="calendar__date" ng-disabled="blocked"  ng-model="user.birth_day"  />
             </div>
-            <div class="editlink editlink--white">
-                <gs-user-edit fieldisable="fieldisable" user="user" userinfo="true"  ></gs-user-edit>
+            <div  ng-show="editable" class="editlink editlink--white">
+                <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user" userinfo="true"  ></gs-user-edit>
             </div>
        </form>
         <div class="userprofile__fields" ng-show="editable">
-
             <p class="userprofile__text">This information will not be visible on your public profile. Your friends will recieve notifications for your important dates, and the address will be used as your shipping address </p>
             <form class="userprofileform" name="userProfileform">
                 <div class="userprofileform__email">
                     <p class="userprofileform__labelmail">Email</p>
-                    <input type="email" class="userprofileform__usermail" ng-disabled="fieldisable" ng-model="user.email"  placeholder="{{ user.email }}" name="userEmail" required />
+                    <input type="email" class="userprofileform__usermail" ng-disabled="fieldisable" ng-model="user.email"  placeholder="{{ user.email }}" name="userEmail" ng-required="!fieldisable" />
                     <span class="invalid invalid--email" ng-show="userProfileform.userEmail.$error.required">
                         Please fill in your email
                     </span>
@@ -58,14 +54,14 @@
                 </div>
                  <div class="userprofileform__shipping">
                     <p class="userprofileform__labelshipping">Shipping Address</p>
-                    <input type="text" class="userprofileform__usershipping" ng-disabled="fieldisable" ng-model="user.shipping_address" disabled placeholder="{{ user.shipping_address }}" name="shippingaddress" required  />
+                    <input type="text" class="userprofileform__usershipping" ng-disabled="fieldisable" ng-model="user.shipping_address" placeholder="{{ user.shipping_address }}" name="shippingaddress" required  />
                  </div>
                  <div class="userprofileform__phone">
                     <p class="userprofileform__labelphone">Phone</p>
                     <input type="text" class="userprofileform__userphone" ng-disabled="fieldisable" ng-model="user.phone" placeholder="{{user.phone}}" name="phone" required />
                 </div>
                 <div class="editlink">
-                    <gs-user-edit fieldisable="fieldisable" user="user"></gs-user-edit>
+                    <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user"></gs-user-edit>
                 </div>
             </form>
         </div>
