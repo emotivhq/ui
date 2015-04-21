@@ -19,13 +19,13 @@
     disallow_browser = false;
     if (userAgent.match(/(iPod|iPhone|iPad)/)) {
         //no iOS7 Safari
-        if(is_safari) {
-            disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
-        }
+//        if(is_safari) {
+//            disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
+//        }
     } else {
         if (is_safari) {
-            //minimum Safari desktop version: 8
-            disallow_browser = window.navigator.userAgent.match(/version\/[1234567]/i);
+            //minimum Safari desktop version: 7
+            disallow_browser = window.navigator.userAgent.match(/version\/[123456]/i);
         } else if (is_explorer) {
             //minimum Internet Explorer desktop version: 8
             disallow_browser = userAgent.match(/MSIE [1234567]/);
