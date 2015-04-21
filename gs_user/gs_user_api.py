@@ -141,14 +141,14 @@ class UserHandler(webapp2.RequestHandler):
 
     def post(self):
         data = json.loads(self.request.body)
+        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
+        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
+        is_validated_self = uid and validate(uid, token, self.request.path) and uid == data['uid']
 
         if data['action'] == 'update-profile':
-            uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
-            token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
-            if(uid and validate(uid, token, self.request.path) and uid==data['uid']):
+            if(is_validated_self):
                 user = ndb.Key('User', uid).get()
                 try:
-                    logging.warning("Setting info for {0}".format(user.jsonify(True)))
                     user.name=data['name']
                     user.link_facebook=data['link_facebook']
                     user.link_twitter=data['link_twitter']
@@ -164,7 +164,6 @@ class UserHandler(webapp2.RequestHandler):
                     user.shipping_state=data['shipping_state']
                     user.shipping_zip=data['shipping_zip']
                     user.put()
-                    logging.warning("New info is {0}".format(user.jsonify(True)))
                     self.response.write(json.dumps({
                         'ok': 'User updated'
                     }))
@@ -177,6 +176,31 @@ class UserHandler(webapp2.RequestHandler):
                 self.response.set_status(400, "Invalid user id")
                 self.response.write(json.dumps({
                     'error': 'It looks like you\'re trying to edit someone else\'s profile.'
+                }))
+        elif data['action'] == 'save-for-later':
+            if(is_validated_self):
+                try:
+                    logging.warning(
+                        "\n {0}\n {1}\n {2}\n {3}\n {4}\n {5}".format(
+                        data['url'].encode('ascii', 'ignore').decode('ascii'),
+                        data['retailer'].encode('ascii', 'ignore').decode('ascii'),
+                        data['price'],
+                        data['title'].encode('ascii', 'ignore').decode('ascii'),
+                        data['description'].encode('ascii', 'ignore').decode('ascii'),
+                        data['imgUrl']).encode('ascii', 'ignore').decode('ascii')
+                    )
+                    self.response.write(json.dumps({
+                        'ok': 'List updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in the '+x.message
+                    }))
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s list.'
                 }))
         elif data['action'] == 'is-logged-in':
             if data['service'] == 'twitter':
