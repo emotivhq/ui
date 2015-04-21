@@ -4,9 +4,10 @@
                <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
             </div>
             <div class="userprofile__name">
-                <h2 class="userprofile__title">
-                    {{user.name}}
+                <h2 ng-show="blocked" class="userprofile__title">
+                    {{ user.name }}
                 </h2>
+                <input class="userprofile__title" type="text" ng-model="user.name" ng-disabled="blocked" ng-hide="blocked" name="username" ng-value="user.name" placeholder="{{ user.name }}" />
             </div>
             <div class="userprofile__social">
                 <div class="social">
@@ -42,7 +43,8 @@
         <div class="userprofile__fields" ng-show="editable">
             <p class="userprofile__text">This information will not be visible on your public profile. Your friends will recieve notifications for your important dates, and the address will be used as your shipping address </p>
             <form class="userprofileform" name="userProfileform">
-                <div class="userprofileform__email">
+                <div class="userprofileform__firstcol">
+                    <div class="userprofileform__email">
                     <p class="userprofileform__labelmail">Email</p>
                     <input type="email" class="userprofileform__usermail" ng-disabled="fieldisable" ng-model="user.email"  placeholder="{{ user.email }}" name="userEmail" ng-required="!fieldisable" />
                     <span class="invalid invalid--email" ng-show="userProfileform.userEmail.$error.required">
@@ -52,13 +54,29 @@
                         Please fill in valid email
                     </span>
                 </div>
-                 <div class="userprofileform__shipping">
-                    <p class="userprofileform__labelshipping">Shipping Address</p>
-                    <input type="text" class="userprofileform__usershipping" ng-disabled="fieldisable" ng-model="user.shipping_address" placeholder="{{ user.shipping_address }}" name="shippingaddress" required  />
-                 </div>
-                 <div class="userprofileform__phone">
+                    <div class="userprofileform__phone">
                     <p class="userprofileform__labelphone">Phone</p>
                     <input type="text" class="userprofileform__userphone" ng-disabled="fieldisable" ng-model="user.phone" placeholder="{{user.phone}}" name="phone" required />
+                </div>
+                </div>
+                <div class="userprofileform__secondcol">
+                    <div class="userprofileform__shipping">
+                        <div>
+                            <div class="userprofileform__labelshipping">
+                                Shipping Address
+                            </div>
+                            <div class="userprofileform__usershippinginfo" ng-show="fieldisable">
+                                <span class="userprofileform__useraddress">{{ user.shipping_address }} </span><br/>
+                                <span class="userprofileform__useraddressfull">{{ user.shipping_city }}, {{ user.shipping_state }} {{ user.shipping_zip }}</span>
+                            </div>
+                            <input type="text" ng-hide="fieldisable" class="userprofileform__usershipping" ng-disabled="fieldisable" ng-model="user.shipping_address" placeholder="{{ user.shipping_address }}" name="shippingaddress" required  />
+                        </div>
+                        <div>
+                            <input type="text" class="userprofileform__usercity" ng-disabled="fieldisable" ng-hide="fieldisable" ng-model="user.shipping_city" placeholder="{{ user.shipping_city }}" name="shippingcity" required  />
+                            <input type="text" class="userprofileform__userstate" ng-disabled="fieldisable" ng-hide="fieldisable" ng-model="user.shipping_state" placeholder="{{ user.shipping_state }}" name="shippingstate" required  />
+                            <input type="text" class="userprofileform__userzip" ng-disabled="fieldisable" ng-hide="fieldisable" ng-model="user.shipping_zip" placeholder="{{ user.shipping_zip }}" name="shippingzip" required  />
+                        </div>
+                    </div>
                 </div>
                 <div class="editlink">
                     <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user"></gs-user-edit>
