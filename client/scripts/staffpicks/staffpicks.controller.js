@@ -28,7 +28,7 @@ function StaffPicksController($scope, $timeout) {
             "/assets/staffpicks/lumixgh4.jpg",
             "$1,497.99",
             "Lumix GH4",
-            "It's an amazing video-centric DSLR, the Lumix GH4 shoots 4k at 24p, supports VFR and unlimited length, and boasts clean HDMI out and onboard WiFi & NFC – all at half the price of a Canon 5D!",
+            "It's an amazing video-centric DSLR. The Lumix GH4 shoots 4k at 24p, supports VFR and unlimited length, and boasts clean HDMI out and onboard WiFi & NFC – all at half the price of a Canon 5D!",
             "/assets/about/img/jon.png",
             "https://www.giftstarter.co/search/lumix%20gh4"
         ),
