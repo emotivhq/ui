@@ -7,20 +7,26 @@
     <div class="product-item first">
       <a ng-href="{{firstProduct.link}}"><img class="left-col" ng-src="{{firstProduct.image}}"/></a>
       <div class="corner-box"></div>
-      <img class="avatar" ng-src="{{firstProduct.avatar}}"/>
-      <p>{{firstProduct.desc}}</p>
-      <hr />
-      <p class="title">{{firstProduct.title}}</p>
-      <p>{{firstProduct.price}}</p>
+      <div>
+        <img class="avatar" ng-src="{{firstProduct.avatar}}"/>
+        <p>{{firstProduct.desc}}</p>
+      </div>
+      <div class="bottom">
+        <hr />
+        <p class="title">{{firstProduct.title}}</p>
+        <p>{{firstProduct.price}}</p>
+      </div>
     </div>
     <div class="product-item second">
       <a ng-href="{{secondProduct.link}}"><img class="left-col" ng-src="{{secondProduct.image}}"/></a>
       <div class="corner-box"></div>
       <img class="avatar" ng-src="{{secondProduct.avatar}}"/>
       <p>{{secondProduct.desc}}</p>
-      <hr />
-      <p class="title">{{secondProduct.title}}</p>
-      <p>{{secondProduct.price}}</p>
+      <div class="bottom">
+        <hr />
+        <p class="title">{{secondProduct.title}}</p>
+        <p>{{secondProduct.price}}</p>
+      </div>
     </div>
   </div>
   <div id="clear"></div>
