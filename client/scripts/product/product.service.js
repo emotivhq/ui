@@ -5,9 +5,9 @@
  */
 
 GiftStarterApp.service('ProductService', ['$http','$rootScope','Analytics',
-    'UserService', '$location', ProductService]);
+    'UserService', 'PopoverService', '$location', ProductService]);
 
-function ProductService($http,  $rootScope,  Analytics, UserService, $location) {
+function ProductService($http,  $rootScope,  Analytics, UserService, PopoverService, $location) {
 
     this.product = {
         product_url: '',
@@ -55,10 +55,10 @@ function ProductService($http,  $rootScope,  Analytics, UserService, $location) 
 
     this.saveForLater = function(retailer, url, price, title, description, imgUrl) {
         if(!UserService.loggedIn) {
-            alert("TBD: require login");
+            PopoverService.setPopover('login');
         } else {
             Analytics.track('product', 'save for later');
-            $http.post('/users', {
+            return $http.post('/users', {
                 'uid': UserService.uid,
                 'action': 'save-for-later',
                 'url': url,
@@ -67,11 +67,12 @@ function ProductService($http,  $rootScope,  Analytics, UserService, $location) 
                 'title': title,
                 'description': description,
                 'imgUrl': imgUrl
-            })
+            });
         }
     };
 
     this.searchProducts = function(search) {
+        if(window.history) {window.history.replaceState({},'GiftStarter Search: '+search,'/search/'+encodeURIComponent(search));}
         Analytics.track('product', 'search submitted');
         $http({method: 'GET',
             url: '/products/' + encodeURIComponent(search) + '.json'})
