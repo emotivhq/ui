@@ -179,6 +179,17 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
             );
         };
 
+        scope.saveForLater = function(index) {
+            ProductService.saveForLater(
+                scope.selectedProducts[index].retailer,
+                scope.selectedProducts[index].url,
+                scope.selectedProducts[index].price,
+                scope.selectedProducts[index].title,
+                scope.selectedProducts[index].description,
+                scope.selectedProducts[index].imgUrl
+            );
+        };
+
         var performHeadSearch = function () {
             scope.submit();
             $('html, body').animate({

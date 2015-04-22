@@ -5,9 +5,9 @@
  */
 
 GiftStarterApp.service('ProductService', ['$http','$rootScope','Analytics',
-    '$location', ProductService]);
+    'UserService', '$location', ProductService]);
 
-function ProductService($http,  $rootScope,  Analytics,  $location) {
+function ProductService($http,  $rootScope,  Analytics, UserService, $location) {
 
     this.product = {
         product_url: '',
@@ -51,7 +51,24 @@ function ProductService($http,  $rootScope,  Analytics,  $location) {
         self.logo = '';
         self.product.imgs = [imgUrl];
         $location.path("create");
+    };
 
+    this.saveForLater = function(retailer, url, price, title, description, imgUrl) {
+        if(!UserService.loggedIn) {
+            alert("TBD: require login");
+        } else {
+            Analytics.track('product', 'save for later');
+            $http.post('/users', {
+                'uid': UserService.uid,
+                'action': 'save-for-later',
+                'url': url,
+                'retailer': retailer,
+                'price': price,
+                'title': title,
+                'description': description,
+                'imgUrl': imgUrl
+            })
+        }
     };
 
     this.searchProducts = function(search) {

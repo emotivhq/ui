@@ -1,7 +1,11 @@
 @import "../base"
 
 .userprofile
-  min-height: 40rem
+  min-height: 51rem
+  @include apply-at-size("tablet")
+    min-height: 53rem
+  @include apply-at-size("phone")
+    min-height: 78rem
 
   &__info
     background: url("/assets/giftideas/hero.jpg")
@@ -13,16 +17,21 @@
 
   &__userimage
     width: 9rem
+    border-radius: 5rem
     border: 2px solid #fff
 
   &__title
     color: #fff
     font-size: 2.8rem
     font-weight: bold
-    text-align: center
-    margin-top: 2rem
+    margin: 2rem auto 0
     font-family: Roboto, sans-serif
     word-break: break-all
+    background: transparent
+    border: 0
+    display: block
+    text-align: center
+    width: 100%
 
   &__social,
   &__month,
@@ -35,61 +44,145 @@
     font-size: 1rem
     @include apply-at-size("phone")
       text-align: justify
+      margin-bottom: 0
 
   &__fields
     width: 80%
     margin: 0 auto
 
+  .ng-invalid-email
+    .editlink__save
+      color: #ccc
+
+  .ng-invalid-required
+    .editlink__save
+      color: #ccc
+
+  .invalid--email
+    color: darkred
+    position: relative
+    top: 3px
+    font-size: 0.9rem
+
+  .userprofileform__usermail.ng-invalid.ng-invalid-email,
+  .userprofileform__usermail.ng-invalid-required
+    border: 1px solid #ff0000
+
   .userprofileform
     width: 100%
     height: 8rem
     margin-top: 1.5rem
-    text-align: center
     @include apply-at-size("phone")
       text-align: left
       height: 18rem
+      margin-top: 0
+
+    &__firstcol,
+    &__secondcol
+      width: 49%
+      display: inline-block
+      @include apply-at-size("phone")
+        width: 100%
+        margin: 1rem auto
+
+    &__secondcol
+      @include apply-at-size("tablet")
+        margin-top: 0
+      @include apply-at-size("phone")
+        margin-top: 0
 
     &__email,
     &__shipping,
     &__phone
-      float: left
-      width: 33%
-      height: 4rem
+      height: 3rem
       @include apply-at-size("phone")
         float: none
         height: 5rem
         width: 100%
 
+    &__userzip,
+    &__userstate,
+    &__usercity,
     &__usermail,
     &__userphone,
     &__usershipping,
     &__labelmail,
     &__labelphone,
-    &__labelshipping
+    &__labelshipping,
+    &__useraddressfull,
+    &__useraddress
       font-family: Gotham, sans-serif
 
     &__labelmail,
     &__labelphone,
     &__labelshipping
-      margin: 0
+      margin: 1rem 0 0
       font-size: 1.3rem
       text-transform: uppercase
+      display: inline-block
+      text-align: left
+
+    &__labelmail,
+    &__labelphone
+      width: 5rem
 
     &__usermail,
     &__userphone,
-    &__usershipping
-      margin-left: -5px
-      width: 93%
-      padding: 9px 0 6px 5px
+    &__usershipping,
+    &__userzip,
+    &__userstate,
+    &__usercity
+      display: inline-block
+      margin-left: 5px
+      width: 60%
+      padding: 9px 0 6px 10px
       border: 0
-      text-align: center
-      background: #eee
+      border: 1px solid #eee
       line-height: 1.5rem
       @include apply-at-size("phone")
+        margin-left: 0
+
+    &__usermail,
+    &__userphone
+      @include apply-at-size("phone")
         text-align: left
+        display: block
+        width: 97%
+
+    &__usercity
+      width: 45%
+      @include apply-at-size("phone")
+        width: 50%
+
+    &__usershipping
+      width: 49%
+      @include apply-at-size("tablet")
+        width: 97%
+      @include apply-at-size("phone")
+        margin-top: 0.5rem
+        width: 97%
+
+    &__userstate
+      width: 17%
+      margin-top: 9px
+      @include apply-at-size("phone")
+        margin-top: 1.5rem
+
+    &__usershippinginfo
+      font-size: 0.9rem
+      margin-top: 1rem
+
+    &__userzip
+      width: 30%
+      @include apply-at-size("tablet")
+        width: 29%
+      @include apply-at-size("phone")
+        width: 28%
 
     input:disabled
       background: #fff
+      border: 0
+      color: #333
 
 .calendar
   padding-bottom: 1rem
@@ -101,6 +194,11 @@
     font-size: 1.2rem
     font-family: Gotham, sans-serif
     margin-bottom: 0.2rem
+
+  &__monthwrap
+    width: 6rem
+    overflow: hidden
+    margin: 0 auto
 
   &__month,
   &__date
@@ -114,14 +212,25 @@
     background: #343434
     color: #fff
     font-size: 1.2rem
-    padding: 0.2rem 0 0.1rem
+    padding: 0.2rem 0 0.1rem 1.35rem
     min-height: 1.6rem
+    display: block
+
+    &:disabled
+      border: 0
+      width: 120%
 
   &__date
+    position: relative
     background: #fff
-    padding: 0.5rem 0
+    padding: 0.5rem 0 0 1.1rem
     font-size: 1.7rem
     min-height: 2.5rem
+    display: block
+    color: #333
+
+    &:disabled
+      border: 0
 
 .editlink
   position: relative
@@ -135,38 +244,26 @@
     text-transform: uppercase
     position: absolute
     right: -11%
-    top: 5.6rem
+    top: 1rem
     @include apply-at-size("phone")
-      top: 5px
+      top: 5rem
       right: -10%
 
   &__cancel
     right: 1rem
     @include apply-at-size("phone")
-        right: 2rem
+      right: 3rem
 
-  &--white
-   .editlink__edit,
-   .editlink__save,
-   .editlink__cancel
-     color: #FFF
-     right: 0.9375rem
-     bottom: 0.9375rem
-     top: auto
+.editlink--white
+  padding: 1.2rem 0 1.2rem
 
-   .editlink__cancel
-      right: 7rem
+  .editlink__edit,
+  .editlink__save,
+  .editlink__cancel
+    color: #FFF
+    right: 0.9375rem
+    bottom: 0.9375rem
+    top: auto
 
-  .ng-invalid-email
-    .editlink__save
-      color: #ccc
-
-  .invalid--email
-    color: darkred
-    position: relative
-    top: 3px
-    font-size: 0.9rem
-
-  .userprofileform__usermail.ng-invalid.ng-invalid-email,
-  .userprofileform__usermail.ng-invalid-required
-    border: 1px solid #ff0000
+  .editlink__cancel
+    right: 7rem

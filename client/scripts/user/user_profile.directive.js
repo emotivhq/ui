@@ -9,14 +9,17 @@ angular.module('GiftStarterApp').directive('gsUserEdit', ['$http', 'UserService'
 function gsUserEdit($http, UserService, Analytics) {
     function link(scope, elm, attrs, userProfileform) {
         scope.canEdit = true;
-
         scope.editUserFields = function () {
-            if(!scope.userinfo) {
+            console.log(scope.blocked);
+            if(!scope.userinfo && scope.blocked ) {
                 scope.copyUser = angular.copy(scope.user);
                 scope.fieldisable = false;
-
+                scope.canEdit = false;
             }
-            scope.canEdit = false;
+            else if (scope.userinfo && scope.fieldisable) {
+                scope.canEdit = false;
+                scope.blocked = false;
+            }
         }
 
         scope.cancelEdit = function () {
@@ -24,6 +27,8 @@ function gsUserEdit($http, UserService, Analytics) {
             if(!scope.userinfo) {
                 scope.fieldisable = true;
                 scope.user = angular.copy(scope.copyUser);
+            } else if (scope.userinfo && scope.fieldisable) {
+                scope.blocked = true;
             }
         }
 
@@ -55,6 +60,7 @@ function gsUserEdit($http, UserService, Analytics) {
                     });
                 scope.canEdit = true;
                 scope.fieldisable = true;
+                scope.blocked = true;
             }
             else {
                 alert("Please fill fields correctly");
@@ -69,6 +75,7 @@ function gsUserEdit($http, UserService, Analytics) {
             fieldisable: "=",
             user: "=",
             userinfo: "=",
+            blocked: "="
         },
         require: '^form',
         link: link,
