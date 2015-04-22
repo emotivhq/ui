@@ -60,7 +60,7 @@ class User(ndb.Model):
 
     paypal_vault_payer_id = ndb.StringProperty()
 
-    def jsonify_raw(self, include_protected_data=False):
+    def dictify(self, include_protected_data=False):
         json_data = {
                 'uid': self.uid,
                 'name': self.name,
@@ -83,4 +83,4 @@ class User(ndb.Model):
         return json_data
 
     def jsonify(self, include_protected_data=False):
-        return json.dumps(self.jsonify_raw(include_protected_data))
+        return json.dumps(self.dictify(include_protected_data))

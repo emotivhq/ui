@@ -2,10 +2,6 @@
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
-from social.facebook import FacebookTokenSet
-from social.twitter import TwitterTokenSet
-from social.googleplus import GooglePlusTokenSet
-from login import EmailLoginPair
 import json
 
 

@@ -7,6 +7,7 @@ import json
 from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens
 from gs_user_stats import get_stats
+import StoredProduct
 from UserLogin import UserLogin
 from render_app import render_app
 import re
@@ -54,7 +55,7 @@ class UserProfileHandler(webapp2.RequestHandler):
             if user is None:
                 self.response.set_status(400, "Invalid user id")
             else:
-                response_data = user.jsonify_raw(allow_protected_data)
+                response_data = user.dictify(allow_protected_data)
                 if('giftideas' in extended_attribs):
                     response_data['giftideas'] = [
                         {"url": "http://www.amazon.com/Canon-6-3MP-Digital-Rebel-Camera/dp/B0000C8VU8",
@@ -178,17 +179,19 @@ class UserHandler(webapp2.RequestHandler):
                     'error': 'It looks like you\'re trying to edit someone else\'s profile.'
                 }))
         elif data['action'] == 'save-for-later':
-            if(is_validated_self):
+            if is_validated_self:
                 try:
-                    logging.warning(
-                        "\n {0}\n {1}\n {2}\n {3}\n {4}\n {5}".format(
-                        data['url'].encode('ascii', 'ignore').decode('ascii'),
-                        data['retailer'].encode('ascii', 'ignore').decode('ascii'),
-                        data['price'],
-                        data['title'].encode('ascii', 'ignore').decode('ascii'),
-                        data['description'].encode('ascii', 'ignore').decode('ascii'),
-                        data['imgUrl']).encode('ascii', 'ignore').decode('ascii')
-                    )
+                    product = StoredProduct(uid = uid,url = data['url'],retailer = data['retailer'],price = data['price'],title = data['title'],description = data['description'],img = data['imgUrl'])
+                    # logging.warning(
+                    #     "\n {0}\n {1}\n {2}\n {3}\n {4}\n {5}".format(
+                    #     data['url'].encode('ascii', 'ignore').decode('ascii'),
+                    #     data['retailer'].encode('ascii', 'ignore').decode('ascii'),
+                    #     data['price'],
+                    #     data['title'].encode('ascii', 'ignore').decode('ascii'),
+                    #     data['description'].encode('ascii', 'ignore').decode('ascii'),
+                    #     data['imgUrl']).encode('ascii', 'ignore').decode('ascii')
+                    # )
+                    logging.warning(product.jsonify())
                     self.response.write(json.dumps({
                         'ok': 'List updated'
                     }))
