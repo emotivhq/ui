@@ -7,7 +7,7 @@ import json
 from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens
 from gs_user_stats import get_stats
-import StoredProduct
+from StoredProduct import StoredProduct
 from UserLogin import UserLogin
 from render_app import render_app
 import re
@@ -57,20 +57,8 @@ class UserProfileHandler(webapp2.RequestHandler):
             else:
                 response_data = user.dictify(allow_protected_data)
                 if('giftideas' in extended_attribs):
-                    response_data['giftideas'] = [
-                        {"url": "http://www.amazon.com/Canon-6-3MP-Digital-Rebel-Camera/dp/B0000C8VU8",
-                         "title": "Canon EOS 6.3MP Digital Rebel Camera",
-                         "description": "Description would go here",
-                         "imgUrl": "http://ecx.images-amazon.com/images/I/61iKKHMwQtL._SL1000_.jpg",
-                         "retailer": "Amazon",
-                         "price": 7690},
-                        {"url": "http://www.amazon.com/Canon-Rebel-Digital-Camera-Body/dp/B00BW6LW7G",
-                         "title": "Canon EOS Rebel T5i",
-                         "description": "Description would go here",
-                         "imgUrl": "http://ecx.images-amazon.com/images/I/51soj2YVq5L.jpg",
-                         "retailer": "Amazon",
-                         "price": 64900}
-                    ]
+                    products = StoredProduct.query(StoredProduct.uid == uid).fetch()
+                    response_data['giftideas'] = map(lambda x: x.dictify(), products)
                 self.response.write(json.dumps(response_data))
 
 
@@ -181,7 +169,14 @@ class UserHandler(webapp2.RequestHandler):
         elif data['action'] == 'save-for-later':
             if is_validated_self:
                 try:
-                    product = StoredProduct(uid = uid,url = data['url'],retailer = data['retailer'],price = data['price'],title = data['title'],description = data['description'],img = data['imgUrl'])
+                    product = StoredProduct(
+                        uid=uid,
+                        url=data['url'],
+                        retailer=data['retailer'],
+                        price=data['price'],
+                        title=data['title'],
+                        description=data['description'],
+                        img=data['imgUrl'])
                     # logging.warning(
                     #     "\n {0}\n {1}\n {2}\n {3}\n {4}\n {5}".format(
                     #     data['url'].encode('ascii', 'ignore').decode('ascii'),
@@ -192,6 +187,7 @@ class UserHandler(webapp2.RequestHandler):
                     #     data['imgUrl']).encode('ascii', 'ignore').decode('ascii')
                     # )
                     logging.warning(product.jsonify())
+                    product.put()
                     self.response.write(json.dumps({
                         'ok': 'List updated'
                     }))

@@ -16,14 +16,16 @@ class StoredProduct(ndb.Model):
     description = ndb.TextProperty()
     img = ndb.StringProperty(required=True)
 
+    def dictify(self):
+        return {
+            'uid': self.uid,
+            'url': self.url,
+            'retailer': self.retailer,
+            'price': self.price,
+            'title': self.title,
+            'description': self.description,
+            'img': self.img
+        }
+
     def jsonify(self):
-        return json.dumps({
-                'timestamp': self.timestamp,
-                'uid': self.uid,
-                'url': self.url,
-                'retailer': self.retailer,
-                'price': self.price,
-                'title': self.title,
-                'description': self.description,
-                'img': self.img
-        })
+        return json.dumps(self.dictify())
