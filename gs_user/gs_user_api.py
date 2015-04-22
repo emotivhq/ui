@@ -179,7 +179,7 @@ class UserHandler(webapp2.RequestHandler):
                         img=data['imgUrl'])
                     product.put()
                     self.response.write(json.dumps({
-                        'ok': 'Your product has been saved'
+                        'ok': 'List updated'
                     }))
                 except KeyError as x:
                     self.response.set_status(400, "Invalid user id")

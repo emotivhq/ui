@@ -6,7 +6,7 @@
 
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
-function gsProductSearch(ProductService, $location, Analytics, $window,
+function gsProductSearch(ProductService, $location, Analytics, UserService, $window,
                          $timeout, $rootScope) {
     function link(scope, element) {
         scope.loading = false;
@@ -192,7 +192,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
             );
             if(saver) {
                 saver.success(function (response) {
-                    scope.productMessage = response['ok'];
+                    scope.productMessage = "The product has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
                 })
                 .error(function (response) {
                     scope.productMessage = "An error occurred while saving the product: " + response['error'];
