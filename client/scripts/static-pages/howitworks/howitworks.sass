@@ -31,10 +31,12 @@
     text-align: center
     width: 85%
     h2
-      padding-bottom: 0
+      padding: 20px
     h3, h4
-      margin: 0 auto
+      margin: 20px auto
       width: 60%
+    .sub
+      padding-bottom: 30px
     table
       background-color: white
     td
@@ -63,16 +65,21 @@
         width: 100%
 
     .group-item
+      background-color: #e2e2e2
+      border: 5px solid white
+      clear: both
+      overflow: hidden
+      text-align: left
       p
         display: inline-block
-        padding-right: 20px
-        width: 33%
+        margin: 10px
+        width: 250px
         vertical-align: top
         @include  apply-at-size("phone")
           width: 100%
       img
         display: inline-block
-        width: 65.5%
+        float: right
         @include  apply-at-size("phone")
           width: 100%
 
