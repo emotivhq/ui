@@ -35,8 +35,10 @@
             <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
                 <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GiftStart It</button></a>
-                <button class="pitch-in button" ng-click="saveProdForLater();">Save for Later</button>
-                <div class="product-message" ng-bind-html="productMessage"></div>
+                <div class="saveforlater">
+                    <button class="pitch-in button" ng-click="saveProdForLater();">Save for Later</button>
+                    <div class="product-message" ng-bind-html="productMessage"></div>
+                </div>
             </div>
             <div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
