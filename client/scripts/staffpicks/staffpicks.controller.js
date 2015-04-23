@@ -44,7 +44,7 @@ function StaffPicksController($scope, $timeout) {
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
             "$299.99",
             "UPPAbaby Vista Stroller 2015 (Maya)",
-            "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features. Typical tandem strollers require two kids in them to function properly and not look foolish",
+            "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features.",
             "/assets/about/img/christie.png",
             "#"
         ),
