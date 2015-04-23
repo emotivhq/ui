@@ -20,21 +20,22 @@ function UserprofileController($scope, UserService, $location, $http) {
     $scope.fieldisable = true;
     $scope.blocked = true;
     $scope.months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
+        { label: 'Jan', value: 0 },
+        { label: 'Feb', value: 1 },
+        { label: 'Mar', value: 2 },
+        { label: 'Apr', value: 3 },
+        { label: 'May', value: 4},
+        { label: 'Jun', value: 5},
+        { label: 'Jul', value: 6},
+        { label: 'Aug', value: 7},
+        { label: 'Sep', value: 8},
+        { label: 'Oct', value: 9},
+        { label: 'Nov', value: 10},
+        { label: 'Dec', value: 11}
     ];
-    $scope.user.birth_day = null;
-
+    $scope.$watch('user', function(newValue, oldValue) {
+       newValue.birth_month = $scope.months[newValue.birth_month];
+    });
     var thisUser = $location.path().replace('/user/', '');
     var imageData;
 

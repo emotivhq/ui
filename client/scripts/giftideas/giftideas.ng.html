@@ -14,6 +14,10 @@
                 <div class="gsbuttons">
                     <a href="{{product.giftStartLink}}" target="_self" class="button" ng-show="product.hasPrice">GIFTSTART IT!</a>
                     <a href="#" onclick="olark('api.box.expand')" class="button" ng-show="!product.hasPrice">Contact the Gift Concierge</a>
+                    <div ng-show="product.hasPrice" class="saveforlater">
+                        <a href="#" ng-click="saveGiftIdeaForLater(product);" class="button" ng-show="product.hasPrice">Save for Later</a>
+                        <div class="product-message" ng-bind-html="productMessage"></div>
+                    </div>
                 </div>
             </div>
         </div>

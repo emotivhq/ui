@@ -10,13 +10,13 @@ function gsUserEdit($http, UserService, Analytics) {
     function link(scope, elm, attrs, userProfileform) {
         scope.canEdit = true;
         scope.editUserFields = function () {
-            console.log(scope.blocked);
             if(!scope.userinfo && scope.blocked ) {
                 scope.copyUser = angular.copy(scope.user);
                 scope.fieldisable = false;
                 scope.canEdit = false;
             }
             else if (scope.userinfo && scope.fieldisable) {
+                scope.copyUserInfo = angular.copy(scope.user);
                 scope.canEdit = false;
                 scope.blocked = false;
             }
@@ -26,8 +26,19 @@ function gsUserEdit($http, UserService, Analytics) {
             scope.canEdit = true;
             if(!scope.userinfo) {
                 scope.fieldisable = true;
-                scope.user = angular.copy(scope.copyUser);
+                scope.user.name = angular.copy(scope.copyUser.name);
+                scope.user.email = angular.copy(scope.copyUser.email);
+                scope.user.shipping_address = angular.copy(scope.copyUser.shipping_address);
+                scope.user.shipping_city = angular.copy(scope.copyUser.shipping_city);
+                scope.user.shipping_state = angular.copy(scope.copyUser.shipping_state);
             } else if (scope.userinfo && scope.fieldisable) {
+                scope.user.name = angular.copy(scope.copyUserInfo.name);
+                scope.user.link_facebook = angular.copy(scope.copyUserInfo.link_facebook);
+                scope.user.link_twitter = angular.copy(scope.copyUserInfo.link_twitter);
+                scope.user.link_linkedin = angular.copy(scope.copyUserInfo.link_linkedin);
+                scope.user.link_googleplus = angular.copy(scope.copyUserInfo.link_googleplus);
+                scope.user.link_website = angular.copy(scope.copyUserInfo.link_website);
+                scope.user.birth_day = angular.copy(scope.copyUserInfo.birth_day);
                 scope.blocked = true;
             }
         }
@@ -47,7 +58,7 @@ function gsUserEdit($http, UserService, Analytics) {
                     phone: scope.user.phone,
                     shipping_address: scope.user.shipping_address,
                     birth_day: scope.user.birth_day,
-                    birth_month: scope.user.birth_month,
+                    birth_month: scope.user.birth_month.value,
                     shipping_city: scope.user.shipping_city,
                     shipping_state: scope.user.shipping_state,
                     shipping_zip: scope.user.shipping_zip
