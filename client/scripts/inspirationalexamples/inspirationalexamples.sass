@@ -1,0 +1,58 @@
+@import "../base"
+
+.inspirationalexamples
+  overflow: hidden
+  width: 100%
+
+  .product-item
+    background-color: rgb(54, 54, 54)
+    color: white
+    display: inline-block
+    height: 368px
+    padding: 10px
+    margin: 10px
+    text-align: left
+    width: 520px
+    @include apply-at-size("phone")
+      height: auto
+      width: 95vw
+    white-space: normal
+    vertical-align: top
+    -webkit-font-smoothing: antialiased
+    .left-col
+      float: left
+      height: 348px
+      margin-right: 10px
+
+    .title
+      font-size: 1.125em
+      line-height: 90%
+      margin: 5px
+
+    hr
+      margin: 5px
+
+    p
+      font-size: 0.7em
+
+  .rotate
+    overflow: hidden
+    position: relative
+    left: -50%
+    height: 378px
+    text-align: center
+    width: 100%
+    white-space: nowrap
+    vertical-align: top
+    @include apply-at-size("phone")
+      left: auto
+
+  #outer
+    display: inline-block
+    position: relative
+    right: -50%
+    @include apply-at-size("phone")
+      right: auto
+
+  #clear
+    clear: both
