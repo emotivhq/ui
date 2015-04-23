@@ -151,7 +151,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         );
         if(saver) {
             saver.success(function (response) {
-                $scope.productMessage = "The product has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
             })
             .error(function (response) {
                 $scope.productMessage = "An error occurred while saving the product: " + response['error'];
