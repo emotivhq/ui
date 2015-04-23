@@ -6,7 +6,7 @@
 
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
-function gsProductSearch(ProductService, $location, Analytics, $window,
+function gsProductSearch(ProductService, $location, Analytics, UserService, $window,
                          $timeout, $rootScope) {
     function link(scope, element) {
         scope.loading = false;
@@ -15,6 +15,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         scope.product_url = "";
         scope.currentProductLink = '';
         scope.selectedProduct = -1;
+        scope.productMessage = '';
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
             'gift concierge email clicked')};
@@ -128,6 +129,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         scope.showProductDetails = function(index) {
             Analytics.track('product', 'show product details');
             scope.hideProductDetails();
+            scope.productMessage = '';
             scope.selectedProduct = index;
             scope.selectedProducts[index].selected = true;
 
@@ -180,7 +182,7 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
         };
 
         scope.saveForLater = function(index) {
-            ProductService.saveForLater(
+            var saver = ProductService.saveForLater(
                 scope.selectedProducts[index].retailer,
                 scope.selectedProducts[index].url,
                 scope.selectedProducts[index].price,
@@ -188,6 +190,15 @@ function gsProductSearch(ProductService, $location, Analytics, $window,
                 scope.selectedProducts[index].description,
                 scope.selectedProducts[index].imgUrl
             );
+            if(saver) {
+                saver.success(function (response) {
+                    scope.productMessage = "The product has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                })
+                .error(function (response) {
+                    scope.productMessage = "An error occurred while saving the product: " + response['error'];
+
+                });
+            }
         };
 
         var performHeadSearch = function () {

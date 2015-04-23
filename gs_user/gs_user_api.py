@@ -177,16 +177,6 @@ class UserHandler(webapp2.RequestHandler):
                         title=data['title'],
                         description=data['description'],
                         img=data['imgUrl'])
-                    # logging.warning(
-                    #     "\n {0}\n {1}\n {2}\n {3}\n {4}\n {5}".format(
-                    #     data['url'].encode('ascii', 'ignore').decode('ascii'),
-                    #     data['retailer'].encode('ascii', 'ignore').decode('ascii'),
-                    #     data['price'],
-                    #     data['title'].encode('ascii', 'ignore').decode('ascii'),
-                    #     data['description'].encode('ascii', 'ignore').decode('ascii'),
-                    #     data['imgUrl']).encode('ascii', 'ignore').decode('ascii')
-                    # )
-                    logging.warning(product.jsonify())
                     product.put()
                     self.response.write(json.dumps({
                         'ok': 'List updated'

@@ -7,7 +7,7 @@ import json
 
 class StoredProduct(ndb.Model):
     """a Product which the User has saved for later use"""
-    timestamp = ndb.TimeProperty(auto_now_add=True)
+    timestamp = ndb.DateTimeProperty(auto_now_add=True)
     uid = ndb.StringProperty(required=True)
     url = ndb.StringProperty(required=True)
     retailer = ndb.StringProperty(required=True)
