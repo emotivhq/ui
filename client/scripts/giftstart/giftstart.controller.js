@@ -7,12 +7,12 @@
 GiftStarterApp.controller('GiftStartController', [
             '$scope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'UserService','$window', '$document', 'PopoverService','LocalStorage',
+            'ProductService', 'UserService','$window', '$document', 'PopoverService','LocalStorage',
     GiftStartController]);
 
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         UserService,  $window, $document,  PopoverService, LocalStorage) {
+         ProductService, UserService,  $window, $document,  PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -31,6 +31,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.isMobile = device.mobile();
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
+
+    $scope.productMessage = '';
 
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
@@ -137,6 +139,26 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         $scope.secondsLeftTimer.cancel();
         $scope.secondsLeftTimer = null;
     }
+
+    $scope.saveProdForLater = function() {
+        var saver = ProductService.saveForLater(
+            'GiftStartService',
+            GiftStartService.giftStart.product_url,
+            GiftStartService.giftStart.price,
+            GiftStartService.giftStart.product_title,
+            '',
+            GiftStartService.giftStart.product_img_url
+        );
+        if(saver) {
+            saver.success(function (response) {
+                $scope.productMessage = "The product has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+            })
+            .error(function (response) {
+                $scope.productMessage = "An error occurred while saving the product: " + response['error'];
+
+            });
+        }
+    };
 
     $scope.giftstartThisUrl = function() {
         return '/create?' + urlSerialize({

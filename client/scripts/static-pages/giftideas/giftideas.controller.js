@@ -4,11 +4,12 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location',
+GiftStarterApp.controller('GiftideasController', ['$scope','$http','$location', "ProductService", "UserService",
     GiftideasController]);
 
-function GiftideasController($scope, $http, $location) {
+function GiftideasController($scope, $http, $location, ProductService, UserService) {
 
+    $scope.productMessage = '';
     $scope.location = $location;
     $scope.path = $location.path();
     var pathParts = $scope.path.replace('//','/').split('/');
@@ -20,6 +21,27 @@ function GiftideasController($scope, $http, $location) {
     if(category && !product && (category=="lunarnewyear"||category=="farewell"||category=="pisces") && $location.search()['utm_campaign']=="18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015") {
         category=false;
     }
+
+
+    $scope.saveGiftIdeaForLater = function(product) {
+        var saver = ProductService.saveForLater(
+            "GiftIdeas",
+            product.giftStartLink,
+            parseInt(product.productPrice*100),
+            product.productName,
+            product.productDescription,
+            product.productImage
+        );
+        if(saver) {
+            saver.success(function (response) {
+                $scope.productMessage = "The product has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+            })
+            .error(function (response) {
+                $scope.productMessage = "An error occurred while saving the product: " + response['error'];
+
+            });
+        }
+    };
 
     function setMeta(metatitle, metadesc) {
         metatitle = "GiftStarter: "+metatitle;
