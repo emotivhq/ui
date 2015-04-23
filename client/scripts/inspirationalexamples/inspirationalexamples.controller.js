@@ -33,6 +33,22 @@ function InspirationalExamplesController($scope, $timeout) {
             "https://www.giftstarter.co/giftstart/T1-HIMARS-Smoke-Break"
         ),
         new product(
+            "/assets/howitworks/featuredCampaigns-tiffanys.jpg",
+            "$147.20",
+            "Jessi's 30th Birthday Blowout!",
+            "TIFFANY 1837™ Circle Pendant",
+            "10",
+            "https://www.giftstarter.co/giftstart/Jessis-30th-Birthday-Blowout"
+        ),
+        new product(
+            "/assets/howitworks/featuredCampaigns-ghosttruck.jpg",
+            "$147.20",
+            "Jessi's 30th Birthday Blowout!",
+            "TIFFANY 1837™ Circle Pendant",
+            "10",
+            "https://www.giftstarter.co/giftstart/Lets-help-Wix-move"
+        ),
+        new product(
             "/assets/howitworks/featuredCampaigns-watch.jpg",
             "$329.52",
             "Run Nikki Run!!!",
