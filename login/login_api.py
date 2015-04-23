@@ -45,7 +45,7 @@ class CreateHandler(webapp2.RequestHandler):
             uid = True
         if uid:
             self.response.write(json.dumps({
-                'error': 'It appears you\'ve already set a password... please go back and click "login" instead!'
+                'error': 'It appears you\'ve already set a password... please click "login" instead!'
             }))
         else:
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))

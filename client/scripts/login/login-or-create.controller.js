@@ -11,14 +11,22 @@
 
         $scope.showCreate = false;
         $scope.showForgot = false;
+        $scope.name;
+        $scope.surname;
         $scope.email;
+        $scope.reenteremail;
         $scope.password;
+        $scope.reenterpassword;
         $scope.message;
 
         resetForm = function() {
-            $scope.email = '';
-            $scope.password = '';
-            $scope.message = '';
+            $scope.name='';
+            $scope.surname='';
+            $scope.email='';
+            $scope.reenteremail='';
+            $scope.password='';
+            $scope.reenterpassword='';
+            $scope.message='';
         };
         resetForm();
 
@@ -40,7 +48,21 @@
         };
 
         $scope.doCreateEmail = function() {
-            alert('Not Yet Implemented');
+            Analytics.track('user', 'create email login');
+            if ($scope.email.trim()!=$scope.reenteremail.trim()) {
+                $scope.message="Your email addresses do not match";
+                return;
+            }
+            if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
+                $scope.message="Your passwords do not match";
+                return;
+            }
+            emailLoginService.login('create',$scope.name+' '+$scope.surname,$scope.email,$scope.password,'').
+                then(function (okMsg) {
+                    resetForm();
+                }, function (errMsg) {
+                    $scope.message=errMsg;
+                });
         };
 
         $scope.doForgotPassword = function() {

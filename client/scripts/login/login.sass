@@ -2,10 +2,10 @@
 
 .userlogin
   display: block
-  min-height: 46rem
+  //min-height: 46rem
   padding-top: 2rem
-  @include apply-at-size("phone")
-    min-height: 50rem
+  //@include apply-at-size("phone")
+  //  min-height: 50rem
 
   &__title
     text-align: center
@@ -60,9 +60,10 @@
   &__remember,
   &__rememberlabel,
   &__forgot
+    margin-top: 15px
     position: relative
     float: left
-    top: 1rem
+    //top: 1rem
     display: block
 
   &__remember
@@ -73,7 +74,7 @@
     -o-transform: scale(1.5)
     @include apply-at-size("phone")
       left: 0
-      top: 1.8rem
+      //top: 1.8rem
 
   &__rememberlabel,
   &__forgot,
@@ -102,28 +103,33 @@
     float: none
     display: block
     font-size: 14px
-    @include apply-at-size("phone")
-      position: absolute
-      top: 0
-      left: 0
+    //@include apply-at-size("phone")
+    //  position: absolute
+    //  //top: 0
+    //  left: 0
 
     &:hover
       color: #333
 
+  &__message
+    padding-top: 15px
+    color: #666
+
   &__loginbtn
     clear: both
     display: block
-    margin: 0 auto
+    margin: 15px auto
     position: relative
-    top: 3rem
+    //top: 3rem
     font-size: 1.7rem
     padding: 0.8rem 2.5rem
-    @include apply-at-size("phone")
-      top: 4rem
+    //@include apply-at-size("phone")
+    //  top: 4rem
 
   &__createacc
     position: relative
-    top: 5.5rem
+    margin-top: 15px
+    //top: 5.5rem
     text-align: center
 
   &__createacclink
@@ -132,6 +138,7 @@
       color: #333
 
   &__sociallogin
+    margin-top: 15px
     position: relative
-    top: 9rem
+    //top: 9rem
     text-align: center
