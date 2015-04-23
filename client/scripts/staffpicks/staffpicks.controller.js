@@ -52,7 +52,7 @@ function StaffPicksController($scope, $timeout) {
             "/assets/staffpicks/steelseries-headset-white-thumb.jpg",
             "$159.99",
             "SteelSeries Headphones with Inline Mic",
-            "This is a great gift if you need headphones for gaming/streaming/everyday. It's got inline mic for streaming, looks nice, and is very comfortable.",
+            "This is a great gift if you need headphones for gaming, streaming, or everyday. It's got inline mic for streaming, looks nice, and is very comfortable.",
             "/assets/about/img/sharon.png",
             "#"
         ),
