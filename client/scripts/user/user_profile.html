@@ -65,7 +65,7 @@
             </div>
        </form>
         <div class="userprofile__fields" ng-hide="loading">
-            <p class="userprofile__text">This information will not be visible on your public profile. Your friends will recieve notifications for your important dates, and the address will be used as your shipping address </p>
+            <p class="userprofile__text" ng-show="editable">This information will not be visible on your public profile. Your friends will recieve notifications for your important dates, and the address will be used as your shipping address </p>
             <form class="userprofileform" name="userProfileform">
                 <div class="userprofileform__firstcol">
                     <div class="userprofileform__email">
