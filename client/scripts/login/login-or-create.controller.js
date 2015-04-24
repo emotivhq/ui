@@ -94,7 +94,7 @@
 
         $scope.$on('login-success', function() {
             $scope.resetForm();
-            $scope.message="Welcome, "+UserService.name+"!";
+            $scope.message=UserService.name?("Welcome, "+UserService.name+"!"):"Welcome!";
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
         });
