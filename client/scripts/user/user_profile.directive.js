@@ -68,7 +68,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                     .then(function (res) {
                         scope.loading = false;
                     }, function (errorRes) {
-                        alert("Error. Please try agai ");
+                        alert("Error. Please try again.");
                         userProfileform.$invalid = true;
                     });
                 scope.canEdit = true;
