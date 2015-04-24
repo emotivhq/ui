@@ -14,31 +14,39 @@
                 <input class="userprofile__title" type="text" ng-model="user.name" ng-disabled="blocked" ng-hide="blocked" name="username" ng-value="user.name" placeholder="{{ user.name }}" />
             </div>
             <div class="userprofile__social">
-                <div class="social">
+                <div class="social" ng-show="user.link_facebook||user.link_twitter||user.link_linkedin||user.link_googleplus||user.link_website||!blocked">
                     <p class="social__desc">Social profiles</p>
-                    <div ng-class="{true:'social__inline'}[blocked]" >
-                        <a ng-href="http://{{user.link_facebook}}" class="social__link" >
-                            <img class="social__icons" src="/assets/facebookicon.png">
-                        </a>
-                        <input type="text" name="linkfacebook" class="social__inputs" placeholder="{{user.link_facebook}} Paste link to profile" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_facebook"  />
-                        <a ng-href="http://{{user.link_twitter}}"  class="social__link" >
-                            <img class="social__icons" src="/assets/twittericon.png">
-                        </a>
-                        <input type="text" name="linktwitter" class="social__inputs" placeholder="{{user.link_twitter}} Paste link to profile" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_twitter"  />
-                        <a ng-href="http://{{user.link_linkedin}}"  class="social__link" >
-                            <img class="social__icons" src="/assets/linkedInicon.png">
-                        </a>
-                        <input type="text" name="linklinkedin" class="social__inputs" placeholder="{{user.link_linkedin}} Paste link to profile" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_linkedin"  />
-                    </div>
-                    <div ng-class="{true:'social__inline'}[blocked]" class="social__secondrow">
-                        <a ng-href="http://{{user.link_googleplus}}"  class="social__link" >
-                            <img class="social__icons" src="/assets/googleicon.png">
-                        </a>
-                        <input type="text" name="linkgoogleplus" class="social__inputs" placeholder="{{user.link_googleplus}} Paste link to profile" ng-hide="blocked" ng-hide="blocked" ng-model="user.link_googleplus"  />
-                        <a href="http://{{user.link_website}}"  class="social__link" >
-                            <img class="social__icons" src="/assets/rssicon.png">
-                        </a>
-                        <input type="text" name="linkwebsite" class="social__inputs" placeholder="{{user.link_website}} Paste link to web page" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_website"  />
+                    <div class="social__inline" >
+                        <div class="social__editblock" ng-show="user.link_facebook||!blocked">
+                            <a ng-href="{{user.link_facebook}}" class="social__link" >
+                                <img class="social__icons" src="/assets/facebookicon.png">
+                            </a>
+                            <input type="text" name="linkfacebook" class="social__inputs" placeholder="{{user.link_facebook}} Paste link to profile" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_facebook"  />
+                        </div>
+                        <div class="social__editblock" ng-show="user.link_twitter||!blocked">
+                            <a ng-href="{{user.link_twitter}}" class="social__link" >
+                                <img class="social__icons" src="/assets/twittericon.png">
+                            </a>
+                            <input type="text" name="linktwitter" class="social__inputs" placeholder="{{user.link_twitter}} Paste link to profile" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_twitter"  />
+                        </div>
+                        <div class="social__editblock" ng-show="user.link_linkedin||!blocked">
+                            <a ng-href="{{user.link_linkedin}}"  class="social__link">
+                                <img class="social__icons" src="/assets/linkedInicon.png">
+                            </a>
+                            <input type="text" name="linklinkedin" class="social__inputs" placeholder="{{user.link_linkedin}} Paste link to profile" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_linkedin"  />
+                        </div>
+                        <div class="social__editblock" ng-show="user.link_googleplus||!blocked">
+                            <a ng-href="{{user.link_googleplus}}"  class="social__link" >
+                                <img class="social__icons" src="/assets/googleicon.png">
+                            </a>
+                            <input type="text" name="linkgoogleplus" class="social__inputs" placeholder="{{user.link_googleplus}} Paste link to profile" ng-hide="blocked" ng-hide="blocked" ng-model="user.link_googleplus"  />
+                        </div>
+                        <div class="social__editblock" ng-show="user.link_website||!blocked">
+                            <a href="{{user.link_website}}"  class="social__link" >
+                                <img class="social__icons" src="/assets/rssicon.png">
+                            </a>
+                            <input type="text" name="linkwebsite" class="social__inputs" placeholder="{{user.link_website}} Paste link to web page" ng-disabled="blocked" ng-hide="blocked" ng-model="user.link_website"  />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,7 +57,7 @@
                 </div>
                 <input type="number" name="date" min="1" max="31" class="calendar__date" ng-disabled="blocked" ng-model="user.birth_day"  />
             </div>
-            <div  ng-show="editable" class="editlink editlink--white">
+            <div ng-show="editable" class="editlink editlink--white">
                 <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user" userinfo="true" loading="loading" ></gs-user-edit>
             </div>
        </form>
@@ -91,7 +99,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="editlink">
+                <div ng-show="editable" class="editlink">
                     <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user" loading="loading"></gs-user-edit>
                 </div>
             </form>
