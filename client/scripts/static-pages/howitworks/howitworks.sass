@@ -1,6 +1,8 @@
 @import "../static-pages"
+@import "../../classes"
 
 .howitworks
+  color: #333333
 
   .headerwrap
     background: url("/assets/howitworks/how-it-works-hero.jpg") no-repeat center top
@@ -9,21 +11,24 @@
     overflow: hidden
 
   .menu
-    border-spacing: 20px
+    border-spacing: 20px 0
     display: table
     margin: 0 auto
     text-align: center
 
     .menu-item
       @extend .linky
-      background-color: $disabled-color
-      border: 1px solid black
+      background-color: #e2e2e2
+      border-spacing: 0
       display: table-cell
       height: 50px
-      margin: 20px
       padding: 20px
       vertical-align: middle
       width: 200px
+
+    .menu-wrapper
+      border-spacing: 0
+      display: table-cell
 
   .content
     font: 1em "Roboto", sans-serif
@@ -103,3 +108,15 @@
 
   #gifting-button
     margin-bottom: 20px
+
+  .selected
+    border-bottom: 8px solid #238471
+    background-color: #238471 !important
+    color: white
+
+  #selector-bar
+    height: 6px
+    background-color: #238471
+    padding: 0
+    margin: 0 auto
+    width: 90%
