@@ -7,8 +7,9 @@
 (function (app) {
 
     var LoginOrCreateController = function ($scope,  $location, $routeParams, $timeout, UserService, TwitterService,
-                                            FacebookService, GooglePlusService, emailLoginService, Analytics, AppStateService) {
+                                            FacebookService, GooglePlusService, emailLoginService, Analytics) {
 
+        $scope.working = false;
         $scope.showCreate = false;
         $scope.showForgot = false;
         $scope.name;
@@ -30,7 +31,10 @@
         };
         resetForm();
 
-        $scope.loggedIn = UserService.loggedIn;
+        if(UserService.loggedIn) {
+            jQuery('.userlogin').css({display:"none"});
+        }
+
         $scope.doLoginFacebook = FacebookService.login;
         $scope.doLoginTwitter = function() {
             TwitterService.getAuthUrl();
@@ -39,10 +43,12 @@
         $scope.doLoginGoogleplus = GooglePlusService.login;
         $scope.doLoginEmail = function() {
             Analytics.track('user', 'login attempt with email');
+            $scope.working = true;
             emailLoginService.login('login','',$scope.email,$scope.password,'').
                 then(function (okMsg) {
-                    resetForm();
+                    //reset handled by $scope.$on('login-success')
                 }, function (errMsg) {
+                    $scope.working = false;
                     $scope.message=errMsg;
                 });
         };
@@ -57,10 +63,12 @@
                 $scope.message="Your passwords do not match";
                 return;
             }
+            $scope.working = true;
             emailLoginService.login('create',$scope.name+' '+$scope.surname,$scope.email,$scope.password,'').
                 then(function (okMsg) {
-                    resetForm();
+                    emailLoginService.login('login','',$scope.email,$scope.password,'')
                 }, function (errMsg) {
+                    $scope.working = false;
                     $scope.message=errMsg;
                 });
         };
@@ -77,13 +85,15 @@
         };
 
         $scope.$on('logout-success', function() {
-            $scope.loggedIn = false;
+            jQuery('.userlogin').fadeIn(1500);
             resetForm();
         });
 
         $scope.$on('login-success', function() {
-            $scope.loggedIn = true;
             resetForm();
+            $scope.message="Welcome, "+UserService.name+"!";
+            jQuery('.userlogin').fadeOut(3000);
+            $scope.working = false;
         });
 
 
@@ -91,6 +101,6 @@
 
     app.controller('LoginOrCreateController', [
         '$scope',  '$location', '$routeParams', '$timeout', 'UserService', 'TwitterService', 'FacebookService',
-        'GooglePlusService', 'emailLoginService', 'Analytics', 'AppStateService',
+        'GooglePlusService', 'emailLoginService', 'Analytics',
         LoginOrCreateController]);
 }(angular.module('GiftStarterApp')));
