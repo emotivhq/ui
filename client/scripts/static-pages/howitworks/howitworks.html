@@ -8,22 +8,34 @@
 
   <div class="main">
     <div class="menu">
-      <div class="menu-item" ng-click="sectionShown = 'welcome'">
-        WELCOME
+      <div class="menu-wrapper">
+        <div class="menu-item" ng-click="sectionShown = 'welcome'" ng-class="{selected: sectionShown == 'welcome'}">
+          WELCOME
+        </div>
       </div>
-      <div class="menu-item" ng-click="sectionShown = 'group-gifting'">
-        GROUP GIFTING
+      <div class="menu-wrapper">
+        <div class="menu-item" ng-click="sectionShown = 'group-gifting'" ng-class="{selected: sectionShown == 'group-gifting'}">
+          GROUP GIFTING
+        </div>
       </div>
-      <div class="menu-item" ng-click="sectionShown = 'concierge'">
-        GIFT CONCIERGE
+      <div class="menu-wrapper">
+        <div class="menu-item" ng-click="sectionShown = 'concierge'" ng-class="{selected: sectionShown == 'concierge'}">
+          GIFT CONCIERGE
+        </div>
       </div>
-      <div class="menu-item" ng-click="sectionShown = 'search'">
-        FIND A GIFT
+      <div class="menu-wrapper">
+        <div class="menu-item" ng-click="sectionShown = 'search'" ng-class="{selected: sectionShown == 'search'}">
+          FIND A GIFT
+        </div>
       </div>
-      <div class="menu-item" ng-click="sectionShown = 'glossary'">
-        GLOSSARY
+      <div class="menu-wrapper">
+        <div class="menu-item" ng-click="sectionShown = 'glossary'" ng-class="{selected: sectionShown == 'glossary'}">
+          GLOSSARY
+        </div>
       </div>
     </div>
+
+    <div id="selector-bar"></div>
 
     <div class="content">
       <div id="welcome" ng-show="sectionShown == 'welcome'">
