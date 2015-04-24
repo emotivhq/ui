@@ -1,11 +1,11 @@
 @import "../base"
 
 .userprofile
-  min-height: 51rem
+  min-height: 55rem
   @include apply-at-size("tablet")
-    min-height: 53rem
+    min-height: 68rem
   @include apply-at-size("phone")
-    min-height: 78rem
+    min-height: 86rem
 
   &__info
     background: url("/assets/giftideas/hero.jpg")
@@ -37,6 +37,7 @@
   &__name
     width: 60%
     margin: 0 auto
+
   &__title
     color: #fff
     font-size: 2.8rem
@@ -50,6 +51,15 @@
     width: 100%
     @include apply-at-size("phone")
       font-size: 2.2rem
+
+  &__loading
+    position: fixed
+    width: 100%
+    bottom: 50%
+
+  &__loadingimg
+    margin: 0 auto
+    display: block
 
   input.userprofile__title
     border: 1px solid #eee
@@ -239,7 +249,7 @@
     background: #343434
     color: #fff
     font-size: 1.2rem
-    padding: 0.2rem 0 0.1rem 1.35rem
+    padding: 0.2rem 0 0.1rem 1.6rem
     min-height: 1.6rem
     display: block
 
