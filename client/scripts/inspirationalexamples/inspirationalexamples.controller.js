@@ -21,7 +21,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "$146.25",
             "6 months of seasonal beauty products for Marion's birthday",
             "6 Boxes of Julep Maven",
-            "25",
+            "11",
             "https://www.giftstarter.co/giftstart/6-months-of-seasonal-beauty-products-for-Marions-birthday"
         ),
         new product(
@@ -29,15 +29,39 @@ function InspirationalExamplesController($scope, $timeout) {
             "$122.28",
             "T1 HIMARS Smoke Break",
             "Gurkha Special Ops",
-            "12",
+            "3",
             "https://www.giftstarter.co/giftstart/T1-HIMARS-Smoke-Break"
+        ),
+        new product(
+            "/assets/howitworks/featuredCampaigns-tiffanys.jpg",
+            "$147.20",
+            "Jessi's 30th Birthday Blowout!",
+            "TIFFANY 1837™ Circle Pendant",
+            "7",
+            "https://www.giftstarter.co/giftstart/Jessis-30th-Birthday-Blowout"
+        ),
+        new product(
+            "/assets/howitworks/featuredCampaigns-ghosttruck.jpg",
+            "$448.80",
+            "Let's help Wix move!",
+            "Gift of Moving by Ghostruck (1br move within 30 mi of Seattle)",
+            "15",
+            "https://www.giftstarter.co/giftstart/Lets-help-Wix-move"
+        ),
+        new product(
+            "/assets/howitworks/featuredCampaigns-lens.jpg",
+            "$1,270.08",
+            "Just when you thought Quinn and Silas' pictures couldn't get any more amazing...",
+            "Canon EF 135mm f/2L USM Lens for Canon SLR Cameras",
+            "8",
+            "https://www.giftstarter.co/giftstart/Just-when-you-thought-Quinn-and-Silas-pictures-couldnt-get-any-more-amazing"
         ),
         new product(
             "/assets/howitworks/featuredCampaigns-watch.jpg",
             "$329.52",
             "Run Nikki Run!!!",
             "Garmin Forerunner 220 - Black/Red Bundle (Includes Heart Rate Monitor)",
-            "12",
+            "11",
             "https://www.giftstarter.co/giftstart/Run-Nikki-Run"
         )
     ];
