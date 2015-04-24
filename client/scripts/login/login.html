@@ -8,7 +8,7 @@
             <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
         </div>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="btn userlogin__loginbtn">Log In</button>
+        <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Log In</button>
     </form>
 </div>
 

@@ -36,7 +36,7 @@ class CreateHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error': 'Password cannot be blank'}))
             return
         if not validate_password_complexity(password):
-            self.response.write(json.dumps({'error': 'Password does not meet minimum requirements. Please try again.'}))
+            self.response.write(json.dumps({'error': 'Please use a more complex password: at least 8 characters, with uppercase, lowercase, and number(s)'}))
             return
         token_set = login_core.get_email_token_set(email=email, password=password)
         try:
@@ -50,6 +50,7 @@ class CreateHandler(webapp2.RequestHandler):
         else:
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))
             user = gs_user.gs_user_core.login_emaillogin_user(email, password, referrer)
+            user.email = email
             user.name = name
             user.put()
             self.response.write(json.dumps({
@@ -99,7 +100,7 @@ class LoginHandler(webapp2.RequestHandler):
             }))
         else:
             self.response.write(json.dumps({
-                'error': 'We couldn\'t find that email address and password combination; please try again.'
+                'error': 'We\'re sorry, that email or password does not match one we have on file'
             }))
 
 class RequestResetHandler(webapp2.RequestHandler):
