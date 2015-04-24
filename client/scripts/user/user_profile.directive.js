@@ -45,7 +45,6 @@ var gsUserEdit = function ($http, UserService, Analytics) {
 
         scope.saveInput = function () {
             scope.loading = true;
-            setTimeout(function() {
             if (userProfileform.$valid) {
                 $http.post('/users', {
                     'uid': UserService.uid,
@@ -80,7 +79,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                 scope.loading = false;
                 scope.canEdit = false;
                 scope.fieldisable = false;
-            }}, 100);
+            }
         }
 
     }
