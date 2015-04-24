@@ -20,7 +20,7 @@
         $scope.reenterpassword;
         $scope.message;
 
-        resetForm = function() {
+        $scope.resetForm = function() {
             $scope.name='';
             $scope.surname='';
             $scope.email='';
@@ -29,7 +29,7 @@
             $scope.reenterpassword='';
             $scope.message='';
         };
-        resetForm();
+        $scope.resetForm();
 
         if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
@@ -75,23 +75,26 @@
 
         $scope.doForgotPassword = function() {
             Analytics.track('user', 'forgot login password');
+            $scope.working = true;
             emailLoginService.login('forgotPassword','',$scope.email,'','').
                 then(function (okMsg) {
                     $scope.message=okMsg;
                     $scope.showForgot = false;
+                    $scope.working = false;
                 }, function (errMsg) {
                     $scope.message=errMsg;
+                    $scope.working = false;
                 });
         };
 
         $scope.$on('logout-success', function() {
             jQuery('.userlogin').fadeIn(1500);
-            resetForm();
+            $scope.resetForm();
         });
 
         $scope.$on('login-success', function() {
-            resetForm();
-            $scope.message="Welcome, "+UserService.name+"!";
+            $scope.resetForm();
+            $scope.message=UserService.name?("Welcome, "+UserService.name+"!"):"Welcome!";
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
         });

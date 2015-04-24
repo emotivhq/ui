@@ -10,7 +10,7 @@
         <input class="userlogin__reenterpassword" type="password" name="reenterpassword" ng-model="$parent.reenterpassword" placeholder="Reenter Password" required />
         <br />
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="btn userlogin__loginbtn">Create account</button>
+        <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Create account</button>
     </form>
 </div>
 

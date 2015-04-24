@@ -17,7 +17,7 @@
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email" required />
         <a href="#" class="userlogin__forgot" ng-click="$parent.showForgot=false">Cancel</a>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="btn userlogin__loginbtn">Get Password</button>
+        <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Get Password</button>
     </form>
 </div>
 

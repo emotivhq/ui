@@ -1,0 +1,83 @@
+@import "../base"
+
+.social
+  margin: 1rem 0 2rem
+  max-width: 60%
+  margin-left: auto
+  margin-right: auto
+
+  &__nolinks
+    color: #ccc
+
+  &__editblock
+    display: inline-block
+    white-space: nowrap
+    margin-bottom: 8px
+    margin-right: 5px
+    @include apply-at-size("tablet")
+      margin-bottom: 0
+    @include apply-at-size("phone")
+      margin-bottom: 0
+
+  &__icons
+    width: 2rem
+    height: 2rem
+    margin-left: 1rem
+    @include apply-at-size("tablet")
+      margin-top: 0.5rem
+    @include apply-at-size("phone")
+      margin-top: 0.5rem
+
+  &__desc
+    text-transform: uppercase
+    color: #fff
+    font-size: 1.2rem
+    font-family: Gotham, sans-serif
+
+  &__inputs
+    color: #eee
+    border: 1px solid #ccc
+    background: transparent
+    vertical-align: top
+    @include apply-at-size("tablet")
+      margin-top: 0.5rem
+      margin-left: 0.5rem
+    @include apply-at-size("phone")
+      margin-top: 0.5rem
+      margin-left: 0.5rem
+
+    &::-webkit-input-placeholder
+      color: #eee
+
+    &:-moz-placeholder
+      color: #eee
+      opacity: 1
+
+    &::-moz-placeholder
+      color: #eee
+      opacity: 1
+
+    &:-ms-input-placeholder
+      color: #eee
+
+  &__inline
+    display: inline
+    //.social__link:before
+    //  content: ''
+    //  @include apply-at-size("tablet")
+    //    position: relative
+    //    display: none
+    //  @include apply-at-size("phone")
+    //    position: relative
+    //    display: none
+
+  //&__secondrow
+  //  width: 79.5%
+  //  margin-top: 1rem
+  //  margin-left: 1rem
+  //  @include apply-at-size("tablet")
+  //    //width: 100%
+  //    margin-top: 0
+  //  @include apply-at-size("phone")
+  //    //width: 100%
+  //    margin-top: 0

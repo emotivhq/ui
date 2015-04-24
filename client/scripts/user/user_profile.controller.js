@@ -4,39 +4,36 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('UserprofileController', ['$scope','UserService',
-    '$location', '$http', 'Analytics', UserprofileController]);
+(function (app) {
 
-function UserprofileController($scope, UserService, $location, $http) {
+var UserprofileController = function ($scope, UserService, $location, $http) {
 
+    var urlpath = $location.path();
+    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1)
     $scope.user = {};
     $http({
         method: 'GET',
-        url: ' /users/profile/' + UserService.uid + '.json'
-    }).success(function(response){
+        url: ' /users/profile/' + thisUser + '.json'
+    }).success(function (response) {
         $scope.user = response;
     });
 
     $scope.fieldisable = true;
     $scope.blocked = true;
     $scope.months = [
-        { label: 'Jan', value: 0 },
-        { label: 'Feb', value: 1 },
-        { label: 'Mar', value: 2 },
-        { label: 'Apr', value: 3 },
-        { label: 'May', value: 4},
-        { label: 'Jun', value: 5},
-        { label: 'Jul', value: 6},
-        { label: 'Aug', value: 7},
-        { label: 'Sep', value: 8},
-        { label: 'Oct', value: 9},
-        { label: 'Nov', value: 10},
-        { label: 'Dec', value: 11}
+        {label: 'Jan', value: 0},
+        {label: 'Feb', value: 1},
+        {label: 'Mar', value: 2},
+        {label: 'Apr', value: 3},
+        {label: 'May', value: 4},
+        {label: 'Jun', value: 5},
+        {label: 'Jul', value: 6},
+        {label: 'Aug', value: 7},
+        {label: 'Sep', value: 8},
+        {label: 'Oct', value: 9},
+        {label: 'Nov', value: 10},
+        {label: 'Dec', value: 11}
     ];
-    $scope.$watch('user', function(newValue, oldValue) {
-       newValue.birth_month = $scope.months[newValue.birth_month];
-    });
-    var thisUser = $location.path().replace('/user/', '');
     var imageData;
 
     $scope.editable = thisUser == UserService.uid;
@@ -45,6 +42,24 @@ function UserprofileController($scope, UserService, $location, $http) {
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;
 
+    $scope.validateLinks = function() {
+        $scope.user.link_facebook=addProtocol($scope.user.link_facebook);
+        $scope.user.link_twitter=addProtocol($scope.user.link_twitter);
+        $scope.user.link_linkedin=addProtocol($scope.user.link_linkedin);
+        $scope.user.link_googleplus=addProtocol($scope.user.link_googleplus);
+        $scope.user.link_website=addProtocol($scope.user.link_website);
+    };
+
+    var addProtocol = function(link) {
+        if(link){
+            link=link.trim();
+            if(link!=""&&link.indexOf("http://")<0&&link.indexOf("https://")<0) {
+                link="http://"+link;
+            }
+        }
+        return link;
+    };
+
     function imageUpdated(data) {
         $scope.imageSet = true;
         imageData = data;
@@ -52,13 +67,16 @@ function UserprofileController($scope, UserService, $location, $http) {
 
     function submit() {
         UserService.uploadProfileImage(imageData)
-            .success(function(newImageUrl) {
+            .then(function (newImageUrl) {
                 $scope.user.img_url = newImageUrl;
                 $scope.editMode = false;
-            })
-            .error(function(reason) {
+            }, function (reason) {
                 console && console.log && console.log('Failed to update profile image', reason);
                 $scope.editMode = false;
             });
     }
 }
+    app.controller('UserprofileController', ['$scope','UserService',
+    '$location', '$http', 'Analytics', UserprofileController]);
+}(angular.module('GiftStarterApp')));
+

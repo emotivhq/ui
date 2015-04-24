@@ -4,13 +4,13 @@
  * Proprietary and confidential.
  */
 
-angular.module('GiftStarterApp').directive('gsUserEdit', ['$http', 'UserService', 'Analytics', gsUserEdit]);
+(function (app) {
 
-function gsUserEdit($http, UserService, Analytics) {
+var gsUserEdit = function ($http, UserService, Analytics) {
     function link(scope, elm, attrs, userProfileform) {
         scope.canEdit = true;
         scope.editUserFields = function () {
-            if(!scope.userinfo && scope.blocked ) {
+            if (!scope.userinfo && scope.blocked) {
                 scope.copyUser = angular.copy(scope.user);
                 scope.fieldisable = false;
                 scope.canEdit = false;
@@ -20,11 +20,11 @@ function gsUserEdit($http, UserService, Analytics) {
                 scope.canEdit = false;
                 scope.blocked = false;
             }
-        }
+        };
 
         scope.cancelEdit = function () {
             scope.canEdit = true;
-            if(!scope.userinfo) {
+            if (!scope.userinfo) {
                 scope.fieldisable = true;
                 scope.user.name = angular.copy(scope.copyUser.name);
                 scope.user.email = angular.copy(scope.copyUser.email);
@@ -41,12 +41,13 @@ function gsUserEdit($http, UserService, Analytics) {
                 scope.user.birth_day = angular.copy(scope.copyUserInfo.birth_day);
                 scope.blocked = true;
             }
-        }
+        };
 
         scope.saveInput = function () {
-            if(userProfileform.$valid) {
+            scope.loading = true;
+            if (userProfileform.$valid) {
                 $http.post('/users', {
-                    'uid': UserService.uid,
+                    'uid': scope.user.uid,
                     'action': 'update-profile',
                     name: scope.user.name,
                     email: scope.user.email,
@@ -58,16 +59,16 @@ function gsUserEdit($http, UserService, Analytics) {
                     phone: scope.user.phone,
                     shipping_address: scope.user.shipping_address,
                     birth_day: scope.user.birth_day,
-                    birth_month: scope.user.birth_month.value,
+                    birth_month: scope.user.birth_month,
                     shipping_city: scope.user.shipping_city,
                     shipping_state: scope.user.shipping_state,
                     shipping_zip: scope.user.shipping_zip
                 })
-                    .success(function (res) {
-                        console.log(res);
-                    })
-                    .error(function (res) {
-                        console.log(res);
+                    .then(function (res) {
+                        scope.loading = false;
+                    }, function (errorRes) {
+                        alert("Error. Please try again.");
+                        userProfileform.$invalid = true;
                     });
                 scope.canEdit = true;
                 scope.fieldisable = true;
@@ -75,10 +76,12 @@ function gsUserEdit($http, UserService, Analytics) {
             }
             else {
                 alert("Please fill fields correctly");
+                scope.loading = false;
                 scope.canEdit = false;
                 scope.fieldisable = false;
             }
         }
+
     }
 
     return {
@@ -86,11 +89,16 @@ function gsUserEdit($http, UserService, Analytics) {
             fieldisable: "=",
             user: "=",
             userinfo: "=",
-            blocked: "="
+            blocked: "=",
+            loading: "="
         },
         require: '^form',
         link: link,
         templateUrl: '/scripts/user/user_profile_edit.ng.html',
         restrict: 'E'
     }
-}
+
+};
+
+    app.directive('gsUserEdit', ['$http', 'UserService', 'Analytics', gsUserEdit]);
+}(angular.module('GiftStarterApp')));
