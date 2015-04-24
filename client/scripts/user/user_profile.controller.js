@@ -8,10 +8,12 @@
 
 var UserprofileController = function ($scope, UserService, $location, $http) {
 
+    var urlpath = $location.path();
+    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1)
     $scope.user = {};
     $http({
         method: 'GET',
-        url: ' /users/profile/' + UserService.uid + '.json'
+        url: ' /users/profile/' + thisUser + '.json'
     }).success(function (response) {
         $scope.user = response;
     });
@@ -32,8 +34,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         {label: 'Nov', value: 10},
         {label: 'Dec', value: 11}
     ];
-    var urlpath = $location.path();
-    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1)
     var imageData;
 
     $scope.editable = thisUser == UserService.uid;

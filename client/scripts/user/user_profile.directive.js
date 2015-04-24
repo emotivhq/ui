@@ -47,7 +47,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
             scope.loading = true;
             if (userProfileform.$valid) {
                 $http.post('/users', {
-                    'uid': UserService.uid,
+                    'uid': scope.user.uid,
                     'action': 'update-profile',
                     name: scope.user.name,
                     email: scope.user.email,
