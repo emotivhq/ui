@@ -75,12 +75,15 @@
 
         $scope.doForgotPassword = function() {
             Analytics.track('user', 'forgot login password');
+            $scope.working = true;
             emailLoginService.login('forgotPassword','',$scope.email,'','').
                 then(function (okMsg) {
                     $scope.message=okMsg;
                     $scope.showForgot = false;
+                    $scope.working = false;
                 }, function (errMsg) {
                     $scope.message=errMsg;
+                    $scope.working = false;
                 });
         };
 
