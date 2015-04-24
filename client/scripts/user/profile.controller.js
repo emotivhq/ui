@@ -9,8 +9,8 @@ GiftStarterApp.controller('ProfileController', ['$scope','UserService',
 
 function ProfileController($scope,  UserService,  $location) {
     $scope.user = {};
-
-    var thisUser = $location.path().replace('/users/', '');
+    var urlpath = $location.path();
+    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1)
     var imageData;
 
     UserService.getUser(thisUser,

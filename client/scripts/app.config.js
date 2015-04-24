@@ -25,7 +25,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/login',
         {templateUrl: '/scripts/login/login-or-create.html', reloadOnSearch: false})
         .when('/users/:uid',
-        {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
+        {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
         .when('/user/:uid',
         {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
         .when('/about',

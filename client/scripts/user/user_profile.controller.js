@@ -32,7 +32,8 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         {label: 'Nov', value: 10},
         {label: 'Dec', value: 11}
     ];
-    var thisUser = $location.path().replace('/user/', '');
+    var urlpath = $location.path();
+    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1)
     var imageData;
 
     $scope.editable = thisUser == UserService.uid;
@@ -40,6 +41,24 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;
+
+    $scope.validateLinks = function() {
+        $scope.user.link_facebook=addProtocol($scope.user.link_facebook);
+        $scope.user.link_twitter=addProtocol($scope.user.link_twitter);
+        $scope.user.link_linkedin=addProtocol($scope.user.link_linkedin);
+        $scope.user.link_googleplus=addProtocol($scope.user.link_googleplus);
+        $scope.user.link_website=addProtocol($scope.user.link_website);
+    };
+
+    var addProtocol = function(link) {
+        if(link){
+            link=link.trim();
+            if(link!=""&&link.indexOf("http://")<0&&link.indexOf("https://")<0) {
+                link="http://"+link;
+            }
+        }
+        return link;
+    };
 
     function imageUpdated(data) {
         $scope.imageSet = true;

@@ -20,7 +20,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                 scope.canEdit = false;
                 scope.blocked = false;
             }
-        }
+        };
 
         scope.cancelEdit = function () {
             scope.canEdit = true;
@@ -41,7 +41,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                 scope.user.birth_day = angular.copy(scope.copyUserInfo.birth_day);
                 scope.blocked = true;
             }
-        }
+        };
 
         scope.saveInput = function () {
             scope.loading = true;
@@ -98,7 +98,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
         restrict: 'E'
     }
 
-}
+};
 
     app.directive('gsUserEdit', ['$http', 'UserService', 'Analytics', gsUserEdit]);
 }(angular.module('GiftStarterApp')));
