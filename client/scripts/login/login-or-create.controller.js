@@ -20,7 +20,7 @@
         $scope.reenterpassword;
         $scope.message;
 
-        resetForm = function() {
+        $scope.resetForm = function() {
             $scope.name='';
             $scope.surname='';
             $scope.email='';
@@ -29,7 +29,7 @@
             $scope.reenterpassword='';
             $scope.message='';
         };
-        resetForm();
+        $scope.resetForm();
 
         if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
@@ -86,11 +86,11 @@
 
         $scope.$on('logout-success', function() {
             jQuery('.userlogin').fadeIn(1500);
-            resetForm();
+            $scope.resetForm();
         });
 
         $scope.$on('login-success', function() {
-            resetForm();
+            $scope.resetForm();
             $scope.message="Welcome, "+UserService.name+"!";
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
