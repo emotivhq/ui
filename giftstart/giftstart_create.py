@@ -3,6 +3,7 @@ __author__ = 'GiftStarter'
 
 import webapp2
 import json
+from requests.exceptions import ConnectionError
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 from giftstart.GiftStart import GiftStart
@@ -210,7 +211,10 @@ def complete_campaign_creation(uid, gs):
     gs.put()
     logging.info("Saved {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
 
-    giftstart_comm.send_create_notification(gs)
+    try:
+        giftstart_comm.send_create_notification(gs)
+    except ConnectionError as x:
+        logging.error("ConnectionError during complete_campaign_creation"+str(x.message))
 
     campaign_length=gs.deadline - datetime.now()
     campaign_seconds = (campaign_length.days*SECONDS_PER_DAY) + campaign_length.seconds
