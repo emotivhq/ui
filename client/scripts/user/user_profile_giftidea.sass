@@ -80,6 +80,7 @@
 
   &__producttitle
     background: #eee
+    color: #333
     padding: 0.65rem
     font-size: 0.85rem
     height: 2.7rem
@@ -98,6 +99,7 @@
     font-size: 0.95rem
     padding-top: 0.5rem
     background: #eee
+    color: #333
 
   &__findbtn
     margin: 1rem auto 0
@@ -109,6 +111,9 @@
     padding: 9px 12px 8px 12px
     text-align: center
     vertical-align: top
+    @include apply-at-size("phone")
+      margin: 1rem auto 1rem
+
 
     &:hover
       background: #ff686b
