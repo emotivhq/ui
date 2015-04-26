@@ -18,7 +18,6 @@ var UserprofileController = function ($scope, UserService, GiftStartService, $lo
     }).success(function (response) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;
-        console.log($scope.userIdea);
     });
 
     $scope.giftstartThisUrl = function(title,  price, img) {
