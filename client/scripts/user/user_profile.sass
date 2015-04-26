@@ -2,6 +2,7 @@
 
 .userprofile
   min-height: 70rem
+  color: #333
   @include apply-at-size("tablet")
     min-height: 68rem
   @include apply-at-size("phone")
@@ -37,20 +38,24 @@
   &__name
     width: 60%
     margin: 0 auto
+    @include apply-at-size("phone")
+      width: 90%
 
   &__title
     color: #fff
     font-size: 2.8rem
     font-weight: bold
-    margin: 2rem auto 0
+    margin: 0.2rem auto 0
+    padding: 0.2rem 0
     font-family: Roboto, sans-serif
     word-break: break-all
     background: transparent
     display: block
     text-align: center
-    width: 100%
+    width: 80%
     @include apply-at-size("phone")
       font-size: 2.2rem
+      width: 100%
 
   &__loading
     position: fixed
@@ -72,7 +77,9 @@
 
   &__text
     font-family: Gotham, sans-serif
-    font-size: 1rem
+    font-size: 0.9rem
+    width: 80%
+    margin: 1.5rem auto 0
     @include apply-at-size("phone")
       text-align: justify
       margin-bottom: 0
@@ -154,7 +161,7 @@
     &__labelphone,
     &__labelshipping
       margin: 1rem 0 0
-      font-size: 1.3rem
+      font-size: 0.9rem
       text-transform: uppercase
       display: inline-block
       text-align: left
@@ -227,18 +234,18 @@
     text-align: center
     text-transform: uppercase
     color: #fff
-    font-size: 1.2rem
+    font-size: 0.9rem
     font-family: Gotham, sans-serif
-    margin-bottom: 0.2rem
+    margin: 0 0 0.2rem
 
   &__monthwrap
-    width: 6rem
+    width: 4.6rem
     overflow: hidden
     margin: 0 auto
 
   &__month,
   &__date
-    width: 6rem
+    width: 4.6rem
     margin: 0 auto
     font-family: Gotham, sans-serif
     text-transform: uppercase
@@ -248,20 +255,24 @@
   &__month
     background: #343434
     color: #fff
-    font-size: 1.2rem
-    padding: 0.2rem 0 0.1rem 1.6rem
+    font-size: 1rem
+    padding: 0.2rem 0 0.1rem 18%
+    margin-top: 0.2rem
     min-height: 1.6rem
     display: block
+    -webkit-appearance: none
+    border-radius: 0
 
     &:disabled
       border: 0
-      width: 120%
+      width: 121%
 
   &__date
     position: relative
     background: #fff
-    padding: 0.5rem 0 0 1.1rem
-    font-size: 1.7rem
+    padding: 0.5rem 0 0.1em 1.1rem
+    margin-bottom: 0.3rem
+    font-size: 1.3rem
     min-height: 2.5rem
     display: block
     color: #333
@@ -275,9 +286,9 @@
   &__edit,
   &__cancel,
   &__save
-    font-size: 1.5rem
+    font-size: 0.9rem
     font-family: Gotham, sans-serif
-    color: #000
+    color: #333
     text-transform: uppercase
     position: absolute
     right: -11%
@@ -303,4 +314,4 @@
     top: auto
 
   .editlink__cancel
-    right: 7rem
+    right: 5rem

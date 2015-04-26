@@ -1,7 +1,9 @@
 
         <div class="userprofile__fields" ng-hide="loading">
-            <p class="userprofile__text" ng-show="editable">This information will not be visible on your public profile. Your friends will recieve notifications for your important dates, and the address will be used as your shipping address </p>
-            <form class="userprofileform" name="userProfileform">
+            <p class="userprofile__text" ng-show="editable">
+                The information below will not be visible to anyone but you. Adding this information now ensures you'll always know what's happening with gifts you're a part of, and we will know where to ship gifts for you! (Unless specified otherwise)
+            </p>
+            <form class="userprofileform" name="userProfileform" ng-show="editable">
                 <div class="userprofileform__firstcol">
                     <div class="userprofileform__email">
                     <span class="invalid invalid--email" ng-show="userProfileform.userEmail.$error.required">
@@ -15,7 +17,7 @@
                 </div>
                     <div class="userprofileform__phone">
                     <p class="userprofileform__labelphone">Phone</p>
-                    <input type="text" class="userprofileform__userphone" ng-disabled="fieldisable" ng-model="user.phone" placeholder="{{user.phone}} Phone number" name="phone" required />
+                    <input type="text"  class="userprofileform__userphone" ng-disabled="fieldisable" ng-model="user.phone" placeholder="{{user.phone}} Phone number" name="phone" required />
                 </div>
                 </div>
                 <div class="userprofileform__secondcol">
