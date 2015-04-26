@@ -21,7 +21,7 @@
                 <div class="useridea__productdesc">
                     <img class="useridea__productimg" ng-src="{{ idea.img }}" alt=""/>
                     <div class="useridea__producttitle">{{ idea.title }}</div>
-                    <div class="useridea__productprice">{{ idea.price | currency }}</div>
+                    <div class="useridea__productprice">{{ idea.price / 100 | currency }}</div>
                 </div>
             </a>
         </div>
