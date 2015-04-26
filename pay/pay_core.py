@@ -166,7 +166,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
                  paypal_charge_id="" if is_stripe else charge_id,
                  email=email_address,
                  stripe_charge_json=charge_json if is_stripe else "",
-                 paypal_charge_json="" if is_stripe else charge_id,
+                 paypal_charge_json="" if is_stripe else charge_json,
                  last_four=card_last_four, img_url=usr_img,
                  name=user.name if user.name else '')
     pi.put()
@@ -295,6 +295,9 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
         raise StripeError(str(payment.error['details'][0]['issue']))
 
 
+def get_payment_data_for_transaction(transaction_id):
+    return paypalrestsdk.Payment.find(transaction_id)
+
 def get_card_type(cc_number):
     for type, regexp in CC_MAP.items():
         if regexp.match(str(cc_number)):
@@ -408,7 +411,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
                  paypal_charge_id="" if is_stripe else charge_id,
                  email=user.email,
                  stripe_charge_json=charge_json if is_stripe else "",
-                 paypal_charge_json="" if is_stripe else charge_id,
+                 paypal_charge_json="" if is_stripe else charge_json,
                  last_four=card_last_four,
                  img_url=user.cached_profile_image_url,
                  name=user.name if user.name else '')
@@ -417,3 +420,40 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
     send_pitchin_notification(giftstart, charge_id, charge_amount,
                               card_last_four, user.email, note, user.name,
                               user.cached_profile_image_url)
+
+
+def extract_payment_amount_from_paypal_payment(payment):
+    return int(float(payment['transactions'][0]['amount']['total']) * 100)
+
+
+def get_charge_amount_for_pitchin(pitchin):
+    """
+    get the charge amount for a PitchIn
+    :param pitchin: the PitchIn
+    :return: amount transacted, in cents
+    """
+    if pitchin.paypal_charge_json and pitchin.paypal_charge_json!=None:
+        try:
+            return extract_payment_amount_from_paypal_payment(json.loads(pitchin.paypal_charge_json))
+        except Exception as x:
+            logging.error("Unable to PitchIn.getChargeAmount for PayPal transaction: {0} {1} {2}".format(pitchin.giftstart_url_title, pitchin.parts, pitchin.paypal_charge_json))
+            if pitchin.paypal_charge_json==pitchin.paypal_charge_id:
+                logging.error("Reparing {0} {1}".format(pitchin.giftstart_url_title, pitchin.parts))
+                try:
+                    paypal_charge =  get_payment_data_for_transaction(pitchin.paypal_charge_id)
+                    amount = extract_payment_amount_from_paypal_payment(paypal_charge)
+                    pitchin.paypal_charge_json = json.dumps(paypal_charge.to_dict())
+                    pitchin.put()
+                    return amount
+                except Exception as y:
+                    logging.error("Unable to repair {0} {1}: {2}".format(pitchin.giftstart_url_title, pitchin.parts,y.message))
+            return 0
+    elif pitchin.stripe_charge_json and pitchin.stripe_charge_json!=None:
+        try:
+            return json.loads(pitchin.stripe_charge_json)['amount']
+        except Exception as x:
+            logging.error("Unable to PitchIn.getChargeAmount for Stripe transaction: {0} {1} {2}".format(pitchin.giftstart_url_title, pitchin.parts, pitchin.stripe_charge_json))
+            return 0
+    else:
+        logging.error("Unable to PitchIn.getChargeAmount for unknown transaction: {0} {1}".format(pitchin.giftstart_url_title, pitchin.parts))
+        return 0

@@ -8,9 +8,9 @@ from giftstart.GiftStart import GiftStart
 from pay.PitchIn import PitchIn
 from gs_user import User
 from gs_user.UserLogin import UserLogin
-import json
+from pay import pay_core
 
-NUM_WEEKS = 10
+NUM_WEEKS = 5
 """how many historical weeks of data should be shown?"""
 
 LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
@@ -149,7 +149,7 @@ def transactions_per_week():
 def dollars_per_week():
     def amt_pitchins_by(date):
         pis = PitchIn.query(PitchIn.timestamp < date).fetch()
-        get_amt = lambda pi: json.loads(pi.stripe_charge_json)['amount']/100.0
+        get_amt = lambda pi: pay_core.get_charge_amount_for_pitchin(pi)/100.0
         return sum([get_amt(p) for p in pis])
 
     total_dollars = [amt_pitchins_by(d) for d in DATES]
