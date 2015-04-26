@@ -6,20 +6,27 @@
 
 (function (app) {
 
-var UserprofileController = function ($scope, UserService, $location, $http) {
+var UserprofileController = function ($scope, UserService, GiftStartService, $location, $http) {
 
     var urlpath = $location.path();
-    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1)
+    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1);
     $scope.user = {};
+    $scope.userIdea = {};
     $http({
         method: 'GET',
-        url: ' /users/profile/' + thisUser + '.json'
+        url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
     }).success(function (response) {
         $scope.user = response;
+        $scope.userIdea = $scope.user.giftideas;
+        console.log($scope.userIdea);
     });
+
+    console.log(GiftStartService);
 
     $scope.fieldisable = true;
     $scope.blocked = true;
+    $scope.quantity = 10;
+    $scope.showMore = true;
     $scope.months = [
         {label: 'Jan', value: 0},
         {label: 'Feb', value: 1},
@@ -76,7 +83,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             });
     }
 }
-    app.controller('UserprofileController', ['$scope','UserService',
+    app.controller('UserprofileController', ['$scope','UserService', 'GiftStartService',
     '$location', '$http', 'Analytics', UserprofileController]);
 }(angular.module('GiftStarterApp')));
 

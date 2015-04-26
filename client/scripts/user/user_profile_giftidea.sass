@@ -1,0 +1,133 @@
+@import "../base"
+
+.useridea
+  width: 85%
+  margin: 0 auto
+  min-height: 50rem
+
+  &__title
+    color: #333
+    text-align: center
+    position: relative
+    margin-top: 3rem
+    @include apply-at-size("phone")
+      margin-top: 8rem
+
+  &__wrap
+    width: 90%
+    min-height: 80rem
+    margin: 0 auto
+
+  &__filter
+    text-transform: uppercase
+    margin: 1rem 0 0 1rem
+
+  &__filterby
+    color: #333
+    @include apply-at-size("phone")
+      display: block
+      margin-bottom: 0.85rem
+
+  &__filtertags,
+  &__filterdate,
+  &__filtertprice
+    font-size: 0.65rem
+    color: #333
+    margin-left: 0.8rem
+    @include apply-at-size("phone")
+      margin: 0 1rem 0 0
+    &:hover
+      cursor: pointer
+
+  &__productlist
+    display: table
+    width: 100%
+    border-spacing: 1rem
+
+  &__productimg
+    width: 100%
+    min-height: 13rem
+    background: #fff
+    padding: 0.5rem 0 1rem
+    @include apply-at-size("phone")
+      width: 80%
+      display: block
+      margin: 0 auto
+
+  &__productdesc
+    @include apply-at-size("phone")
+      background: #fff
+
+  &__productlist--row
+    display: table-row
+    @include apply-at-size("phone")
+      display: none
+
+  &__productlistitem
+    display: table-cell
+    width: 18%
+    border: 1px solid #000
+    background: #eee
+    @include apply-at-size("phone")
+      display: block
+      width: 100%
+      margin: 0.5rem 0
+
+    &--only
+      display: block
+      width: 60%
+      margin: 0 auto
+
+  &__producttitle
+    background: #eee
+    padding: 0.65rem
+    font-size: 0.85rem
+    height: 2.7rem
+    position: relative
+    overflow: hidden
+    text-align: center
+    -ms-word-break: break-all
+    word-break: break-all
+    -webkit-hyphens: auto
+    -moz-hyphens: auto
+    hyphens: auto
+
+  &__productprice
+    text-align: center
+    margin: 0 0 1rem
+    font-size: 0.95rem
+    padding-top: 0.5rem
+    background: #eee
+
+  &__findbtn
+    margin: 1rem auto 0
+    width: 12rem
+    background: #df484b
+    border: 2px solid #df484b
+    color: #fff
+    cursor: pointer
+    padding: 9px 12px 8px 12px
+    text-align: center
+    vertical-align: top
+
+    &:hover
+      background: #ff686b
+      border-color: #ff686b
+
+  &__findlink,
+  &__viewmorelink
+    font-family: Gotham, sans-serif
+    font-size: 1rem
+
+  &__findlink
+    color: #fff
+
+  &__viewmorelink
+    display: block
+    text-align: center
+    color: #000
+    background: url('/assets/rotate_button_primary.png') no-repeat center
+    background-size: 3rem 3rem
+    width: 7rem
+    margin: 2rem auto 0
+    padding-bottom: 5rem
