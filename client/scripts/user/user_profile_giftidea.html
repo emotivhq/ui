@@ -17,7 +17,7 @@
     <div class="useridea__productlist">
         <div ng-repeat-start="idea in userIdea | limitTo:quantity | orderBy:userOrder track by $index" class="h--hide" ng-class="{true: 'useridea__productlist--row'}[$index % 5 == 0 && !$first]"></div>
         <div class="useridea__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userIdea.length == 1]">
-            <a href="{{ giftstartThisUrl(idea.title, idea.price, idea.img) }}">
+            <a href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}">
                 <div class="useridea__productdesc">
                     <img class="useridea__productimg" ng-src="{{ idea.img }}" alt=""/>
                     <div class="useridea__producttitle">{{ idea.title }}</div>

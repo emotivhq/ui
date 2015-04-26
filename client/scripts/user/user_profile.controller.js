@@ -20,9 +20,9 @@ var UserprofileController = function ($scope, UserService, GiftStartService, $lo
         $scope.userIdea = $scope.user.giftideas;
     });
 
-    $scope.giftstartThisUrl = function(title,  price, img) {
+    $scope.giftstartThisUrl = function(title, price, img, url) {
         return '/create?' + urlSerialize({
-                product_url: 'storedproduct',
+                product_url: url,
                 title: title,
                 price: price,
                 img_url: img,
