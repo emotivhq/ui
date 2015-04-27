@@ -30,7 +30,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
             parseInt(product.productPrice*100),
             product.productName,
             product.productDescription,
-            product.productImage
+            product.productImage.indexOf('http')==0?product.productImage:('/assets/giftideas/category'+product.productImage)
         );
         if(saver) {
             saver.success(function (response) {
