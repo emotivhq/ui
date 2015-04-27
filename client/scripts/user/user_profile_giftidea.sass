@@ -75,8 +75,11 @@
 
     &--only
       display: block
-      width: 60%
+      width: 40%
       margin: 0 auto
+      @include apply-at-size("phone")
+        width: 100%
+
 
   &__producttitle
     background: #eee
