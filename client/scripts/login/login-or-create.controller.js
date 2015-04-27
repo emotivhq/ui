@@ -10,7 +10,7 @@
                                             FacebookService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
-        $scope.showCreate = false;
+        $scope.showCreate = true;
         $scope.showForgot = false;
         $scope.name;
         $scope.surname;
