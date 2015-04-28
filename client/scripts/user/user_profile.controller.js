@@ -6,7 +6,7 @@
 
 (function (app) {
 
-var UserprofileController = function ($scope, UserService, GiftStartService, $location, $http) {
+var UserprofileController = function ($scope, UserService, $location, $http) {
 
     var urlpath = $location.path();
     var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1);
@@ -18,6 +18,12 @@ var UserprofileController = function ($scope, UserService, GiftStartService, $lo
     }).success(function (response) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;
+    });
+
+    UserService.getUser(thisUser,
+        function(data) {
+            $scope.userCampaings = data[Object.keys(data)[0]];
+            console.log($scope.userCampaings);
     });
 
     $scope.giftstartThisUrl = function(title, price, img, url) {
@@ -100,7 +106,7 @@ var UserprofileController = function ($scope, UserService, GiftStartService, $lo
             });
     }
 }
-    app.controller('UserprofileController', ['$scope','UserService', 'GiftStartService',
+    app.controller('UserprofileController', ['$scope','UserService',
     '$location', '$http', 'Analytics', UserprofileController]);
 }(angular.module('GiftStarterApp')));
 

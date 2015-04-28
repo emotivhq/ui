@@ -41,14 +41,21 @@
 
   &__productlist
     display: table
-    width: 100%
     border-spacing: 1rem
 
-  &__productimg
-    width: 100%
+  &__productimgwrap
     min-height: 13rem
     background: #fff
+    width: 100%
+    @media screen and (max-width: $tablet-landscape-width)
+      min-height: 11rem
+    @media screen and (max-width: $tablet-portrait-width+50)
+      min-height: 8.5rem
+
+  &__productimg
     padding: 0.5rem 0 1rem
+    vertical-align: top
+    width: 100%
     @include apply-at-size("phone")
       width: 80%
       display: block

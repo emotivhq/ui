@@ -1,0 +1,16 @@
+<div class="usercampaign__title">
+    Championed
+</div>
+<div class="usercampaign__list">
+    <div ng-show="userCampaings.giftstarts.length === 0"> none </div>
+    <div class="usercampaign__items" ng-repeat-start="giftstart in userCampaings.giftstarts" ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" >        </div>
+    <div class="usercampaign__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userCampaings.length == 1]">
+        <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
+            <div class="usercampaign__productimgwrap">
+                <img class="usercampaign__itemsimages" ng-src="{{ giftstart.product_img_url }}" alt="Championed image"/>
+            </div>
+            <h3  class="usercampaign__itemstitle">{{ giftstart.title }}</h3>
+        </a>
+    </div>
+    <div ng-repeat-end="" class="h--hide"></div>
+</div>

@@ -1,0 +1,49 @@
+@import "../base"
+
+.usercampaign
+  width: 49%
+  background: #E2E2E2
+  display: table-cell
+
+  &__title
+    color: #fff
+    font-size: 1.3rem
+    padding: 0.5rem
+    background: #333
+
+  &__list
+    display: table
+    border-spacing: 1rem
+
+  &__items
+    display: none
+    &--row
+      display: table-row
+      
+  &__productimgwrap
+    width: 100%
+    background: #fff
+    padding: 5%
+    min-height: 8.94rem
+    position: relative
+    top: -1px
+    @media screen and (max-width: $tablet-landscape-width)
+      min-height: 8.215rem
+    @media screen and (max-width: $tablet-portrait-width+75)
+      border: 1px solid red
+
+  &__productlistitem
+    display: table-cell
+    width: 30%
+    background: #333
+
+  &__itemsimages
+    width: 100%
+    vertical-align: top
+
+  &__itemstitle
+    margin: 0
+    padding: 1rem 0.5rem
+    font-size: 0.9rem
+    color: #fff
+    text-align: center
