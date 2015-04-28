@@ -7,18 +7,21 @@ GiftStarterApp.controller('GiftsGivenBarController', ['$scope','$timeout',
     GiftsGivenBarController]);
 
 function GiftsGivenBarController($scope) {
-    var campaign = function(url, img) {
+    var campaign = function(title, url, img) {
+        this.title = title,
         this.url = url;
         this.img = img;
     };
 
     $scope.campaigns = [
         new campaign(
+            "Agnes Christmas gift",
             "https://www.giftstarter.co/giftstart/Agnes-Christmas-gift",
             "https://storage.googleapis.com/giftstarter-pictures/p/158.jpeg"
 
         ),
         new campaign(
+            "A fantastic bag for a fantastic lady",
             "https://www.giftstarter.co/giftstart/A-fantastic-bag-for-a-fantastic-lady",
             "https://storage.googleapis.com/giftstarter-pictures/p/58.jpeg"
 
