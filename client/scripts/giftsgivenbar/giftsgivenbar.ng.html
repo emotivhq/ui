@@ -1,6 +1,6 @@
 <div id="giftsgivenbar" ng-controller="GiftsGivenBarController">
     <div class="title">Gifts given through GiftStarter</div>
-    <div ng-repeat="campaign in campaigns">
-        <div class="giftbox"><a ng-href="campaign.url"><img ng-src="campaign.img"></a></div>
-    </div>
+    <span ng-repeat="campaign in campaigns">
+        <a ng-href="{{campaign.url}}"><img ng-src="{{campaign.img}}"></a>
+    </span>
 </div>

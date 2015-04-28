@@ -14,13 +14,13 @@ function GiftsGivenBarController($scope) {
 
     $scope.campaigns = [
         new campaign(
-            "https://www.giftstarter.co/giftideas/baby/4moms-Breeze-Playard",
-            "/assets/staffpicks/4momsBreeze.jpg"
+            "https://www.giftstarter.co/giftstart/Agnes-Christmas-gift",
+            "https://storage.googleapis.com/giftstarter-pictures/p/158.jpeg"
 
         ),
         new campaign(
-            "https://www.giftstarter.co/search/lumix%20gh4",
-            "https://www.giftstarter.co/search/lumix%20gh4"
+            "https://www.giftstarter.co/giftstart/A-fantastic-bag-for-a-fantastic-lady",
+            "https://storage.googleapis.com/giftstarter-pictures/p/58.jpeg"
 
         )
     ];
