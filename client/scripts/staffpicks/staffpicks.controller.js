@@ -54,7 +54,7 @@ function StaffPicksController($scope, $timeout) {
             "SteelSeries Headphones with Inline Mic",
             "This is a great gift if you need headphones for gaming, streaming, or everyday. It's got inline mic for streaming, looks nice, and is very comfortable.",
             "/assets/about/img/sharon.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/electronics/SteelSeries-Headset-White"
         ),
         new product(
             "/assets/staffpicks/brother-thread-serger.jpg",
