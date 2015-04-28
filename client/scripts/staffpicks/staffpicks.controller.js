@@ -62,7 +62,7 @@ function StaffPicksController($scope, $timeout) {
             "Brother Thread Serger",
             "I have my mother’s old sewing machine, but I find for many of my projects a serger would be ideal. This one is very user friendly for novices, with advanced features for experienced users.",
             "/assets/about/img/christie.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/forher/Brother-Thread-Serger"
         ),
         new product(
             "/assets/staffpicks/guava-lotus-everywhere-crib.jpg",
