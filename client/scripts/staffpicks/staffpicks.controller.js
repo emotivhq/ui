@@ -70,7 +70,7 @@ function StaffPicksController($scope, $timeout) {
             "Lotus Everywhere Crib",
             "Transforms from backpack to standard-size crib in under a minute. Lightweight yet stable, with zippered mesh sides and an optional sun-shade, it's perfect for travel AND as a primary sleep-space or play area for your little one.",
             "/assets/about/img/jon.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/baby/Guava-Lotus-Everywhere-Crib"
         ),
         new product(
             "/assets/staffpicks/deathadder-gaming-mouse-thumb.jpg",
