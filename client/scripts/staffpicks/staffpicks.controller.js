@@ -78,7 +78,7 @@ function StaffPicksController($scope, $timeout) {
             "Razer Gaming Mouse",
             "This is the ultimate mouse for gaming and everyday use and it's ergonomic, too!!",
             "/assets/about/img/sharon.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/electronics/DeathAdder-Gaming-Mouse"
         )
     ];
     var n = 0;
