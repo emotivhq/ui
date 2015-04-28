@@ -23,7 +23,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     UserService.getUser(thisUser,
         function(data) {
             $scope.userCampaings = data[Object.keys(data)[0]];
-            console.log($scope.userCampaings);
     });
 
     $scope.giftstartThisUrl = function(title, price, img, url) {
@@ -49,7 +48,9 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.fieldisable = true;
     $scope.blocked = true;
     $scope.quantity = 10;
+    $scope.campaingquantity = 6;
     $scope.showMore = true;
+    $scope.showMoreCampaign = true;
     $scope.months = [
         {label: 'Jan', value: 0},
         {label: 'Feb', value: 1},

@@ -22,7 +22,9 @@
                     <div class="useridea__productimgwrap">
                         <img class="useridea__productimg" ng-src="{{ idea.img }}" alt="Gift Idea Image"/>
                     </div>
-                    <div class="useridea__producttitle">{{ idea.title }}</div>
+                    <div class="useridea__producttitle">
+                        {{ idea.title | limitTo:43 }}{{idea.title.length > 43 ? '...' : ''}}
+                    </div>
                     <div class="useridea__productprice">{{ idea.price / 100 | currency }}</div>
                 </div>
             </a>
