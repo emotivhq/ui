@@ -19,6 +19,11 @@
     margin: 5px
     padding: 5px
 
+    input
+      background: #eee
+      border: 0
+      height: 34px
+
   #header-menu-button
     display: none
     @media screen and (max-width: $phone-tablet-boundary)
@@ -86,9 +91,17 @@
               color: white
 
     .menu-login
+      &:hover
+        background: rgb(223, 72, 76)
       a
         color: rgb(223, 72, 76)
         text-decoration: underline
         &:hover
           background: rgb(223, 72, 76)
           color: white
+      .menu-user
+        text-decoration: none
+      .submenu
+        border-left: 8px solid rgb(223, 72, 76)
+        a
+          text-decoration: none

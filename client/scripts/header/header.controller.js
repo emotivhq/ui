@@ -22,6 +22,7 @@
 
         this.userImageUrl = UserService.profileImageUrl;
         this.userProfileUrl = '/users/' + UserService.uid;
+        this.userName = (UserService.name).toUpperCase();
 
         this.creating = $location.path().indexOf('/create') === 0;
 
