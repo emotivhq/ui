@@ -38,8 +38,9 @@
             <li><a href="#">Learn more</a></li>
           </ul>
         </li>
-        <li class="menu-login"><a href="#">CREATE ACCOUNT</a></li>
-        <li class="menu-login"><a href="#">LOG IN</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating">CREATE ACCOUNT</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">LOG IN</a></li>
+        <li class="menu-login"><a href="#" ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">LOG OUT</a></li>
       </ul>
     </div>
   </div>
