@@ -46,7 +46,7 @@ function StaffPicksController($scope, $timeout) {
             "UPPAbaby Vista Stroller 2015 (Maya)",
             "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features.",
             "/assets/about/img/christie.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/baby/UPPAbaby-Stroller-2015"
         ),
         new product(
             "/assets/staffpicks/steelseries-headset-white-thumb.jpg",
