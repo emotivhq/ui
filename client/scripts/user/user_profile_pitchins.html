@@ -14,7 +14,7 @@
         <p ng-hide="editable" >{{ user.name }} hasn't pitched in on any gifts yet. Invite them to pitch-in on one of your campaigns!</p>
     </div>
     <div class="usercampaign__items" ng-repeat-start="pitchin in userCampaings.pitchins | limitTo:campaingquantity track by $index " ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" ></div>
-    <div class="usercampaign__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userCampaings.length == 1]">
+    <div class="usercampaign__productlistitem" ng-class="{true: 'usercampaign__productlistitem--only'}[userCampaings.pitchins.length == 1]">
         <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
             <div class="usercampaign__productimgwrap">
                 <img class="usercampaign__itemsimages" ng-src="{{ pitchin.gs_img }}" alt="Pitch Ins image"/>

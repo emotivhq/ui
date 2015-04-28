@@ -10,8 +10,6 @@
     text-align: center
     position: relative
     margin-top: 3rem
-    @include apply-at-size("phone")
-      margin-top: 8rem
 
   &__wrap
     width: 90%
@@ -53,6 +51,9 @@
     @media screen and (max-width: $tablet-portrait-width+50)
       min-height: 8.5rem
       max-height: 8.6rem
+    @include apply-at-size("phone")
+      min-height: 100%
+      max-height: 100%
 
   &__productimg
     padding: 0.5rem 0 1rem
