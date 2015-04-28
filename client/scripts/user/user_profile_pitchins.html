@@ -2,14 +2,14 @@
     Pitch Ins
 </div>
 <div class="usercampaign__list">
-    <div ng-show="userCampaings.pitchins == 0"> none </div>
+    <div ng-show="userCampaings.pitchins.length === 0"> none </div>
     <div class="usercampaign__items" ng-repeat-start="pitchin in userCampaings.pitchins" ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" ></div>
     <div class="usercampaign__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userCampaings.length == 1]">
         <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
             <div class="usercampaign__productimgwrap">
-                <img class="usercampaign__itemsimages" ng-src="{{ pitchin.product_img_url }}" alt="Pitch Ins image"/>
+                <img class="usercampaign__itemsimages" ng-src="{{ pitchin.img }}" alt="Pitch Ins image"/>
             </div>
-            <h3  class="usercampaign__itemstitle">{{ pitchin.title }}</h3>
+            <h3  class="usercampaign__itemstitle">{{ pitchin.gs_title }}</h3>
         </a>
     </div>
     <div ng-repeat-end="" class="h--hide"></div>
