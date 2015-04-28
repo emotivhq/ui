@@ -2,8 +2,11 @@
     Pitch Ins
 </div>
 <div class="usercampaign__list">
-    <div ng-show="userCampaings.pitchins.length === 0"> none </div>
-    <div class="usercampaign__items" ng-repeat-start="pitchin in userCampaings.pitchins" ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" ></div>
+    <div ng-show="userCampaings.pitchins.length === 0">
+        <p ng-show="editable">You haven't pitched-in on any gifts yet.</p>
+        <p ng-hide="editable" >{{ user.name }} hasn't pitched in on any gifts yet. Invite them to pitch-in on one of your campaigns!</p>
+    </div>
+    <div class="usercampaign__items" ng-repeat-start="pitchin in userCampaings.pitchins | limitTo:campaingquantity " ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" ></div>
     <div class="usercampaign__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userCampaings.length == 1]">
         <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
             <div class="usercampaign__productimgwrap">

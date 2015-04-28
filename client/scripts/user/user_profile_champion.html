@@ -2,14 +2,20 @@
     Championed
 </div>
 <div class="usercampaign__list">
-    <div ng-show="userCampaings.giftstarts.length === 0"> none </div>
+    <div ng-show="userCampaings.giftstarts.length === 0">
+        <p ng-show="editable">You haven't been a Gift Champion yet. Start a gift today! <br />
+            <a href="/giftideas" class="usercampaign__link">Browse Gift Ideas</a>
+            <a href="/search" class="usercampaign__link">Search</a>
+        </p>
+        <p ng-hide="editable" >{{ user.name }} hasn't started any gifts yet</p>
+    </div>
     <div class="usercampaign__items" ng-repeat-start="giftstart in userCampaings.giftstarts" ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" >        </div>
     <div class="usercampaign__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userCampaings.length == 1]">
         <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
             <div class="usercampaign__productimgwrap">
                 <img class="usercampaign__itemsimages" ng-src="{{ giftstart.product_img_url }}" alt="Championed image"/>
             </div>
-            <h3  class="usercampaign__itemstitle">{{ giftstart.title }}</h3>
+            <h3  class="usercampaign__itemstitle">{{ giftstart.title | limitTo:100 }}</h3>
         </a>
     </div>
     <div ng-repeat-end="" class="h--hide"></div>

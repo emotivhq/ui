@@ -17,6 +17,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
     }).success(function (response) {
         $scope.user = response;
+        console.log(response);
         $scope.userIdea = $scope.user.giftideas;
     });
 
@@ -49,6 +50,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.fieldisable = true;
     $scope.blocked = true;
     $scope.quantity = 10;
+    $scope.campaingquantity = 6;
     $scope.showMore = true;
     $scope.months = [
         {label: 'Jan', value: 0},
