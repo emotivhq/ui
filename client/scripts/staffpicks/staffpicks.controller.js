@@ -41,6 +41,17 @@ function StaffPicksController($scope, $timeout) {
             "https://www.giftstarter.co/giftideas/electronics/Apple-Watch-Milanese"
         ),
         new product(
+            "/assets/staffpicks/hue-personal-wireless-light.jpg",
+            "$199.99",
+            "Hue Personal Wireless Light",
+            "The Philips Hue Personal Wireless Lighting Kit connects to your home Wi-Fi and" +
+            " up to 50 Philips Hue Bulbs/Lighting. It is the most exciting and unique product. " +
+            "The lights sync with an alarm, sets on schedules, " +
+            "and the IFTTT connectivity to other 3rd party apps is mindblowing.",
+            "/assets/about/img/roy.png",
+            "#"
+        ),
+        new product(
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
             "$299.99",
             "UPPAbaby Vista Stroller 2015 (Maya)",
