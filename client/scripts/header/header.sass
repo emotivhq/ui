@@ -1,149 +1,109 @@
 @import "../base"
 
 #header
-  background-size: cover
-  width: 100%
-  max-width: 1200px !important
-  margin-left: auto
-  margin-right: auto
-  position: fixed
-  top: 0
-  left: 0
-  right: 0
-  z-index: 1000
   background-color: white
   border-bottom: 2px solid #eee
-  height: $header-height
-  @media screen and (max-width: $phone-tablet-boundary)
-    height: $header-height-mobile
+  height: 50px
+  max-width: 1200px
+  padding: 0px 20px
+  width: 100%
+  vertical-align: middle
+  -webkit-font-smoothing: antialiased
 
-  @media screen and (max-width: $phone-boundary)
-    top: 0
-
-  #header-logo
-    background-image: url(/assets/GSlogo_web_large_reg.png)
-    background-repeat: no-repeat
-    background-size: 238px 98px //($header-height*2.42) $header-height
-    width: 238px //$header-height*2.42
-    height: 98px //$header-height
-    position: absolute
-    top: 0
-    left: 20px
-    @media screen and (max-width: $phone-tablet-boundary+50)
-      left: 1%
-    @media screen and (max-width: $phone-tablet-boundary)
-      background-image: url(/assets/logo_square_nobg_reg.png)
-      background-repeat: no-repeat
-      background-size: $header-height-mobile $header-height-mobile
-      height: $header-height-mobile
-      width: $header-height-mobile
-      left: auto
-      right: 20px
-      top: 15px
-
-  > div.wrapper
-    margin: 0 auto
-
-    @media screen and (max-width: $phone-tablet-boundary)
-      div.headerLogoWrapper
-        width: 100%
-        height: 80px
-        background-color: #fff
-
-    h1
-      cursor: default
-      @media screen and (max-width: 37.5em)
-        font-size: 2em
-      color: $primary-color
-      text-align: center
-
-    ul.headerNav.expanded
-      top: 75px
-    ul.headerNav
-      text-align: center
-      font-family: "Roboto", sans-serif
-      -webkit-font-smoothing: antialiased
-      @media screen and (max-width: $phone-tablet-boundary)
-        position: absolute
-        padding: 10px 20px
-        background-color: #eaeaea
-        text-align: left
-        top: -380px
-        width: 100%
-        z-index: -1
-        +transition(all, 0.5s)
-      li.login
-        position: absolute
-        right: 20px
-        margin-top: 10px
-        @media screen and (max-width: $phone-tablet-boundary)
-          position: static
-          margin: auto
-      li
-        list-style: none
-        display: inline-block
-        margin: 0 10px
-        @media screen and (max-width: $phone-tablet-boundary)
-          display: block
-          margin: 15px 0
-        a
-          text-decoration: none
-          color: #000
-          font-size: 16pt
-          &:hover
-            color: #df484b
-          @media screen and (max-width: $phone-tablet-boundary)
-            font-size: 14pt
-        a.currentpage
-          color: #df484b
-
-
-#header-padding
-  height: $header-height-mobile * 7 / 8
-  @media screen and (min-width: $phone-tablet-boundary)
-    height: $header-height * 7 / 8
-#header-padding.gs-it-expanded
-  height: $header-height-mobile * 7 / 8 + 3em
-
-#header-menu-button
-  position: absolute
-  top: 20px
-  left: 20px
-  display: none
-  @media screen and (max-width: $phone-tablet-boundary)
-    display: inline-block
-  cursor: pointer
   img
     height: 40px
 
-#subliminal-header
-  +transition(all, 0.2s)
-  cursor: default
-  position: absolute
-  top: 3em
-  right: 24%
-  height: 1.0em
-  width: 10em
-  background-image: url("/assets/subliminal_scroller.png")
-  background-size: 8em
-  background-position-y: -3px
-  @media screen and (min-width: $phone-tablet-boundary)
-    right: 1.7em
-  
-#header-profile-picture
-  border-radius: 50%
-  height: 2.5em
-  margin: 0 0 -0.9em -0.8em
+  form
+    display: inline-block
+    float: left
+    margin: 5px
+    padding: 5px
 
-div.header.search
-  @media screen and (max-width: $phone-tablet-boundary)
-    margin-top: -60px
-  .inputs
-    margin-left: 40px
+    input
+      background: #eee
+      border: 0
+      color: #333
+      height: 34px
+      -webkit-input-placeholder: #333
+
+  #header-menu-button
+    display: none
     @media screen and (max-width: $phone-tablet-boundary)
-      margin-left: 0
-    .text-input
-      width: 380px
-      @media screen and (max-width: $phone-boundary)
-        width: 35%
+      display: inline-block
 
+  .headerLogoWrapper
+    display: inline-block
+    float: left
+    margin: 5px
+
+  .right
+    display: inline-block
+    float: right
+    margin-left: auto
+
+  #menu
+    float: right
+    list-style: none
+    margin: 0
+    padding: 0
+
+    li
+      float: left
+      position: relative
+      &:hover
+        background: #6E8B97
+        a
+          color: white
+        .submenu
+          display: block
+
+      a
+        color: #333
+        display: block
+        height: 50px
+        padding: 20px
+        &:hover
+          background: #6E8B97
+          color: white
+
+      .submenu
+        background-color: #e2e2e2
+        border-left: 8px solid #6E8B97
+        color: #333
+        display: none
+        position: absolute
+        list-style: none
+        margin: 0
+        padding: 10px 0
+        z-index: 100
+
+        li
+          clear: left
+          left: auto
+          width: 100%
+          white-space: nowrap
+          //&:last-child      //for if we have a submenu for last menu item later (to drop to the right instead of the left)
+          //  left: auto
+          //  right: 0
+          a
+            color: #333
+            height: auto
+            padding: 5px 10px
+            &:hover
+              color: white
+
+    .menu-login
+      &:hover
+        background: rgb(223, 72, 76)
+      a
+        color: rgb(223, 72, 76)
+        text-decoration: underline
+        &:hover
+          background: rgb(223, 72, 76)
+          color: white
+      .menu-user
+        text-decoration: none
+      .submenu
+        border-left: 8px solid rgb(223, 72, 76)
+        a
+          text-decoration: none

@@ -1,53 +1,55 @@
 {% raw %}
 <header ng-controller="HeaderController as header">
-    <div id="header">
-        <div class="wrapper" ng-class="{big: header.thisRoute == '/', small: header.thisRoute != '/'}">
-            <div class="headerLogoWrapper">
-                <div id="header-menu-button">
-                    <img src="/assets/hamburgerGrey.png" ng-click="actions.toggleMobileMenu()"/>
-                </div>
-                <a href="/" id="header-logo"></a>
-            </div>
-            <ul class="headerNav">
-                <li>
-                    <a href="/"  ng-click="actions.menuItemClicked()">HOME</a>
-                </li>
-                <li>
-                    <a href="/giftideas"  ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/giftideas')==0}">GIFT IDEAS</a>
-                </li>
-                <li>
-                    <a href="/concierge"  ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/concierge')==0}">GIFT CONCIERGE</a>
-                </li>
-                <li>
-                    <a href="/partners" ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/partners')==0}">PARTNERS</a>
-                </li>
-                <li>
-                    <a href="/faq" ng-click="actions.menuItemClicked()" ng-class="{currentpage: header.thisRoute.indexOf('/faq')==0}">FAQ</a>
-                </li>
-                <li>
-                    <a href="/blog" ng-click="actions.menuItemClicked()" target="_blank" ng-class="{currentpage: header.thisRoute == '/:path*'}">BLOG</a>
-                </li>
-                <li class="login">
-                    <a ng-href="{{header.userProfileUrl}}">
-                        <img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/>
-                    </a>
-                    <button id="login_button" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">LOG IN</button>
-                    <button id="logout_button" ng-show="header.loggedIn" ng-click="header.logout(); actions.menuItemClicked()">LOG OUT</button>
-                </li>
-            </ul>
-            <div class="search wrapper header" style="text-align:center">
-                <span class="inputs">
-                    <input id="product-search-input-head"
-                           class="text-input"
-                           type="text"
-                           name="product-link"
-                           placeholder="Search here for the perfect gift..."
-                           onkeypress="if(event.keyCode==13){jQuery('#product-search-button-head').click();}" />&nbsp;&nbsp;
-
-                    <button id="product-search-button-head" class="submit" onclick="top.location='/search/'+jQuery('#product-search-input-head').val()">SEARCH</button>
-                </span>
-            </div>
-        </div>
+  <div id="header">
+    <div class="headerLogoWrapper">
+      <div id="header-menu-button">
+          <img src="/assets/hamburgerGrey.png" ng-click="actions.toggleMobileMenu()"/>
+      </div>
+      <a href="/"><img src="/assets/webLogo.png" /></a>
     </div>
+    <form>
+        <input id="product-search-input-head"
+               class="text-input"
+               type="text"
+               name="product-link"
+               placeholder="SEARCH FOR A GIFT"
+               onkeypress="if(event.keyCode==13){jQuery('#product-search-button-head').click();}" />
+
+        <button id="product-search-button-head" class="submit" onclick="top.location='/search/'+jQuery('#product-search-input-head').val()">SEARCH</button>
+
+    </form>
+    <div class="right">
+      <ul id="menu">
+        <li><a href="#">START</a>
+          <ul class="submenu">
+            <li><a href="#">Search for a gift</a></li>
+            <li><a href="/giftideas">Browse gift ideas</a></li>
+            <li><a href="/concierge">Contact the Gift Concierge</a></li>
+            <li><a href="#">Pitch-in on a gift</a></li>
+            <li><a href="#">Say thanks for a gift</a></li>
+            <li><a href="#">Pick up an e-gift</a></li>
+          </ul>
+        </li>
+        <li><a href="#">HELP</a>
+          <ul class="submenu">
+            <li><a href="/howitworks">How it works</a></li>
+            <li><a href="/faq">FAQ</a></li>
+            <li><a href="/concierge">Contact the Gift Concierge</a></li>
+            <li><a href="#">Learn more</a></li>
+          </ul>
+        </li>
+        <li class="menu-login" ng-show="header.loggedIn"><a class="menu-user" href="#" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/>{{header.userName}}</a>
+          <ul class="submenu">
+            <li><a ng-href="{{header.userProfileUrl}}">Profile page</a></li>
+            <li><a href="#">Notifications</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()">Sign Out</a></li>
+          </ul>
+        </li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating">CREATE ACCOUNT</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">LOG IN</a></li>
+      </ul>
+    </div>
+  </div>
 </header>
 {% endraw %}

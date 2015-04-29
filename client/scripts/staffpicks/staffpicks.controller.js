@@ -41,12 +41,23 @@ function StaffPicksController($scope, $timeout) {
             "https://www.giftstarter.co/giftideas/electronics/Apple-Watch-Milanese"
         ),
         new product(
+            "/assets/staffpicks/hue-personal-wireless-light.jpg",
+            "$199.99",
+            "Hue Personal Wireless Light",
+            "The Philips Hue Personal Wireless Lighting Kit connects to your home Wi-Fi and" +
+            " up to 50 Philips Hue Bulbs/Lighting. It is the most exciting and unique product. " +
+            "The lights sync with an alarm, sets on schedules, " +
+            "and the IFTTT connectivity to other 3rd party apps is mindblowing.",
+            "/assets/about/img/roy.png",
+            "#"
+        ),
+        new product(
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
             "$299.99",
             "UPPAbaby Vista Stroller 2015 (Maya)",
             "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features.",
             "/assets/about/img/christie.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/baby/UPPAbaby-Stroller-2015"
         ),
         new product(
             "/assets/staffpicks/steelseries-headset-white-thumb.jpg",
@@ -54,7 +65,7 @@ function StaffPicksController($scope, $timeout) {
             "SteelSeries Headphones with Inline Mic",
             "This is a great gift if you need headphones for gaming, streaming, or everyday. It's got inline mic for streaming, looks nice, and is very comfortable.",
             "/assets/about/img/sharon.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/electronics/SteelSeries-Headset-White"
         ),
         new product(
             "/assets/staffpicks/brother-thread-serger.jpg",
@@ -62,7 +73,7 @@ function StaffPicksController($scope, $timeout) {
             "Brother Thread Serger",
             "I have my mother’s old sewing machine, but I find for many of my projects a serger would be ideal. This one is very user friendly for novices, with advanced features for experienced users.",
             "/assets/about/img/christie.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/forher/Brother-Thread-Serger"
         ),
         new product(
             "/assets/staffpicks/guava-lotus-everywhere-crib.jpg",
@@ -70,7 +81,7 @@ function StaffPicksController($scope, $timeout) {
             "Lotus Everywhere Crib",
             "Transforms from backpack to standard-size crib in under a minute. Lightweight yet stable, with zippered mesh sides and an optional sun-shade, it's perfect for travel AND as a primary sleep-space or play area for your little one.",
             "/assets/about/img/jon.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/baby/Guava-Lotus-Everywhere-Crib"
         ),
         new product(
             "/assets/staffpicks/deathadder-gaming-mouse-thumb.jpg",
@@ -78,7 +89,7 @@ function StaffPicksController($scope, $timeout) {
             "Razer Gaming Mouse",
             "This is the ultimate mouse for gaming and everyday use and it's ergonomic, too!!",
             "/assets/about/img/sharon.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/electronics/DeathAdder-Gaming-Mouse"
         )
     ];
     var n = 0;
