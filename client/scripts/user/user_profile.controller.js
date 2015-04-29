@@ -9,9 +9,10 @@
 var UserprofileController = function ($scope, UserService, $location, $http) {
 
     var urlpath = $location.path();
-    var thisUser = urlpath.substring(urlpath.lastIndexOf('/')+1);
+    var thisUser = urlpath.substring(urlpath.lastIndexOf('/') + 1);
     $scope.user = {};
     $scope.userIdea = {};
+    $scope.pitchins_unique = []
     $http({
         method: 'GET',
         url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
@@ -21,11 +22,24 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     });
 
     UserService.getUser(thisUser,
-        function(data) {
+        function (data) {
             $scope.userCampaings = data[Object.keys(data)[0]];
-    });
+            $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
+        });
 
-    $scope.giftstartThisUrl = function(title, price, img, url) {
+    var getUniquePitchIns = function(pitchins) {
+        var flags = [], ret = [], l = pitchins.length, i;
+        for( i=0; i<l; i++) {
+            if( flags[pitchins[i].giftstart_url_title]) continue;
+            flags[pitchins[i].giftstart_url_title] = true;
+            ret.push(pitchins[i]);
+        }
+        return ret;
+    };
+
+
+
+    $scope.giftstartThisUrl = function (title, price, img, url) {
         return '/create?' + urlSerialize({
                 product_url: url,
                 title: title,
@@ -35,9 +49,9 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             });
     };
 
-    var urlSerialize = function(obj) {
+    var urlSerialize = function (obj) {
         var str = [];
-        for(var p in obj)
+        for (var p in obj)
             if (obj.hasOwnProperty(p)) {
                 str.push(encodeURIComponent(p) + "=" +
                 encodeURIComponent(obj[p]));
@@ -73,19 +87,19 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;
 
-    $scope.validateLinks = function() {
-        $scope.user.link_facebook=addProtocol($scope.user.link_facebook);
-        $scope.user.link_twitter=addProtocol($scope.user.link_twitter);
-        $scope.user.link_linkedin=addProtocol($scope.user.link_linkedin);
-        $scope.user.link_googleplus=addProtocol($scope.user.link_googleplus);
-        $scope.user.link_website=addProtocol($scope.user.link_website);
+    $scope.validateLinks = function () {
+        $scope.user.link_facebook = addProtocol($scope.user.link_facebook);
+        $scope.user.link_twitter = addProtocol($scope.user.link_twitter);
+        $scope.user.link_linkedin = addProtocol($scope.user.link_linkedin);
+        $scope.user.link_googleplus = addProtocol($scope.user.link_googleplus);
+        $scope.user.link_website = addProtocol($scope.user.link_website);
     };
 
-    var addProtocol = function(link) {
-        if(link){
-            link=link.trim();
-            if(link!=""&&link.indexOf("http://")<0&&link.indexOf("https://")<0) {
-                link="http://"+link;
+    var addProtocol = function (link) {
+        if (link) {
+            link = link.trim();
+            if (link != "" && link.indexOf("http://") < 0 && link.indexOf("https://") < 0) {
+                link = "http://" + link;
             }
         }
         return link;
@@ -106,8 +120,10 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
                 $scope.editMode = false;
             });
     }
-}
-    app.controller('UserprofileController', ['$scope','UserService',
-    '$location', '$http', 'Analytics', UserprofileController]);
+
+};
+
+app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', 'Analytics', UserprofileController]);
+
 }(angular.module('GiftStarterApp')));
 
