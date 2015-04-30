@@ -26,6 +26,8 @@
 
         this.creating = $location.path().indexOf('/create') === 0;
 
+        $scope.search = false;
+
         $interval(updateSubliminal, 3000);
 
         $scope.$on('login-success', updateLogin);
@@ -86,6 +88,14 @@
                 } else {
                     device.mobile() && olark('api.box.hide');
                     angular.element('ul.headerNav').addClass('expanded');
+                }
+            },
+            toggleSearchBar: function() {
+                $scope.search = !$scope.search;
+                if($scope.search) {
+                    angular.element('#searchbar').removeClass('expanded');
+                } else {
+                    angular.element('#searchbar').addClass('expanded');
                 }
             },
             menuItemClicked: function (isLoginItem) {
