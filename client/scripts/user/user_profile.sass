@@ -23,14 +23,26 @@
 
   &__image
     text-align: center
-    min-height: 13rem
-    margin: 0 auto
+    margin: 0 auto 3.5rem
     position: relative
+    height: 250px
+    width: 250px
+
+    .image-upload,
+    gs-image-upload
+      padding-bottom: 0 !important
+      height: 250px !important
+      width: 250px
 
   &__userimage
     width: 9rem
     border-radius: 5rem
     border: 2px solid #fff
+
+  &__imageedit
+    position: absolute
+    bottom: -2.5rem
+    left: 38%
 
   .uploader
     top: 0
@@ -41,6 +53,11 @@
     top: 0
     right: 0
     z-index: 1
+
+  &__imageupload
+    position: absolute
+    bottom: -40px
+    left: 20px
 
   &__name
     width: 60%
