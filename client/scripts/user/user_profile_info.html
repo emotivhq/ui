@@ -3,8 +3,8 @@
                 <button class="userprofile__imagecancel" ng-show="editMode" ng-click="editMode = false;">X</button>
                 <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
                 <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
-                <button class="userprofile__imageedit" ng-hide="blocked"  ng-click="editMode=true;">Change</button>
-                <button class="userprofile__imageupload" ng-click="editMode=false;" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button>
+                <button class="userprofile__imageedit" ng-hide="blocked"  ng-click="editMode=true;">Change photo</button>
+                <button class="userprofile__imageupload" ng-click="submit()" ng-click="editMode=false;" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button>
             </div>
             <div class="userprofile__name">
                 <h2 ng-show="blocked" class="userprofile__title">
