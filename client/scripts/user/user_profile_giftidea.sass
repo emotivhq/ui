@@ -10,6 +10,8 @@
     text-align: center
     position: relative
     margin-top: 3rem
+    @include apply-at-size("phone")
+      margin-top: 1rem
 
   &__wrap
     width: 90%
@@ -58,11 +60,17 @@
   &__productimg
     padding: 0.5rem 0 1rem
     vertical-align: top
-    width: 100%
-    @include apply-at-size("phone")
-      width: 80%
+    width: 60%
+    display: block
+    margin: 0 auto
+    @media screen and (max-width: $tablet-landscape-width)
+      width: auto
+      max-height: 10rem
+      min-height: 10rem
       display: block
       margin: 0 auto
+    @include apply-at-size("phone")
+      max-height: 13rem
 
   &__productdesc
     @include apply-at-size("phone")
@@ -86,7 +94,6 @@
     &--only
       display: block
       width: 45%
-      margin: 0 auto
       @include apply-at-size("phone")
         width: 100%
 
