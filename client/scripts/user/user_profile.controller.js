@@ -97,7 +97,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     var addProtocol = function (link) {
         if (link) {
-            link = link.trim();
+            link = link.trim().toLowerCase();
             if (link != "" && link.indexOf("http://") < 0 && link.indexOf("https://") < 0) {
                 link = "http://" + link;
             }
