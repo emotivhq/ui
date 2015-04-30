@@ -38,7 +38,7 @@
             <li><a href="#">Learn more</a></li>
           </ul>
         </li>
-        <li class="menu-login" ng-show="header.loggedIn"><a class="menu-user" href="#" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/>{{header.userName}}</a>
+        <li class="menu-login" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" href="#" ng-show="header.loggedIn">{{header.userName}}</a>
           <ul class="submenu">
             <li><a ng-href="{{header.userProfileUrl}}">Profile page</a></li>
             <li><a href="#">Notifications</a></li>
