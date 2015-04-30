@@ -36,10 +36,20 @@
     float: left
     margin: 5px
 
+    #logo
+      @media screen and (max-width: $phone-tablet-boundary)
+        text-align: center
+
   .right
     display: inline-block
     float: right
     margin-left: auto
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: none
+
+  #searchbar
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: none
 
   #menu
     float: right
