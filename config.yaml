@@ -11,7 +11,7 @@ facebook_app_id:          '301135316704582'
 
 baseServiceFeeRate:       0.08
 
-couponCodes:               ['GiftMe!', 'CollisionGift', 'StartupGift', 'GiftFriend', 'GiftPartner', 'GiftItForward']
+couponCodes:               ['GiftMe!', 'CollisionGift', 'Collision15', 'StartupGift', 'GiftFriend', 'GiftPartner', 'GiftItForward']
 
 googleanalytics:
   key:                    'UA-51616127-2'
