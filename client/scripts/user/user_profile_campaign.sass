@@ -1,10 +1,9 @@
 @import "../base"
 
 .usercampaign
-  width: 49%
   background: #E2E2E2
   display: table-cell
-  @media screen and (max-width: $tablet-portrait-width+100)
+  @media screen and (max-width: $tablet-portrait-width+200)
     width: 100%
     display: block
     margin-bottom: 1rem
@@ -56,42 +55,55 @@
       
   &__productimgwrap
     background: #fff
-    max-height: 11rem
-    min-height: 10rem
-    top: -3px
+    height: 10rem
+    max-width: 13rem
+    min-width: 4.5rem
     @media screen and (max-width: $tablet-landscape-width)
-      min-height: 8.215rem
-      max-height: 8.315rem
+      height: 8rem
+      max-width: 8.5rem
+      min-width: 4rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      height: 11rem
+      max-width: 14rem
+      min-width: 4.5rem
     @include apply-at-size("phone")
       min-height: 100%
       max-height: 100%
+      max-width: 100%
 
   &__productlistitem
     display: table-cell
-    width: 30%
     background: #333
+    vertical-align: top
+    padding-bottom: 0.8rem
     @include apply-at-size("phone")
       display: block
       width: 85%
       margin: 1rem auto
 
-    &--only
-      display: block
-      width: 110%
-      @include apply-at-size("phone")
-        width: 100%
-        margin: 1rem 0
-
   &__itemsimages
-    max-height: 10.5rem
+    min-height: 7rem
+    max-height: 9rem
+    max-width: 12rem
+    min-width: 4rem
     display: block
     margin: 0 auto
     padding: 1rem
-    @media screen and (max-width: $tablet-landscape-width)
-      min-height: 10rem
-      max-height: 10rem
+    @media screen and (max-width: $tablet-landscape-width+100)
+      min-height: 6rem
+      max-height: 8rem
+      min-width: 3.5rem
+      max-width: 8rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      max-height: 10.5rem
+      max-width: 13.5rem
+      min-width: 5rem
     @include apply-at-size("phone")
-      max-height: 13rem
+      min-height: 10rem
+      max-height: 11rem
+    @media screen and (max-width: $phone-portrait-width)
+      min-height: 5rem
+      max-height: 8rem
 
   &__itemstitle
     margin: 0
@@ -100,3 +112,9 @@
     line-height: 1.3rem
     color: #fff
     text-align: center
+    max-width: 12rem
+    height: 3.688rem
+    @media screen and (max-width: $tablet-landscape-width+100)
+      max-width: 8rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      max-width: 100%
