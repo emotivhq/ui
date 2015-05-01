@@ -5,18 +5,20 @@
   border-bottom: 2px solid #eee
   height: 50px
   max-width: 1200px
-  padding: 0px 20px
+  @include apply-at-size("desktop")
+    padding: 0 20px
   width: 100%
   vertical-align: middle
   -webkit-font-smoothing: antialiased
 
   img
-    height: 40px
+    @include apply-at-size("desktop")
+      height: 40px
 
   form
     display: inline-block
     float: left
-    margin: 5px
+    margin: 5px 0
     padding: 5px
 
     input
