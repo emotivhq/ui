@@ -25,9 +25,9 @@
       <ul id="menu">
         <li><a href="#">START</a><hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a href="#">Search for a gift</a></li>
-            <li><a href="/giftideas">Browse gift ideas</a></li>
-            <li><a href="/concierge">Contact the Gift Concierge</a></li>
+            <li><a href="#" ng-click="$scope.menu = !$scope.menu">Search for a gift</a></li>
+            <li><a href="/giftideas" ng-click="$scope.menu = !$scope.menu">Browse gift ideas</a></li>
+            <li><a href="/concierge" ng-click="$scope.menu = !$scope.menu">Contact the Gift Concierge</a></li>
             <li><a href="#" class="coming-soon">Pitch-in on a gift *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Say thanks for a gift *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
@@ -35,23 +35,23 @@
         </li>
         <li><a href="#">HELP</a><hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a href="/howitworks">How it works</a></li>
-            <li><a href="/faq">FAQ</a></li>
-            <li><a href="/concierge">Contact the Gift Concierge</a></li>
-            <li><a href="/howitworks">Learn more</a></li>
+            <li><a href="/howitworks" ng-click="$scope.menu = !$scope.menu">How it works</a></li>
+            <li><a href="/faq" ng-click="$scope.menu = !$scope.menu">FAQ</a></li>
+            <li><a href="/concierge" ng-click="$scope.menu = !$scope.menu">Contact the Gift Concierge</a></li>
+            <li><a href="/howitworks" ng-click="$scope.menu = !$scope.menu">Learn more</a></li>
           </ul>
         </li>
         <li class="menu-login" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" href="#" ng-show="header.loggedIn">{{header.userName}}</a>
           <hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a ng-href="{{header.userProfileUrl}}">Profile page</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}" ng-click="$scope.menu = !$scope.menu">Profile page</a></li>
             <li><a href="#" class="coming-soon">Notifications *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Settings *Coming Soon*</a></li>
-            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()">Log Out</a></li>
+            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()" ng-click="$scope.menu = !$scope.menu">Log Out</a></li>
           </ul>
         </li>
-        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating">CREATE ACCOUNT</a></li>
-        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true)">LOG IN</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="$scope.menu = !$scope.menu">CREATE ACCOUNT</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
       </ul>
     </div>
   </div>
