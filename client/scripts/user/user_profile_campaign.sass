@@ -56,7 +56,8 @@
       
   &__productimgwrap
     background: #fff
-    min-height: 8.94rem
+    max-height: 11rem
+    min-height: 10rem
     top: -3px
     @media screen and (max-width: $tablet-landscape-width)
       min-height: 8.215rem
@@ -82,14 +83,15 @@
         margin: 1rem 0
 
   &__itemsimages
-    max-height: 8.95rem
+    max-height: 10.5rem
     display: block
     margin: 0 auto
+    padding: 1rem
     @media screen and (max-width: $tablet-landscape-width)
-      min-height: 7rem
-      max-height: 7rem
-    @include apply-at-size("phone")
+      min-height: 10rem
       max-height: 10rem
+    @include apply-at-size("phone")
+      max-height: 13rem
 
   &__itemstitle
     margin: 0
