@@ -3,7 +3,7 @@
   <div id="header">
     <div class="headerLogoWrapper">
       <div class="header-menu-button">
-          <img src="/assets/hamburgerGrey.png" ng-click="actions.toggleMobileMenu()"/>
+          <img src="/assets/hamburgerGrey.png" ng-click="$scope.menu = !$scope.menu"/>
       </div>
       <a href="/"><img id="logo" src="/assets/webLogo.png" /></a>
       <div class="header-menu-button">
@@ -21,7 +21,7 @@
         <button id="product-search-button-head" class="submit" onclick="top.location='/search/'+jQuery('#product-search-input-head').val()">SEARCH</button>
 
     </form>
-    <div class="right">
+    <div class="menuwrapper" ng-class="{hideMobileMenu: !$scope.menu}">
       <ul id="menu">
         <li><a href="#">START</a>
           <ul class="submenu">
