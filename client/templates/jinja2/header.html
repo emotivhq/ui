@@ -3,11 +3,11 @@
   <div id="header">
     <div class="headerLogoWrapper">
       <div class="header-menu-button">
-          <img src="/assets/hamburgerGrey.png" ng-click="$scope.menu = !$scope.menu"/>
+          <img src="/assets/menu-mobile.png" ng-click="$scope.menu = !$scope.menu"/>
       </div>
       <a href="/"><img id="logo" src="/assets/webLogo.png" /></a>
       <div class="header-menu-button">
-          <img src="/assets/hamburgerGrey.png" ng-click="$scope.search = !$scope.search"/>
+          <img src="/assets/search-mobile.png" ng-click="$scope.search = !$scope.search"/>
       </div>
     </div>
     <form id="searchbar" ng-class="{hideMobileSearch: !$scope.search}">
@@ -23,7 +23,7 @@
     </form>
     <div class="menuwrapper" ng-class="{hideMobileMenu: !$scope.menu}">
       <ul id="menu">
-        <li><a href="#">START</a>
+        <li><a href="#">START</a><hr class="mobile-rule" />
           <ul class="submenu">
             <li><a href="#">Search for a gift</a></li>
             <li><a href="/giftideas">Browse gift ideas</a></li>
@@ -33,7 +33,7 @@
             <li><a href="#">Pick up an e-gift</a></li>
           </ul>
         </li>
-        <li><a href="#">HELP</a>
+        <li><a href="#">HELP</a><hr class="mobile-rule" />
           <ul class="submenu">
             <li><a href="/howitworks">How it works</a></li>
             <li><a href="/faq">FAQ</a></li>
@@ -42,6 +42,7 @@
           </ul>
         </li>
         <li class="menu-login" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" href="#" ng-show="header.loggedIn">{{header.userName}}</a>
+          <hr class="mobile-rule" />
           <ul class="submenu">
             <li><a ng-href="{{header.userProfileUrl}}">Profile page</a></li>
             <li><a href="#">Notifications</a></li>
