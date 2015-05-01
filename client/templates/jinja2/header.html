@@ -2,12 +2,15 @@
 <header ng-controller="HeaderController as header">
   <div id="header">
     <div class="headerLogoWrapper">
-      <div id="header-menu-button">
+      <div class="header-menu-button">
           <img src="/assets/hamburgerGrey.png" ng-click="actions.toggleMobileMenu()"/>
       </div>
-      <a id="logo" href="/"><img src="/assets/webLogo.png" /></a>
+      <a href="/"><img id="logo" src="/assets/webLogo.png" /></a>
+      <div class="header-menu-button">
+          <img src="/assets/hamburgerGrey.png" ng-click="$scope.search = !$scope.search"/>
+      </div>
     </div>
-    <form id="searchbar">
+    <form id="searchbar" ng-class="{hideMobileSearch: !$scope.search}">
         <input id="product-search-input-head"
                class="text-input"
                type="text"

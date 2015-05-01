@@ -26,18 +26,23 @@
       height: 34px
       -webkit-input-placeholder: #333
 
-  #header-menu-button
+  .header-menu-button
     display: none
+    width: 40px
     @media screen and (max-width: $phone-tablet-boundary)
-      display: inline-block
+      display: table-cell
 
   .headerLogoWrapper
-    display: inline-block
+    display: table
     float: left
     margin: 5px
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 100%
 
     #logo
       @media screen and (max-width: $phone-tablet-boundary)
+        display: table-cell
+        margin: 0 auto
         text-align: center
 
   .right
@@ -49,7 +54,14 @@
 
   #searchbar
     @media screen and (max-width: $phone-tablet-boundary)
-      display: none
+      display: table
+      width: 100%
+      &.hideMobileSearch
+        display: none
+
+      input
+        width: calc(100% - 100px)
+
 
   #menu
     float: right
