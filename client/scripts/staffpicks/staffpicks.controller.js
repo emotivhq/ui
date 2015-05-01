@@ -54,7 +54,7 @@ function StaffPicksController($scope, $timeout) {
         new product(
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
             "$299.99",
-            "UPPAbaby Vista Stroller 2015 (Maya)",
+            "UPPAbaby Vista Stroller 2015",
             "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features.",
             "/assets/about/img/christie.png",
             "https://www.giftstarter.co/giftideas/baby/UPPAbaby-Stroller-2015"
@@ -96,18 +96,18 @@ function StaffPicksController($scope, $timeout) {
     $scope.firstProduct = $scope.products[n];
     $scope.secondProduct = $scope.products[(n+1)%$scope.products.length];
     var rotate = function() {
-        jQuery('.product-item.first').fadeOut(1000, function() {
+        jQuery('.product-item.first').fadeOut(500, function() {
             n = (n + 1) % $scope.products.length;
             $scope.$apply(function() {$scope.firstProduct = $scope.products[n]});
-            jQuery('.product-item.second').fadeOut(1000, function() {
+            jQuery('.product-item.second').fadeOut(500, function() {
                 $scope.$apply(function() {$scope.secondProduct = $scope.products[(n+1)%$scope.products.length]});
             });
-            jQuery('.product-item.first').fadeIn(2000);
-            jQuery('.product-item.second').fadeIn(2000);
-            timer = $timeout(rotate, 8000);
+            jQuery('.product-item.first').fadeIn(1000);
+            jQuery('.product-item.second').fadeIn(1000);
+            timer = $timeout(rotate, 60000);
         });
     };
-    var timer = $timeout(rotate, 8000);
+    var timer = $timeout(rotate, 60000);
 
     $scope.$on('$destroy', function() {$timeout.cancel(timer);});
 }
