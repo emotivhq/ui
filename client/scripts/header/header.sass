@@ -4,6 +4,8 @@
   background-color: white
   border-bottom: 2px solid #eee
   height: 50px
+  @media screen and (max-width: $phone-tablet-boundary)
+    height: 70px
   max-width: 1200px
   @include apply-at-size("desktop")
     padding: 0 20px
@@ -14,11 +16,13 @@
   img
     @include apply-at-size("desktop")
       height: 40px
+    @media screen and (max-width: $phone-tablet-boundary)
+      height: 70px
 
   form
     display: inline-block
     float: left
-    margin: 5px 0
+    margin: 5px
     padding: 5px
 
     input
@@ -37,15 +41,18 @@
   .headerLogoWrapper
     display: table
     float: left
-    margin: 5px
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
 
     #logo
       @media screen and (max-width: $phone-tablet-boundary)
-        display: table-cell
-        margin: 0 auto
-        text-align: center
+        display: none
+    #logo-mobile
+      display: table-cell
+      margin: 0 auto
+      text-align: center
+      @include apply-at-size("desktop")
+        display: none
 
   #menu
     @media screen and (max-width: $phone-tablet-boundary)
@@ -53,7 +60,7 @@
         color: #333
         &:hover
           color: rgb(223, 72, 76)
-        font-size: 2em
+        font-size: 1.2em
       .mobile-rule
         display: block
 
@@ -62,6 +69,9 @@
         margin-bottom: 30px
         a
           font-size: 1em
+
+    .coming-soon
+      color: #bbb !important
 
     @include apply-at-size(desktop)
       float: right

@@ -5,7 +5,7 @@
       <div class="header-menu-button">
           <img src="/assets/menu-mobile.png" ng-click="$scope.menu = !$scope.menu"/>
       </div>
-      <a href="/"><img id="logo" src="/assets/webLogo.png" /></a>
+      <a href="/"><img id="logo" src="/assets/webLogo.png" /><img id="logo-mobile" src="/assets/logo-mobile.png" /></a>
       <div class="header-menu-button">
           <img src="/assets/search-mobile.png" ng-click="$scope.search = !$scope.search"/>
       </div>
@@ -28,9 +28,9 @@
             <li><a href="#">Search for a gift</a></li>
             <li><a href="/giftideas">Browse gift ideas</a></li>
             <li><a href="/concierge">Contact the Gift Concierge</a></li>
-            <li><a href="#">Pitch-in on a gift</a></li>
-            <li><a href="#">Say thanks for a gift</a></li>
-            <li><a href="#">Pick up an e-gift</a></li>
+            <li><a href="#" class="coming-soon">Pitch-in on a gift *Coming Soon*</a></li>
+            <li><a href="#" class="coming-soon">Say thanks for a gift *Coming Soon*</a></li>
+            <li><a href="#" class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
           </ul>
         </li>
         <li><a href="#">HELP</a><hr class="mobile-rule" />
@@ -38,15 +38,15 @@
             <li><a href="/howitworks">How it works</a></li>
             <li><a href="/faq">FAQ</a></li>
             <li><a href="/concierge">Contact the Gift Concierge</a></li>
-            <li><a href="#">Learn more</a></li>
+            <li><a href="/howitworks">Learn more</a></li>
           </ul>
         </li>
         <li class="menu-login" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" href="#" ng-show="header.loggedIn">{{header.userName}}</a>
           <hr class="mobile-rule" />
           <ul class="submenu">
             <li><a ng-href="{{header.userProfileUrl}}">Profile page</a></li>
-            <li><a href="#">Notifications</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="#" class="coming-soon">Notifications *Coming Soon*</a></li>
+            <li><a href="#" class="coming-soon">Settings *Coming Soon*</a></li>
             <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()">Log Out</a></li>
           </ul>
         </li>
