@@ -8,12 +8,12 @@
   padding-bottom: 50px
 
   a
-    color: rgb(223, 72, 76)
+    color: $primary-color
     font-family: "Roboto", sans-serif
 
   h1, h2, h3, h4, h5, h6
     font-family: "Roboto", sans-serif
-    color: rgb(51, 51, 51)
+    color: $font-color
 
   .headerwrap
     color: white
@@ -26,21 +26,33 @@
     h1
       color: white
       font: 700 3.063em "Roboto Condensed"
-      @include apply-at-size("phone")
+      @include apply-at-size("phone", "portrait")
+        font-size: 1.5em
+      @include apply-at-size("phone", "landscape")
         font-size: 2em
+      @include apply-at-size("tablet", "portrait")
+        font-size: 2.25em
+      @include apply-at-size("tablet", "landscape")
+        font-size: 2.5em
       letter-spacing: 3px
       -webkit-font-smoothing: antialiased
 
     p
-      font: 1.5em "Roboto", sans-serif
+      font: 1.2em "Roboto", sans-serif
+      line-height: 25px
       @include  apply-at-size("phone", "portrait")
-        font-size: 1em
+        font-size: 0.8em
         line-height: 18px
       @include  apply-at-size("phone", "landscape")
-        font-size: 1.25em
-        line-height: 26px
+        font-size: 1em
+        line-height: 20px
+      @include apply-at-size("tablet", "portrait")
+        font-size: 0.9em
+        line-height: 20px
+      @include apply-at-size("tablet", "landscape")
+        font-size: 1.125em
+        line-height: 22px
       letter-spacing: 1px
-      line-height: 35px
       margin: 10px auto 7px auto
       width: 60%
       @include apply-at-size("tablet")
@@ -50,9 +62,8 @@
       -webkit-font-smoothing: antialiased
 
   a.button
-    background-color: rgb(223, 72, 76)
+    background-color: $primary-color
     border: 0px solid
-    //border-radius: 4px
     clear: left
     color: white
     display: inline-block
@@ -62,6 +73,6 @@
     -webkit-font-smoothing: antialiased
 
   h2
-    color: rgb(51, 51, 51)
+    color: $font-color
     font: 2.25em "Roboto", sans-serif
-    padding-bottom: 50px
+    padding: 15px 0 30px 0
