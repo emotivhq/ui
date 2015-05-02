@@ -14,11 +14,13 @@ from giftstart import giftstart_comm, giftstart_core
 import storage.image_cache
 import urllib
 import logging
+import yaml
 
 MIN_GIFTSTART_CAMPAIGN_DAYS = 2
 MAX_GIFTSTART_CAMPAIGN_DAYS = 29 #no more than 29 days (taskqueue restriction)
 SECONDS_PER_DAY = 24 * 60 * 60
 
+app_url = yaml.load(open('config.yaml'))['app_url']
 
 class AuthError(Exception):
     pass
@@ -122,6 +124,8 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         gs.gsid = str(gs_count + 1) if gs_count else '1'
         # Check if running in development env
         if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
+            if not giftstart['product_img_url'].lower().startswith('http'):
+                giftstart['product_img_url'] = app_url+'/'+giftstart['product_img_url']
             gs.product_img_url = storage.image_cache.cache_product_image(
                 giftstart['product_img_url'], gs.gsid)
 
