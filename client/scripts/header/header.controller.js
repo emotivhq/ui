@@ -112,6 +112,10 @@
             $scope.actions.menuItemClicked(true);
         });
 
+        $scope.scrollTo = function(id) {
+            $location.hash(id);
+            $anchorScroll();
+        }
 
         var producturl = decodeURIComponent($location.search().producturl);
         if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {

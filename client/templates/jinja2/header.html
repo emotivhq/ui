@@ -50,7 +50,7 @@
             <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()" ng-click="$scope.menu = !$scope.menu">Log Out</a></li>
           </ul>
         </li>
-        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="$scope.menu = !$scope.menu">CREATE ACCOUNT</a></li>
+        <li class="menu-login"><a href="" ng-hide="header.loggedIn || header.creating" ng-click="$scope.menu = !$scope.menu; scrollTo('loginpanel')">CREATE ACCOUNT</a></li>
         <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
       </ul>
     </div>
