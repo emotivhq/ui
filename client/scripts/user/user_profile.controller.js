@@ -37,8 +37,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         return ret;
     };
 
-
-
     $scope.giftstartThisUrl = function (title, price, img, url) {
         return '/create?' + urlSerialize({
                 product_url: url,
@@ -62,7 +60,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.fieldisable = true;
     $scope.blocked = true;
     $scope.quantity = 10;
-    $scope.campaingquantity = 6;
+    $scope.campaingquantity = 3;
     $scope.showMore = true;
     $scope.showMoreCampaign = true;
     $scope.months = [
@@ -87,6 +85,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;
 
+
     $scope.validateLinks = function () {
         $scope.user.link_facebook = addProtocol($scope.user.link_facebook);
         $scope.user.link_twitter = addProtocol($scope.user.link_twitter);
@@ -94,6 +93,11 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         $scope.user.link_googleplus = addProtocol($scope.user.link_googleplus);
         $scope.user.link_website = addProtocol($scope.user.link_website);
     };
+
+    $scope.$on('logout-success', function() {
+            $scope.editable = false;
+        }
+    );
 
     var addProtocol = function (link) {
         if (link) {

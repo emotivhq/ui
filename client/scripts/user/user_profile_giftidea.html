@@ -1,45 +1,47 @@
 <div class="useridea">
-    <h2 class="useridea__title">Gift Idea Board</h2>
-    <div class="useridea__filter" ng-hide="userIdea.length == 0">
-        <span class="useridea__filterby">
-            Filter by
-        </span>
-        <span class="useridea__filtertags">
-            My tags
-        </span>
-        <span class="useridea__filterdate">
-            Date added
-        </span>
-        <span class="useridea__filtertprice" ng-click="userOrder = '-price' ">
-            Product price
-        </span>
-    </div>
-    <p class="useridea__innfonone" ng-show="userIdea.length == 0">
-        (none)
-    </p>
-    <div class="useridea__productlist">
-        <div ng-repeat-start="idea in userIdea | limitTo:quantity | orderBy:userOrder track by $index" class="h--hide" ng-class="{true: 'useridea__productlist--row'}[$index % 5 == 0 && !$first]"></div>
-        <div class="useridea__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userIdea.length == 1]">
-            <a class="useridea__productlink" href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}">
-                <div class="useridea__productdesc">
-                    <div class="useridea__productimgwrap">
-                        <img class="useridea__productimg" ng-src="{{ idea.img }}" alt="Gift Idea Image"/>
+    <div class="useridea__wrap">
+        <h2 class="useridea__title">Gift Idea Board</h2>
+        <div class="useridea__filter" ng-hide="userIdea.length == 0">
+            <span class="useridea__filterby">
+                Filter by
+            </span>
+            <span class="useridea__filtertags">
+                My tags
+            </span>
+            <span class="useridea__filterdate">
+                Date added
+            </span>
+            <span class="useridea__filtertprice" ng-click="userOrder = '-price' ">
+                Product price
+            </span>
+        </div>
+        <p class="useridea__innfonone" ng-show="userIdea.length == 0">
+            Did you know you can save products you like to your Gift Idea Board? Just click the "Save It For Later" button!
+        </p>
+        <div class="useridea__productlist">
+            <div ng-repeat-start="idea in userIdea | limitTo:quantity | orderBy:userOrder track by $index" class="h--hide" ng-class="{true: 'useridea__productlist--row'}[$index % 5 == 0 && !$first]"></div>
+            <div class="useridea__productlistitem" ng-class="{true: 'useridea__productlistitem--only'}[userIdea.length == 1]">
+                <a class="useridea__productlink" href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}">
+                    <div class="useridea__productdesc">
+                        <div class="useridea__productimgwrap">
+                            <img class="useridea__productimg" ng-src="{{ idea.img }}" alt="Gift Idea Image"/>
+                        </div>
+                        <div class="useridea__producttitle">
+                            {{ idea.title }}
+                        </div>
+                        <div class="useridea__productprice">{{ idea.price / 100 | currency }}</div>
                     </div>
-                    <div class="useridea__producttitle">
-                        {{ idea.title | limitTo:50 }}{{idea.title.length > 50 ? '...' : ''}}
-                    </div>
-                    <div class="useridea__productprice">{{ idea.price / 100 | currency }}</div>
-                </div>
+                </a>
+            </div>
+            <div ng-repeat-end="" class="h--hide"></div>
+        </div>
+        <div class="useridea__findbtn">
+            <a href="search/" class="useridea__findlink">Find more gift ideas</a>
+        </div>
+        <div ng-show="showMore">
+            <a class="useridea__viewmorelink" ng-show=" userIdea.length>10"  ng-click="quantity=userIdea.length; showMore=false" href="#">
+                View more
             </a>
         </div>
-        <div ng-repeat-end="" class="h--hide"></div>
-    </div>
-    <div class="useridea__findbtn">
-        <a href="search/" class="useridea__findlink">Find more gift ideas</a>
-    </div>
-    <div ng-show="showMore">
-        <a class="useridea__viewmorelink" ng-show=" userIdea.length>10"  ng-click="quantity=userIdea.length; showMore=false" href="#">
-            View more
-        </a>
     </div>
 </div>

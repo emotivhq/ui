@@ -82,6 +82,13 @@ var gsUserEdit = function ($http, UserService, Analytics) {
             }
         }
 
+        scope.$on('logout-success', function() {
+            scope.canEdit = true;
+            scope.fieldisable = true;
+            scope.blocked = true;
+        }
+    );
+
     }
 
     return {

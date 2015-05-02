@@ -1,12 +1,5 @@
 <div class="usercampaign__header">
-    <div class="usercampaign__title">
-        Pitch Ins
-    </div>
-    <div class="usercampaign__viewmore" ng-show="showMoreCampaign">
-        <a class="usercampaign__viewmorelink" href="#" ng-show=" userCampaings.pitchins.length>6"  ng-click="campaingquantity=userCampaings.pitchins.length; showMoreCampaign = false">
-            View More
-        </a>
-    </div>
+    Pitch Ins
 </div>
 <div class="usercampaign__list">
     <div ng-show="userCampaings.pitchins.length === 0">
@@ -25,4 +18,9 @@
         </a>
     </div>
     <div ng-repeat-end="" class="h--hide"></div>
+</div>
+<div class="usercampaign__viewmore" ng-show="showMoreCampaign" >
+    <a class="usercampaign__viewmorelink" href="#" ng-show=" userCampaings.pitchins.length > 3"  ng-click="campaingquantity=userCampaings.pitchins.length; showMoreCampaign = false">
+        <span class="usercampaign__viewmoretext" >View More</span> <span class="usercampaign__viewmoreicon"></span>
+    </a>
 </div>
