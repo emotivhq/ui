@@ -3,6 +3,7 @@ __author__ = 'GiftStarter'
 
 import webapp2
 import json
+from requests.exceptions import ConnectionError
 from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 from giftstart.GiftStart import GiftStart
@@ -13,11 +14,13 @@ from giftstart import giftstart_comm, giftstart_core
 import storage.image_cache
 import urllib
 import logging
+import yaml
 
 MIN_GIFTSTART_CAMPAIGN_DAYS = 2
 MAX_GIFTSTART_CAMPAIGN_DAYS = 29 #no more than 29 days (taskqueue restriction)
 SECONDS_PER_DAY = 24 * 60 * 60
 
+app_url = yaml.load(open('config.yaml'))['app_url']
 
 class AuthError(Exception):
     pass
@@ -121,6 +124,8 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         gs.gsid = str(gs_count + 1) if gs_count else '1'
         # Check if running in development env
         if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
+            if not giftstart['product_img_url'].lower().startswith('http'):
+                giftstart['product_img_url'] = app_url+'/'+giftstart['product_img_url']
             gs.product_img_url = storage.image_cache.cache_product_image(
                 giftstart['product_img_url'], gs.gsid)
 
@@ -209,7 +214,10 @@ def complete_campaign_creation(uid, gs):
     gs.put()
     logging.info("Saved {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
 
-    giftstart_comm.send_create_notification(gs)
+    try:
+        giftstart_comm.send_create_notification(gs)
+    except ConnectionError as x:
+        logging.error("ConnectionError during complete_campaign_creation"+str(x.message))
 
     campaign_length=gs.deadline - datetime.now()
     campaign_seconds = (campaign_length.days*SECONDS_PER_DAY) + campaign_length.seconds
