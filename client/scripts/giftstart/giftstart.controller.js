@@ -34,6 +34,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
 
     $scope.productMessage = '';
 
+    $scope.isSavingForLater = false;
+
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
     } else {
@@ -141,6 +143,7 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     }
 
     $scope.saveProdForLater = function() {
+        $scope.isSavingForLater = true;
         var saver = ProductService.saveForLater(
             'GiftStartService',
             GiftStartService.giftStart.product_url,
@@ -152,11 +155,14 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         if(saver) {
             saver.success(function (response) {
                 $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                $scope.isSavingForLater = false;
             })
             .error(function (response) {
                 $scope.productMessage = "An error occurred while saving the product: " + response['error'];
-
+                $scope.isSavingForLater = false;
             });
+        } else {
+            $scope.isSavingForLater = false;
         }
     };
 

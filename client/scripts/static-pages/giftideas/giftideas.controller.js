@@ -12,6 +12,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.productMessage = '';
     $scope.location = $location;
     $scope.path = $location.path();
+    $scope.isSavingForLater = false;
     var pathParts = $scope.path.replace('//','/').split('/');
     $scope.basePath = pathParts[1];
     var category = pathParts.length>2?pathParts[2]:false;
@@ -24,6 +25,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
 
 
     $scope.saveGiftIdeaForLater = function(product) {
+        $scope.isSavingForLater = true;
         var saver = ProductService.saveForLater(
             "GiftIdeas",
             product.giftStartLink,
@@ -35,11 +37,14 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         if(saver) {
             saver.success(function (response) {
                 $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                $scope.isSavingForLater = false;
             })
             .error(function (response) {
                 $scope.productMessage = "An error occurred while saving the product: " + response['error'];
-
+                $scope.isSavingForLater = false;
             });
+        } else {
+            $scope.isSavingForLater = false;
         }
     };
 
