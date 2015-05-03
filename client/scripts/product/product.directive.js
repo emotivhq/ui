@@ -16,6 +16,7 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         scope.currentProductLink = '';
         scope.selectedProduct = -1;
         scope.productMessage = '';
+        scope.isSavingForLater = false;
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
             'gift concierge email clicked')};
@@ -182,6 +183,7 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         };
 
         scope.saveForLater = function(index) {
+            scope.isSavingForLater = true;
             var saver = ProductService.saveForLater(
                 scope.selectedProducts[index].retailer,
                 scope.selectedProducts[index].url,
@@ -193,11 +195,14 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
             if(saver) {
                 saver.success(function (response) {
                     scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                    scope.isSavingForLater = false;
                 })
                 .error(function (response) {
                     scope.productMessage = "An error occurred while saving the product: " + response['error'];
-
+                    scope.isSavingForLater = false;
                 });
+            } else {
+                scope.isSavingForLater = false;
             }
         };
 

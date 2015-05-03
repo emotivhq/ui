@@ -36,7 +36,7 @@
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
                 <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GIFTSTART IT</button></a>
                 <div class="saveforlater">
-                    <button class="pitch-in button" ng-click="saveProdForLater();">SAVE FOR LATER</button>
+                    <button class="pitch-in button" ng-click="saveProdForLater();">SAVE FOR LATER <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
                     <div class="product-message" ng-bind-html="productMessage"></div>
                 </div>
             </div>

@@ -15,7 +15,7 @@
                     <a href="{{product.giftStartLink}}" target="_self" class="button" ng-show="product.hasPrice">GIFTSTART IT!</a>
                     <a href="#" onclick="olark('api.box.expand')" class="button" ng-show="!product.hasPrice">CONTACT THE GIFT CONCIERGE</a>
                     <div ng-show="product.hasPrice" class="saveforlater">
-                        <a href="#" ng-click="saveGiftIdeaForLater(product);" class="button" ng-show="product.hasPrice">Save for Later</a>
+                        <a href="#" ng-click="saveGiftIdeaForLater(product);" class="button" ng-show="product.hasPrice">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></a>
                         <div class="product-message" ng-bind-html="productMessage"></div>
                     </div>
                 </div>
