@@ -61,9 +61,9 @@ def render_app(request):
         '/partners': 'Partner with GiftStarter, the best group gifting service for brands. Our seamless social commerce platform uses patent-pending technology to give your customers a better way to gift, together.',
         '/concierge': 'Gift Concierge provides fast and friendly gift help to make your group gift campaign a success.',
         '/howitworks': "GiftStarter is the best way to bring family and friends together to give an amazing gift. You start it, and we help you with the rest. You don't have to collect the money or chase people down for cash.",
-        '/terms': "GiftStarter's goal is to provide the #1 online gifting experience service. GiftStarter.co websites exist for the purpose of providing a personal gifting experience with one or more people together.",
+        '/terms': "GiftStarter's mission is to provide the #1 online gifting experience service. GiftStarter.com websites exist for the purpose of providing a personal gifting experience with one or more people together.",
         '/privacy': 'This page sets forth the Privacy Policy for the website at GiftStarter.co - we take the responsibility of having your personal information very seriously.',
-        '/press': "GiftStarter has been fortunate enough to be featured by some of the most prestigious media outlets in the world. See what all of the buzz is about."
+        '/press': "GiftStarter has been fortunate enough to be featured by some of the most prestigious media outlets in the world. See what all of the gifting buzz is about."
     }
     try:
         page_title = page_titles[request.path]
