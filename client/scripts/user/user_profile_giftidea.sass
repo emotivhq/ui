@@ -2,11 +2,12 @@
 
 .useridea
   width: 96%
-  margin: 0 auto 1rem
+  margin: 3rem auto 1rem
   padding-bottom: 1rem
   min-height: 15rem
   background: #238471
-
+  @include apply-at-size("phone")
+    margin-top: -1rem
   &__title
     color: #fff
     text-align: center
@@ -45,32 +46,40 @@
   &__productlist
     display: table
     border-spacing: 1rem
+    margin: 0 auto
+    @include apply-at-size("phone")
+      display: block
 
   &__productimgwrap
     min-height: 11rem
     max-height: 12rem
     background: #fff
-    width: 100%
+    max-width: 13rem
+    min-width: 2rem
     @media screen and (max-width: $tablet-landscape-width+200)
       min-height: 8rem
       max-height: 9.5rem
       max-width: 11.5rem
-      min-width: 4rem
+      min-width: 2rem
     @media screen and (max-width: $tablet-portrait-width+200)
       min-height: 5.5rem
       max-height: 6.5rem
       max-width: 9.5rem
-      min-width: 4rem
+      min-width: 2rem
     @include apply-at-size("phone")
       margin: 0 auto
-      min-height: 100%
-      max-height: 100%
+      max-height: 11.5rem
+      max-width: 16rem
+      min-height: 9.5rem
+      min-width: 10rem
 
   &__productimg
     padding: 0.5rem 0 1rem
     vertical-align: top
     max-height: 10.5rem
     min-height: 9.5rem
+    max-width: 12.5rem
+    min-width: 1.5rem
     display: block
     margin: 0 auto
     @media screen and (max-width: $tablet-landscape-width+200)
@@ -82,9 +91,10 @@
       min-height: 5rem
       max-height: 6rem
       max-width: 9rem
-      min-width: 3.5rem
+      min-width: 1rem
     @include apply-at-size("phone")
       max-height: 11rem
+      max-width: 16rem
 
   &__productdesc
     @include apply-at-size("phone")
@@ -97,20 +107,13 @@
 
   &__productlistitem
     display: table-cell
-    width: 18%
     border: 1px solid #000
     background: #12584c
+    max-width: 18%
     @include apply-at-size("phone")
       display: block
-      width: 98%
-      margin: 0.5rem 0
-
-    &--only
-      display: block
-      width: 65%
-      @include apply-at-size("phone")
-        width: 100%
-
+      margin: 0.5rem auto
+      max-width: 88%
 
   &__producttitle
     background: #12584c
@@ -118,6 +121,7 @@
     padding: 0.65rem 0.65rem 0 0.65rem
     font-size: 0.85rem
     height: 3rem
+    max-width: 13rem
     position: relative
     overflow: hidden
     text-align: center
@@ -126,14 +130,27 @@
     -webkit-hyphens: auto
     -moz-hyphens: auto
     hyphens: auto
+    @media screen and (max-width: $tablet-landscape-width+200)
+      max-width: 11.5rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      max-width: 9.5rem
+    @include apply-at-size("phone")
+      max-width: 100%
 
   &__productprice
-    text-align: center
     margin: 0 0 1rem
-    font-size: 0.95rem
     padding-top: 0.5rem
-    background: #12584c
+    max-width: 13rem
+    font-size: 0.95rem
+    text-align: center
     color: #fff
+    background: #12584c
+    @media screen and (max-width: $tablet-landscape-width+200)
+      max-width: 11.5rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      max-width: 15rem
+    @include apply-at-size("phone")
+      max-width: 100%
 
   &__findbtn
     margin: 1rem auto 0
