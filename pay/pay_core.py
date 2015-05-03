@@ -292,7 +292,10 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
         print("Payment[%s] created successfully" % (payment.id))
         return payment
     else:
-        raise StripeError(str(payment.error['details'][0]['issue']))
+        try:
+            raise StripeError(str(payment.error['details'][0]['issue']))
+        except KeyError as x:
+            raise StripeError("{0}".format(payment.error))
 
 
 def get_payment_data_for_transaction(transaction_id):
