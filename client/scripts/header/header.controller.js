@@ -68,6 +68,7 @@
             self.loggedIn = UserService.loggedIn;
             self.userImageUrl = UserService.profileImageUrl;
             self.userProfileUrl = '/users/' + UserService.uid;
+            self.userName = (UserService.name).toUpperCase();
         }
 
         function menuOpen() {$rootScope.$broadcast('menu-open')}
