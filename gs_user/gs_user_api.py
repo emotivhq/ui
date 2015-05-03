@@ -169,6 +169,32 @@ class UserHandler(webapp2.RequestHandler):
                 self.response.write(json.dumps({
                     'error': 'It looks like you\'re trying to edit someone else\'s profile.'
                 }))
+        elif data['action'] == 'delete-save-for-later':
+            if is_validated_self:
+                try:
+                    s = StoredProduct.query(
+                        StoredProduct.uid == uid,
+                        StoredProduct.url == data['url'],
+                        StoredProduct.retailer == data['retailer'],
+                        StoredProduct.price == data['price'],
+                        StoredProduct.title == data['title'],
+                        StoredProduct.img == data['imgUrl']
+                    ).fetch(1)
+                    if len(s)>0:
+                        s[0].delete()
+                    self.response.write(json.dumps({
+                        'ok': 'List updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in the '+x.message
+                    }))
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s list.'
+                }))
         elif data['action'] == 'save-for-later':
             if is_validated_self:
                 try:
