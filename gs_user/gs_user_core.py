@@ -15,6 +15,18 @@ import stripe
 from pay import paypalapi
 
 
+config = yaml.load(open('config.yaml'))
+
+def send_welcome_email(email_address):
+    """email a welcome message to the user"""
+    data = json.dumps({'subject': "Welcome to GiftStarter",
+                       'sender': "receipt@giftstarter.co", 'to': [email_address],
+                       'template_name': "welcome_user",
+                       'mime_type': 'html',
+                       'template_kwargs': {}})
+
+    requests.put(config['email_url'], data=data)
+
 def save_email(uid, email):
     """
     update email address for the given User
