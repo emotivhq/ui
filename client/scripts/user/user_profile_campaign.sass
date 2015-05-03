@@ -4,6 +4,7 @@
   background: #E2E2E2
   display: table-cell
   width: 50%
+  position: relative
   @media screen and (max-width: $phone-landscape-width+200)
     width: 100%
     display: block
@@ -11,7 +12,7 @@
 
   &__header,
   &__viewmore
-    background: #b2b812
+    background: #e2e2e2
     color: #fff
     font-size: 1.3rem
     padding:  0.5rem 0.5rem 0.5rem 1rem
@@ -19,12 +20,15 @@
   &__viewmore
     padding: 0
     text-align: center
+    position: absolute
+    bottom: -2.5rem
+    width: 100%
 
   &__viewmorelink
     display: block
     height: 3rem
     line-height: 3rem
-    color: #fff
+    color: #333
     font-size: 0.8rem
     text-transform: uppercase
 
@@ -33,7 +37,7 @@
 
   &__viewmoreicon
     display: inline-block
-    background: url("/assets/plus.png") no-repeat center
+    background: url("/assets/plus-black.png") no-repeat center
     background-size: 2rem
     width: 3rem
     height: 3rem
@@ -49,6 +53,7 @@
     @include apply-at-size("phone")
       display: block
       padding: 0.3rem 1rem
+      margin-bottom: 4rem
 
   &__items
     display: none
@@ -61,23 +66,23 @@
     background: #fff
     height: 10rem
     max-width: 13rem
-    min-width: 4.5rem
+    min-width: 2rem
     @media screen and (max-width: $tablet-landscape-width+200)
       height: 8rem
       max-width: 9rem
-      min-width: 4rem
     @media screen and (max-width: $tablet-portrait-width+200)
-      height: 7rem
-      max-width: 10.5rem
-      min-width: 4rem
+      height: 8rem
+      max-width: 13.5rem
     @media screen and (max-width: $phone-landscape-width+200)
       height: 10rem
       max-width: 13rem
-      min-width: 4.5rem
     @include apply-at-size("phone")
       height: 100%
       max-width: 100%
-      min-width: 100%
+      min-width: 4rem
+      min-height: 7rem
+      min-width: 1.75rem
+
 
   &__productlistitem
     display: table-cell
@@ -93,30 +98,32 @@
     min-height: 7rem
     max-height: 9rem
     max-width: 12rem
-    min-width: 4rem
+    min-width: 1.5rem
     display: block
     margin: 0 auto
     padding: 1rem
     @media screen and (max-width: $tablet-landscape-width+200)
       min-height: 6rem
       max-height: 8rem
-      min-width: 3.5rem
+      min-width: 1.5rem
       max-width: 8rem
     @media screen and (max-width: $tablet-portrait-width+200)
       max-height: 6.5rem
       max-width: 9.5rem
-      min-width: 4rem
+      min-width: 1rem
     @media screen and (max-width: $phone-landscape-width+200)
       min-height: 7rem
       max-height: 9rem
       max-width: 12rem
-      min-width: 4rem
+      min-width: 1.5rem
     @include apply-at-size("phone")
       max-height: 10rem
       max-width: 16rem
+      min-width: 1.5rem
     @media screen and (max-width: $phone-portrait-width)
       min-height: 5rem
       max-height: 8rem
+      min-width: 1rem
 
   &__itemstitle
     margin: 0
