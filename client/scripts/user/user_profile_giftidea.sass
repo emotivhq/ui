@@ -1,32 +1,32 @@
 @import "../base"
 
 .useridea
-  width: 85%
-  margin: 0 auto
-  min-height: 50rem
+  width: 96%
+  margin: 0 auto 1rem
+  padding-bottom: 1rem
+  min-height: 15rem
+  background: #238471
 
   &__title
-    color: #333
+    color: #fff
     text-align: center
     position: relative
-    margin-top: 3rem
-    @include apply-at-size("phone")
-      margin-top: 1rem
+    padding-top: 1rem
 
   &__wrap
-    width: 90%
-    min-height: 80rem
+    width: 88%
     margin: 0 auto
 
   &__innfonone
     text-align: center
+    color: #fff
 
   &__filter
     text-transform: uppercase
-    margin: 1rem 0 0 1rem
+    margin: 0.5rem 0 0 1rem
 
   &__filterby
-    color: #333
+    color: #fff
     @include apply-at-size("phone")
       display: block
       margin-bottom: 0.85rem
@@ -35,7 +35,7 @@
   &__filterdate,
   &__filtertprice
     font-size: 0.65rem
-    color: #333
+    color: #fff
     margin-left: 0.8rem
     @include apply-at-size("phone")
       margin: 0 1rem 0 0
@@ -47,32 +47,42 @@
     border-spacing: 1rem
 
   &__productimgwrap
-    min-height: 13.5rem
-    max-height: 13.5rem
+    min-height: 11rem
+    max-height: 12rem
     background: #fff
     width: 100%
-    @media screen and (max-width: $tablet-landscape-width)
-      min-height: 10rem
-      max-height: 11rem
-    @media screen and (max-width: $tablet-portrait-width+50)
+    @media screen and (max-width: $tablet-landscape-width+200)
       min-height: 8rem
-      max-height: 10rem
+      max-height: 9.5rem
+      max-width: 11.5rem
+      min-width: 4rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      min-height: 5.5rem
+      max-height: 6.5rem
+      max-width: 9.5rem
+      min-width: 4rem
     @include apply-at-size("phone")
+      margin: 0 auto
       min-height: 100%
       max-height: 100%
 
   &__productimg
     padding: 0.5rem 0 1rem
     vertical-align: top
-    max-height: 11.5rem
+    max-height: 10.5rem
+    min-height: 9.5rem
     display: block
     margin: 0 auto
-    @media screen and (max-width: $tablet-landscape-width)
-      width: auto
-      max-height: 10rem
-      min-height: 10rem
-      display: block
-      margin: 0 auto
+    @media screen and (max-width: $tablet-landscape-width+200)
+      min-height: 7.5rem
+      max-height: 8rem
+      max-width: 10rem
+      min-width: 4rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      min-height: 5rem
+      max-height: 6rem
+      max-width: 9rem
+      min-width: 3.5rem
     @include apply-at-size("phone")
       max-height: 11rem
 
@@ -89,10 +99,10 @@
     display: table-cell
     width: 18%
     border: 1px solid #000
-    background: #eee
+    background: #12584c
     @include apply-at-size("phone")
       display: block
-      width: 100%
+      width: 98%
       margin: 0.5rem 0
 
     &--only
@@ -103,8 +113,8 @@
 
 
   &__producttitle
-    background: #eee
-    color: #333
+    background: #12584c
+    color: #fff
     padding: 0.65rem 0.65rem 0 0.65rem
     font-size: 0.85rem
     height: 3rem
@@ -122,14 +132,14 @@
     margin: 0 0 1rem
     font-size: 0.95rem
     padding-top: 0.5rem
-    background: #eee
-    color: #333
+    background: #12584c
+    color: #fff
 
   &__findbtn
     margin: 1rem auto 0
     width: 12rem
-    background: #df484b
-    border: 2px solid #df484b
+    background: #12584c
+    border: 1px solid #092C26
     color: #fff
     cursor: pointer
     padding: 9px 12px 8px 12px
@@ -138,8 +148,8 @@
     @include apply-at-size("phone")
       margin: 1rem auto 1rem
     &:hover
-      background: #ff686b
-      border-color: #ff686b
+      background: #0E463C
+      border-color: #092C26
 
   &__findlink,
   &__viewmorelink
@@ -152,8 +162,8 @@
   &__viewmorelink
     display: block
     text-align: center
-    color: #000
-    background: url('/assets/circle_red_plus.png') no-repeat center
+    color: #fff
+    background: url('/assets/plus.png') no-repeat center
     background-size: 3rem 3rem
     width: 7rem
     margin: 2rem auto 0

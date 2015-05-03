@@ -132,7 +132,7 @@ class UserHandler(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
         token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
-        is_validated_self = uid and validate(uid, token, self.request.path) and uid == data['uid']
+        is_validated_self = uid and validate(uid, token, self.request.path) and 'uid' in data and uid == data['uid']
 
         if data['action'] == 'update-profile':
             if(is_validated_self):

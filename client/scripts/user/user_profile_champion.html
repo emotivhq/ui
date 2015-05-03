@@ -2,11 +2,6 @@
     <div class="usercampaign__title">
         Championed
     </div>
-    <div class="usercampaign__viewmore" ng-show="showMoreCampaign">
-        <a class="usercampaign__viewmorelink" href="#" ng-show=" userCampaings.giftstarts.length>6"  ng-click="campaingquantity=userCampaings.giftstarts.length; showMoreCampaign = false">
-            View More
-        </a>
-    </div>
 </div>
 <div class="usercampaign__list">
     <div ng-show="userCampaings.giftstarts.length === 0">
@@ -23,9 +18,14 @@
                 <img class="usercampaign__itemsimages" ng-src="{{ giftstart.product_img_url }}" alt="Championed image"/>
             </div>
             <h3  class="usercampaign__itemstitle">
-                {{ giftstart.title | limitTo:25 }}{{giftstart.title.length > 25 ? '...' : ''}}
+                {{ giftstart.title }}
             </h3>
         </a>
     </div>
     <div ng-repeat-end="" class="h--hide"></div>
+</div>
+<div class="usercampaign__viewmore" ng-show="showMoreCampaign">
+    <a class="usercampaign__viewmorelink" href="#" ng-show=" userCampaings.giftstarts.length > 3"  ng-click="campaingquantity=userCampaings.giftstarts.length; showMoreCampaign = false">
+        View More
+    </a>
 </div>

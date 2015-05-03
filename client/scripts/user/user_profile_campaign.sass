@@ -3,37 +3,40 @@
 .usercampaign
   background: #E2E2E2
   display: table-cell
-  @media screen and (max-width: $tablet-portrait-width+200)
+  width: 50%
+  @media screen and (max-width: $phone-landscape-width+200)
     width: 100%
     display: block
     margin-bottom: 1rem
 
-  &__header
-    background: #333
+  &__header,
+  &__viewmore
+    background: #b2b812
     color: #fff
-    position: relative
-
-  &__title
     font-size: 1.3rem
     padding:  0.5rem 0.5rem 0.5rem 1rem
-    display: inline-block
 
   &__viewmore
-    display: inline-block
-    position: absolute
-    right: 1.3rem
-    height: 2.5rem
+    padding: 0
+    text-align: center
 
   &__viewmorelink
-    color: #fff
-    font-size: 0.6rem
-    text-transform: uppercase
-    background: url("/assets/plus.png") no-repeat right
-    background-size: 1.5rem
-    padding-right: 2.1rem
-    height: 2.5rem
-    line-height: 2.5rem
     display: block
+    height: 3rem
+    line-height: 3rem
+    color: #fff
+    font-size: 0.8rem
+    text-transform: uppercase
+
+  &__viewmoretext
+    vertical-align: top
+
+  &__viewmoreicon
+    display: inline-block
+    background: url("/assets/plus.png") no-repeat center
+    background-size: 2rem
+    width: 3rem
+    height: 3rem
 
   &__link
     color: #333
@@ -42,6 +45,7 @@
   &__list
     display: table
     border-spacing: 1rem
+    margin: 0 auto
     @include apply-at-size("phone")
       display: block
       padding: 0.3rem 1rem
@@ -58,18 +62,22 @@
     height: 10rem
     max-width: 13rem
     min-width: 4.5rem
-    @media screen and (max-width: $tablet-landscape-width)
+    @media screen and (max-width: $tablet-landscape-width+200)
       height: 8rem
-      max-width: 8.5rem
+      max-width: 9rem
       min-width: 4rem
     @media screen and (max-width: $tablet-portrait-width+200)
-      height: 11rem
-      max-width: 14rem
+      height: 7rem
+      max-width: 10.5rem
+      min-width: 4rem
+    @media screen and (max-width: $phone-landscape-width+200)
+      height: 10rem
+      max-width: 13rem
       min-width: 4.5rem
     @include apply-at-size("phone")
-      min-height: 100%
-      max-height: 100%
+      height: 100%
       max-width: 100%
+      min-width: 100%
 
   &__productlistitem
     display: table-cell
@@ -89,18 +97,23 @@
     display: block
     margin: 0 auto
     padding: 1rem
-    @media screen and (max-width: $tablet-landscape-width+100)
+    @media screen and (max-width: $tablet-landscape-width+200)
       min-height: 6rem
       max-height: 8rem
       min-width: 3.5rem
       max-width: 8rem
     @media screen and (max-width: $tablet-portrait-width+200)
-      max-height: 10.5rem
-      max-width: 13.5rem
-      min-width: 5rem
+      max-height: 6.5rem
+      max-width: 9.5rem
+      min-width: 4rem
+    @media screen and (max-width: $phone-landscape-width+200)
+      min-height: 7rem
+      max-height: 9rem
+      max-width: 12rem
+      min-width: 4rem
     @include apply-at-size("phone")
-      min-height: 10rem
-      max-height: 11rem
+      max-height: 10rem
+      max-width: 16rem
     @media screen and (max-width: $phone-portrait-width)
       min-height: 5rem
       max-height: 8rem
@@ -114,7 +127,11 @@
     text-align: center
     max-width: 12rem
     height: 3.688rem
-    @media screen and (max-width: $tablet-landscape-width+100)
+    @media screen and (max-width: $tablet-landscape-width+200)
       max-width: 8rem
     @media screen and (max-width: $tablet-portrait-width+200)
+      max-width: 13.5rem
+    @media screen and (max-width: $phone-landscape-width+200)
+      max-width: 13rem
+    @include apply-at-size("phone")
       max-width: 100%

@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="calendar" ng-show="user.birth_month||user.birth_day||editable">
+            <div class="calendar" ng-show="user.birth_month&&user.birth_day&&editable">
                 <p class="calendar__calendartext">Birth Date</p>
                 <div class="calendar__monthwrap">
                     <select ng-disabled="blocked" class="calendar__month" ng-model="user.birth_month" ng-options="month.value as month.label for month in months"></select>
