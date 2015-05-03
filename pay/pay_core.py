@@ -294,8 +294,12 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
     else:
         try:
             raise StripeError(str(payment.error['details'][0]['issue']))
-        except KeyError as x:
-            raise StripeError("{0}".format(payment.error))
+        except KeyError:
+            try:
+                raise StripeError("Unable to complete your payment (perhaps your card is expired?): {0}".format(payment.error['message']))
+            except KeyError:
+                logging.error("payment.error at pay_core:charge_card_paypal {0}".format(payment.error))
+                raise StripeError("Unable to complete your payment (perhaps your card is expired?)")
 
 
 def get_payment_data_for_transaction(transaction_id):
