@@ -129,6 +129,17 @@
             console.log("set Olark message: "+parser.hostname);
         }
 
+        var userAgent = navigator.userAgent.toLowerCase();
+         if (userAgent .indexOf('safari')!=-1){
+           if(userAgent .indexOf('chrome')  > -1){
+             //browser is chrome
+           }else if((userAgent .indexOf('opera')  > -1)||(userAgent .indexOf('opr')  > -1)){
+             //browser is opera
+           }else{
+               jQuery('.menu-login > .submenu').css('margin-top', '-7px');
+           }
+          }
+
     };
 
     app.controller('HeaderController', [
