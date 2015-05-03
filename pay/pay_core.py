@@ -257,7 +257,6 @@ def save_card_paypal_vault(user, card_data):
     card_struct = {"type": get_card_type(card_data['number']), "number": card_data['number'],
            "expire_month": str(int(card_data['expiry'][:2])), "expire_year": card_data['expiry'][-4:],
            "cvv2": card_data['cvc'], "external_customer_id": user.paypal_vault_payer_id}
-    # logging.error(card_struct)
     credit_card = paypalrestsdk.CreditCard(card_struct)
     if credit_card.create():
         print("CreditCard[%s] created successfully" % (credit_card.id))
@@ -284,7 +283,6 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
                 "total": format(charge_amount_cents/100.0, '.2f'),
                 "currency": currency},
             "description": description}]}
-    # logging.error(payment_struct)
     payment = paypalrestsdk.Payment(payment_struct)
     if payment.create():
         if truncated_desc:
@@ -295,11 +293,8 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
         try:
             raise StripeError(str(payment.error['details'][0]['issue']))
         except KeyError:
-            try:
-                raise StripeError("Unable to complete your payment (perhaps your card is expired?): {0}".format(payment.error['message']))
-            except KeyError:
-                logging.error("payment.error at pay_core:charge_card_paypal {0}".format(payment.error))
-                raise StripeError("Unable to complete your payment (perhaps your card is expired?)")
+            logging.error("payment.error at pay_core:charge_card_paypal {0}".format(payment.error))
+            raise StripeError("Unable to complete your payment; your card might be invalid or expired.  Please try another card.")
 
 
 def get_payment_data_for_transaction(transaction_id):

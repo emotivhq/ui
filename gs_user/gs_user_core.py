@@ -15,6 +15,18 @@ import stripe
 from pay import paypalapi
 
 
+config = yaml.load(open('config.yaml'))
+
+def send_welcome_email(email_address):
+    """email a welcome message to the user"""
+    data = json.dumps({'subject': "Welcome to GiftStarter",
+                       'sender': "receipt@giftstarter.co", 'to': [email_address],
+                       'template_name': "welcome_user",
+                       'mime_type': 'html',
+                       'template_kwargs': {}})
+
+    requests.put(config['email_url'], data=data)
+
 def save_email(uid, email):
     """
     update email address for the given User
@@ -24,8 +36,11 @@ def save_email(uid, email):
     """
     user = ndb.Key('User', uid).get()
     if user is not None:
+        was_email_empty = user.email is None or len(user.email) == 0
         user.email = email
         user.put()
+        if was_email_empty and user.email is not None and len(user.email) > 0:
+            send_welcome_email(user.email)
     return user
 
 

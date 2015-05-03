@@ -5,7 +5,7 @@ import webapp2
 from social import twitter, googleplus, facebook
 import json
 from gs_user_core import update_or_create, get_user, \
-    subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens
+    subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
 from gs_user_stats import get_stats
 from StoredProduct import StoredProduct
 from UserLogin import UserLogin
@@ -137,6 +137,7 @@ class UserHandler(webapp2.RequestHandler):
         if data['action'] == 'update-profile':
             if(is_validated_self):
                 user = ndb.Key('User', uid).get()
+                was_email_empty = user.email is None or len(user.email) == 0
                 try:
                     user.name=data['name']
                     user.link_facebook=data['link_facebook']
@@ -161,10 +162,38 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(json.dumps({
                         'error': 'Please fill in your '+x.message
                     }))
+                if was_email_empty and user.email is not None and len(user.email) > 0:
+                    send_welcome_email(user.email)
             else:
                 self.response.set_status(400, "Invalid user id")
                 self.response.write(json.dumps({
                     'error': 'It looks like you\'re trying to edit someone else\'s profile.'
+                }))
+        elif data['action'] == 'delete-save-for-later':
+            if is_validated_self:
+                try:
+                    s = StoredProduct.query(
+                        StoredProduct.uid == uid,
+                        StoredProduct.url == data['url'],
+                        StoredProduct.retailer == data['retailer'],
+                        StoredProduct.price == data['price'],
+                        StoredProduct.title == data['title'],
+                        StoredProduct.img == data['imgUrl']
+                    ).fetch(1)
+                    if len(s)>0:
+                        s[0].delete()
+                    self.response.write(json.dumps({
+                        'ok': 'List updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in the '+x.message
+                    }))
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s list.'
                 }))
         elif data['action'] == 'save-for-later':
             if is_validated_self:

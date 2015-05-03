@@ -17,6 +17,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 EMAIL_TEMPLATES = {
+    'welcome_user': JINJA_ENVIRONMENT.get_template(
+        "welcome_user.html"),
     'pitch_in_thank_you': JINJA_ENVIRONMENT.get_template(
         "pitch_in_thank_you.html"),
     'campaign_complete_user_not_funded': JINJA_ENVIRONMENT.get_template(
