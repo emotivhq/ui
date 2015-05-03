@@ -36,8 +36,11 @@ def save_email(uid, email):
     """
     user = ndb.Key('User', uid).get()
     if user is not None:
+        was_email_empty = user.email is None or len(user.email) == 0
         user.email = email
         user.put()
+        if was_email_empty and user.email is not None and len(user.email) > 0:
+            send_welcome_email(user.email)
     return user
 
 

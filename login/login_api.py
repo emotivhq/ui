@@ -5,9 +5,9 @@ __author__ = 'GiftStarter'
 import webapp2
 import time
 from login import login_core
-import gs_user.gs_user_core
 from gs_user import User
 from giftstart import giftstart_comm
+from gs_user.gs_user_core import send_welcome_email, login_emaillogin_user
 import EmailLoginPair
 import json
 import re
@@ -49,7 +49,7 @@ class CreateHandler(webapp2.RequestHandler):
             }))
         else:
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))
-            user = gs_user.gs_user_core.login_emaillogin_user(email, password, referrer)
+            user = login_emaillogin_user(email, password, referrer)
             user.email = email
             user.name = name
             user.put()
@@ -63,6 +63,7 @@ class CreateHandler(webapp2.RequestHandler):
                         'has_pitched_in': user.has_pitched_in,
                     }
             }))
+            send_welcome_email(user.email)
 
 
 class LoginHandler(webapp2.RequestHandler):
