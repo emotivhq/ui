@@ -45,6 +45,8 @@
           <hr class="mobile-rule" />
           <ul class="submenu">
             <li><a ng-href="{{header.userProfileUrl}}" ng-click="$scope.menu = !$scope.menu">Profile page</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="$scope.menu = !$scope.menu">My Campaigns</a></li>
+            <li><a  ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="$scope.menu = !$scope.menu">Saved Gift Ideas</a></li>
             <li><a href="#" class="coming-soon">Notifications *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Settings *Coming Soon*</a></li>
             <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()" ng-click="$scope.menu = !$scope.menu">Log Out</a></li>
