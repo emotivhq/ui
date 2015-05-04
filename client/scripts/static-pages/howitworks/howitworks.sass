@@ -47,10 +47,18 @@
     h3, h4
       margin: 20px auto
       width: 60%
+      @include apply-at-size("tablet")
+        width: 90%
+      @include apply-at-size("phone")
+        width: 90%
     .sub
       padding-bottom: 30px
       margin: 0 auto
       width: 60%
+      @include apply-at-size("tablet")
+        width: 90%
+      @include apply-at-size("phone")
+        width: 90%
     table
       background-color: white
     td
@@ -60,14 +68,24 @@
       &:first-child
         white-space: nowrap
 
+    .concierge-table
+      background-color: white
+      display: table
+      @include apply-at-size("phone")
+        display: block
+
     .concierge-item
       background-color: #d3d3d3
       border: 20px solid white
+      display: table-cell
       padding: 20px
       text-align: center
       width: 33%
       &:first-child
         white-space: normal
+      @include apply-at-size("phone")
+        display: inline-block
+        width: 99%
 
     .search-item
       display: inline-block
