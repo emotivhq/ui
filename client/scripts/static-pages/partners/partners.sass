@@ -16,6 +16,10 @@
       padding: 20px
       width: 24.5%
       vertical-align: top
+      @include apply-at-size("tablet")
+        width: 49.5%
+      @include apply-at-size("phone")
+        width: 99%
       img
         height: 70px
         width: 70px
@@ -28,3 +32,5 @@
       padding: 20px
       width: 49.5%
       vertical-align: top
+      @include apply-at-size("phone")
+        width: 99%
