@@ -47,10 +47,18 @@
     h3, h4
       margin: 20px auto
       width: 60%
+      @include apply-at-size("tablet")
+        width: 90%
+      @include apply-at-size("phone")
+        width: 90%
     .sub
       padding-bottom: 30px
       margin: 0 auto
       width: 60%
+      @include apply-at-size("tablet")
+        width: 90%
+      @include apply-at-size("phone")
+        width: 90%
     table
       background-color: white
     td
