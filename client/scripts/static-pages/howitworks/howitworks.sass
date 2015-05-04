@@ -60,14 +60,24 @@
       &:first-child
         white-space: nowrap
 
+    .concierge-table
+      background-color: white
+      display: table
+      @include apply-at-size("phone")
+        display: block
+
     .concierge-item
       background-color: #d3d3d3
       border: 20px solid white
+      display: table-cell
       padding: 20px
       text-align: center
       width: 33%
       &:first-child
         white-space: normal
+      @include apply-at-size("phone")
+        display: inline-block
+        width: 99%
 
     .search-item
       display: inline-block
