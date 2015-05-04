@@ -49,7 +49,7 @@ function StaffPicksController($scope, $timeout) {
             "The lights sync with an alarm, sets on schedules, " +
             "and the IFTTT connectivity to other 3rd party apps is mindblowing.",
             "/assets/about/img/roy.png",
-            "#"
+            "https://www.giftstarter.co/giftideas/electronics/Hue-Personal-Wireless-Light"
         ),
         new product(
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
