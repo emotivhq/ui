@@ -32,7 +32,8 @@
       margin: 0 10px
       @include apply-at-size("tablet")
         margin: 10px
-        //width: 31%
+      @include apply-at-size("tablet", "landscape")
+        width: 31%
       @include apply-at-size("phone")
         margin: 10px
 
