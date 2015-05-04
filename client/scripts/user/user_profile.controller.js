@@ -12,20 +12,23 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     var thisUser = urlpath.substring(urlpath.lastIndexOf('/') + 1);
     $scope.user = {};
     $scope.userIdea = {};
-    $scope.pitchins_unique = []
-    $http({
-        method: 'GET',
-        url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
-    }).success(function (response) {
-        $scope.user = response;
-        $scope.userIdea = $scope.user.giftideas;
-    });
+    $scope.pitchins_unique = [];
 
-    UserService.getUser(thisUser,
-        function (data) {
-            $scope.userCampaings = data[Object.keys(data)[0]];
-            $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
+    function refreshUserData() {
+        $http({
+            method: 'GET',
+            url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
+        }).success(function (response) {
+            $scope.user = response;
+            $scope.userIdea = $scope.user.giftideas;
         });
+        UserService.getUser(thisUser,
+            function (data) {
+                $scope.userCampaings = data[Object.keys(data)[0]];
+                $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
+            });
+    }
+    refreshUserData();
 
     var getUniquePitchIns = function(pitchins) {
         var flags = [], ret = [], l = pitchins.length, i;
@@ -47,22 +50,24 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             });
     };
 
-    $scope.DeleteSavedItem = function(url, retailer, price, title, img){
+    $scope.DeleteSavedItem = function(idea){
+        idea.loading = true;
         $http.post('/users', {
             'uid': $scope.user.uid,
             'action': 'delete-save-for-later',
-            'url': url,
-            'retailer': retailer,
-            'price': price,
-            'title': title,
-            'imgUrl': img
+            'url': idea.url,
+            'retailer': idea.retailer,
+            'price': idea.price,
+            'title': idea.title,
+            'imgUrl': idea.img
         })
             .then(function (res) {
-
+                refreshUserData();
+                idea.loading = false;
             }, function (errorRes) {
                 alert("Error. Please try again.");
             });
-    }
+    };
 
     var urlSerialize = function (obj) {
         var str = [];
