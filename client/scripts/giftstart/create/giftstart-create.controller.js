@@ -27,9 +27,8 @@
         $scope.campaignEndDate = null;
         $scope.getCampaignLength = function (date) {
             if (angular.isDate(date)) {
-                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000);
+                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000)-5; //5 days for shipping etc
             }
-
             return campaignLength;
         };
         $scope.salesTaxRate = 0.098;
@@ -233,8 +232,8 @@
         }
 
         function dateChosenValid() {
-            return !($scope.getCampaignLength($scope.campaignEndDate) > 29 ||
-            $scope.getCampaignLength($scope.campaignEndDate) < 2);
+            return !($scope.getCampaignLength($scope.campaignEndDate) >= 29 ||
+            $scope.getCampaignLength($scope.campaignEndDate) < 1);
         }
 
         $scope.validationCreateStep = {
