@@ -25,8 +25,8 @@
                     <div class="useridea__productdesc">
                         <div class="useridea__productimgwrap">
                             <img class="useridea__productimg" ng-src="{{ idea.img }}" alt="Gift Idea Image"/>
-                            <a href="#" class="useridea__close" ng-click="DeleteSavedItem(idea.url, idea.retailer, idea.price, idea.title, idea.img)">
-                                Delete
+                            <a href="#" class="useridea__close" ng-click="DeleteSavedItem(idea)" ng-disabled="idea.loading">
+                                X <span class="useridea__deletetext">remove</span> <img src="/assets/loading_transparent.gif" class="loader" ng-show="idea.loading">
                             </a>
                         </div>
                         <div class="useridea__producttitle">

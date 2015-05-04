@@ -181,7 +181,7 @@ class UserHandler(webapp2.RequestHandler):
                         StoredProduct.img == data['imgUrl']
                     ).fetch(1)
                     if len(s)>0:
-                        s[0].delete()
+                        s[0].key.delete()
                     self.response.write(json.dumps({
                         'ok': 'List updated'
                     }))
