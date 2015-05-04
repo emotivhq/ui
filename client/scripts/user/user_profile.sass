@@ -29,6 +29,11 @@
     height: 10rem
     width: 10rem
 
+    .image,
+    .userprofile__imagesave.disabled,
+    .disabled .rotate
+      display: none
+
     .image-upload,
     gs-image-upload
       padding-bottom: 0 !important
@@ -39,6 +44,13 @@
       .userprofile__imageedit
         bottom: -2.5rem
         left: 50%
+
+  &__preload
+    position: absolute
+    top: 0
+    left: 0
+    background: #fff
+    padding: 0.625rem
 
   &__userimage
     width: 9rem
@@ -60,11 +72,24 @@
     top: 0
     right: 0
     z-index: 1
+    width: 1.5rem
+    height: 1.5rem
+    padding: 0
 
-  &__imageupload
+  &__imageupload,
+  &__imagesave
     position: absolute
-    bottom: -40px
+    bottom: -2.5rem
+
+  &__imagesave.disabled + &__imageupload
     left: 0
+    width: 100%
+
+  &__imagesave + &__imageupload
+    left: 5rem
+
+  &__imagesave
+    left: 0rem
 
   &__name
     width: 60%

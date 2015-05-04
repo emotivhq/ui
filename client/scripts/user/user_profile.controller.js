@@ -85,6 +85,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.campaingquantity = 3;
     $scope.showMore = true;
     $scope.showMoreCampaign = true;
+    $scope.imgloading = false;
     $scope.months = [
         {label: 'Jan', value: 0},
         {label: 'Feb', value: 1},
