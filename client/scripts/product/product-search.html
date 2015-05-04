@@ -2,13 +2,13 @@
 <div id="product-search-anchor" class="product-link">
     <div class="search wrapper">
         <span class="inputs">
-            <input id="product-search-input" class="text-input" type="text" name="product-link" placeholder="Search here for the perfect gift..." ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><button id="product-search-button" class="submit" ng-click="submit()">Search</button>
+            <input id="product-search-input" class="text-input" type="text" name="product-link" placeholder="Search here for the perfect gift..." ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><button id="product-search-button" class="submit" ng-click="submit()">SEARCH</button>
         </span>
     </div>
 
     <div id="categories-container">
       <div class="categories">
-        <p><strong>SEARCH BRANDS:</strong></p>
+        <p><strong>BRANDS:</strong></p>
         <ul>
           <li><a target="_top" href="/search/apple">Apple</a></li>
           <li><a target="_top" href="/search/bose">Bose</a></li>
@@ -23,7 +23,7 @@
         </ul>
       </div>
       <div class="categories">
-        <p><strong>SEARCH BABY GIFTS:</strong></p>
+        <p><strong>BABY GIFTS:</strong></p>
         <ul>
           <li><a target="_top" href="/search/baby+crib">Baby Crib</a></li>
           <li><a target="_top" href="/search/bassinet">Bassinet</a></li>
@@ -37,7 +37,7 @@
         </ul>
       </div>
       <div class="categories">
-        <p><strong>SEARCH ELECTRONIC GIFTS:</strong></p>
+        <p><strong>ELECTRONIC GIFTS:</strong></p>
         <ul>
           <li><a target="_top" href="/search/camera">Camera</a></li>
           <li><a target="_top" href="/search/home+theater">Home Theater</a></li>
@@ -48,11 +48,11 @@
           <li><a target="_top" href="/search/microsoft+office">Microsoft Office</a></li>
           <li><a target="_top" href="/search/television">Television</a></li>
           <li><a target="_top" href="/search/wireless+speaker">Wireless Speakers</a></li>
-          <li><a target="_top" href="/search/xbox">xBox</a></li>
+          <li><a target="_top" href="/search/xbox">Xbox</a></li>
         </ul>
       </div>
       <div class="categories">
-        <p><strong>SEARCH HOME + WEDDING GIFTS:</strong></p>
+        <p><strong>HOME + WEDDING GIFTS:</strong></p>
         <ul>
           <li><a target="_top" href="/search/barbecue+grill">Barbecue Grill</a></li>
           <li><a target="_top" href="/search/dog+bed">Dog Bed</a></li>
@@ -101,6 +101,8 @@
                 <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
                 <div class="buttons">
                     <button class="giftstart" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart!</button>
+                    <button class="giftstart" ng-click="saveForLater($index);$event.stopPropagation();">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
+                    <div class="product-message" ng-show="product.selected" ng-bind-html="productMessage"></div>
                 </div>
             </div>
         </div>
@@ -108,5 +110,5 @@
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>
-    <p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="mailto:giftconcierge@giftstarter.co" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p>
+    <p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p>
 </div>

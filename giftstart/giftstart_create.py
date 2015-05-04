@@ -170,6 +170,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
             logging.info('Both uid {0} and uuid {1} supplied during populate_giftstart'.format(uid, uuid))
         ndbgs.giftstart_title = giftstart['title']
         ndbgs.giftstart_description = giftstart['description']
+        ndbgs.coupon = giftstart['coupon']
 
         ndbgs.product_url = giftstart['product_url']
         ndbgs.product_img_url = giftstart['product_img_url']

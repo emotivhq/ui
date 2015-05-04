@@ -12,6 +12,9 @@ from google.appengine.ext import ndb
 from google.appengine.api import taskqueue
 import logging
 from gs_email.gs_email_preview import EmailPreviewHandler
+import requests
+import yaml
+import re
 
 REQUIRED_PARAMS = ['to', 'sender', 'subject', 'body']
 REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
@@ -23,6 +26,9 @@ TEMPLATE_PARAMS = ['to', 'sender', 'cc', 'bcc', 'subject', 'template_name',
                    'giftstart_it_url', 'thank_you_link']
 EMAIL_PARAMS = ['to', 'sender', 'cc', 'bcc']
 
+config = yaml.load(open('config.yaml'))
+
+validEmailRegex = re.compile( "^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$", re.IGNORECASE)
 
 class SentEmail(ndb.Model):
     uuid = ndb.StringProperty(required=True)
@@ -81,9 +87,38 @@ class FromQueueHandler(webapp2.RequestHandler):
         else:
             gs_email_comm.send(**{k: v for k, v in params.items() if k in SEND_PARAMS})
 
+class ContactUsHandler(webapp2.RedirectHandler):
+    """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""
+    def put(self):
+        params = json.loads(self.request.body)
+        from_email = params["from_email"]
+        try:
+            if from_email == None or not validEmailRegex.match(from_email):
+                raise Exception("A valid email address is required.")
+            msg = ""
+            for name in params:
+                if name != "from_email":
+                    msg += "{0}: {1} \n".format(name, params[name])
+
+            requests.put(config['email_url'],
+                 data=json.dumps({
+                     'subject': "Contact Us Message",
+                     'sender': "giftconcierge@giftstarter.co",
+                     'mime_type': 'html',
+                     'to': "giftconcierge@giftstarter.co",
+                     'template_name': "contact_us",
+                     'template_kwargs': { "from_email" : from_email,
+                                          "msg" : msg }
+                 }))
+            self.response.write(json.dumps({"ok": "Success!"}))
+        except Exception as e:
+            self.response.set_status(403)
+            self.response.write(json.dumps({"error": e.message}))
+
 
 handler = webapp2.WSGIApplication([
     ('/email/send.json', SendHandler),
     ('/email/sendfromqueue', FromQueueHandler),
     ('/email/preview/.*', EmailPreviewHandler),
+    ('/email/contactus.json', ContactUsHandler)
 ], debug=True)

@@ -31,17 +31,21 @@
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
             </div>
-            <button class="pitch-in button" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">Pay ${{giftStart.totalSelection / 100 | number : 2}} Now</button>
+            <button class="pitch-in button" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
             <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
-                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GiftStart It</button></a>
+                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GIFTSTART IT</button></a>
+                <div class="saveforlater">
+                    <button class="pitch-in button" ng-click="saveProdForLater();">SAVE FOR LATER <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
+                    <div class="product-message" ng-bind-html="productMessage"></div>
+                </div>
             </div>
             <div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
-                <img class="share" src="/assets/share_email.png" ng-click="emailShare();" />
-                <img class="share" src="/assets/share_facebook.png" ng-click="facebookShare();"/>
-                <img class="share" src="/assets/share_twitter.png" ng-click="twitterShare();" />
-                <img class="share" src="/assets/share_google.png" ng-click="googlePlusShare();" />
+                <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
+                <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
+                <img class="share" src="/assets/twittericon.png" ng-click="twitterShare();" />
+                <img class="share" src="/assets/googleicon.png" ng-click="googlePlusShare();" />
             </div>
         </div>
     </div>
@@ -49,18 +53,18 @@
     <div class="fullwidth block fullwidth--last">
         <div class="prices block">
             <div class="price funded">
-                <h2>Gifted!</h2>
-                <h1>$<span class="giftstart product contribution">{{giftStart.funded / 100 | number : 2}}</span></h1>
+                <h3>Gifted!</h3>
+                <h2>$<span class="giftstart product contribution">{{giftStart.funded / 100 | number : 2}}</span></h2>
             </div>
             <div class="price remaining">
-                <h2>Amount Needed</h2>
-                <h1>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h1>
+                <h3>Amount Needed</h3>
+                <h2>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h2>
             </div>
             <gs-funding-bar></gs-funding-bar>
         </div>
         <div class="completion block">
-            <div><h2>Time Left in GiftStart</h2></div>
-            <div><h1 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h1></div>
+            <div><h3>Time Left in GiftStart</h3></div>
+            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2></div>
         </div>
     </div>
 
@@ -86,10 +90,11 @@
         <div ng-repeat-end class="h--hide"></div>
         <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
 
-        <div class="btn btn--pdf" ng-click="getPdf()">
-            <!-- a href="#" class="btn__link">
-                View Card PDF
-            </a -->
-        </div>
+
+    </div>
+    <div class="btn btn--pdf">
+        <!-- a href="#" ng-click="toPDFPage()" class="btn__link">
+            View Card PDF
+        </a -->
     </div>
 </div>

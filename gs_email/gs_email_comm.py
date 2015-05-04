@@ -17,6 +17,8 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 EMAIL_TEMPLATES = {
+    'welcome_user': JINJA_ENVIRONMENT.get_template(
+        "welcome_user.html"),
     'pitch_in_thank_you': JINJA_ENVIRONMENT.get_template(
         "pitch_in_thank_you.html"),
     'campaign_complete_user_not_funded': JINJA_ENVIRONMENT.get_template(
@@ -37,6 +39,8 @@ EMAIL_TEMPLATES = {
         "campaign_create_user.html"),
     'campaign_share_email': JINJA_ENVIRONMENT.get_template(
         "campaign_share_email.html"),
+    'contact_us': JINJA_ENVIRONMENT.get_template(
+        "contact_us.html"),
     'thank_you_notification': JINJA_ENVIRONMENT.get_template(
         "thank_you_notification.html"),
     "gc_pitchin_notification": JINJA_ENVIRONMENT.get_template(

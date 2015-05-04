@@ -18,7 +18,6 @@
                                Analytics,
                                AppStateService) {
 
-        var serviceFeeRate = 0.08;
         var shippingRate = 0; //0.045;
 
         var campaignLength = 10;
@@ -28,12 +27,12 @@
         $scope.campaignEndDate = null;
         $scope.getCampaignLength = function (date) {
             if (angular.isDate(date)) {
-                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000);
+                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000)-5; //5 days for shipping etc
             }
-
             return campaignLength;
         };
         $scope.salesTaxRate = 0.098;
+        $scope.serviceFeeRate = 0.08;
         $scope.fetchingTaxRate = false;
 
         $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4],
@@ -65,6 +64,7 @@
         $scope.selectedImg = ProductService.product.imgs[$scope.imgIndex];
         $scope.title = '';
         $scope.description = '';
+        $scope.coupon = '';
         $scope.specialNotes = '';
         $scope.pitchInsInitialized = false;
         $scope.giftStart = GiftStartService.giftStart;
@@ -92,16 +92,16 @@
                         shipping_zip: $scope.shippingZip
                     }
                 })
-                    .success(function (result) {
-                        Analytics.track('product', 'tax and shipping fetch success');
-                        $scope.salesTaxRate = result.tax;
-                        $scope.fetchingTaxRate = false;
-                        $scope.priceChanged();
-                    })
-                    .error(function (reason) {
-                        $scope.fetchingTaxRate = false;
-                        Analytics.track('product', 'tax and shipping fetch failed');
-                    });
+                .success(function (result) {
+                    Analytics.track('product', 'tax and shipping fetch success');
+                    $scope.salesTaxRate = result.tax;
+                    $scope.fetchingTaxRate = false;
+                    $scope.priceChanged();
+                })
+                .error(function (reason) {
+                    $scope.fetchingTaxRate = false;
+                    Analytics.track('product', 'tax and shipping fetch failed');
+                });
             }
         };
 
@@ -122,14 +122,34 @@
             GiftStartService.giftStart.product_img_url = $scope.selectedImg;
         };
 
-        $scope.priceChanged = function () {
+        function completePriceChange() {
             Analytics.track('campaign', 'price changed');
             $scope.salesTax = $scope.salesTaxRate * $scope.inputPrice * 100;
-            $scope.serviceFee = serviceFeeRate * $scope.inputPrice * 100;
+            $scope.serviceFee = $scope.serviceFeeRate * $scope.inputPrice * 100;
             $scope.shipping = shippingRate * $scope.inputPrice * 100;
-            $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax +
-            $scope.serviceFee + $scope.shipping;
+            $scope.totalPrice = $scope.inputPrice * 100 + $scope.salesTax + $scope.serviceFee + $scope.shipping;
+            $scope.fetchingTaxRate = false;
             $scope.updateOverlay();
+        }
+
+        $scope.priceChanged = function () {
+            $scope.fetchingTaxRate = true;
+            $http({
+                method: 'POST', url: '/product',
+                data: {
+                    action: 'get-service-fee',
+                    coupon: $scope.coupon
+                }
+            })
+            .success(function (result) {
+                Analytics.track('product', 'service fee fetch success');
+                $scope.serviceFeeRate = result.fee;
+                completePriceChange();
+            })
+            .error(function (reason) {
+                Analytics.track('product', 'service fee fetch failure');
+                completePriceChange();
+            });
         };
 
         $scope.moreParts = function (event) {
@@ -176,6 +196,7 @@
             return {
                 'title': $scope.title,
                 'description': $scope.description,
+                'coupon': $scope.coupon,
                 'product_url': ProductService.product.product_url,
                 'product_img_url': $scope.selectedImg,
                 'product_price': $scope.inputPrice * 100,
@@ -199,6 +220,7 @@
         function clearCreateData() {
             $scope.title = '';
             $scope.description = '';
+            $scope.coupon = '';
             $scope.selectedImg = '';
             $scope.shippingName = '';
             $scope.shippingEmail = '';
@@ -210,13 +232,14 @@
         }
 
         function dateChosenValid() {
-            return !($scope.getCampaignLength($scope.campaignEndDate) > 29 ||
-            $scope.getCampaignLength($scope.campaignEndDate) < 2);
+            return !($scope.getCampaignLength($scope.campaignEndDate) >= 29 ||
+            $scope.getCampaignLength($scope.campaignEndDate) < 1);
         }
 
         $scope.validationCreateStep = {
             title: 2,
             description: 2,
+            coupon: 3,
             shippingState: 3,
             shippingZip: 3,
             shippingName: 3,
@@ -229,6 +252,7 @@
             $scope.hideValidationError = {
                 title: true,
                 description: true,
+                coupon: true,
                 shippingState: true,
                 shippingZip: true,
                 shippingName: true,
@@ -288,6 +312,7 @@
 
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
+            GiftStartService.coupon = $scope.coupon;
             GiftStartService.productUrl = ProductService.product.product_url;
             GiftStartService.productTitle = ProductService.product.title;
             GiftStartService.retailerLogo = ProductService.logo;
@@ -396,6 +421,7 @@
             // This function doesn't seem to be in use
             $scope.title = session.title;
             $scope.description = session.description;
+            $scope.coupon = session.coupon;
             ProductService.product.product_url = session.productUrl;
             ProductService.product.title = session.productTitle;
             ProductService.logo = session.retailerLogo;

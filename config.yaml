@@ -13,6 +13,10 @@ baseServiceFeeRate:       0.08
 
 couponCodes:               ['GiftMe!', 'CollisionGift', 'Collision15', 'StartupGift', 'GiftFriend', 'GiftPartner', 'GiftItForward']
 
+baseServiceFeeRate:       0.08
+
+couponCodes:               ['GiftMe!', 'CollisionGift', 'Collision15', 'StartupGift', 'GiftFriend', 'GiftPartner', 'GiftItForward']
+
 googleanalytics:
   key:                    'UA-51616127-2'
 

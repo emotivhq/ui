@@ -1,0 +1,20 @@
+<div class="userlogin__form">
+    <form ng-submit="$parent.doCreateEmail()">
+        <input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="First name" required />
+        <input class="userlogin__surname" type="text" name="surname" ng-model="$parent.surname" placeholder="Last name" required />
+        <br />
+        <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Email Address" required />
+        <input class="userlogin__reentermail" type="email" name="reenteremail" ng-model="$parent.reenteremail" placeholder="Re-enter Email Address" required />
+        <br />
+        <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Password" required />
+        <input class="userlogin__reenterpassword" type="password" name="reenterpassword" ng-model="$parent.reenterpassword" placeholder="Re-enter Password" required />
+        <br />
+        <div class="userlogin__message">{{$parent.message}}</div>
+        <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Create account</button>
+    </form>
+</div>
+
+<div class="userlogin__createacc">
+    <span>Already have an account? </span>
+    <span><a ng-click="$parent.showCreate=false; $parent.resetForm();" href="#"  class="userlogin__createacclink">Login</a></span>
+</div>

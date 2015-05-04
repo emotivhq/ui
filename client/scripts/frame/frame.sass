@@ -1,7 +1,7 @@
 @import "../base"
 
 html
-  background-color: #f2f2f2
+  background-color: #E5E5E5
 
 body
   margin: 0 auto
@@ -32,7 +32,6 @@ h1
 input, button, select, textarea
   font: $p-font
   padding: 0.075em 0.5em
-  +border-radius(0.4rem)
 
 input, select, textarea
   padding: 0.5em
@@ -52,7 +51,9 @@ button
   border: solid $primary-color 2px
   color: #fff
   cursor: pointer
+  padding: 9px 10px 5px 10px
   +transition(all, 0.2s)
+  -webkit-font-smoothing: antialiased
 
 button.share
   background: $share-color
@@ -142,12 +143,8 @@ h4
 
 /*  ANGULAR VIEW  */
 #angular-view
-  //overflow: auto
-  margin-bottom: 2em
-  margin-top: $header-height - 1
-  //overflow-x: hidden
   @media screen and (max-width: $phone-tablet-boundary)
-    margin: 65px auto 0 auto
+    margin: 0 auto
 
 //  Disable "Welcome Back!" popup from google
 iframe[src^="https://apis.google.com"]

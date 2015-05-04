@@ -5,7 +5,7 @@
 
     <div ng-show="isCreateStepTiles()"><h2 class="state-title">How many pitch-in tiles do you want?</h2><div class="state-subtitle">Create Your Gifting Event: step 2 of 4</div></div>
     <div ng-show="isCreateStepStory()"><h2 class="state-title">Your Gifting Event</h2><div class="state-subtitle">Create Your Gifting Event: step 3 of 4</div></div>
-    <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping details</h2><div class="state-subtitle">Create Your Gifting Event: step 4 of 4</div></div>
+    <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping Details</h2><div class="state-subtitle">Create Your Gifting Event: step 4 of 4</div></div>
 
     <div class="block image">
         <div class="image-container">
@@ -29,7 +29,7 @@
             </div>
 
             <div ng-show="isCreateStepStory()">
-                <h2>1. What's the gifting event called?</h2>
+                <h2>1. What's the gifting event?</h2>
                 <input type="text"
                        id="campaign-title"
                        name="title"
@@ -45,11 +45,11 @@
                     <div ng-show="campaignForm.title.$error.required">
                         <div class="arrowUp"></div>
                         <div class="errorMessage">
-                            Don't forget to name your campaign!
+                            Don't forget to name the gifting event!
                         </div>
                     </div>
                 </div>
-                <h2>2. Describe your gifting event real quick.</h2>
+                <h2>2. Describe your gifting event.</h2>
                 <textarea id="campaign-description"
                           name="description"
                           placeholder="Who's the gift for? What's your relationship? Why this gift?"
@@ -64,7 +64,7 @@
                     <div ng-show="campaignForm.description.$error.required">
                         <div class="arrowUp"></div>
                         <div class="errorMessage">
-                            Don't forget to include your story!
+                            Don't forget to describe it!
                         </div>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
                             </div>
                         </div>
                     </span>
-                    <h2>2. Where Should the Gift be Shipped?</h2>
+                    <h2>2. Where should the Gift be shipped?</h2>
                     <span class="state">
                         <select class="state"
                                 ng-model="shippingState"
@@ -248,8 +248,8 @@
                     </span>
                 </div>
                 <div class="campaign-length">
-                    <h2>3. When do you need the gift by?</h2>
-                    <label>Max: 29 days.  Add one week for gift processing and shipping.</label>
+                    <h2>3. When do you need the Gift?</h2>
+                    <label>Max: 34 days.  Your campaign will end 5 days earlier to allow for gift fulfillment.</label>
                     <input ui-date
                            type="text"
                            class="endDate"
@@ -264,17 +264,30 @@
                         <div ng-show="campaignForm.campaignEndDate.$error.required">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Your campaign must be between 3 and 29 days!
+                                Please select a date 7-34 days from now!
                             </div>
                         </div>
                         <div ng-show="!dateChosenValid()">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Your campaign must be between 3 and 29 days!
+                                Please select a date 7-34 days from now!
                             </div>
                         </div>
                     </div>
-                    <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)+1}} Days</label>
+                    <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)+6}} Days</label>
+                </div>
+                <div class="coupon-code">
+                    <h2>4. Do you have a promo code?</h2>
+                    <input type="text"
+                           id="coupon"
+                           name="coupon"
+                           placeholder="Enter your code"
+                           maxlength="20"
+                           ng-model="coupon"
+                           ng-focus="hideValidationError.code = true"
+                           ng-blur="hideValidationError.code = false;"
+                           onkeypress="return event.keyCode==13?false:true"
+                           ng-change="priceChanged()"/>
                 </div>
                 <div class="price-block">
                     <h2>Price</h2>
@@ -304,10 +317,10 @@
     </div>
 
     <div class="progress-nav">
-        <div class="back-indicator" ng-class="{'invisible': isCreateStepTiles()}"><img id="giftstart-create-prev" class="linky prev" ng-click="prevStep()" src="/assets/circle_black_lt.png"><br/>Previous<br/>step</div>
-        <div class="step-indicator"><img src="/assets/circle_green_check.png" alt="Find a gift"/><br/>Find<br/>a gift</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_black.png" alt="Adjust the tiles"/><img ng-show="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(1)" alt="Adjust the tiles" /><br/>Adjust<br/>the tiles</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepShipping()" src="/assets/circle_black.png" alt="Tell the story"/><img ng-show="isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(2)" alt="Tell the story" /><br/>Tell the<br/>story</div><img class="step-indicator-divider" src="/assets/hbar_black.png" alt="Shipping datails"/><div class="step-indicator"><img src="/assets/circle_black.png" /><br/>Shipping<br/>details</div>
-        <button id="giftstart-create-next" class="next" ng-hide="isCreateStepShipping()" ng-click="nextStep()">Next Step</button>
-        <button id="giftstart-create-submit" class="next" ng-show="isCreateStepShipping()" ng-click="next()">Next Step</button><img ng-show="isSubmittingData" class="loader" src="/assets/loading_transparent.gif">
+        <div class="back-indicator" ng-class="{'invisible': isCreateStepTiles()}"><img id="giftstart-create-prev" class="linky prev" ng-click="prevStep()" src="/assets/circle_black_lt.png"><br/>PREVIOUS<br/>STEP</div>
+        <div class="step-indicator"><img src="/assets/circle_green_check.png" alt="Find a gift"/><br/>FIND<br/>A GIFT</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_black.png" alt="Adjust the tiles"/><img ng-show="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(1)" alt="Adjust the tiles" /><br/>Adjust<br/>the tiles</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepShipping()" src="/assets/circle_black.png" alt="Tell the story"/><img ng-show="isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(2)" alt="Tell the story" /><br/>Tell the<br/>story</div><img class="step-indicator-divider" src="/assets/hbar_black.png" alt="Shipping datails"/><div class="step-indicator"><img src="/assets/circle_black.png" /><br/>Shipping<br/>details</div>
+        <button id="giftstart-create-next" class="next" ng-hide="isCreateStepShipping()" ng-click="nextStep()">NEXT STEP</button>
+        <button id="giftstart-create-submit" class="next" ng-show="isCreateStepShipping()" ng-click="next()">NEXT STEP</button><img ng-show="isSubmittingData" class="loader" src="/assets/loading_transparent.gif">
     </div>
 
 </div>

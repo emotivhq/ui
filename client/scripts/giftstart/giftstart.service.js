@@ -48,6 +48,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     // Campaign Details
     this.title = '';
     this.description = '';
+    this.coupon = '';
     this.specialNotes = '';
     this.productImgUrl = '';
     this.productTitle = '';
@@ -106,6 +107,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         return {
             title: self.title,
             description: self.description,
+            coupon: self.coupon,
             special_notes: self.specialNotes,
             gift_champion_uid: UserService.uid,
             product_price: self.productPrice,

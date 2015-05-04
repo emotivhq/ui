@@ -1,0 +1,134 @@
+@import "../base"
+
+.userlogin
+  display: block
+
+  &__title
+    text-align: center
+    color: #000
+    font-family: "Roboto", sans-serif
+    font-size: 2.25em
+    padding-bottom: 0.5em !important
+    @include apply-at-size("phone")
+      padding-bottom: 0.5rem !important
+
+  &__logo
+    background-image: url("/assets/giftstarter.png")
+    background-size: 51px 51px
+    background-repeat: no-repeat
+    width: 51px
+    height: 51px
+    margin: 1.25rem auto 0 auto
+
+  &__form
+    text-align: center
+    input
+      border: 1px solid #cdcdcd
+      padding: .8em
+
+  &__email,
+  &__password,
+  &__name,
+  &__surname,
+  &__reentermail,
+  &__reenterpassword
+    border: 1px solid #000
+    width: 24%
+    margin-top: 1rem
+    @include apply-at-size("phone")
+      display: block
+      width: 70%
+      margin: 1rem auto
+      padding: 1rem 0.5rem
+
+  br
+    @include apply-at-size("phone")
+      display: none
+
+  &__email
+    margin-right: 1rem
+    @include apply-at-size("phone")
+      margin-right: auto
+
+
+  &__surname,
+  &__reenterpassword
+    margin-left: 1rem
+    @include apply-at-size("phone")
+      margin-left: auto
+
+
+  &__remember,
+  &__rememberlabel,
+  &__forgot
+    margin-top: 15px
+    position: relative
+    float: left
+    display: block
+
+  &__remember
+    left: 25%
+    -ms-transform: scale(1.5)
+    -moz-transform: scale(1.5)
+    -webkit-transform: scale(1.5)
+    -o-transform: scale(1.5)
+    @include apply-at-size("phone")
+      left: 0
+
+  &__rememberlabel,
+  &__forgot,
+  &__createacclink
+    text-transform: uppercase
+    color: #333
+
+  &__rememberlabel
+    left: 26%
+    @include apply-at-size("phone")
+      left: 0.4rem
+      top: 1.8rem
+
+    &:hover
+      text-decoration: underline
+
+  &__wrapper
+    @include apply-at-size("phone")
+      position: relative
+      width: 70%
+      margin: 0 auto
+
+  &__forgot
+    float: none
+    display: block
+    font-size: 14px
+
+    &:hover
+      color: #333
+
+  &__message
+    padding-top: 15px
+    color: #DE4A50
+
+  &__loginbtn
+    clear: both
+    display: block
+    margin: 15px auto
+    position: relative
+    font-size: 1em
+    padding: 14px 53px
+    font-family: Gotham, sans-serif
+    text-transform: uppercase
+
+  &__createacc
+    position: relative
+    margin-top: 15px
+    text-align: center
+
+  &__createacclink
+    text-decoration: underline
+    &:hover
+      color: #333
+
+  &__sociallogin
+    margin-top: 15px
+    position: relative
+    text-align: center

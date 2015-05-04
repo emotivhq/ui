@@ -39,10 +39,10 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
                         '].disabled}" ng-click="giftstart.parts['+i+
                         '].toggle()" ' +
                         'style="width: '+width+'px;height: '+height+'px;margin:'+margin+'px '+margin+'px;">' +
-                        '<table><tr><td><span class="price">${{giftstart.parts['+i+
+                        '<div class="td"><span class="price">${{giftstart.parts['+i+
                         '].value / 100 | number : 2}}</span><a ng-href="/users/{{giftstart.parts['+i+'].uid}}"><img class="giver" style="width:' +
                         usrShortEdge + 'px;height:' + usrShortEdge + 'px;" ng-src="{{giftstart.parts['+i+
-                        '].img}}"/></a></td></tr></table></div>';
+                        '].img}}"/></a></div></div>';
                     overlayElement.append($compile(divString)(scope));
                 }
             }, 10);

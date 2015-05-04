@@ -1,25 +1,35 @@
-@import "../../base"
+@import "../static-pages"
 
-div.wrapper.faq
+div.faq
   margin: 2em auto 5em auto
-  padding-top: 3px
-  width: 64em
+  padding-top: 3px auto
   font-weight: 800
-  @media screen and (max-width: 48em)
-    width: 90%
+  text-align: left
+
+  .headerwrap
+    background: url("/assets/faq/FAQHero.jpg") no-repeat center top
+    h1, h2, p
+      padding: 0px
+      margin-top: 0px
+    a
+      color: #ffffff
+      text-decoration: underline
 
   h1#mainhead
     font-weight: bolder
 
   h1
-    font-family: "Roboto"
+    font-family: "Roboto", sans-serif
     margin-top: 1em
     margin-bottom: 10px
+    padding: 0px 75px
 
   h2
-    font-family: "Roboto"
+    font-family: "Roboto", sans-serif
     font-size: 24px
+    padding: 0px 75px
 
   p
-    font-family: "Roboto"
+    font-family: "Roboto", sans-serif
     font-size: 14px
+    padding: 0px 75px

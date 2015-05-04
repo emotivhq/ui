@@ -21,9 +21,13 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/giftstart/:title/:object/:attr',
         {templateUrl: '/scripts/giftstart/giftstart.html', reloadOnSearch: false})
         .when('/giftstart/:title/print',
-        {templateUrl: '/scripts/giftstart/giftstart__print.html', reloadOnSearch: false})
+        {templateUrl: '/scripts/giftstart/print/print.html', reloadOnSearch: false})
+        .when('/login',
+        {templateUrl: '/scripts/login/login-or-create.html', reloadOnSearch: false})
         .when('/users/:uid',
-        {templateUrl: '/scripts/user/profile.html', reloadOnSearch: false})
+        {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
+        .when('/user/:uid',
+        {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
         .when('/about',
         {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
         .when('/concierge',

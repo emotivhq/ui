@@ -100,7 +100,7 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
     function fetchTaggableFriends(resolve, reject) {
         var uid = 'me';
         // TODO: use better abstraction than direct access of inserted token
-        return $http({method: 'GET', url: 'https://graph.facebook.com/v2.2/' +
+        return $http({method: 'GET', url: 'https://graph.facebook.com/' +
             uid + '/taggable_friends' + '?access_token=' +
             window.loginDeets[2]})
             .success(function(response) {

@@ -13,7 +13,23 @@ import base64
 import yaml
 import stripe
 from pay import paypalapi
+import logging
 
+
+config = yaml.load(open('config.yaml'))
+
+def send_welcome_email(email_address):
+    """email a welcome message to the user; FAILS SILENTLY if cannot contact PUT target to DEV compatibility"""
+    data = json.dumps({'subject': "Welcome to GiftStarter",
+                       'sender': "receipt@giftstarter.co", 'to': [email_address],
+                       'template_name': "welcome_user",
+                       'mime_type': 'html',
+                       'template_kwargs': {}})
+
+    try:
+        requests.put(config['email_url'], data=data)
+    except Exception:
+        logging.error("Unable to send welcome email: {0}".format(data))
 
 def save_email(uid, email):
     """
@@ -24,8 +40,11 @@ def save_email(uid, email):
     """
     user = ndb.Key('User', uid).get()
     if user is not None:
+        was_email_empty = user.email is None or len(user.email) == 0
         user.email = email
         user.put()
+        if was_email_empty and user.email is not None and len(user.email) > 0:
+            send_welcome_email(user.email)
     return user
 
 
@@ -185,7 +204,7 @@ token_pointer_map = {
 }
 
 
-def validate(uid, token, path):
+def validate(uid, token, path=None):
     """
     validate user token and record login
     @param uid: user ID
@@ -199,7 +218,8 @@ def validate(uid, token, path):
         if user.name is None:
             user.name = ''
         if token_pointer_map[uid[0]](user) == token:
-            UserLogin.register_login(uid, path)
+            if path:
+                UserLogin.register_login(uid, path)
             result = {
                 'uid': uid, 'img_url': user.cached_profile_image_url,
                 'token': token,

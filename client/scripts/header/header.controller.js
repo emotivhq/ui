@@ -22,8 +22,12 @@
 
         this.userImageUrl = UserService.profileImageUrl;
         this.userProfileUrl = '/users/' + UserService.uid;
+        this.userName = (UserService.name).toUpperCase();
 
         this.creating = $location.path().indexOf('/create') === 0;
+
+        $scope.search = false;
+        $scope.menu = false;
 
         $interval(updateSubliminal, 3000);
 
@@ -64,6 +68,7 @@
             self.loggedIn = UserService.loggedIn;
             self.userImageUrl = UserService.profileImageUrl;
             self.userProfileUrl = '/users/' + UserService.uid;
+            self.userName = (UserService.name).toUpperCase();
         }
 
         function menuOpen() {$rootScope.$broadcast('menu-open')}
@@ -108,6 +113,10 @@
             $scope.actions.menuItemClicked(true);
         });
 
+        $scope.scrollTo = function(id) {
+            $location.hash(id);
+            $anchorScroll();
+        }
 
         var producturl = decodeURIComponent($location.search().producturl);
         if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {
@@ -119,6 +128,17 @@
             });
             console.log("set Olark message: "+parser.hostname);
         }
+
+        var userAgent = navigator.userAgent.toLowerCase();
+         if (userAgent .indexOf('safari')!=-1){
+           if(userAgent .indexOf('chrome')  > -1){
+             //browser is chrome
+           }else if((userAgent .indexOf('opera')  > -1)||(userAgent .indexOf('opr')  > -1)){
+             //browser is opera
+           }else{
+               jQuery('.menu-login > .submenu').css('margin-top', '-7px');
+           }
+          }
 
     };
 
@@ -133,5 +153,13 @@
         '$timeout',
         '$window',
         HeaderController]);
+
+    app.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+      //when the route is changed scroll to the proper element.
+      $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+        $location.hash($routeParams.scrollTo);
+        $anchorScroll();
+      });
+    });
 
 }(angular.module('GiftStarterApp')));

@@ -5,29 +5,29 @@ $footer-column-width: 37.3em
 $wrapper-padding: 1em
 
 footer
-  background-color: #eee
+  background-color: #333
 
   .footblock
     display: inline-block
     vertical-align: top
-    margin: 0 0 15px 0
+    margin: 0 0 40px 0
     padding: 0
-    color: #333
+    color: #e2e2e2
     font-size: 12px
-    line-height: 13px
+    line-height: 22px
     .socialicon
       width: 20px
       height: 20px
     .logo
-      width: 40px
-      height: 40px
+      width: 50px
+      height: 50px
     &.left
       width: 73%
       margin-left: 5%
       .footcol
         height: 100px
         @media screen and (max-width: $phone-tablet-boundary)
-          margin: 0 1% 20px 6%
+          margin: 0 1% 40px 6%
       @media screen and (max-width: $phone-tablet-boundary)
         text-align: center
         width: 100%
@@ -46,7 +46,10 @@ footer
     text-align: left
     vertical-align: top
     text-transform: capitalize
-    color: #333
+    color: #e2e2e2
+    line-height: 22px
+    #mce-EMAIL
+      max-width: 120px
     @media screen and (max-width: $phone-boundary)
       width: 42%
     .colhead
@@ -54,6 +57,7 @@ footer
       margin-bottom: 10px
       font-size: 14px
       text-transform: uppercase
+      font-family: "Roboto", sans-serif
     input, button
       margin: 2px 0
       vertical-align: middle
@@ -75,7 +79,7 @@ footer
       background-color: #333
     a
       font: $p-font
-      color: #333
+      color: #e2e2e2
       text-decoration: none
       display: inline-block
       white-space: nowrap
@@ -123,7 +127,7 @@ footer
     p
       margin-bottom: 1.5em
     input.email
-      +border-radius(0.4em)
+      //+border-radius(0.4em)
       width: 20em
       @media screen and (max-width: 37.5em)
         width: 100%

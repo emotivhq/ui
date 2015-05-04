@@ -17,7 +17,7 @@ div.about
     display: inline-block
     padding: 20px
     text-align: center
-    width: 32.5%
+    width: 24.5%
     @include apply-at-size("phone")
       width: 49%
     vertical-align: top
@@ -28,11 +28,11 @@ div.about
     h4
       font-size: 1em
 
-  //.threeup
-  //  .member-item
-  //    width: 32.5%
-  //    @include apply-at-size("phone")
-  //      width: 49%
+  .threeup
+    .member-item
+      width: 32.5%
+      @include apply-at-size("phone")
+        width: 49%
 
   .mission
     font-family: "Roboto", sans-serif
@@ -51,7 +51,7 @@ div.about
       td:first-child
         white-space: nowrap
 
-  .investors
+  .investors, .advisors
     text-align: left
 
   .font

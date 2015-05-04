@@ -5,9 +5,9 @@ __author__ = 'GiftStarter'
 import webapp2
 import time
 from login import login_core
-import gs_user.gs_user_core
 from gs_user import User
 from giftstart import giftstart_comm
+from gs_user.gs_user_core import send_welcome_email, login_emaillogin_user
 import EmailLoginPair
 import json
 import re
@@ -36,7 +36,7 @@ class CreateHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error': 'Password cannot be blank'}))
             return
         if not validate_password_complexity(password):
-            self.response.write(json.dumps({'error': 'Password does not meet minimum requirements. Please try again.'}))
+            self.response.write(json.dumps({'error': 'Please use a more complex password: at least 8 characters, with uppercase, lowercase, and number(s)'}))
             return
         token_set = login_core.get_email_token_set(email=email, password=password)
         try:
@@ -45,11 +45,12 @@ class CreateHandler(webapp2.RequestHandler):
             uid = True
         if uid:
             self.response.write(json.dumps({
-                'error': 'It appears you\'ve already set a password... please go back and click "login" instead!'
+                'error': 'It appears you\'ve already set a password... please click "login" instead!'
             }))
         else:
             referrer = None #UserReferral.from_dict(data.get('referrer', {}))
-            user = gs_user.gs_user_core.login_emaillogin_user(email, password, referrer)
+            user = login_emaillogin_user(email, password, referrer)
+            user.email = email
             user.name = name
             user.put()
             self.response.write(json.dumps({
@@ -62,6 +63,7 @@ class CreateHandler(webapp2.RequestHandler):
                         'has_pitched_in': user.has_pitched_in,
                     }
             }))
+            send_welcome_email(user.email)
 
 
 class LoginHandler(webapp2.RequestHandler):
@@ -99,7 +101,7 @@ class LoginHandler(webapp2.RequestHandler):
             }))
         else:
             self.response.write(json.dumps({
-                'error': 'We couldn\'t find that email address and password combination; please try again.'
+                'error': 'We\'re sorry, that email or password does not match one we have on file'
             }))
 
 class RequestResetHandler(webapp2.RequestHandler):

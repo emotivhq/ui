@@ -6,6 +6,7 @@ by relevance.
 __author__ = 'GiftStarter'
 
 import requests
+from requests.exceptions import ConnectionError
 import urllib
 import json
 import logging
@@ -148,10 +149,12 @@ def search_amazon(query):
     """ search_amazon('xbox 1') -> [Product...]
     Search for specified keywords on amazon, returning a list of products
     """
-    response = requests.get(make_amazon_url(query)).text
-    products = parse_amazon_products(response)
-
-    return products
+    try:
+        response = requests.get(make_amazon_url(query)).text
+        return parse_amazon_products(response)
+    except ConnectionError as x:
+        logging.error("ConnectionError in product_search: "+str(x.message))
+        return []
 
 
 def make_amazon_url(query):
@@ -206,17 +209,20 @@ def search_prosperent(query):
     """
     products = []
 
-    response = json.loads(requests.get(make_prosperent_url(query)).text)
-    if response.get('errors'):
-        logging.error(
-            'Prosperent error during search:\t' +
-            json.dumps(response['errors']))
-    else:
-        products = [SearchProduct.from_prosperent(prosp_prod)
-                    for prosp_prod in response.get('data')]
-        products = [product for product in products if price_filter(product)]
-
-    return products
+    try:
+        response = json.loads(requests.get(make_prosperent_url(query)).text)
+        if response.get('errors'):
+            logging.error(
+                'Prosperent error during search:\t' +
+                json.dumps(response['errors']))
+        else:
+            products = [SearchProduct.from_prosperent(prosp_prod)
+                        for prosp_prod in response.get('data')]
+            products = [product for product in products if price_filter(product)]
+        return products
+    except ConnectionError as x:
+        logging.error("ConnectionError in product_search: "+str(x.message))
+        return []
 
 
 def make_prosperent_url(query):

@@ -5,8 +5,9 @@ import webapp2
 from social import twitter, googleplus, facebook
 import json
 from gs_user_core import update_or_create, get_user, \
-    subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens
+    subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
 from gs_user_stats import get_stats
+from StoredProduct import StoredProduct
 from UserLogin import UserLogin
 from render_app import render_app
 import re
@@ -34,6 +35,31 @@ class StatsHandler(webapp2.RequestHandler):
         """
         uid = self.request.path[7:-5]
         self.response.write(json.dumps(get_stats(uid)))
+
+
+class UserProfileHandler(webapp2.RequestHandler):
+    """JSON-formatted User"""
+    def get(self):
+        """
+        Gets user as JSON (including protected data if signed in as self)
+        """
+        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
+        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
+        allow_protected_data = uid and validate(uid, token, self.request.path)
+        extended_attribs = self.request.params['ext'] if 'ext' in self.request.params else [];
+        uid = self.request.path.split('/')[3][:-5]
+        if uid[0] not in ['f', 'g', 't', 'e']:
+            self.response.set_status(400, "Invalid user id")
+        else:
+            user = get_user(uid)
+            if user is None:
+                self.response.set_status(400, "Invalid user id")
+            else:
+                response_data = user.dictify(allow_protected_data)
+                if('giftideas' in extended_attribs):
+                    products = StoredProduct.query(StoredProduct.uid == uid).fetch()
+                    response_data['giftideas'] = map(lambda x: x.dictify(), products)
+                self.response.write(json.dumps(response_data))
 
 
 class UserPageHandler(webapp2.RequestHandler):
@@ -104,8 +130,97 @@ class UserHandler(webapp2.RequestHandler):
 
     def post(self):
         data = json.loads(self.request.body)
+        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
+        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
+        is_validated_self = uid and validate(uid, token, self.request.path) and 'uid' in data and uid == data['uid']
 
-        if data['action'] == 'is-logged-in':
+        if data['action'] == 'update-profile':
+            if(is_validated_self):
+                user = ndb.Key('User', uid).get()
+                was_email_empty = user.email is None or len(user.email) == 0
+                try:
+                    user.name=data['name']
+                    user.link_facebook=data['link_facebook']
+                    user.link_twitter=data['link_twitter']
+                    user.link_linkedin=data['link_linkedin']
+                    user.link_googleplus=data['link_googleplus']
+                    user.link_website=data['link_website']
+                    user.email=data['email']
+                    user.phone_number=data['phone']
+                    user.birth_day=data['birth_day']
+                    user.birth_month=data['birth_month']
+                    user.shipping_address=data['shipping_address']
+                    user.shipping_city=data['shipping_city']
+                    user.shipping_state=data['shipping_state']
+                    user.shipping_zip=data['shipping_zip']
+                    user.put()
+                    self.response.write(json.dumps({
+                        'ok': 'User updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in your '+x.message
+                    }))
+                if was_email_empty and user.email is not None and len(user.email) > 0:
+                    send_welcome_email(user.email)
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s profile.'
+                }))
+        elif data['action'] == 'delete-save-for-later':
+            if is_validated_self:
+                try:
+                    s = StoredProduct.query(
+                        StoredProduct.uid == uid,
+                        StoredProduct.url == data['url'],
+                        StoredProduct.retailer == data['retailer'],
+                        StoredProduct.price == data['price'],
+                        StoredProduct.title == data['title'],
+                        StoredProduct.img == data['imgUrl']
+                    ).fetch(1)
+                    if len(s)>0:
+                        s[0].key.delete()
+                    self.response.write(json.dumps({
+                        'ok': 'List updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in the '+x.message
+                    }))
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s list.'
+                }))
+        elif data['action'] == 'save-for-later':
+            if is_validated_self:
+                try:
+                    product = StoredProduct(
+                        uid=uid,
+                        url=data['url'],
+                        retailer=data['retailer'],
+                        price=data['price'],
+                        title=data['title'],
+                        description=data['description'],
+                        img=data['imgUrl'])
+                    product.put()
+                    self.response.write(json.dumps({
+                        'ok': 'List updated'
+                    }))
+                except KeyError as x:
+                    self.response.set_status(400, "Invalid user id")
+                    self.response.write(json.dumps({
+                        'error': 'Please fill in the '+x.message
+                    }))
+            else:
+                self.response.set_status(400, "Invalid user id")
+                self.response.write(json.dumps({
+                    'error': 'It looks like you\'re trying to edit someone else\'s list.'
+                }))
+        elif data['action'] == 'is-logged-in':
             if data['service'] == 'twitter':
                 self.response.write(twitter.is_logged_in(data['uid']))
 
@@ -229,6 +344,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
+                               ('/users/profile/.*.json', UserProfileHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
                                ('/users/.*/cards.json', PaymentCardsHandler),

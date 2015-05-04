@@ -1,23 +1,22 @@
 @import "../base"
 @import "../frame/column"
+@import "../static-pages/static-pages"
 
-$step-margin-width: 4em
-$landing-page-padding-horz: 1.5em
-$step-width: (2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
+$landing-page-padding-horz: 1.3125em
+$step-width: 210px //(2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
+
+.headerwrap
+  background: url("/assets/homepage_hero.jpg") no-repeat center top
+  margin-bottom: 10px !important
 
 div.landing-page
-  padding: 0.75em $landing-page-padding-horz
   text-align: center
   margin: 0 auto
+  padding-bottom: 0
 
   sup.regmark
     font-size: 20px
     top: -30px
-
-  *
-    font-family: "Roboto", sans-serif
-    font-color: #333
-    margin: 0
 
   hr
     margin: 30px 0 30px 0
@@ -28,7 +27,7 @@ div.landing-page
     clear: both
 
   button
-    font-family: BlanchCondensed
+    font-family: Gotham, sans-serif
 
   div.horizontalBar
     border-color: $primary-color
@@ -152,8 +151,7 @@ div.landing-page
   @media screen and (min-width: $phone-tablet-boundary)
     div.process
       div.step
-        margin-left: 2em
-        margin-right: 2em
+        margin: 0 28px
 
     @media screen and (min-width: $tablet-computer-boundary)
       div.step.one
@@ -172,7 +170,7 @@ div.landing-page
       width: 30em
 
   p.need-help-concierge
-    width: 300px
+    width: 500px
     margin: 0 auto
     @media screen and (max-width: $phone-tablet-boundary)
       width: 80%
