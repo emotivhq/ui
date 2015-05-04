@@ -12,23 +12,29 @@
 
   .menu
     border-spacing: 20px 0
-    display: table
+    display: block
     margin: 0 auto
     text-align: center
 
     .menu-item
       @extend .linky
-      background-color: #e2e2e2
       border-spacing: 0
-      display: table-cell
+      display: inline-block
       height: 50px
-      padding: 20px
+      padding: 15px
       vertical-align: middle
       width: 200px
 
     .menu-wrapper
+      background-color: #e2e2e2
       border-spacing: 0
-      display: table-cell
+      display: inline-block
+      margin: 0 10px
+      @include apply-at-size("tablet")
+        margin: 10px
+        //width: 31%
+      @include apply-at-size("phone")
+        margin: 10px
 
   .content
     font: 1em "Roboto", sans-serif
@@ -110,7 +116,8 @@
     margin-bottom: 20px
 
   .selected
-    border-bottom: 8px solid $gs-green
+    @include apply-at-size("desktop")
+      border-bottom: 8px solid $gs-green
     background-color: $gs-green !important
     color: white
 
@@ -119,4 +126,17 @@
     background-color: $gs-green
     padding: 0
     margin: 0 auto
-    width: 90%
+    width: 91.3%
+    @include apply-at-size("tablet")
+      display: none
+    @include apply-at-size("phone")
+      display: none
+
+  //.phone-row
+  //  @include apply-at-size("phone")
+  //    display: table-row
+  //.tablet-row
+  //  @include apply-at-size("tablet")
+  //    display: table-row
+  //  @include apply-at-size("phone")
+  //    display: table-row
