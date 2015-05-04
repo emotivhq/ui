@@ -19,7 +19,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     }).success(function (response) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;
-        console.log($scope.userIdea);
     });
 
     UserService.getUser(thisUser,
@@ -61,7 +60,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             .then(function (res) {
 
             }, function (errorRes) {
-                console.log(errorRes);
                 alert("Error. Please try again.");
             });
     }
