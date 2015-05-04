@@ -19,6 +19,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     }).success(function (response) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;
+        console.log($scope.userIdea);
     });
 
     UserService.getUser(thisUser,
@@ -46,6 +47,24 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
                 source: 'StoredProduct'
             });
     };
+
+    $scope.DeleteSavedItem = function(url, retailer, price, title, img){
+        $http.post('/users', {
+            'uid': $scope.user.uid,
+            'action': 'delete-save-for-later',
+            'url': url,
+            'retailer': retailer,
+            'price': price,
+            'title': title,
+            'imgUrl': img
+        })
+            .then(function (res) {
+
+            }, function (errorRes) {
+                console.log(errorRes);
+                alert("Error. Please try again.");
+            });
+    }
 
     var urlSerialize = function (obj) {
         var str = [];

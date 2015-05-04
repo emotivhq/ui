@@ -50,7 +50,19 @@
     @include apply-at-size("phone")
       display: block
 
+  &__close
+     position: absolute
+     top: 0
+     right: 0
+     z-index: 11
+     background: #000
+     border: 1px solid #333
+     font-size: 0.8rem
+     color: #fff
+     padding: 0.5rem
+
   &__productimgwrap
+    position: relative
     min-height: 11rem
     max-height: 12rem
     background: #fff
