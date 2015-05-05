@@ -1,7 +1,7 @@
        <form class="userprofile__info" name="userprofilInfo">
             <div class="userprofile__image" ng-class="{true: 'userprofile__image--edit'}[editMode]">
                 <button class="userprofile__imagecancel tooltip--right" data-tooltip="Close" ng-show="editMode" ng-click="editMode = false;">x</button>
-                <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
+                <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" />
                 <gs-image-upload ng-show="editMode" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
                 <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="imgloading">
                 <button class="userprofile__imageedit" ng-hide="blocked||editMode"  ng-click="editMode=true;">Change photo</button>

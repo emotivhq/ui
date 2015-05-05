@@ -140,7 +140,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     function submit() {
         UserService.uploadProfileImage(imageData)
             .then(function (newImageUrl) {
-                $scope.user.img_url = newImageUrl;
+                $scope.user.img_url = newImageUrl.data;
                 $scope.editMode = false;
             }, function (reason) {
                 console && console.log && console.log('Failed to update profile image', reason);
