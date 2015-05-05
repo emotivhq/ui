@@ -23,13 +23,20 @@
     </div>
 
     <div class="groupcard">
-        <div class="title title--groupcard">
-            <h2 class="title" ng-hide="editMode">{{giftStart.title}}</h2>
-        </div>
-        <div class="contributor__imageset">
-            <div ng-repeat="pitchIn in pitchIns" class="contributors__photo">
-                <img class="contributors__img" ng-src="{{pitchIn.img}}" />
+        <div class="groupcard__wrapper">
+            <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
+            <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
+                <div class="contributors__figure">
+                    <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
+                        <img class="contributors__img" ng-src="{{pitchIn.img}}" />
+                    </a>
+                </div>
+                <div class="contributors__info">
+                    <h3 class="contributors__name">{{pitchIn.name}}</h3>
+                    <p class="contributors__info">{{pitchIn.note}}</p>
+                </div>
             </div>
+            <div ng-repeat-end class="h--hide"></div>
         </div>
         <div class="contributor__description">
             <p class="contributor__text">
@@ -97,21 +104,8 @@
         margin-right: 3%;
         float: right !important;
     }
-
-    .contributors__photo:only-child {
-        display: block;
-        position: relative;
-        left: 33%;
-    }
-
-    .title--groupcard {
-        display: block !important;
-    }
-
-    .contributors__photo,
     .contributor__link,
     .contributors__img,
-    .contributor__imageset,
     .contributor__description {
         float: left;
         display: inline-block;
@@ -123,8 +117,10 @@
         margin: 0 0 15px;
     }
 
-    .contributors__photo {
-        width: 25%;
+    .groupcard__wrapper {
+        float: left;
+        width: 50%;
+        margin: 1rem 0 1rem 1rem;
     }
 
     .desc {
@@ -133,12 +129,7 @@
 
     .contributors__img {
         width: 47% !important;
-    }
-
-    .contributor__imageset {
-        width: 53%;
-        min-height: 200px;
-        margin-left: 3%;
+        margin: 5% 25% !important
     }
 
     .contributor__description {
