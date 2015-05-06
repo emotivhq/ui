@@ -34,7 +34,7 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
             '&redirect_uri=' + $window.location.protocol + '//' +
             $window.location.host +
             '&state=' + AppStateService.base64State() +
-            '&scope=public_profile,basic_info,email,user_birthday,user_friends,friends_birthday';
+            '&scope=public_profile,basic_info,email,user_birthday,user_friends';
         console&console.log&&console.log("FB URL: "+url)&&console.log("\n\n\n");
         $window.open(url, '_self');
     };
