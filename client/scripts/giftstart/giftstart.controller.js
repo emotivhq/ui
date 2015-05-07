@@ -12,7 +12,7 @@ GiftStarterApp.controller('GiftStartController', [
 
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         ProductService, UserService,  $window, $document,  PopoverService, LocalStorage) {
+         ProductService, UserService, $window, $document, PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -105,6 +105,10 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
             $scope.pitchinButtonHoverMessage = 'Click on some parts first!';
         }
     });
+
+
+    console&&console.log&&console.log("starting syncPitchInsTimer");
+    var syncPitchInsTimer = $interval(function(){GiftStartService.syncPitchIns("GiftStartService    ");}, 500);
 
     // Synchronize parts on mouse activity
     $scope.mouseActivityCallback = function(source) {
@@ -299,4 +303,12 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.$on('logout-success', loggedOut);
 
     imageInput.bind('change', $scope.updateImage);
+
+    $scope.$on("$destroy", function() {
+        if (syncPitchInsTimer) {
+            console&&console.log&&console.log("cancelling syncPitchInsTimer");
+            $interval.cancel(syncPitchInsTimer);
+        }
+    });
+
 }
