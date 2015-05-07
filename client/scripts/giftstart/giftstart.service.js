@@ -474,7 +474,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 updateLastChecked();
             } else if (!self.pitchInsInitialized) {
                 checkForSync();
-                updateLastChecked();;
+                updateLastChecked();
             } else {
                 // Update every N seconds upon user activity
                 var currentTime = new Date().getTime();
