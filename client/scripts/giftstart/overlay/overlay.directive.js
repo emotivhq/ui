@@ -31,19 +31,21 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
                 var usrShortEdge = (usrHeight > usrWidth) ? usrWidth : usrHeight;
                 overlayElement.empty();
 
-                for (var i = 0; i < GiftStartService.giftStart.parts.length; i++) {
-                    var divString = '<div class="part-cell c'+i+
-                        '" ng-class="{bought: giftstart.parts['+i+
-                        '].bought, selected: giftstart.parts['+i+
-                        '].selected, disabled: giftstart.parts['+i+
-                        '].disabled}" ng-click="giftstart.parts['+i+
-                        '].toggle()" ' +
-                        'style="width: '+width+'px;height: '+height+'px;margin:'+margin+'px '+margin+'px;">' +
-                        '<div class="td"><span class="price">${{giftstart.parts['+i+
-                        '].value / 100 | number : 2}}</span><a ng-href="/users/{{giftstart.parts['+i+'].uid}}"><img class="giver" style="width:' +
-                        usrShortEdge + 'px;height:' + usrShortEdge + 'px;" ng-src="{{giftstart.parts['+i+
-                        '].img}}"/></a></div></div>';
-                    overlayElement.append($compile(divString)(scope));
+                if(GiftStartService.giftStart.parts.length){
+                    for (var i = 0; i < GiftStartService.giftStart.parts.length; i++) {
+                        var divString = '<div class="part-cell c'+i+
+                            '" ng-class="{bought: giftstart.parts['+i+
+                            '].bought, selected: giftstart.parts['+i+
+                            '].selected, disabled: giftstart.parts['+i+
+                            '].disabled}" ng-click="giftstart.parts['+i+
+                            '].toggle()" ' +
+                            'style="width: '+width+'px;height: '+height+'px;margin:'+margin+'px '+margin+'px;">' +
+                            '<div class="td"><span class="price">${{giftstart.parts['+i+
+                            '].value / 100 | number : 2}}</span><a ng-href="/users/{{giftstart.parts['+i+'].uid}}"><img class="giver" style="width:' +
+                            usrShortEdge + 'px;height:' + usrShortEdge + 'px;" ng-src="{{giftstart.parts['+i+
+                            '].img}}"/></a></div></div>';
+                        overlayElement.append($compile(divString)(scope));
+                    }
                 }
             }, 10);
         }
@@ -51,7 +53,6 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
         drawGrid();
 
         angular.element(overlayElement).bind('load', drawGrid);
-        console&&console.log&&console.log('binding to: '+jQuery(overlayElement));
         jQuery( window ).resize(drawGrid);
         scope.$on('overlay-updated', drawGrid);
         scope.$on('giftstart-loaded', drawGrid);

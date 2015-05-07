@@ -38,7 +38,6 @@
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
-            console && console.log && console.log($location.path());
             self.creating = $location.path().indexOf('/create') === 0;
             menuClose();
             if (next.$$route) {
