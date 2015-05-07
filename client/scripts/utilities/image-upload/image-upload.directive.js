@@ -10,14 +10,18 @@ function gsImageUpload($timeout, $window) {
 
     function link(scope, element, attrs) {
 
-        var inputEle = element.children()[0].children[1].children[0];
+        var inputEle = document.querySelector('.thanks-image-input');
         var canvasEle = element.children()[0].children[0];
         var ctx = canvasEle.getContext('2d');
         var aspect = attrs.aspect;
         var gsElement = element[0];
 
         scope.openImageDialog = function () {
-            inputEle.click()
+            inputEle.click();
+        };
+
+        scope.$parent.openImageDialogGlobal = function () {
+            scope.openImageDialog();
         };
 
         // Size canvas to container
@@ -62,7 +66,6 @@ function gsImageUpload($timeout, $window) {
         }
 
         function makeImage(imageData) {
-
             resizeCanvas();
             var tempImg = new Image();
             tempImg.src = imageData;
@@ -103,7 +106,7 @@ function gsImageUpload($timeout, $window) {
                 var dragNextY = 0;
                 var dragging = false;
                 angular.element(canvasEle)
-                    .bind('mousedown touchstart', function (event) {
+                    .on('mousedown touchstart', function (event) {
                         if (dragReady) {
                             dragReady = false;
                             $timeout(function () {
@@ -120,13 +123,13 @@ function gsImageUpload($timeout, $window) {
                         }
                     });
                 angular.element(canvasEle)
-                    .bind('mouseup touchend mouseleave touchleave',
+                    .on('mouseup touchend mouseleave touchleave',
                     function (event) {
                         dragging = false;
                         scope.imageUpdated(canvasEle.toDataURL());
                     });
                 angular.element(canvasEle)
-                    .bind('mousemove touchmove', function (event) {
+                    .on('mousemove touchmove', function (event) {
                         if (dragging) {
                             event.preventDefault();
                             // Transform drag based on rotation
@@ -198,10 +201,18 @@ function gsImageUpload($timeout, $window) {
                     exception);
             }
             makeImage(reader.result);
+            scope.$parent.imgloading = false;
         }
 
-        function fileChanged() {scope.putImage(inputEle.files[0])}
-        angular.element(inputEle).bind('change', fileChanged);
+        function fileChanged() {
+            scope.putImage(inputEle.files[0]);
+        }
+        angular.element(inputEle).on('change', function () {
+            scope.$parent.imgloading = true;
+            $timeout(function () {
+                fileChanged();
+            }, 100);
+        });
     }
 
     return {

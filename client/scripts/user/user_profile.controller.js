@@ -85,6 +85,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.campaingquantity = 3;
     $scope.showMore = true;
     $scope.showMoreCampaign = true;
+    $scope.imgloading = false;
     $scope.months = [
         {label: 'Jan', value: 0},
         {label: 'Feb', value: 1},
@@ -139,7 +140,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     function submit() {
         UserService.uploadProfileImage(imageData)
             .then(function (newImageUrl) {
-                $scope.user.img_url = newImageUrl;
+                $scope.user.img_url = newImageUrl.data;
                 $scope.editMode = false;
             }, function (reason) {
                 console && console.log && console.log('Failed to update profile image', reason);

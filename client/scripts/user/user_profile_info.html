@@ -1,10 +1,12 @@
        <form class="userprofile__info" name="userprofilInfo">
             <div class="userprofile__image" ng-class="{true: 'userprofile__image--edit'}[editMode]">
-                <button class="userprofile__imagecancel" ng-show="editMode" ng-click="editMode = false;">X</button>
-                <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
-                <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
-                <button class="userprofile__imageedit" ng-hide="blocked"  ng-click="editMode=true;">Change photo</button>
-                <button class="userprofile__imageupload" ng-click="submit()" ng-click="editMode=false;" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button>
+                <button class="userprofile__imagecancel tooltip--right" data-tooltip="Close" ng-show="editMode" ng-click="editMode = false;">x</button>
+                <img class="userprofile__userimage" ng-src="{{user.img_url}}" ng-hide="editMode" />
+                <gs-image-upload ng-show="editMode" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
+                <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="imgloading">
+                <button class="userprofile__imageedit" ng-hide="blocked||editMode"  ng-click="editMode=true;">Change photo</button>
+                <button class="userprofile__imagesave" ng-click="submit(); editMode = false;" ng-show="editMode" ng-class="{disabled: !imageSet}">Save</button>
+                <button class="userprofile__imageupload"  ng-show="editMode"  ng-click="openImageDialogGlobal();">Upload</button>
             </div>
             <div class="userprofile__name">
                 <h2 ng-show="blocked" class="userprofile__title">
