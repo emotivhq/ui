@@ -20,7 +20,7 @@
                     <span class="signature__title" ng-show=" giftStart.gc_name "> {{ giftStart.gc_name }} </span>
                 </p>
                     <input class="gc-name" ng-model="newGcName" ng-show="editMode"/>
-                <button class="edit" ng-show="campaignEditable && !editMode && secondsLeft > 0 && ! ()" ng-click="editMode=true;">EDIT</button>
+                <button class="edit" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">EDIT</button>
                 <div class="save"><button class="save" ng-click="updateCampaign();" ng-show="editMode">Save</button><button class="save" ng-click="editMode=false;" ng-show="editMode">X</button></div>
                 <p ng-show="giftStart.gc_name.length > 0 || editMode" class="gift-champion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion</p>
             </div>
