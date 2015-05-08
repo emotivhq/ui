@@ -1,8 +1,8 @@
-<div class="giftstart wrapper" ng-controller="GiftStartController" ng-mousemove="mouseActivityCallback('mouse-move')" ng-click="mouseActivityCallback('click')">
+<div class="giftstart wrapper" ng-controller="GiftStartController" ng-click="mouseActivityCallback('click')">
 
     <div class="fullwidth block">
         <div class="title">
-            <h1 class="title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
+            <h1 class="title campaign-title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
         </div>
     </div>
 
@@ -69,7 +69,6 @@
     </div>
 
     <gs-thanks></gs-thanks>
-
     <div class="groupcard">
         <div class="title title--groupcard">
             <h3 class="title__name">Group Card</h3>

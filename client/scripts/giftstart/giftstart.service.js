@@ -467,6 +467,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     }
 
     this.syncPitchIns = function(source) {
+        console&&console.log&&console.log("syncPitchIns: "+source);
         if (self.giftStart.gsid) {
             if (source == 'pitch-in-hover' || source == 'GiftStartService') {
                 // User hovered pitch-in button, need to update immediately
