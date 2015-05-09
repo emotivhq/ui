@@ -149,7 +149,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
 };
 
-app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', '$timeout', 'Analytics', UserprofileController]);
+app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', 'Analytics', UserprofileController]);
 
 }(angular.module('GiftStarterApp')));
 
