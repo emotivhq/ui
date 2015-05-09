@@ -6,7 +6,7 @@
 
 (function (app) {
 
-var UserprofileController = function ($scope, UserService, $location, $http) {
+var UserprofileController = function ($scope, UserService, $location, $http, $timeout) {
 
     var urlpath = $location.path();
     var thisUser = urlpath.substring(urlpath.lastIndexOf('/') + 1);
@@ -14,21 +14,19 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.userIdea = {};
     $scope.pitchins_unique = [];
 
-    function refreshUserData() {
-        $http({
-            method: 'GET',
-            url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
-        }).success(function (response) {
-            $scope.user = response;
-            $scope.userIdea = $scope.user.giftideas;
-        });
-        UserService.getUser(thisUser,
-            function (data) {
-                $scope.userCampaings = data[Object.keys(data)[0]];
-                $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
-            });
-    }
-    refreshUserData();
+    $http({
+        method: 'GET',
+        url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
+    }).success(function (response) {
+        $scope.user = response;
+        $scope.userIdea = $scope.user.giftideas;
+    });
+
+    UserService.getUser(thisUser,
+        function (data) {
+            $scope.userCampaings = data[Object.keys(data)[0]];
+            $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
+    });
 
     var getUniquePitchIns = function(pitchins) {
         var flags = [], ret = [], l = pitchins.length, i;
@@ -42,16 +40,18 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     $scope.giftstartThisUrl = function (title, price, img, url) {
         return '/create?' + urlSerialize({
-                product_url: url,
-                title: title,
-                price: price,
-                img_url: img,
-                source: 'StoredProduct'
-            });
+            product_url: url,
+            title: title,
+            price: price,
+            img_url: img,
+            source: 'StoredProduct'
+        });
     };
 
-    $scope.DeleteSavedItem = function(idea){
+    $scope.DeleteSavedItem = function(idea) {
         idea.loading = true;
+        var index = $scope.userIdea.indexOf(idea);
+        $scope.userIdea.splice(index, 1);
         $http.post('/users', {
             'uid': $scope.user.uid,
             'action': 'delete-save-for-later',
@@ -61,13 +61,12 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             'title': idea.title,
             'imgUrl': idea.img
         })
-            .then(function (res) {
-                refreshUserData();
+            .then(function () {
                 idea.loading = false;
-            }, function (errorRes) {
+            }, function () {
                 alert("Error. Please try again.");
-            });
-    };
+            })
+    }
 
     var urlSerialize = function (obj) {
         var str = [];
@@ -150,7 +149,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
 };
 
-app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', 'Analytics', UserprofileController]);
+app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', '$timeout', 'Analytics', UserprofileController]);
 
 }(angular.module('GiftStarterApp')));
 

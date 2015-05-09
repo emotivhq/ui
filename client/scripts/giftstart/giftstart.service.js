@@ -476,14 +476,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             } else if (!self.pitchInsInitialized) {
                 checkForSync();
                 updateLastChecked();
-            } else {
-                // Update every N seconds upon user activity
-                var currentTime = new Date().getTime();
-                if (currentTime - self.lastCheckedMilliseconds >
-                    self.updateInterval) {
-                    checkForSync();
-                    updateLastChecked();
-                }
             }
         }
     };
