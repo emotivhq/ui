@@ -68,7 +68,6 @@ module.exports = function(grunt) {
                     '../client//scripts/frame/gs-focus.directive.js',
                     '../client//scripts/menu/menu.directive.js',
                     '../client//scripts/home/scroll-play.directive.js',
-                    '../client//scripts/menu/menu.directive.js',
                     '../client//scripts/static-pages/about/about.controller.js',
                     '../client//scripts/static-pages/faq/faq.controller.js',
                     '../client//scripts/static-pages/giftideas/giftideas.controller.js',
