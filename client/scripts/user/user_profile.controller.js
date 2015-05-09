@@ -6,7 +6,7 @@
 
 (function (app) {
 
-var UserprofileController = function ($scope, UserService, $location, $http, $timeout) {
+var UserprofileController = function ($scope, UserService, $location, $http) {
 
     var urlpath = $location.path();
     var thisUser = urlpath.substring(urlpath.lastIndexOf('/') + 1);
