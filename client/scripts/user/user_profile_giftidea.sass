@@ -75,7 +75,7 @@
     max-width: 13rem
     min-width: 2rem
     @media screen and (max-width: $tablet-landscape-width+200)
-      min-height: 8rem
+      min-height: 7rem
       max-height: 9.5rem
       max-width: 11.5rem
       min-width: 2rem
@@ -84,12 +84,19 @@
       max-height: 6.5rem
       max-width: 9.5rem
       min-width: 2rem
+    @media screen and (max-width: $phone-landscape-width+200)
+      margin: 0 auto
+      max-height: 7.5rem
+      max-width: 10rem
+      min-height: 6.5rem
+      min-width: 1.5rem
     @include apply-at-size("phone")
       margin: 0 auto
-      max-height: 11.5rem
-      max-width: 16rem
-      min-height: 9.5rem
-      min-width: 10rem
+      max-height: 9.5rem
+      max-width: 100%
+      min-height: 6.5rem
+      min-width: 1.5rem
+
 
   &__productimg
     padding: 0.5rem 0 1rem
@@ -110,9 +117,12 @@
       max-height: 6rem
       max-width: 9rem
       min-width: 1rem
+    @media screen and (max-width: $phone-landscape-width+200)
+      max-height: 6rem
+      max-width: 9rem
     @include apply-at-size("phone")
-      max-height: 11rem
-      max-width: 16rem
+      max-height: 9rem
+      max-width: 11rem
 
   &__productdesc
     @include apply-at-size("phone")
@@ -142,10 +152,13 @@
     max-width: 12rem
     position: relative
     text-align: center
+    overflow: hidden
     @media screen and (max-width: $tablet-landscape-width+200)
-      max-width: 11.5rem
-    @media screen and (max-width: $tablet-portrait-width+200)
       max-width: 9.5rem
+    @media screen and (max-width: $tablet-portrait-width+200)
+      max-width: 8.25rem
+    @media screen and (max-width: $phone-landscape-width+200)
+      max-width: 6rem
     @include apply-at-size("phone")
       max-width: 100%
 
