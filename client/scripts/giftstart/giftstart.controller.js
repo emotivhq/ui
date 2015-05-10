@@ -106,8 +106,6 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         }
     });
 
-    var syncPitchInsTimer = $interval(function(){GiftStartService.syncPitchIns("GiftStartService");}, 500);
-
     // Synchronize parts on mouse activity
     $scope.mouseActivityCallback = function(source) {
         GiftStartService.syncPitchIns(source);
