@@ -124,6 +124,7 @@ module.exports = function(grunt) {
                     '../client//scripts/utilities/image-upload/image-upload.directive.js',
                     '../client//scripts/utilities/local-storage.service.js',
                     '../client//scripts/utilities/uservoice.js',
+                    '../client//scripts/utilities/ng-clamp.js',
                     '../client//scripts/button/campaign-giftstart-it.directive.js',
                     '../client//scripts/header/giftstart-it-header.directive.js',
                     '../client//scripts/header/subscribe-header.directive.js',

@@ -12,7 +12,7 @@ GiftStarterApp.controller('GiftStartController', [
 
 function GiftStartController($scope,  GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         ProductService, UserService,  $window, $document,  PopoverService, LocalStorage) {
+         ProductService, UserService, $window, $document, PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -299,4 +299,11 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.$on('logout-success', loggedOut);
 
     imageInput.bind('change', $scope.updateImage);
+
+    $scope.$on("$destroy", function() {
+        if (syncPitchInsTimer) {
+            $interval.cancel(syncPitchInsTimer);
+        }
+    });
+
 }

@@ -1,4 +1,4 @@
-<div class="giftstart wrapper" ng-controller="GiftStartController" >
+<div class="giftstart wrapper" ng-controller="GiftStartController">
 
     <div class="fullwidth block">
         <div class="title">
@@ -10,10 +10,16 @@
         <div class="col2 block">
             <h3 class="title" target="_blank">
                 {{giftStart.product_title}}</h3>
-            <div class="desc">
-                GiftStarter is a Gifting Experience Service. Our mission is to focus on the gifting experience, using technology as an enabler. We enable the experience that captures giving between the recipient and those that give.<br/><br/>
 
-                Search for and select a product using the search bar on the homepage, fill out the GiftStart information to share your story on why this is important to you or your gift recipient, and bring others along on the giving journey. We let your family and friends choose their pieces of the gift to give, we send an awesome hand-crafted group card to remember the experience, and the gift too. <br/>
+            <div class="desc">
+                GiftStarter is a Gifting Experience Service. Our mission is to focus on the gifting experience, using
+                technology as an enabler. We enable the experience that captures giving between the recipient and those
+                that give.<br/><br/>
+
+                Search for and select a product using the search bar on the homepage, fill out the GiftStart information
+                to share your story on why this is important to you or your gift recipient, and bring others along on
+                the giving journey. We let your family and friends choose their pieces of the gift to give, we send an
+                awesome hand-crafted group card to remember the experience, and the gift too. <br/>
             </div>
             <div id="header-logo"></div>
         </div>
@@ -24,15 +30,18 @@
 
     <div class="groupcard">
         <div class="groupcard__wrapper">
-            <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
+            <div ng-repeat-start="pitchIn in pitchIns"
+                 ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]"
+                 class="contributors--pre h--hide"></div>
             <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
                 <div class="contributors__figure">
                     <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
-                        <img class="contributors__img" ng-src="{{pitchIn.img}}" />
+                        <img class="contributors__img" ng-src="{{pitchIn.img}}"/>
                     </a>
                 </div>
                 <div class="contributors__info">
                     <h3 class="contributors__name">{{pitchIn.name}}</h3>
+
                     <p class="contributors__info">{{pitchIn.note}}</p>
                 </div>
             </div>
@@ -42,16 +51,19 @@
             <p class="contributor__text">
                 {{giftStart.description}}
             </p>
+
             <p class="name">
                 <span>
                    &mdash;&mdash;{{giftStart.gc_name}}
                 </span>
             </p>
+
             <p class="gift-champion">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion
             </p>
+
             <div class="contributor__link">
-                <p class="contributor__campaign" >
+                <p class="contributor__campaign">
                     View the Campaign
                 </p>
                 <gs-print-url class="contributor__href"></gs-print-url>
@@ -63,11 +75,67 @@
     html {
         background: #fff;
     }
+
+    * {
+        font-family: Roboto, sans-serif;
+    }
+
+    * a {
+        font-size: 1em;
+        text-decoration: none;
+    }
+
+    @font-face {
+        font-family: Gotham;
+        src: url('/assets/fonts/Gotham-Book.woff'), url('/assets/fonts/Gotham-Book.ttf');
+    }
+
+    @font-face {
+        font-family: Gotham;
+        font-style: italic;
+        src: url('/assets/fonts/Gotham-BookItalic.woff'), url('/assets/fonts/Gotham-BookItalic.ttf');
+    }
+
+    @font-face {
+        font-family: "Roboto Condensed";
+        font-weight: 300;
+        src: url('/assets/fonts/RobotoCondensed-Light-webfont.woff');
+    }
+
+    @font-face {
+        font-family: "Roboto Condensed";
+        font-weight: 700;
+        src: url('/assets/fonts/RobotoCondensed-Bold-webfont.woff');
+    }
+
+    @font-face {
+        font-family: "Roboto Slab";
+        src: url('/assets/fonts/RobotoSlab-Thin-webfont.woff');
+    }
+
+    @font-face {
+        font-family: "Roboto Bold";
+        src: url('/assets/fonts/Roboto-Bold.woff'), url('/assets/fonts/Roboto-Bold.ttf');
+    }
+
+    @font-face {
+        font-family: "Roboto";
+        src: url('/assets/fonts/Roboto-Regular.woff');
+    }
+
+    h3 {
+        font: 400 1.25em "Roboto", sans-serif;
+        color: #000;
+    }
+
     #habla_oplink_a,
     footer,
     .headerNav,
     .search,
-    #header {
+    #header,
+    .toast-wrapper,
+    .h--hide,
+    body > :last-child {
         display: none;
     }
 
@@ -104,6 +172,7 @@
         margin-right: 3%;
         float: right !important;
     }
+
     .contributor__link,
     .contributors__img,
     .contributor__description {
@@ -143,9 +212,10 @@
         padding: 6% 0 7%;
         margin-top: 5%;
     }
-    
+
     .contributor__href {
         color: #444;
+        text-decoration: none;
     }
 
     .gift-champion {
@@ -162,10 +232,151 @@
         display: block !important;
         border-top: 1px solid #ccc;
     }
+
     .title--groupcard .title {
         margin-top: 25px;
     }
+
     .title {
-        color: black
+        color: black;
+        text-align: center;
+    }
+
+    .groupcard {
+        clear: both;
+        padding: 0;
+        text-align: center;
+        display: table;
+        width: 92%;
+        margin: 0 4% 5rem 4%;
+    }
+
+    @media only screen and (max-width: 667px) {
+        .groupcard {
+            display: block;
+        }
+    }
+
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .groupcard {
+            display: block;
+        }
+    }
+
+    .groupcard .title--groupcard {
+        margin: 0 auto 5rem;
+        display: table-caption;
+    }
+
+    @media only screen and (max-width: 667px) {
+        .groupcard .title--groupcard {
+            display: block;
+        }
+    }
+
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .groupcard .title--groupcard {
+            display: block;
+        }
+    }
+
+    .groupcard .title__name {
+        font-size: 3.2rem;
+    }
+
+    .groupcard .contributors {
+        display: table-cell;
+        width: 33%;
+        vertical-align: top;
+    }
+
+    @media only screen and (max-width: 667px) {
+        .groupcard .contributors {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .groupcard .contributors {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .groupcard .contributors--row {
+        display: table-row;
+    }
+
+    @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+        .groupcard .contributors--row {
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+        .groupcard .contributors--pre:nth-child(2n) {
+            display: table-row;
+        }
+    }
+
+    .groupcard .contributors:nth-child(even) {
+        background: #e2e2e2;
+        position: relative;
+    }
+
+    .groupcard .contributors:nth-child(odd) {
+        background: #efefef;
+        position: relative;
+    }
+
+    .groupcard .contributors--only {
+        width: 33%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+        .groupcard .contributors--only {
+            width: 50%;
+        }
+    }
+
+    @media only screen and (max-width: 667px) {
+        .groupcard .contributors--only {
+            width: 100%;
+        }
+    }
+
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .groupcard .contributors--only {
+            width: 100%;
+        }
+    }
+
+    .groupcard .contributors__info {
+        padding: 0 10% 3%;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+    }
+
+    .groupcard .contributors__name {
+        text-align: center;
+    }
+
+    .groupcard .contributors__img {
+        width: 26%;
+        margin: 8% 0 1%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        border: 2px solid #fff;
+        vertical-align: top;
+        cursor: pointer;
     }
 </style>
