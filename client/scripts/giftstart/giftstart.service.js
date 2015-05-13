@@ -327,7 +327,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         }
     };
 
-    this.paymentFailure = function() {console && console.log && console.log("Pitch-in failed!")};
+    this.paymentFailure = function(data) {console && console.log && console.log("Pitch-in failed!: "+data)};
 
     this.updateCampaign = function(newTitle, newDescription, newImage,
                                    newGcName) {

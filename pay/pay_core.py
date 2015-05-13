@@ -112,8 +112,8 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
     except Exception, e:
         logging.error(e.message)
 
-    if not parts_available(parts, gsid):
-        return {'result': 'error', 'error': 'One or more requested parts have '
+    if len(parts) < 1 or not parts_available(parts, gsid):
+        return {'result': 'error', 'payment-error': 'One or more requested parts have '
                                             'already been bought.'}
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
@@ -371,9 +371,8 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
     """
     user = ndb.Key('User', uid).get()
 
-    if not parts_available(parts, gsid):
-        return {'result': 'error', 'error': 'One or more requested parts have '
-                                            'already been bought.'}
+    if len(parts) < 1 or not parts_available(parts, gsid):
+        return {'result': 'error', 'payment-error': 'It looks like someone just bought that tile!  Please select another and try again.'}
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     total_charge = calculate_total_price(giftstart, parts)
@@ -419,9 +418,13 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
                  name=user.name if user.name else '')
     pi.put()
 
+    set_user_pitched_in(user)
+
     send_pitchin_notification(giftstart, charge_id, charge_amount,
                               card_last_four, user.email, note, user.name,
                               user.cached_profile_image_url)
+
+    return {'result': 'success', 'purchased-parts': parts}
 
 
 def extract_payment_amount_from_paypal_payment(payment):
