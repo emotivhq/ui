@@ -5,10 +5,10 @@
  */
 
 GiftStarterApp.service('UserService', ['$http','$rootScope','$cookieStore',
-    '$window','FacebookService','TwitterService','GooglePlusService', 'emailLoginService',
+    '$window', '$timeout','FacebookService','TwitterService','GooglePlusService', 'emailLoginService',
     'Analytics', UserService]);
 
-function UserService($http,  $rootScope,  $cookieStore,  $window,
+function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
                      FacebookService,  TwitterService,  GooglePlusService, emailLoginService,
                      Analytics) {
     this.uid = -1;
@@ -52,7 +52,10 @@ function UserService($http,  $rootScope,  $cookieStore,  $window,
         $cookieStore.put('uid', uid);
         $cookieStore.put('token', token);
 
-        $rootScope.$broadcast('login-success');
+        //cookies take time to propagate
+        $timeout(function() {
+            $rootScope.$broadcast('login-success');
+        }, 500);
 
         if (uid[0] == 'f') {FacebookService.getTaggableFriends()}
     };
