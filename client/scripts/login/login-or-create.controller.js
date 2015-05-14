@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var LoginOrCreateController = function ($scope,  $location, $routeParams, $timeout, UserService, TwitterService,
+    var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, UserService, TwitterService,
                                             FacebookService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
@@ -99,11 +99,12 @@
             $scope.working = false;
         });
 
+        $rootScope.$on('loginbox-show-login', function(){$scope.showCreate = false;});
 
     };
 
     app.controller('LoginOrCreateController', [
-        '$scope',  '$location', '$routeParams', '$timeout', 'UserService', 'TwitterService', 'FacebookService',
+        '$scope', '$rootScope', '$location', '$routeParams', '$timeout', 'UserService', 'TwitterService', 'FacebookService',
         'GooglePlusService', 'emailLoginService', 'Analytics',
         LoginOrCreateController]);
 }(angular.module('GiftStarterApp')));
