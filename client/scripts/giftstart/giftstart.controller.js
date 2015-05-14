@@ -36,6 +36,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
 
     $scope.isSavingForLater = false;
 
+    $scope.showLoginBox = false;
+
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
     } else {

@@ -5,6 +5,9 @@
 div.giftstart.wrapper
   margin: 0 auto
 
+  gs-overlay
+    margin-left: 0
+
   .giftstart-this
     background-color: #ccc
     text-align: center
@@ -107,6 +110,30 @@ div.giftstart.wrapper
       .campaign-title
         white-space: normal
 
+
+  div.login-box
+    float: right
+    display: block
+    padding-top: 0px
+    margin-right: 2%
+    width: 40%
+    @media screen and (max-width: $phone-tablet-boundary - 1)
+      float: none
+      padding: 0
+      margin-left: auto
+      margin-right: auto
+      width: 500px
+      max-width: 100%
+      text-align: center
+    h2
+      margin-top: 1rem
+      margin-bottom: 10px
+      color: #e27f24
+      font-size: 1.2em
+    input, button
+      width: 100%
+      margin-left: 0
+
   div.block.col2
     float: right
     padding-top: 0px
@@ -137,11 +164,18 @@ div.giftstart.wrapper
         float: left
     div.save
       float: right
+    div.prodtitle
+      margin-left: auto
+      margin-right: auto
+      max-width: 500px
     div.description
       position: relative
       overflow: hidden
       padding-top: 2em
       padding-bottom: 2em
+      margin-left: auto
+      margin-right: auto
+      max-width: 500px
       @media screen and (max-width: $phone-tablet-boundary - 1)
         padding-top: 0.5em
         padding-bottom: 0.5em
@@ -172,6 +206,9 @@ div.giftstart.wrapper
       color: black
     div.signature
       position: relative
+      margin-left: auto
+      margin-right: auto
+      max-width: 500px
       p.name
         font-weight: 300
         font-size: 125%
@@ -192,6 +229,7 @@ div.giftstart.wrapper
     div.pitch-instructions
       display: block
       margin: 35px auto 0 auto
+      max-width: 500px
       @media screen and (max-width: $phone-tablet-boundary - 1)
         margin-top: 5px
       p
@@ -225,9 +263,16 @@ div.giftstart.wrapper
       +filter-brightness(1.6)
 
   div.block.prices
+    padding: 12px 0
+    margin-left: auto
+    margin-right: auto
+    @media screen and (max-width: $phone-tablet-boundary - 1)
+      width: 70%
+      margin-left: 14%
+      margin-right: 14%
     @media screen and (min-width: $phone-tablet-boundary)
-      width: 47%
-      margin-left: 2.5%
+      width: 50%
+      padding-left: 5%
     h1
       color: black
     div.price
@@ -240,8 +285,8 @@ div.giftstart.wrapper
   div.block.completion
     text-align: center
     @media screen and (min-width: $phone-tablet-boundary)
-      width: 47%
-      margin-left: 2.5%
+      width: 39%
+      margin-left: 7.5%
 
   .groupcard
     clear: both
