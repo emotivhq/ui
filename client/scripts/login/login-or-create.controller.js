@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, UserService, TwitterService,
+    var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService,
                                             FacebookService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
@@ -35,12 +35,38 @@
             jQuery('.userlogin').css({display:"none"});
         }
 
-        $scope.doLoginFacebook = FacebookService.login;
-        $scope.doLoginTwitter = function() {
-            TwitterService.getAuthUrl();
-            TwitterService.login();
+        function doSocialLogin(successFunction, maxRetries) {
+            maxRetries = typeof maxRetries !== 'undefined' ? maxRetries : 3;
+            if(AppStateService.get('staged_giftstart')) {
+                console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
+                $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart'))
+                    .success(function (response) {
+                        AppStateService.remove('staged_giftstart');
+                        AppStateService.setPath($location.path());
+                        successFunction();
+                    })
+                    .error(function () {
+                        if(maxRetries>0)
+                        console && console.log && console.log("Error while staging GiftStart; retrying...");
+                        doSocialLogin(successFunction, maxRetries-1);
+                    });
+            } else {
+                successFunction();
+            }
+        }
+
+        $scope.doLoginFacebook = function() {
+            doSocialLogin(FacebookService.login);
         };
-        $scope.doLoginGoogleplus = GooglePlusService.login;
+        $scope.doLoginTwitter = function() {
+            doSocialLogin(function() {
+                TwitterService.getAuthUrl();
+                TwitterService.login();
+            })
+        };
+        $scope.doLoginGoogleplus = function() {
+            doSocialLogin(GooglePlusService.login);
+        };
         $scope.doLoginEmail = function() {
             Analytics.track('user', 'login attempt with email');
             $scope.working = true;
@@ -104,7 +130,7 @@
     };
 
     app.controller('LoginOrCreateController', [
-        '$scope', '$rootScope', '$location', '$routeParams', '$timeout', 'UserService', 'TwitterService', 'FacebookService',
+        '$scope', '$rootScope', '$location', '$routeParams', '$timeout', '$http', 'AppStateService', 'UserService', 'TwitterService', 'FacebookService',
         'GooglePlusService', 'emailLoginService', 'Analytics',
         LoginOrCreateController]);
 }(angular.module('GiftStarterApp')));
