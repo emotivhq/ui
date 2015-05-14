@@ -6,12 +6,12 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource', '$timeout',
+    'Analytics','AppStateService', '$resource',
      GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
                           PopoverService,  $window,  Analytics,
-                          AppStateService, $resource, $timeout) {
+                          AppStateService, $resource) {
 
     var GiftStart = $resource('/giftstart/:key.json');
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
