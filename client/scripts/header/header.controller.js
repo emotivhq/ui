@@ -17,6 +17,7 @@
 
         this.logout = logout;
         this.login = login;
+        this.closeLogin = closeLogin;
 
         this.menuOpen = menuOpen;
 
@@ -28,7 +29,7 @@
 
         $scope.search = false;
         $scope.menu = false;
-        $scope.login = false;
+        $scope.loginmenu = false;
 
         $interval(updateSubliminal, 3000);
 
@@ -54,6 +55,10 @@
             self.subliminalStyle = {
                 'background-position-y': self.subliminalOffset + 'px'
             };
+        }
+
+        function closeLogin() {
+            jQuery('.blackout-screen').css('display', 'none');
         }
 
         function login() {
