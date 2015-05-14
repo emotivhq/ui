@@ -7,19 +7,11 @@
   @media screen and (max-width: $phone-tablet-boundary)
     height: 70px
   max-width: 1200px
-  @include apply-at-size("desktop")
-    padding: 0 20px
   width: 100%
   vertical-align: middle
   -webkit-font-smoothing: antialiased
 
-  img
-    @include apply-at-size("desktop")
-      height: 40px
-    @media screen and (max-width: $phone-tablet-boundary)
-      height: 70px
-
-  form
+  form#searchbar
     display: inline-block
     float: left
     margin: 5px
@@ -41,18 +33,27 @@
   .headerLogoWrapper
     display: table
     float: left
+    @include apply-at-size("desktop")
+      margin-left: 10px
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
 
     #logo
       @media screen and (max-width: $phone-tablet-boundary)
         display: none
+
     #logo-mobile
       display: table-cell
       margin: 0 auto
       text-align: center
       @include apply-at-size("desktop")
         display: none
+
+    img
+      @include apply-at-size("desktop")
+        height: 40px
+      @media screen and (max-width: $phone-tablet-boundary)
+        height: 70px
 
   #menu
     @media screen and (max-width: $phone-tablet-boundary)
@@ -156,6 +157,7 @@
     display: inline-block
     float: right
     margin-left: auto
+    margin-right: 10px
     @media screen and (max-width: $phone-tablet-boundary)
       border-bottom: 2px solid $bg-color
       display: block
@@ -179,3 +181,14 @@
 
       input
         width: calc(100% - 100px)
+
+  .loginwrapper
+    background-color: white
+    border-bottom: 2px solid $bg-color
+    position: absolute
+    width: 100%
+    max-width: 1200px
+    top: 70px
+    @include apply-at-size("desktop")
+      top: 50px
+    z-index: 999
