@@ -6,14 +6,16 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource',
-    GiftStartService]);
+    'Analytics','AppStateService','$resource', '$timeout',
+     GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
                           PopoverService,  $window,  Analytics,
-                          AppStateService, $resource) {
+                          AppStateService, $resource, $timeout) {
 
     var GiftStart = $resource('/giftstart/:key.json');
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    newPitchIns;
 
     this.giftStart = {};
 
@@ -426,10 +428,10 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     }
 
     function formatPitchIns(pitchins) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var newPitchIns = pitchins;
-        for (var i = 0; i < newPitchIns.length; i++) {
-            var date = new Date(1000 * pitchins[i].timestamp);
+        newPitchIns = pitchins;
+        var i, len, date;
+        for (i = 0, len = newPitchIns.length; i < len; i++) {
+            date = new Date(1000 * pitchins[i].timestamp);
             newPitchIns[i].timestampString = months[date.getMonth()] +
                 " " + date.getDate() + ", " +
                 ((date.getHours() - 1) % 12) + ":" +
@@ -437,7 +439,14 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 (date.getHours() >= 12 ? 'PM' : 'AM');
         }
         newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
-        self.pitchIns = newPitchIns;
+        if (self.pitchIns.length === 0) {
+            angular.forEach(newPitchIns, function(newPitchIn) {
+                this.push(newPitchIn);
+            }, self.pitchIns);
+        }
+        else if(newPitchIns.length > self.pitchIns.length) {
+            self.pitchIns.push(newPitchIns[0]);
+        }
     }
 
     function updatePartsFromPitchIns(pitchins) {
@@ -476,7 +485,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             } else if (!self.pitchInsInitialized) {
                 checkForSync();
                 updateLastChecked();
-            }
+             }
         }
     };
 
