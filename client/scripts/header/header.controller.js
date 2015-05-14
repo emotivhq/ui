@@ -28,6 +28,7 @@
 
         $scope.search = false;
         $scope.menu = false;
+        $scope.login = false;
 
         $interval(updateSubliminal, 3000);
 
