@@ -96,9 +96,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
         self.giftStart = self.buildGiftStart();
         self.pitchInsInitialized = false;
-        $http({method: 'POST', url: '/giftstart/create.json',
+        return $http({method: 'POST', url: '/giftstart/create.json',
             data: self.giftStart})
-            .success(function(data) {self.inflateGiftStart(data)})
+            .success(function(data) {
+                self.inflateGiftStart(data);
+            })
             .error(function(reason) {
                 console && console.log && console.log(reason);
                 Analytics.track('campaign', 'campaign create failed');
