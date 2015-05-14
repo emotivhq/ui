@@ -56,7 +56,10 @@
             };
         }
 
-        function login() {PopoverService.setPopover('login')}
+        function login() {
+            //PopoverService.setPopover('login')
+            jQuery('.blackout-screen').css('display', 'block');
+        }
 
         function logout() {
             self.userImageUrl = '';

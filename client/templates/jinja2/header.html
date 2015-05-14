@@ -53,12 +53,13 @@
           </ul>
         </li>
         <li class="menu-login"><a ng-href="/?scrollTo=loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="$scope.menu = !$scope.menu">CREATE ACCOUNT</a></li>
-        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="$scope.login = !$scope.login; actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); $scope.login = !$scope.login; actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
       </ul>
     </div>
   <div class="loginwrapper" ng-show="$scope.login">
     <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
   </div>
+  <div class="blackout-screen"></div>
   </div>
 </header>
 {% endraw %}
