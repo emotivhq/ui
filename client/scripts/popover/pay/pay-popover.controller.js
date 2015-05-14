@@ -5,11 +5,11 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', ['$scope','GiftStartService',
-    'PopoverService','UserService','Analytics','CardService',
+    'PopoverService','UserService','Analytics','CardService','$timeout',
     PayPopoverController]);
 
 function PayPopoverController($scope, GiftStartService, PopoverService,
-                              UserService,  Analytics, CardService) {
+                              UserService,  Analytics, CardService, $timeout) {
 
     CardService.fetch();
 
@@ -91,12 +91,12 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         if ($scope.selectedCard) {
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
-                    $scope.pitchingIn = false;
                     if (data['payment-error']) {
                         $scope.errorMessage = data['payment-error'];
                     } else {
                         $scope.trackConversion();
                     }
+                    $timeout(function(){$scope.pitchingIn = false;},1000);
                 })
                 .error(function(data) {
                     $scope.pitchingIn = false;
@@ -110,12 +110,12 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.payment.emailAddress = $scope.email;
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
-                $scope.pitchingIn = false;
                 if (data['payment-error']) {
                     $scope.errorMessage = data['payment-error'];
                 } else {
                     $scope.trackConversion();
                 }
+                $timeout(function(){$scope.pitchingIn = false;},1000);
             });
         }
     };

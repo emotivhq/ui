@@ -1,8 +1,4 @@
 <div id="loginpanel" class="userlogin" ng-controller="LoginOrCreateController">
-    <div class="userlogin__logo"></div>
-    <h2 class="userlogin__title">
-        Join our gifting movement
-    </h2>
     <div ng-hide="showCreate"><ng-include src="'/scripts/login/login.html'"></ng-include></div>
     <div ng-show="showCreate"><ng-include src="'/scripts/login/create-account.html'"></ng-include></div>
     <div class="userlogin__sociallogin">
