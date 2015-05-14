@@ -6,7 +6,7 @@
 
 GiftStarterApp.directive('gsOverlay', gsOverlay);
 
-function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
+function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
         var overlayElement = angular.element('gs-overlay div.overlay');
 
@@ -17,7 +17,6 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
                 var overlayWidth = overlayElement.width();
 
                 Analytics.track('campaign', 'overlay drawn');
-                //var overlayElement = angular.element(element.children()[1]);
                 var marginHeight = overlayHeight/GiftStartService.giftStart.rows/20;
                 var marginWidth = overlayWidth/GiftStartService.giftStart.columns/20;
                 var margin = (marginHeight > marginWidth) ? marginWidth : marginHeight;
@@ -30,8 +29,7 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
                 var usrWidth  = overlayWidth/GiftStartService.giftStart.columns - 4*margin;
                 var usrShortEdge = (usrHeight > usrWidth) ? usrWidth : usrHeight;
                 overlayElement.empty();
-
-                if(GiftStartService.giftStart.parts.length){
+                if(GiftStartService.giftStart.parts.length !== 'undefined'){
                     for (var i = 0; i < GiftStartService.giftStart.parts.length; i++) {
                         var divString = '<div class="part-cell c'+i+
                             '" ng-class="{bought: giftstart.parts['+i+
@@ -52,8 +50,8 @@ function gsOverlay($compile, $timeout, GiftStartService, Analytics) {
 
         drawGrid();
 
-        angular.element(overlayElement).bind('load', drawGrid);
-        jQuery( window ).resize(drawGrid);
+        angular.element($window).on('load', drawGrid);
+        angular.element($window).on('resize', drawGrid);
         scope.$on('overlay-updated', drawGrid);
         scope.$on('giftstart-loaded', drawGrid);
     }
