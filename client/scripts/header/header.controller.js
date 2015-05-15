@@ -64,6 +64,7 @@
         function login() {
             //PopoverService.setPopover('login')
             jQuery('.blackout-screen').css('display', 'block');
+            $rootScope.$broadcast('loginbox-show-login');
         }
 
         function logout() {
