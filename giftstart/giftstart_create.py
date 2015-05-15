@@ -33,18 +33,21 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
         self.request.giftstart = json.loads(self.request.body)
         broken_param = self.find_invalid_param()
         if broken_param:
-            logging.error("Invalid or missing param {0}".format(broken_param))
-            self.response.set_status(400, "Invalid or missing param {0}"
-                                     .format(broken_param))
+            err_msg = "Invalid or missing param {0}".format(broken_param)
+            logging.error(err_msg)
+            self.response.set_status(400, err_msg)
+            self.response.write(err_msg)
         else:
             try:
                 self.create_giftstart()
             except ValueError as e:
                 logging.error("Expected valid UUID or uid: "+e.message)
                 self.response.set_status(400, "Expected valid UUID or uid")
+                self.response.write("Expected valid UUID or uid")
             except AuthError as e:
                 logging.error("Invalid credentials: "+e.message)
                 self.response.set_status(403, "Invalid credentials")
+                self.response.write("Invalid credentials")
 
     def str_param_valid(self, param):
         """ Check if the parameter in the received json object is a non ''

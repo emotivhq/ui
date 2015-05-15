@@ -2,6 +2,8 @@
 @import "../../frame/column"
 
 #giftstart-contact-wrapper
+  gs-overlay
+    margin-left: 0
   text-align: center
   padding: 1px
   .invisible
@@ -45,6 +47,13 @@
   textarea
     display: block
 
+  div.login-box
+    max-width: 500px
+    margin-left: auto
+    margin-right: auto
+    input
+      margin-left: 0
+
   div.submitting
     opacity: 0.2
     transition: opacity .25s ease-in-out
@@ -69,6 +78,9 @@
       width: 40%
 
   div.block.details
+    max-width: 500px
+    margin-left: auto
+    margin-right: auto
     h2
       margin-top: 1rem
       margin-bottom: 10px
@@ -78,6 +90,10 @@
       input[type="text"],input[type="email"],textarea,select
          padding: 0.9em
          border-width: 1px
+      input[type="text"],input[type="email"],textarea
+         width: 23.75em
+         @media screen and (max-width: $phone-tablet-boundary)
+           width: 100%
       div.shipping-details
         span
           display: inline-block
@@ -96,12 +112,14 @@
             width: 7em
             height: 2em
         span.name
+          display: block
           input
             width: 23.75em
             margin-bottom: 1em
             @media screen and (max-width: $phone-tablet-boundary)
               width: 100%
         span.email
+          display: block
           input
             width: 23.75em
             @media screen and (max-width: $phone-tablet-boundary)
@@ -112,7 +130,7 @@
           @media screen and (max-width: $phone-tablet-boundary)
             width: 100%
 
-      div.coupon
+      div.coupon-code
         input
           width: 23.75em
           @media screen and (max-width: $phone-tablet-boundary)

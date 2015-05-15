@@ -8,6 +8,7 @@
     'use strict';
 
     var controller = function ($scope,
+                               $rootScope,
                                GiftStartService,
                                $location,
                                ProductService,
@@ -50,6 +51,8 @@
             }
             return $scope.xySets.length - 1;
         }
+
+        $scope.showLoginBox = false;
 
         $scope.createStep = 1;
 
@@ -337,10 +340,16 @@
                 if (UserService.loggedIn) {
                     Analytics.track('campaign', 'campaign submitted', '',
                         $scope.totalPrice);
-                    GiftStartService.createGiftStart();
                     $scope.isSubmittingData = true;
-                    clearCreateData();
-                    resetValidationErrors();
+                    GiftStartService.createGiftStart()
+                        .success(function(data) {
+                            clearCreateData();
+                            resetValidationErrors();
+                        })
+                        .error(function(data) {
+                            alert("A severe error occurred; please try again? If it keeps happening, please contact the Gift Concierge with the following information: "+data);
+                            $scope.isSubmittingData = false;
+                        });
                 } else {
                     var uuid = $scope.makeUUID();
                     //stash staged giftstart for later use by login-popover.controller
@@ -348,8 +357,10 @@
                     console&&console.log&&console.log("staging: "+stagedGiftStart(uuid)['staging_uuid']);
                     AppStateService.set('staged_giftstart', stagedGiftStart(uuid));
                     console&&console.log&&console.log("staged: "+AppStateService.get('staged_giftstart')['staging_uuid']);
-                    PopoverService.giftstartCreateLogin = true;
-                    PopoverService.setPopover('login');
+                    //PopoverService.giftstartCreateLogin = true;
+                    //PopoverService.setPopover('login');
+                    $rootScope.$broadcast('loginbox-show-login');
+                    $scope.showLoginBox = true;
                 }
             }
         };
@@ -485,10 +496,17 @@
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
+
+        $rootScope.$on('login-success', function(){
+            $scope.showLoginBox = false;
+            $scope.next();
+        });
+
     };
 
     app.controller('GiftStartCreateController', [
         '$scope',
+        '$rootScope',
         'GiftStartService',
         '$location',
         'ProductService',

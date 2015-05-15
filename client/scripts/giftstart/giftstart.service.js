@@ -73,7 +73,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         this.preselectedParts = AppStateService.get('selectedParts');
         AppStateService.remove('selectedParts');
     }
-    $rootScope.$on('giftstart-loaded', restartPitchin);
 
     var self = this;
 
@@ -96,9 +95,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
         self.giftStart = self.buildGiftStart();
         self.pitchInsInitialized = false;
-        $http({method: 'POST', url: '/giftstart/create.json',
+        return $http({method: 'POST', url: '/giftstart/create.json',
             data: self.giftStart})
-            .success(function(data) {self.inflateGiftStart(data)})
+            .success(function(data) {
+                self.inflateGiftStart(data);
+            })
             .error(function(reason) {
                 console && console.log && console.log(reason);
                 Analytics.track('campaign', 'campaign create failed');
@@ -393,23 +394,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.goToUserPage = function(uid) {
         $location.path('u').search('').search('uid', uid);
     };
-
-    this.pitchIn = function() {
-        // Ensure they have selected more than $0 of the gift to pitch in
-        if (self.giftStart.totalSelection > 0) {
-            Analytics.track('pitchin', 'pitchin button clicked');
-            PopoverService.contributeLogin = true;
-            AppStateService.set('contributeLogin', true);
-            PopoverService.setPopover('login');
-        } else {console && console.log && console.log("Nothing selected!")}
-    };
-
-    function restartPitchin() {
-        if (AppStateService.get('contributeLogin')) {
-            AppStateService.remove('contributeLogin');
-            self.pitchIn();
-        }
-    }
 
     function checkForSync() {
         $http({

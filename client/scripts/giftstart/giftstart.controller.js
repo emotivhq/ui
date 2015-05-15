@@ -5,14 +5,14 @@
  */
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$interval',
+            '$scope','$rootScope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'ProductService', 'UserService','$window', '$document', 'PopoverService','LocalStorage',
+            'ProductService', 'UserService', 'AppStateService', '$window', '$document', 'PopoverService','LocalStorage',
     GiftStartController]);
 
-function GiftStartController($scope,  GiftStartService,  $location,  $interval,
+function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         ProductService, UserService, $window, $document, PopoverService, LocalStorage) {
+         ProductService, UserService, AppStateService, $window, $document, PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
@@ -35,6 +35,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.productMessage = '';
 
     $scope.isSavingForLater = false;
+
+    $scope.showLoginBox = false;
 
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
@@ -115,7 +117,29 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.pitchInHoverCallback = function() {
         GiftStartService.syncPitchIns('pitch-in-hover')};
 
-    $scope.pitchIn = GiftStartService.pitchIn;
+    $scope.pitchIn = function() {
+        // Ensure they have selected more than $0 of the gift to pitch in
+        if (GiftStartService.giftStart.totalSelection > 0) {
+            Analytics.track('pitchin', 'pitchin button clicked');
+            if (UserService.loggedIn) {
+                AppStateService.set('contributeLogin', false);
+                PopoverService.setPopover('pay');
+            } else {
+                //PopoverService.contributeLogin = true;
+                AppStateService.set('contributeLogin', true);
+                //PopoverService.setPopover('login');
+                $rootScope.$broadcast('loginbox-show-login');
+                $scope.showLoginBox = true;
+            }
+        } else {console && console.log && console.log("Nothing selected!")}
+    };
+
+    function restartPitchin() {
+        if (AppStateService.get('contributeLogin')) {
+            AppStateService.remove('contributeLogin');
+            $scope.pitchIn();
+        }
+    }
 
     $scope.campaignComplete = function() {
         return (GiftStartService.giftStart.funded /
@@ -228,6 +252,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.$on('login-success', function() {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
         $scope.newUser = !UserService.hasPitchedIn;
+        $scope.showLoginBox = false;
+        restartPitchin();
     });
     $scope.$on('logout-success', function() {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
@@ -299,6 +325,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
 
     $scope.$on('login-success', loggedIn);
     $scope.$on('logout-success', loggedOut);
+
+    $scope.$on('giftstart-loaded', restartPitchin);
 
     imageInput.bind('change', $scope.updateImage);
 

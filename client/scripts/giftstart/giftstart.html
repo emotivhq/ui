@@ -10,9 +10,10 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block">
-            <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
-
+        <div class="col2 block" ng-hide="showLoginBox">
+            <div class="prodtitle">
+                <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
+            </div>
             <div class="description">
                 <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
                 <span class="description makelinks" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
@@ -31,7 +32,11 @@
                 <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file" capture="camera" accept="image/*"/></div>
                 <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         </div>
-        <div class="col2 block">
+        <div ng-show="showLoginBox" class="login-box">
+            <h2>Log in or create an account:</h2>
+            <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+        </div>
+        <div class="col2 block" ng-hide="showLoginBox">
             <div class="pitch-instructions">
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>

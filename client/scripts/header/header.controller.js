@@ -17,6 +17,7 @@
 
         this.logout = logout;
         this.login = login;
+        this.closeLogin = closeLogin;
 
         this.menuOpen = menuOpen;
 
@@ -28,6 +29,7 @@
 
         $scope.search = false;
         $scope.menu = false;
+        $scope.loginmenu = false;
 
         $interval(updateSubliminal, 3000);
 
@@ -55,7 +57,15 @@
             };
         }
 
-        function login() {PopoverService.setPopover('login')}
+        function closeLogin() {
+            jQuery('.blackout-screen').css('display', 'none');
+        }
+
+        function login() {
+            //PopoverService.setPopover('login')
+            jQuery('.blackout-screen').css('display', 'block');
+            $rootScope.$broadcast('loginbox-show-login');
+        }
 
         function logout() {
             self.userImageUrl = '';
