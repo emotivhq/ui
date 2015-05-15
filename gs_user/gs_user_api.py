@@ -60,7 +60,10 @@ class UserNotifyHandler(webapp2.RequestHandler):
             if user is None:
                 self.response.set_status(400, "Invalid user id")
             else:
-                response_data = {"notifications":[{"id":1, "message":"test one"},{"id":2, "message":"test two"}]}
+                response_data = {"notifications":[
+                    {"id":1, "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
+                    {"id":2, "title":"title two", "message":"test two", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g116794909651143246507.jpg"}
+                ]}
                 self.response.write(json.dumps(response_data))
 
 class UserProfileHandler(webapp2.RequestHandler):
