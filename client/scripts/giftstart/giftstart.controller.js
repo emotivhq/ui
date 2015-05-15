@@ -5,12 +5,12 @@
  */
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','GiftStartService','$location','$interval',
+            '$scope','$rootScope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
             'ProductService', 'UserService', 'AppStateService', '$window', '$document', 'PopoverService','LocalStorage',
     GiftStartController]);
 
-function GiftStartController($scope,  GiftStartService,  $location,  $interval,
+function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
          ProductService, UserService, AppStateService, $window, $document, PopoverService, LocalStorage) {
 
@@ -122,11 +122,14 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
         if (GiftStartService.giftStart.totalSelection > 0) {
             Analytics.track('pitchin', 'pitchin button clicked');
             if (UserService.loggedIn) {
+                AppStateService.set('contributeLogin', false);
                 PopoverService.setPopover('pay');
             } else {
-                PopoverService.contributeLogin = true;
+                //PopoverService.contributeLogin = true;
                 AppStateService.set('contributeLogin', true);
-                PopoverService.setPopover('login');
+                //PopoverService.setPopover('login');
+                $rootScope.$broadcast('loginbox-show-login');
+                $scope.showLoginBox = true;
             }
         } else {console && console.log && console.log("Nothing selected!")}
     };
@@ -249,6 +252,8 @@ function GiftStartController($scope,  GiftStartService,  $location,  $interval,
     $scope.$on('login-success', function() {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
         $scope.newUser = !UserService.hasPitchedIn;
+        $scope.showLoginBox = false;
+        restartPitchin();
     });
     $scope.$on('logout-success', function() {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
