@@ -57,6 +57,7 @@
       </ul>
     </div>
   <div class="loginwrapper" ng-show="$scope.loginmenu">
+    <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin(); $scope.loginmenu = false" />
     <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
   </div>
   <div class="blackout-screen" ng-click="header.closeLogin(); $scope.loginmenu = false"></div>
