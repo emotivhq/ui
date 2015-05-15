@@ -27,6 +27,12 @@ secrets = yaml.load(open('secret.yaml'))
 stripe.api_key = secrets['stripe_auth']['app_secret']
 
 
+def getUidFromCookies(request):
+    return urllib.unquote(request.cookies.get('uid', '').replace('%22', ''))
+
+def getTokenFromCookies(request):
+    return urllib.unquote(request.cookies.get('token', '').replace('%22', ''))
+
 class StatsHandler(webapp2.RequestHandler):
     """JSON-formatted metadata about User (list of giftstarts and pitchins)"""
     def get(self):
@@ -36,6 +42,26 @@ class StatsHandler(webapp2.RequestHandler):
         uid = self.request.path[7:-5]
         self.response.write(json.dumps(get_stats(uid)))
 
+class UserNotifyHandler(webapp2.RequestHandler):
+    """JSON-formatted User"""
+
+    def get(self):
+        """
+        Gets user notifications as JSON (including protected data if signed in as self)
+        """
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        allow_protected_data = validate(uid, token, self.request.path)
+        uid = self.request.path.split('/')[3][:-5]
+        if uid[0] not in ['f', 'g', 't', 'e']:
+            self.response.set_status(400, "Invalid user id")
+        else:
+            user = get_user(uid)
+            if user is None:
+                self.response.set_status(400, "Invalid user id")
+            else:
+                response_data = {"notifications":[{"id":1, "message":"test one"},{"id":2, "message":"test two"}]}
+                self.response.write(json.dumps(response_data))
 
 class UserProfileHandler(webapp2.RequestHandler):
     """JSON-formatted User"""
@@ -43,10 +69,10 @@ class UserProfileHandler(webapp2.RequestHandler):
         """
         Gets user as JSON (including protected data if signed in as self)
         """
-        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
-        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
-        allow_protected_data = uid and validate(uid, token, self.request.path)
-        extended_attribs = self.request.params['ext'] if 'ext' in self.request.params else [];
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        allow_protected_data = validate(uid, token, self.request.path)
+        extended_attribs = self.request.params['ext'] if 'ext' in self.request.params else []
         uid = self.request.path.split('/')[3][:-5]
         if uid[0] not in ['f', 'g', 't', 'e']:
             self.response.set_status(400, "Invalid user id")
@@ -130,9 +156,9 @@ class UserHandler(webapp2.RequestHandler):
 
     def post(self):
         data = json.loads(self.request.body)
-        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
-        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
-        is_validated_self = uid and validate(uid, token, self.request.path) and 'uid' in data and uid == data['uid']
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        is_validated_self = validate(uid, token, self.request.path) and 'uid' in data and uid == data['uid']
 
         if data['action'] == 'update-profile':
             if(is_validated_self):
@@ -319,8 +345,8 @@ class PaymentCardsHandler(webapp2.RequestHandler):
     """ Handles requests for payment tokens """
 
     def get(self):
-        uid = urllib.unquote(self.request.cookies.get('uid', '').replace('%22', ''))
-        token = urllib.unquote(self.request.cookies.get('token', '').replace('%22', ''))
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
 
         if not all([bool(thing) for thing in [uid, token]]):
             logging.warning("Invalid data used for payment cards request:"
@@ -345,6 +371,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
                                ('/users/profile/.*.json', UserProfileHandler),
+                               ('/users/notify/.*.json', UserNotifyHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
                                ('/users/.*/cards.json', PaymentCardsHandler),

@@ -213,21 +213,21 @@ def validate(uid, token, path=None):
     @return: {uid,img_url,token,on_mailing_list,name,has_pitched_in}
     """
     result = None
-    user = ndb.Key('User', uid).get()
-    if user:
-        if user.name is None:
-            user.name = ''
-        if token_pointer_map[uid[0]](user) == token:
-            if path:
-                UserLogin.register_login(uid, path)
-            result = {
-                'uid': uid, 'img_url': user.cached_profile_image_url,
-                'token': token,
-                'on_mailing_list': user.subscribed_to_mailing_list,
-                'name': base64.b64encode(user.name.encode('utf-8')),
-                'has_pitched_in': user.has_pitched_in,
-            }
-
+    if uid and token:
+        user = ndb.Key('User', uid).get()
+        if user:
+            if user.name is None:
+                user.name = ''
+            if token_pointer_map[uid[0]](user) == token:
+                if path:
+                    UserLogin.register_login(uid, path)
+                result = {
+                    'uid': uid, 'img_url': user.cached_profile_image_url,
+                    'token': token,
+                    'on_mailing_list': user.subscribed_to_mailing_list,
+                    'name': base64.b64encode(user.name.encode('utf-8')),
+                    'has_pitched_in': user.has_pitched_in,
+                }
     return result
 
 
