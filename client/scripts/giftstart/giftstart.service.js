@@ -423,14 +423,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 (date.getHours() >= 12 ? 'PM' : 'AM');
         }
         newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
-        if (self.pitchIns.length === 0) {
-            angular.forEach(newPitchIns, function(newPitchIn) {
+        angular.forEach(newPitchIns, function(newPitchIn) {
+            if (self.pitchIns.length < newPitchIns.length && newPitchIn.gsid === self.giftStart.gsid) {
                 this.push(newPitchIn);
-            }, self.pitchIns);
-        }
-        else if(newPitchIns.length > self.pitchIns.length) {
-            self.pitchIns.push(newPitchIns[0]);
-        }
+            }
+        }, self.pitchIns);
     }
 
     function updatePartsFromPitchIns(pitchins) {
