@@ -49,18 +49,18 @@
             <li><a  ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="$scope.menu = !$scope.menu">Saved Gift Ideas</a></li>
             <li><a href="#" class="coming-soon">Notifications *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Settings *Coming Soon*</a></li>
-            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked()" ng-click="$scope.menu = !$scope.menu">Log Out</a></li>
+            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked(); $scope.menu = !$scope.menu">Log Out</a></li>
           </ul>
         </li>
         <li class="menu-login"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="$scope.menu = !$scope.menu">CREATE ACCOUNT</a></li>
-        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); $scope.loginmenu = !$scope.loginmenu; actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
       </ul>
     </div>
-  <div class="loginwrapper" ng-show="$scope.loginmenu" ng-keyup="header.loginKeyPress()">
-    <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin(); $scope.loginmenu = false" />
+  <div class="loginwrapper" ng-keyup="header.loginKeyPress()">
+    <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
     <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
   </div>
-  <div class="blackout-screen" ng-click="header.closeLogin(); $scope.loginmenu = false"></div>
+  <div class="blackout-screen" ng-click="header.closeLogin()"></div>
   </div>
 </header>
 {% endraw %}

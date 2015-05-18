@@ -30,7 +30,6 @@
 
         $scope.search = false;
         $scope.menu = false;
-        $scope.loginmenu = false;
 
         $interval(updateSubliminal, 3000);
 
@@ -60,12 +59,15 @@
 
         function closeLogin() {
             jQuery('.blackout-screen').css('display', 'none');
+            jQuery('.loginwrapper').css('display', 'none');
         }
 
         function login() {
             //PopoverService.setPopover('login')
             jQuery('.blackout-screen').css('display', 'block');
+            jQuery('.loginwrapper').css('display', 'block');
             $rootScope.$broadcast('loginbox-show-login');
+            jQuery('.loginwrapper .userlogin__email').focus();
         }
 
         function logout() {
@@ -82,6 +84,7 @@
         }
 
         function loginKeyPress() {
+            console.log("keypress");
             if($event.keyCode == 27)
               closeLogin();
         }

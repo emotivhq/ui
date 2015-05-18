@@ -106,7 +106,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         .success( function (pitchIns) {
             angular.forEach(pitchIns, function(pitchIn) {
             if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
-                this.push(pitchIn);
+                this.unshift(pitchIn);
             }
         }, $scope.pitchIns);
         })
