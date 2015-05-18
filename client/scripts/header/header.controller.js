@@ -161,14 +161,26 @@
         '$interval',
         '$timeout',
         '$window',
-        HeaderController]);
-
-    app.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+        HeaderController])
+    .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
         $anchorScroll();
       });
-    });
+    })
+    .directive('escKey', function () {
+      return function (scope, element, attrs) {
+        element.bind('keydown keypress', function (event) {
+          if(event.which === 27) { // 27 = esc key
+            scope.$apply(function (){
+              scope.$eval(attrs.escKey);
+            });
+
+            event.preventDefault();
+          }
+        });
+      };
+    })
 
 }(angular.module('GiftStarterApp')));

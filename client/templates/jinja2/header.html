@@ -56,7 +56,7 @@
         <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.login(); $scope.loginmenu = !$scope.loginmenu; actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
       </ul>
     </div>
-  <div class="loginwrapper" ng-show="$scope.loginmenu">
+  <div class="loginwrapper" ng-show="$scope.loginmenu" esc-key="header.closeLogin()">
     <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin(); $scope.loginmenu = false" />
     <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
   </div>
