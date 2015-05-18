@@ -166,7 +166,7 @@ class ResetHandler(webapp2.RequestHandler):
                 }))
         else:
             self.response.write(json.dumps({
-                'error': 'Unable to reset your password (perhaps you are using the wrong code or email address?).  If you'
+                'error': 'Unable to reset your password (perhaps you are using the wrong email address or reset link?).  If you'
                         ' continue to have problems, please contact the Gift Concierge.'
             }))
 
