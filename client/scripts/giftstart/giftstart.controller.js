@@ -7,17 +7,18 @@
 GiftStarterApp.controller('GiftStartController', [
             '$scope','$rootScope','GiftStartService','$location','$interval',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'ProductService', 'UserService', 'AppStateService', '$window', '$document', 'PopoverService','LocalStorage',
+            'ProductService', 'UserService', 'AppStateService', '$window', '$document', '$http', 'PopoverService','LocalStorage',
     GiftStartController]);
 
 function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         ProductService, UserService, AppStateService, $window, $document, PopoverService, LocalStorage) {
+         ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
 
     Analytics.track('campaign', 'controller created');
 
     $scope.giftStart = GiftStartService.giftStart;
-    $scope.pitchIns = GiftStartService.pitchIns;
+    $scope.pitchIns = [];
+
     $scope.secondsLeft = 0;
 
     $scope.newTitle = $scope.giftStart.title;
@@ -97,7 +98,19 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     });
 
     $scope.$on('pitch-ins-updated', function() {
-        $scope.pitchIns = GiftStartService.pitchIns;
+    $http({
+        method: 'POST',
+        url: '/pay',
+        data: {action: 'get-pitch-ins', gsid: $scope.giftStart.gsid}
+    })
+        .success( function (pitchIns) {
+            angular.forEach(pitchIns, function(pitchIn) {
+            if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
+                this.push(pitchIn);
+            }
+        }, $scope.pitchIns);
+        })
+        .error(function() {console && console.log && console.log("Failed to contact part sync.")})
     });
 
     $scope.$on('selection-changed', function() {
