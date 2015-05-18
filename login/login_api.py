@@ -145,10 +145,10 @@ class ResetHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error':'Password cannot be blank'}))
             return
         if not validate_password_complexity(password):
-            self.response.write(json.dumps({'error': 'Password does not meet minimum requirements. Please try again.'}))
+            self.response.write(json.dumps({'error': 'Please use a more complex password: at least 8 characters, with uppercase, lowercase, and number(s).'}))
             return
         if len(code) is 0:
-            self.response.write(json.dumps({'error':'reset code not provided'}))
+            self.response.write(json.dumps({'error':'Reset Code not provided'}))
             return
         users = User.query(User.emaillogin_token_set.email == email).fetch(1)
         if len(users) > 0:
