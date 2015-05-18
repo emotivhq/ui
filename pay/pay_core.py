@@ -466,10 +466,10 @@ def get_charge_amount_for_pitchin(pitchin):
     if pitchin.paypal_charge_json and pitchin.paypal_charge_json!=None:
         try:
             return extract_payment_amount_from_paypal_payment(json.loads(pitchin.paypal_charge_json))
-        except Exception as x:
+        except KeyError as x:
             logging.error("Unable to PitchIn.getChargeAmount for PayPal transaction: {0} {1} {2}".format(pitchin.giftstart_url_title, pitchin.parts, pitchin.paypal_charge_json))
             if pitchin.paypal_charge_json==pitchin.paypal_charge_id:
-                logging.error("Reparing {0} {1}".format(pitchin.giftstart_url_title, pitchin.parts))
+                logging.error("Repairing {0} {1}".format(pitchin.giftstart_url_title, pitchin.parts))
                 try:
                     paypal_charge =  get_payment_data_for_transaction(pitchin.paypal_charge_id)
                     amount = extract_payment_amount_from_paypal_payment(paypal_charge)
