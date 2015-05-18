@@ -83,7 +83,7 @@
             self.userName = (UserService.name).toUpperCase();
         }
 
-        function loginKeyPress() {
+        function loginKeyPress($event) {
             console.log("keypress");
             if($event.keyCode == 27)
               closeLogin();
@@ -177,19 +177,6 @@
         $location.hash($routeParams.scrollTo);
         $anchorScroll();
       });
-    })
-    .directive('escKey', function () {
-      return function (scope, element, attrs) {
-        element.bind('keydown keypress', function (event) {
-          if(event.which === 27) { // 27 = esc key
-            scope.$apply(function (){
-              scope.$eval(attrs.escKey);
-            });
-
-            event.preventDefault();
-          }
-        });
-      };
     })
 
 }(angular.module('GiftStarterApp')));
