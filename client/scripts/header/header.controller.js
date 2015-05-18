@@ -139,6 +139,10 @@
             self.showLogin();
         });
 
+        $rootScope.$on('header-close-login', function(){
+            self.closeLogin();
+        });
+
         $rootScope.$on('password-reset-requested', function() {
             self.showReset();
         });

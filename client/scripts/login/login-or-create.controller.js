@@ -128,6 +128,9 @@
                     $scope.message=okMsg;
                     $scope.showForgot = false;
                     $scope.working = false;
+                    $timeout(function(){$rootScope.$broadcast('header-show-login')},3000);
+                    jQuery('.userlogin').fadeOut(3000);
+                    jQuery('.userlogin').fadeIn(1500);
                 }, function (errMsg) {
                     $scope.message=errMsg;
                     $scope.working = false;
@@ -142,6 +145,7 @@
         $scope.$on('login-success', function() {
             $scope.resetForm();
             $scope.message=UserService.name?("Welcome, "+UserService.name+"!"):"Welcome!";
+            $timeout(function(){$rootScope.$broadcast('header-close-login')},3000);
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
         });
