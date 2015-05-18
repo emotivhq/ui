@@ -249,7 +249,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.payment.note = noteText;
         var data = {payment: self.payment, action: 'pitch-in-note-update',
             uid: UserService.uid};
-        return $http({method: 'POST', url: '/pay', data: data})
+        $http({method: 'POST', url: '/pay', data: data});
+        console.log(data);
+        console.log(self.payment.note);
     };
 
     this.saveImage = function(imageUrl) {
@@ -406,6 +408,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     }
 
     function syncCheckCallback(pitchins) {
+        console.log(pitchins);
         updatePartsFromPitchIns(pitchins);
         formatPitchIns(pitchins);
         $rootScope.$broadcast('pitch-ins-updated');
