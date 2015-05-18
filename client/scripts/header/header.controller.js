@@ -18,6 +18,7 @@
         this.logout = logout;
         this.login = login;
         this.closeLogin = closeLogin;
+        this.loginKeyPress = loginKeyPress;
 
         this.menuOpen = menuOpen;
 
@@ -78,6 +79,11 @@
             self.userImageUrl = UserService.profileImageUrl;
             self.userProfileUrl = '/users/' + UserService.uid;
             self.userName = (UserService.name).toUpperCase();
+        }
+
+        function loginKeyPress() {
+            if($event.keyCode == 27)
+              closeLogin();
         }
 
         function menuOpen() {$rootScope.$broadcast('menu-open')}
