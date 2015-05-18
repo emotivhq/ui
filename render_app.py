@@ -42,7 +42,7 @@ def render_app(request):
                  abtest.get_tests(request) + ");"
 
     page_titles = {
-        '/': 'GiftStarter: Group Gifting Made Easy',
+        '/': 'GiftStarter: GiftStarter, Group Gifting Starts Here',
         '/about': 'Meet the GiftStarter Team and our Mission',
         '/faq': 'GiftStarter: Learn how to easily group gift with friends and family',
         '/giftideas': 'GiftStarter: Find the Perfect Group Gift with our Gift Ideas',
