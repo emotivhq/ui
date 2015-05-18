@@ -63,7 +63,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.serviceFee = 0;
     this.totalPrice = 0;
     this.campaignLength = 0;
-
+    this.newPitchIn = {};
     // Thanks data
     this.thanks_img = {};
 
@@ -249,9 +249,12 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.payment.note = noteText;
         var data = {payment: self.payment, action: 'pitch-in-note-update',
             uid: UserService.uid};
-        $http({method: 'POST', url: '/pay', data: data});
-        console.log(data);
-        console.log(self.payment.note);
+        $http({method: 'POST', url: '/pay', data: data})
+            .success(function (resp) {
+                self.newPitchIn = resp;
+                $rootScope.$broadcast('note-saved');
+            });
+
     };
 
     this.saveImage = function(imageUrl) {
@@ -408,7 +411,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     }
 
     function syncCheckCallback(pitchins) {
-        console.log(pitchins);
         updatePartsFromPitchIns(pitchins);
         formatPitchIns(pitchins);
         $rootScope.$broadcast('pitch-ins-updated');
@@ -428,7 +430,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
         angular.forEach(newPitchIns, function(newPitchIn) {
             if (self.pitchIns.length < newPitchIns.length && newPitchIn.gsid === self.giftStart.gsid) {
-                this.push(newPitchIn);
+                this.unshift(newPitchIn);
             }
         }, self.pitchIns);
     }

@@ -97,6 +97,11 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         $scope.pitchInsInitialized = true;
     });
 
+    $scope.$on('note-saved', function() {
+        $scope.pitchIns.shift();
+        $scope.pitchIns.unshift(GiftStartService.newPitchIn);
+    });
+
     $scope.$on('pitch-ins-updated', function() {
     $http({
         method: 'POST',
