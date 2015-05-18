@@ -1,4 +1,4 @@
-<div class="userlogin__form" ng-hide="$parent.showForgot">
+<div class="userlogin__form" ng-hide="$parent.showForgot || $parent.showReset">
     <form ng-submit="$parent.doLoginEmail()">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter Your Email" required />
         <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter Your Password" required>
@@ -16,6 +16,18 @@
     <form ng-submit="$parent.doForgotPassword()">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email" required />
         <a href="#" class="userlogin__forgot" ng-click="$parent.showForgot=false">Cancel</a>
+        <div class="userlogin__message">{{$parent.message}}</div>
+        <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Get Password</button>
+    </form>
+</div>
+
+<div class="userlogin__form" ng-show="$parent.showReset">
+    <h3>Reset Your Password:</h3>
+    <form ng-submit="$parent.doResetPassword()">
+        <input class="userlogin__email" type="hidden" name="resetcode" ng-model="$parent.resetCode" placeholder="Enter the reset code" required />
+        <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter a New Password" required>
+        <input class="userlogin__password" type="password" name="password" ng-model="$parent.reenterpassword" placeholder="Re-enter the New Password" required>
+        <a href="#" class="userlogin__forgot" ng-click="$parent.showReset=false">Cancel</a>
         <div class="userlogin__message">{{$parent.message}}</div>
         <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Get Password</button>
     </form>

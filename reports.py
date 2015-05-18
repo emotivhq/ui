@@ -10,15 +10,10 @@ from gs_user import User
 from gs_user.UserLogin import UserLogin
 from pay import pay_core
 
-NUM_WEEKS = 5
-"""how many historical weeks of data should be shown?"""
-
 LAST_WK_START = datetime.now() - timedelta(days=datetime.now().weekday(),
                                            hours=datetime.now().hour,
                                            minutes=datetime.now().minute,
                                            seconds=datetime.now().second)
-DATES = [LAST_WK_START - timedelta(days=7)*wk for wk in range(NUM_WEEKS-1, -1, -1)]
-
 
 def build_row(row):
     return "<tr><td>" + "</td><td>".join([str(v) for v in row]) + "</td></tr>"
@@ -29,7 +24,7 @@ def build_hdr(row):
 
 
 
-def show_dates():
+def show_dates(NUM_WEEKS, DATES):
     def format_date(date):
         return str(date.year)+"-"+str(date.month)+"-"+str(date.day)
 
@@ -42,7 +37,7 @@ def show_dates():
 
     return result
 
-def user_growth():
+def user_growth(NUM_WEEKS, DATES):
     base_users = User.query().count() - User.query(User.timestamp < LAST_WK_START).count()
 
     def num_users_by(date):
@@ -70,7 +65,7 @@ def user_growth():
     return result
 
 
-def mau_growth():
+def mau_growth(NUM_WEEKS, DATES):
     def num_logins_between(start_date, end_date):
         """ num_logins_by(datetime, datetime) -> 124
         Returns the number unique users that have logged in in a specd period
@@ -96,7 +91,7 @@ def mau_growth():
     return result
 
 
-def giftstart_growth():
+def giftstart_growth(NUM_WEEKS, DATES):
     base_giftstarts = GiftStart.query().count() - \
                       GiftStart.query(GiftStart.timestamp < LAST_WK_START)\
                           .count()
@@ -123,7 +118,7 @@ def giftstart_growth():
     return result
 
 
-def transactions_per_week():
+def transactions_per_week(NUM_WEEKS, DATES):
     base_pitchins = PitchIn.query().count() - PitchIn.query(PitchIn.timestamp < LAST_WK_START).count()
 
     def num_pitchins_by(date):
@@ -146,7 +141,7 @@ def transactions_per_week():
     return result
 
 
-def dollars_per_week():
+def dollars_per_week(NUM_WEEKS, DATES):
     def amt_pitchins_by(date):
         pis = PitchIn.query(PitchIn.timestamp < date).fetch()
         get_amt = lambda pi: pay_core.get_charge_amount_for_pitchin(pi)/100.0
@@ -215,6 +210,13 @@ class ReportsHandler(webapp2.RequestHandler):
         $ Transacted Growth
         """
 
+        if not 'num_weeks' in self.request.params.keys():
+            self.response.write('<form action="">Number of weeks: <input type="text" name="num_weeks" value="4" /><input type="submit" /></form>')
+            return
+
+        num_weeks = int(self.request.params['num_weeks'])
+        dates = [LAST_WK_START - timedelta(days=7)*wk for wk in range(num_weeks-1, -1, -1)]
+
         template = '<div class="metric"><h3>Dates</h3><p>{show_dates}</p></div>' \
                    '<div class="metric"><h3>Wk/wk User Growth</h3><p>{user_growth}</p></div>' \
                    '<div class="metric"><h3>Wk/wk Monthly Active Users Growth</h3><p>{mau_growth}</p></div>' \
@@ -225,13 +227,13 @@ class ReportsHandler(webapp2.RequestHandler):
 
 
         template_kwargs = {
-            'show_dates': show_dates(),
-            'user_growth': user_growth(),
-            'mau_growth': mau_growth(),
-            'campaign_growth': giftstart_growth(),
+            'show_dates': show_dates(num_weeks, dates),
+            'user_growth': user_growth(num_weeks, dates),
+            'mau_growth': mau_growth(num_weeks, dates),
+            'campaign_growth': giftstart_growth(num_weeks, dates),
             'campaign_success_rate': campaign_success_rate(),
-            'transactions_per_week': transactions_per_week(),
-            'dollars_per_week': dollars_per_week(),
+            'transactions_per_week': transactions_per_week(num_weeks, dates),
+            'dollars_per_week': dollars_per_week(num_weeks, dates),
         }
 
         self.response.write(template.format(**template_kwargs))
