@@ -2,6 +2,7 @@
 @import "../../frame/column"
 
 #giftstart-contact-wrapper
+  clear: both
   gs-overlay
     margin-left: 0
   text-align: center
@@ -87,10 +88,12 @@
       color: #e27f24
       font-size: 1.2em
     form
-      input[type="text"],input[type="email"],textarea,select
+      input[type="text"],input[type="email"],input[type="password"],textarea,select
          padding: 0.9em
          border-width: 1px
-      input[type="text"],input[type="email"],textarea
+         margin-left: 0
+         margin-right: 0
+      input[type="text"],input[type="email"],input[type="password"],textarea
          width: 23.75em
          @media screen and (max-width: $phone-tablet-boundary)
            width: 100%
