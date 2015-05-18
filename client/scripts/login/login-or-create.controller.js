@@ -12,6 +12,7 @@
         $scope.working = false;
         $scope.showCreate = true;
         $scope.showForgot = false;
+        $scope.showReset = false;
         $scope.name;
         $scope.surname;
         $scope.email;
@@ -19,6 +20,7 @@
         $scope.password;
         $scope.reenterpassword;
         $scope.message;
+        $scope.resetCode;
 
         $scope.resetForm = function() {
             $scope.name='';
@@ -28,6 +30,7 @@
             $scope.password='';
             $scope.reenterpassword='';
             $scope.message='';
+            $scope.resetCode='';
         };
         $scope.resetForm();
 
@@ -125,7 +128,16 @@
             $scope.working = false;
         });
 
-        $rootScope.$on('loginbox-show-login', function(){$scope.showCreate = false;});
+        $rootScope.$on('loginbox-show-login', function(){
+            $scope.showCreate = false;
+            $scope.showReset = false;
+        });
+
+        $rootScope.$on('loginbox-show-reset', function() {
+            $scope.resetCode = $routeParams.resetCode;
+            $scope.showCreate = false;
+            $scope.showReset = true;
+        });
 
     };
 

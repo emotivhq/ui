@@ -16,7 +16,8 @@
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
 
         this.logout = logout;
-        this.login = login;
+        this.showLogin = showLogin;
+        this.showReset = showReset;
         this.closeLogin = closeLogin;
         this.loginKeyPress = loginKeyPress;
 
@@ -62,12 +63,21 @@
             jQuery('.loginwrapper').css('display', 'none');
         }
 
-        function login() {
-            //PopoverService.setPopover('login')
+        function revealLogin() {
             jQuery('.blackout-screen').css('display', 'block');
             jQuery('.loginwrapper').css('display', 'block');
+        }
+
+        function showLogin() {
+            revealLogin();
             $rootScope.$broadcast('loginbox-show-login');
             jQuery('.loginwrapper .userlogin__email').focus();
+        }
+
+        function showReset() {
+            revealLogin();
+            $rootScope.$broadcast('loginbox-show-reset');
+            jQuery('.loginwrapper .userlogin__password').focus();
         }
 
         function logout() {
@@ -126,15 +136,18 @@
             }
         };
 
-        $rootScope.$on('password-reset-requested', function () {
-            login();
-            $scope.actions.menuItemClicked(true);
+        $rootScope.$on('header-show-login', function(){
+            self.showLogin();
+        });
+
+        $rootScope.$on('password-reset-requested', function() {
+            self.showReset();
         });
 
         $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();
-        }
+        };
 
         var producturl = decodeURIComponent($location.search().producturl);
         if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {
