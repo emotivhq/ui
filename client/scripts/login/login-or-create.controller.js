@@ -116,6 +116,24 @@
                 });
         };
 
+        $scope.doResetPassword = function() {
+            if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
+                $scope.message="Your passwords do not match";
+                return;
+            }
+            Analytics.track('user', 'reset login password');
+            $scope.working = true;
+            emailLoginService.login('reset','',$scope.email,$scope.password,$scope.resetCode).
+                then(function (okMsg) {
+                    $scope.message=okMsg;
+                    $scope.showForgot = false;
+                    $scope.working = false;
+                }, function (errMsg) {
+                    $scope.message=errMsg;
+                    $scope.working = false;
+                });
+        };
+
         $scope.$on('logout-success', function() {
             jQuery('.userlogin').fadeIn(1500);
             $scope.resetForm();
@@ -129,11 +147,13 @@
         });
 
         $rootScope.$on('loginbox-show-login', function(){
+            $scope.resetForm();
             $scope.showCreate = false;
             $scope.showReset = false;
         });
 
         $rootScope.$on('loginbox-show-reset', function() {
+            $scope.resetForm();
             $scope.resetCode = $routeParams.resetCode;
             $scope.showCreate = false;
             $scope.showReset = true;
