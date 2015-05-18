@@ -6,12 +6,12 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource', '$timeout',
+    'Analytics','AppStateService', '$resource',
      GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
                           PopoverService,  $window,  Analytics,
-                          AppStateService, $resource, $timeout) {
+                          AppStateService, $resource) {
 
     var GiftStart = $resource('/giftstart/:key.json');
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -423,14 +423,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 (date.getHours() >= 12 ? 'PM' : 'AM');
         }
         newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
-        if (self.pitchIns.length === 0) {
-            angular.forEach(newPitchIns, function(newPitchIn) {
+        angular.forEach(newPitchIns, function(newPitchIn) {
+            if (self.pitchIns.length < newPitchIns.length && newPitchIn.gsid === self.giftStart.gsid) {
                 this.push(newPitchIn);
-            }, self.pitchIns);
-        }
-        else if(newPitchIns.length > self.pitchIns.length) {
-            self.pitchIns.push(newPitchIns[0]);
-        }
+            }
+        }, self.pitchIns);
     }
 
     function updatePartsFromPitchIns(pitchins) {
