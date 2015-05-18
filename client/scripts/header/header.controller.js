@@ -71,7 +71,7 @@
         function showLogin() {
             revealLogin();
             $rootScope.$broadcast('loginbox-show-login');
-            jQuery('.loginwrapper .userlogin__email').focus();
+            setTimeout(function() {jQuery('.loginwrapper .userlogin__email').focus();}, 0);
         }
 
         function showReset() {
@@ -94,7 +94,6 @@
         }
 
         function loginKeyPress($event) {
-            console.log("keypress");
             if($event.keyCode == 27)
               closeLogin();
         }
