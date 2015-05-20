@@ -8,7 +8,7 @@ import webapp2
 import requests
 import json
 import logging
-from gs_user.gs_user_core import get_user, validate
+from gs_user.gs_user_core import get_user, validate, is_valid_uid_pattern
 from social import facebook
 import urllib
 #import giftstart_comm
@@ -48,36 +48,31 @@ class FacebookShareHandler(webapp2.RequestHandler):
             logging.error("facebook_share: Invalid session token")
             return
 
-        if sessionUid!=uid:
+        if sessionUid != uid:
             self.response.set_status(400, "Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
             logging.error("facebook_share: Attempted to use a UID("+uid+") different from Session UID("+sessionUid+")")
             return
 
-        if uid[0] not in ['f', 'g', 't', 'e']:
+        user = get_user(uid)
+        if user is None:
             self.response.set_status(400, "Invalid user id")
             logging.error("facebook_share: Invalid User id "+uid)
             return
-        else:
-            user = get_user(uid)
-            if user is None:
-                self.response.set_status(400, "Invalid user id")
-                logging.error("facebook_share: Invalid User id "+uid)
-                return
-            fb_tokens = user.facebook_token_set
-            if fb_tokens is None:
-                self.response.set_status(400, "Invalid FaceBook tokens")
-                logging.error("facebook_share: Invalid FaceBook tokens "+uid)
-                return
-            fb_id = user.facebook_uid
-            try:
-                if(fb_id is None):
-                    #todo: figure out why users don't always get their facebook_uid set when they are created
-                    fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens)
-                    user.fb_id = fb_id
-                    user.put()
-            except Exception as e:
-                logging.error("facebook_share: Unable to set current user's FB ID: "+str(e))
-            self.response.write(text=self.publish_share(fb_tokens.access_token, gift_path, message, tags, deny).content)
+        fb_tokens = user.facebook_token_set
+        if fb_tokens is None:
+            self.response.set_status(400, "Invalid FaceBook tokens")
+            logging.error("facebook_share: Invalid FaceBook tokens "+uid)
+            return
+        fb_id = user.facebook_uid
+        try:
+            if(fb_id is None):
+                #todo: figure out why users don't always get their facebook_uid set when they are created
+                fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens)
+                user.fb_id = fb_id
+                user.put()
+        except Exception as e:
+            logging.error("facebook_share: Unable to set current user's FB ID: "+str(e))
+        self.response.write(text=self.publish_share(fb_tokens.access_token, gift_path, message, tags, deny).content)
 
     @staticmethod
     def publish_share(access_token, gift_path, message, tags=None, deny=None):

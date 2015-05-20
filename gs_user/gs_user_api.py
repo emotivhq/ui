@@ -53,18 +53,15 @@ class UserNotifyHandler(webapp2.RequestHandler):
         token = getTokenFromCookies(self.request)
         allow_protected_data = validate(uid, token, self.request.path)
         uid = self.request.path.split('/')[3][:-5]
-        if uid[0] not in ['f', 'g', 't', 'e']:
+        user = get_user(uid)
+        if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            user = get_user(uid)
-            if user is None:
-                self.response.set_status(400, "Invalid user id")
-            else:
-                response_data = {"notifications":[
-                    {"id":1, "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
-                    {"id":2, "title":"title two", "message":"test two"}
-                ]}
-                self.response.write(json.dumps(response_data))
+            response_data = {"notifications":[
+                {"id":1, "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
+                {"id":2, "title":"title two", "message":"test two"}
+            ]}
+            self.response.write(json.dumps(response_data))
 
 class UserProfileHandler(webapp2.RequestHandler):
     """JSON-formatted User"""
@@ -77,18 +74,15 @@ class UserProfileHandler(webapp2.RequestHandler):
         allow_protected_data = validate(uid, token, self.request.path)
         extended_attribs = self.request.params['ext'] if 'ext' in self.request.params else []
         uid = self.request.path.split('/')[3][:-5]
-        if uid[0] not in ['f', 'g', 't', 'e']:
+        user = get_user(uid)
+        if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            user = get_user(uid)
-            if user is None:
-                self.response.set_status(400, "Invalid user id")
-            else:
-                response_data = user.dictify(allow_protected_data)
-                if('giftideas' in extended_attribs):
-                    products = StoredProduct.query(StoredProduct.uid == uid).fetch()
-                    response_data['giftideas'] = map(lambda x: x.dictify(), products)
-                self.response.write(json.dumps(response_data))
+            response_data = user.dictify(allow_protected_data)
+            if('giftideas' in extended_attribs):
+                products = StoredProduct.query(StoredProduct.uid == uid).fetch()
+                response_data['giftideas'] = map(lambda x: x.dictify(), products)
+            self.response.write(json.dumps(response_data))
 
 
 class UserPageHandler(webapp2.RequestHandler):
@@ -148,14 +142,11 @@ class UserHandler(webapp2.RequestHandler):
     """provide User JSON data, and handle POSTs for login services"""
     def get(self):
         uid = self.request.path.split('/')[-1]
-        if uid[0] not in ['f', 'g', 't', 'e']:
+        user = get_user(uid)
+        if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            user = get_user(uid)
-            if user is None:
-                self.response.set_status(400, "Invalid user id")
-            else:
-                self.response.write(user.jsonify())
+            self.response.write(user.jsonify())
 
     def post(self):
         data = json.loads(self.request.body)
