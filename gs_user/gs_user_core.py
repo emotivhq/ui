@@ -136,10 +136,28 @@ service_prefix = {'facebook':'f',
                   'googleplus':'g',
                   'emaillogin':'e'}
 
+valid_uid_prefixes = service_prefix.values()
+
+info_map = {'f': lambda u: facebook.get_user_info(u),
+            't': lambda u: twitter.get_user_info(u),
+            'g': lambda u: googleplus.get_user_info(u),
+            'e': lambda u: login.login_core.get_user_info(u)}
+
+token_pointer_map = {
+    'f': lambda user: user.facebook_token_set.access_token,
+    't': lambda user: user.twitter_token_set.access_token,
+    'g': lambda user: user.googleplus_token_set.access_token,
+    'e': lambda user: user.emaillogin_token_set.email,
+}
+
 uid_fns = {'facebook': lambda tok: facebook.get_uid(tok),
            'twitter': lambda tok: twitter.get_uid(tok),
            'googleplus': lambda tok: googleplus.get_uid(tok),
            'emaillogin': lambda tok: login.login_core.get_uid(tok,create=True)}
+
+
+def is_valid_uid_pattern(uid):
+    return len(uid) > 0 and uid[0] in valid_uid_prefixes
 
 
 def update_or_create(service, token_set, referral):
@@ -180,12 +198,6 @@ def update_or_create(service, token_set, referral):
     return user
 
 
-info_map = {'f': lambda u: facebook.get_user_info(u),
-            't': lambda u: twitter.get_user_info(u),
-            'g': lambda u: googleplus.get_user_info(u),
-            'e': lambda u: login.login_core.get_user_info(u)}
-
-
 def get_user_info(user):
     """attempt to inject user info provided by service (eg, Google+ displayName) into User"""
     return info_map[user.uid[0]](user)
@@ -193,15 +205,9 @@ def get_user_info(user):
 
 def get_user(uid):
     """get User for ID"""
+    if not is_valid_uid_pattern(uid):
+        return None
     return ndb.Key('User', uid).get()
-
-
-token_pointer_map = {
-    'f': lambda user: user.facebook_token_set.access_token,
-    't': lambda user: user.twitter_token_set.access_token,
-    'g': lambda user: user.googleplus_token_set.access_token,
-    'e': lambda user: user.emaillogin_token_set.email,
-}
 
 
 def validate(uid, token, path=None):
