@@ -38,18 +38,6 @@
         $scope.$on('$routeChangeStart', routeChangeListener);
         $scope.$on('profile-image-changed', updateLogin);
 
-        if($location.hash() == "nav_mobile") {
-            $scope.menu = true;
-        } else if($location.hash() == "searchbar") {
-            $scope.search = true;
-        } else if($location.hash() == "nav_help" || $location.hash() == "nav_start") {
-            var menuopenlistener = function() {
-                jQuery('#' + $location.hash()).removeClass("hover");
-                angular.element($window).off('mousemove', menuopenlistener);
-            };
-            jQuery('#' + $location.hash()).addClass("hover");
-            angular.element($window).on('mousemove', menuopenlistener);
-        }
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
@@ -92,7 +80,9 @@
         self.showLogin = function() {
             revealLogin();
             $rootScope.$broadcast('loginbox-show-login');
-            setTimeout(function() {jQuery('.loginwrapper .userlogin__email').focus();}, 0);
+            $timeout(function() {
+                $rootScope.$broadcast('loginbox-show-login');
+            }, 200);
         };
 
         function showReset() {
@@ -172,6 +162,21 @@
             $location.hash(id);
             $anchorScroll();
         };
+
+        if($location.hash() == "nav_mobile") {
+            $scope.menu = true;
+        } else if($location.hash() == "searchbar") {
+            $scope.search = true;
+        } else if($location.hash() == "nav_login") {
+            self.showLogin();
+        } else if($location.hash() == "nav_help" || $location.hash() == "nav_start") {
+            var menuopenlistener = function() {
+                jQuery('#' + $location.hash()).removeClass("hover");
+                angular.element($window).off('mousemove', menuopenlistener);
+            };
+            jQuery('#' + $location.hash()).addClass("hover");
+            angular.element($window).on('mousemove', menuopenlistener);
+        }
 
         var producturl = decodeURIComponent($location.search().producturl);
         if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {
