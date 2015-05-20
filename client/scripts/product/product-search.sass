@@ -1,6 +1,4 @@
-
 @import "../base"
-
 
 gs-product-search
   @media screen and (max-width: 37.5em)
@@ -11,11 +9,6 @@ gs-product-search
     /*  PRODUCT LINK INPUT  */
     text-align: center
     margin: 0 auto
-
-    input
-      margin-right: 4px
-      color: #000
-      font-size: 1.2em
 
     select
       margin-top: 0.125em
@@ -29,8 +22,13 @@ gs-product-search
 
     span.inputs
       input
+        background: #eee
+        border: 0
+        color: #333
+        height: 34px
+        -webkit-input-placeholder: #333
         padding: 0.18em 0.6em
-        width: 21em
+        width: 25em
       button
         @media screen and (max-width: $phone-tablet-boundary)
           width: 100%

@@ -16,7 +16,9 @@
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
 
         this.logout = logout;
-        this.login = login;
+        this.showReset = showReset;
+        this.closeLogin = closeLogin;
+        this.loginKeyPress = loginKeyPress;
 
         this.menuOpen = menuOpen;
 
@@ -35,6 +37,19 @@
         $scope.$on('logout-success', updateLogin);
         $scope.$on('$routeChangeStart', routeChangeListener);
         $scope.$on('profile-image-changed', updateLogin);
+
+        var menuopenlistener = function() {
+            jQuery('#' + $location.hash()).removeClass("hover");
+            window.removeEventListener("mousemove", menuopenlistener);
+        };
+        jQuery('#' + $location.hash()).addClass("hover");
+        window.addEventListener("mousemove", menuopenlistener);
+
+        if($location.hash() == "nav_mobile") {
+            $scope.menu = true;
+        } else if($location.hash() == "searchbar") {
+            $scope.search = true;
+        }
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
@@ -55,7 +70,36 @@
             };
         }
 
-        function login() {PopoverService.setPopover('login')}
+        self.toggleMobileMenu = function() {
+            $scope.menu = !$scope.menu;
+            console.log($scope.menu);
+        };
+
+        self.closeMobileMenu = function() {
+            $scope.menu = false;
+        };
+
+        function closeLogin() {
+            jQuery('.blackout-screen').css('display', 'none');
+            jQuery('.loginwrapper').css('display', 'none');
+        }
+
+        function revealLogin() {
+            jQuery('.blackout-screen').css('display', 'block');
+            jQuery('.loginwrapper').css('display', 'block');
+        }
+
+        self.showLogin = function() {
+            revealLogin();
+            $rootScope.$broadcast('loginbox-show-login');
+            setTimeout(function() {jQuery('.loginwrapper .userlogin__email').focus();}, 0);
+        };
+
+        function showReset() {
+            revealLogin();
+            $rootScope.$broadcast('loginbox-show-reset');
+            jQuery('.loginwrapper .userlogin__password').focus();
+        }
 
         function logout() {
             self.userImageUrl = '';
@@ -68,6 +112,11 @@
             self.userImageUrl = UserService.profileImageUrl;
             self.userProfileUrl = '/users/' + UserService.uid;
             self.userName = (UserService.name).toUpperCase();
+        }
+
+        function loginKeyPress($event) {
+            if($event.keyCode == 27)
+              closeLogin();
         }
 
         function menuOpen() {$rootScope.$broadcast('menu-open')}
@@ -107,15 +156,22 @@
             }
         };
 
-        $rootScope.$on('password-reset-requested', function () {
-            login();
-            $scope.actions.menuItemClicked(true);
+        $rootScope.$on('header-show-login', function(){
+            self.showLogin();
+        });
+
+        $rootScope.$on('header-close-login', function(){
+            self.closeLogin();
+        });
+
+        $rootScope.$on('password-reset-requested', function() {
+            self.showReset();
         });
 
         $scope.scrollTo = function(id) {
             $location.hash(id);
             $anchorScroll();
-        }
+        };
 
         var producturl = decodeURIComponent($location.search().producturl);
         if(producturl&&producturl!=""&&producturl!="true"&&producturl!="undefined") {
@@ -151,14 +207,13 @@
         '$interval',
         '$timeout',
         '$window',
-        HeaderController]);
-
-    app.run(function($rootScope, $location, $anchorScroll, $routeParams) {
+        HeaderController])
+    .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
         $anchorScroll();
       });
-    });
+    })
 
 }(angular.module('GiftStarterApp')));

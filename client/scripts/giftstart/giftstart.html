@@ -1,16 +1,19 @@
-<div class="giftstart wrapper" ng-controller="GiftStartController" ng-click="mouseActivityCallback('click')">
+<div class="giftstart wrapper" ng-controller="GiftStartController" >
 
     <div class="fullwidth block">
         <div class="title">
-            <h1 class="title campaign-title" ng-hide="editMode">{{giftStart.title}}</h1><input class="title" ng-model="newTitle" ng-show="editMode"/><span class="title edit"></span>
+            <h1 class="title campaign-title" ng-hide="editMode">{{giftStart.title}}</h1>
+            <input class="title" ng-model="newTitle" ng-show="editMode"/>
+            <span class="title edit"></span>
         </div>
     </div>
 
     <div class="fullwidth block">
 
-        <div class="col2 block">
-            <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
-
+        <div class="col2 block" ng-hide="showLoginBox">
+            <div class="prodtitle">
+                <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
+            </div>
             <div class="description">
                 <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
                 <span class="description makelinks" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
@@ -27,9 +30,13 @@
         </div>
         <div class="overlay block">
                 <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file" capture="camera" accept="image/*"/></div>
-            <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
+                <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         </div>
-        <div class="col2 block">
+        <div ng-show="showLoginBox" class="login-box">
+            <h2>Log in or create an account:</h2>
+            <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+        </div>
+        <div class="col2 block" ng-hide="showLoginBox">
             <div class="pitch-instructions">
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
@@ -77,7 +84,7 @@
             <h3 class="title__name">Group Card</h3>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
         </div>
-        <div ng-repeat-start="pitchIn in pitchIns" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
+        <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
         <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
             <div class="contributors__figure">
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
@@ -93,7 +100,7 @@
         <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
     <div ng-show="campaignComplete()" class="btn btn--pdf">
-        <a href="#" ng-click="toPDFPage()" class="btn__link">
+        <a href="" ng-click="toPDFPage()" class="btn__link">
             View Card PDF
         </a>
     </div>

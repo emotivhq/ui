@@ -19,6 +19,7 @@ import paypalrestsdk
 import paypalapi
 import uuid
 import re
+from txn_lock.txn_lock_core import obtain_lock, release_lock
 
 config = yaml.load(open('config.yaml'))
 
@@ -112,71 +113,83 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
     except Exception, e:
         logging.error(e.message)
 
-    if not parts_available(parts, gsid):
-        return {'result': 'error', 'error': 'One or more requested parts have '
-                                            'already been bought.'}
-
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    total_charge = calculate_total_price(giftstart, parts)
 
-    desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+    lock = None
 
-    is_stripe = paypalapi.is_stripe()
     try:
-        if is_stripe:
-            if save_this_card:
-                customer, card = save_card_stripe(user, stripe_response['id'])
-                charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                              customer=customer['id'],
-                                              card=card['id'], description=desc)
+
+        lock = obtain_lock(giftstart, 15)
+
+        if len(parts) < 1 or not parts_available(parts, gsid):
+            return {'result': 'error', 'payment-error': 'One or more requested parts have '
+                                                'already been bought.'}
+        total_charge = calculate_total_price(giftstart, parts)
+
+        desc = "GiftStarter #{0} parts {1}".format(gsid, str(parts))
+
+        is_stripe = paypalapi.is_stripe()
+        try:
+            if is_stripe:
+                if save_this_card:
+                    customer, card = save_card_stripe(user, stripe_response['id'])
+                    charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                                  customer=customer['id'],
+                                                  card=card['id'], description=desc)
+                else:
+                    charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                                  card=stripe_response['id'],
+                                                  description=desc)
             else:
-                charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                              card=stripe_response['id'],
-                                              description=desc)
-        else:
-            card_token = save_card_paypal_vault(user,card_data)
-            try:
-                urlfetch.set_default_fetch_deadline(30)
-                payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
-                if(not save_this_card):
+                card_token = save_card_paypal_vault(user,card_data)
+                try:
+                    urlfetch.set_default_fetch_deadline(30)
+                    payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
+                    if(not save_this_card):
+                        delete_card_paypal_vault(card_token)
+                except Exception as ex:
                     delete_card_paypal_vault(card_token)
-            except Exception as ex:
-                delete_card_paypal_vault(card_token)
-                raise ex
-            finally:
-                urlfetch.set_default_fetch_deadline(None)
+                    raise ex
+                finally:
+                    urlfetch.set_default_fetch_deadline(None)
 
+        except (CardError, InvalidRequestError, AuthenticationError,
+                APIConnectionError, StripeError) as e:
+            logging.error(e)
+            return {'result': 'error', 'payment-error': e.json_body.error.message if e.json_body else e.message}
 
+        # Make pitch in
+        charge_id = charge['id'] if is_stripe else payment.id
+        charge_amount = charge['amount'] if is_stripe else total_charge
+        pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
+                         'PitchIn', charge_id)
+        card_last_four = stripe_response['card']['last4'] if is_stripe else payment.payer.funding_instruments[0].credit_card_token.last4
+        charge_json = json.dumps(charge if is_stripe else payment.to_dict())
+        pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
+                     giftstart_url_title=giftstart.giftstart_url_title,
+                     stripe_charge_id=charge_id if is_stripe else "",
+                     paypal_charge_id="" if is_stripe else charge_id,
+                     email=email_address,
+                     stripe_charge_json=charge_json if is_stripe else "",
+                     paypal_charge_json="" if is_stripe else charge_json,
+                     last_four=card_last_four, img_url=usr_img,
+                     name=user.name if user.name else '')
+        pi.put()
 
-    except (CardError, InvalidRequestError, AuthenticationError,
-            APIConnectionError, StripeError) as e:
-        logging.error(e)
-        return {'result': 'error', 'payment-error': e.json_body.error.message if e.json_body else e.message}
+        set_user_pitched_in(user)
+        send_pitchin_notification(giftstart, charge_id, charge_amount,
+                                  card_last_four, email_address,
+                                  note, user.name, usr_img)
 
-    # Make pitch in
-    charge_id = charge['id'] if is_stripe else payment.id
-    charge_amount = charge['amount'] if is_stripe else total_charge
-    pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
-                     'PitchIn', charge_id)
-    card_last_four = stripe_response['card']['last4'] if is_stripe else payment.payer.funding_instruments[0].credit_card_token.last4
-    charge_json = json.dumps(charge if is_stripe else payment.to_dict())
-    pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
-                 giftstart_url_title=giftstart.giftstart_url_title,
-                 stripe_charge_id=charge_id if is_stripe else "",
-                 paypal_charge_id="" if is_stripe else charge_id,
-                 email=email_address,
-                 stripe_charge_json=charge_json if is_stripe else "",
-                 paypal_charge_json="" if is_stripe else charge_json,
-                 last_four=card_last_four, img_url=usr_img,
-                 name=user.name if user.name else '')
-    pi.put()
+        return {'result': 'success', 'purchased-parts': parts}
 
-    set_user_pitched_in(user)
-    send_pitchin_notification(giftstart, charge_id, charge_amount,
-                              card_last_four, email_address,
-                              note, user.name, usr_img)
+    except IOError as x:
+        logging.error("IOError at pitch_in: {0}".format(x))
+        return {'result': 'error', 'payment-error': "The payment timed out; please try again."}
 
-    return {'result': 'success', 'purchased-parts': parts}
+    finally:
+        if lock is not None:
+            release_lock(lock)
 
 
 def set_user_pitched_in(user):
@@ -371,58 +384,74 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
     """
     user = ndb.Key('User', uid).get()
 
-    if not parts_available(parts, gsid):
-        return {'result': 'error', 'error': 'One or more requested parts have '
-                                            'already been bought.'}
-
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    total_charge = calculate_total_price(giftstart, parts)
-    desc = "GiftStarter #{0} parts {1}".format(gsid, ",".join(str(x) for x in parts))
 
-    is_stripe = paypalapi.is_stripe()
+    lock = None
 
     try:
-        if is_stripe:
-            customer, card = get_card_by_fingerprint(fingerprint, user)
-            charge = stripe.Charge.create(amount=total_charge, currency='usd',
-                                          card=card['id'], customer=customer,
-                                          description=desc)
-        else:
-            card_token = fingerprint
-            try:
-                urlfetch.set_default_fetch_deadline(30)
-                payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
-            finally:
-                urlfetch.set_default_fetch_deadline(None)
-    except (CardError, InvalidRequestError, AuthenticationError,
-            APIConnectionError, StripeError) as e:
-        logging.error(e)
-        return {'result': 'error', 'payment-error': e.json_body.error.message if e.json_body else e.message}
+        lock = obtain_lock(giftstart, 15)
+
+        if len(parts) < 1 or not parts_available(parts, gsid):
+            return {'result': 'error', 'payment-error': 'It looks like someone just bought that tile!  Please select another and try again.'}
+
+        total_charge = calculate_total_price(giftstart, parts)
+        desc = "GiftStarter #{0} parts {1}".format(gsid, ",".join(str(x) for x in parts))
+
+        is_stripe = paypalapi.is_stripe()
+
+        try:
+            if is_stripe:
+                customer, card = get_card_by_fingerprint(fingerprint, user)
+                charge = stripe.Charge.create(amount=total_charge, currency='usd',
+                                              card=card['id'], customer=customer,
+                                              description=desc)
+            else:
+                card_token = fingerprint
+                try:
+                    urlfetch.set_default_fetch_deadline(30)
+                    payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
+                finally:
+                    urlfetch.set_default_fetch_deadline(None)
+        except (CardError, InvalidRequestError, AuthenticationError,
+                APIConnectionError, StripeError) as e:
+            logging.error(e)
+            return {'result': 'error', 'payment-error': e.json_body.error.message if e.json_body else e.message}
 
 
-    # Make pitch in
-    charge_id = charge['id'] if is_stripe else payment.id
-    charge_amount = charge['amount'] if is_stripe else total_charge
-    pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
-                     'PitchIn', charge_id)
-    card_last_four = card['last4'] if is_stripe else payment.payer.funding_instruments[0].credit_card_token.last4
-    charge_json = json.dumps(charge if is_stripe else payment.to_dict())
-    pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
-                 giftstart_url_title=giftstart.giftstart_url_title,
-                 stripe_charge_id=charge_id if is_stripe else "",
-                 paypal_charge_id="" if is_stripe else charge_id,
-                 email=user.email,
-                 stripe_charge_json=charge_json if is_stripe else "",
-                 paypal_charge_json="" if is_stripe else charge_json,
-                 last_four=card_last_four,
-                 img_url=user.cached_profile_image_url,
-                 name=user.name if user.name else '')
-    pi.put()
+        # Make pitch in
+        charge_id = charge['id'] if is_stripe else payment.id
+        charge_amount = charge['amount'] if is_stripe else total_charge
+        pi_key = ndb.Key('GiftStart', giftstart.giftstart_url_title,
+                         'PitchIn', charge_id)
+        card_last_four = card['last4'] if is_stripe else payment.payer.funding_instruments[0].credit_card_token.last4
+        charge_json = json.dumps(charge if is_stripe else payment.to_dict())
+        pi = PitchIn(key=pi_key, uid=uid, gsid=gsid, note=note, parts=parts,
+                     giftstart_url_title=giftstart.giftstart_url_title,
+                     stripe_charge_id=charge_id if is_stripe else "",
+                     paypal_charge_id="" if is_stripe else charge_id,
+                     email=user.email,
+                     stripe_charge_json=charge_json if is_stripe else "",
+                     paypal_charge_json="" if is_stripe else charge_json,
+                     last_four=card_last_four,
+                     img_url=user.cached_profile_image_url,
+                     name=user.name if user.name else '')
+        pi.put()
 
-    send_pitchin_notification(giftstart, charge_id, charge_amount,
-                              card_last_four, user.email, note, user.name,
-                              user.cached_profile_image_url)
+        set_user_pitched_in(user)
 
+        send_pitchin_notification(giftstart, charge_id, charge_amount,
+                                  card_last_four, user.email, note, user.name,
+                                  user.cached_profile_image_url)
+
+        return {'result': 'success', 'purchased-parts': parts}
+
+    except IOError as x:
+        logging.error("IOError at pay_with_fingerprint: {0}".format(x))
+        return {'result': 'error', 'payment-error': "The payment timed out; please try again."}
+
+    finally:
+        if lock is not None:
+            release_lock(lock)
 
 def extract_payment_amount_from_paypal_payment(payment):
     return int(float(payment['transactions'][0]['amount']['total']) * 100)
@@ -437,10 +466,10 @@ def get_charge_amount_for_pitchin(pitchin):
     if pitchin.paypal_charge_json and pitchin.paypal_charge_json!=None:
         try:
             return extract_payment_amount_from_paypal_payment(json.loads(pitchin.paypal_charge_json))
-        except Exception as x:
+        except KeyError as x:
             logging.error("Unable to PitchIn.getChargeAmount for PayPal transaction: {0} {1} {2}".format(pitchin.giftstart_url_title, pitchin.parts, pitchin.paypal_charge_json))
             if pitchin.paypal_charge_json==pitchin.paypal_charge_id:
-                logging.error("Reparing {0} {1}".format(pitchin.giftstart_url_title, pitchin.parts))
+                logging.error("Repairing {0} {1}".format(pitchin.giftstart_url_title, pitchin.parts))
                 try:
                     paypal_charge =  get_payment_data_for_transaction(pitchin.paypal_charge_id)
                     amount = extract_payment_amount_from_paypal_payment(paypal_charge)

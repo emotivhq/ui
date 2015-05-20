@@ -6,14 +6,16 @@
 
 GiftStarterApp.service('GiftStartService', [
     '$http','$location','UserService','$rootScope', 'PopoverService','$window',
-    'Analytics','AppStateService','$resource',
-    GiftStartService]);
+    'Analytics','AppStateService', '$resource',
+     GiftStartService]);
 
 function GiftStartService($http,  $location,  UserService,  $rootScope,
                           PopoverService,  $window,  Analytics,
                           AppStateService, $resource) {
 
     var GiftStart = $resource('/giftstart/:key.json');
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    newPitchIns;
 
     this.giftStart = {};
 
@@ -61,7 +63,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.serviceFee = 0;
     this.totalPrice = 0;
     this.campaignLength = 0;
-
+    this.newPitchIn = {};
     // Thanks data
     this.thanks_img = {};
 
@@ -71,7 +73,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         this.preselectedParts = AppStateService.get('selectedParts');
         AppStateService.remove('selectedParts');
     }
-    $rootScope.$on('giftstart-loaded', restartPitchin);
 
     var self = this;
 
@@ -94,9 +95,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
         self.giftStart = self.buildGiftStart();
         self.pitchInsInitialized = false;
-        $http({method: 'POST', url: '/giftstart/create.json',
+        return $http({method: 'POST', url: '/giftstart/create.json',
             data: self.giftStart})
-            .success(function(data) {self.inflateGiftStart(data)})
+            .success(function(data) {
+                self.inflateGiftStart(data);
+            })
             .error(function(reason) {
                 console && console.log && console.log(reason);
                 Analytics.track('campaign', 'campaign create failed');
@@ -246,7 +249,12 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         self.payment.note = noteText;
         var data = {payment: self.payment, action: 'pitch-in-note-update',
             uid: UserService.uid};
-        return $http({method: 'POST', url: '/pay', data: data})
+        $http({method: 'POST', url: '/pay', data: data})
+            .success(function (resp) {
+                self.newPitchIn = resp;
+                $rootScope.$broadcast('note-saved');
+            });
+
     };
 
     this.saveImage = function(imageUrl) {
@@ -327,7 +335,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         }
     };
 
-    this.paymentFailure = function() {console && console.log && console.log("Pitch-in failed!")};
+    this.paymentFailure = function(data) {console && console.log && console.log("Pitch-in failed!: "+data)};
 
     this.updateCampaign = function(newTitle, newDescription, newImage,
                                    newGcName) {
@@ -392,23 +400,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         $location.path('u').search('').search('uid', uid);
     };
 
-    this.pitchIn = function() {
-        // Ensure they have selected more than $0 of the gift to pitch in
-        if (self.giftStart.totalSelection > 0) {
-            Analytics.track('pitchin', 'pitchin button clicked');
-            PopoverService.contributeLogin = true;
-            AppStateService.set('contributeLogin', true);
-            PopoverService.setPopover('login');
-        } else {console && console.log && console.log("Nothing selected!")}
-    };
-
-    function restartPitchin() {
-        if (AppStateService.get('contributeLogin')) {
-            AppStateService.remove('contributeLogin');
-            self.pitchIn();
-        }
-    }
-
     function checkForSync() {
         $http({
             method: 'POST',
@@ -426,10 +417,10 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     }
 
     function formatPitchIns(pitchins) {
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var newPitchIns = pitchins;
-        for (var i = 0; i < newPitchIns.length; i++) {
-            var date = new Date(1000 * pitchins[i].timestamp);
+        newPitchIns = pitchins;
+        var i, len, date;
+        for (i = 0, len = newPitchIns.length; i < len; i++) {
+            date = new Date(1000 * pitchins[i].timestamp);
             newPitchIns[i].timestampString = months[date.getMonth()] +
                 " " + date.getDate() + ", " +
                 ((date.getHours() - 1) % 12) + ":" +
@@ -437,7 +428,11 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 (date.getHours() >= 12 ? 'PM' : 'AM');
         }
         newPitchIns.sort(function(a, b) {return b.timestamp - a.timestamp});
-        self.pitchIns = newPitchIns;
+        angular.forEach(newPitchIns, function(newPitchIn) {
+            if (self.pitchIns.length < newPitchIns.length && newPitchIn.gsid === self.giftStart.gsid) {
+                this.unshift(newPitchIn);
+            }
+        }, self.pitchIns);
     }
 
     function updatePartsFromPitchIns(pitchins) {
@@ -476,15 +471,7 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             } else if (!self.pitchInsInitialized) {
                 checkForSync();
                 updateLastChecked();
-            } else {
-                // Update every N seconds upon user activity
-                var currentTime = new Date().getTime();
-                if (currentTime - self.lastCheckedMilliseconds >
-                    self.updateInterval) {
-                    checkForSync();
-                    updateLastChecked();
-                }
-            }
+             }
         }
     };
 
