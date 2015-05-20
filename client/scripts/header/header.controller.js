@@ -39,6 +39,13 @@
         $scope.$on('$routeChangeStart', routeChangeListener);
         $scope.$on('profile-image-changed', updateLogin);
 
+        var menuopenlistener = function() {
+            jQuery('#' + $location.hash()).removeClass("hover");
+            window.removeEventListener("mousemove", menuopenlistener);
+        }
+        jQuery('#' + $location.hash()).addClass("hover");
+        window.addEventListener("mousemove", menuopenlistener);
+
         // for sizing using ng-class
         function routeChangeListener(event, next) {
             self.creating = $location.path().indexOf('/create') === 0;

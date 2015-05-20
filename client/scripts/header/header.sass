@@ -59,7 +59,7 @@
     @media screen and (max-width: $phone-tablet-boundary)
       a
         color: #333
-        &:hover
+        &:hover, .hover
           color: $primary-color
         font-size: 1.2em
       .mobile-rule
@@ -87,7 +87,7 @@
         float: left
         position: relative
         white-space: nowrap
-        &:hover
+        &:hover, &.hover
           background: #6E8B97
           a
             color: white
@@ -99,7 +99,7 @@
           display: block
           height: 48px
           padding: 20px
-          &:hover
+          &:hover, .hover
             background: #6E8B97
             color: white
 
@@ -126,17 +126,17 @@
               color: #333
               height: auto
               padding: 5px 10px
-              &:hover
+              &:hover, .hover
                 color: white
 
       .menu-login
         height: 48px
-        &:hover
+        &:hover, .hover
           background: $primary-color
         a
           color: $primary-color
           text-decoration: underline
-          &:hover
+          &:hover, .hover
             background: $primary-color
             color: white
         .menu-user

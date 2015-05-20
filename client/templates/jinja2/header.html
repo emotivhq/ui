@@ -23,7 +23,7 @@
     </form>
     <div class="menuwrapper" ng-class="{hideMobileMenu: !$scope.menu}">
       <ul id="menu">
-        <li><a href="#">START</a><hr class="mobile-rule" />
+        <li id="nav_start"><a href="#nav_start">START</a><hr class="mobile-rule" />
           <ul class="submenu">
             <li><a href="/#productsearch" ng-click="$scope.menu = !$scope.menu; $scope.search = !$scope.search">Search for a Gift</a></li>
             <li><a href="/giftideas" ng-click="$scope.menu = !$scope.menu">Browse Gift Ideas</a></li>
@@ -33,7 +33,7 @@
             <li><a href="#" class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
           </ul>
         </li>
-        <li><a href="#">HELP</a><hr class="mobile-rule" />
+        <li id="nav_help"><a href="#nav_help">HELP</a><hr class="mobile-rule" />
           <ul class="submenu">
             <li><a href="/howitworks" ng-click="$scope.menu = !$scope.menu">How It Works</a></li>
             <li><a href="/faq" ng-click="$scope.menu = !$scope.menu">FAQ</a></li>
