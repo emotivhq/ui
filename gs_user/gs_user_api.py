@@ -45,9 +45,9 @@ class StatsHandler(webapp2.RequestHandler):
 class UserNotifyHandler(webapp2.RequestHandler):
     """JSON-formatted User"""
 
-    def get(self):
+    def post(self):
         """
-        Gets user notifications as JSON (including protected data if signed in as self)
+        { "set_seen":"*", "set_acknowledged":[1,2,3] }
         """
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
@@ -55,11 +55,26 @@ class UserNotifyHandler(webapp2.RequestHandler):
         uid = self.request.path.split('/')[3][:-5]
         user = get_user(uid)
         if user is None:
+            self
+
+    def get(self):
+        """
+        Gets user notifications as JSON (including protected data if signed in as self)
+        """
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        allow_protected_data = validate(uid, token, self.request.path)
+        num = int(self.request.params.get('num').lower()) if ('num' in self.request.params.keys()) else 10
+        show_seen = (self.request.params.get('seen').lower() is 'true') if ('seen' in self.request.params.keys()) else True
+        show_acknowledged = (self.request.params.get('acknowledged').lower() is 'true') if ('acknowledged' in self.request.params.keys()) else False
+        uid = self.request.path.split('/')[3][:-5]
+        user = get_user(uid)
+        if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
             response_data = {"notifications":[
-                {"id":1, "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
-                {"id":2, "title":"title two", "message":"test two"}
+                {"id":1, "time":1432164908092, "seen":"true", "acknowledged":"true", "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
+                {"id":2, "time":1432164906241, "seen":"false", "acknowledged":"false", "title":"title two", "message":"test two"}
             ]}
             self.response.write(json.dumps(response_data))
 
