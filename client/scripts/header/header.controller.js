@@ -38,17 +38,17 @@
         $scope.$on('$routeChangeStart', routeChangeListener);
         $scope.$on('profile-image-changed', updateLogin);
 
-        var menuopenlistener = function() {
-            jQuery('#' + $location.hash()).removeClass("hover");
-            window.removeEventListener("mousemove", menuopenlistener);
-        };
-        jQuery('#' + $location.hash()).addClass("hover");
-        window.addEventListener("mousemove", menuopenlistener);
-
         if($location.hash() == "nav_mobile") {
             $scope.menu = true;
         } else if($location.hash() == "searchbar") {
             $scope.search = true;
+        } else if($location.hash() == "nav_help" || $location.hash() == "nav_start") {
+            var menuopenlistener = function() {
+                jQuery('#' + $location.hash()).removeClass("hover");
+                angular.element($window).off('mousemove', menuopenlistener);
+            };
+            jQuery('#' + $location.hash()).addClass("hover");
+            angular.element($window).on('mousemove', menuopenlistener);
         }
 
         // for sizing using ng-class
