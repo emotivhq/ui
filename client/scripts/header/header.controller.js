@@ -16,7 +16,6 @@
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
 
         this.logout = logout;
-        this.showLogin = showLogin;
         this.showReset = showReset;
         this.closeLogin = closeLogin;
         this.loginKeyPress = loginKeyPress;
@@ -42,9 +41,15 @@
         var menuopenlistener = function() {
             jQuery('#' + $location.hash()).removeClass("hover");
             window.removeEventListener("mousemove", menuopenlistener);
-        }
+        };
         jQuery('#' + $location.hash()).addClass("hover");
         window.addEventListener("mousemove", menuopenlistener);
+
+        if($location.hash() == "nav_mobile") {
+            $scope.menu = true;
+        } else if($location.hash() == "searchbar") {
+            $scope.search = true;
+        }
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
@@ -65,6 +70,15 @@
             };
         }
 
+        self.toggleMobileMenu = function() {
+            $scope.menu = !$scope.menu;
+            console.log($scope.menu);
+        };
+
+        self.closeMobileMenu = function() {
+            $scope.menu = false;
+        };
+
         function closeLogin() {
             jQuery('.blackout-screen').css('display', 'none');
             jQuery('.loginwrapper').css('display', 'none');
@@ -75,11 +89,11 @@
             jQuery('.loginwrapper').css('display', 'block');
         }
 
-        function showLogin() {
+        self.showLogin = function() {
             revealLogin();
             $rootScope.$broadcast('loginbox-show-login');
             setTimeout(function() {jQuery('.loginwrapper .userlogin__email').focus();}, 0);
-        }
+        };
 
         function showReset() {
             revealLogin();

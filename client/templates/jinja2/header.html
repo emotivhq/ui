@@ -3,14 +3,14 @@
   <div id="header">
     <div class="headerLogoWrapper">
       <div class="header-menu-button">
-          <img src="/assets/menu-mobile.png" ng-click="$scope.menu = !$scope.menu"/>
+          <a href="#nav_mobile"><img src="/assets/menu-mobile.png" ng-click="header.toggleMobileMenu()"/></a>
       </div>
       <a href="/"><img id="logo" src="/assets/webLogo.png" /><img id="logo-mobile" src="/assets/logo-mobile.png" /></a>
       <div class="header-menu-button">
-          <img src="/assets/search-mobile.png" ng-click="$scope.search = !$scope.search"/>
+          <a href="#searchbar"><img src="/assets/search-mobile.png" ng-click="search = !search"/></a>
       </div>
     </div>
-    <form id="searchbar" ng-class="{hideMobileSearch: !$scope.search}">
+    <form id="searchbar" ng-class="{hideMobileSearch: !search}">
         <input id="product-search-input-head"
                class="text-input"
                type="text"
@@ -21,39 +21,39 @@
         <button id="product-search-button-head" class="submit" onclick="top.location='/search/'+jQuery('#product-search-input-head').val()">SEARCH</button>
 
     </form>
-    <div class="menuwrapper" ng-class="{hideMobileMenu: !$scope.menu}">
+    <div id="nav_mobile" class="menuwrapper" ng-class="{hideMobileMenu: !menu}">
       <ul id="menu">
         <li id="nav_start"><a href="#nav_start">START</a><hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a href="/#productsearch" ng-click="$scope.menu = !$scope.menu; $scope.search = !$scope.search">Search for a Gift</a></li>
-            <li><a href="/giftideas" ng-click="$scope.menu = !$scope.menu">Browse Gift Ideas</a></li>
-            <li><a href="/concierge" ng-click="$scope.menu = !$scope.menu">Contact the Gift Concierge</a></li>
+            <li><a href="/#productsearch" ng-click="header.closeMobileMenu(); search = !search">Search for a Gift</a></li>
+            <li><a href="/giftideas" ng-click="header.closeMobileMenu()">Browse Gift Ideas</a></li>
+            <li><a href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
             <li><a href="#" class="coming-soon">Pitch-in on a gift *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Say thanks for a gift *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
           </ul>
         </li>
-        <li id="nav_help"><a href="#nav_help">HELP</a><hr class="mobile-rule" />
+        <li id="nav_help"><a href="/faq#nav_help">HELP</a><hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a href="/howitworks" ng-click="$scope.menu = !$scope.menu">How It Works</a></li>
-            <li><a href="/faq" ng-click="$scope.menu = !$scope.menu">FAQ</a></li>
-            <li><a href="/concierge" ng-click="$scope.menu = !$scope.menu">Contact the Gift Concierge</a></li>
+            <li><a href="/howitworks" ng-click="header.closeMobileMenu()">How It Works</a></li>
+            <li><a href="/faq" ng-click="header.closeMobileMenu()">FAQ</a></li>
+            <li><a href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
             <li><a href="#" class="coming-soon">Learn more *Coming Soon*</a></li>
           </ul>
         </li>
         <li class="menu-login" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" ng-href="{{header.userProfileUrl}}" ng-show="header.loggedIn">{{header.userName}}</a>
           <hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a ng-href="{{header.userProfileUrl}}" ng-click="$scope.menu = !$scope.menu">Profile Page</a></li>
-            <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="$scope.menu = !$scope.menu">My Campaigns</a></li>
-            <li><a  ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="$scope.menu = !$scope.menu">Saved Gift Ideas</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
+            <li><a  ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
             <li><a href="#" class="coming-soon">Notifications *Coming Soon*</a></li>
             <li><a href="#" class="coming-soon">Settings *Coming Soon*</a></li>
-            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked(); $scope.menu = !$scope.menu">Log Out</a></li>
+            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
           </ul>
         </li>
-        <li class="menu-login"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="$scope.menu = !$scope.menu">CREATE ACCOUNT</a></li>
-        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.showLogin(); actions.menuItemClicked(true); $scope.menu = !$scope.menu">LOG IN</a></li>
+        <li class="menu-login"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="header.closeMobileMenu()">CREATE ACCOUNT</a></li>
+        <li class="menu-login"><a href="#" ng-hide="header.loggedIn || header.creating" ng-click="header.showLogin(); actions.menuItemClicked(true); header.closeMobileMenu()">LOG IN</a></li>
       </ul>
     </div>
   <div class="loginwrapper" ng-keyup="header.loginKeyPress($event)">
