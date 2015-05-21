@@ -2,7 +2,7 @@
     <form ng-submit="$parent.doLoginEmail()">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
         <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter your password" required>
-        <a href="#" class="userlogin__forgot" ng-click="$parent.showForgot=true">Forgot password</a>
+        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=true">Forgot password</a>
         <br />
         <div class="userlogin__wrapper">
             <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
@@ -15,7 +15,7 @@
 <div class="userlogin__form" ng-show="$parent.showForgot">
     <form ng-submit="$parent.doForgotPassword()">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
-        <a href="#" class="userlogin__forgot" ng-click="$parent.showForgot=false">Cancel</a>
+        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=false">Cancel</a>
         <div class="userlogin__message">{{$parent.message}}</div>
         <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Get Password</button>
     </form>
@@ -28,7 +28,7 @@
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required /><br/>
         <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter a New Password" required>
         <input class="userlogin__password" type="password" name="password" ng-model="$parent.reenterpassword" placeholder="Re-enter the Password" required>
-        <a href="#" class="userlogin__forgot" ng-click="$parent.showReset=false">Cancel</a>
+        <a class="userlogin__forgot linky" ng-click="$parent.showReset=false">Cancel</a>
         <div class="userlogin__message">{{$parent.message}}</div>
         <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Change Password</button>
     </form>

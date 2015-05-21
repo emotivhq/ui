@@ -28,17 +28,17 @@
             <li><a href="/#productsearch" ng-click="header.closeMobileMenu(); search = !search">Search for a Gift</a></li>
             <li><a href="/giftideas" ng-click="header.closeMobileMenu()">Browse Gift Ideas</a></li>
             <li><a href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
-            <li><a href="#" class="coming-soon">Pitch-in on a gift *Coming Soon*</a></li>
-            <li><a href="#" class="coming-soon">Say thanks for a gift *Coming Soon*</a></li>
-            <li><a href="#" class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
+            <li><a class="coming-soon">Pitch-in on a gift *Coming Soon*</a></li>
+            <li><a class="coming-soon">Say thanks for a gift *Coming Soon*</a></li>
+            <li><a class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
           </ul>
         </li>
         <li id="nav_help"><a href="/faq#nav_help">HELP</a><hr class="mobile-rule" />
           <ul class="submenu">
-            <li><a href="/howitworks" ng-click="header.closeMobileMenu()">How It Works</a></li>
-            <li><a href="/faq" ng-click="header.closeMobileMenu()">FAQ</a></li>
-            <li><a href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
-            <li><a href="#" class="coming-soon">Learn more *Coming Soon*</a></li>
+            <li><a class="linky" href="/howitworks" ng-click="header.closeMobileMenu()">How It Works</a></li>
+            <li><a class="linky" href="/faq" ng-click="header.closeMobileMenu()">FAQ</a></li>
+            <li><a class="linky" href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
+            <li><a class="coming-soon">Learn more *Coming Soon*</a></li>
           </ul>
         </li>
         <li class="menu-login" ng-show="header.loggedIn"><img id="header-profile-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" ng-href="{{header.userProfileUrl}}" ng-show="header.loggedIn">{{header.userName}}</a>
@@ -46,10 +46,10 @@
           <ul class="submenu">
             <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
             <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
-            <li><a  ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
-            <li><a href="#" class="coming-soon">Notifications *Coming Soon*</a></li>
-            <li><a href="#" class="coming-soon">Settings *Coming Soon*</a></li>
-            <li><a href="#" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
+            <li><a class="coming-soon">Notifications *Coming Soon*</a></li>
+            <li><a class="coming-soon">Settings *Coming Soon*</a></li>
+            <li><a class="linky" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
           </ul>
         </li>
         <li class="menu-login"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="header.closeMobileMenu()">CREATE ACCOUNT</a></li>
