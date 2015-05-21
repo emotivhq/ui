@@ -30,10 +30,6 @@
             PopoverService.setPopover('profile');
         };
 
-        $scope.showInput = function() {
-            $anchorScroll('#note-popover');
-        };
-
         $scope.action = {
             submit: function () {
                 if ($scope.skipNote) {
