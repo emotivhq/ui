@@ -21,10 +21,6 @@ function gsPopover(PopoverService, $compile, $document) {
             scope.topPosition = $(window).scrollTop();
         };
 
-        var noScroll = function (event) {
-            event.preventDefault();
-        };
-
         scope.topPosition = 0;
 
         // When something updates the popover service, this should listen and update from service
@@ -40,7 +36,6 @@ function gsPopover(PopoverService, $compile, $document) {
         function popoverHidden() {
             scope.popoverShown = false;
             bodyElement.removeClass('popoverShown');
-            bodyElement.off('touchmove', noScroll);
         }
 
         // When something shows via the popover service, this needs to react
@@ -50,8 +45,6 @@ function gsPopover(PopoverService, $compile, $document) {
             bodyElement.addClass('popoverShown');
             if (navigator.userAgent.match(/(iPod|iPhone|iPad)/)) {
                 $(window).on("orientationchange",fixPosition);
-            } else {
-                bodyElement.on('touchmove', noScroll);
             }
             fixPosition();
         }
