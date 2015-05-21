@@ -31,9 +31,8 @@
         };
 
         $scope.showInput = function() {
-            $location.hash('note-textarea');
-            $anchorScroll();
-        }
+            $anchorScroll('#note-popover');
+        };
 
         $scope.action = {
             submit: function () {
