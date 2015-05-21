@@ -154,6 +154,7 @@
             $scope.resetForm();
             $scope.showCreate = false;
             $scope.showReset = false;
+            setTimeout(function() {jQuery('.loginwrapper .userlogin__email').focus();}, 0);
         });
 
         $rootScope.$on('loginbox-show-reset', function() {

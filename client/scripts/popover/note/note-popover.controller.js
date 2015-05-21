@@ -10,7 +10,7 @@
     var noteText = '';
     var skipNote = false;
 
-    var notePopoverController = function ($scope, UserService, PopoverService, GiftStartService, Analytics) {
+    var notePopoverController = function ($scope, $location, UserService, PopoverService, GiftStartService, Analytics) {
         
         $scope.noteText = noteText;
         $scope.skipNote = skipNote;
@@ -30,6 +30,11 @@
             PopoverService.setPopover('profile');
         };
 
+        $scope.showInput = function() {
+            $location.hash('note-textarea');
+            $anchorScroll();
+        }
+
         $scope.action = {
             submit: function () {
                 if ($scope.skipNote) {
@@ -47,6 +52,6 @@
         }
     };
 
-    app.controller('NotePopoverController', ['$scope','UserService', 'PopoverService','GiftStartService','Analytics', notePopoverController]);
+    app.controller('NotePopoverController', ['$scope', '$location', 'UserService', 'PopoverService','GiftStartService','Analytics', notePopoverController]);
 }(angular.module('GiftStarterApp')));
 
