@@ -45,7 +45,7 @@
                 <input type="button" class="createLogin" ng-click="emailFormActions.createLoginMode($event)" value="Create login" />
             </div>
             <div ng-show="!emailFormModel.isLoginCreate && !emailFormModel.isForgotPassword && !emailFormModel.isReset">
-                <a href="#" ng-click="emailFormActions.forgotPasswordMode($event)" class="forgotPwdLink">Forgot password.</a>
+                <a ng-click="emailFormActions.forgotPasswordMode($event)" class="forgotPwdLink linky">Forgot password.</a>
                 <div style="clear: both"></div>
             </div>
             <div>
