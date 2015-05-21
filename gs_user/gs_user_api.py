@@ -73,8 +73,8 @@ class UserNotifyHandler(webapp2.RequestHandler):
             self.response.set_status(400, "Invalid user id")
         else:
             response_data = {"notifications":[
-                {"id":1, "time":1432164908092, "seen":"true", "acknowledged":"true", "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
-                {"id":2, "time":1432164906241, "seen":"false", "acknowledged":"false", "title":"title two", "message":"test two"}
+                {"id":1, "time":1432164908092, "seen":"true", "acknowledged":"true", "link": "/concierge", "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
+                {"id":2, "time":1432164906241, "seen":"false", "acknowledged":"false", "link": "/about", "title":"title two", "message":"test two"}
             ]}
             self.response.write(json.dumps(response_data))
 
