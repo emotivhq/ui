@@ -7,7 +7,7 @@
             <button class="small white-border edit-picture-button" ng-click="editPhoto()">Edit Photo</button>
         </div>
         <div class="note">
-            <textarea class="note" ng-model="noteText" ng-disabled="skipNote"></textarea>
+            <textarea id="note-textarea" class="note" ng-model="noteText" ng-disabled="skipNote" ng-focus="showInput()"></textarea>
             <p class="chars-left" ng-show="noteText.length > 0" ng-class="{warning: (noteText.length > 214)}">{{250 - noteText.length}}</p>
         </div>
     </div>

@@ -1,17 +1,37 @@
 @import "../base"
 
+.android .popover-container
+  margin-top: -20%
+  position: relative
+  z-index: 10000
+
+.android .note-popover button
+  margin: 0 0 1.5rem
+
+.android .note-popover
+  overflow-y: scroll
+  -webkit-overflow-scrolling: touch
+  height: 32rem
+
+::-webkit-scrollbar
+  -webkit-appearance: none
+  width: 5px
+
+::-webkit-scrollbar-thumb
+  border-radius: 2px
+  background-color: rgba(0,0,0,.3)
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.3)
+
 div.popover-wrapper
   position: absolute
   display: none
-  width: 100vw
-  height: 110vh
+  width: 100%
+  height: 100%
   left: 0
   background: rgba(0, 0, 0, 0.6)
   transition: all 0.2s
   text-align: center
   z-index: 10000
-  +justify-content(center)
-  +flex-direction(column)
 
   div.popover-container
     display: inline-block
