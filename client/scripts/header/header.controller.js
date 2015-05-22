@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -31,6 +31,10 @@
         $scope.search = false;
         $scope.menu = false;
 
+        $scope.numNotifications = 0;
+        $scope.notifications = null;
+        $scope.notificationImg = "notifications-none.png";
+
         $interval(updateSubliminal, 3000);
 
         $scope.$on('login-success', updateLogin);
@@ -38,6 +42,36 @@
         $scope.$on('$routeChangeStart', routeChangeListener);
         $scope.$on('profile-image-changed', updateLogin);
 
+        //check notifications for user
+        $http({
+            method: 'GET',
+            url: ' /users/notify/' + UserService.uid + '.json'
+        }).success(function (response) {
+            console.log(response);
+            $scope.notifications = response.notifications;
+            for (item in $scope.notifications) {
+                if ($scope.notifications[item].seen == "false") {
+                    $scope.numNotifications++;
+                }
+            }
+            self.checkNotifications();
+        });
+
+        self.checkNotifications = function () {
+            if ($scope.numNotifications > 0) {
+                $scope.notificationImg = "notifications-new.png";
+            } else {
+                $scope.notificationImg = "notifications-none.png";
+            }
+        };
+
+        self.notificationsHoverIn = function () {
+            $scope.notificationImg = "notifications-open.png";
+        };
+
+        self.notificationsHoverOut = function () {
+            self.checkNotifications();
+        };
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
@@ -212,6 +246,7 @@
         '$interval',
         '$timeout',
         '$window',
+        '$http',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       //when the route is changed scroll to the proper element.
