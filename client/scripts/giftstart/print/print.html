@@ -1,4 +1,4 @@
-<div class="giftstart wrapper print" ng-controller="GiftStartController">
+<div class="giftstart wrapper" ng-controller="GiftStartController">
 
     <div class="fullwidth block">
         <div class="title">
@@ -29,6 +29,27 @@
     </div>
 
     <div class="groupcard">
+        <div class="contributor__description">
+            <p class="contributor__text">
+                {{giftStart.description}}
+            </p>
+
+            <p class="name">
+                <span>
+                   &mdash;&mdash;{{giftStart.gc_name}}
+                </span>
+            </p>
+
+            <p class="gift-champion">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion
+            </p>
+        </div>
+        <div class="contributor__link">
+            <p class="contributor__campaign">
+                View the Campaign
+            </p>
+            <gs-print-url class="contributor__href"></gs-print-url>
+        </div>
         <div class="groupcard__wrapper">
             <div ng-repeat-start="pitchIn in pitchIns"
                  ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]"
@@ -46,28 +67,6 @@
                 </div>
             </div>
             <div ng-repeat-end class="h--hide"></div>
-        </div>
-        <div class="contributor__description">
-            <p class="contributor__text">
-                {{giftStart.description}}
-            </p>
-
-            <p class="name">
-                <span>
-                   &mdash;&mdash;{{giftStart.gc_name}}
-                </span>
-            </p>
-
-            <p class="gift-champion">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion
-            </p>
-
-            <div class="contributor__link">
-                <p class="contributor__campaign">
-                    View the Campaign
-                </p>
-                <gs-print-url class="contributor__href"></gs-print-url>
-            </div>
         </div>
     </div>
 </div>
@@ -157,6 +156,9 @@
     }
 
     .overlay {
+        display: block;
+        margin-left: auto !important;
+        margin-right: auto !important;
         height: 400px;
         background-size: 350px 400px;
         background-repeat: no-repeat;
@@ -168,7 +170,7 @@
 
     .col2 {
         margin-right: 0 !important;
-        width: 40% !important;
+        width: 50% !important;
         margin-right: 3%;
         float: right !important;
     }
@@ -176,20 +178,19 @@
     .contributor__link,
     .contributors__img,
     .contributor__description {
-        float: left;
         display: inline-block;
     }
 
     .contributor__campaign {
         font-size: 21px;
-        color: #686868;
+        color: #ffffff;
         margin: 0 0 15px;
     }
 
     .groupcard__wrapper {
         float: left;
-        width: 50%;
-        margin: 1rem 0 1rem 1rem;
+        width: 96%;
+        margin: 10px 2%;
     }
 
     .desc {
@@ -202,19 +203,20 @@
     }
 
     .contributor__description {
-        width: 40%;
+        width: 60%;
         margin-left: 3%;
     }
 
     .contributor__link {
-        background: #efefef;
-        width: 95%;
+        background: #238471;
+        width: 32%;
+        float: right;
         padding: 6% 0 7%;
-        margin-top: 5%;
+        margin: 10px 2% 0 2%
     }
 
     .contributor__href {
-        color: #444;
+        color: #ffffff;
         text-decoration: none;
     }
 
@@ -285,23 +287,9 @@
     }
 
     .groupcard .contributors {
-        display: table-cell;
-        width: 33%;
+        display: table-cell !important;
+        width: 33% !important;
         vertical-align: top;
-    }
-
-    @media only screen and (max-width: 667px) {
-        .groupcard .contributors {
-            display: block;
-            width: 100%;
-        }
-    }
-
-    @media only screen and (max-width: 375px) and (orientation: portrait) {
-        .groupcard .contributors {
-            display: block;
-            width: 100%;
-        }
     }
 
     .groupcard .contributors--row {
