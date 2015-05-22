@@ -30,6 +30,7 @@
 
         $scope.search = false;
         $scope.menu = false;
+        $scope.notifyOpen = false;
 
         $scope.numNotifications = 0;
         $scope.notifications = null;
@@ -57,7 +58,7 @@
             self.checkNotifications();
         });
 
-        self.checkNotifications = function () {
+        self.checkNotifications = function() {
             if ($scope.numNotifications > 0) {
                 $scope.notificationImg = "notifications-new.png";
             } else {
@@ -65,12 +66,23 @@
             }
         };
 
-        self.notificationsHoverIn = function () {
+        self.notificationsHoverIn = function() {
             $scope.notificationImg = "notifications-open.png";
         };
 
-        self.notificationsHoverOut = function () {
+        self.notificationsHoverOut = function() {
             self.checkNotifications();
+        };
+
+        self.openNotifications = function() {
+            self.closeMobileMenu();
+            jQuery('.blackout-screen').css('display', 'block');
+            $scope.notifyOpen = true;
+        };
+
+        self.closeNotifications = function() {
+            jQuery('.blackout-screen').css('display', 'none');
+            $scope.notifyOpen = false;
         };
 
         // for sizing using ng-class
