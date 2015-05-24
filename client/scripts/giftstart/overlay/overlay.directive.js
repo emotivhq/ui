@@ -29,7 +29,7 @@ function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
                 var usrWidth  = overlayWidth/GiftStartService.giftStart.columns - 4*margin;
                 var usrShortEdge = (usrHeight > usrWidth) ? usrWidth : usrHeight;
                 overlayElement.empty();
-                if(GiftStartService.giftStart.parts.length !== 'undefined'){
+                if(GiftStartService.giftStart.parts !== 'undefined' && GiftStartService.giftStart.parts.length !== 'undefined'){
                     for (var i = 0; i < GiftStartService.giftStart.parts.length; i++) {
                         var divString = '<div class="part-cell c'+i+
                             '" ng-class="{bought: giftstart.parts['+i+
