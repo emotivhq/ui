@@ -71,6 +71,9 @@
         a
           font-size: 1em
 
+      li.hideOnMobile
+        display: none
+
     .coming-soon
       color: #bbb !important
 
@@ -208,7 +211,8 @@
 
   #nav_notifications
     @media screen and (max-width: $phone-tablet-boundary)
-      display: none
+      &.hideMobileNotifications
+        display: none
 
     img
       height: 23px
