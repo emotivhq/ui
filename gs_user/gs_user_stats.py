@@ -27,7 +27,7 @@ def filter_pitchins(uid, pitchins):
 
 def pitchin_attach_title_and_img(pitchin_dict, giftstarts):
     gsid = pitchin_dict.get('gsid')
-    found_gs = filter(lambda g: g.gsid == gsid, giftstarts)
+    found_gs = filter(lambda g: g is not None and g.gsid == gsid, giftstarts)
     if(len(found_gs)==0):
         logging.error("No matching GS found for GSID {0} at pitchin_attach_title_and_img".format(gsid))
         title = '(campaign title missing)'
