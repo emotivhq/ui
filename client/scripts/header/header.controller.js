@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -30,6 +30,11 @@
 
         $scope.search = false;
         $scope.menu = false;
+        $scope.notifyOpen = false;
+
+        $scope.numNotifications = 0;
+        $scope.notifications = null;
+        $scope.notificationImg = "notifications-none.png";
 
         $interval(updateSubliminal, 3000);
 
@@ -38,6 +43,47 @@
         $scope.$on('$routeChangeStart', routeChangeListener);
         $scope.$on('profile-image-changed', updateLogin);
 
+        //check notifications for user
+        $http({
+            method: 'GET',
+            url: ' /users/notify/' + UserService.uid + '.json'
+        }).success(function (response) {
+            console.log(response);
+            $scope.notifications = response.notifications;
+            for (item in $scope.notifications) {
+                if ($scope.notifications[item].seen == "false") {
+                    $scope.numNotifications++;
+                }
+            }
+            self.checkNotifications();
+        });
+
+        self.checkNotifications = function() {
+            if ($scope.numNotifications > 0) {
+                $scope.notificationImg = "notifications-new.png";
+            } else {
+                $scope.notificationImg = "notifications-none.png";
+            }
+        };
+
+        self.notificationsHoverIn = function() {
+            $scope.notificationImg = "notifications-open.png";
+        };
+
+        self.notificationsHoverOut = function() {
+            self.checkNotifications();
+        };
+
+        self.openNotifications = function() {
+            self.closeMobileMenu();
+            jQuery('.blackout-screen').css('display', 'block');
+            $scope.notifyOpen = true;
+        };
+
+        self.closeNotifications = function() {
+            jQuery('.blackout-screen').css('display', 'none');
+            $scope.notifyOpen = false;
+        };
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
@@ -212,6 +258,7 @@
         '$interval',
         '$timeout',
         '$window',
+        '$http',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       //when the route is changed scroll to the proper element.

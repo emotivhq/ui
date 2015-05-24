@@ -71,6 +71,9 @@
         a
           font-size: 1em
 
+      li.hideOnMobile
+        display: none
+
     .coming-soon
       color: #bbb !important
 
@@ -87,6 +90,9 @@
         float: left
         position: relative
         white-space: nowrap
+        //&:last-child      //for if we have a submenu for last menu item later (to drop to the right instead of the left)
+        //  left: auto
+        //  right: 0
         &:hover, &.hover
           background: #6E8B97
           a
@@ -119,9 +125,6 @@
             left: auto
             width: 100%
             white-space: nowrap
-            //&:last-child      //for if we have a submenu for last menu item later (to drop to the right instead of the left)
-            //  left: auto
-            //  right: 0
             a
               color: #333
               height: auto
@@ -147,10 +150,8 @@
           border-left: 8px solid $primary-color
           a
             text-decoration: none
-        #header-profile-picture
-          display: inline-block
-          margin-top: 5px
-          vertical-align: top
+        .header-picture
+          vertical-align: middle
 
   .menuwrapper
     background-color: white
@@ -209,3 +210,14 @@
     z-index: 99
 
   #nav_notifications
+    @media screen and (max-width: $phone-tablet-boundary)
+      &.hideMobileNotifications
+        display: none
+
+    img
+      height: 23px
+    #notification-list
+      .notificationsUnread
+        background-color: #ccc
+      .notificationsRead
+        background-color: white
