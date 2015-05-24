@@ -124,7 +124,7 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
                                      giftstart.get('staging_uuid'))
         gs.giftstart_url_title = gs_url_title
         gs_count = GiftStart.query().count()
-        gs.gsid = str(gs_count + 1) if gs_count else '1'
+        gs.gsid = str(gs_count + 101) if gs_count else '1' #was gs_count + 1 but some stuff got deleted; need to fix this so we don't use count
         # Check if running in development env
         if not os.environ['SERVER_SOFTWARE'].startswith('Development'):
             if not giftstart['product_img_url'].lower().startswith('http'):
