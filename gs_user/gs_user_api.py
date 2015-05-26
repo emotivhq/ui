@@ -15,7 +15,7 @@ from gs_user.gs_user_referral import UserReferral
 from storage import image_cache
 import base64
 import logging
-from gs_user.User import User
+from Notification import Notification
 from google.appengine.ext import ndb
 import uuid
 import stripe
@@ -30,8 +30,14 @@ stripe.api_key = secrets['stripe_auth']['app_secret']
 def getUidFromCookies(request):
     return urllib.unquote(request.cookies.get('uid', '').replace('%22', ''))
 
+
 def getTokenFromCookies(request):
     return urllib.unquote(request.cookies.get('token', '').replace('%22', ''))
+
+
+def dictify_all(k):
+    return map(lambda x: x.dictify(), k)
+
 
 class StatsHandler(webapp2.RequestHandler):
     """JSON-formatted metadata about User (list of giftstarts and pitchins)"""
@@ -42,6 +48,7 @@ class StatsHandler(webapp2.RequestHandler):
         uid = self.request.path[7:-5]
         self.response.write(json.dumps(get_stats(uid)))
 
+
 class UserNotifyHandler(webapp2.RequestHandler):
     """JSON-formatted User"""
 
@@ -51,31 +58,58 @@ class UserNotifyHandler(webapp2.RequestHandler):
         """
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
-        allow_protected_data = validate(uid, token, self.request.path)
-        uid = self.request.path.split('/')[3][:-5]
-        user = get_user(uid)
-        if user is None:
-            self
+        uid_path = self.request.path.split('/')[3][:-5]
+        allow_protected_data = True #uid == uid_path and validate(uid, token, self.request.path)
+        data = json.loads(self.request.body)
+        set_seen = data['set_seen'] if ('set_seen' in data) else None
+        set_acknowledged = data['set_acknowledged'] if ('set_acknowledged' in data) else None
+        user = get_user(uid_path)
+        if user is None or not allow_protected_data:
+            self.response.set_status(400, "Invalid user id")
+        else:
+            # todo: only modify the right Notifications
+            query = Notification.query(Notification.target_uid == uid)
+            if set_seen is not None:
+                seen_query = query.filter(Notification.seen == False)
+                if set_seen is '*':
+                    notifications = seen_query.fetch()
+                else:
+                    notifications = seen_query.filter(Notification.id in set_seen).fetch()
+                for n in notifications:
+                    n.seen = True
+                ndb.put_multi(notifications)
+            response_data = {'ok':'Notifications updated'}
+            self.response.write(json.dumps(response_data))
 
     def get(self):
         """
         Gets user notifications as JSON (including protected data if signed in as self)
         """
-        uid = getUidFromCookies(self.request)
-        token = getTokenFromCookies(self.request)
-        allow_protected_data = validate(uid, token, self.request.path)
+        # uid = getUidFromCookies(self.request)
+        # token = getTokenFromCookies(self.request)
+        uid_path = self.request.path.split('/')[3][:-5]
+        # allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
         num = int(self.request.params.get('num').lower()) if ('num' in self.request.params.keys()) else 10
-        show_seen = (self.request.params.get('seen').lower() is 'true') if ('seen' in self.request.params.keys()) else True
-        show_acknowledged = (self.request.params.get('acknowledged').lower() is 'true') if ('acknowledged' in self.request.params.keys()) else False
-        uid = self.request.path.split('/')[3][:-5]
-        user = get_user(uid)
+        show_seen = (self.request.params.get('seen').lower().strip() is 'true') if ('seen' in self.request.params.keys()) else True
+        show_acknowledged = (self.request.params.get('acknowledged').lower().strip() is 'true') if ('acknowledged' in self.request.params.keys()) else False
+        user = get_user(uid_path)
         if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            response_data = {"notifications":[
-                {"id":1, "time":1432164908092, "seen":"true", "acknowledged":"true", "link": "/concierge", "title":"title one", "message":"test one", "image":"https://storage.googleapis.com/giftstarter-pictures/u/g113973637227780697952.jpg"},
-                {"id":2, "time":1432164906241, "seen":"false", "acknowledged":"false", "link": "/about", "title":"title two", "message":"test two"}
-            ]}
+            # n = Notification(
+            #     target_uid=user.uid,
+            #     link='/faq',
+            #     title='Another Notification for '+user.name,
+            #     message='This is the another Notification for '+user.name
+            # )
+            # n.put()
+            query = Notification.query(Notification.target_uid == user.uid)
+            if not show_seen:
+                query.filter(Notification.seen == False)
+            if not show_acknowledged:
+                query.filter(Notification.acknowledged == False)
+            notifications = query.order(-Notification.timestamp).fetch(limit=num)
+            response_data = {"notifications":dictify_all(notifications)}
             self.response.write(json.dumps(response_data))
 
 class UserProfileHandler(webapp2.RequestHandler):
@@ -86,17 +120,17 @@ class UserProfileHandler(webapp2.RequestHandler):
         """
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
-        allow_protected_data = validate(uid, token, self.request.path)
+        uid_path = self.request.path.split('/')[3][:-5]
+        allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
         extended_attribs = self.request.params['ext'] if 'ext' in self.request.params else []
-        uid = self.request.path.split('/')[3][:-5]
-        user = get_user(uid)
+        user = get_user(uid_path)
         if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
             response_data = user.dictify(allow_protected_data)
             if('giftideas' in extended_attribs):
                 products = StoredProduct.query(StoredProduct.uid == uid).fetch()
-                response_data['giftideas'] = map(lambda x: x.dictify(), products)
+                response_data['giftideas'] = dictify_all(products)
             self.response.write(json.dumps(response_data))
 
 
