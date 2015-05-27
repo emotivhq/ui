@@ -15,13 +15,14 @@ from gs_user.gs_user_referral import UserReferral
 from storage import image_cache
 import base64
 import logging
-from Notification import Notification
+from Notification import Notification, notify
 from google.appengine.ext import ndb
 import uuid
 import stripe
 import yaml
 from social.facebook import facebook_share
 import urllib
+import time
 
 secrets = yaml.load(open('secret.yaml'))
 stripe.api_key = secrets['stripe_auth']['app_secret']
@@ -68,13 +69,13 @@ class UserNotifyHandler(webapp2.RequestHandler):
             self.response.set_status(400, "Invalid user id")
         else:
             # todo: only modify the right Notifications
-            query = Notification.query(Notification.target_uid == uid)
+            query = Notification.query(Notification.target_uid == user.uid)
             if set_seen is not None:
                 seen_query = query.filter(Notification.seen == False)
                 if set_seen is '*':
                     notifications = seen_query.fetch()
                 else:
-                    notifications = seen_query.filter(Notification.id in set_seen).fetch()
+                    notifications = seen_query.filter(Notification.id.IN([str(s) for s in set_seen])).fetch()
                 for n in notifications:
                     n.seen = True
                 ndb.put_multi(notifications)
@@ -96,13 +97,7 @@ class UserNotifyHandler(webapp2.RequestHandler):
         if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            # n = Notification(
-            #     target_uid=user.uid,
-            #     link='/faq',
-            #     title='Another Notification for '+user.name,
-            #     message='This is the another Notification for '+user.name
-            # )
-            # n.put()
+            notify(user,'/faq','Notification at '+str(time.localtime())+' for '+user.name,'This is the another Notification for '+user.name)
             query = Notification.query(Notification.target_uid == user.uid)
             if not show_seen:
                 query.filter(Notification.seen == False)

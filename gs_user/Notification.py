@@ -5,6 +5,26 @@ import json
 from uuid import uuid4
 import time
 
+def notify(user, link, title, message, image=None):
+    """
+    Creates a Notification for the provided User, saves it, and returns it
+    :param user: target User
+    :param link: URL (usually relative)
+    :param title: headline
+    :param message: body
+    :param image: URL of image
+    :return: Notification
+    """
+    n = Notification(
+        target_uid=user.uid,
+        link=link,
+        title=title,
+        message=message,
+        image=image
+    )
+    n.put()
+    return n
+
 class Notification(ndb.Model):
     """Notifications inform a User of a message, status change (e.g., a Campaign completing), or another User's actions (e.g., a pitch-in)"""
     target_uid = ndb.StringProperty(required=True)
