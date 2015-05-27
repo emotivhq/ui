@@ -79,6 +79,15 @@ class UserNotifyHandler(webapp2.RequestHandler):
                 for n in notifications:
                     n.seen = True
                 ndb.put_multi(notifications)
+            if set_acknowledged is not None:
+                acknowledged_query = query.filter(Notification.acknowledged == False)
+                if set_acknowledged is '*':
+                    notifications = acknowledged_query.fetch()
+                else:
+                    notifications = acknowledged_query.filter(Notification.id.IN([str(s) for s in set_acknowledged])).fetch()
+                for n in notifications:
+                    n.acknowledged = True
+                ndb.put_multi(notifications)
             response_data = {'ok':'Notifications updated'}
             self.response.write(json.dumps(response_data))
 
