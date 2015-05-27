@@ -54,7 +54,7 @@
         </li>
         <li id="nav_notifications" class="menu-login" ng-show="header.loggedIn" ng-mouseenter="header.notificationsHoverIn()" ng-mouseleave="header.notificationsHoverOut()" ng-class="{hideMobileNotifications: !notifyOpen}"><img class="header-picture" ng-src="/assets/{{notificationImg}}" ng-hide="notifyOpen"/><a href="" class="menu-user" ng-hide="notifyOpen">{{numNotifications}}</a>
           <ul id="notification-list" class="submenu">
-            <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.acknowledged == 'true'}"><a href="{{item.link}}">{{item.message}}</a></li>
+            <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.acknowledged == 'true'}"><a href="{{item.link}}">{{item.title}}</a></li>
             <li id="no-notifications-msg">No notifications :(</li>
           </ul>
         </li>
