@@ -1,5 +1,4 @@
 """ Core functions for pitchins """
-import stripe
 
 __author__ = 'GiftStarter'
 
@@ -10,11 +9,13 @@ import json, yaml
 from gs_user import gs_user_core
 from giftstart.GiftStart import GiftStart
 from pay.PitchIn import PitchIn
+from gs_user.Notification import notify
 import requests
 import logging
 from stripe.error import CardError, InvalidRequestError, AuthenticationError, \
     APIConnectionError, StripeError
 from gs_util import gs_util_link
+import stripe
 import paypalrestsdk
 import paypalapi
 import uuid
@@ -179,7 +180,7 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
         set_user_pitched_in(user)
         send_pitchin_notification(giftstart, charge_id, charge_amount,
                                   card_last_four, email_address,
-                                  note, user.name, usr_img)
+                                  note, user.name, usr_img, uid)
 
         return {'result': 'success', 'purchased-parts': parts}
 
@@ -199,7 +200,7 @@ def set_user_pitched_in(user):
         user.put()
 
 
-def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_four, email, note, name, usr_img):
+def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_four, email, note, name, usr_img, uid):
     """email a receipt to the user who pitched in, and a notification to the gift champion"""
     taskqueue.add(url="/giftstart/api", method="POST", payload=json.dumps(
         {'action': 'check-if-complete', 'gsid': giftstart.gsid}), countdown=30)
@@ -225,6 +226,8 @@ def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_fo
 
     requests.put(config['email_url'], data=data)
 
+    notify(uid,'Thank You for Pitching In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], None)
+
     # Notify giftstarter
     email_kwargs = {
         'campaign_name': giftstart.giftstart_title,
@@ -246,6 +249,8 @@ def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_fo
                        'template_kwargs': email_kwargs})
 
     requests.put(config['email_url'], data=data)
+
+    notify(giftstart.gift_champion_uid,'Someone Pitched In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], None)
 
 
 def ensure_paypal_vault_id(user):
@@ -441,7 +446,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
 
         send_pitchin_notification(giftstart, charge_id, charge_amount,
                                   card_last_four, user.email, note, user.name,
-                                  user.cached_profile_image_url)
+                                  user.cached_profile_image_url, uid)
 
         return {'result': 'success', 'purchased-parts': parts}
 
