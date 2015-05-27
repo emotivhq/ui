@@ -55,12 +55,12 @@ class UserNotifyHandler(webapp2.RequestHandler):
 
     def post(self):
         """
-        { "set_seen":"*", "set_acknowledged":[1,2,3] }
+        sets Notifications for this User as being Seen or Achnowledged; accepts * or ID list: { "set_seen":"*", "set_acknowledged":[1,2,3] }
         """
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
         uid_path = self.request.path.split('/')[3][:-5]
-        allow_protected_data = True #uid == uid_path and validate(uid, token, self.request.path)
+        allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
         data = json.loads(self.request.body)
         set_seen = data['set_seen'] if ('set_seen' in data) else None
         set_acknowledged = data['set_acknowledged'] if ('set_acknowledged' in data) else None
