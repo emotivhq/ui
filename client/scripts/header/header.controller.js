@@ -87,11 +87,30 @@
             self.closeMobileMenu();
             jQuery('.blackout-screen').css('display', 'block');
             $scope.notifyOpen = true;
+            $http({
+                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                data: {
+                    set_seen: '*'
+                }
+            })
         };
 
         self.closeNotifications = function() {
             jQuery('.blackout-screen').css('display', 'none');
             $scope.notifyOpen = false;
+        };
+
+        self.notificationClick = function(item) {
+            $http({
+                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                data: {
+                    set_acknowledged: '[' + item.id + ']'
+                }
+            })
+            .success(function (result) {
+            })
+            .error(function (reason) {
+            });
         };
 
         // for sizing using ng-class

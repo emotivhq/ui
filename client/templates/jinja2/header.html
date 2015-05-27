@@ -47,14 +47,14 @@
             <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
             <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
             <li><a ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
-            <li><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotifications}})</a></li>
+            <li id="mobile_notifications"><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotifications}})</a></li>
             <li><a class="coming-soon">Settings *Coming Soon*</a></li>
             <li><a class="linky" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
           </ul>
         </li>
         <li id="nav_notifications" class="menu-login" ng-show="header.loggedIn" ng-mouseenter="header.notificationsHoverIn()" ng-mouseleave="header.notificationsHoverOut()" ng-class="{hideMobileNotifications: !notifyOpen}"><img class="header-picture" ng-src="/assets/{{notificationImg}}" ng-hide="notifyOpen"/><a href="" class="menu-user" ng-hide="notifyOpen">{{numNotifications}}</a>
           <ul id="notification-list" class="submenu">
-            <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.acknowledged == 'true'}"><a href="{{item.link}}">{{item.title}}</a></li>
+            <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.seen == 'true'}" ng-click="header.notificationClick(item)"><a href="{{item.link}}">{{item.title}}</a></li>
             <li id="no-notifications-msg">No notifications :(</li>
           </ul>
         </li>
