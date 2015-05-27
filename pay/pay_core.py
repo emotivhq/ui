@@ -226,7 +226,7 @@ def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_fo
 
     requests.put(config['email_url'], data=data)
 
-    notify(uid,'Thank You for Pitching In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], None)
+    notify(uid,'Thank You for Pitching In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
 
     # Notify giftstarter
     email_kwargs = {
@@ -250,7 +250,7 @@ def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_fo
 
     requests.put(config['email_url'], data=data)
 
-    notify(giftstart.gift_champion_uid,'Someone Pitched In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], None)
+    notify(giftstart.gift_champion_uid,'Someone Pitched In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
 
 
 def ensure_paypal_vault_id(user):

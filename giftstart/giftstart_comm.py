@@ -12,6 +12,7 @@ from google.appengine.api import taskqueue
 from gs_util import gs_util_link
 from thank import thank_core
 from gs_user.User import User
+from gs_user.Notification import notify
 from login import login_core
 
 config = yaml.load(open('config.yaml'))
@@ -55,6 +56,8 @@ def send_create_notification(giftstart):
                      'template_kwargs': email_kwargs
                  }))
 
+    notify(giftstart.gift_champion_uid,'You created a Campaign: '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
+
 
 def send_day_left_warning(gsid):
     """notify creator and all givers that campaign has one day left"""
@@ -81,6 +84,8 @@ def send_day_left_warning(gsid):
                          'to': [giftstart.gc_email],
                      }))
 
+        notify(giftstart.gift_champion_uid,'There is one day left to Pitch In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
+
         # Notify all givers
         emails = list(set(map(lambda pi: pi.email, pitch_ins)))
         email_kwargs = {
@@ -101,6 +106,8 @@ def send_day_left_warning(gsid):
                          'mime_type': 'html',
                          'to': emails,
                      }))
+        for pi in pitch_ins:
+            notify(pi.uid,'There is one day left to Pitch In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
 
 
 def send_emaillogin_reset(email):
@@ -158,6 +165,8 @@ def check_if_complete(gsid):
                              'to': [giftstart.gc_email]
                          }))
 
+            notify(giftstart.gift_champion_uid,'Your Campaign was a success: '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
+
             # And email GiftStarter personnel...
             email_kwargs = {
                 'campaign_link': config['app_url'] + '/giftstart/' +
@@ -204,6 +213,11 @@ def check_if_complete(gsid):
                     'sender': "giftconcierge@giftstarter.co",
                     'to': [giftstart.shipping_email]
                 })
+
+                recipients = User.query(User.email == giftstart.shipping_email).fetch()
+                for user in recipients:
+                    notify(user.uid,"You've received a Gift: "+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
+
                 # taskqueue.add(url=send_path, method='PUT',
                 #               eta=datetime.now() + timedelta(days=10),
                 #               payload=payload)
@@ -234,6 +248,8 @@ def check_if_complete(gsid):
                                  'mime_type': 'html',
                                  'to': [giftstart.gc_email]
                              }))
+
+                notify(giftstart.gift_champion_uid, 'Your GiftStart has Ended: '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
 
                 # And email GiftStarter personnel...
                 email_kwargs = {
@@ -282,9 +298,16 @@ def check_if_complete(gsid):
                         'sender': "giftconcierge@giftstarter.co",
                         'to': [giftstart.shipping_email]
                     })
+
+                    recipients = User.query(User.email == giftstart.shipping_email).fetch()
+                    for user in recipients:
+                        notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, email_kwargs['campaign_link'], giftstart.product_img_url)
+
                     # taskqueue.add(url=send_path, method='PUT',
                     #               eta=datetime.now() + timedelta(days=10),
                     #               payload=payload)
+
+
 
             else:
                 # Send email of regret to gift champion
@@ -304,6 +327,7 @@ def check_if_complete(gsid):
                                  'sender': 'giftconcierge@giftstarter.co',
                                  'to': [giftstart.gc_email],
                              }))
+                notify(giftstart.gift_champion_uid,"Your GiftStart has Ended: "+giftstart.giftstart_title, None, email_kwargs['campaign_link'], giftstart.product_img_url)
 
 
 def pitchins_by_gc(giftstart, pitchins):
@@ -343,6 +367,8 @@ def congratulate_givers(gsid, funded):
                          'sender': "giftconcierge@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))
+        for pi in pitch_ins:
+            notify(pi.uid,"Your GiftStart has Ended: "+giftstart.giftstart_title, None, email_kwargs['campaign_link'], giftstart.product_img_url)
     else:
         # Send email to all the givers, great job guys!
         email_kwargs = {
@@ -362,3 +388,5 @@ def congratulate_givers(gsid, funded):
                          'sender': "giftconcierge@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))
+        for pi in pitch_ins:
+            notify(pi.uid,"Your GiftStart has Ended: "+giftstart.giftstart_title, None, email_kwargs['campaign_link'], giftstart.product_img_url)

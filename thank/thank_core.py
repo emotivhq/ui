@@ -63,4 +63,4 @@ def send_emails(key):
                'You Received a Thank You for '+ email_kwargs['campaign_name'],
                None,
                email_kwargs['campaign_link'],
-               None)
+               gs.product_img_url)
