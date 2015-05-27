@@ -241,16 +241,18 @@ def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_fo
         'giftstart_it_url': gs_util_link.make_giftstart_it_url(giftstart),
     }
 
-    data = json.dumps({'subject': "Someone Pitched In!",
-                       'sender': "giftconcierge@giftstarter.co",
-                       'to': [giftstart.gc_email],
-                       'template_name': "gc_pitchin_notification",
-                       'mime_type': 'html',
-                       'template_kwargs': email_kwargs})
+    if(uid!=giftstart.gift_champion_uid):
 
-    requests.put(config['email_url'], data=data)
+        data = json.dumps({'subject': "Someone Pitched In!",
+                           'sender': "giftconcierge@giftstarter.co",
+                           'to': [giftstart.gc_email],
+                           'template_name': "gc_pitchin_notification",
+                           'mime_type': 'html',
+                           'template_kwargs': email_kwargs})
 
-    notify(giftstart.gift_champion_uid,'Someone Pitched In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
+        requests.put(config['email_url'], data=data)
+
+        notify(giftstart.gift_champion_uid,'Someone Pitched In on '+email_kwargs['campaign_name'], None, email_kwargs['campaign_link'], giftstart.product_img_url)
 
 
 def ensure_paypal_vault_id(user):
