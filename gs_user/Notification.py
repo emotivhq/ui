@@ -4,6 +4,7 @@ from google.appengine.ext import ndb
 import json
 from uuid import uuid4
 import time
+import logging
 
 def notify(user, link, title, message, image=None):
     """
@@ -16,12 +17,14 @@ def notify(user, link, title, message, image=None):
     :return: Notification
     """
     n = Notification(
+        id=str(uuid4()),
         target_uid=user.uid,
         link=link,
         title=title,
         message=message,
         image=image
     )
+    logging.error(n.id)
     n.put()
     return n
 
@@ -29,7 +32,7 @@ class Notification(ndb.Model):
     """Notifications inform a User of a message, status change (e.g., a Campaign completing), or another User's actions (e.g., a pitch-in)"""
     target_uid = ndb.StringProperty(required=True)
     # source_uid = ndb.StringProperty(default=None)
-    id = ndb.StringProperty(default=str(uuid4()))
+    id = ndb.StringProperty(required=True)
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
     seen = ndb.BooleanProperty(default=False)
     link = ndb.StringProperty(default=None)
