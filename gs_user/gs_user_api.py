@@ -22,7 +22,7 @@ import stripe
 import yaml
 from social.facebook import facebook_share
 import urllib
-import time
+import datetime
 
 secrets = yaml.load(open('secret.yaml'))
 stripe.api_key = secrets['stripe_auth']['app_secret']
@@ -97,7 +97,7 @@ class UserNotifyHandler(webapp2.RequestHandler):
         if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            notify(user,'/faq','Notification at '+str(time.localtime())+' for '+user.name,'This is the another Notification for '+user.name)
+            notify(user,'/faq','Notification at '+datetime.datetime.now().strftime('%b-%d-%I%M%p-%G')+' for '+user.name,'This is a Notification at '+datetime.datetime.now().strftime('%b-%d-%I%M%p-%G')+' for '+user.name)
             query = Notification.query(Notification.target_uid == user.uid)
             if not show_seen:
                 query.filter(Notification.seen == False)
