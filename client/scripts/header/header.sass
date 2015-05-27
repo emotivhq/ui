@@ -90,9 +90,6 @@
         float: left
         position: relative
         white-space: nowrap
-        //&:last-child      //for if we have a submenu for last menu item later (to drop to the right instead of the left)
-        //  left: auto
-        //  right: 0
         &:hover, &.hover
           background: #6E8B97
           a
@@ -111,7 +108,7 @@
 
         .submenu
           background-color: #e2e2e2
-          border-left: 8px solid #6E8B97
+          border-left: 8px solid $gs-navy
           color: #333
           display: none
           position: absolute
@@ -119,6 +116,9 @@
           margin: 0
           padding: 10px 0
           z-index: 100
+          //&:last-child      //for if we have a submenu for last menu item later (to drop to the right instead of the left)
+          //  //left: auto
+          //  right: 0
 
           li
             clear: left
@@ -213,6 +213,11 @@
     @media screen and (max-width: $phone-tablet-boundary)
       &.hideMobileNotifications
         display: none
+
+    .submenu
+      border-left: 0
+      border-right: 8px solid $primary-color
+      right: 0
 
     img
       height: 23px

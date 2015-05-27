@@ -48,12 +48,13 @@
             method: 'GET',
             url: ' /users/notify/' + UserService.uid + '.json'
         }).success(function (response) {
-            console.log("response: " + response);
+            console.log(response);
             $scope.notifications = response.notifications;
             var emptyList = true;
             for (item in $scope.notifications) {
-                entered = false;
-                if ($scope.notifications[item].seen == "false") {
+                console.table(item);
+                emptyList = false;
+                if ($scope.notifications[item].seen == false) {
                     $scope.numNotifications++;
                 }
             }
