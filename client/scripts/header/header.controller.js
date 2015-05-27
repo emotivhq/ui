@@ -48,14 +48,22 @@
             method: 'GET',
             url: ' /users/notify/' + UserService.uid + '.json'
         }).success(function (response) {
-            console.log(response);
+            console.log("response: " + response);
             $scope.notifications = response.notifications;
+            var emptyList = true;
             for (item in $scope.notifications) {
+                entered = false;
                 if ($scope.notifications[item].seen == "false") {
                     $scope.numNotifications++;
                 }
             }
+            //show 'no notifications' msg if list is empty
+            if (emptyList) {
+                jQuery('#no-notifications-msg').css('display', 'block');
+            }
             self.checkNotifications();
+        }).error(function (response) {
+            jQuery('#no-notifications-msg').css('display', 'block');
         });
 
         self.checkNotifications = function() {
