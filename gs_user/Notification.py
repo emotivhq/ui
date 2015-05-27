@@ -4,12 +4,11 @@ from google.appengine.ext import ndb
 import json
 from uuid import uuid4
 import time
-import logging
 
-def notify(user, link, title, message, image=None):
+def notify(uid, title, message=None, link=None, image=None):
     """
     Creates a Notification for the provided User, saves it, and returns it
-    :param user: target User
+    :param uid: target User.uid
     :param link: URL (usually relative)
     :param title: headline
     :param message: body
@@ -18,13 +17,12 @@ def notify(user, link, title, message, image=None):
     """
     n = Notification(
         id=str(uuid4()),
-        target_uid=user.uid,
+        target_uid=uid,
         link=link,
         title=title,
         message=message,
         image=image
     )
-    logging.error(n.id)
     n.put()
     return n
 
@@ -38,7 +36,7 @@ class Notification(ndb.Model):
     link = ndb.StringProperty(default=None)
     acknowledged = ndb.BooleanProperty(default=False)
     title = ndb.StringProperty(required=True)
-    message = ndb.StringProperty(required=True)
+    message = ndb.StringProperty(default=None)
     image = ndb.StringProperty(default=None)
 
     def dictify(self):
