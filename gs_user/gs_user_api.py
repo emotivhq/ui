@@ -106,7 +106,7 @@ class UserNotifyHandler(webapp2.RequestHandler):
         if user is None:
             self.response.set_status(400, "Invalid user id")
         else:
-            notify(user,'/faq','Notification at '+datetime.datetime.now().strftime('%b-%d-%I%M%p-%G')+' for '+user.name,'This is a Notification at '+datetime.datetime.now().strftime('%b-%d-%I%M%p-%G')+' for '+user.name)
+            notify(user,'Notification at '+datetime.datetime.now().strftime('%b-%d-%I%M%p-%G')+' for '+user.name,'This is a Notification at '+datetime.datetime.now().strftime('%b-%d-%I%M%p-%G')+' for '+user.name, '/faq', '/assets/about/img/9mile-labs.png')
             query = Notification.query(Notification.target_uid == user.uid)
             if not show_seen:
                 query.filter(Notification.seen == False)

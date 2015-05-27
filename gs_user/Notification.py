@@ -4,9 +4,8 @@ from google.appengine.ext import ndb
 import json
 from uuid import uuid4
 import time
-import logging
 
-def notify(user, link, title, message, image=None):
+def notify(user, title, message, link=None, image=None):
     """
     Creates a Notification for the provided User, saves it, and returns it
     :param user: target User
@@ -24,7 +23,6 @@ def notify(user, link, title, message, image=None):
         message=message,
         image=image
     )
-    logging.error(n.id)
     n.put()
     return n
 
