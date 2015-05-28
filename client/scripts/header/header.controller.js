@@ -73,15 +73,14 @@
 
         self.notificationsHoverIn = function() {
             $scope.notificationHover = true;
+            notificationsSeen();
         };
 
         self.notificationsHoverOut = function() {
             $scope.notificationHover = false;
         };
 
-        self.openNotifications = function() {
-            self.closeMobileMenu();
-            jQuery('.blackout-screen').css('display', 'block');
+        function notificationsSeen() {
             $scope.notifyOpen = true;
             $http({
                 method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
@@ -89,6 +88,12 @@
                     set_seen: '*'
                 }
             })
+        }
+
+        self.openNotifications = function() {
+            notificationsSeen();
+            self.closeMobileMenu();
+            jQuery('.blackout-screen').css('display', 'block');
         };
 
         self.closeNotifications = function() {
