@@ -142,15 +142,17 @@
           &:hover, .hover
             background: $primary-color
             color: white
-        .menu-user
+        .menu-user, .menu-notifications
           display: inline-block
           padding-left: 5px
           text-decoration: none
+        .menu-notifications
+          padding-right: 5px
         .submenu
           border-left: 8px solid $primary-color
           a
             text-decoration: none
-        .header-picture
+        .header-picture, .header-notifications
           vertical-align: middle
 
   .menuwrapper
@@ -214,6 +216,9 @@
       display: none
 
   #nav_notifications
+
+    padding-left: 5px
+
     @media screen and (max-width: $phone-tablet-boundary)
       &.hideMobileNotifications
         display: none
@@ -222,6 +227,8 @@
       border-left: 0 !important
       border-right: 8px solid $primary-color
       right: 0
+      li
+        padding: 5px 10px
 
     img
       height: 23px
@@ -231,5 +238,3 @@
       .notificationsRead
         background-color: white
         color: #aaa
-      #no-notifications-msg
-        display: none

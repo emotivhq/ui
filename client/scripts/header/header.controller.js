@@ -34,7 +34,7 @@
 
         $scope.numNotifications = 0;
         $scope.notifications = null;
-        $scope.notificationImg = "notifications-none.png";
+        $scope.notificationHover = false;
 
         $interval(updateSubliminal, 3000);
 
@@ -44,43 +44,34 @@
         $scope.$on('profile-image-changed', updateLogin);
 
         //check notifications for user
-        $http({
-            method: 'GET',
-            url: ' /users/notify/' + UserService.uid + '.json'
-        }).success(function (response) {
-            console.log(response);
-            $scope.notifications = response.notifications;
-            var emptyList = true;
-            for (item in $scope.notifications) {
-                console.table(item);
-                emptyList = false;
-                if ($scope.notifications[item].seen == false) {
-                    $scope.numNotifications++;
+        checkNotifications = function() {
+            $http({
+                method: 'GET',
+                url: ' /users/notify/' + UserService.uid + '.json'
+            }).success(function (response) {
+                $scope.notifications = response.notifications;
+                $scope.numNotifications = 0;
+                for (item in $scope.notifications) {
+                    if ($scope.notifications[item].seen == false) {
+                        $scope.numNotifications++;
+                    }
                 }
-            }
-            //show 'no notifications' msg if list is empty
-            if (emptyList) {
-                jQuery('#no-notifications-msg').css('display', 'block');
-            }
-            self.checkNotifications();
-        }).error(function (response) {
-            jQuery('#no-notifications-msg').css('display', 'block');
-        });
-
-        self.checkNotifications = function() {
-            if ($scope.numNotifications > 0) {
-                $scope.notificationImg = "notifications-new.png";
-            } else {
-                $scope.notificationImg = "notifications-none.png";
-            }
+            }).error(function (response) {
+                console && console.log && console.log(response)
+            });
         };
+        $scope.pollNotifications = function(){
+            checkNotifications();
+            $timeout($scope.pollNotifications, 3000);
+        };
+        $scope.pollNotifications();
 
         self.notificationsHoverIn = function() {
-            $scope.notificationImg = "notifications-open.png";
+            $scope.notificationHover = true;
         };
 
         self.notificationsHoverOut = function() {
-            self.checkNotifications();
+            $scope.notificationHover = false;
         };
 
         self.openNotifications = function() {
@@ -106,11 +97,12 @@
                 data: {
                     set_acknowledged: '[' + item.id + ']'
                 }
-            })
-            .success(function (result) {
-            })
-            .error(function (reason) {
             });
+            if(item.link) {
+                $timeout(function () {
+                    $location.path(item.link)
+                }, 500);
+            }
         };
 
         // for sizing using ng-class
@@ -134,7 +126,6 @@
 
         self.toggleMobileMenu = function() {
             $scope.menu = !$scope.menu;
-            console.log($scope.menu);
         };
 
         self.closeMobileMenu = function() {
@@ -260,7 +251,6 @@
             olark('api.chat.sendMessageToVisitor', {
                 body: "Welcome!  Can I help you gift this product from "+(parser.hostname=="localhost"?"another site":parser.hostname)+"?"
             });
-            console.log("set Olark message: "+parser.hostname);
         }
 
         var userAgent = navigator.userAgent.toLowerCase();
