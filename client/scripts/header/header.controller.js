@@ -46,22 +46,24 @@
 
         //check notifications for user
         checkNotifications = function() {
-            $http({
-                method: 'GET',
-                url: ' /users/notify/' + UserService.uid + '.json'
-            }).success(function (response) {
-                $scope.notifications = response.notifications;
-                $scope.numNotifications = 0;
-                $scope.numNotificationsUnseen = 0;
-                for (item in $scope.notifications) {
-                    $scope.numNotifications++;
-                    if (!$scope.notifications[parseInt(item)].seen) {
-                        $scope.numNotificationsUnseen++;
+            if(UserService.loggedIn) {
+                $http({
+                    method: 'GET',
+                    url: ' /users/notify/' + UserService.uid + '.json'
+                }).success(function (response) {
+                    $scope.notifications = response.notifications;
+                    $scope.numNotifications = 0;
+                    $scope.numNotificationsUnseen = 0;
+                    for (item in $scope.notifications) {
+                        $scope.numNotifications++;
+                        if (!$scope.notifications[parseInt(item)].seen) {
+                            $scope.numNotificationsUnseen++;
+                        }
                     }
-                }
-            }).error(function (response) {
-                console && console.log && console.log(response)
-            });
+                }).error(function (response) {
+                    console && console.log && console.log(response)
+                });
+            }
         };
         $scope.pollNotifications = function(){
             checkNotifications();
