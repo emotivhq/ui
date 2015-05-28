@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -97,6 +97,7 @@
             notificationsSeen();
             self.closeMobileMenu();
             $scope.showBlackout = true;
+            $anchorScroll('notificationlist')
         };
 
         self.closeNotifications = function() {
@@ -294,6 +295,7 @@
         '$timeout',
         '$window',
         '$http',
+        '$anchorScroll',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       //when the route is changed scroll to the proper element.
