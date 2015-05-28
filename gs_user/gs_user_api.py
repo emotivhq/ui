@@ -74,7 +74,7 @@ class UserNotifyHandler(webapp2.RequestHandler):
                 if set_seen is '*':
                     notifications = seen_query.fetch()
                 else:
-                    notifications = seen_query.filter(Notification.id.IN([str(s) for s in set_seen])).fetch()
+                    notifications = seen_query.filter(Notification.id.IN([str(s) for s in json.loads(set_seen)])).fetch()
                 for n in notifications:
                     n.seen = True
                 ndb.put_multi(notifications)
@@ -83,7 +83,7 @@ class UserNotifyHandler(webapp2.RequestHandler):
                 if set_acknowledged is '*':
                     notifications = acknowledged_query.fetch()
                 else:
-                    notifications = acknowledged_query.filter(Notification.id.IN([str(s) for s in set_acknowledged])).fetch()
+                    notifications = acknowledged_query.filter(Notification.id.IN([str(s) for s in json.loads(set_acknowledged)])).fetch()
                 for n in notifications:
                     n.acknowledged = True
                 ndb.put_multi(notifications)
@@ -107,9 +107,9 @@ class UserNotifyHandler(webapp2.RequestHandler):
         else:
             query = Notification.query(Notification.target_uid == user.uid)
             if not show_seen:
-                query.filter(Notification.seen == False)
+                query=query.filter(Notification.seen == False)
             if not show_acknowledged:
-                query.filter(Notification.acknowledged == False)
+                query=query.filter(Notification.acknowledged == False)
             notifications = query.order(-Notification.timestamp).fetch(limit=num)
             response_data = {"notifications":dictify_all(notifications)}
             self.response.write(json.dumps(response_data))

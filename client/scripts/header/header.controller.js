@@ -95,8 +95,11 @@
             $http({
                 method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
                 data: {
-                    set_acknowledged: '[' + item.id + ']'
+                    set_acknowledged: '["' + item.id + '"]'
                 }
+            })
+            .success(function() {
+                $timeout(checkNotifications, 1000);
             });
             if(item.link) {
                 $timeout(function () {

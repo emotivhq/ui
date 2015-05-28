@@ -18,6 +18,13 @@ indexes:
 
 - kind: Notification
   properties:
+  - name: acknowledged
+  - name: target_uid
+  - name: timestamp
+    direction: desc
+
+- kind: Notification
+  properties:
   - name: target_uid
   - name: seen
 
