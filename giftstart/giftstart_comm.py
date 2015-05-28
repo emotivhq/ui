@@ -137,7 +137,7 @@ def check_if_complete(gsid):
 
     if not giftstart.giftstart_complete:
 
-        if len(pitch_in_parts) == giftstart.overlay_columns * giftstart.overlay_rows:
+        if len(pitch_in_parts) >= giftstart.overlay_columns * giftstart.overlay_rows:
             # Giftstart is complete!
 
             giftstart.giftstart_complete = True
