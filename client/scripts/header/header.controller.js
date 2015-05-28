@@ -119,6 +119,7 @@
                     $location.path(item.link)
                 }, 500);
             }
+            self.closeNotifications();
         };
 
         // for sizing using ng-class
