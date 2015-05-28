@@ -33,6 +33,7 @@
         $scope.notifyOpen = false;
 
         $scope.numNotifications = 0;
+        $scope.numNotificationsUnseen = 0;
         $scope.notifications = null;
         $scope.notificationHover = false;
 
@@ -51,9 +52,11 @@
             }).success(function (response) {
                 $scope.notifications = response.notifications;
                 $scope.numNotifications = 0;
+                $scope.numNotificationsUnseen = 0;
                 for (item in $scope.notifications) {
-                    if ($scope.notifications[item].seen == false) {
-                        $scope.numNotifications++;
+                    $scope.numNotifications++;
+                    if (!$scope.notifications[parseInt(item)].seen) {
+                        $scope.numNotificationsUnseen++;
                     }
                 }
             }).error(function (response) {

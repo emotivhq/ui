@@ -47,7 +47,7 @@
             <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
             <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
             <li><a ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
-            <li id="mobile_notifications"><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotifications}})</a></li>
+            <li id="mobile_notifications"><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotificationsUnseen}})</a></li>
             <li><a class="coming-soon">Settings *Coming Soon*</a></li>
             <li><a class="linky" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
           </ul>
@@ -55,7 +55,7 @@
         <li id="nav_notifications" class="menu-login" ng-show="header.loggedIn" ng-mouseenter="header.notificationsHoverIn()" ng-mouseleave="header.notificationsHoverOut()" ng-class="{hideMobileNotifications: !notifyOpen}"><img class="header-notifications" ng-src="/assets/notifications-{{notificationHover && 'open' || numNotifications==0 && 'none' || 'new'}}.png" ng-hide="notifyOpen"/><a href="" class="menu-notifications" ng-hide="notifyOpen">{{numNotifications}}</a>
           <ul id="notification-list" class="submenu">
             <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.seen == 'true'}"><a ng-click="header.notificationClick(item)">{{item.title}}</a></li>
-            <li id="no-notifications-msg" ng-show="numNotifications==0">You have no notifications</li>
+            <li id="no-notifications-msg" ng-show="numNotificationsSeen==0">You have no notifications</li>
           </ul>
         </li>
         <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="header.closeMobileMenu()">CREATE ACCOUNT</a></li>
