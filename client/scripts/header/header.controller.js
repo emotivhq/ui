@@ -49,7 +49,7 @@
             if(UserService.loggedIn) {
                 $http({
                     method: 'GET',
-                    url: ' /users/notify/' + UserService.uid + '.json'
+                    url: '/users/notify/' + UserService.uid + '.json'
                 }).success(function (response) {
                     $scope.notifications = response.notifications;
                     $scope.numNotifications = 0;
@@ -81,7 +81,6 @@
         };
 
         function notificationsSeen() {
-            $scope.notifyOpen = true;
             $http({
                 method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
                 data: {
@@ -91,6 +90,7 @@
         }
 
         self.openNotifications = function() {
+            $scope.notifyOpen = true;
             notificationsSeen();
             self.closeMobileMenu();
             jQuery('.blackout-screen').css('display', 'block');

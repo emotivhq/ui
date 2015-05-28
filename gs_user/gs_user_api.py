@@ -71,19 +71,27 @@ class UserNotifyHandler(webapp2.RequestHandler):
             query = Notification.query(Notification.target_uid == user.uid)
             if set_seen is not None:
                 seen_query = query.filter(Notification.seen == False)
-                if set_seen is '*':
+                if set_seen == '*':
                     notifications = seen_query.fetch()
                 else:
-                    notifications = seen_query.filter(Notification.id.IN([str(s) for s in json.loads(set_seen)])).fetch()
+                    try:
+                        notifications = seen_query.filter(Notification.id.IN([str(s) for s in json.loads(set_seen)])).fetch()
+                    except ValueError as x:
+                        self.response.write(json.dumps({'error':'invalid value '+str(set_seen)}))
+                        return
                 for n in notifications:
                     n.seen = True
                 ndb.put_multi(notifications)
             if set_acknowledged is not None:
                 acknowledged_query = query.filter(Notification.acknowledged == False)
-                if set_acknowledged is '*':
+                if set_acknowledged == '*':
                     notifications = acknowledged_query.fetch()
                 else:
-                    notifications = acknowledged_query.filter(Notification.id.IN([str(s) for s in json.loads(set_acknowledged)])).fetch()
+                    try:
+                        notifications = acknowledged_query.filter(Notification.id.IN([str(s) for s in json.loads(set_acknowledged)])).fetch()
+                    except ValueError as x:
+                        self.response.write(json.dumps({'error':'invalid value '+str(set_acknowledged)}))
+                        return
                 for n in notifications:
                     n.acknowledged = True
                 ndb.put_multi(notifications)
