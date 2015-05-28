@@ -62,11 +62,13 @@
         <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a href="#nav_login" ng-hide="header.loggedIn || header.creating" ng-click="header.showLogin(); actions.menuItemClicked(true); header.closeMobileMenu()">LOG IN</a></li>
       </ul>
     </div>
-  <div class="loginwrapper" ng-keyup="header.loginKeyPress($event)">
-    <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
-    <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
-  </div>
-  <div class="blackout-screen" ng-click="header.closeLogin(); header.closeNotifications()"></div>
+    <div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">
+      <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
+      <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+    </div>
+    <div class="nomobile">
+      <div class="blackout-screen" ng-show="showBlackout" ng-click="header.closeLogin(); header.closeNotifications()"></div>
+    </div>
   </div>
 </header>
 {% endraw %}

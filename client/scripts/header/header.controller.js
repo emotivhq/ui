@@ -37,6 +37,9 @@
         $scope.notifications = null;
         $scope.notificationHover = false;
 
+        $scope.showLoginwrapper = false;
+        $scope.showBlackout = false;
+
         $interval(updateSubliminal, 3000);
 
         $scope.$on('login-success', updateLogin);
@@ -93,11 +96,11 @@
             $scope.notifyOpen = true;
             notificationsSeen();
             self.closeMobileMenu();
-            jQuery('.blackout-screen').css('display', 'block');
+            $scope.showBlackout = true;
         };
 
         self.closeNotifications = function() {
-            jQuery('.blackout-screen').css('display', 'none');
+            $scope.showBlackout = false;
             $scope.notifyOpen = false;
         };
 
@@ -146,13 +149,13 @@
         };
 
         function closeLogin() {
-            jQuery('.blackout-screen').css('display', 'none');
-            jQuery('.loginwrapper').css('display', 'none');
+            $scope.showBlackout = false;
+            $scope.showLoginwrapper = false;
         }
 
         function revealLogin() {
-            jQuery('.blackout-screen').css('display', 'block');
-            jQuery('.loginwrapper').css('display', 'block');
+            $scope.showBlackout = true;
+            $scope.showLoginwrapper = true;
         }
 
         self.showLogin = function() {

@@ -11,6 +11,10 @@
   vertical-align: middle
   -webkit-font-smoothing: antialiased
 
+  .nomobile
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: none
+
   form#searchbar
     display: inline-block
     float: left
@@ -190,20 +194,18 @@
   .loginwrapper
     background-color: white
     border-bottom: 2px solid $bg-color
-    display: none
     position: absolute
     width: 100%
     max-width: 1200px
     top: 70px
+    z-index: 999
     @include apply-at-size("desktop")
       top: 50px
-    z-index: 999
     #closebtn
       margin-left: calc(99% - 30px)
       width: 30px
 
   .blackout-screen
-    display: none
     height: 100%
     width: 100%
     position: fixed
