@@ -204,23 +204,22 @@ def check_if_complete(gsid):
                                       thank_core.encode_secret(gsid),
                     }
                 email_url = config['email_url']
-                send_path = email_url[email_url.find('/', 8):]
-                payload = json.dumps({
-                    'subject': "You've Received a GiftStarter Gift!",
-                    'mime_type': 'html',
-                    'template_name': "recipient_thankyou_notification",
-                    'template_kwargs': email_kwargs,
-                    'sender': "giftconcierge@giftstarter.co",
-                    'to': [giftstart.shipping_email]
-                })
-
-                recipients = User.query(User.email == giftstart.shipping_email).fetch()
-                for user in recipients:
-                    notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
-
+                # send_path = email_url[email_url.find('/', 8):]
+                # payload = json.dumps({
+                #     'subject': "You've Received a GiftStarter Gift!",
+                #     'mime_type': 'html',
+                #     'template_name': "recipient_thankyou_notification",
+                #     'template_kwargs': email_kwargs,
+                #     'sender': "giftconcierge@giftstarter.co",
+                #     'to': [giftstart.shipping_email]
+                # })
                 # taskqueue.add(url=send_path, method='PUT',
                 #               eta=datetime.now() + timedelta(days=10),
                 #               payload=payload)
+                # recipients = User.query(User.email == giftstart.shipping_email).fetch()
+                # TBD: IF WE RE-ENABLE AUTOMATIC NOTIFICATION OF GIFT RECEIPT, DELAY THIS BY 10 DAYS
+                # for user in recipients:
+                #     notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
         elif giftstart.deadline < datetime.now():
             giftstart.giftstart_complete = True
@@ -289,23 +288,22 @@ def check_if_complete(gsid):
                                           thank_core.encode_secret(gsid),
                     }
                     email_url = config['email_url']
-                    send_path = email_url[email_url.find('/', 8):]
-                    payload = json.dumps({
-                        'subject': "You've Received a GiftStarter Gift!",
-                        'mime_type': 'html',
-                        'template_name': "recipient_thankyou_notification",
-                        'template_kwargs': email_kwargs,
-                        'sender': "giftconcierge@giftstarter.co",
-                        'to': [giftstart.shipping_email]
-                    })
-
-                    recipients = User.query(User.email == giftstart.shipping_email).fetch()
-                    for user in recipients:
-                        notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
-
+                    # send_path = email_url[email_url.find('/', 8):]
+                    # payload = json.dumps({
+                    #     'subject': "You've Received a GiftStarter Gift!",
+                    #     'mime_type': 'html',
+                    #     'template_name': "recipient_thankyou_notification",
+                    #     'template_kwargs': email_kwargs,
+                    #     'sender': "giftconcierge@giftstarter.co",
+                    #     'to': [giftstart.shipping_email]
+                    # })
                     # taskqueue.add(url=send_path, method='PUT',
                     #               eta=datetime.now() + timedelta(days=10),
                     #               payload=payload)
+                    # recipients = User.query(User.email == giftstart.shipping_email).fetch()
+                    # TBD: IF WE RE-ENABLE AUTOMATIC NOTIFICATION OF GIFT RECEIPT, DELAY THIS BY 10 DAYS
+                    # for user in recipients:
+                    #     notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
 
 
