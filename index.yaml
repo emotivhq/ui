@@ -23,22 +23,6 @@ indexes:
   - name: timestamp
     direction: desc
 
-- kind: Notification
-  properties:
-  - name: target_uid
-  - name: seen
-
-- kind: Notification
-  properties:
-  - name: target_uid
-  - name: timestamp
-
-- kind: Notification
-  properties:
-  - name: target_uid
-  - name: timestamp
-    direction: desc
-
 - kind: PitchIn
   properties:
   - name: gsid
