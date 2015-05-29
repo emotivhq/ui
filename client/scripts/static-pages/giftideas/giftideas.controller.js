@@ -87,7 +87,6 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
             });
             if(!setmeta) {
                 var metatitle=data.categoryName;
-
                 var metadesc=data.categoryMetaDescription&&data.categoryMetaDescription.trim()!=""?data.categoryMetaDescription:data.categoryBlurb;
                 setMeta(metatitle, metadesc);
             }
