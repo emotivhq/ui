@@ -6,7 +6,7 @@
 
 (function (app) {
 
-    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http) {
+    var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
         var self = this;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
@@ -33,8 +33,12 @@
         $scope.notifyOpen = false;
 
         $scope.numNotifications = 0;
+        $scope.numNotificationsUnseen = 0;
         $scope.notifications = null;
-        $scope.notificationImg = "notifications-none.png";
+        $scope.notificationHover = false;
+
+        $scope.showLoginwrapper = false;
+        $scope.showBlackout = false;
 
         $interval(updateSubliminal, 3000);
 
@@ -44,45 +48,79 @@
         $scope.$on('profile-image-changed', updateLogin);
 
         //check notifications for user
-        $http({
-            method: 'GET',
-            url: ' /users/notify/' + UserService.uid + '.json'
-        }).success(function (response) {
-            console.log(response);
-            $scope.notifications = response.notifications;
-            for (item in $scope.notifications) {
-                if ($scope.notifications[item].seen == "false") {
-                    $scope.numNotifications++;
-                }
-            }
-            self.checkNotifications();
-        });
-
-        self.checkNotifications = function() {
-            if ($scope.numNotifications > 0) {
-                $scope.notificationImg = "notifications-new.png";
-            } else {
-                $scope.notificationImg = "notifications-none.png";
+        checkNotifications = function() {
+            if(UserService.loggedIn) {
+                $http({
+                    method: 'GET',
+                    url: '/users/notify/' + UserService.uid + '.json'
+                }).success(function (response) {
+                    $scope.notifications = response.notifications;
+                    $scope.numNotifications = 0;
+                    $scope.numNotificationsUnseen = 0;
+                    for (item in $scope.notifications) {
+                        $scope.numNotifications++;
+                        if (!$scope.notifications[parseInt(item)].seen) {
+                            $scope.numNotificationsUnseen++;
+                        }
+                    }
+                }).error(function (response) {
+                    console && console.log && console.log(response)
+                });
             }
         };
+        $scope.pollNotifications = function(){
+            checkNotifications();
+            $timeout($scope.pollNotifications, 3000);
+        };
+        $scope.pollNotifications();
 
         self.notificationsHoverIn = function() {
-            $scope.notificationImg = "notifications-open.png";
+            $scope.notificationHover = true;
+            notificationsSeen();
         };
 
         self.notificationsHoverOut = function() {
-            self.checkNotifications();
+            $scope.notificationHover = false;
         };
 
+        function notificationsSeen() {
+            $http({
+                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                data: {
+                    set_seen: '*'
+                }
+            })
+        }
+
         self.openNotifications = function() {
-            self.closeMobileMenu();
-            jQuery('.blackout-screen').css('display', 'block');
             $scope.notifyOpen = true;
+            notificationsSeen();
+            self.closeMobileMenu();
+            $scope.showBlackout = true;
+            $anchorScroll('notificationlist')
         };
 
         self.closeNotifications = function() {
-            jQuery('.blackout-screen').css('display', 'none');
+            $scope.showBlackout = false;
             $scope.notifyOpen = false;
+        };
+
+        self.notificationClick = function(item) {
+            $http({
+                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                data: {
+                    set_acknowledged: '["' + item.id + '"]'
+                }
+            })
+            .success(function() {
+                $timeout(checkNotifications, 1000);
+            });
+            if(item.link) {
+                $timeout(function () {
+                    $location.path(item.link)
+                }, 500);
+            }
+            self.closeNotifications();
         };
 
         // for sizing using ng-class
@@ -106,7 +144,6 @@
 
         self.toggleMobileMenu = function() {
             $scope.menu = !$scope.menu;
-            console.log($scope.menu);
         };
 
         self.closeMobileMenu = function() {
@@ -114,13 +151,13 @@
         };
 
         function closeLogin() {
-            jQuery('.blackout-screen').css('display', 'none');
-            jQuery('.loginwrapper').css('display', 'none');
+            $scope.showBlackout = false;
+            $scope.showLoginwrapper = false;
         }
 
         function revealLogin() {
-            jQuery('.blackout-screen').css('display', 'block');
-            jQuery('.loginwrapper').css('display', 'block');
+            $scope.showBlackout = true;
+            $scope.showLoginwrapper = true;
         }
 
         self.showLogin = function() {
@@ -232,7 +269,6 @@
             olark('api.chat.sendMessageToVisitor', {
                 body: "Welcome!  Can I help you gift this product from "+(parser.hostname=="localhost"?"another site":parser.hostname)+"?"
             });
-            console.log("set Olark message: "+parser.hostname);
         }
 
         var userAgent = navigator.userAgent.toLowerCase();
@@ -259,6 +295,7 @@
         '$timeout',
         '$window',
         '$http',
+        '$anchorScroll',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       //when the route is changed scroll to the proper element.

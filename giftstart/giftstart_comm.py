@@ -12,6 +12,7 @@ from google.appengine.api import taskqueue
 from gs_util import gs_util_link
 from thank import thank_core
 from gs_user.User import User
+from gs_user.Notification import notify
 from login import login_core
 
 config = yaml.load(open('config.yaml'))
@@ -55,6 +56,8 @@ def send_create_notification(giftstart):
                      'template_kwargs': email_kwargs
                  }))
 
+    notify(giftstart.gift_champion_uid,'You created a Campaign: '+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
+
 
 def send_day_left_warning(gsid):
     """notify creator and all givers that campaign has one day left"""
@@ -81,6 +84,8 @@ def send_day_left_warning(gsid):
                          'to': [giftstart.gc_email],
                      }))
 
+        notify(giftstart.gift_champion_uid,'There is one day left to Pitch In on '+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
+
         # Notify all givers
         emails = list(set(map(lambda pi: pi.email, pitch_ins)))
         email_kwargs = {
@@ -101,6 +106,8 @@ def send_day_left_warning(gsid):
                          'mime_type': 'html',
                          'to': emails,
                      }))
+        for pi in pitch_ins:
+            notify(pi.uid,'There is one day left to Pitch In on '+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
 
 def send_emaillogin_reset(email):
@@ -130,7 +137,7 @@ def check_if_complete(gsid):
 
     if not giftstart.giftstart_complete:
 
-        if len(pitch_in_parts) == giftstart.overlay_columns * giftstart.overlay_rows:
+        if len(pitch_in_parts) >= giftstart.overlay_columns * giftstart.overlay_rows:
             # Giftstart is complete!
 
             giftstart.giftstart_complete = True
@@ -157,6 +164,8 @@ def check_if_complete(gsid):
                              'sender': "giftconcierge@giftstarter.co",
                              'to': [giftstart.gc_email]
                          }))
+
+            notify(giftstart.gift_champion_uid,'Your Campaign was a success: '+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
             # And email GiftStarter personnel...
             email_kwargs = {
@@ -195,18 +204,22 @@ def check_if_complete(gsid):
                                       thank_core.encode_secret(gsid),
                     }
                 email_url = config['email_url']
-                send_path = email_url[email_url.find('/', 8):]
-                payload = json.dumps({
-                    'subject': "You've Received a GiftStarter Gift!",
-                    'mime_type': 'html',
-                    'template_name': "recipient_thankyou_notification",
-                    'template_kwargs': email_kwargs,
-                    'sender': "giftconcierge@giftstarter.co",
-                    'to': [giftstart.shipping_email]
-                })
+                # send_path = email_url[email_url.find('/', 8):]
+                # payload = json.dumps({
+                #     'subject': "You've Received a GiftStarter Gift!",
+                #     'mime_type': 'html',
+                #     'template_name': "recipient_thankyou_notification",
+                #     'template_kwargs': email_kwargs,
+                #     'sender': "giftconcierge@giftstarter.co",
+                #     'to': [giftstart.shipping_email]
+                # })
                 # taskqueue.add(url=send_path, method='PUT',
                 #               eta=datetime.now() + timedelta(days=10),
                 #               payload=payload)
+                # recipients = User.query(User.email == giftstart.shipping_email).fetch()
+                # TBD: IF WE RE-ENABLE AUTOMATIC NOTIFICATION OF GIFT RECEIPT, DELAY THIS BY 10 DAYS
+                # for user in recipients:
+                #     notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
         elif giftstart.deadline < datetime.now():
             giftstart.giftstart_complete = True
@@ -234,6 +247,8 @@ def check_if_complete(gsid):
                                  'mime_type': 'html',
                                  'to': [giftstart.gc_email]
                              }))
+
+                notify(giftstart.gift_champion_uid, 'Your GiftStart has Ended: '+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
                 # And email GiftStarter personnel...
                 email_kwargs = {
@@ -273,18 +288,24 @@ def check_if_complete(gsid):
                                           thank_core.encode_secret(gsid),
                     }
                     email_url = config['email_url']
-                    send_path = email_url[email_url.find('/', 8):]
-                    payload = json.dumps({
-                        'subject': "You've Received a GiftStarter Gift!",
-                        'mime_type': 'html',
-                        'template_name': "recipient_thankyou_notification",
-                        'template_kwargs': email_kwargs,
-                        'sender': "giftconcierge@giftstarter.co",
-                        'to': [giftstart.shipping_email]
-                    })
+                    # send_path = email_url[email_url.find('/', 8):]
+                    # payload = json.dumps({
+                    #     'subject': "You've Received a GiftStarter Gift!",
+                    #     'mime_type': 'html',
+                    #     'template_name': "recipient_thankyou_notification",
+                    #     'template_kwargs': email_kwargs,
+                    #     'sender': "giftconcierge@giftstarter.co",
+                    #     'to': [giftstart.shipping_email]
+                    # })
                     # taskqueue.add(url=send_path, method='PUT',
                     #               eta=datetime.now() + timedelta(days=10),
                     #               payload=payload)
+                    # recipients = User.query(User.email == giftstart.shipping_email).fetch()
+                    # TBD: IF WE RE-ENABLE AUTOMATIC NOTIFICATION OF GIFT RECEIPT, DELAY THIS BY 10 DAYS
+                    # for user in recipients:
+                    #     notify(user.uid,"You've received a Gift: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
+
+
 
             else:
                 # Send email of regret to gift champion
@@ -304,6 +325,7 @@ def check_if_complete(gsid):
                                  'sender': 'giftconcierge@giftstarter.co',
                                  'to': [giftstart.gc_email],
                              }))
+                notify(giftstart.gift_champion_uid,"Your GiftStart has Ended: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
 
 
 def pitchins_by_gc(giftstart, pitchins):
@@ -343,6 +365,8 @@ def congratulate_givers(gsid, funded):
                          'sender': "giftconcierge@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))
+        for pi in pitch_ins:
+            notify(pi.uid,"Your GiftStart has Ended: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)
     else:
         # Send email to all the givers, great job guys!
         email_kwargs = {
@@ -362,3 +386,5 @@ def congratulate_givers(gsid, funded):
                          'sender': "giftconcierge@giftstarter.co",
                          'to': [pi.email for pi in pitch_ins]
                      }))
+        for pi in pitch_ins:
+            notify(pi.uid,"Your GiftStart has Ended: "+giftstart.giftstart_title, None, '/giftstart/'+giftstart.giftstart_url_title, giftstart.product_img_url)

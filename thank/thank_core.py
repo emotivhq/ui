@@ -9,6 +9,7 @@ from google.appengine.ext import ndb
 import yaml
 import json
 import requests
+from gs_user.Notification import notify
 
 config = yaml.load(open('config.yaml'))
 
@@ -56,3 +57,10 @@ def send_emails(key):
                        'template_kwargs': email_kwargs})
 
     requests.put(url, data=data)
+
+    for pi in pis:
+        notify(pi.uid,
+               'You Received a Thank You for '+ email_kwargs['campaign_name'],
+               None,
+               email_kwargs['campaign_link'],
+               gs.product_img_url)
