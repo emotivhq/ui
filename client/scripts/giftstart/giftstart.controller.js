@@ -14,6 +14,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
          ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
 
+    //alert('TBD: functionality and left-hand side (see Screen Shot 2015-05-29 at 11.14.12 PM')
+
     Analytics.track('campaign', 'controller created');
 
     $scope.giftStart = GiftStartService.giftStart;
@@ -38,6 +40,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.isSavingForLater = false;
 
     $scope.showLoginBox = false;
+
+    $scope.showPayBox = false;
+
+    $rootScope.$on('paybox-hidden', function() {
+        $scope.showPayBox = false;
+    });
 
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
@@ -141,7 +149,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             Analytics.track('pitchin', 'pitchin button clicked');
             if (UserService.loggedIn) {
                 AppStateService.set('contributeLogin', false);
-                PopoverService.setPopover('pay');
+                //PopoverService.setPopover('pay');
+                $scope.showPayBox = true;
             } else {
                 //PopoverService.contributeLogin = true;
                 AppStateService.set('contributeLogin', true);

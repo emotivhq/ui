@@ -10,7 +10,7 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block" ng-hide="showLoginBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox">
             <div class="prodtitle">
                 <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
             </div>
@@ -32,11 +32,16 @@
                 <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file" capture="camera" accept="image/*"/></div>
                 <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
         </div>
-        <div ng-show="showLoginBox" class="login-box">
+        <div class="login-box" ng-show="showLoginBox">
             <h2>Log in or create an account:</h2>
             <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
         </div>
-        <div class="col2 block" ng-hide="showLoginBox">
+        <div class="pay-box" ng-show="showPayBox">
+            <h2>Payment Information:</h2>
+            <p>We accept payment by Visa, MasterCard, Amex, or Discover.  Our payments are secure and processed by PayPal.</p>
+            <ng-include src="'/scripts/pay/pay.html'"></ng-include>
+        </div>
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox">
             <div class="pitch-instructions">
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>

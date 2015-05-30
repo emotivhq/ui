@@ -4,11 +4,11 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('PayPopoverController', ['$scope','GiftStartService',
+GiftStarterApp.controller('PayPopoverController', ['$scope','$rootScope','GiftStartService',
     'PopoverService','UserService','Analytics','CardService','$timeout',
     PayPopoverController]);
 
-function PayPopoverController($scope, GiftStartService, PopoverService,
+function PayPopoverController($scope, $rootScope, GiftStartService, PopoverService,
                               UserService,  Analytics, CardService, $timeout) {
 
     CardService.fetch();
@@ -31,7 +31,10 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
 
     $scope.errorMessage = '';
 
-    $scope.hidePopover = PopoverService.hidePopover;
+    $scope.hidePopover = function() {
+        PopoverService.hidePopover();
+        $rootScope.$broadcast('paybox-hidden');
+    };
 
     $scope.submitted = false;
 
@@ -96,10 +99,14 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                     } else {
                         $scope.trackConversion();
                     }
-                    $timeout(function(){$scope.pitchingIn = false;},1000);
+                    $timeout(function(){
+                        $scope.pitchingIn = false;
+                        $rootScope.$broadcast('paybox-hidden');
+                    },1000);
                 })
                 .error(function(data) {
                     $scope.pitchingIn = false;
+                    $rootScope.$broadcast('paybox-hidden');
                 });
         } else {
             // Got stripe token, attach it to the current giftstart payment
@@ -115,7 +122,10 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                 } else {
                     $scope.trackConversion();
                 }
-                $timeout(function(){$scope.pitchingIn = false;},1000);
+                $timeout(function(){
+                    $scope.pitchingIn = false;
+                    $rootScope.$broadcast('paybox-hidden');
+                },1000);
             });
         }
     };
@@ -134,6 +144,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
                     $scope.pitchingIn = false;
+                    $rootScope.$broadcast('paybox-hidden');
                     if (data['payment-error']) {
                         $scope.errorMessage = data['payment-error'];
                     } else {
@@ -142,9 +153,11 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                 })
                 .error(function(data) {
                     $scope.pitchingIn = false;
+                    $rootScope.$broadcast('paybox-hidden');
                 });
         } else if (response.error) {
             $scope.pitchingIn = false;
+            $rootScope.$broadcast('paybox-hidden');
             Analytics.track('pitchin', 'payment error');
         } else {
             // Got stripe token, attach it to the current giftstart payment
@@ -156,6 +169,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 $scope.pitchingIn = false;
+                $rootScope.$broadcast('paybox-hidden');
                 if (data['payment-error']) {
                     $scope.errorMessage = data['payment-error'];
                 } else {
@@ -173,6 +187,7 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             PopoverService.nextPopover();
         }
         $scope.pitchingIn = false;
+        $rootScope.$broadcast('paybox-hidden');
     });
 
     $scope.$on('cards-fetch-success', cardsFetched);
