@@ -52,7 +52,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         $rootScope.$broadcast('paybox-hidden');
     };
 
-    $rootScope.$on('paybox-hidden',$scope.initialize);
+    $rootScope.$on('paybox-shown',$scope.initialize);
 
     $scope.updateFormValidity = function() {
         if ($scope.submitted) {
@@ -198,9 +198,10 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         Analytics.track('pitchin', 'payment succeeded',
             GiftStartService.giftStart.gsid.toString(),
             $scope.currentCharge);
-        if(PopoverService.currentLocation=='pay') {
-            PopoverService.nextPopover();
-        }
+        //if(PopoverService.currentLocation=='pay') {
+        //    PopoverService.nextPopover();
+        //}
+        PopoverService.setPopover('note');
         $scope.pitchingIn = false;
         $rootScope.$broadcast('paybox-hidden');
     });

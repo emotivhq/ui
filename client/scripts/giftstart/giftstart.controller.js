@@ -43,6 +43,10 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.showPayBox = false;
 
+    $scope.getTileCost = function() {
+        return Math.floor($scope.giftStart.total_price / ($scope.giftStart.rows * $scope.giftStart.columns));
+    };
+
     $rootScope.$on('paybox-hidden', function() {
         $scope.showPayBox = false;
     });
@@ -151,6 +155,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
                 AppStateService.set('contributeLogin', false);
                 //PopoverService.setPopover('pay');
                 $scope.showPayBox = true;
+                $rootScope.$broadcast('paybox-shown');
             } else {
                 //PopoverService.contributeLogin = true;
                 AppStateService.set('contributeLogin', true);

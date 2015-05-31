@@ -71,6 +71,7 @@ div.giftstart.wrapper
       width: 39%
 
   div.block.overlay
+    position: relative
     width: $column-width
     text-align: center
     padding: 0
@@ -89,11 +90,43 @@ div.giftstart.wrapper
     div.image-upload
       margin-bottom: 0.5em
 
-  div.receipt
-    height: 500px
-    width: 500px
-    float: left
-    background-color: lightgrey
+  div.receipt-wrap
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 10
+    .receipt
+      height: 100%
+      width: 100%
+      margin: 0 auto
+      @media screen and (max-width: $phone-tablet-boundary)
+        width: 80%
+      background-color: white
+      border: 2px solid lightgrey
+      .receipt-tiles
+        height: 60%
+        padding: 50px
+        vertical-align: middle
+        img
+          float: left
+          width: 60%
+          height: auto
+          padding-right: 10%
+        div
+          float: right
+          text-align: left
+      .receipt-total
+        height: 40%
+        background-color: lightgrey
+        padding: 50px
+        text-align: left
+        vertical-align: middle
+        .purchase-total
+          font-size: 0.8em
+        .total-price
+          float: right
 
   div.invite.block
     width: 100%
