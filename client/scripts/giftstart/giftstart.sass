@@ -76,6 +76,9 @@ div.giftstart.wrapper
     padding: 0
     float: left
     margin: 0 0 $margin-vert 0
+    &.shrunk
+      zoom: 0.5
+      -moz-transform: scale(0.5)
     @media screen and (max-width: $phone-tablet-boundary)
       width: 100%
       padding-top: 2em
@@ -85,6 +88,12 @@ div.giftstart.wrapper
       margin-left: 5%
     div.image-upload
       margin-bottom: 0.5em
+
+  div.receipt
+    height: 500px
+    width: 500px
+    float: left
+    background-color: lightgrey
 
   div.invite.block
     width: 100%
