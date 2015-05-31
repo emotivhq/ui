@@ -24,26 +24,39 @@ class PayHandler(webapp2.RequestHandler):
         data = json.loads(self.request.body)
 
         if data['action'] == 'pitch-in':
-            payment = data['payment']
-            if data.get('fingerprint'):
-                result = pay_core.pay_with_fingerprint(data.get('fingerprint'),
-                                                       data['uid'],
-                                                       payment['gsid'],
-                                                       payment['parts'],
-                                                       payment['note'],
-                                                       payment['subscribe'],)
-            else:
-                result = pay_core.pitch_in(data['uid'], payment['gsid'],
-                                           payment['parts'],
-                                           payment['emailAddress'],
-                                           payment['note'],
-                                           payment['stripeResponse'],
-                                           payment['cardData'],
-                                           payment['subscribe'],
-                                           payment.get('saveCreditCard', False))
-                if 'error' in result.keys():
-                    self.response.set_status(400)
-            self.response.write(json.dumps(result))
+            try:
+                payment = data['payment']
+                if data.get('fingerprint'):
+                    result = pay_core.pay_with_fingerprint(data.get('fingerprint'),
+                                                           data['uid'],
+                                                           payment['gsid'],
+                                                           payment['parts'],
+                                                           payment['note'],
+                                                           payment['subscribe'],)
+                else:
+                    result = pay_core.pitch_in(data['uid'], payment['gsid'],
+                                               payment['parts'],
+                                               payment['emailAddress'],
+                                               payment['note'],
+                                               payment['stripeResponse'],
+                                               payment['cardData'],
+                                               payment['subscribe'],
+                                               payment.get('saveCreditCard', False))
+                    if 'error' in result.keys():
+                        self.response.set_status(400)
+                self.response.write(json.dumps(result))
+            except KeyError as x:
+                def get_err_msg(key):
+                    return {
+                        'emailAddress': 'Please provide your email address',
+                        'fingerprint': 'Please select a card',
+                        'cardData': 'Please enter your credit card information',
+                        'number':'Please enter your credit card number',
+                        'expiry':'Please enter your credit card expiry',
+                        'cvc':'Please enter your credit card CVC',
+                        'zip':'Please enter your zip code'
+                    }[key]
+                self.response.write(json.dumps({'payment-error':get_err_msg(x.message)}))
 
         elif data['action'] == 'pitch-in-note-update':
             payment = data['payment']

@@ -31,11 +31,10 @@
                 * Receipt will be emailed
             </span><span class="save-card">
                 <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard"/><label for="save-credit-card">Remember my card</label><input type="checkbox" id="tooltip-checkbox"/>
+            </span><span class="subscribe" ng-hide="userOnMailingList">
+                <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label for="subscribe-checkbox">Want to hear about new features?</label>
             </span>
         </div>
-        <span class="subscribe" ng-hide="userOnMailingList">
-            <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label class="small" for="subscribe-checkbox">Want to hear about new features?</label>
-        </span>
 
         <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 

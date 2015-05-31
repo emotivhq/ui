@@ -18,16 +18,14 @@
   div.saved-cards
     max-height: 300px
     //background: rgba(0, 0, 0, 0.15)
-    margin-bottom: 1em
-    margin-left: auto
-    margin-right: auto
+    margin: 0 -10px 1em -10px
     +transition(all, 0.2s)
     //+inset-vert-shadow(#333333, 10px)
 
     span.card
       text-align: center
       display: inline-block
-      margin: 3px
+      margin: 2px
       vertical-align: top
       +no-select()
 
@@ -52,8 +50,8 @@
         margin-top: 0.15em
         vertical-align: top
       label span.last-four
-        font-size: 1.2em
-        margin-left: 0.2em
+        font-size: 1em
+        margin-left: 0.1em
 
       input:checked + label
         border: 1px solid #444444
@@ -155,7 +153,9 @@
         text-align: right
         font-size: 12px
         color: #888888
-      .save-card
+      .save-card, .subscribe
+        label
+          font-size: 12px
         input
           width: auto
           margin-left: 6px
@@ -202,9 +202,10 @@
           vertical-align: middle
 
     span.error
-      margin: 1em
-      padding: 0.5em
+      margin: 1em 0
+      padding: 0
       font: $p-font
+      color: red
       //border-radius: 0.5em
       display: block
 

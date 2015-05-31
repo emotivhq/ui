@@ -282,7 +282,7 @@ def save_card_paypal_vault(user, card_data):
         print("CreditCard[%s] created successfully" % (credit_card.id))
         return credit_card.id
     else:
-        raise StripeError(str(credit_card.error['details'][0]['issue']))
+        raise StripeError("{0} {1}".format(credit_card.error['details'][0]['field'],str(credit_card.error['details'][0]['issue']).lower()))
 
 def charge_card_paypal(user, charge_amount_cents, currency, card_token, description):
     truncated_desc = False
