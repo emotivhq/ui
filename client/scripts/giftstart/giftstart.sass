@@ -109,24 +109,38 @@ div.giftstart.wrapper
         height: 60%
         padding: 50px
         vertical-align: middle
+        @media screen and (max-width: $phone-tablet-boundary)
+          padding: 15px
         img
           float: left
           width: 60%
           height: auto
           padding-right: 10%
+          @media screen and (max-width: $phone-tablet-boundary)
+            width: 30%
+            float: none
+            padding: 0 0 10% 0
         div
           float: right
           text-align: left
+          @media screen and (max-width: $phone-tablet-boundary)
+            float: none
+            text-align: center
       .receipt-total
         height: 40%
         background-color: lightgrey
         padding: 50px
         text-align: left
         vertical-align: middle
+        @media screen and (max-width: $phone-tablet-boundary)
+          text-align: center
+          padding: 15px
         .purchase-total
           font-size: 0.8em
         .total-price
           float: right
+          @media screen and (max-width: $phone-tablet-boundary)
+            float: none
 
   div.invite.block
     width: 100%
