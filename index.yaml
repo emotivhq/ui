@@ -12,6 +12,17 @@ indexes:
 
 - kind: GiftStart
   properties:
+  - name: gift_champion_uid
+  - name: deadline
+
+- kind: GiftStart
+  properties:
+  - name: gift_champion_uid
+  - name: deadline
+    direction: desc
+
+- kind: GiftStart
+  properties:
   - name: thanked
   - name: deadline
     direction: desc
