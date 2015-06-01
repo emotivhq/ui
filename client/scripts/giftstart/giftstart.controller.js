@@ -41,7 +41,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.showLoginBox = false;
 
-    $scope.showPayBox = true;
+    $scope.showPayBox = false;
 
     $scope.getTileCost = function() {
         return Math.floor($scope.giftStart.total_price / ($scope.giftStart.rows * $scope.giftStart.columns));
