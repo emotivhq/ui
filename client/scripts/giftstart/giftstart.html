@@ -35,14 +35,14 @@
                 <div class="receipt">
                     <div class="receipt-tiles">
                         <img ng-src="{{giftStart.product_img_url}}">
-                        <div>
-                            <h1>{{giftStart.nSelected}} TILES</h1>
-                            <p>AT ${{getTileCost() / 100 | number : 2}} EACH</p>
+                        <div class="info-tiles">
+                            <div class="num-tiles">{{giftStart.nSelected}} TILES</div>
+                            <div class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</div>
                         </div>
                     </div>
                     <div class="receipt-total">
-                        <h1><span class="purchase-total">PURCHASE TOTAL:</span> <span class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</span></h1>
-                        <p>Includes all costs of taxes, shipping, handling, fees, and personalized card.</p>
+                        <div class="purchase-total">PURCHASE TOTAL: <div class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</div></div>
+                        <div class="purchase-note">Includes all costs of taxes, shipping, handling, fees, and personalized card.</div>
                     </div>
                 </div>
             </div>
