@@ -100,9 +100,10 @@ div.giftstart.wrapper
       height: 100%
       width: 100%
       margin: 0 auto
-      font-size: 1.2em
+      font-size: 3vw
       @media screen and (max-width: 580px)
         width: 80%
+        font-size: 3.5vw
       background-color: white
       border: 2px solid lightgrey
       .receipt-tiles
@@ -169,12 +170,12 @@ div.giftstart.wrapper
         .purchase-note
           display: block
           clear: both
-          font-size: 0.7em
+          font-size: 70%
           line-height: 150%
           width: 100%
           margin: 1em 0 0 0
-          //@media screen and (max-width: 580px)
-          //  font-size: 0.7em
+          @media screen and (min-width: 580px) and (max-width: $phone-tablet-boundary)
+            margin-top: 50px
 
   div.invite.block
     width: 100%
