@@ -101,6 +101,8 @@ div.giftstart.wrapper
       width: 100%
       margin: 0 auto
       font-size: 3vw
+      @media screen and (min-width: $phone-tablet-boundary) and (max-width: $tablet-computer-boundary)
+        font-size: 1.5vw
       @media screen and (max-width: 580px)
         width: 80%
         font-size: 3.5vw
@@ -114,7 +116,6 @@ div.giftstart.wrapper
           padding: 15px
         .info-tiles
           float: right
-          width: 38%
           @media screen and (max-width:  580px)
             width: 100%
             float: none
