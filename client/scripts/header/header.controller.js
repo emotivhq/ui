@@ -111,15 +111,8 @@
                 data: {
                     set_acknowledged: '["' + item.id + '"]'
                 }
-            })
-            .success(function() {
-                $timeout(checkNotifications, 1000);
             });
-            if(item.link) {
-                $timeout(function () {
-                    $location.path(item.link)
-                }, 500);
-            }
+            $scope.notifications.splice($scope.notifications.indexOf(item), 1);
             self.closeNotifications();
         };
 
