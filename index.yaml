@@ -45,3 +45,9 @@ indexes:
   - name: gsid
   - name: timestamp
     direction: desc
+
+- kind: PitchIn
+  properties:
+  - name: uid
+  - name: timestamp
+    direction: desc
