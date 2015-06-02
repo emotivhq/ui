@@ -115,6 +115,9 @@
                 <h3 class="contributors__name">{{pitchIn.name}}</h3>
                 <p class="contributors__info">{{pitchIn.note}}</p>
             </div>
+            <div class="contributors__edit">
+              <button class="contributors__edit__button">EDIT</button>
+            </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
         <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
