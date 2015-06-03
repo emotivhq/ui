@@ -85,7 +85,7 @@
 
         function notificationsSeen() {
             $http({
-                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                method: 'POST', url: '/users/notify/' + UserService.uid + '.json',
                 data: {
                     set_seen: '*'
                 }
@@ -107,7 +107,7 @@
 
         self.notificationClick = function(item) {
             $http({
-                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                method: 'POST', url: '/users/notify/' + UserService.uid + '.json',
                 data: {
                     set_acknowledged: '["' + item.id + '"]'
                 }
