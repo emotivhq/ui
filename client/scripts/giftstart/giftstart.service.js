@@ -382,19 +382,14 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.updateComment = function(pitchIn) {
-        //var data = {
-        //    uid: pitchIn.uid,
-        //    name: newName,
-        //    img: pitchIn.img,
-        //    gsid: pitchIn.gsid,
-        //    note: newDescription,
-        //    parts: pitchIn.parts,
-        //    timestamp: pitchIn.timestamp,
-        //    giftstart_url_title: pitchIn.giftstart_url_title
-        //};
+        var data = {
+            pitchin: pitchIn,
+            action: 'pitch-in-note-update',
+            uid: UserService.uid
+        };
         //Analytics.track('campaign', 'campaign update sent');
 
-        $http({method: 'POST', url: '/pay', data: pitchIn})
+        $http({method: 'POST', url: '/pay', data: data})
             .success(function(response) {
                 //Analytics.track('campaign', 'campaign update succeeded');
             })
