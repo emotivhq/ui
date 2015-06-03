@@ -139,7 +139,7 @@ class UserProfileHandler(webapp2.RequestHandler):
         else:
             response_data = user.dictify(allow_protected_data)
             if('giftideas' in extended_attribs):
-                products = StoredProduct.query(StoredProduct.uid == uid).fetch()
+                products = StoredProduct.query(StoredProduct.uid == uid_path).fetch()
                 response_data['giftideas'] = dictify_all(products)
             self.response.write(json.dumps(response_data))
 
