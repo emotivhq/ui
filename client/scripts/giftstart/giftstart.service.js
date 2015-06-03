@@ -381,6 +381,28 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             .error(function() {Analytics.track('campaign', 'campaign update failed')})
     };
 
+    this.updateComment = function(pitchIn) {
+        //var data = {
+        //    uid: pitchIn.uid,
+        //    name: newName,
+        //    img: pitchIn.img,
+        //    gsid: pitchIn.gsid,
+        //    note: newDescription,
+        //    parts: pitchIn.parts,
+        //    timestamp: pitchIn.timestamp,
+        //    giftstart_url_title: pitchIn.giftstart_url_title
+        //};
+        //Analytics.track('campaign', 'campaign update sent');
+
+        $http({method: 'POST', url: '/pay', data: pitchIn})
+            .success(function(response) {
+                //Analytics.track('campaign', 'campaign update succeeded');
+            })
+            .error(function() {
+                //Analytics.track('campaign', 'campaign update failed');
+            })
+    };
+
     this.setThanksImage = function(img) {self.thanksImage = img};
 
     this.updateThanks = function(message) {

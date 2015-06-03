@@ -47,11 +47,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showPayBox = false;
 
     $scope.editingComment = function(comment, editing) {
-        //console && console.log && console.log("list: " + $scope.commentEditing + ", comment: " + comment);
+        //console && console.log && console.log(comment);
         if (editing) {
             $scope.commentEditing.push(comment);
         } else if (!editing) {
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
+            GiftStartService.updateComment(comment);
         }
     };
 
