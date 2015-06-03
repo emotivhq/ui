@@ -211,7 +211,7 @@ class ReportsHandler(webapp2.RequestHandler):
         """
 
         if not 'num_weeks' in self.request.params.keys():
-            self.response.write('<form action="">Number of weeks: <input type="text" name="num_weeks" value="4" /><input type="submit" /></form>')
+            self.response.write('<form action="">Number of weeks: <input type="text" name="num_weeks" value="2" /><input type="submit" /></form>')
             return
 
         num_weeks = int(self.request.params['num_weeks'])
