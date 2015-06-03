@@ -70,7 +70,7 @@ class PayHandler(webapp2.RequestHandler):
                 logging.info("setting note for pitchin "+pitchin['gsid'])
                 result = pay_core.set_note_for_pitchin(data['uid'], pitchin['gsid'],
                                            pitchin['parts'], pitchin['note'],
-                                           name=pitchin['name'], img_url=pitchin['img_url'])
+                                           name=pitchin['name'] if 'name' in pitchin else None, img_url=pitchin['img_url'] if 'img_url' in pitchin else None)
             self.response.write(json.dumps(None if result is None else result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-update':
