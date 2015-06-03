@@ -116,7 +116,8 @@
                 <p class="contributors__info">{{pitchIn.note}}</p>
             </div>
             <div class="contributors__edit">
-              <button class="contributors__edit__button">EDIT</button>
+              <button class="contributors__edit__button" ng-show="pitchIn.uid == userId && commentEditing.indexOf(pitchIn) == -1" ng-click="editingComment(pitchIn, true)">EDIT</button>
+              <button class="contributors__edit__button" ng-show="commentEditing.indexOf(pitchIn) != -1" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>

@@ -35,6 +35,9 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
 
+    $scope.userId = UserService.uid;
+    $scope.commentEditing = [];
+
     $scope.productMessage = '';
 
     $scope.isSavingForLater = false;
@@ -42,6 +45,15 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showLoginBox = false;
 
     $scope.showPayBox = false;
+
+    $scope.editingComment = function(comment, editing) {
+        //console && console.log && console.log("list: " + $scope.commentEditing + ", comment: " + comment);
+        if (editing) {
+            $scope.commentEditing.push(comment);
+        } else if (!editing) {
+            $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
+        }
+    };
 
     $scope.getTileCost = function() {
         return Math.floor($scope.giftStart.total_price / ($scope.giftStart.rows * $scope.giftStart.columns));
