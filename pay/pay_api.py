@@ -59,11 +59,19 @@ class PayHandler(webapp2.RequestHandler):
                 self.response.write(json.dumps({'payment-error':get_err_msg(x.message)}))
 
         elif data['action'] == 'pitch-in-note-update':
-            payment = data['payment']
-            logging.info("setting note for "+payment['gsid'])
-            result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
-                                       payment['parts'], payment['note'])
-            self.response.write(json.dumps(result if result is None else result.ext_dictify()))
+            result = None
+            if 'payment' in data:
+                payment = data['payment']
+                logging.info("setting note for payment "+payment['gsid'])
+                result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
+                                           payment['parts'], payment['note'])
+            else:
+                pitchin = data['pitchin']
+                logging.info("setting note for pitchin "+pitchin['gsid'])
+                result = pay_core.set_note_for_pitchin(data['uid'], pitchin['gsid'],
+                                           pitchin['parts'], pitchin['note'],
+                                           name=pitchin['name'], img_url=pitchin['img_url'])
+            self.response.write(json.dumps(None if result is None else result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-update':
             payment = data['payment']
