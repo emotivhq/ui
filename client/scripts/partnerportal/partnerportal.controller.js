@@ -6,11 +6,14 @@
 
 (function (app) {
 
-var PartnerportalController = function ($scope, UserService, $location, $http, Analytics) {
-
+var PartnerportalController = function ($scope, $rootScope, $window, UserService, $timeout, $location, $http, Analytics) {
+    if(UserService.loggedIn && !UserService.isUserEmailLogin()) {
+        UserService.logout();
+        $window.location.reload(); //$timeout(UserService.registerLogout,3000);
+    }
 };
 
-app.controller('PartnerportalController', ['$scope','UserService', '$location', '$http', 'Analytics', PartnerportalController]);
+app.controller('PartnerportalController', ['$scope', '$rootScope', '$window', 'UserService', '$timeout', '$location', '$http', 'Analytics', PartnerportalController]);
 
 }(angular.module('GiftStarterApp')));
 

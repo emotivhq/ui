@@ -58,8 +58,8 @@
             <li id="no-notifications-msg" ng-show="numNotifications==0" ng-click="header.closeNotifications()">You have no notifications</li>
           </ul>
         </li>
-        <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating" ng-click="header.closeMobileMenu()">CREATE ACCOUNT</a></li>
-        <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a href="#nav_login" ng-hide="header.loggedIn || header.creating" ng-click="header.showLogin(); actions.menuItemClicked(true); header.closeMobileMenu()">LOG IN</a></li>
+        <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="/#loginpanel" ng-hide="header.loggedIn || header.creating || header.portaling" ng-click="header.closeMobileMenu()">CREATE ACCOUNT</a></li>
+        <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a href="#nav_login" ng-hide="header.loggedIn || header.creating || header.portaling" ng-click="header.showLogin(); actions.menuItemClicked(true); header.closeMobileMenu()">LOG IN</a></li>
       </ul>
     </div>
     <div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">

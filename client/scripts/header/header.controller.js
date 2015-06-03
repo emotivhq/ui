@@ -27,6 +27,7 @@
         this.userName = (UserService.name).toUpperCase();
 
         this.creating = $location.path().indexOf('/create') === 0;
+        this.portaling = $location.path().indexOf('/portal') === 0;
 
         $scope.search = false;
         $scope.menu = false;
@@ -119,6 +120,7 @@
         // for sizing using ng-class
         function routeChangeListener(event, next) {
             self.creating = $location.path().indexOf('/create') === 0;
+            self.portaling = $location.path().indexOf('/portal') === 0;
             menuClose();
             if (next.$$route) {
                 self.thisRoute = next.$$route.originalPath;
@@ -156,9 +158,7 @@
         self.showLogin = function() {
             revealLogin();
             $rootScope.$broadcast('loginbox-show-login');
-            $timeout(function() {
-                $rootScope.$broadcast('loginbox-show-login');
-            }, 200);
+            $timeout(function() {$rootScope.$broadcast('loginbox-show-login');}, 200);
         };
 
         function showReset() {
