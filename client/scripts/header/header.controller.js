@@ -29,6 +29,8 @@
         this.creating = $location.path().indexOf('/create') === 0;
         this.portaling = $location.path().indexOf('/portal') === 0;
 
+        $scope.isHeaderOnly = self.thisRoute == '/header';
+
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
