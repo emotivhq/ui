@@ -40,6 +40,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/oldbrowser/oldbrowser.html', reloadOnSearch: false})
         .when('/partners',
         {templateUrl: '/scripts/static-pages/partners/partners.html', reloadOnSearch: false})
+        .when('/portal',
+        {templateUrl: '/scripts/partnerportal/partnerportal.html', reloadOnSearch: false})
         .when('/press',
         {templateUrl: '/scripts/static-pages/press/press.html', reloadOnSearch: false})
         .when('/terms',

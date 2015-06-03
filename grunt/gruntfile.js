@@ -74,6 +74,8 @@ module.exports = function(grunt) {
                     '../client//scripts/static-pages/concierge/concierge.controller.js',
                     '../client//scripts/static-pages/howitworks/howitworks.controller.js',
                     '../client//scripts/static-pages/oldbrowser/oldbrowser.controller.js',
+                    '../client//scripts/static-pages/partnerportal/partnerportal.controller.js',
+                    '../client//scripts/partnerportal/partnerportal.controller.js',
                     '../client//scripts/static-pages/partners/partners.controller.js',
                     '../client//scripts/static-pages/press/press.controller.js',
                     '../client//scripts/static-pages/what-is-it/what-is-it.controller.js',
