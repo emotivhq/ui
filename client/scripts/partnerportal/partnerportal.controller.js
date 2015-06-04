@@ -14,21 +14,26 @@
                 method: 'GET',
                 url: '/users/partner/' + UserService.uid + '.json'
             }).success(function (response) {
+                $scope.coreDataComplete = false;
+                $scope.editMode = true;
                 $scope.partner = response;
                 if ($scope.partner.api_key && $scope.partner.api_key.length > 0) {
                     $scope.coreDataComplete = true;
+                    $scope.editMode = false;
                 }
                 $scope.coreError = '';
                 $scope.loading = false;
             }).error(function () {
                 $scope.coreError = "Unable to retrieve your company information; please reload the page";
+                $scope.coreDataComplete = false;
+                $scope.editMode = false;
                 $scope.loading = false;
             });
         }
 
         this.initialize = function() {
             $scope.coreDataComplete = false;
-            $scope.editMode = !$scope.coreDataComplete;
+            $scope.editMode = false;
             $scope.loading = false;
             $scope.htmlInstructions = true;
             $scope.shopifyInstructions = false;
@@ -51,6 +56,10 @@
             $scope.editMode = true;
         };
 
+        $scope.cancelCore = function() {
+            $scope.editMode = false;
+        };
+
         $scope.saveCore = function() {
             $scope.loading = true;
             $http({
@@ -64,6 +73,7 @@
                 if($scope.partner.api_key && $scope.partner.api_key.length>0) {
                     $scope.coreDataComplete = true;
                 }
+                $scope.coreError = '';
                 $scope.loading = false;
                 $location.hash('core-form');
             })
