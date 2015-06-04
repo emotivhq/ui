@@ -13,9 +13,9 @@
     <div class="core-info" ng-show="loggedIn()">
         <h1>1. {{coreDataComplete?'Verify':'Enter'}} your company info:</h1>
         <form class="core-form"><a name="core-form"></a>
-            <span class="row"><span class="label" for="companyName">Company Name:</span><span class="value" ng-hide="editMode">{{partner.companyName}}</span><span ng-show="editMode" class="input"><input type="text" name="companyName" ng-bind="companyName"/></span></span>
-            <span class="row"><span class="label" for="companyUrl">Company Website:</span><span class="value"  ng-hide="editMode">{{partner.companyUrl}}</span><span ng-show="editMode" class="input"><input type="text" name="companyUrl" ng-bind="companyUrl"/><br/></span></span>
-            <span class="row"><span class="label" for="phone">Phone Number:</span><span class="value" ng-hide="editMode">{{partner.phone}}</span><span ng-show="editMode" class="input"><input type="text" name="phone" ng-bind="phone"/><br/></span></span>
+            <span class="row"><span class="label" for="companyName">Company Name:</span><span class="value" ng-hide="editMode">{{partner.companyName}}</span><span ng-show="editMode" class="input"><input type="text" name="companyName" ng-model="partner.companyName"/></span></span>
+            <span class="row"><span class="label" for="companyUrl">Website:</span><span class="value"  ng-hide="editMode">{{partner.companyUrl}}</span><span ng-show="editMode" class="input"><input type="text" name="companyUrl" ng-model="partner.companyUrl"/><br/></span></span>
+            <span class="row"><span class="label" for="phone">Phone:</span><span class="value" ng-hide="editMode">{{partner.phone}}</span><span ng-show="editMode" class="input"><input type="text" name="phone" ng-model="partner.phone"/><br/></span></span>
             <span class="row"><span class="label" for="phone">API Key:</span><span class="value" ng-hide="editMode">{{partner.apiKey}}</span></span>
             <span class="row"><span class="error" ng-show="coreError!=''">{{coreError}}</span></span>
             <span class="row"><span class="button"><button ng-hide="editMode" ng-click="editCore()">Edit</button><button ng-show="editMode" ng-click="saveCore()">Save</button></span></span>
@@ -33,7 +33,7 @@
                 <p>To add the button to your Shopify store, you should add the following snippet of HTML to your product details liquid file:</p>
                 <pre>
                 &lt;gs-button id="gsbutton" class="gsbutton"&gt;&lt;/gs-button&gt;
-                &lt;script src="https://www.giftstarter.co/scripts/shopify/button.js"&gt;&lt;/script&gt;
+                &lt;script src="https://www.giftstarter.co/scripts/shopify/button.js?key={{partner.apiKey}}"&gt;&lt;/script&gt;
                 </pre>
                 <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
                 <pre>
@@ -58,7 +58,7 @@
                         imgUrl: 'http://example.com/images/12345.jpg'
                     };
                 &lt;/script&gt;
-                &lt;script src="https://www.giftstarter.co/scripts/button/general.js"&gt;&lt;/script&gt;
+                &lt;script src="https://www.giftstarter.co/scripts/button/general.js?key={{partner.apiKey}}"&gt;&lt;/script&gt;
                 </pre>
                 <p>You'll need to replace the example product info in the first script tag with your actualy product data.  On most platforms this can be done in the template for your product details page.</p>
                 <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
