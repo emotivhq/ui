@@ -16,12 +16,14 @@ from storage import image_cache
 import base64
 import logging
 from Notification import Notification
+from Partner import Partner
 from google.appengine.ext import ndb
 import uuid
 import stripe
 import yaml
 from social.facebook import facebook_share
 import urllib
+from uuid import uuid4
 
 secrets = yaml.load(open('secret.yaml'))
 stripe.api_key = secrets['stripe_auth']['app_secret']
@@ -153,14 +155,28 @@ class PartnerHandler(webapp2.RequestHandler):
         allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
         data = json.loads(self.request.body)
         if allow_protected_data:
-            partner = data.get('partner')
-            response_data = {
-                'partnerId': uid_path,
-                'companyName': partner['companyName'],
-                'companyUrl': partner['companyUrl'],
-                'phone': partner['phone'],
-                'apiKey': 'TBD'
-            }
+            partner_data = data.get('partner')
+            if(partner_data['uid']!=uid_path):
+                self.response.set_status(400, "Invalid user id")
+                return
+            # if(CHECK VALID PARAMS):
+            #     RESPOND WITH ERROR
+            partners = Partner.query(Partner.uid == uid_path).fetch(1)
+            if(len(partners)):
+                partner = partners[0]
+                partner.company_name = partner_data['company_name'],
+                partner.company_url = partner_data['companyUrl'],
+                partner.phone_number = partner_data['phone_number'],
+            else:
+                partner = Partner(
+                    partner_id = partner_data['uid'],
+                    company_name = partner_data['company_name'],
+                    company_url = partner_data['companyUrl'],
+                    phone_number = partner_data['phone_number'],
+                    api_key = str(uuid4())
+                )
+            partner.put()
+            response_data = partner.dictify();
             self.response.write(json.dumps(response_data))
         else:
             self.response.set_status(400, "Invalid user id")

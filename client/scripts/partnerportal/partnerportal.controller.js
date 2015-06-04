@@ -21,21 +21,13 @@
                 url: '/users/partner/' + UserService.uid + '.json'
             }).success(function (response) {
                 $scope.partner = response;
-                if($scope.partner.apiKey && $scope.partner.apiKey.length>0) {
+                if($scope.partner.api_key && $scope.partner.api_key.length>0) {
                     $scope.coreDataComplete = true;
                 }
                 $scope.coreError = '';
             }).error(function() {
                 $scope.coreError = "Unable to retrieve your company information; please reload the page";
             });
-
-            //$scope.partner = {
-            //    partnerId: "",
-            //    companyName: "",
-            //    companyUrl: "",
-            //    phone: "",
-            //    apiKey: ""
-            //};
 
             $scope.coreError = "Loading...";
 
@@ -65,7 +57,7 @@
             .success( function (data) {
                 $scope.partner = data;
                 $scope.editMode = false;
-                if($scope.partner.apiKey && $scope.partner.apiKey.length>0) {
+                if($scope.partner.api_key && $scope.partner.api_key.length>0) {
                     $scope.coreDataComplete = true;
                 }
                 $location.hash('core-form');
