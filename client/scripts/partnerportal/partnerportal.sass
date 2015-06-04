@@ -23,24 +23,32 @@
     .core-form
       display: block
       margin: 0 auto
-      width: 340px
+      width: 80%
       .row
         height: 35px
         display: block
         clear: both
         .label, .value, .input
-          width: 50%
           height: 32px
           display: block
           text-align: left
+          font-size: 16px
+          @include apply-at-size("phone")
+            height: 46px
         .label
+          width: 35%
           font-weight: bold
           padding-top: 3px
+          line-height: 16px
           float: left
         .value
+          width: 65%
           padding-top: 3px
           float: right
+          @include apply-at-size("phone")
+            padding-top: 0
         .input
+          width: 65%
           float: right
           input
             width: 100%

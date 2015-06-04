@@ -8,26 +8,45 @@
 
     var PartnerportalController = function ($scope, $rootScope, $window, UserService, $timeout, $location, $http, Analytics) {
 
+        this.initialize = function() {
+
+            $scope.coreDataComplete = false;
+            $scope.editMode = !$scope.coreDataComplete;
+
+            $scope.htmlInstructions = true;
+            $scope.shopifyInstructions = false;
+
+            $http({
+                method: 'GET',
+                url: '/users/partner/' + UserService.uid + '.json'
+            }).success(function (response) {
+                $scope.partner = response;
+                if($scope.partner.apiKey && $scope.partner.apiKey.length>0) {
+                    $scope.coreDataComplete = true;
+                }
+                $scope.coreError = '';
+            }).error(function() {
+                $scope.coreError = "Unable to retrieve your company information; please reload the page";
+            });
+
+            //$scope.partner = {
+            //    partnerId: "",
+            //    companyName: "",
+            //    companyUrl: "",
+            //    phone: "",
+            //    apiKey: ""
+            //};
+
+            $scope.coreError = "Loading...";
+
+        };
+
         if(UserService.loggedIn && !UserService.isUserEmailLogin()) {
             UserService.logout();
             $window.location.reload(); //$timeout(UserService.registerLogout,3000);
+        } else {
+            this.initialize()
         }
-
-        $scope.coreDataComplete = false;
-        $scope.editMode = !$scope.coreDataComplete;
-
-        $scope.htmlInstructions = true;
-        $scope.shopifyInstructions = false;
-
-        $scope.partner ={
-            partnerId: "",
-            companyName: "Company Name",
-            companyUrl: "Company URL",
-            phone: "Phone",
-            apiKey:"API Key"
-        };
-
-        $scope.coreError = "Error message";
 
         $scope.loggedIn = function() {
             return UserService.loggedIn;
@@ -38,10 +57,22 @@
         };
 
         $scope.saveCore = function() {
-            $scope.editMode = false;
-            $scope.coreDataComplete = true;
-            $location.hash('core-form');
-            $anchorScroll();
+            $http({
+                method: 'POST',
+                url: '/users/partner/' + UserService.uid + '.json',
+                data: {partner: $scope.partner}
+            })
+            .success( function (data) {
+                $scope.partner = data;
+                $scope.editMode = false;
+                if($scope.partner.apiKey && $scope.partner.apiKey.length>0) {
+                    $scope.coreDataComplete = true;
+                }
+                $location.hash('core-form');
+            })
+            .error(function(data) {
+                $scope.coreError = data;
+            })
         };
 
         $scope.showShopifyInstructions = function() {

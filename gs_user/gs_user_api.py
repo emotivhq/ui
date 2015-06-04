@@ -122,6 +122,49 @@ class UserNotifyHandler(webapp2.RequestHandler):
             response_data = {"notifications":dictify_all(notifications)}
             self.response.write(json.dumps(response_data))
 
+class PartnerHandler(webapp2.RequestHandler):
+    """JSON-formatted Partner"""
+    def get(self):
+        """
+        Gets Partner as JSON (only if signed in as self)
+        """
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        uid_path = self.request.path.split('/')[3][:-5]
+        allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
+        if allow_protected_data:
+            response_data = {
+                'partnerId': uid_path,
+                'companyName': '',
+                'companyUrl': 'http://',
+                'phone': '',
+                'apiKey': ''
+            }
+            self.response.write(json.dumps(response_data))
+        else:
+            self.response.set_status(400, "Invalid user id")
+    def post(self):
+        """
+        Sets Partner as JSON (only if signed in as self)
+        """
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        uid_path = self.request.path.split('/')[3][:-5]
+        allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
+        data = json.loads(self.request.body)
+        if allow_protected_data:
+            partner = data.get('partner')
+            response_data = {
+                'partnerId': uid_path,
+                'companyName': partner['companyName'],
+                'companyUrl': partner['companyUrl'],
+                'phone': partner['phone'],
+                'apiKey': 'TBD'
+            }
+            self.response.write(json.dumps(response_data))
+        else:
+            self.response.set_status(400, "Invalid user id")
+
 class UserProfileHandler(webapp2.RequestHandler):
     """JSON-formatted User"""
     def get(self):
@@ -423,6 +466,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
+                               ('/users/partner/.*.json', PartnerHandler),
                                ('/users/profile/.*.json', UserProfileHandler),
                                ('/users/notify/.*.json', UserNotifyHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
