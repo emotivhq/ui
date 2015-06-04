@@ -31,12 +31,12 @@
             </ul>
             <div class="add-instructions" ng-show="shopifyInstructions">
                 <p>To add the button to your Shopify store, you should add the following snippet of HTML to your product details liquid file:</p>
-                <pre>
+                <pre ng-click="convertToTextarea($event)">
                 &lt;gs-button id="gsbutton" class="gsbutton"&gt;&lt;/gs-button&gt;
-                &lt;script src="https://www.giftstarter.co/scripts/shopify/button.js?key={{partner.api_key}}"&gt;&lt;/script&gt;
+                &lt;script src="https://www.giftstarter.co/scripts/shopify/button.js"&gt;&lt;/script&gt;
                 </pre>
                 <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
-                <pre>
+                <pre ng-click="convertToTextarea($event)">
                 #gsbutton {
                     height: 36px;
                     border-radius: 4px;
@@ -48,21 +48,22 @@
             </div>
             <div class="add-instructions" ng-show="htmlInstructions">
                 <p>To add the button to a site, you should insert the following snippet next to your "Add to Cart" button:</p>
-                <pre>
+                <pre ng-click="convertToTextarea($event)">
                 &lt;gs-button id="gsbutton" class="gsbutton" style="display: none;"&gt;&lt;/gs-button&gt;
                 &lt;script&gt;
                     window.giftStartButton = {
                         productUrl: 'http://example.com/product/12345',
                         title: 'Example title',
                         price: 85.00,
-                        imgUrl: 'http://example.com/images/12345.jpg'
+                        imgUrl: 'http://example.com/images/12345.jpg',
+                        publicKey: '{{partner.api_key}}'
                     };
                 &lt;/script&gt;
-                &lt;script src="https://www.giftstarter.co/scripts/button/general.js?key={{partner.api_key}}"&gt;&lt;/script&gt;
+                &lt;script src="https://www.giftstarter.co/scripts/button/general.js"&gt;&lt;/script&gt;
                 </pre>
                 <p>You'll need to replace the example product info in the first script tag with your actualy product data.  On most platforms this can be done in the template for your product details page.</p>
                 <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
-                <pre>
+                <pre ng-click="convertToTextarea($event)">
                 #gsbutton {
                     height: 36px;
                     border-radius: 4px;

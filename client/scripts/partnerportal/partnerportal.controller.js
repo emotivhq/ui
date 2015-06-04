@@ -8,6 +8,16 @@
 
     var PartnerportalController = function ($scope, $rootScope, $window, UserService, $timeout, $location, $http, Analytics) {
 
+        $scope.convertToTextarea = function(event) {
+            var elem = jQuery(event.target);
+            var height = elem.height();
+            elem.wrapAll('<textarea>');
+            var parent = elem.parent();
+            elem.contents().unwrap();
+            parent.height(height);
+            parent.select();
+        };
+
         function loadCoreData() {
             $scope.loading = true;
             $http({
