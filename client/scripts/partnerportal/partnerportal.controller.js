@@ -13,11 +13,11 @@
             $window.location.reload(); //$timeout(UserService.registerLogout,3000);
         }
 
-        $scope.editMode = false;
         $scope.coreDataComplete = false;
+        $scope.editMode = !$scope.coreDataComplete;
 
+        $scope.htmlInstructions = true;
         $scope.shopifyInstructions = false;
-        $scope.htmlInstructions = false;
 
         $scope.partner ={
             partnerId: "",
@@ -40,6 +40,8 @@
         $scope.saveCore = function() {
             $scope.editMode = false;
             $scope.coreDataComplete = true;
+            $location.hash('core-form');
+            $anchorScroll();
         };
 
         $scope.showShopifyInstructions = function() {

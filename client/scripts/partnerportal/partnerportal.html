@@ -11,7 +11,8 @@
     </div>
 
     <div class="core-info" ng-show="loggedIn()">
-        <form class="core-form">
+        <h1>1. {{coreDataComplete?'Verify':'Enter'}} your company info:</h1>
+        <form class="core-form"><a name="core-form"></a>
             <span class="row"><span class="label" for="companyName">Company Name:</span><span class="value" ng-hide="editMode">{{partner.companyName}}</span><span ng-show="editMode" class="input"><input type="text" name="companyName" ng-bind="companyName"/></span></span>
             <span class="row"><span class="label" for="companyUrl">Company Website:</span><span class="value"  ng-hide="editMode">{{partner.companyUrl}}</span><span ng-show="editMode" class="input"><input type="text" name="companyUrl" ng-bind="companyUrl"/><br/></span></span>
             <span class="row"><span class="label" for="phone">Phone Number:</span><span class="value" ng-hide="editMode">{{partner.phone}}</span><span ng-show="editMode" class="input"><input type="text" name="phone" ng-bind="phone"/><br/></span></span>
@@ -22,14 +23,13 @@
     </div>
     <div ng-show="coreDataComplete">
         <section id="add-the-button">
-            <h1>Adding the Button</h1>
+            <h1>2. Add the GiftStart It button to your website:</h1>
             <p>Adding the GiftStart It button is easy.  Pick your platform:</p>
             <ul class="toggle-button">
                 <li ng-class="{'selected': shopifyInstructions}"><a ng-click="showShopifyInstructions()">Shopify</a></li>
                 <li ng-class="{'selected': htmlInstructions}"><a ng-click="showHtmlInstructions()">All Others</a></li>
             </ul>
-            <span ng-show="shopifyInstructions">
-                <h2 id="shopify">Shopify</h2>
+            <div class="add-instructions" ng-show="shopifyInstructions">
                 <p>To add the button to your Shopify store, you should add the following snippet of HTML to your product details liquid file:</p>
                 <pre>
                 &lt;gs-button id="gsbutton" class="gsbutton"&gt;&lt;/gs-button&gt;
@@ -45,10 +45,9 @@
                 </pre>
                 <p>Be sure to only adjust the height or the width - doing both will likely distort the button!</p>
                 <p>If you have any questions at all, please email us at <a href="mailto:giftconcierge@giftstarter.co">giftconcierge@giftstarter.co</a>!</p>
-            </span>
-            <span ng-show="htmlInstructions">
-                <h2 id="others">Others</h2>
-                <p>To add the button to a site not using a service specified above, you should insert the following snippet next to your "Add to Cart" button:</p>
+            </div>
+            <div class="add-instructions" ng-show="htmlInstructions">
+                <p>To add the button to a site, you should insert the following snippet next to your "Add to Cart" button:</p>
                 <pre>
                 &lt;gs-button id="gsbutton" class="gsbutton" style="display: none;"&gt;&lt;/gs-button&gt;
                 &lt;script&gt;
@@ -72,7 +71,7 @@
                 </pre>
                 <p>Be sure to only adjust the height or the width - doing both will likely distort the button!</p>
                 <p>If you have any questions at all, please email us at <a href="mailto:giftconcierge@giftstarter.co">giftconcierge@giftstarter.co</a>!</p>
-            </span>
+            </div>
         </section>
     </div>
 

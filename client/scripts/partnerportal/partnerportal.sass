@@ -14,7 +14,12 @@
 
   .core-info
     text-align: center
-    padding: 15px 0
+    padding: 15px 5%
+    margin: 0 auto
+    width: 80%
+    h1
+      padding-bottom: 14px
+      float: left
     .core-form
       display: block
       margin: 0 auto
@@ -48,31 +53,46 @@
           float: right
 
 
-#add-the-button
-  width: 100%
-  margin: 2em auto
-  text-align: left
+  #add-the-button
+    width: 80%
+    margin: 2em auto
+    text-align: left
 
-  .toggle-button
-    padding: 0
-    margin: 0
-    li
-      display: inline-block
-      padding: 2px 5px
+    .toggle-button
+      padding: 0
       margin: 0
-      border: 1px solid #222222
-      background-color: lightgrey
-      a
-        color: #000
-      .selected
-        background-color: darkgrey
+      li
+        display: inline-block
+        padding: 2px 5px
+        margin: 0
+        border: 1px solid #222222
+        position: relative
+        top: 1px
+        padding-bottom: -2px
+        background-color: #dddddd
         a
-          font-weight: bold
-
-  pre
-    white-space: pre-wrap
-    white-space: -moz-pre-wrap
-    white-space: -o-pre-wrap
-    word-wrap: break-word
-    font-size: 10px
-    color: #666
+          color: grey
+        &.selected
+          border: 1px solid #222222
+          border-bottom: 0
+          background-color: lightgrey
+          position: relative
+          top: 2px
+          a
+            color: #000
+            font-weight: bold
+    .add-instructions
+        margin: 0
+        padding: 5px
+        border: 1px solid #222222
+        background-color: lightgrey
+        pre
+          color: #666
+          background-color: #ffffff
+          padding-top: 10px
+          margin: 0 25px
+          white-space: pre-wrap
+          white-space: -moz-pre-wrap
+          white-space: -o-pre-wrap
+          word-wrap: break-word
+          font-size: 10px
