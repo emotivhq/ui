@@ -103,6 +103,8 @@
             $scope.htmlInstructions = true;
         };
 
+        $rootScope.$on('login-success', this.initialize);
+
     };
 
     app.controller('PartnerportalController', ['$scope', '$rootScope', '$window', 'UserService', '$timeout', '$location', '$http', 'Analytics', PartnerportalController]);
