@@ -13,7 +13,8 @@
 //         productUrl: 'http://example.com/product/12345',
 //         title: 'Example title',
 //         price: 85.00,
-//         imgUrl: 'http://example.com/images/12345.jpg'
+//         imgUrl: 'http://example.com/images/12345.jpg',
+//         publicKey: 'XXXX-XXXX-XXXX-XXXX-XXXX'
 //     };
 // </script>
 // <script src="https://www.giftstarter.co/scripts/button/general.js"></script>
@@ -21,12 +22,15 @@
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
 window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
-                                      buttonId) {
+                                      publicKey, buttonId) {
     // Ensure inputs are valid before continuing
     function inputValid(prev, input) {return input != null && input != undefined && prev;}
     var inputsValid = [productUrl, title, price, imgUrl].reduce(inputValid, true);
     if (!inputsValid) {return}
 
+    if (publicKey == undefined || publicKey == null) {
+        publicKey = '';
+    }
     if (buttonId == undefined || buttonId == null) {
         buttonId = '';
     }
@@ -89,6 +93,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         title: title,
         price: price * 100,
         img_url: imgUrl,
+        public_key: publicKey,
         source: source
     });
 
@@ -187,6 +192,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
             productTitle: title,
             productPrice: price,
             productImgUrl: imgUrl,
+            publicKey: publicKey,
             scrollDepth: window.scrollY,
             screenW: window.screen.width,
             screenH: window.screen.height,
@@ -250,5 +256,7 @@ if (window.giftStartButton) {
         window.giftStartButton.productUrl,
         window.giftStartButton.title,
         window.giftStartButton.price,
-        window.giftStartButton.imgUrl)
+        window.giftStartButton.imgUrl,
+        window.giftStartButton.publicKey
+    )
 }
