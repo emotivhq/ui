@@ -6,14 +6,55 @@
 
 (function (app) {
 
-var PartnerportalController = function ($scope, $rootScope, $window, UserService, $timeout, $location, $http, Analytics) {
-    if(UserService.loggedIn && !UserService.isUserEmailLogin()) {
-        UserService.logout();
-        $window.location.reload(); //$timeout(UserService.registerLogout,3000);
-    }
-};
+    var PartnerportalController = function ($scope, $rootScope, $window, UserService, $timeout, $location, $http, Analytics) {
 
-app.controller('PartnerportalController', ['$scope', '$rootScope', '$window', 'UserService', '$timeout', '$location', '$http', 'Analytics', PartnerportalController]);
+        if(UserService.loggedIn && !UserService.isUserEmailLogin()) {
+            UserService.logout();
+            $window.location.reload(); //$timeout(UserService.registerLogout,3000);
+        }
+
+        $scope.editMode = false;
+        $scope.coreDataComplete = false;
+
+        $scope.shopifyInstructions = false;
+        $scope.htmlInstructions = false;
+
+        $scope.partner ={
+            partnerId: "",
+            companyName: "Company Name",
+            companyUrl: "Company URL",
+            phone: "Phone",
+            apiKey:"API Key"
+        };
+
+        $scope.coreError = "Error message";
+
+        $scope.loggedIn = function() {
+            return UserService.loggedIn;
+        };
+
+        $scope.editCore = function() {
+            $scope.editMode = true;
+        };
+
+        $scope.saveCore = function() {
+            $scope.editMode = false;
+            $scope.coreDataComplete = true;
+        };
+
+        $scope.showShopifyInstructions = function() {
+            $scope.shopifyInstructions = true;
+            $scope.htmlInstructions = false;
+        };
+
+        $scope.showHtmlInstructions = function() {
+            $scope.shopifyInstructions = false;
+            $scope.htmlInstructions = true;
+        };
+
+    };
+
+    app.controller('PartnerportalController', ['$scope', '$rootScope', '$window', 'UserService', '$timeout', '$location', '$http', 'Analytics', PartnerportalController]);
 
 }(angular.module('GiftStarterApp')));
 
