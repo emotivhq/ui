@@ -17,7 +17,7 @@ class Partner(ndb.Model):
     def dictify(self):
         json_data = {
                 'uid': self.uid,
-                'company_name': self.company_nameame,
+                'company_name': self.company_name,
                 'company_url': self.company_url,
                 'phone_number': self.phone_number,
                 'api_key': self.api_key
