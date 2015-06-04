@@ -18,7 +18,7 @@
             <span class="row"><span class="label" for="phone">Phone:</span><span class="value" ng-hide="editMode">{{partner.phone_number}}</span><span ng-show="editMode" class="input"><input type="text" name="phone" ng-model="partner.phone_number"/><br/></span></span>
             <span class="row"><span class="label" for="phone">API Key:</span><span class="value" ng-hide="editMode">{{partner.api_key}}</span></span>
             <span class="row"><span class="error" ng-show="coreError!=''">{{coreError}}</span></span>
-            <span class="row"><span class="button"><button ng-hide="editMode" ng-click="editCore()" ng-disabled="loading">Edit</button><span ng-show="editMode"><button ng-show="coreDataComplete" ng-click="cancelCore()" ng-disabled="loading">Cancel</button> <button ng-click="saveCore()" ng-disabled="loading">Save</button><span></span></span></span>
+            <span class="row buttons"><span class="buttons"><button ng-hide="editMode" ng-click="editCore()" ng-disabled="loading">Edit</button><span ng-show="editMode"><button ng-show="coreDataComplete" ng-click="cancelCore()" ng-disabled="loading">Cancel</button> <button ng-click="saveCore()" ng-disabled="loading">Save</button></span></span></span>
         </form>
     </div>
     <div ng-show="coreDataComplete">
