@@ -142,6 +142,9 @@ class PartnerHandler(webapp2.RequestHandler):
                 'phone_number': '',
                 'api_key': ''
             }
+            partners = Partner.query(Partner.uid == uid_path).fetch(1)
+            if(len(partners)):
+                response_data = partners[0].dictify()
             self.response.write(json.dumps(response_data))
         else:
             self.response.set_status(400)
