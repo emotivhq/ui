@@ -17,6 +17,12 @@
         <input id="new-credit-card-cb" type="checkbox" ng-model="putNew" ng-change="deselectCards()"><label for="new-credit-card-cb"><span class="arrow" ng-class="{down: putNew && !cardsLoading}">&#x25BC;</span><span>Enter New Card</span></label>
 
         <div class="card-entry" ng-class="{'put-new': putNew && !cardsLoading}">
+            <div id="card-imgs">
+                <img src="/assets/mastercard_card.png" />
+                <img src="/assets/visa_card.png" />
+                <img src="/assets/discover_card.png" />
+                <img src="/assets/amex_card.png" />
+            </div>
             <div class="number">
                 <input type="text" id="card-number" ng-disabled="!putNew" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" name="cc-number"/>
             </div><div class="cvc">
