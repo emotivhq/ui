@@ -26,10 +26,14 @@ function FaqController($scope,  $location,  $timeout) {
     });
 
     $scope.toggleQuestion = function(question) {
-        if($scope.openQuestions.indexOf(question) != -1) {
+        if($scope.isOpenQuestion(question)) {
             $scope.openQuestions.splice($scope.openQuestions.indexOf(question), 1);
         } else {
             $scope.openQuestions.push(question);
         }
     };
+
+    $scope.isOpenQuestion = function(question) {
+        return $scope.openQuestions.indexOf(question) != -1
+    }
 }
