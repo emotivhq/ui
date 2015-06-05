@@ -51,11 +51,14 @@
     };
 
     this.updateButtonLink = function() {
+        var publicKey = '';
+        if (window.giftStartButton) {publicKey = window.giftStartButton.publicKey;}
         var urlParams = {
             product_url: document.location.href,
             title: self.productObject.title,
             price: self.product.price * 100,
             img_url: self.product.imgUrl,
+            public_key: publicKey,
             source: 'shopify/' + window.Shopify.shop
         };
         var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);

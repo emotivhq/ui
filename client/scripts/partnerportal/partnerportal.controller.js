@@ -8,37 +8,47 @@
 
     var PartnerportalController = function ($scope, $rootScope, $window, UserService, $timeout, $location, $http, Analytics) {
 
-        this.initialize = function() {
+        $scope.convertToTextarea = function(event) {
+            var elem = jQuery(event.target);
+            var height = elem.height();
+            elem.wrapAll('<textarea>');
+            var parent = elem.parent();
+            elem.contents().unwrap();
+            parent.height(height);
+            parent.select();
+        };
 
-            $scope.coreDataComplete = false;
-            $scope.editMode = !$scope.coreDataComplete;
-
-            $scope.htmlInstructions = true;
-            $scope.shopifyInstructions = false;
-
+        function loadCoreData() {
+            $scope.loading = true;
             $http({
                 method: 'GET',
                 url: '/users/partner/' + UserService.uid + '.json'
             }).success(function (response) {
+                $scope.coreDataComplete = false;
+                $scope.editMode = true;
                 $scope.partner = response;
-                if($scope.partner.apiKey && $scope.partner.apiKey.length>0) {
+                if ($scope.partner.api_key && $scope.partner.api_key.length > 0) {
                     $scope.coreDataComplete = true;
+                    $scope.editMode = false;
                 }
                 $scope.coreError = '';
-            }).error(function() {
+                $scope.loading = false;
+            }).error(function () {
                 $scope.coreError = "Unable to retrieve your company information; please reload the page";
+                $scope.coreDataComplete = false;
+                $scope.editMode = false;
+                $scope.loading = false;
             });
+        }
 
-            //$scope.partner = {
-            //    partnerId: "",
-            //    companyName: "",
-            //    companyUrl: "",
-            //    phone: "",
-            //    apiKey: ""
-            //};
-
+        this.initialize = function() {
+            $scope.coreDataComplete = false;
+            $scope.editMode = false;
+            $scope.loading = false;
+            $scope.htmlInstructions = true;
+            $scope.shopifyInstructions = false;
             $scope.coreError = "Loading...";
-
+            loadCoreData();
         };
 
         if(UserService.loggedIn && !UserService.isUserEmailLogin()) {
@@ -56,7 +66,12 @@
             $scope.editMode = true;
         };
 
+        $scope.cancelCore = function() {
+            $scope.editMode = false;
+        };
+
         $scope.saveCore = function() {
+            $scope.loading = true;
             $http({
                 method: 'POST',
                 url: '/users/partner/' + UserService.uid + '.json',
@@ -65,13 +80,16 @@
             .success( function (data) {
                 $scope.partner = data;
                 $scope.editMode = false;
-                if($scope.partner.apiKey && $scope.partner.apiKey.length>0) {
+                if($scope.partner.api_key && $scope.partner.api_key.length>0) {
                     $scope.coreDataComplete = true;
                 }
+                $scope.coreError = '';
+                $scope.loading = false;
                 $location.hash('core-form');
             })
             .error(function(data) {
                 $scope.coreError = data;
+                $scope.loading = false;
             })
         };
 
@@ -84,6 +102,8 @@
             $scope.shopifyInstructions = false;
             $scope.htmlInstructions = true;
         };
+
+        $rootScope.$on('login-success', this.initialize);
 
     };
 
