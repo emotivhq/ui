@@ -269,7 +269,7 @@
             .replace(/\//g, '_')
             .replace(/=/g, '.');
         var elm = document.createElement('script');
-        elm.src = 'https://www.dev.giftstarter.co/a/' + encodedData;
+        elm.src = 'https://www.giftstarter.co/a/' + encodedData;
         elm.onload = function() {document.head.removeChild(elm)};
         document.head.appendChild(elm);
     }
