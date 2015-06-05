@@ -68,6 +68,14 @@
         }
     };
 
+    this.moveAfterPurchaseButton = function() {
+        var target = document.getElementById('add-to-cart');
+        if(target) {
+            target.parentElement.appendChild(self.button);
+            self.buttonImg.setAttribute('style', 'max-height: 92%; padding: 0; margin: 0 8px; border: 1px solid darkgrey;');
+        }
+    };
+
     this.urlSerialize = function(obj) {
         var str = [];
         for(var p in obj)
@@ -118,6 +126,7 @@
         // Put onto the dom...
         self.buttonLink.appendChild(self.buttonImg);
         self.button.appendChild(self.buttonLink);
+        self.moveAfterPurchaseButton();
     };
 
     setTimeout(this.initializeButton, 100);
