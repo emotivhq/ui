@@ -12,6 +12,17 @@ indexes:
 
 - kind: GiftStart
   properties:
+  - name: gift_champion_uid
+  - name: deadline
+
+- kind: GiftStart
+  properties:
+  - name: gift_champion_uid
+  - name: deadline
+    direction: desc
+
+- kind: GiftStart
+  properties:
   - name: thanked
   - name: deadline
     direction: desc
@@ -23,8 +34,20 @@ indexes:
   - name: timestamp
     direction: desc
 
+- kind: Notification
+  properties:
+  - name: target_uid
+  - name: timestamp
+    direction: desc
+
 - kind: PitchIn
   properties:
   - name: gsid
+  - name: timestamp
+    direction: desc
+
+- kind: PitchIn
+  properties:
+  - name: uid
   - name: timestamp
     direction: desc

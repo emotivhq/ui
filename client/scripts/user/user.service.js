@@ -84,6 +84,10 @@ function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
         $rootScope.$broadcast('logout-success');
     };
 
+    this.isUserEmailLogin = function() {
+        return self.loggedIn && self.uid.substring(0,1).toLowerCase()=='e';
+    };
+
     function uploadProfileImage(imageData) {
         console && console.log && console.log(imageData);
         var contentType = imageData.split(';')[0].replace('data:', '');

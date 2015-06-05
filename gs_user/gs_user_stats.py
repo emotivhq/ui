@@ -53,12 +53,12 @@ def get_stats(uids):
     uids = uids if type(uids) == list else [uids]
 
     users = ndb.get_multi([ndb.Key('User', uid) for uid in uids])
-    pitchins = PitchIn.query(PitchIn.uid.IN(uids)).fetch()
+    pitchins = PitchIn.query(PitchIn.uid.IN(uids)).order(-PitchIn.timestamp).fetch()
 
     parent_giftstarts = ndb.get_multi([pi.key.parent()
                                        for pi in pitchins
                                        if pi.key.parent()])
-    giftstarts = GiftStart.query(GiftStart.gift_champion_uid.IN(uids)).fetch()
+    giftstarts = GiftStart.query(GiftStart.gift_champion_uid.IN(uids)).order(-GiftStart.deadline).fetch()
 
     stats = {user.uid: {'name': user.name,
                         'img_url': user.cached_profile_image_url,

@@ -31,12 +31,16 @@ DISCOVER_CC_RE = re.compile(r"^6(?:011|5[0-9]{2})[0-9]{12}$")
 
 CC_MAP = {"amex": AMEX_CC_RE, "visa": VISA_CC_RE, "mastercard": MASTERCARD_CC_RE, "discover": DISCOVER_CC_RE}
 
-def set_note_for_pitchin(uid,gsid,parts,note):
+def set_note_for_pitchin(uid,gsid,parts,note,name=None,img_url=None):
     """set note for the given parts"""
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid, PitchIn.uid == uid).fetch()
     for pitchin in pitch_ins:
         if pitchin.parts==parts:
             pitchin.note=note
+            if name is not None:
+                pitchin.name=name
+            if img_url is not None:
+                pitchin.img_url=img_url
             pitchin.put()
             return pitchin
     logging.error("No pitch-in with gsid={0}, uid={1}, parts={2}".format(gsid,uid,parts))
@@ -282,7 +286,7 @@ def save_card_paypal_vault(user, card_data):
         print("CreditCard[%s] created successfully" % (credit_card.id))
         return credit_card.id
     else:
-        raise StripeError(str(credit_card.error['details'][0]['issue']))
+        raise StripeError("{0} {1}".format(credit_card.error['details'][0]['field'],str(credit_card.error['details'][0]['issue']).lower()))
 
 def charge_card_paypal(user, charge_amount_cents, currency, card_token, description):
     truncated_desc = False

@@ -121,6 +121,13 @@ angular.module('GiftStarterApp').service('AppStateService', [
             $location.search('re', null);
         }
 
+        //delete API key
+        if ($location.search().public_key) {
+            set('api_key', $location.search().public_key);
+            $location.search('public_key', null);
+        }
+
+
         if ($location.search().source && $location.search().title &&
             $location.search().product_url) {
             set('referrer', {

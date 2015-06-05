@@ -15,6 +15,11 @@
     this.product = null;
     var self = this;
 
+    // Tracking data
+    var buttonSeenSent = false;
+    var buttonX, buttonY, buttonW, buttonH;
+    var intervalId;
+
     this.getThisProduct = function() {
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
@@ -51,17 +56,28 @@
     };
 
     this.updateButtonLink = function() {
+        var publicKey = '';
+        if (window.giftStartButton) {publicKey = window.giftStartButton.publicKey;}
         var urlParams = {
             product_url: document.location.href,
             title: self.productObject.title,
             price: self.product.price * 100,
             img_url: self.product.imgUrl,
+            public_key: publicKey,
             source: 'shopify/' + window.Shopify.shop
         };
         var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
-        if (self.product.price > 50) {
+        if (self.product.price > 99) {
             self.button.setAttribute('style', ' display: inline-block; text-align: center;');
+        }
+    };
+
+    this.moveAfterPurchaseButton = function() {
+        var target = document.getElementById('add-to-cart');
+        if(target) {
+            target.parentElement.appendChild(self.button);
+            self.buttonImg.setAttribute('style', 'max-height: 92%; padding: 0; margin: 0 8px; border: 1px solid darkgrey;');
         }
     };
 
@@ -115,6 +131,7 @@
         // Put onto the dom...
         self.buttonLink.appendChild(self.buttonImg);
         self.button.appendChild(self.buttonLink);
+        self.moveAfterPurchaseButton();
     };
 
     setTimeout(this.initializeButton, 100);
@@ -129,5 +146,154 @@
         }
         self.prevUrl = thisUrl;
     }, 250);
+
+    //tracking
+
+    function isButtonVisible() {
+        // Button is visible if buttonY + button height < scrollY + screen
+        // height and same with X
+        var visible = true;
+        var bounds = button.getBoundingClientRect();
+        visible &= bounds.bottom < window.innerHeight;
+        visible &= bounds.right < window.innerWidth;
+        return visible;
+    }
+
+    function makeData(action) {
+        var publicKey = '';
+        if (window.giftStartButton) {publicKey = window.giftStartButton.publicKey;}
+        return {
+            domain: window.location.host,
+            path: window.location.pathname,
+            uuid: makeUUID(),
+            productUrl: document.location.href,
+            productTitle: self.productObject.title,
+            productPrice: self.product.price,
+            productImgUrl: self.product.imgUrl,
+            publicKey: publicKey,
+            scrollDepth: window.scrollY,
+            screenW: window.screen.width,
+            screenH: window.screen.height,
+            cookie: getCookie(),
+            action: action,
+            buttonX: buttonX,
+            buttonY: buttonY,
+            buttonW: buttonW,
+            buttonH: buttonH,
+            buttonBorder: getBorder(),
+            buttonBackground: getBackground(),
+            buttonImg: buttonImg.src
+        }
+    }
+
+    function sendSee() {sendData(makeData('seen'))}
+    function sendClick() {sendData(makeData('click'))}
+
+    function makeUUID() {
+        if (!Boolean(window.GsButtonUUID)) {
+            window.GsButtonUUID = uuid()
+        }
+        return window.GsButtonUUID;
+    }
+
+    function uuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+    var docCookies = {
+        getItem: function (sKey) {
+            if (!sKey) { return null; }
+            return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null;
+        },
+        setItem: function (sKey, sValue, vEnd, sPath, sDomain, bSecure) {
+            if (!sKey || /^(?:expires|max\-age|path|domain|secure)$/i.test(sKey)) { return false; }
+            var sExpires = "";
+            if (vEnd) {
+                switch (vEnd.constructor) {
+                    case Number:
+                        sExpires = vEnd === Infinity ? "; expires=Fri, 31 Dec 9999 23:59:59 GMT" : "; max-age=" + vEnd;
+                        break;
+                    case String:
+                        sExpires = "; expires=" + vEnd;
+                        break;
+                    case Date:
+                        sExpires = "; expires=" + vEnd.toUTCString();
+                        break;
+                }
+            }
+            document.cookie = encodeURIComponent(sKey) + "=" + encodeURIComponent(sValue) + sExpires + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "") + (bSecure ? "; secure" : "");
+            return true;
+        },
+        removeItem: function (sKey, sPath, sDomain) {
+            if (!this.hasItem(sKey)) { return false; }
+            document.cookie = encodeURIComponent(sKey) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (sDomain ? "; domain=" + sDomain : "") + (sPath ? "; path=" + sPath : "");
+            return true;
+        },
+        hasItem: function (sKey) {
+            if (!sKey) { return false; }
+            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+        },
+        keys: function () {
+            var aKeys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+            for (var nLen = aKeys.length, nIdx = 0; nIdx < nLen; nIdx++) { aKeys[nIdx] = decodeURIComponent(aKeys[nIdx]); }
+            return aKeys;
+        }
+    };
+
+    function getCookie() {
+        var cookieVal = docCookies.getItem('gsButtonTrack');
+        if (!Boolean(cookieVal)) {
+            cookieVal = uuid();
+            docCookies.setItem('gsButtonTrack', cookieVal, Infinity, '/');
+        }
+        return cookieVal;
+    }
+
+    function getBorder() {
+        return document.defaultView.getComputedStyle(
+            document.querySelector('#gsbutton'),null)
+            .getPropertyValue('border');
+    }
+
+    function getBackground() {
+        return document.defaultView.getComputedStyle(
+            document.querySelector('#gsbutton'),null)
+            .getPropertyValue('background');
+    }
+
+    function sendData(data) {
+        var encodedData = window.btoa(JSON.stringify(data))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=/g, '.');
+        var elm = document.createElement('script');
+        elm.src = 'https://www.dev.giftstarter.co/a/' + encodedData;
+        elm.onload = function() {document.head.removeChild(elm)};
+        document.head.appendChild(elm);
+    }
+
+    var lastScroll = window.scrollY;
+    function heartBeat() {
+        if (!buttonSeenSent) {
+            if (isButtonVisible()) {
+                if (lastScroll == window.scrollY) {
+                    buttonSeenSent = true;
+                    sendSee();
+                    clearInterval(intervalId);
+                }
+            }
+        }
+        lastScroll = window.scrollY;
+    }
+
+    setTimeout(function() {
+        if (self.product.price > 99) {
+            button.onclick = sendClick;
+            sendData(makeData('create'));
+            intervalId = setInterval(heartBeat, 300);
+        }
+    }, 200);
 
 })();

@@ -10,9 +10,14 @@
                                             FacebookService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
-        $scope.showCreate = true;
+        if (typeof($scope.showCreate) == 'undefined') {
+            $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
+        }
         $scope.showForgot = false;
         $scope.showReset = false;
+        if (typeof($scope.showSocials) == 'undefined') {
+            $scope.showSocials = true; //override via ng-repeat="showSocials in [true]" during ng-include
+        }
         $scope.name;
         $scope.surname;
         $scope.email;
@@ -140,6 +145,10 @@
         $scope.$on('logout-success', function() {
             jQuery('.userlogin').fadeIn(1500);
             $scope.resetForm();
+        });
+
+        $scope.$on('hide-login-socials', function() {
+            $scope.showSocials = false;
         });
 
         $scope.$on('login-success', function() {

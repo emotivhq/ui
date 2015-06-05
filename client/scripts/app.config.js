@@ -40,6 +40,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/oldbrowser/oldbrowser.html', reloadOnSearch: false})
         .when('/partners',
         {templateUrl: '/scripts/static-pages/partners/partners.html', reloadOnSearch: false})
+        .when('/portal',
+        {templateUrl: '/scripts/partnerportal/partnerportal.html', reloadOnSearch: false})
         .when('/press',
         {templateUrl: '/scripts/static-pages/press/press.html', reloadOnSearch: false})
         .when('/terms',
@@ -49,7 +51,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/what-is-it',
         {templateUrl: '/scripts/static-pages/about/about.html', reloadOnSearch: false})
         .when('/add-the-button',
-        {templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
+        {templateUrl: '/scripts/partnerportal/partnerportal.html'})
+        //{templateUrl: '/scripts/static-pages/add-the-button/add-the-button.html'})
         .when('/reset/:resetCode',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/search/:searchTerm',

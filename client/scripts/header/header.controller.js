@@ -27,6 +27,9 @@
         this.userName = (UserService.name).toUpperCase();
 
         this.creating = $location.path().indexOf('/create') === 0;
+        this.portaling = $location.path().indexOf('/portal') === 0;
+
+        $scope.isHeaderOnly = self.thisRoute == '/header';
 
         $scope.search = false;
         $scope.menu = false;
@@ -85,7 +88,7 @@
 
         function notificationsSeen() {
             $http({
-                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                method: 'POST', url: '/users/notify/' + UserService.uid + '.json',
                 data: {
                     set_seen: '*'
                 }
@@ -107,25 +110,19 @@
 
         self.notificationClick = function(item) {
             $http({
-                method: 'POST', url: ' /users/notify/' + UserService.uid + '.json',
+                method: 'POST', url: '/users/notify/' + UserService.uid + '.json',
                 data: {
                     set_acknowledged: '["' + item.id + '"]'
                 }
-            })
-            .success(function() {
-                $timeout(checkNotifications, 1000);
             });
-            if(item.link) {
-                $timeout(function () {
-                    $location.path(item.link)
-                }, 500);
-            }
+            $scope.notifications.splice($scope.notifications.indexOf(item), 1);
             self.closeNotifications();
         };
 
         // for sizing using ng-class
         function routeChangeListener(event, next) {
             self.creating = $location.path().indexOf('/create') === 0;
+            self.portaling = $location.path().indexOf('/portal') === 0;
             menuClose();
             if (next.$$route) {
                 self.thisRoute = next.$$route.originalPath;
@@ -163,9 +160,7 @@
         self.showLogin = function() {
             revealLogin();
             $rootScope.$broadcast('loginbox-show-login');
-            $timeout(function() {
-                $rootScope.$broadcast('loginbox-show-login');
-            }, 200);
+            $timeout(function() {$rootScope.$broadcast('loginbox-show-login');}, 200);
         };
 
         function showReset() {

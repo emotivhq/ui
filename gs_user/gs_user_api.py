@@ -16,12 +16,14 @@ from storage import image_cache
 import base64
 import logging
 from Notification import Notification
+from Partner import Partner
 from google.appengine.ext import ndb
 import uuid
 import stripe
 import yaml
 from social.facebook import facebook_share
 import urllib
+from uuid import uuid4
 
 secrets = yaml.load(open('secret.yaml'))
 stripe.api_key = secrets['stripe_auth']['app_secret']
@@ -121,6 +123,78 @@ class UserNotifyHandler(webapp2.RequestHandler):
             notifications = query.order(-Notification.timestamp).fetch(limit=num)
             response_data = {"notifications":dictify_all(notifications)}
             self.response.write(json.dumps(response_data))
+
+class PartnerHandler(webapp2.RequestHandler):
+    """JSON-formatted Partner"""
+    def get(self):
+        """
+        Gets Partner as JSON (only if signed in as self)
+        """
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        uid_path = self.request.path.split('/')[3][:-5]
+        allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
+        if allow_protected_data:
+            response_data = {
+                'uid': uid_path,
+                'company_name': '',
+                'company_url': 'http://',
+                'phone_number': '',
+                'api_key': ''
+            }
+            partners = Partner.query(Partner.uid == uid_path).fetch(1)
+            if(len(partners)):
+                response_data = partners[0].dictify()
+            self.response.write(json.dumps(response_data))
+        else:
+            self.response.set_status(400)
+            self.response.write("Invalid user id")
+    def post(self):
+        """
+        Sets Partner as JSON (only if signed in as self)
+        """
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        uid_path = self.request.path.split('/')[3][:-5]
+        allow_protected_data = uid == uid_path and validate(uid, token, self.request.path)
+        data = json.loads(self.request.body)
+        if allow_protected_data:
+            partner_data = data.get('partner')
+            if(partner_data['uid']!=uid_path):
+                self.response.set_status(400)
+                self.response.write("Invalid user id")
+                return
+            company_name = str(partner_data['company_name']).strip()
+            company_url = str(partner_data['company_url']).strip()
+            if(company_url.find('http://') != 0 and company_url.find('https://') != 0):
+                company_url = 'http://'+company_url
+            if(company_url=='http://' or company_url=='https://'):
+                company_url=''
+            phone_number = str(partner_data['phone_number']).strip()
+            if(company_name=='' or company_url=='' or phone_number==''):
+                self.response.set_status(400)
+                self.response.write("Please fill out all the fields")
+                return
+            partners = Partner.query(Partner.uid == uid_path).fetch(1)
+            if(len(partners)):
+                partner = partners[0]
+                partner.company_name = company_name
+                partner.company_url = company_url
+                partner.phone_number = phone_number
+            else:
+                partner = Partner(
+                    uid = partner_data['uid'],
+                    company_name = company_name,
+                    company_url = company_url,
+                    phone_number = phone_number,
+                    api_key = str(uuid4())
+                )
+            partner.put()
+            response_data = partner.dictify()
+            self.response.write(json.dumps(response_data))
+        else:
+            self.response.set_status(400)
+            self.response.write("Invalid user id")
 
 class UserProfileHandler(webapp2.RequestHandler):
     """JSON-formatted User"""
@@ -423,6 +497,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/sweepstakes.json', SweepstakesSubscribeHandler),
+                               ('/users/partner/.*.json', PartnerHandler),
                                ('/users/profile/.*.json', UserProfileHandler),
                                ('/users/notify/.*.json', UserNotifyHandler),
                                ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),

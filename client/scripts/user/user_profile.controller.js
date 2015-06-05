@@ -16,7 +16,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     $http({
         method: 'GET',
-        url: ' /users/profile/' + thisUser + '.json?ext=giftideas'
+        url: '/users/profile/' + thisUser + '.json?ext=giftideas'
     }).success(function (response) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;

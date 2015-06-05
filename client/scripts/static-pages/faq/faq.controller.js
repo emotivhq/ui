@@ -10,6 +10,8 @@ GiftStarterApp.controller('FaqController', ['$scope','$location','$timeout',
 function FaqController($scope,  $location,  $timeout) {
     $scope.location = $location;
 
+    $scope.openQuestions = [];
+
     $scope.scrollToSearch = function() {
         if (Object.keys($location.search()).length) {
             var selector = document.querySelector('#'+Object.keys($location.search())[0]);
@@ -22,4 +24,16 @@ function FaqController($scope,  $location,  $timeout) {
         $timeout($scope.scrollToSearch, 400);
         $timeout($scope.scrollToSearch, 700);
     });
+
+    $scope.toggleQuestion = function(question) {
+        if($scope.isOpenQuestion(question)) {
+            $scope.openQuestions.splice($scope.openQuestions.indexOf(question), 1);
+        } else {
+            $scope.openQuestions.push(question);
+        }
+    };
+
+    $scope.isOpenQuestion = function(question) {
+        return $scope.openQuestions.indexOf(question) != -1
+    }
 }

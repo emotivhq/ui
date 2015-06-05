@@ -4,42 +4,55 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('PayPopoverController', ['$scope','GiftStartService',
+GiftStarterApp.controller('PayPopoverController', ['$scope','$rootScope','GiftStartService',
     'PopoverService','UserService','Analytics','CardService','$timeout',
     PayPopoverController]);
 
-function PayPopoverController($scope, GiftStartService, PopoverService,
+function PayPopoverController($scope, $rootScope, GiftStartService, PopoverService,
                               UserService,  Analytics, CardService, $timeout) {
 
-    CardService.fetch();
+    $scope.initialize = function() {
 
-    // Now that user is logged in, create giftstart in server
-    if (!GiftStartService.giftStart.gsid) {
-        GiftStartService.createGiftStart()
-    }
+        jQuery('.payment form').find("input[type=text], input[type=email]").val('');
 
-    $scope.currentCharge = GiftStartService.giftStart.totalSelection;
-    $scope.emailSubscribe = true;
-    $scope.saveCreditCard = true;
-    $scope.pitchingIn = false;
-    $scope.userOnMailingList = UserService.onMailingList;
-    $scope.addressZip = '';
+        CardService.fetch();
 
-    $scope.cards = CardService.cards;
-    $scope.putNew = !(CardService.cards.length > 0);
-    $scope.cardsLoading = !(CardService.cards.length > 0);
+        // Now that user is logged in, create giftstart in server
+        if (!GiftStartService.giftStart.gsid) {
+            GiftStartService.createGiftStart()
+        }
 
-    $scope.errorMessage = '';
+        $scope.currentCharge = GiftStartService.giftStart.totalSelection;
+        $scope.emailSubscribe = true;
+        $scope.saveCreditCard = true;
+        $scope.pitchingIn = false;
+        $scope.userOnMailingList = UserService.onMailingList;
+        $scope.addressZip = '';
 
-    $scope.hidePopover = PopoverService.hidePopover;
+        $scope.cards = CardService.cards;
+        $scope.putNew = !(CardService.cards.length > 0);
+        $scope.cardsLoading = !(CardService.cards.length > 0);
 
-    $scope.submitted = false;
+        $scope.errorMessage = '';
 
-    $scope.numberImgUrl = '/assets/cc_icon_card_number.png';
-    $scope.cvcImgUrl = '/assets/cc_icon_cvc.png';
-    $scope.expiryImgUrl = '/assets/cc_icon_expiry.png';
-    $scope.zipImgUrl = '/assets/cc_icon_zip.png';
-    $scope.emailImgUrl = '/assets/cc_icon_email.png';
+        $scope.submitted = false;
+
+        $scope.numberImgUrl = '/assets/cc_icon_card_number.png';
+        $scope.cvcImgUrl = '/assets/cc_icon_cvc.png';
+        $scope.expiryImgUrl = '/assets/cc_icon_expiry.png';
+        $scope.zipImgUrl = '/assets/cc_icon_zip.png';
+        $scope.emailImgUrl = '/assets/cc_icon_email.png';
+
+    };
+
+    $scope.initialize();
+
+    $scope.hidePopover = function() {
+        PopoverService.hidePopover();
+        $rootScope.$broadcast('paybox-hidden');
+    };
+
+    $rootScope.$on('paybox-shown',$scope.initialize);
 
     $scope.updateFormValidity = function() {
         if ($scope.submitted) {
@@ -96,10 +109,15 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                     } else {
                         $scope.trackConversion();
                     }
-                    $timeout(function(){$scope.pitchingIn = false;},1000);
+                    $timeout(function(){
+                        $scope.pitchingIn = false;
+                        //$rootScope.$broadcast('paybox-hidden');
+                    },1000);
                 })
                 .error(function(data) {
                     $scope.pitchingIn = false;
+                    console&&console.log&&console.log(data);
+                    //$rootScope.$broadcast('paybox-hidden');
                 });
         } else {
             // Got stripe token, attach it to the current giftstart payment
@@ -115,7 +133,10 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                 } else {
                     $scope.trackConversion();
                 }
-                $timeout(function(){$scope.pitchingIn = false;},1000);
+                $timeout(function(){
+                    $scope.pitchingIn = false;
+                    //$rootScope.$broadcast('paybox-hidden');
+                },1000);
             });
         }
     };
@@ -135,16 +156,22 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
                 .success(function (data) {
                     $scope.pitchingIn = false;
                     if (data['payment-error']) {
+                        console&&console.log&&console.log(data['payment-error']);
                         $scope.errorMessage = data['payment-error'];
                     } else {
                         $scope.trackConversion();
+                        $rootScope.$broadcast('paybox-hidden');
                     }
                 })
                 .error(function(data) {
                     $scope.pitchingIn = false;
+                    console&&console.log&&console.log(data);
+                    //$rootScope.$broadcast('paybox-hidden');
                 });
         } else if (response.error) {
             $scope.pitchingIn = false;
+            //$rootScope.$broadcast('paybox-hidden');
+            console&&console.log&&console.log(response);
             Analytics.track('pitchin', 'payment error');
         } else {
             // Got stripe token, attach it to the current giftstart payment
@@ -157,9 +184,11 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
             GiftStartService.sendPayment(function (data) {
                 $scope.pitchingIn = false;
                 if (data['payment-error']) {
+                    console&&console.log&&console.log(data['payment-error']);
                     $scope.errorMessage = data['payment-error'];
                 } else {
                     $scope.trackConversion();
+                    $rootScope.$broadcast('paybox-hidden');
                 }
             });
         }
@@ -169,10 +198,12 @@ function PayPopoverController($scope, GiftStartService, PopoverService,
         Analytics.track('pitchin', 'payment succeeded',
             GiftStartService.giftStart.gsid.toString(),
             $scope.currentCharge);
-        if(PopoverService.currentLocation=='pay') {
-            PopoverService.nextPopover();
-        }
+        //if(PopoverService.currentLocation=='pay') {
+        //    PopoverService.nextPopover();
+        //}
+        PopoverService.setPopover('note');
         $scope.pitchingIn = false;
+        $rootScope.$broadcast('paybox-hidden');
     });
 
     $scope.$on('cards-fetch-success', cardsFetched);

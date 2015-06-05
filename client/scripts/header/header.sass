@@ -223,9 +223,6 @@
       display: none
 
   #nav_notifications
-
-    padding-left: 5px
-
     @media screen and (max-width: $phone-tablet-boundary)
       &.hideMobileNotifications
         display: none
@@ -234,14 +231,13 @@
       border-left: 0 !important
       border-right: 8px solid $primary-color
       right: 0
-      li
-        padding: 5px 10px
 
     img
       height: 23px
     #notification-list
       .notificationsUnread
-        background-color: #ccc
-      .notificationsRead
         background-color: white
-        color: #aaa
+      .notificationsRead
+        color: #bbb
+      #no-notifications-msg
+        margin: 0 10pxe

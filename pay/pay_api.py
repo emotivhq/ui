@@ -24,33 +24,54 @@ class PayHandler(webapp2.RequestHandler):
         data = json.loads(self.request.body)
 
         if data['action'] == 'pitch-in':
-            payment = data['payment']
-            if data.get('fingerprint'):
-                result = pay_core.pay_with_fingerprint(data.get('fingerprint'),
-                                                       data['uid'],
-                                                       payment['gsid'],
-                                                       payment['parts'],
-                                                       payment['note'],
-                                                       payment['subscribe'],)
-            else:
-                result = pay_core.pitch_in(data['uid'], payment['gsid'],
-                                           payment['parts'],
-                                           payment['emailAddress'],
-                                           payment['note'],
-                                           payment['stripeResponse'],
-                                           payment['cardData'],
-                                           payment['subscribe'],
-                                           payment.get('saveCreditCard', False))
-                if 'error' in result.keys():
-                    self.response.set_status(400)
-            self.response.write(json.dumps(result))
+            try:
+                payment = data['payment']
+                if data.get('fingerprint'):
+                    result = pay_core.pay_with_fingerprint(data.get('fingerprint'),
+                                                           data['uid'],
+                                                           payment['gsid'],
+                                                           payment['parts'],
+                                                           payment['note'],
+                                                           payment['subscribe'],)
+                else:
+                    result = pay_core.pitch_in(data['uid'], payment['gsid'],
+                                               payment['parts'],
+                                               payment['emailAddress'],
+                                               payment['note'],
+                                               payment['stripeResponse'],
+                                               payment['cardData'],
+                                               payment['subscribe'],
+                                               payment.get('saveCreditCard', False))
+                    if 'error' in result.keys():
+                        self.response.set_status(400)
+                self.response.write(json.dumps(result))
+            except KeyError as x:
+                def get_err_msg(key):
+                    return {
+                        'emailAddress': 'Please provide your email address',
+                        'fingerprint': 'Please select a card',
+                        'cardData': 'Please enter your credit card information',
+                        'number':'Please enter your credit card number',
+                        'expiry':'Please enter your credit card expiry',
+                        'cvc':'Please enter your credit card CVC',
+                        'zip':'Please enter your zip code'
+                    }[key]
+                self.response.write(json.dumps({'payment-error':get_err_msg(x.message)}))
 
         elif data['action'] == 'pitch-in-note-update':
-            payment = data['payment']
-            logging.info("setting note for "+payment['gsid'])
-            result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
-                                       payment['parts'], payment['note'])
-            self.response.write(json.dumps(result if result is None else result.ext_dictify()))
+            result = None
+            if 'payment' in data:
+                payment = data['payment']
+                logging.info("setting note for payment "+payment['gsid'])
+                result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
+                                           payment['parts'], payment['note'])
+            else:
+                pitchin = data['pitchin']
+                logging.info("setting note for pitchin "+pitchin['gsid'])
+                result = pay_core.set_note_for_pitchin(data['uid'], pitchin['gsid'],
+                                           pitchin['parts'], pitchin['note'],
+                                           name=pitchin['name'] if 'name' in pitchin else None, img_url=pitchin['img_url'] if 'img_url' in pitchin else None)
+            self.response.write(json.dumps(None if result is None else result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-update':
             payment = data['payment']

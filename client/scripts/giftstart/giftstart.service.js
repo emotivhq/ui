@@ -199,10 +199,12 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
 
     this.updateSelected = function() {
         self.giftStart.totalSelection = 0;
+        self.giftStart.nSelected = 0;
         self.giftStart.remaining = 0;
         self.giftStart.funded = 0;
         self.giftStart.parts.map(function(part) {
             self.giftStart.totalSelection += part.value * part.selected;
+            self.giftStart.nSelected += 1 * part.selected;
             self.giftStart.remaining += part.value *
                 !(part.selected || part.bought);
             self.giftStart.funded += part.value * part.bought;
@@ -377,6 +379,23 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
                 $rootScope.$broadcast('giftstart-updated');
             })
             .error(function() {Analytics.track('campaign', 'campaign update failed')})
+    };
+
+    this.updateComment = function(pitchIn) {
+        var data = {
+            pitchin: pitchIn,
+            action: 'pitch-in-note-update',
+            uid: UserService.uid
+        };
+        //Analytics.track('campaign', 'campaign update sent');
+
+        $http({method: 'POST', url: '/pay', data: data})
+            .success(function(response) {
+                //Analytics.track('campaign', 'campaign update succeeded');
+            })
+            .error(function() {
+                //Analytics.track('campaign', 'campaign update failed');
+            })
     };
 
     this.setThanksImage = function(img) {self.thanksImage = img};
