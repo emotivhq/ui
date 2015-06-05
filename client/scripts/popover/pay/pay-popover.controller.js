@@ -28,6 +28,12 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         $scope.pitchingIn = false;
         $scope.userOnMailingList = UserService.onMailingList;
         $scope.addressZip = '';
+        $scope.email = '';
+        if(UserService.loggedIn) {
+            UserService.getUser(UserService.uid, function(data) {
+                $scope.email = data[Object.keys(data)[0]].email;
+            });
+        }
 
         $scope.cards = CardService.cards;
         $scope.putNew = !(CardService.cards.length > 0);
