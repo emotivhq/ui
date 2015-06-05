@@ -67,6 +67,12 @@
         $scope.selectedImg = ProductService.product.imgs[$scope.imgIndex];
         $scope.title = '';
         $scope.description = '';
+        $scope.gcEmail = '';
+        if(UserService.loggedIn) {
+            UserService.getUser(UserService.uid, function(data) {
+                $scope.gcEmail = data[Object.keys(data)[0]].email;
+            });
+        }
         $scope.coupon = '';
         $scope.specialNotes = '';
         $scope.pitchInsInitialized = false;
