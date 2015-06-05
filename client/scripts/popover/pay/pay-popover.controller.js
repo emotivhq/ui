@@ -29,9 +29,21 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         $scope.userOnMailingList = UserService.onMailingList;
         $scope.addressZip = '';
         $scope.email = '';
+        $scope.firstname = '';
+        $scope.lastname = '';
         if(UserService.loggedIn) {
             UserService.getUser(UserService.uid, function(data) {
-                $scope.email = data[Object.keys(data)[0]].email;
+                var u = data[Object.keys(data)[0]];
+                $scope.email = u.email;
+                if(u.name) {
+                    var names = u.name.split(" ");
+                    if (names.length > 0) {
+                        $scope.firstname = names[0];
+                    }
+                    if (names.length > 1) {
+                        $scope.lastname = names[names.length-1];
+                    }
+                }
             });
         }
 
@@ -132,6 +144,8 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                 $scope.currentCharge);
             GiftStartService.attachCardData($scope.number,$scope.cvc,$scope.expiry,$scope.addressZip);
             GiftStartService.payment.emailAddress = $scope.email;
+            GiftStartService.payment.firstname = $scope.firstname;
+            GiftStartService.payment.lastname = $scope.lastname;
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 if (data['payment-error']) {

@@ -94,7 +94,7 @@ def parts_available(parts, gsid):
     return not any([part in bought_parts for part in parts])
 
 
-def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
+def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_response, card_data,
              subscribe_to_mailing_list, save_this_card):
     """
     Process a pitch-in, charge & save card, send notifications
@@ -109,7 +109,14 @@ def pitch_in(uid, gsid, parts, email_address, note, stripe_response, card_data,
     @param save_this_card: should the Stripe card be saved for this User?
     @return: {result, purchased-parts|error|payment-error}
     """
+    if(firstname == None or str(firstname).strip()==''):
+        raise KeyError('firstname')
+    if(lastname == None or str(lastname).strip()==''):
+        raise KeyError('lastname')
     user = gs_user_core.save_email(uid, email_address)
+    if user.name is None or str(user.name).strip() == '':
+        user.name = firstname+' '+lastname
+        user.put()
     usr_img = user.cached_profile_image_url
 
     try:
