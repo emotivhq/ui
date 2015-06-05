@@ -224,6 +224,10 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         PopoverService.setPopover('note');
         $scope.pitchingIn = false;
         $rootScope.$broadcast('paybox-hidden');
+        $scope.number = '';
+        $scope.cvc = '';
+        $scope.expiry = '';
+        $scope.addressZip = '';
     });
 
     $scope.$on('cards-fetch-success', cardsFetched);
