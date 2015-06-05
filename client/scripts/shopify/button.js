@@ -15,6 +15,11 @@
     this.product = null;
     var self = this;
 
+    // Tracking data
+    var buttonSeenSent = false;
+    var buttonX, buttonY, buttonW, buttonH;
+    var intervalId;
+
     this.getThisProduct = function() {
         var xhr = new XMLHttpRequest();
         xhr.onload = function() {
@@ -63,7 +68,7 @@
         };
         var url = 'https://www.giftstarter.co/create?' + self.urlSerialize(urlParams);
         self.buttonLink.setAttribute('href', url);
-        if (self.product.price > 50) {
+        if (self.product.price > 99) {
             self.button.setAttribute('style', ' display: inline-block; text-align: center;');
         }
     };
@@ -141,5 +146,113 @@
         }
         self.prevUrl = thisUrl;
     }, 250);
+
+    //tracking
+
+    function isButtonVisible() {
+        // Button is visible if buttonY + button height < scrollY + screen
+        // height and same with X
+        var visible = true;
+        var bounds = button.getBoundingClientRect();
+        visible &= bounds.bottom < window.innerHeight;
+        visible &= bounds.right < window.innerWidth;
+        return visible;
+    }
+
+    function makeData(action) {
+        return {
+            domain: window.location.host,
+            path: window.location.pathname,
+            uuid: makeUUID(),
+            productUrl: productUrl,
+            productTitle: title,
+            productPrice: price,
+            productImgUrl: imgUrl,
+            publicKey: publicKey,
+            scrollDepth: window.scrollY,
+            screenW: window.screen.width,
+            screenH: window.screen.height,
+            cookie: getCookie(),
+            action: action,
+            buttonX: buttonX,
+            buttonY: buttonY,
+            buttonW: buttonW,
+            buttonH: buttonH,
+            buttonBorder: getBorder(),
+            buttonBackground: getBackground(),
+            buttonImg: buttonImg.src
+        }
+    }
+
+    function sendSee() {sendData(makeData('seen'))}
+    function sendClick() {sendData(makeData('click'))}
+
+    function makeUUID() {
+        if (!Boolean(window.GsButtonUUID)) {
+            window.GsButtonUUID = uuid()
+        }
+        return window.GsButtonUUID;
+    }
+
+    function uuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    function getCookie() {
+        var cookieVal = docCookies.getItem('gsButtonTrack');
+        if (!Boolean(cookieVal)) {
+            cookieVal = uuid();
+            docCookies.setItem('gsButtonTrack', cookieVal, Infinity, '/');
+        }
+        return cookieVal;
+    }
+
+    function getBorder() {
+        return document.defaultView.getComputedStyle(
+            document.getElementById(gsButtonId),null)
+            .getPropertyValue('border');
+    }
+
+    function getBackground() {
+        return document.defaultView.getComputedStyle(
+            document.getElementById(gsButtonId),null)
+            .getPropertyValue('background');
+    }
+
+    function sendData(data) {
+        var encodedData = window.btoa(JSON.stringify(data))
+            .replace(/\+/g, '-')
+            .replace(/\//g, '_')
+            .replace(/=/g, '.');
+        var elm = document.createElement('script');
+        elm.src = 'https://www.dev.giftstarter.co/a/' + encodedData;
+        elm.onload = function() {document.head.removeChild(elm)};
+        document.head.appendChild(elm);
+    }
+
+    var lastScroll = window.scrollY;
+    function heartBeat() {
+        if (!buttonSeenSent) {
+            if (isButtonVisible()) {
+                if (lastScroll == window.scrollY) {
+                    buttonSeenSent = true;
+                    sendSee();
+                    clearInterval(intervalId);
+                }
+            }
+        }
+        lastScroll = window.scrollY;
+    }
+
+    setTimeout(function() {
+        if (self.product.price > 99) {
+            button.onclick = sendClick;
+            sendData(makeData('create'));
+            intervalId = setInterval(heartBeat, 300);
+        }
+    }, 200);
 
 })();

@@ -83,6 +83,7 @@ class ButtonAnalyticsEvent(ndb.Model):
     button_border = ndb.StringProperty()
     button_background = ndb.StringProperty()
     button_img = ndb.StringProperty()
+    api_key_public = ndb.StringProperty()
 
     @staticmethod
     def from_dict(d):
