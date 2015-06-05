@@ -167,7 +167,7 @@
             path: window.location.pathname,
             uuid: makeUUID(),
             productUrl: document.location.href,
-            productTitle: self.product.title,
+            productTitle: self.productObject.title,
             productPrice: self.product.price,
             productImgUrl: self.product.imgUrl,
             publicKey: publicKey,
