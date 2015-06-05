@@ -23,7 +23,11 @@
                 <img src="/assets/discover_card.png" />
                 <img src="/assets/amex_card.png" />
             </div>
-            <div class="number">
+            <div class="firstname">
+                <input type="text" id="card-firstname" ng-disabled="!putNew" ng-model="firstname" placeholder="First Name" ng-change="updateFormValidity()" name="firstname"/>
+            </div><div class="lastname">
+                <input type="text" id="card-lastname" ng-disabled="!putNew" ng-model="lastname" placeholder="Last Name" ng-change="updateFormValidity()" name="lastname"/>
+            </div><div class="number">
                 <input type="text" id="card-number" ng-disabled="!putNew" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" name="cc-number"/>
             </div><div class="cvc">
                 <input type="text" id="card-cvc" ng-disabled="!putNew" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc"/>

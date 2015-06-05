@@ -25,7 +25,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         note: '',
         stripeResponse: {},
         emailAddress: '',
-        subscribe: false
+        subscribe: false,
+        firstName: '',
+        lastName: ''
     };
 
     this.pitchIns = [];
