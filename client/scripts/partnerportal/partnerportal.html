@@ -33,6 +33,11 @@
                 <p>To add the button to your Shopify store, you should add the following snippet of HTML to your product details liquid file:</p>
                 <pre ng-click="convertToTextarea($event)">
                 &lt;gs-button id="gsbutton" class="gsbutton"&gt;&lt;/gs-button&gt;
+                &lt;script&gt;
+                    window.giftStartButton = {
+                        publicKey: '{{partner.api_key}}'
+                    };
+                &lt;/script&gt;
                 &lt;script src="https://www.giftstarter.co/scripts/shopify/button.js"&gt;&lt;/script&gt;
                 </pre>
                 <p>You should style the button to match your existing buttons height and corner rounding, but a good starting point for the buttons CSS is:</p>
