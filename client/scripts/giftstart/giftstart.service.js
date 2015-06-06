@@ -25,7 +25,9 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         note: '',
         stripeResponse: {},
         emailAddress: '',
-        subscribe: false
+        subscribe: false,
+        firstName: '',
+        lastName: ''
     };
 
     this.pitchIns = [];
@@ -284,7 +286,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.attachCardData = function(number,cvc,expiry,addressZip) {
-        console.log(number+"|"+cvc+"|"+expiry+"|"+addressZip)
         self.payment.cardData = {number:number,cvc:cvc,expiry:expiry,zip:addressZip};
         self.payment.gsid = self.giftStart.gsid;
         self.payment.parts = [];

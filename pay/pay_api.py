@@ -37,6 +37,8 @@ class PayHandler(webapp2.RequestHandler):
                     result = pay_core.pitch_in(data['uid'], payment['gsid'],
                                                payment['parts'],
                                                payment['emailAddress'],
+                                               payment['firstname'],
+                                               payment['lastname'],
                                                payment['note'],
                                                payment['stripeResponse'],
                                                payment['cardData'],
@@ -48,6 +50,8 @@ class PayHandler(webapp2.RequestHandler):
             except KeyError as x:
                 def get_err_msg(key):
                     return {
+                        'firstname': 'Please provide your first name',
+                        'lastname': 'Please provide your last name',
                         'emailAddress': 'Please provide your email address',
                         'fingerprint': 'Please select a card',
                         'cardData': 'Please enter your credit card information',

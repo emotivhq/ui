@@ -62,6 +62,7 @@ def get_stats(uids):
 
     stats = {user.uid: {'name': user.name,
                         'img_url': user.cached_profile_image_url,
+                        'email': user.email,
                         'pitchins':
                             [pitchin_attach_title_and_img(pi, parent_giftstarts)
                              for pi in filter_pitchins(user.uid, pitchins)],
