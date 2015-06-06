@@ -34,7 +34,7 @@
             <div class="receipt-wrap" ng-show="showPayBox">
                 <div class="receipt">
                     <div class="receipt-tiles">
-                        <img ng-src="{{giftStart.product_img_url}}">
+                        <div class="img-wrap" style="background-image:url('{{giftStart.product_img_url}}')"></div>
                         <div class="info-tiles">
                             <div class="num-tiles">{{giftStart.nSelected}} TILES</div>
                             <div class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</div>
