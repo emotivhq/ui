@@ -4,7 +4,7 @@
     <p>We are here to help in any way we can. If you need help coming up with ideas, finding a gift or setting up your gift, send any request to us. We respond within 1 business day (9AM-7PM PST). Email <a href="mailto: giftconcierge@giftstarter.com">giftconcierge@giftstarter.com</a>, call 206-486-4849, or use the chat option in the bottom right corner of your window.</p>
   </div>
     <div class="main">
-      <div ng-repeat="section in items">
+      <div ng-repeat="section in items" class="sections">
         <h1>{{section.name}}</h1>
         <div ng-repeat="question in section.questions">
           <h2 ng-click="toggleQuestion(question)" ng-class="{open: isOpenQuestion(question)}"><img src="/assets/plus1.png" class="expand" ng-hide="isOpenQuestion(question)"/><img src="/assets/minus.png" class="contract" ng-show="isOpenQuestion(question)"/>{{question.question}}</h2>
