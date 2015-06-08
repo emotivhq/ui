@@ -8,7 +8,7 @@
         <h1>{{section.name}}</h1>
         <div ng-repeat="question in section.questions">
           <h2 ng-click="toggleQuestion(question)" ng-class="{open: isOpenQuestion(question)}"><img src="/assets/plus1.png" class="expand" ng-hide="isOpenQuestion(question)"/><img src="/assets/minus.png" class="contract" ng-show="isOpenQuestion(question)"/>{{question.question}}</h2>
-          <p ng-show="isOpenQuestion(question)">{{question.answer}}</p>
+          <p ng-show="isOpenQuestion(question)" ng-bind-html="question.answer"></p>
         </div>
       </div>
     </div>
