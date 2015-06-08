@@ -14,9 +14,17 @@ div.faq
     padding: 0 75px
 
     h1
+      color: $gs-darkgreen
+      font: 1.5em Gotham, sans-serif
       margin-top: 1em
       margin-bottom: 10px
 
     h2
       @extend .linky
-      font-size: 24px
+      font-size: 16px
+      padding: 15px 0 5px 0
+      &:hover, &.open
+        color: $gs-green
+      img
+        width: 12px
+        margin-right: 5px
