@@ -133,9 +133,10 @@
                     $scope.message=okMsg;
                     $scope.showForgot = false;
                     $scope.working = false;
-                    $timeout(function(){$rootScope.$broadcast('header-show-login')},3000);
-                    jQuery('.userlogin').fadeOut(3000);
-                    jQuery('.userlogin').fadeIn(1500);
+                    //$timeout(function(){$rootScope.$broadcast('header-show-login')},3000);
+                    //jQuery('.userlogin').fadeOut(3000);
+                    //jQuery('.userlogin').fadeIn(1500);
+                    $scope.doLoginEmail();
                 }, function (errMsg) {
                     $scope.message=errMsg;
                     $scope.working = false;
