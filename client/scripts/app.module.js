@@ -51,7 +51,7 @@ angular.module('GiftStarterApp').service('AppStateService', [
 
         // Returns encoded app state for persisting across OAuth transitions
         function base64State() {
-            state.path = self.path;
+            state.path = window.location.pathname; //self.path;
             state.app_url = $window.location.protocol + '//' +
                 $window.location.host + '/';
             console && console.log && console.log('encoding state', state);
