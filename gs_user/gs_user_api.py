@@ -7,6 +7,7 @@ import json
 from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
 from gs_user_stats import get_stats
+from gs_email.gs_email_comm import send
 from StoredProduct import StoredProduct
 from UserLogin import UserLogin
 from render_app import render_app
@@ -26,6 +27,7 @@ import urllib
 from uuid import uuid4
 
 secrets = yaml.load(open('secret.yaml'))
+config = yaml.load(open('config.yaml'))
 stripe.api_key = secrets['stripe_auth']['app_secret']
 
 
@@ -175,6 +177,7 @@ class PartnerHandler(webapp2.RequestHandler):
                 self.response.set_status(400)
                 self.response.write("Please fill out all the fields")
                 return
+            user = get_user(uid_path)
             partners = Partner.query(Partner.uid == uid_path).fetch(1)
             if(len(partners)):
                 partner = partners[0]
@@ -189,6 +192,12 @@ class PartnerHandler(webapp2.RequestHandler):
                     phone_number = phone_number,
                     api_key = str(uuid4())
                 )
+                send("New Partner signup",
+                     "A new Partner signed up on {0}:\nuid: {1}\nname: {2}\nemail: {3}, \ncompany name: {4}\ncompany url: {5}\nphone:{6}".format(
+                         config['app_url'], partner.uid, user.name, user.email, partner.company_name, partner.company_url, partner.phone_number
+                     ),
+                     config['team_notification_email'],
+                     config['team_notification_email'])
             partner.put()
             response_data = partner.dictify()
             self.response.write(json.dumps(response_data))
