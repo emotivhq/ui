@@ -31,19 +31,51 @@
       padding: .8em
 
   &__email,
-  &__password,
+  &__passwordwrap,
   &__name,
   &__surname,
   &__reentermail,
   &__reenterpassword
-    border: 1px solid #000
+    display: inline-block
+    border: 1px solid #cdcdcd
     width: 24%
+    height: 38px
     margin-top: 1rem
     @include apply-at-size("phone")
-      display: block
       width: 70%
       margin: 1rem auto
       padding: 1rem 0.5rem
+
+  &__passwordwrap
+    text-align: left
+    padding: 0
+    @include apply-at-size("phone")
+      padding: 0
+
+  &__password
+    width: 76%
+    height: 100%
+    display: inline-block
+    border: 0 !important
+    outline: 0 !important
+    margin: 0 0 0 0.8em
+    padding: 0 !important
+    &:hover, &:active, &:focus
+      outline: none
+      border: none
+      box-shadow: none
+
+  &__eye
+    display: inline-block
+    margin-left: 2%
+    width: 14%
+    height: 25px
+    vertical-align: middle
+    background-image: url("/assets/eye.png")
+    background-size: contain
+    background-repeat: no-repeat
+    background-position: right
+
 
   br
     @include apply-at-size("phone")
