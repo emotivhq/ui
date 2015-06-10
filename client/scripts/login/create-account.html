@@ -4,10 +4,10 @@
         <input class="userlogin__surname" type="text" name="surname" ng-model="$parent.surname" placeholder="Last Name" required />
         <br />
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Email Address" required />
-        <input class="userlogin__reentermail" type="email" name="reenteremail" ng-model="$parent.reenteremail" placeholder="Re-enter Email Address" required />
-        <br />
-        <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Password" required />
-        <input class="userlogin__reenterpassword" type="password" name="reenterpassword" ng-model="$parent.reenterpassword" placeholder="Re-enter Password" required />
+        <!--<input class="userlogin__reentermail" type="email" name="reenteremail" ng-model="$parent.reenteremail" placeholder="Re-enter Email Address" required />-->
+        <!--<br />-->
+        <div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
+        <!--<input class="userlogin__reenterpassword" type="password" name="reenterpassword" ng-model="$parent.reenterpassword" placeholder="Re-enter Password" required />-->
         <br />
         <div class="userlogin__message">{{$parent.message}}</div>
         <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Create account</button>

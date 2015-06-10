@@ -21,9 +21,10 @@
         $scope.name;
         $scope.surname;
         $scope.email;
-        $scope.reenteremail;
+        //$scope.reenteremail;
         $scope.password;
-        $scope.reenterpassword;
+        $scope.showPassword;
+        //$scope.reenterpassword;
         $scope.message;
         $scope.resetCode;
 
@@ -31,9 +32,10 @@
             $scope.name='';
             $scope.surname='';
             $scope.email='';
-            $scope.reenteremail='';
+            //$scope.reenteremail='';
             $scope.password='';
-            $scope.reenterpassword='';
+            $scope.showPassword=false;
+            //$scope.reenterpassword='';
             $scope.message='';
             $scope.resetCode='';
         };
@@ -89,14 +91,14 @@
 
         $scope.doCreateEmail = function() {
             Analytics.track('user', 'create email login');
-            if ($scope.email.trim()!=$scope.reenteremail.trim()) {
-                $scope.message="Your email addresses do not match";
-                return;
-            }
-            if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
-                $scope.message="Your passwords do not match";
-                return;
-            }
+            //if ($scope.email.trim()!=$scope.reenteremail.trim()) {
+            //    $scope.message="Your email addresses do not match";
+            //    return;
+            //}
+            //if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
+            //    $scope.message="Your passwords do not match";
+            //    return;
+            //}
             $scope.working = true;
             emailLoginService.login('create',$scope.name+' '+$scope.surname,$scope.email,$scope.password,'').
                 then(function (okMsg) {
@@ -122,10 +124,10 @@
         };
 
         $scope.doResetPassword = function() {
-            if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
-                $scope.message="Your passwords do not match";
-                return;
-            }
+            //if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
+            //    $scope.message="Your passwords do not match";
+            //    return;
+            //}
             Analytics.track('user', 'reset login password');
             $scope.working = true;
             emailLoginService.login('reset','',$scope.email,$scope.password,$scope.resetCode).
