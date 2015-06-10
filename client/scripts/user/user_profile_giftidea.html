@@ -1,6 +1,6 @@
 <div class="useridea">
     <div class="useridea__wrap">
-        <h2 class="useridea__title">Gift Idea Board</h2>
+        <h2 class="useridea__title">Saved Gift Ideas</h2>
         <div class="useridea__filter" ng-hide="userIdea.length == 0">
             <span class="useridea__filterby">
                 Filter by
@@ -16,7 +16,7 @@
             </span>
         </div>
         <p class="useridea__innfonone" ng-show="userIdea.length == 0">
-            Did you know you can save products you like to your Gift Idea Board? Just click the "Save It For Later" button!
+            Did you know you can save products you like to your Saved Gift Idea Board? Just click the "Save It For Later" button!
         </p>
         <div class="useridea__productlist">
             <div ng-repeat-start="idea in userIdea | limitTo:quantity | orderBy:userOrder track by $index" class="h--hide" ng-class="{true: 'useridea__productlist--row'}[$index % 5 == 0 && !$first]"></div>

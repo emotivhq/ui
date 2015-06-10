@@ -6,7 +6,7 @@
                 <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="imgloading">
                 <button class="userprofile__imageedit" ng-hide="blocked||editMode"  ng-click="editMode=true;">Change photo</button>
                 <button class="userprofile__imagesave" ng-click="submit(); editMode = false;" ng-show="editMode" ng-class="{disabled: !imageSet}">Save</button>
-                <button class="userprofile__imageupload"  ng-show="editMode"  ng-click="openImageDialogGlobal();">Upload</button>
+                <button class="userprofile__imageupload" ng-show="editMode"  ng-click="openImageDialogGlobal();">Upload</button>
             </div>
             <div class="userprofile__name">
                 <h2 ng-show="blocked" class="userprofile__title">
