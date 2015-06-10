@@ -14,7 +14,10 @@ import re
 
 def validate_password_complexity(password):
     #return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[\!@#$&+=]).*$',password)
-    return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$',password)
+    # return re.search('^(?=.{8,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).*$',password)
+    return re.search('^(?=.{6,})(?=.*[0-9]).*$',password)
+
+password_complexity_note = 'at least six characters, with at least one number'
 
 class CreateHandler(webapp2.RequestHandler):
     """handle creation of a new email-based User identity; validate uniqueness of Email; check password complexity"""
@@ -36,7 +39,7 @@ class CreateHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error': 'Password cannot be blank'}))
             return
         if not validate_password_complexity(password):
-            self.response.write(json.dumps({'error': 'Please use a more complex password: at least 8 characters, with uppercase, lowercase, and number(s)'}))
+            self.response.write(json.dumps({'error': 'Please use a more complex password: '+ password_complexity_note}))
             return
         token_set = login_core.get_email_token_set(email=email, password=password)
         try:
@@ -145,7 +148,7 @@ class ResetHandler(webapp2.RequestHandler):
             self.response.write(json.dumps({'error':'Password cannot be blank'}))
             return
         if not validate_password_complexity(password):
-            self.response.write(json.dumps({'error': 'Please use a more complex password: at least 8 characters, with uppercase, lowercase, and number(s).'}))
+            self.response.write(json.dumps({'error': 'Please use a more complex password: '+ password_complexity_note}))
             return
         if len(code) is 0:
             self.response.write(json.dumps({'error':'Reset Code not provided'}))
