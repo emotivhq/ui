@@ -66,6 +66,15 @@ class ManualUploadHandler(webapp2.RequestHandler):
 
 class SturtevantsUploadHandler(webapp2.RequestHandler):
     """parse an uploaded Sturtevants feed file"""
+    def cleanupSturtevantsDescription(self, desc):
+        if "<li" in desc and "<ul" not in desc:
+            desc=desc.replace("<li>","&bull; ")
+            desc=desc.replace("</li>","<br/>")
+            # desc=desc.replace("<li","<div><ul><li",1)
+            # desc_reverse=desc[::-1]
+            # desc_reverse.replace("<il/>","<il/><lu/><vid/>",1)
+            # desc=desc_reverse[::-1]
+        return desc
     def post(self):
         """accept a Sturtevants feed file of the following format:
         TITLE
@@ -99,7 +108,7 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
                     img=line[2],
                     url=line[3],
                     retailer='Sturtevant\'s',
-                    description=line[1].decode('ascii', 'ignore'))
+                    description=self.cleanupSturtevantsDescription(line[1].decode('ascii', 'ignore')))
                 products.append(product)
                 search_docs.append(product.to_search_document(str(uuid4())))
 
