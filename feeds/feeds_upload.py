@@ -70,10 +70,6 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
         if "<li" in desc and "<ul" not in desc:
             desc=desc.replace("<li>","&bull; ")
             desc=desc.replace("</li>","<br/>")
-            # desc=desc.replace("<li","<div><ul><li",1)
-            # desc_reverse=desc[::-1]
-            # desc_reverse.replace("<il/>","<il/><lu/><vid/>",1)
-            # desc=desc_reverse[::-1]
         return desc
     def post(self):
         """accept a Sturtevants feed file of the following format:
