@@ -118,6 +118,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         // 4. Client app sends response with card id to server app
         // 5. Server app attempts to charge card, responds with result (success/fail)
         $scope.submitted = true;
+        $scope.pitchingIn = true;
         $scope.updateFormValidity();
         GiftStartService.payment.subscribe = $scope.emailSubscribe;
         if ($scope.selectedCard) {
@@ -252,7 +253,9 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
 
     $scope.deselectCards = deselectCards;
     function deselectCards(except) {
+        $scope.showDeleteCardDialogue = false;
         $scope.selectedCard = '';
+        $scope.selectedLastFour = '';
         for (var i = 0; i < $scope.cards.length; i++) {
             if ($scope.cards[i].fingerprint != except) {
                 $scope.cards[i].selected = false;
@@ -277,6 +280,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             deselectCards(this.card.fingerprint);
             this.card.selected = true;
             $scope.selectedCard = this.card.fingerprint;
+            $scope.selectedLastFour = this.card.last_four
         }
     };
 }
