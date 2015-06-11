@@ -114,8 +114,9 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
     if(lastname == None or str(lastname).strip()==''):
         raise KeyError('lastname')
     user = gs_user_core.save_email(uid, email_address)
+    card_name = str(firstname).strip()+' '+str(lastname).strip()
     if user.name is None or str(user.name).strip() == '':
-        user.name = firstname+' '+lastname
+        user.name = card_name
         user.put()
     usr_img = user.cached_profile_image_url
 
@@ -153,7 +154,8 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
                                                   card=stripe_response['id'],
                                                   description=desc)
             else:
-                card_token = save_card_paypal_vault(user,card_data)
+                # create a new card; if saving this one, delete any old ones that match
+                card_token = save_card_paypal_vault(user,card_data, save_this_card)
                 try:
                     urlfetch.set_default_fetch_deadline(30)
                     payment = charge_card_paypal(user, total_charge, 'USD', card_token, desc)
@@ -185,7 +187,7 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
                      stripe_charge_json=charge_json if is_stripe else "",
                      paypal_charge_json="" if is_stripe else charge_json,
                      last_four=card_last_four, img_url=usr_img,
-                     name=user.name if user.name else '')
+                     name=card_name)
         pi.put()
 
         set_user_pitched_in(user)
@@ -277,20 +279,39 @@ def delete_card_paypal_vault(card_token):
     except Exception:
         return
 
-def save_card_paypal_vault(user, card_data):
+def save_card_paypal_vault(user, card_data, delete_matching_cards):
     """
     attach the provided Credit Card to the given User, setting their Stripe ID if needed
     :param user: User
     :param card_data: Credit Card with number,cvc,expiry,zip
+    :param delete_matching_cards: if a card with the same last_four is found, delete the old card?
     @return: credit_card_id
     """
     ensure_paypal_vault_id(user)
-    card_struct = {"type": get_card_type(card_data['number']), "number": card_data['number'],
-           "expire_month": str(int(card_data['expiry'][:2])), "expire_year": card_data['expiry'][-4:],
-           "cvv2": card_data['cvc'], "external_customer_id": user.paypal_vault_payer_id}
+    card_number = card_data['number']
+    if(card_number==""):
+        raise KeyError("number")
+    card_expiry = card_data['expiry']
+    if(card_expiry==""):
+        raise KeyError("expiry")
+    card_cvc = card_data['cvc']
+    if(card_cvc==""):
+        raise KeyError("cvc")
+    card_struct = {"type": get_card_type(card_number), "number": card_number,
+           "expire_month": str(int(card_expiry[:2])), "expire_year": card_expiry[-4:],
+           "cvv2": card_cvc, "external_customer_id": user.paypal_vault_payer_id}
+
+    old_cards = None
+    if(delete_matching_cards):
+        old_cards = paypalapi.getCards(user.paypal_vault_payer_id)
+
     credit_card = paypalrestsdk.CreditCard(card_struct)
     if credit_card.create():
         print("CreditCard[%s] created successfully" % (credit_card.id))
+        if(old_cards):
+            for card in old_cards['items']:
+                if card_number[-4:]==card.get('number')[-4:]:
+                    delete_card_paypal_vault(card.get('id'))
         return credit_card.id
     else:
         raise StripeError("{0} {1}".format(credit_card.error['details'][0]['field'],str(credit_card.error['details'][0]['issue']).lower()))
@@ -401,6 +422,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
     @param subscribe: (ignored)
     """
     user = ndb.Key('User', uid).get()
+    card_name = user.name if user.name else ''
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
 
@@ -452,7 +474,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
                      paypal_charge_json="" if is_stripe else charge_json,
                      last_four=card_last_four,
                      img_url=user.cached_profile_image_url,
-                     name=user.name if user.name else '')
+                     name=card_name)
         pi.put()
 
         set_user_pitched_in(user)

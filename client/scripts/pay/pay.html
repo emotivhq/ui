@@ -12,7 +12,7 @@
 
     <div class="loading" ng-show="cardsLoading"><img src="../../../assets/loading_transparent.gif" width="14px" height="14px"> Loading saved cards</div>
 
-    <form xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" ng-submit="pitchingIn = stripeForm.$valid;">
+    <form xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" Xng-submit="pitchingIn = stripeForm.$valid;">
 
         <input id="new-credit-card-cb" type="checkbox" ng-model="putNew" ng-change="deselectCards()"><label for="new-credit-card-cb"><span class="arrow" ng-class="{down: putNew && !cardsLoading}">&#x25BC;</span><span>Enter New Card</span></label>
 
@@ -45,6 +45,13 @@
                 <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label for="subscribe-checkbox">Want to hear about new features?</label>
             </span>
         </div>
+
+
+        <span ng-show="selectedCard"><input id="delete-credit-card-toggle" type="checkbox" ng-model="showDeleteCardDialogue"><label for="delete-credit-card-toggle"><span class="arrow" ng-class="{down: showDeleteCardDialogue && selectedCard}">&#x25BC;</span><span>Delete Selected Card</span></label></span>
+        <div class="delete-credit-card-confirm" ng-show="showDeleteCardDialogue && selectedCard">
+            <button class="delete-card" ng-click="deleteSelectedCard()">Delete card #{{selectedLastFour}}</button> <button class="delete-cancel" ng-click="showDeleteCardDialogue = false">Cancel</button>
+        </div>
+
 
         <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 

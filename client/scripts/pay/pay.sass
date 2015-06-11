@@ -25,6 +25,7 @@
     span.card
       text-align: center
       display: inline-block
+      position: relative
       margin: 2px
       vertical-align: top
       +no-select()
@@ -69,9 +70,9 @@
     input:focus
       +box-shadow(rgba(0, 0, 0, 0), 0, 0, 0)
 
-    #new-credit-card-cb
+    #new-credit-card-cb, #delete-credit-card-toggle
       display: none
-    #new-credit-card-cb + label
+    #new-credit-card-cb + label, #delete-credit-card-toggle + label
       display: block
       margin-bottom: 0.5em
       padding-left: 0.5em
@@ -209,6 +210,21 @@
           display: inline-block
           height: 100%
           width: calc(25% - 3.2px)
+
+    div.delete-credit-card-confirm
+      border: 1px solid #dddddd
+      padding: 10px 0
+      text-align: center
+      button
+        display: inline-block
+        background: #999999
+        border-color: #999999
+        margin: 5px
+        font-size: 12px
+        &.delete-card
+          width: 135px
+        &.delete-cancel
+          width: 75px
 
     span.error
       margin: 1em 0
