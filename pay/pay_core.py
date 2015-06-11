@@ -285,9 +285,18 @@ def save_card_paypal_vault(user, card_data):
     @return: credit_card_id
     """
     ensure_paypal_vault_id(user)
-    card_struct = {"type": get_card_type(card_data['number']), "number": card_data['number'],
-           "expire_month": str(int(card_data['expiry'][:2])), "expire_year": card_data['expiry'][-4:],
-           "cvv2": card_data['cvc'], "external_customer_id": user.paypal_vault_payer_id}
+    card_number = card_data['number']
+    if(card_number==""):
+        raise KeyError("number")
+    card_expiry = card_data['expiry']
+    if(card_expiry==""):
+        raise KeyError("expiry")
+    card_cvc = card_data['cvc']
+    if(card_cvc==""):
+        raise KeyError("cvc")
+    card_struct = {"type": get_card_type(card_number), "number": card_number,
+           "expire_month": str(int(card_expiry[:2])), "expire_year": card_expiry[-4:],
+           "cvv2": card_cvc, "external_customer_id": user.paypal_vault_payer_id}
     credit_card = paypalrestsdk.CreditCard(card_struct)
     if credit_card.create():
         print("CreditCard[%s] created successfully" % (credit_card.id))
