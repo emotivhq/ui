@@ -114,8 +114,9 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
     if(lastname == None or str(lastname).strip()==''):
         raise KeyError('lastname')
     user = gs_user_core.save_email(uid, email_address)
+    card_name = str(firstname).strip()+' '+str(lastname).strip()
     if user.name is None or str(user.name).strip() == '':
-        user.name = firstname+' '+lastname
+        user.name = card_name
         user.put()
     usr_img = user.cached_profile_image_url
 
@@ -185,7 +186,7 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
                      stripe_charge_json=charge_json if is_stripe else "",
                      paypal_charge_json="" if is_stripe else charge_json,
                      last_four=card_last_four, img_url=usr_img,
-                     name=user.name if user.name else '')
+                     name=card_name)
         pi.put()
 
         set_user_pitched_in(user)
@@ -410,6 +411,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
     @param subscribe: (ignored)
     """
     user = ndb.Key('User', uid).get()
+    card_name = user.name if user.name else ''
 
     giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
 
@@ -461,7 +463,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
                      paypal_charge_json="" if is_stripe else charge_json,
                      last_four=card_last_four,
                      img_url=user.cached_profile_image_url,
-                     name=user.name if user.name else '')
+                     name=card_name)
         pi.put()
 
         set_user_pitched_in(user)
