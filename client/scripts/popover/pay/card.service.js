@@ -43,15 +43,15 @@ function cardService($rootScope, $http, UserService, Analytics) {
             });
     }
 
-    function deleteCard(card) {
+    function deleteCard(fingerprint) {
         Analytics.track('client', 'user card deleted');
         var deleteIndex = -1;
         for (var i = 0; i < this.cards.length; i++) {
-            if(this.cards[i].fingerprint == card.fingerprint) {deleteIndex=i;}
+            if(this.cards[i].fingerprint == fingerprint) {deleteIndex=i;}
         }
         if(deleteIndex>=0) {this.cards.splice(deleteIndex, 1);}
         return $http({method: 'POST', url: '/users/' + UserService.uid +
-            '/cards.json', data: {action: 'delete-card', card: card}});
+            '/cards.json', data: {action: 'delete-card', fingerprint: fingerprint}});
     }
 
     function addCardImage(card) {

@@ -49,6 +49,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
 
         $scope.cards = CardService.cards;
         $scope.putNew = !(CardService.cards.length > 0);
+        $scope.showDeleteCardDialogue = false;
         $scope.cardsLoading = !(CardService.cards.length > 0);
 
         $scope.errorMessage = '';
@@ -259,24 +260,14 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         }
     }
 
-    $scope.showDeleteCard = function() {
-        deselectCards();
-        for (var i = 0; i < $scope.cards.length; i++) {
-            $scope.cards[i].showDelete = false;
+    $scope.deleteSelectedCard = function() {
+        $scope.showDeleteCardDialogue = false;
+        if ($scope.selectedCard) {
+            CardService.deleteCard($scope.selectedCard)
+                .success(function(response){
+                    CardService.fetch()
+                });
         }
-        this.card.showDelete = true;
-    };
-
-    $scope.hideDeleteCard = function() {
-        this.card.showDelete = false;
-    };
-
-    $scope.deleteCard = function() {
-        this.card.showDelete = false;
-        CardService.deleteCard(this.card)
-            .success(function(response){
-                CardService.fetch()
-            });
     };
 
     $scope.selectCard = function(allowToggle) {

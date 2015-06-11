@@ -518,8 +518,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
             return
         data = json.loads(self.request.body)
         if(data['action']=='delete-card'):
-            logging.error(data['card']['fingerprint'])
-            delete_card_paypal_vault(data['card']['fingerprint'])
+            delete_card_paypal_vault(data['fingerprint'])
 
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),

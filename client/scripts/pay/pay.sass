@@ -32,17 +32,6 @@
 
       input
         display: none
-      .closebox
-        z-index: 10
-        position: absolute
-        top: 0
-        left: 0
-        font-size: 8px
-        color: #ffffff
-        padding: 0 1px
-        margin: 2px
-        background-color: #666666
-        border: 1px solid #333
       label
         font-family: Gotham, sans-serif
         font-weight: 100
@@ -71,16 +60,6 @@
         span.last-four
           color: #444444
 
-    .card-delete
-      width: 77px
-      display: inline-block
-      font-size: 10px
-      color: #666666
-      white-space: nowrap
-      .card-delete-button
-        padding-right: 4px
-        border-right: 1px solid #cccccc
-
   div.loading
     margin: 2px auto 10px auto
 
@@ -91,9 +70,9 @@
     input:focus
       +box-shadow(rgba(0, 0, 0, 0), 0, 0, 0)
 
-    #new-credit-card-cb
+    #new-credit-card-cb, #delete-credit-card-toggle
       display: none
-    #new-credit-card-cb + label
+    #new-credit-card-cb + label, #delete-credit-card-toggle + label
       display: block
       margin-bottom: 0.5em
       padding-left: 0.5em
