@@ -38,7 +38,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.userId = UserService.uid;
     $scope.commentEditing = [];     //keeping as array for one day when we can upload multiple images
-    var imageData;
+    var imageData, commentName, commentImg, commentTxt;
 
     $scope.productMessage = '';
 
@@ -54,9 +54,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.editingComment = function(comment, editing) {
         //console && console.log && console.log(comment);
-        if (editing) {
+        if (editing) {                      //edit mode on
             $scope.commentEditing.push(comment);
-        } else if (!editing) {
+            commentName = comment.name;
+            commentTxt = comment.note;
+            commentImg = comment.img;
+        } else if (!editing) {              //saving edit
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
 
             //console && console.log && console.log(imageData);
@@ -77,6 +80,13 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
                 GiftStartService.updateComment(comment);
             }
         }
+    };
+
+    $scope.cancelEditComment = function(comment) {
+        $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
+        comment.name = commentName;
+        comment.note = commentTxt;
+        comment.img = commentImg;
     };
 
     $scope.isEditing = function(comment) {
