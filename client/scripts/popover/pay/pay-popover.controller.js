@@ -240,6 +240,8 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
 
     function cardsFetched() {
         $scope.cards = CardService.cards;
+        deselectCards();
+        //auto-select first card
         if ($scope.cards.length > 0) {
             $scope.selectCard.apply({card: $scope.cards[0]});
         }
@@ -258,6 +260,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
     }
 
     $scope.showDeleteCard = function() {
+        deselectCards();
         for (var i = 0; i < $scope.cards.length; i++) {
             $scope.cards[i].showDelete = false;
         }
@@ -269,20 +272,20 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
     };
 
     $scope.deleteCard = function() {
-        alert("TBD: delete "+this.card.last_four)
+        this.card.showDelete = false;
+        CardService.deleteCard(this.card)
+            .success(function(response){
+                CardService.fetch()
+            });
     };
 
     $scope.selectCard = function(allowToggle) {
         if (this.card.fingerprint == $scope.selectedCard) {
             deselectCards();
-            //auto-select first card
-            $scope.selectCard.apply({card: $scope.cards[0]});
         } else {
             deselectCards(this.card.fingerprint);
             this.card.selected = true;
             $scope.selectedCard = this.card.fingerprint;
         }
     };
-
-    //cardsFetched();
 }

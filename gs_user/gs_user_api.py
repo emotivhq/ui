@@ -8,6 +8,7 @@ from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
 from gs_user_stats import get_stats
 from gs_email.gs_email_comm import send
+from pay.pay_core import delete_card_paypal_vault
 from StoredProduct import StoredProduct
 from UserLogin import UserLogin
 from render_app import render_app
@@ -478,30 +479,47 @@ class ImageUploadHandler(webapp2.RequestHandler):
 
 
 class PaymentCardsHandler(webapp2.RequestHandler):
-    """ Handles requests for payment tokens """
+    """ Handles requests for payment tokens and deletion thereof """
 
     def get(self):
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
-
         if not all([bool(thing) for thing in [uid, token]]):
             logging.warning("Invalid data used for payment cards request:"
                             "\n{0}".format(self.request.body))
             self.response.set_status(400, "Invalid data")
             return
-
         # validate user and token
         if validate(uid, token, self.request.path):
             user = ndb.Key('User', uid).get()
-
         else:
             logging.warning("Invalid user credentials:\n{0}"
                             .format(self.request.cookies))
             self.response.set_status(403)
             return
-
         charge_tokens = get_card_tokens(user)
         self.response.write(json.dumps(charge_tokens))
+
+    def post(self):
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        if not all([bool(thing) for thing in [uid, token]]):
+            logging.warning("Invalid data used for payment cards request:"
+                            "\n{0}".format(self.request.body))
+            self.response.set_status(400, "Invalid data")
+            return
+        # validate user and token
+        if validate(uid, token, self.request.path):
+            user = ndb.Key('User', uid).get()
+        else:
+            logging.warning("Invalid user credentials:\n{0}"
+                            .format(self.request.cookies))
+            self.response.set_status(403)
+            return
+        data = json.loads(self.request.body)
+        if(data['action']=='delete-card'):
+            logging.error(data['card']['fingerprint'])
+            delete_card_paypal_vault(data['card']['fingerprint'])
 
 
 api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
