@@ -25,12 +25,24 @@
     span.card
       text-align: center
       display: inline-block
+      position: relative
       margin: 2px
       vertical-align: top
       +no-select()
 
       input
         display: none
+      .closebox
+        z-index: 10
+        position: absolute
+        top: 0
+        left: 0
+        font-size: 8px
+        color: #ffffff
+        padding: 0 1px
+        margin: 2px
+        background-color: #666666
+        border: 1px solid #333
       label
         font-family: Gotham, sans-serif
         font-weight: 100
@@ -58,6 +70,16 @@
         background: #dddddd
         span.last-four
           color: #444444
+
+    .card-delete
+      width: 77px
+      display: inline-block
+      font-size: 10px
+      color: #666666
+      white-space: nowrap
+      .card-delete-button
+        padding-right: 4px
+        border-right: 1px solid #cccccc
 
   div.loading
     margin: 2px auto 10px auto

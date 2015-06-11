@@ -2,11 +2,18 @@
 
     <div class="saved-cards" ng-show="cards.length > 0" ng-class="{hidden: putNew}">
         <span ng-repeat="card in cards" class="card">
-            <input ng-attr-id="{{card.fingerprint}}" type="checkbox" ng-checked="card.selected" value="{{card.fingerprint}}" ng-click="selectCard()"/>
-            <label ng-attr-for="{{card.fingerprint}}">
-                <img class="brand" ng-src="{{card.brandImage}}">
-                <span class="last-four">{{card.last_four}}</span>
-            </label>
+            <span ng-hide="card.showDelete">
+                <input ng-attr-id="{{card.fingerprint}}" type="checkbox" ng-checked="card.selected" value="{{card.fingerprint}}" ng-click="selectCard()"/>
+                <label ng-attr-for="{{card.fingerprint}}">
+                    <img class="brand" ng-src="{{card.brandImage}}">
+                    <span class="last-four">{{card.last_four}}</span>
+                </label>
+                <div class="closebox linky" ng-click="showDeleteCard()">X</div>
+            </span>
+            <span ng-show="card.showDelete" class="card-delete">
+                <span class="card-delete-button" ng-click="deleteCard()">DELETE</span>
+                <span class="card-cancel-button" ng-click="hideDeleteCard()">CANCEL</span>
+            </span>
         </span>
     </div>
 

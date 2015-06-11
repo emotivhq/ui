@@ -257,6 +257,21 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         }
     }
 
+    $scope.showDeleteCard = function() {
+        for (var i = 0; i < $scope.cards.length; i++) {
+            $scope.cards[i].showDelete = false;
+        }
+        this.card.showDelete = true;
+    };
+
+    $scope.hideDeleteCard = function() {
+        this.card.showDelete = false;
+    };
+
+    $scope.deleteCard = function() {
+        alert("TBD: delete "+this.card.last_four)
+    };
+
     $scope.selectCard = function(allowToggle) {
         if (this.card.fingerprint == $scope.selectedCard) {
             deselectCards();
