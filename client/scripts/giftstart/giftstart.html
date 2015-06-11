@@ -119,7 +119,7 @@
                 <input ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
             </div>
             <div class="contributors__edit">
-              <button class="contributors__edit__button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn)" ng-click="editingComment(pitchIn, true)">EDIT</button>
+              <button class="contributors__edit__button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</button>
               <button class="contributors__edit__button" ng-show="isEditing(pitchIn)" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
