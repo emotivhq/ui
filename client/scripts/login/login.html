@@ -1,7 +1,7 @@
 <div class="userlogin__form" ng-hide="$parent.showForgot || $parent.showReset">
     <form ng-submit="$parent.doLoginEmail()">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
-        <div class="userlogin__passwordwrap"><input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter your password" required></div>
+        <div class="userlogin__passwordwrap"><input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Enter your password" required></div>
         <a class="userlogin__forgot linky" ng-click="$parent.showForgot=true">Forgot password</a>
         <br />
         <div class="userlogin__wrapper">
@@ -26,8 +26,8 @@
     <form ng-submit="$parent.doResetPassword()">
         <input class="userlogin__email" type="hidden" name="resetcode" ng-model="$parent.resetCode" placeholder="Enter the reset code" required />
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
-        <div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter a New Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
-        <!--<input class="userlogin__password" type="password" name="password" ng-model="$parent.reenterpassword" placeholder="Re-enter the Password" required>-->
+        <div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Enter a New Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
+        <!--<input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.reenterpassword" placeholder="Re-enter the Password" required>-->
         <a class="userlogin__forgot linky" ng-click="$parent.showReset=false">Cancel</a>
         <div class="userlogin__message">{{$parent.message}}</div>
         <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Change Password</button>
