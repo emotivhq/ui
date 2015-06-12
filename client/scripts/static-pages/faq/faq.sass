@@ -11,12 +11,32 @@ div.faq
       text-decoration: underline
 
   .main
-    padding: 0 75px
+    padding: 7px 75px
+    @include apply-at-size("desktop")
+      column-count: 2
+      -webkit-column-count: 2
+      -moz-column-count: 2
+      -webkit-margin-bottom-collapse: separate
 
     h1
-      margin-top: 1em
-      margin-bottom: 10px
+      color: $gs-darkgreen
+      font: 1.5em Gotham, sans-serif
+      padding-top: 1em
+      padding-bottom: 10px
 
     h2
       @extend .linky
-      font-size: 24px
+      font-size: 16px
+      padding: 15px 0 5px 0
+      &:hover, &.open
+        color: $gs-green
+      img
+        width: 12px
+        margin-right: 5px
+
+    p
+      margin-left: 30px
+
+    .sections
+      display: inline-block
+      width: 99%

@@ -34,9 +34,11 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.isMobile = device.mobile();
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
+    $scope.imageUpdated = imageUpdated;
 
     $scope.userId = UserService.uid;
-    $scope.commentEditing = [];
+    $scope.commentEditing = [];     //keeping as array for one day when we can upload multiple images
+    var imageData, commentName, commentImg, commentTxt;
 
     $scope.productMessage = '';
 
@@ -46,14 +48,49 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.showPayBox = false;
 
+    function imageUpdated(data) {
+        imageData = data;
+    }
+
     $scope.editingComment = function(comment, editing) {
         //console && console.log && console.log(comment);
-        if (editing) {
+        if (editing) {                      //edit mode on
             $scope.commentEditing.push(comment);
-        } else if (!editing) {
+            commentName = comment.name;
+            commentTxt = comment.note;
+            commentImg = comment.img;
+        } else if (!editing) {              //saving edit
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
-            GiftStartService.updateComment(comment);
+
+            //console && console.log && console.log(imageData);
+            if (imageData) {
+                comment.img = imageData;
+                GiftStartService.updateCommentImage(comment, imageData)
+                    .success(function(response) {
+                        Analytics.track('campaign', 'pitchin image update succeeded');
+                        comment.img = response;
+                        GiftStartService.updateComment(comment);
+                    })
+                    .error(function() {
+                        Analytics.track('campaign', 'pitchin image update failed');
+                        GiftStartService.updateComment(comment);
+                    });
+                imageData = null;
+            } else {
+                GiftStartService.updateComment(comment);
+            }
         }
+    };
+
+    $scope.cancelEditComment = function(comment) {
+        $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
+        comment.name = commentName;
+        comment.note = commentTxt;
+        comment.img = commentImg;
+    };
+
+    $scope.isEditing = function(comment) {
+        return $scope.commentEditing.indexOf(comment) != -1;
     };
 
     $scope.getTileCost = function() {

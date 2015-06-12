@@ -29,6 +29,7 @@ function cardService($rootScope, $http, UserService, Analytics) {
 
     this.cards = [];
     this.fetch = fetchCards;
+    this.deleteCard = deleteCard;
 
     function fetchCards() {
         Analytics.track('client', 'user cards fetch started');
@@ -40,6 +41,17 @@ function cardService($rootScope, $http, UserService, Analytics) {
                 Analytics.track('client', 'user cards fetch failed');
 
             });
+    }
+
+    function deleteCard(fingerprint) {
+        Analytics.track('client', 'user card deleted');
+        var deleteIndex = -1;
+        for (var i = 0; i < this.cards.length; i++) {
+            if(this.cards[i].fingerprint == fingerprint) {deleteIndex=i;}
+        }
+        if(deleteIndex>=0) {this.cards.splice(deleteIndex, 1);}
+        return $http({method: 'POST', url: '/users/' + UserService.uid +
+            '/cards.json', data: {action: 'delete-card', fingerprint: fingerprint}});
     }
 
     function addCardImage(card) {

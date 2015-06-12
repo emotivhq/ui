@@ -73,6 +73,36 @@ function GiftsGivenBarController($scope) {
             "Andrea and John want a Vitamix for their wedding",
             "https://www.giftstarter.co/giftstart/Andrea-and-John-want-a-Vitamix-for-their-wedding",
             "https://storage.googleapis.com/giftstarter-pictures/p/2.jpg"
+        ),
+        new campaign(
+            "The Truffle Treasure",
+            "https://www.giftstarter.co/giftstart/The-Truffle-Treasure-1",
+            "https://storage.googleapis.com/giftstarter-pictures/p/The-Truffle-Treasure-1.jpeg"
+        ),
+        new campaign(
+            "Spencer's Birthday Gift- Iphone 6!",
+            "https://www.giftstarter.co/giftstart/Spencers-Birthday",
+            "https://storage.googleapis.com/giftstarter-pictures/p/390.png"
+        ),
+        new campaign(
+            "Jeffrey Song's Birthday!",
+            "https://www.giftstarter.co/giftstart/Jeffrey-Songs-Birthday",
+            "https://storage.googleapis.com/giftstarter-pictures/p/Jeffrey-Songs-Birthday.jpeg"
+        ),
+        new campaign(
+            "Sending our love to our newly minted Texan!",
+            "https://www.giftstarter.co/giftstart/Sending-our-love-to-our-newly-minted-Texan",
+            "https://storage.googleapis.com/giftstarter-pictures/p/487.jpeg"
+        ),
+        new campaign(
+            "Birthday Love for Arry",
+            "https://www.giftstarter.co/giftstart/Birthday-Love-for-Arry",
+            "https://storage.googleapis.com/giftstarter-pictures/p/488.jpeg"
+        ),
+        new campaign(
+            "Amanda & SoonSol's wedding",
+            "https://www.giftstarter.co/giftstart/Amanda--SoonSols-wedding",
+            "https://storage.googleapis.com/giftstarter-pictures/p/385.jpeg"
         )
     ];
 }

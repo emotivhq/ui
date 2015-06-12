@@ -6,6 +6,7 @@ $wrapper-padding: 1em
 
 footer
   background-color: #333
+  -webkit-font-smoothing: antialiased
 
   .footblock
     display: inline-block
@@ -16,16 +17,15 @@ footer
     font-size: 12px
     line-height: 22px
     .socialicon
-      width: 20px
-      height: 20px
+      margin-right: 6px
+      width: 28px
+      vertical-align: middle
     .logo
       width: 50px
       height: 50px
     &.left
-      width: 73%
-      margin-left: 5%
+      width: 80%
       .footcol
-        height: 100px
         @media screen and (max-width: $phone-tablet-boundary)
           margin: 0 1% 40px 6%
       @media screen and (max-width: $phone-tablet-boundary)
@@ -42,20 +42,19 @@ footer
   .footcol
     display: inline-block
     width: 15%
-    margin: 0 0 0 9%
+    margin: 0 0 0 6%
     text-align: left
     vertical-align: top
-    text-transform: capitalize
     color: #e2e2e2
-    line-height: 22px
+    line-height: 26px
     #mce-EMAIL
-      max-width: 120px
+      width: 100%
     @media screen and (max-width: $phone-boundary)
       width: 42%
     .colhead
       display: block
       margin-bottom: 10px
-      font-size: 14px
+      font-size: 16px
       text-transform: uppercase
       font-family: "Roboto", sans-serif
     input, button
@@ -63,16 +62,16 @@ footer
       vertical-align: middle
       border: 1px solid #666 !important
     input
-      padding: 2px 4px
+      padding: 8px
       margin-top: 8px
       font-size: 12px
       line-height: 14px
       color: #222
     button
-      padding: 2px
-      width: 120px
-      font-size: 11px
-      font-family: "Roboto Condensed", sans-serif
+      padding: 8px
+      margin-top: 8px
+      width: 100%
+      font-size: 14px
       line-height: 16px
       text-transform: uppercase
       color: #fff
@@ -85,6 +84,13 @@ footer
       white-space: nowrap
     .nobr
       white-space: nowrap
+    &.social
+      a
+        line-height: 42px
+    &.joinus
+      width: 230px
+      #desc
+        font-family: Gotham, sans-serif
 
   div.patent-pending
     text-align: center

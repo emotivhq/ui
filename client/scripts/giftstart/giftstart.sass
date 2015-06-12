@@ -454,7 +454,7 @@ div.giftstart.wrapper
         text-align: center
 
       &__img
-        width: 26%
+        width: 80%
         margin: 8% 0 1%
         +border-radius(50%)
         border: 2px solid #fff
@@ -462,10 +462,29 @@ div.giftstart.wrapper
         cursor: pointer
 
       &__edit
+        bottom: 0
+        right: 0
+        position: absolute
         text-align: right
 
         &__button
           margin: 10px
+
+      &__info
+        input
+          width: 100%
+
+      &__figure
+        position: relative
+        margin: 0 auto
+        height: 10rem
+        width: 10rem
+        text-align: center
+
+        gs-image-upload
+          padding-bottom: 0 !important
+          height: 10rem !important
+          width: 10rem !important
 
     .nocontributors
       color: #aaa
@@ -475,7 +494,6 @@ div.giftstart.wrapper
   .btn
     width: 170px
     margin: 20px auto 0
-    //border-radius: 20px
     border-color: #aeaeae
     &__link
       text-transform: uppercase

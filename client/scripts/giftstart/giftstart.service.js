@@ -388,15 +388,23 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
             action: 'pitch-in-note-update',
             uid: UserService.uid
         };
-        //Analytics.track('campaign', 'campaign update sent');
-
         $http({method: 'POST', url: '/pay', data: data})
             .success(function(response) {
-                //Analytics.track('campaign', 'campaign update succeeded');
+                Analytics.track('campaign', 'pitchin comment update succeeded');
             })
             .error(function() {
-                //Analytics.track('campaign', 'campaign update failed');
+                Analytics.track('campaign', 'pitchin comment update failed');
             })
+    };
+
+    this.updateCommentImage = function(pitchIn, imageData) {
+        console && console.log && console.log(imageData);
+        var contentType = imageData.split(';')[0].replace('data:', '');
+        var data = {
+            payment: pitchIn, action: 'pitch-in-img-upload',
+            uid: UserService.uid, contenttype: contentType, imgdata: imageData
+        };
+        return $http({method: 'POST', url: '/pay', data: data});
     };
 
     this.setThanksImage = function(img) {self.thanksImage = img};
