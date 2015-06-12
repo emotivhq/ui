@@ -13,7 +13,7 @@
     </div>
     <div>
         <input id="skipNote" type="checkbox" ng-model="skipNote">
-        <label for="skipNote">No thanks, just put my name on the group card.</label>
+        <label for="skipNote">No thanks, just put my name on the card.</label>
     </div>
     <button class="large white-border" ng-click="action.submit()" ng-disabled="!skipNote && !noteText || noteText.length > 250 " ng-class="{disabled: !skipNote && !noteText}">Sign it!</button>
     <!-- div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div -->
