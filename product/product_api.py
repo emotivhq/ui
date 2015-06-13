@@ -52,6 +52,14 @@ class ProductUrlHandler(webapp2.RequestHandler):
         self.response.write(json.dumps(product_fetch.product(url)))
 
 
+class ProductAdminHandler(webapp2.RequestHandler):
+    """perform a keyword search and return as JSON [{price,retailer,imgUrl,description,title,url}]"""
+
+    def get(self):
+        n = product_search.copy_index(product_search.get_static_product_index(),product_search.get_dynamic_product_index())
+        self.response.write("OK: "+str(n))
+
+
 class ProductSearchHandler(webapp2.RequestHandler):
     """perform a keyword search and return as JSON [{price,retailer,imgUrl,description,title,url}]"""
 
@@ -64,5 +72,6 @@ class ProductSearchHandler(webapp2.RequestHandler):
 handler = webapp2.WSGIApplication([
     ('/products/urls/.*.json', ProductUrlHandler),
     ('/products/.*.json', ProductSearchHandler),
+    ('/products/admin', ProductAdminHandler),
     ('/product', ProductHandler),
 ], debug=True)
