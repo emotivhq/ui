@@ -7,7 +7,7 @@
 // makeGiftStarterButton
 // Fills in GiftStarter button on product pages.
 // Button tag and script source should be:
-// <script src="https://www.giftstarter.co/scripts/butter/button.js"></script>
+// <script src="https://www.giftstarter.com/scripts/butter/button.js"></script>
 // <script>
 //     window.giftStartButton = {
 //         productUrl: 'http://example.com/product/12345',
@@ -29,7 +29,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     if (buttonId == undefined || buttonId == null) {
         buttonId = '';
     }
-    var gs_domain = 'https://www.giftstarter.co';
+    var gs_domain = 'https://www.giftstarter.com';
     var source = 'butterLONDON';
     var gsButtonId = 'gsbutton' + buttonId;
     var button = document.querySelector('#gsbutton' + buttonId);
@@ -110,7 +110,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
             .replace(/\//g, '_')
             .replace(/=/g, '.');
         var elm = document.createElement('script');
-        elm.src = 'https://www.giftstarter.co/a/' + encodedData;
+        elm.src = 'https://www.giftstarter.com/a/' + encodedData;
         elm.onload = function() {document.head.removeChild(elm)};
         document.head.appendChild(elm);
     }

@@ -1,6 +1,6 @@
 """
 provide a preview of any email template specified in URL, along with specified GET params
-example URL: /email/preview/campaign_complete_user_not_funded.html?&campaign_name=A+Scanner+for+Katherine&campaign_link=https%3A%2F%2Fwww.giftstarter.co%2Fgiftstart%2FA-scanner-for-Katherine
+example URL: /email/preview/campaign_complete_user_not_funded.html?&campaign_name=A+Scanner+for+Katherine&campaign_link=https%3A%2F%2Fwww.giftstarter.com%2Fgiftstart%2FA-scanner-for-Katherine
 """
 __author__ = 'GiftStarter'
 

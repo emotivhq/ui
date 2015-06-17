@@ -17,7 +17,7 @@
 //         publicKey: 'XXXX-XXXX-XXXX-XXXX-XXXX'
 //     };
 // </script>
-// <script src="https://www.giftstarter.co/scripts/button/general.js"></script>
+// <script src="https://www.giftstarter.com/scripts/button/general.js"></script>
 // <gs-button id="gsbutton" class="gsbutton" style="display: none;"></gs-button>
 // Recommended styling:
 // <style>gs-button{height: 40px;border: 2px solid #df484b; border-radius: 4px;}</style>
@@ -34,7 +34,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     if (buttonId == undefined || buttonId == null) {
         buttonId = '';
     }
-    var gs_domain = 'https://www.giftstarter.co';
+    var gs_domain = 'https://www.giftstarter.com';
     var source = location.host;
     var gsButtonId = 'gsbutton' + buttonId;
     var button = document.querySelector('#gsbutton' + buttonId);
@@ -116,7 +116,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
             .replace(/\//g, '_')
             .replace(/=/g, '.');
         var elm = document.createElement('script');
-        elm.src = 'https://www.giftstarter.co/a/' + encodedData;
+        elm.src = 'https://www.giftstarter.com/a/' + encodedData;
         elm.onload = function() {document.head.removeChild(elm)};
         document.head.appendChild(elm);
     }

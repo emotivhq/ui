@@ -85,7 +85,7 @@ class FacebookShareHandler(webapp2.RequestHandler):
         @param deny: FB privacy['deny']
         :return:
         """
-        gift_url = "https://www.giftstarter.co/giftstart/"+gift_path
+        gift_url = "https://www.giftstarter.com/giftstart/"+gift_path
         post_url = "https://graph.facebook.com/me/dev-giftstarter:invite"
         privacy = {'value': 'CUSTOM', 'friends': 'FRIENDS_OF_FRIENDS'}
         if(deny):

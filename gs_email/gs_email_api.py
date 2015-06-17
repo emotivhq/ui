@@ -103,9 +103,9 @@ class ContactUsHandler(webapp2.RedirectHandler):
             requests.put(config['email_url'],
                  data=json.dumps({
                      'subject': "Contact Us Message",
-                     'sender': "giftconcierge@giftstarter.co",
+                     'sender': "giftconcierge@giftstarter.com",
                      'mime_type': 'html',
-                     'to': "giftconcierge@giftstarter.co",
+                     'to': "giftconcierge@giftstarter.com",
                      'template_name': "contact_us",
                      'template_kwargs': { "from_email" : from_email,
                                           "msg" : msg }

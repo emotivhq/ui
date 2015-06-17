@@ -48,7 +48,7 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
                 ),
                 new question(
                     "Where do I go if I need help?",
-                    "We are always here to help!  Email us at <a href=\"mailto:giftconcierge@giftstarter.co\">giftconcierge@giftstarter.co</a>.  We are also on standby on <a href=\"https://twitter.com/GiftStarter\">Twitter</a> (@GiftStarter) and <a href=\"www.facebook.com/giftstart\">Facebook</a> (www.facebook.com/giftstart).  Also, feel free to call us at <a href=\"tel:2064864849\">206-486-4849</a>!"
+                    "We are always here to help!  Email us at <a href=\"mailto:giftconcierge@giftstarter.com\">giftconcierge@giftstarter.com</a>.  We are also on standby on <a href=\"https://twitter.com/GiftStarter\">Twitter</a> (@GiftStarter) and <a href=\"www.facebook.com/giftstart\">Facebook</a> (www.facebook.com/giftstart).  Also, feel free to call us at <a href=\"tel:2064864849\">206-486-4849</a>!"
                 )
             ]
         ),

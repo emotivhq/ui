@@ -97,7 +97,7 @@ example_giftstart = {
     'rows': 3,
     'shipping_state': 'WA',
     'shipping_zip': '98109',
-    'gc_email': 'test@giftstarter.co',
+    'gc_email': 'test@giftstarter.com',
 }
 
 
@@ -152,7 +152,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -203,7 +203,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.unnamed_user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -243,7 +243,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
             'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
-            'emailAddress': 'test@giftstarter.co',
+            'emailAddress': 'test@giftstarter.com',
             'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -282,7 +282,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -314,7 +314,7 @@ class PayTestHandlers(unittest.TestCase):
         request1.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -360,7 +360,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False,
                 'saveCreditCard': True
             },
@@ -443,7 +443,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })
@@ -479,7 +479,7 @@ class PayTestHandlers(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': self.user.uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })

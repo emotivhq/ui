@@ -1,9 +1,9 @@
 
-team_notification_email:  'team@giftstarter.co'
+team_notification_email:  'team@giftstarter.com'
 product_api_url:          'https://product-dev-gift-starter.appspot.com/static'
 
 app_url:                  'https://www.giftstarter.com'
-email_url:                'http://www.giftstarter.co/email/send.json'
+email_url:                'http://www.giftstarter.com/email/send.json'
 storage_url:              '/giftstarter-pictures/'
 
 facebook_app:             'giftstarterapp'
