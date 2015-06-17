@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.0.0",
   "authors": [
-    "GiftStarter <concierge@giftstarter.co>"
+    "GiftStarter <admin@giftstarter.com>"
   ],
   "description": "GiftStarter Client App",
   "keywords": [
@@ -10,7 +10,7 @@
     "client"
   ],
   "license": "None",
-  "homepage": "giftstarter.co",
+  "homepage": "giftstarter.com",
   "private": true,
   "ignore": [
     "**/.*",

@@ -22,7 +22,7 @@ function StaffPicksController($scope, $timeout) {
             "4moms® Breeze®",
             "This is the one thing I repeatedly wish I would have splurged on. Typical pack and plays are such a pain to set up and take down, I long for the ease of this one every time!",
             "/assets/about/img/christie.png",
-            "https://www.giftstarter.co/giftideas/baby/4moms-Breeze-Playard"
+            "https://www.giftstarter.com/giftideas/baby/4moms-Breeze-Playard"
         ),
         new product(
             "/assets/staffpicks/lumixgh4.jpg",
@@ -30,7 +30,7 @@ function StaffPicksController($scope, $timeout) {
             "Lumix GH4",
             "It's an amazing video-centric DSLR. The Lumix GH4 shoots 4k at 24p, supports VFR and unlimited length, and boasts clean HDMI out and onboard WiFi & NFC – all at half the price of a Canon 5D!",
             "/assets/about/img/jon.png",
-            "https://www.giftstarter.co/search/lumix%20gh4"
+            "https://www.giftstarter.com/search/lumix%20gh4"
         ),
         new product(
             "/assets/giftideas/category/electronics/apple-watch-milanese.jpg",
@@ -38,7 +38,7 @@ function StaffPicksController($scope, $timeout) {
             "The Apple Watch Milanese",
             "I love all things tech - so I gotta try it! This band is something I would totally wear every day and even out to a dinner party. I bet my husband would steal it and wear it sometimes too.",
             "/assets/about/img/arry.png",
-            "https://www.giftstarter.co/giftideas/electronics/Apple-Watch-Milanese"
+            "https://www.giftstarter.com/giftideas/electronics/Apple-Watch-Milanese"
         ),
         new product(
             "/assets/staffpicks/hue-personal-wireless-light.jpg",
@@ -49,7 +49,7 @@ function StaffPicksController($scope, $timeout) {
             "The lights sync with an alarm, sets on schedules, " +
             "and the IFTTT connectivity to other 3rd party apps is mindblowing.",
             "/assets/about/img/roy.png",
-            "https://www.giftstarter.co/giftideas/electronics/Hue-Personal-Wireless-Light"
+            "https://www.giftstarter.com/giftideas/electronics/Hue-Personal-Wireless-Light"
         ),
         new product(
             "/assets/staffpicks/uppababy-stroller-2015.jpg",
@@ -57,7 +57,7 @@ function StaffPicksController($scope, $timeout) {
             "UPPAbaby Vista Stroller 2015",
             "It’s the only stroller you’ll ever need. First kid? Use the seat, carseat, or bassinet. Two kids? Attach a second of any of those. Three kids? Add the skateboard to the back. It looks right no matter what configuration you have, and it’s full of features.",
             "/assets/about/img/christie.png",
-            "https://www.giftstarter.co/giftideas/baby/UPPAbaby-Stroller-2015"
+            "https://www.giftstarter.com/giftideas/baby/UPPAbaby-Stroller-2015"
         ),
         new product(
             "/assets/staffpicks/steelseries-headset-white-thumb.jpg",
@@ -65,7 +65,7 @@ function StaffPicksController($scope, $timeout) {
             "SteelSeries Headphones with Inline Mic",
             "This is a great gift if you need headphones for gaming, streaming, or everyday. It's got inline mic for streaming, looks nice, and is very comfortable.",
             "/assets/about/img/sharon.png",
-            "https://www.giftstarter.co/giftideas/electronics/SteelSeries-Headset-White"
+            "https://www.giftstarter.com/giftideas/electronics/SteelSeries-Headset-White"
         ),
         new product(
             "/assets/staffpicks/brother-thread-serger.jpg",
@@ -73,7 +73,7 @@ function StaffPicksController($scope, $timeout) {
             "Brother Thread Serger",
             "I have my mother’s old sewing machine, but I find for many of my projects a serger would be ideal. This one is very user friendly for novices, with advanced features for experienced users.",
             "/assets/about/img/christie.png",
-            "https://www.giftstarter.co/giftideas/forher/Brother-Thread-Serger"
+            "https://www.giftstarter.com/giftideas/forher/Brother-Thread-Serger"
         ),
         new product(
             "/assets/staffpicks/guava-lotus-everywhere-crib.jpg",
@@ -81,7 +81,7 @@ function StaffPicksController($scope, $timeout) {
             "Lotus Everywhere Crib",
             "Transforms from backpack to standard-size crib in under a minute. Lightweight yet stable, with zippered mesh sides and an optional sun-shade, it's perfect for travel AND as a primary sleep-space or play area for your little one.",
             "/assets/about/img/jon.png",
-            "https://www.giftstarter.co/giftideas/baby/Guava-Lotus-Everywhere-Crib"
+            "https://www.giftstarter.com/giftideas/baby/Guava-Lotus-Everywhere-Crib"
         ),
         new product(
             "/assets/staffpicks/deathadder-gaming-mouse-thumb.jpg",
@@ -89,7 +89,7 @@ function StaffPicksController($scope, $timeout) {
             "Razer Gaming Mouse",
             "This is the ultimate mouse for gaming and everyday use and it's ergonomic, too!!",
             "/assets/about/img/sharon.png",
-            "https://www.giftstarter.co/giftideas/electronics/DeathAdder-Gaming-Mouse"
+            "https://www.giftstarter.com/giftideas/electronics/DeathAdder-Gaming-Mouse"
         )
     ];
     var n = 0;

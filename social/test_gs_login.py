@@ -35,7 +35,7 @@ example_giftstart = {
     'rows': 3,
     'shipping_state': 'WA',
     'shipping_zip': '98109',
-    'gc_email': 'test@giftstarter.co',
+    'gc_email': 'test@giftstarter.com',
 }
 
 # MOCKS 4DAYZ

@@ -34,7 +34,7 @@ class BlogHandler(webapp2.RequestHandler):
         blog_subdomain="content"
         blog_path_notrail = "/blog"
         blog_path=blog_path_notrail+"/"
-        blog_subdomain_url = "http://"+blog_subdomain+".giftstarter.co/"
+        blog_subdomain_url = "http://"+blog_subdomain+".giftstarter.com/"
         blog_path_url = self.request.host_url+blog_path
         blog_path_url_noprotocol = re.sub("https?://","",blog_path_url)
         fetch_url = self.request.path.replace(blog_path_notrail,blog_subdomain_url,1)
@@ -46,18 +46,18 @@ class BlogHandler(webapp2.RequestHandler):
             logging.info('ERROR: '+fetched.status_code+' for '+fetch_url)
         content = fetched.content
         #replace all subdomain links
-        content = re.sub("(<a|<link rel=\"canonical\"|<link rel=\"alternate\"|<atom:link)( [^>]*href\s*=\s*['\"])(https?://"+blog_subdomain+"\.giftstarter\.co)/?", "\\1\\2"+blog_path_url,content)
-        content = re.sub("(<a class=\"ssba[^>]*)"+blog_subdomain+"\.giftstarter\.co/?", "\\1"+blog_path_url_noprotocol,content)
-        content = content.replace('<meta property="og:url" content="http://'+blog_subdomain+'.giftstarter.co/','<meta property="og:url" content="'+blog_path_url)
-        content = content.replace('<link>http://'+blog_subdomain+'.giftstarter.co','<link>'+blog_path_url)
-        content = content.replace('<comments>http://'+blog_subdomain+'.giftstarter.co','<comments>'+blog_path_url)
-        content = content.replace('<wfw:commentRss>http://'+blog_subdomain+'.giftstarter.co','<wfw:commentRss>'+blog_path_url)
+        content = re.sub("(<a|<link rel=\"canonical\"|<link rel=\"alternate\"|<atom:link)( [^>]*href\s*=\s*['\"])(https?://"+blog_subdomain+"\.giftstarter\.com)/?", "\\1\\2"+blog_path_url,content)
+        content = re.sub("(<a class=\"ssba[^>]*)"+blog_subdomain+"\.giftstarter\.com/?", "\\1"+blog_path_url_noprotocol,content)
+        content = content.replace('<meta property="og:url" content="http://'+blog_subdomain+'.giftstarter.com/','<meta property="og:url" content="'+blog_path_url)
+        content = content.replace('<link>http://'+blog_subdomain+'.giftstarter.com','<link>'+blog_path_url)
+        content = content.replace('<comments>http://'+blog_subdomain+'.giftstarter.com','<comments>'+blog_path_url)
+        content = content.replace('<wfw:commentRss>http://'+blog_subdomain+'.giftstarter.com','<wfw:commentRss>'+blog_path_url)
         content = content.replace(blog_path_url+'/',blog_path_url)
         #sitemap xml files
         if(re.match('.*sitemap.*\.xml',fetch_url)):
-            content = content.replace("http://"+blog_subdomain+".giftstarter.co",self.request.host_url+blog_path_notrail)
+            content = content.replace("http://"+blog_subdomain+".giftstarter.com",self.request.host_url+blog_path_notrail)
         #avoid providing non-SSL content in SSL page
-        content = content.replace("http://"+blog_subdomain+".giftstarter.co","https://"+blog_subdomain+".giftstarter.co")
+        content = content.replace("http://"+blog_subdomain+".giftstarter.com","https://"+blog_subdomain+".giftstarter.com")
         content = content.replace("http://fonts.googleapis.com","https://fonts.googleapis.com")
         logging.info("Headers: {0}".format(fetched.headers))
         #headers['content-type'] = fetched.headers['content-type']

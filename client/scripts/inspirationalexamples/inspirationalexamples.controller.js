@@ -23,7 +23,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "6 months of seasonal beauty products for Marion's birthday",
             "6 Boxes of Julep Maven",
             "11",
-            "https://www.giftstarter.co/giftstart/6-months-of-seasonal-beauty-products-for-Marions-birthday",
+            "https://www.giftstarter.com/giftstart/6-months-of-seasonal-beauty-products-for-Marions-birthday",
             "/assets/inspirationalexamples/6-months-of-beauty.png"
         ),
         new product(
@@ -32,7 +32,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "T1 HIMARS Smoke Break",
             "Gurkha Special Ops",
             "3",
-            "https://www.giftstarter.co/giftstart/T1-HIMARS-Smoke-Break",
+            "https://www.giftstarter.com/giftstart/T1-HIMARS-Smoke-Break",
             "/assets/inspirationalexamples/t1-himars-smoke-break.png"
         ),
         new product(
@@ -41,7 +41,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "Jessi's 30th Birthday Blowout!",
             "TIFFANY 1837™ Circle Pendant",
             "7",
-            "https://www.giftstarter.co/giftstart/Jessis-30th-Birthday-Blowout",
+            "https://www.giftstarter.com/giftstart/Jessis-30th-Birthday-Blowout",
             "/assets/inspirationalexamples/jessi-30th-birthday-blowout.png"
         ),
         new product(
@@ -50,7 +50,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "Let's help Wix move!",
             "Gift of Moving by Ghostruck (1br move within 30 mi of Seattle)",
             "15",
-            "https://www.giftstarter.co/giftstart/Lets-help-Wix-move",
+            "https://www.giftstarter.com/giftstart/Lets-help-Wix-move",
             "/assets/inspirationalexamples/lets-help-wix-move.png"
         ),
         new product(
@@ -59,7 +59,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "Just when you thought Quinn and Silas' pictures couldn't get any more amazing...",
             "Canon EF 135mm f/2L USM Lens for Canon SLR Cameras",
             "8",
-            "https://www.giftstarter.co/giftstart/Just-when-you-thought-Quinn-and-Silas-pictures-couldnt-get-any-more-amazing",
+            "https://www.giftstarter.com/giftstart/Just-when-you-thought-Quinn-and-Silas-pictures-couldnt-get-any-more-amazing",
             "/assets/inspirationalexamples/just-when-you-thought.png"
         ),
         new product(
@@ -68,7 +68,7 @@ function InspirationalExamplesController($scope, $timeout) {
             "Run Nikki Run!!!",
             "Garmin Forerunner 220 - Black/Red Bundle (Includes Heart Rate Monitor)",
             "11",
-            "https://www.giftstarter.co/giftstart/Run-Nikki-Run",
+            "https://www.giftstarter.com/giftstart/Run-Nikki-Run",
             "/assets/inspirationalexamples/run-nikki-run.png"
         )
     ];

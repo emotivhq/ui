@@ -34,7 +34,7 @@ function ConciergeController($scope, $http) {
             })
             .success(function (res) {
                 resetForm();
-                $scope.msg = "Thank you! We'll do our best to respond on the same day, definitely within 24 hours. Please add giftconcierge@giftstarter.co to your address book to make sure you'll receive the reply."
+                $scope.msg = "Thank you! We'll do our best to respond on the same day, definitely within 24 hours. Please add giftconcierge@giftstarter.com to your address book to make sure you'll receive the reply."
             })
             .error(function (res) {
                 $scope.msg = res['error'];

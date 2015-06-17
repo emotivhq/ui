@@ -85,7 +85,7 @@ class ThankApiTestHandler(unittest.TestCase):
                          gs.service_fee
         gs.overlay_columns = 4
         gs.overlay_rows = 4
-        gs.gc_email = 'test@giftstarter.co'
+        gs.gc_email = 'test@giftstarter.com'
         gs.shipping_state = 'WA'
         gs.shipping_zip = '98109'
         gs.put()
@@ -236,7 +236,7 @@ class ThankApiTestHandler(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid,
-                'parts': parts, 'emailAddress': 'test@giftstarter.co',
+                'parts': parts, 'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })

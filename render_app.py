@@ -62,7 +62,7 @@ def render_app(request):
         '/concierge': 'Gift Concierge provides fast and friendly for all of your gifting needs to make your group gift campaign a success.',
         '/howitworks': "GiftStarter is the best way to bring family and friends together to give an amazing gift. You start it, and we help you with the rest. You don't have to collect the money or chase people down for cash.",
         '/terms': "GiftStarter's mission is to provide the #1 online gifting experience service. GiftStarter.com websites exist for the purpose of providing a personal gifting experience with one or more people together.",
-        '/privacy': 'This page sets forth the Privacy Policy for the website at GiftStarter.co - we take the responsibility of having your personal information very seriously.',
+        '/privacy': 'This page sets forth the Privacy Policy for the website at GiftStarter.com - we take the responsibility of having your personal information very seriously.',
         '/press': "GiftStarter has been fortunate enough to be featured by some of the most prestigious media outlets in the world. See what all of the gifting buzz is about."
     }
     try:
@@ -146,7 +146,7 @@ def render_app_with_giftstart(request):
     else:
         response = 'Error: 404<br>Resource not found!  Go to GiftStarter ' \
                    'homepage via ' \
-                   '<a href="http://giftstarter.co">this link</a>.'
+                   '<a href="http://giftstarter.com">this link</a>.'
 
     return response
 
