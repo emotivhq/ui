@@ -5,7 +5,7 @@ import webapp2
 from product.product_search import SearchProduct
 from product.product_search import delete_from_index
 from product.product_search import add_to_index
-from product.product_search import get_product_index
+from product.product_search import get_static_product_index
 from google.appengine.ext import ndb
 import logging
 from uuid import uuid4
@@ -60,7 +60,7 @@ class ManualUploadHandler(webapp2.RequestHandler):
                 search_docs.append(product.to_search_document(str(uuid4())))
 
         logging.info("Adding {0} manual products".format(len(search_docs)))
-        add_to_index(get_product_index(), search_docs)
+        add_to_index(get_static_product_index(), search_docs)
         logging.info("Indexing {0} manual products".format(len(products)))
         ndb.put_multi(products)
 
@@ -109,7 +109,7 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
                 search_docs.append(product.to_search_document(str(uuid4())))
 
         logging.info("Adding {0} sturt products".format(len(search_docs)))
-        add_to_index(get_product_index(), search_docs)
+        add_to_index(get_static_product_index(), search_docs)
         logging.info("Indexing {0} sturt products".format(len(products)))
         ndb.put_multi(products)
 
@@ -128,7 +128,7 @@ class ManualDeleteHandler(webapp2.RequestHandler):
                     .fetch(100)
                 remaining = len(prods)
                 logging.info("Unindexing {0} {1} products".format(remaining, retailer))
-                delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
+                delete_from_index(get_static_product_index(), [prod.doc_id for prod in prods])
                 logging.info("Deleting {0} {1} products".format(remaining, retailer))
                 ndb.delete_multi([prod.key for prod in prods])
 
@@ -142,6 +142,6 @@ class SturtevantsDeleteHandler(webapp2.RequestHandler):
                 .fetch(100)
             remaining = len(prods)
             logging.info("Unindexing {0} sturt products".format(remaining))
-            delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
+            delete_from_index(get_static_product_index(), [prod.doc_id for prod in prods])
             logging.info("Deleting {0} sturt products".format(remaining))
             ndb.delete_multi([prod.key for prod in prods])
