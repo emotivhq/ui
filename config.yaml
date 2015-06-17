@@ -2,7 +2,7 @@
 team_notification_email:  'team@giftstarter.co'
 product_api_url:          'https://product-dev-gift-starter.appspot.com/static'
 
-app_url:                  'https://www.giftstarter.co'
+app_url:                  'https://www.giftstarter.com'
 email_url:                'http://www.giftstarter.co/email/send.json'
 storage_url:              '/giftstarter-pictures/'
 
