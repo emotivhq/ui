@@ -55,7 +55,7 @@ example_giftstart = {
     'rows': 3,
     'shipping_state': 'WA',
     'shipping_zip': '98109',
-    'gc_email': 'test@giftstarter.co',
+    'gc_email': 'test@giftstarter.com',
 }
 
 jpeg_file = open('client/assets/stuart_square_s.jpg')
@@ -240,7 +240,7 @@ class UserStatsTestHandler(unittest.TestCase):
         request.body = json.dumps({
             'action': 'pitch-in', 'uid': uid, 'payment': {
                 'stripeResponse': stripe_response, 'gsid': gsid, 'parts': parts,
-                'emailAddress': 'test@giftstarter.co',
+                'emailAddress': 'test@giftstarter.com',
                 'note': 'Test note for my besty!', 'subscribe': False
             }
         })

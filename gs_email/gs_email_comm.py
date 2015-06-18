@@ -85,11 +85,11 @@ def send_mandrill(sender, to, subject, message_text, cc=None, bcc=None,
         'message': {
             'subject': subject,
             'from_name': 'GiftStarter Concierge',
-            'from_email': 'giftconcierge@giftstarter.co',
+            'from_email': 'giftconcierge@giftstarter.com',
             'to': [
                 {'email': to, 'type': 'to'},
             ],
-            'signing_domain': 'giftstarter.co',
+            'signing_domain': 'giftstarter.com',
             'track_opens': True,
             'images': [],
             'headers': {

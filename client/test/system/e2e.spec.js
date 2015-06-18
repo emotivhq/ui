@@ -18,7 +18,7 @@ describe('e2e home page', function() {
             // Login! Wooh!
             ptor.sleep(300);
 
-            element.all(by.id('Email')).get(0).sendKeys('test@giftstarter.co');
+            element.all(by.id('Email')).get(0).sendKeys('test@giftstarter.com');
             element.all(by.id('Passwd')).get(0).sendKeys('bemygiftchampion');
             element.all(by.id('signIn')).get(0).click();
 
@@ -36,7 +36,7 @@ describe('e2e home page', function() {
 //        browser.ignoreSynchronization = true;
 //        ptor.sleep(300);
 //
-//        element.all(by.id('Email')).get(0).sendKeys('test@giftstarter.co');
+//        element.all(by.id('Email')).get(0).sendKeys('test@giftstarter.com');
 //        element.all(by.id('Passwd')).get(0).sendKeys('bemygiftchampion');
 //        element.all(by.id('signIn')).get(0).click();
 //
@@ -68,7 +68,7 @@ describe('e2e home page', function() {
         element.all(by.id('campaign-description')).get(0)
             .sendKeys(gsDescription);
         element.all(by.id('contact-email')).get(0)
-            .sendKeys('test@giftstarter.co');
+            .sendKeys('test@giftstarter.com');
 
         var moreButton = element.all(by.id('more-parts')).get(0);
         var lessButton = element.all(by.id('less-parts')).get(0);
@@ -134,7 +134,7 @@ describe('e2e home page', function() {
         element.all(by.id('card-expiry')).get(0).sendKeys('12/17');
         element.all(by.id('card-zip')).get(0).sendKeys('12345');
         element.all(by.id('card-email')).get(0).sendKeys(
-            'test@giftstarter.co');
+            'test@giftstarter.com');
 
         element.all(by.css('button.white-border.large')).get(0).click();
 

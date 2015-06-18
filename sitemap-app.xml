@@ -6,52 +6,52 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://www.giftstarter.co/</loc>
+  <loc>https://www.giftstarter.com/</loc>
   <changefreq>daily</changefreq>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/about</loc>
+  <loc>https://www.giftstarter.com/about</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/concierge</loc>
+  <loc>https://www.giftstarter.com/concierge</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/faq</loc>
+  <loc>https://www.giftstarter.com/faq</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/giftideas</loc>
+  <loc>https://www.giftstarter.com/giftideas</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/howitworks</loc>
+  <loc>https://www.giftstarter.com/howitworks</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/partners</loc>
+  <loc>https://www.giftstarter.com/partners</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/press</loc>
+  <loc>https://www.giftstarter.com/press</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/privacy</loc>
+  <loc>https://www.giftstarter.com/privacy</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://www.giftstarter.co/terms</loc>
+  <loc>https://www.giftstarter.com/terms</loc>
   <changefreq>daily</changefreq>
   <priority>0.80</priority>
 </url>

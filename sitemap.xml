@@ -6,12 +6,12 @@
 -->
 <sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd">
     <sitemap>
-        <loc>https://www.giftstarter.co/sitemap-app.xml</loc>
+        <loc>https://www.giftstarter.com/sitemap-app.xml</loc>
     </sitemap>
     <sitemap>
-        <loc>https://www.giftstarter.co/blog/sitemap.xml</loc>
+        <loc>https://www.giftstarter.com/blog/sitemap.xml</loc>
     </sitemap>
     <sitemap>
-        <loc>https://www.giftstarter.co/sitemap-giftideas.xml</loc>
+        <loc>https://www.giftstarter.com/sitemap-giftideas.xml</loc>
     </sitemap>
 </sitemapindex>

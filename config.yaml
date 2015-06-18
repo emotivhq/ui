@@ -1,9 +1,9 @@
 
-team_notification_email:  'test@giftstarter.co'
+team_notification_email:  'test@giftstarter.com'
 product_api_url:          'https://product-dev-gift-starter.appspot.com/static/dev'
 
-app_url:                  'https://www.dev.giftstarter.co'
-email_url:                'http://www.dev.giftstarter.co/email/send.json'
+app_url:                  'https://www.dev.giftstarter.com'
+email_url:                'http://www.dev.giftstarter.com/email/send.json'
 storage_url:              '/giftstarter-pictures/dev/'
 
 facebook_app:             'dev-giftstarter'
@@ -14,7 +14,7 @@ baseServiceFeeRate:       0.08
 couponCodes:               ['GiftMe!','CollisionGift','Collision15','StartupGift','GiftFriend','GiftPartner','GiftItForward','9MileLabsGift','Level3Gift','Logic2020Gift','PathwiseGift','ProductHunt8','Yunderson15','GiftMe8','Facebook8','LenatiGift','SurfGift8','TactileGift8','BandHGift','ButterGift','FatCorkGift','SturtevantsGift']
 
 googleanalytics:
-  key:                    'UA-51616127-3'
+  key:                    'UA-51616127-7'
 
 mixpanel:
   key:                    '2cfdda518bed5ee0bc7e9ad48c8c8f48'

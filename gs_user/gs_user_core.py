@@ -21,7 +21,7 @@ config = yaml.load(open('config.yaml'))
 def send_welcome_email(email_address):
     """email a welcome message to the user; FAILS SILENTLY if cannot contact PUT target to DEV compatibility"""
     data = json.dumps({'subject': "Welcome to GiftStarter",
-                       'sender': "receipt@giftstarter.co", 'to': [email_address],
+                       'sender': "receipt@giftstarter.com", 'to': [email_address],
                        'template_name': "welcome_user",
                        'mime_type': 'html',
                        'template_kwargs': {}})

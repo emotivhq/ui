@@ -1,7 +1,7 @@
 #requires epydoc: http://epydoc.sourceforge.net/manual-install.html
 cd $(dirname $0)
 #export PATH=$PATH:/usr/local/google_appengine/lib/webapp2-2.5.2/webapp2.py
-epydoc -v -n 'GiftStarter (copyright 2015 all rights reserved)' -u http://giftstarter.co --show-imports --include-log \
+epydoc -v -n 'GiftStarter (copyright 2015 all rights reserved)' -u http://giftstarter.com --show-imports --include-log \
 ../analytics.py \
 ../appengine_config.py \
 ../blog.py \
