@@ -49,16 +49,10 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showPayBox = false;
 
     function imageUpdated(data) {
-            //jQuery('.savebtn').attr('disabled', 'disabled');
-            console.log('a');
         imageData = data;
-
-            //$timeout(function() {jQuery('.savebtn').removeAttr('disabled');}, 2000);
-            console.log('b');
     }
 
     $scope.editingComment = function(comment, editing) {
-        //console && console.log && console.log(comment);
         if (editing) {                      //edit mode on
             $scope.commentEditing.push(comment);
             commentName = comment.name;
@@ -66,8 +60,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             commentImg = comment.img;
         } else if (!editing) {              //saving edit
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
-
-            //console && console.log && console.log(imageData);
             if (imageData) {
                 comment.img = imageData;
                 GiftStartService.updateCommentImage(comment, imageData)
