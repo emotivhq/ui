@@ -66,7 +66,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             }, function () {
                 alert("Error. Please try again.");
             })
-    }
+    };
 
     var urlSerialize = function (obj) {
         var str = [];

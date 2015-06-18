@@ -110,18 +110,18 @@
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn)">
                     <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                 </a>
-                <gs-image-upload ng-show="isEditing(pitchIn)" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
+                <gs-image-upload ng-show="isEditing(pitchIn)" on-image-updated="imageUpdated"></gs-image-upload>
             </div>
             <div class="contributors__info">
                 <h3 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h3>
                 <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)"/>
                 <p class="contributors__info" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
-                <input ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
+                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
             </div>
             <div class="contributors__edit">
               <button class="contributors__edit__button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</button>
               <button class="contributors__edit__button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</button>
-                <button class="contributors__edit__button" ng-show="isEditing(pitchIn)" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn" ng-show="isEditing(pitchIn)" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>

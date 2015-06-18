@@ -5,12 +5,12 @@
  */
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','$rootScope','GiftStartService','$location','$interval',
+            '$scope','$rootScope','GiftStartService','$location','$interval', '$timeout',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
             'ProductService', 'UserService', 'AppStateService', '$window', '$document', '$http', 'PopoverService','LocalStorage',
     GiftStartController]);
 
-function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval,
+function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval, $timeout,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
          ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
 
@@ -49,7 +49,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showPayBox = false;
 
     function imageUpdated(data) {
+            //jQuery('.savebtn').attr('disabled', 'disabled');
+            console.log('a');
         imageData = data;
+
+            //$timeout(function() {jQuery('.savebtn').removeAttr('disabled');}, 2000);
+            console.log('b');
     }
 
     $scope.editingComment = function(comment, editing) {
