@@ -20,6 +20,8 @@ handlers:
   script: product.product_api.handler
 - url: /products/.*.json
   script: product.product_api.handler
+- url: /products/admin
+  script: product.product_api.handler
 - url: /product
   script: product.product_api.handler
 

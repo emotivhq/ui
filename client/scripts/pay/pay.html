@@ -4,6 +4,7 @@
         <span ng-repeat="card in cards" class="card">
             <input ng-attr-id="{{card.fingerprint}}" type="checkbox" ng-checked="card.selected" value="{{card.fingerprint}}" ng-click="selectCard()"/>
             <label ng-attr-for="{{card.fingerprint}}">
+                <div class="selected"><img ng-show="card.selected" src="/assets/green_check.png"/></div>
                 <img class="brand" ng-src="{{card.brandImage}}">
                 <span class="last-four">{{card.last_four}}</span>
             </label>

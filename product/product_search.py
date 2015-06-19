@@ -120,9 +120,38 @@ class SearchProduct(FeedProduct):
         return json.dumps(dict_list)
 
 
-def get_product_index():
+def get_static_product_index():
     return search.Index(name='product-search-0')
 
+def get_dynamic_product_index():
+    return search.Index(name='product-search-1')
+
+def copy_index(source_index,target_index):
+    """
+    clears target_index, then copies all documents from source_index to target_index
+    :param source_index: index from which to acquire documents; unmodified
+    :param target_index: index to which documents should be copied; cleared before copy
+    :return: number of documents copied
+    """
+    logging.info('copy_index: clearing {0}'.format(target_index.name))
+    delete_all_from_index(target_index)
+    cursor = search.Cursor()
+    total_retrieved = 0
+    try:
+        while cursor is not None:
+            options = search.QueryOptions(cursor=cursor, limit=1000)
+            query = search.Query(query_string='', options=options)
+            result = source_index.search(query)
+            number_retrieved = len(result.results)
+            total_retrieved += number_retrieved
+            if number_retrieved > 0:
+                logging.info('copy_index: {0} from {1} to {2}'.format(number_retrieved, source_index.name, target_index.name))
+                cursor = result.cursor
+                add_to_index(target_index,result.results)
+    except search.Error as x:
+        logging.exception('copy_index failed: {0}'.format(x.message))
+        return x.message
+    return total_retrieved
 
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
@@ -130,7 +159,7 @@ def product_search(query):
     partners, sorted by relevance
     """
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
-    index = get_product_index()
+    index = get_static_product_index()
 
     """ @type products: [SearchProduct] """
     dynamic_products = []

@@ -59,6 +59,13 @@
         background: #dddddd
         span.last-four
           color: #444444
+      .selected
+        position: absolute
+        left: 3px
+        top: 0
+        z-index: 10
+        img
+          height: 28px
 
   div.loading
     margin: 2px auto 10px auto
@@ -219,12 +226,15 @@
         display: inline-block
         background: #999999
         border-color: #999999
-        margin: 5px
+        margin: 4px
         font-size: 12px
+        padding: 5px
         &.delete-card
           width: 135px
+          margin-left: 0px
         &.delete-cancel
           width: 75px
+          margin-right: 0px
 
     span.error
       margin: 1em 0

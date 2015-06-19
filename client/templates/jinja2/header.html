@@ -41,7 +41,7 @@
             <li><a class="coming-soon">Learn more *Coming Soon*</a></li>
           </ul>
         </li>
-        <li class="menu-login" ng-show="header.loggedIn" ng-class="{hideOnMobile: notifyOpen}"><img class="header-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" ng-href="{{header.userProfileUrl}}" ng-show="header.loggedIn">{{header.userName}}</a>
+        <li class="menu-login" ng-show="header.loggedIn" ng-class="{hideOnMobile: notifyOpen}"><img class="header-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()" ng-show="header.loggedIn">{{header.userName}}</a>
           <hr class="mobile-rule" />
           <ul class="submenu">
             <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>

@@ -28,19 +28,19 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
             [
                 new question(
                     "What is GiftStarter?",
-                    "GiftStarter is a Gifting Experience Service.  Our mission is to focus on the gifting experience, using technology as an enabler.  We enable the experience that captures giving between the recipient and those that give."
+                    "GiftStarter is a payment parsing service that lets you buy and gift anything that is sold online, piece by piece, at anytime, and with/for whomever you want. We divide anything sold on the internet into a grid, then family and friends buy it tile by tile off the grid. Once complete, we send a handmade card and ensure the gift is shipped, too!"
                 ),
                 new question(
                     "How does it work?",
-                    "Search for and select a product using the search bar on the homepage, fill out the GiftStart information to share your story on why this is important to you or your gift recipient, and bring others along on the giving journey.  We let your family and friends choose their pieces of the gift to give, we send an awesome hand-crafted group card to remember the experience, and the gift too."
+                    "Search for and select a product using the search bar on the homepage, fill out the GiftStarter Campaign information to share your story on why this is important to you or your gift recipient, and bring others along on the giving journey.  We let your family and friends choose their pieces of the gift to give, we send an awesome hand-crafted group card to remember the experience, and the gift too."
                 ),
                 new question(
                     "Who can use the GiftStarter service?",
-                    "Anyone can use the GiftStarter service (who has a credit card). We are currently available in the continental United States."
+                    "Anyone can use the GiftStarter service who has a credit card. We accept payments from most everywhere in the world. Gifts are currently limited to delivery in the United States only for now. Europe and Asia are not available for delivery yet - we are working on it."
                 ),
                 new question(
                     "What methods of payment do you support?",
-                    "Visa, MasterCard, American Express, JCB, Discover, and Diners Club."
+                    "We accept Visa, Mastercard, American Express, and Discover. We process credit cards using Paypal, and direct payment via PayPal account is coming soon!"
                 ),
                 new question(
                     "How does GiftStarter compare to other crowdfunding sites?",
@@ -53,22 +53,22 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
             ]
         ),
         new section(
-            "GIFTSTARTS",
+            "GIFTSTARTER CAMPAIGNS",
             [
                 new question(
-                    "How long will my Giftstart be live?",
-                    "From the time the GiftStart is created, it'll be live for 10 days."
+                    "How long will my Giftstarter Campaign be live?",
+                    "The Gift Champion who creates the gift campaign can decide on how long they want the campaign. You can currently choose from 1 day to 30 days."
                 ),
                 new question(
-                    "What happens if my GiftStart isn't completed before the due date?",
+                    "What happens if my GiftStarter Campaign isn't completed before the due date?",
                     "We send out a giftcard for the amount raised. Depending on the funding level, we will send the recipient a hand-crafted group card with the image of what was intended."
                 ),
                 new question(
-                    "How do I create a successful GiftStart?",
-                    "When you create the GiftStart title and description, share with others who will pitch in why it's awesome, why it is the perfect gift for your recipient, and any personal notes about the recipient. Encourage others who pitch in to share their personal stories related to the recipient too! After all, we're creating a gifting memory together!"
+                    "How do I create a successful GiftStarter Campaign?",
+                    "When you create the GiftStarter Campaign title and description, share with others who will pitch in why it's awesome, why it is the perfect gift for your recipient, and any personal notes about the recipient. Encourage others who pitch in to share their personal stories related to the recipient too! After all, we're creating a gifting memory together!"
                 ),
                 new question(
-                    "When Am I Charged?",
+                    "When am I charged?",
                     "We want to get your contribution to the gift as soon as possible, so we charge your card as soon as you pitch in."
                 )
             ]
@@ -77,8 +77,8 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
             "GIFTS",
             [
                 new question(
-                    "After the GiftStart ends, when will the gift arrive?",
-                    "We will send both the hand-crafted group card (with all those that pitched in and their personal notes) and the gift within 3-5 business days of the GiftStart completion."
+                    "After the GiftStarter Campaign ends, when will the gift arrive?",
+                    "We will send both the hand-crafted group card (with all those that pitched in and their personal notes) and the gift within 3-5 business days of the GiftStarter Campaign completion."
                 ),
                 new question(
                     "How is the \"base price\" determined?",
@@ -86,7 +86,7 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
                 ),
                 new question(
                     "How do I know who pitched in on the gift?",
-                    "You'll receive a link to the GiftStart once you pitch in. If you're the recipient, you'll receive a hand-crafted gift card at the end of the campaign!"
+                    "You'll receive a link to the GiftStarter Campaign once you pitch in. If you're the recipient, you'll receive a hand-crafted gift card at the end of the campaign!"
                 )
             ]
         ),

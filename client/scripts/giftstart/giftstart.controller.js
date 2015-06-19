@@ -5,12 +5,12 @@
  */
 
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','$rootScope','GiftStartService','$location','$interval',
+            '$scope','$rootScope','GiftStartService','$location','$interval', '$timeout',
             'FacebookService','TwitterService','GooglePlusService','Analytics',
             'ProductService', 'UserService', 'AppStateService', '$window', '$document', '$http', 'PopoverService','LocalStorage',
     GiftStartController]);
 
-function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval,
+function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval, $timeout,
          FacebookService,  TwitterService,  GooglePlusService,  Analytics,
          ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
 
@@ -53,7 +53,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     }
 
     $scope.editingComment = function(comment, editing) {
-        //console && console.log && console.log(comment);
         if (editing) {                      //edit mode on
             $scope.commentEditing.push(comment);
             commentName = comment.name;
@@ -61,8 +60,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             commentImg = comment.img;
         } else if (!editing) {              //saving edit
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
-
-            //console && console.log && console.log(imageData);
             if (imageData) {
                 comment.img = imageData;
                 GiftStartService.updateCommentImage(comment, imageData)

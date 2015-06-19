@@ -7,7 +7,7 @@ from feeds import FeedProduct
 from product.product_search import SearchProduct
 from product.product_search import delete_from_index
 from product.product_search import add_to_index
-from product.product_search import get_product_index
+from product.product_search import get_static_product_index
 from product.product_search import price_filter
 import json
 from google.appengine.ext import ndb
@@ -34,7 +34,7 @@ def cache(partner, url):
     logging.info("Put {0} products from {1}".format(len(products), partner))
     ndb.put_multi(products)
     logging.info("Indexed {0} products from {1}".format(len(products), partner))
-    add_to_index(get_product_index(), search_docs)
+    add_to_index(get_static_product_index(), search_docs)
 
 
 def clear_feed(partner):
@@ -51,7 +51,7 @@ def clear_feed(partner):
             .fetch(100)
         remaining = len(prods)
         logging.info("Unindexing {0} {1} products".format(remaining, partner))
-        delete_from_index(get_product_index(), [prod.doc_id for prod in prods])
+        delete_from_index(get_static_product_index(), [prod.doc_id for prod in prods])
         logging.info("Deleting {0} {1} products".format(remaining, partner))
         ndb.delete_multi([prod.key for prod in prods])
 
