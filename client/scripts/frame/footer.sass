@@ -6,6 +6,7 @@ $wrapper-padding: 1em
 
 footer
   background-color: #333
+  padding-bottom: 40px
   -webkit-font-smoothing: antialiased
 
   #patentpending
@@ -15,7 +16,7 @@ footer
     text-align: center
 
   .footblock
-    display: inline-block
+    display: table-cell
     vertical-align: top
     margin: 0 0 40px 0
     padding: 0
@@ -39,12 +40,18 @@ footer
         width: 100%
         margin-left: 0
     &.right
+      position: relative
       width: 19%
       font-size: 10px
       text-align: center
       vertical-align: bottom
       @media screen and (max-width: $phone-tablet-boundary)
         width: 100%
+      #comodo
+        padding-right: 72px
+        position: absolute
+        right: 0
+        top: 0
   .footcol
     display: inline-block
     width: 15%
