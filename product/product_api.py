@@ -56,6 +56,8 @@ class ProductAdminHandler(webapp2.RequestHandler):
     """perform a keyword search and return as JSON [{price,retailer,imgUrl,description,title,url}]"""
 
     def get(self):
+        product_search.clear_all_search_keywords()
+        # product_search.delete_all_from_index(product_search.get_static_product_index())
         n = product_search.copy_index(product_search.get_static_product_index(),product_search.get_dynamic_product_index())
         self.response.write("OK: "+str(n))
 

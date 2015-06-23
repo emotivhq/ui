@@ -11,7 +11,6 @@ from product.product_search import get_static_product_index
 from product.product_search import price_filter
 import json
 from google.appengine.ext import ndb
-from uuid import uuid4
 import csv
 from lxml import html
 import logging
@@ -28,9 +27,9 @@ def cache(partner, url):
     products = normalize_products(partner, feed_resp.content)
     products = [SearchProduct.from_feed_product(prod) for prod in products]
     search_docs = []
-    for product in products:
-        search_docs.append(product.to_search_document(str(uuid4())))
     #products = [product for product in static_products if price_filter(product)]
+    for product in products:
+        search_docs.append(product.to_search_document())
     logging.info("Put {0} products from {1}".format(len(products), partner))
     ndb.put_multi(products)
     logging.info("Indexed {0} products from {1}".format(len(products), partner))
