@@ -56,6 +56,9 @@
             <p>We accept payment by Visa, MasterCard, Amex, or Discover.  Our payments are secure and processed by PayPal.</p>
             <ng-include src="'/scripts/pay/pay.html'"></ng-include>
         </div>
+        <div class="sign-box" ng-show="showSignBox">
+            <h2>hello there :) yay</h2>
+        </div>
         <div class="col2 block" ng-hide="showLoginBox||showPayBox">
             <div class="pitch-instructions">
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>

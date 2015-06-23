@@ -45,8 +45,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.isSavingForLater = false;
 
     $scope.showLoginBox = false;
-
     $scope.showPayBox = false;
+    $scope.showSignBox = false;
 
     function imageUpdated(data) {
         imageData = data;
