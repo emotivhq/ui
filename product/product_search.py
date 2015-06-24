@@ -20,6 +20,7 @@ import re
 import math
 from feeds import FeedProduct
 from uuid import uuid4
+import HTMLParser
 from google.appengine.ext import ndb
 from giftideas.giftideas_api import get_giftideas_json
 
@@ -177,21 +178,41 @@ def copy_index(source_index,target_index):
     return total_retrieved
 
 def insert_giftideas_into_index(target_index):
-    num_giftideas = 0
     category_jsons = get_giftideas_json()
+    giftideas_docs = []
+    html_parser = HTMLParser.HTMLParser()
     for category_json in category_jsons:
-        category_slug = category_json['categorySlug']
-        # logging.error("{0}".format(category_slug))
+        category_slug = category_json['categorySlug'].strip()
+        keywords = category_slug
         for product in category_json['productList']:
             url = product['giftStartLink'].strip()
             price = product['productPrice'].strip()
             if len(url)>0 and price.replace('.','').isnumeric():
-                num_giftideas += 1
-                name = product['productName'].encode('utf8', 'replace')
-                image = product['productImage']
-                description = product['productDescription'].encode('utf8', 'replace')
-                logging.error("{2}: {1} {0} {3} {4}".format(name,price,url,image,description))
-    return num_giftideas
+                price = float(price)*100
+                title = html_parser.unescape(product['productName']).encode('utf8', 'replace').strip()
+                img = product['productImage'].strip()
+                img = img if img.startswith('http') else ('/assets/giftideas/category'+img)
+                description = product['productDescription'].encode('utf8', 'replace').strip()
+                extended_description = description
+                retailer = 'giftideas'
+                # logging.error("{2}: {1} {0} {3} {4}".format(title,price,url,img,description))
+                doc = search.Document(
+                    doc_id=hashlib.md5(url.encode('utf8', 'replace')+':'+title).hexdigest(),
+                    fields=[
+                        search.TextField(name='title', value=title),
+                        search.HtmlField(name='description',
+                                         value=description),
+                        search.TextField(name='url', value=url),
+                        search.TextField(name='img', value=img),
+                        search.NumberField(name='price', value=price),
+                        search.TextField(name='retailer', value=retailer),
+                        search.TextField(name='extended_description',
+                                         value=extended_description),
+                        search.TextField(name='keywords', value=keywords),
+                    ])
+                # logging.error("{0}".format(doc))
+                giftideas_docs.append(doc)
+    return add_to_index(target_index,giftideas_docs)
 
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
@@ -209,11 +230,11 @@ def product_search(query):
         dynamic_products += [product for product in search_amazon(query)]
         logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
         dynamic_products += [product for product in search_prosperent(query)]
-        logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
+        logging.info("Adding products to index...\t" + datetime.utcnow().isoformat())
         add_to_index(index, docs = [prod.to_search_document() for prod in dynamic_products])
     # sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
     sorted_products = search_products(index, escaped_query)
-    logging.info("Returning...\t" + datetime.utcnow().isoformat())
+    logging.info("Returning {0} results...\t{1}".format(len(sorted_products),datetime.utcnow().isoformat()))
     return SearchProduct.jsonify_product_list(sorted_products)
 
 
@@ -337,6 +358,7 @@ def make_prosperent_url(query):
 def add_to_index(index, docs):
     """ add_to_index(Index, [Doc...]) -> None
     Adds all the provided documents to the given index
+    :return: number added after deduplication
     """
     docs_deduplicated = []
     doc_ids = []
@@ -353,6 +375,7 @@ def add_to_index(index, docs):
     for doc_set in doc_sets:
         if len(doc_set) > 0:
             index.put(doc_set)
+    return len(docs)
 
 
 def delete_from_index(index, ids):
