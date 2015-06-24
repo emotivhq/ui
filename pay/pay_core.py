@@ -307,7 +307,7 @@ def save_card_paypal_vault(user, card_data, delete_matching_cards):
 
     credit_card = paypalrestsdk.CreditCard(card_struct)
     if credit_card.create():
-        print("CreditCard[%s] created successfully" % (credit_card.id))
+        # print("CreditCard[%s] created successfully" % (credit_card.id))
         if(old_cards):
             for card in old_cards['items']:
                 if card_number[-4:]==card.get('number')[-4:]:
@@ -339,7 +339,7 @@ def charge_card_paypal(user, charge_amount_cents, currency, card_token, descript
     if payment.create():
         if truncated_desc:
             logging.warn("Truncated description for payment [{0}] from: {1}".format(payment.id, truncated_desc))
-        print("Payment[%s] created successfully" % (payment.id))
+        # print("Payment[%s] created successfully" % (payment.id))
         return payment
     else:
         try:
