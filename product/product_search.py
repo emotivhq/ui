@@ -21,6 +21,7 @@ import math
 from feeds import FeedProduct
 from uuid import uuid4
 from google.appengine.ext import ndb
+from giftideas.giftideas_api import get_giftideas_json
 
 
 class SearchProduct(FeedProduct):
@@ -174,6 +175,17 @@ def copy_index(source_index,target_index):
             logging.exception('copy_index failed: {0}'.format(x.message))
             return x.message
     return total_retrieved
+
+def insert_giftideas_into_index(target_index):
+    num_giftideas = 0
+    category_jsons = get_giftideas_json()
+    for category_json in category_jsons:
+        category_slug = category_json['categorySlug']
+        logging.error("{0}".format(category_slug))
+        for product in category_json['productList']:
+            num_giftideas += 1
+            logging.error("  {0}".format(product['productSlug']))
+    return num_giftideas
 
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]

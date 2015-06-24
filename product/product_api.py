@@ -64,9 +64,12 @@ class ProductAdminHandler(webapp2.RequestHandler):
         dynamic_product_index = product_search.get_dynamic_product_index()
         logging.warn("Copying from {0} to {1}...\t{2}".format(static_product_index.name,dynamic_product_index.name,datetime.utcnow().isoformat()))
         # product_search.delete_all_from_index(static_product_index)
-        n = product_search.copy_index(static_product_index, dynamic_product_index)
-        logging.warn("Completed copy of {0} products...\t{1}".format(n,datetime.utcnow().isoformat()))
-        self.response.write("OK: "+str(n))
+        n_static_products = product_search.copy_index(static_product_index, dynamic_product_index)
+        logging.warn("Completed copy of {0} products...\t{1}".format(n_static_products,datetime.utcnow().isoformat()))
+        logging.warn("Inserting GiftIdeas into {0}...\t{1}".format(dynamic_product_index.name,datetime.utcnow().isoformat()))
+        n_giftideas = product_search.insert_giftideas_into_index(dynamic_product_index)
+        logging.warn("Completed copy of {0} giftideas...\t{1}".format(n_giftideas,datetime.utcnow().isoformat()))
+        self.response.write("OK: {0}, {1}".format(n_static_products,n_giftideas))
 
 
 class ProductSearchHandler(webapp2.RequestHandler):
