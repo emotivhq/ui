@@ -181,10 +181,16 @@ def insert_giftideas_into_index(target_index):
     category_jsons = get_giftideas_json()
     for category_json in category_jsons:
         category_slug = category_json['categorySlug']
-        logging.error("{0}".format(category_slug))
+        # logging.error("{0}".format(category_slug))
         for product in category_json['productList']:
-            num_giftideas += 1
-            logging.error("  {0}".format(product['productSlug']))
+            url = product['giftStartLink'].strip()
+            price = product['productPrice'].strip()
+            if len(url)>0 and price.replace('.','').isnumeric():
+                num_giftideas += 1
+                name = product['productName'].encode('utf8', 'replace')
+                image = product['productImage']
+                description = product['productDescription'].encode('utf8', 'replace')
+                logging.error("{2}: {1} {0} {3} {4}".format(name,price,url,image,description))
     return num_giftideas
 
 def product_search(query):
