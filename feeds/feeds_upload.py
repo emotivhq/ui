@@ -8,7 +8,6 @@ from product.product_search import add_to_index
 from product.product_search import get_static_product_index
 from google.appengine.ext import ndb
 import logging
-from uuid import uuid4
 from urlparse import parse_qs
 
 
@@ -57,7 +56,7 @@ class ManualUploadHandler(webapp2.RequestHandler):
                     retailer=retailer,
                     description=description)
                 products.append(product)
-                search_docs.append(product.to_search_document(str(uuid4())))
+                search_docs.append(product.to_search_document())
 
         logging.info("Adding {0} manual products".format(len(search_docs)))
         add_to_index(get_static_product_index(), search_docs)
@@ -106,7 +105,7 @@ class SturtevantsUploadHandler(webapp2.RequestHandler):
                     retailer='Sturtevant\'s',
                     description=self.cleanupSturtevantsDescription(line[1].decode('ascii', 'ignore')))
                 products.append(product)
-                search_docs.append(product.to_search_document(str(uuid4())))
+                search_docs.append(product.to_search_document())
 
         logging.info("Adding {0} sturt products".format(len(search_docs)))
         add_to_index(get_static_product_index(), search_docs)
