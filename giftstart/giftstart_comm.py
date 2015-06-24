@@ -14,6 +14,7 @@ from thank import thank_core
 from gs_user.User import User
 from gs_user.Notification import notify
 from login import login_core
+import logging
 
 config = yaml.load(open('config.yaml'))
 team_notification_email = config['team_notification_email']
@@ -61,7 +62,11 @@ def send_create_notification(giftstart):
 
 def send_day_left_warning(gsid):
     """notify creator and all givers that campaign has one day left"""
-    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    f = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
+    if(len(f)<1):
+        logging.warn("Unable to send_day_left_warning: invalid gsid {0}".format(gsid))
+        return
+    giftstart = f[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     check_if_complete(gsid)
     if not giftstart.giftstart_complete:
@@ -129,7 +134,11 @@ def send_emaillogin_reset(email):
 
 def check_if_complete(gsid):
     """check if given campaign is complete; if so, update gs, email creator & givers, and enqueue later cron tasks such as congrats emails"""
-    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    f = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
+    if(len(f)<1):
+        logging.warn("Unable to check_if_complete: invalid gsid {0}".format(gsid))
+        return
+    giftstart = f[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     pitch_in_parts = []
     for p in pitch_ins:
@@ -344,7 +353,11 @@ def get_gc_img(giftstart):
 
 
 def congratulate_givers(gsid, funded):
-    giftstart = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    f = GiftStart.query(GiftStart.gsid == gsid).fetch(1)
+    if(len(f)<1):
+        logging.warn("Unable to congratulate_givers: invalid gsid {0}".format(gsid))
+        return
+    giftstart = f[0]
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid).fetch()
     if funded:
         # Send email to all the givers, great job guys!
