@@ -8,6 +8,8 @@ import product_tax
 import product_fees
 import product_search
 import urllib
+import logging
+from datetime import datetime
 
 class ProductHandler(webapp2.RequestHandler):
 
@@ -56,9 +58,14 @@ class ProductAdminHandler(webapp2.RequestHandler):
     """perform a keyword search and return as JSON [{price,retailer,imgUrl,description,title,url}]"""
 
     def get(self):
+        logging.warn("Clearing all search keywords...\t{0}".format(datetime.utcnow().isoformat()))
         product_search.clear_all_search_keywords()
-        # product_search.delete_all_from_index(product_search.get_static_product_index())
-        n = product_search.copy_index(product_search.get_static_product_index(),product_search.get_dynamic_product_index())
+        static_product_index = product_search.get_static_product_index()
+        dynamic_product_index = product_search.get_dynamic_product_index()
+        logging.warn("Copying from {0} to {1}...\t{2}".format(static_product_index.name,dynamic_product_index.name,datetime.utcnow().isoformat()))
+        # product_search.delete_all_from_index(static_product_index)
+        n = product_search.copy_index(static_product_index, dynamic_product_index)
+        logging.warn("Completed copy of {0} products...\t{1}".format(n,datetime.utcnow().isoformat()))
         self.response.write("OK: "+str(n))
 
 

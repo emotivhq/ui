@@ -14,7 +14,6 @@ import base64
 import hmac
 import hashlib
 from datetime import datetime
-from string import printable
 from lxml import etree
 from google.appengine.api import search
 import re
@@ -181,12 +180,12 @@ def product_search(query):
     Search for specified keywords, returning a list of products from all
     partners, sorted by relevance
     """
+    query = query.lower()
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
     index = get_dynamic_product_index()
-    logging.info("Beginning search...\t" + datetime.utcnow().isoformat())
+    logging.info("Beginning query for {0}...\t{1}".format(escaped_query,datetime.utcnow().isoformat()))
     #if we've never searched for this keyword before, run the search and add results
     if add_search_keyword(get_dynamic_product_index(),escaped_query):
-        logging.info("Found new products for keyword: {0}".format(escaped_query))
         dynamic_products = []
         logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
         dynamic_products += [product for product in search_amazon(query)]
@@ -196,7 +195,7 @@ def product_search(query):
         add_to_index(index, docs = [prod.to_search_document() for prod in dynamic_products])
     # sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
     sorted_products = search_products(index, escaped_query)
-    logging.info("Returning.\t" + datetime.utcnow().isoformat())
+    logging.info("Returning...\t" + datetime.utcnow().isoformat())
     return SearchProduct.jsonify_product_list(sorted_products)
 
 
