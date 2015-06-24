@@ -223,7 +223,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         //if(PopoverService.currentLocation=='pay') {
         //    PopoverService.nextPopover();
         //}
-        PopoverService.setPopover('note');
+        //PopoverService.setPopover('note');
         $scope.pitchingIn = false;
         $rootScope.$broadcast('paybox-hidden');
         $scope.number = '';

@@ -10,7 +10,7 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
             <div class="prodtitle">
                 <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
             </div>
@@ -57,9 +57,11 @@
             <ng-include src="'/scripts/pay/pay.html'"></ng-include>
         </div>
         <div class="sign-box" ng-show="showSignBox">
-            <h2>hello there :) yay</h2>
+            <h2>Sign the Card:</h2>
+            <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
+            <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
         </div>
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
             <div class="pitch-instructions">
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
