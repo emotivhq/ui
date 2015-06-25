@@ -44,7 +44,7 @@ class BlogHandler(webapp2.RequestHandler):
         fetch_url = fetch_url.replace(blog_subdomain_url+'/',blog_subdomain_url,1)
         fetched = urlfetch.fetch(fetch_url, validate_certificate=False)
         if(fetched.status_code!=200):
-            logging.info('ERROR: '+fetched.status_code+' for '+fetch_url)
+            logging.warn('ERROR: '+str(fetched.status_code)+' for '+str(fetch_url))
         content = fetched.content
         #replace all subdomain links
         content = re.sub("(<a|<link rel=\"canonical\"|<link rel=\"next\"|<link rel=\"alternate\"|<atom:link)( [^>]*href\s*=\s*['\"])(https?://"+blog_subdomain+"\.giftstarter\."+blog_tld+")/?", "\\1\\2"+blog_path_url,content)
