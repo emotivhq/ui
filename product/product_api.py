@@ -62,8 +62,10 @@ class ProductAdminHandler(webapp2.RequestHandler):
     """perform a keyword search and return as JSON [{price,retailer,imgUrl,description,title,url}]"""
 
     def get(self):
-        is_local = self.request.host.startswith('localhost')
-
+        #only allow use by local devs, or by AppEngine cron
+        if self.request.headers.get('X-AppEngine-Cron') is None and not self.request.host.startswith('localhost'):
+            logging.warn('Unauthorized attempt to access {0}'.format(self.request.path_url))
+            return
         logging.warn("Clearing all search keywords...\t{0}".format(datetime.utcnow().isoformat()))
         product_search.clear_all_search_keywords()
         static_product_index = product_search.get_static_product_index()

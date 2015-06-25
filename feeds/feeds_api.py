@@ -6,6 +6,7 @@ __author__ = 'GiftStarter'
 
 import webapp2
 import feeds_core
+import logging
 from google.appengine.api import taskqueue
 from feeds.feeds_upload import SturtevantsUploadHandler, \
     SturtevantsDeleteHandler, ManualUploadHandler, ManualDeleteHandler
@@ -22,10 +23,14 @@ FEEDS = {
 class CronHandler(webapp2.RequestHandler):
     """handle cron requests to enqueue feed updates"""
     def get(self):
+        #only allow use by local devs, or by AppEngine cron
+        if self.request.headers.get('X-AppEngine-Cron') is None and not self.request.host.startswith('localhost'):
+            logging.warn('Unauthorized attempt to access {0}'.format(self.request.path_url))
+            return
         """enqueue all feeds for update"""
         for name, url in FEEDS.items():
-            taskqueue.add(url='/feeds/{name}/update'.format(name=name),
-                          method='POST')
+            logging.warn('Updating feed: {name}'.format(name=name))
+            taskqueue.add(url='/feeds/{name}/update'.format(name=name),method='POST')
 
 
 class FeedsHandler(webapp2.RequestHandler):
