@@ -13,6 +13,8 @@ baseServiceFeeRate:       0.08
 
 couponCodes:               ['GiftMe!','CollisionGift','Collision15','StartupGift','GiftFriend','GiftPartner','GiftItForward','9MileLabsGift','Level3Gift','Logic2020Gift','PathwiseGift','ProductHunt8','Yunderson15','GiftMe8','Facebook8','LenatiGift','SurfGift8','TactileGift8','BandHGift','ButterGift','FatCorkGift','SturtevantsGift']
 
+commonSearchWords:         ['apple','bose','butter+london','cuisinart','dyson+vacuum','fat+cork','frends','icpooch','samsung','sturtevants','baby+crib','bassinet','cradle','crib+bedding','diaper+bag','high+chair','playard','rocking+chair','stroller','camera','home+theater','ipad','iphone','ipod','macbook','playstation','television','wireless+speaker','xbox','barbecue+grill','dog+bed','duvet','fish+tank','keurig','lawn+mower','rug','Vitamix','sofa','toaster+oven']
+
 googleanalytics:
   key:                    'UA-51616127-7'
 

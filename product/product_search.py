@@ -33,7 +33,7 @@ class SearchProduct(FeedProduct):
         """ self.to_search_document() -> search.Document
         Creates a search document for indexing
         """
-        self.doc_id = hashlib.md5(self.url+':'+self.title).hexdigest()
+        self.doc_id = hashlib.md5(self.url.encode('ascii', 'replace')+':'+self.title.encode('ascii', 'replace')).hexdigest()
         doc = search.Document(
             doc_id=self.doc_id,
             fields=[
