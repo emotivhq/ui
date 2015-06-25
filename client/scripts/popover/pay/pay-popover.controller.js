@@ -68,7 +68,11 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
 
     $scope.hidePopover = function() {
         PopoverService.hidePopover();
-        $rootScope.$broadcast('paybox-hidden');
+        if($scope.submitted) {
+            $rootScope.$broadcast('paybox-hidden');
+        } else {
+            $rootScope.$broadcast('paybox-hidden-cancel');
+        }
     };
 
     $rootScope.$on('paybox-shown',$scope.initialize);
