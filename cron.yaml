@@ -1,9 +1,9 @@
 cron:
-- description: update feeds
+- description: update product feeds
   url: /feeds/update
   schedule: every day 01:00
   timezone: America/Los_Angeles
-- description: clean search cache
+- description: clean and preload search cache
   url: /products/admin
   schedule: every day 02:00
   timezone: America/Los_Angeles
