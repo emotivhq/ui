@@ -67,6 +67,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
                         Analytics.track('campaign', 'pitchin image update succeeded');
                         comment.img = response;
                         GiftStartService.updateComment(comment);
+                        $rootScope.$broadcast('pitchin-image-changed', response);
                     })
                     .error(function() {
                         Analytics.track('campaign', 'pitchin image update failed');
@@ -97,6 +98,10 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $rootScope.$on('paybox-hidden', function() {
         $scope.showPayBox = false;
         $scope.showSignBox = true;
+    });
+
+    $rootScope.$on('paybox-hidden-cancel', function() {
+        $scope.showPayBox = false;
     });
 
     if ($scope.giftStart.gc_name) {
