@@ -67,6 +67,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
                         Analytics.track('campaign', 'pitchin image update succeeded');
                         comment.img = response;
                         GiftStartService.updateComment(comment);
+                        $rootScope.$broadcast('pitchin-image-changed', response);
                     })
                     .error(function() {
                         Analytics.track('campaign', 'pitchin image update failed');
