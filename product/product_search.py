@@ -219,7 +219,7 @@ def product_search(query):
     Search for specified keywords, returning a list of products from all
     partners, sorted by relevance
     """
-    query = query.lower()
+    query = re.sub(r'\bgift(s)*\b', ' ', query.lower()).strip()
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
     index = get_dynamic_product_index()
     logging.info("Beginning query for {0}...\t{1}".format(escaped_query,datetime.utcnow().isoformat()))
