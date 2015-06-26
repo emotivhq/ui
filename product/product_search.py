@@ -212,7 +212,7 @@ def insert_giftideas_into_index(target_index):
                     ])
                 # logging.error("{0}".format(doc))
                 giftideas_docs.append(doc)
-    return add_to_index(target_index,giftideas_docs)
+    return add_to_index(target_index,giftideas_docs,True)
 
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
@@ -355,16 +355,20 @@ def make_prosperent_url(query):
 #     return ids
 
 
-def add_to_index(index, docs):
+def add_to_index(index, docs, suppress_duplicates_warning=False):
     """ add_to_index(Index, [Doc...]) -> None
     Adds all the provided documents to the given index
+    :param index: SearchIndex to which items should be added
+    :param docs: docs to add
+    :param suppress_duplicates_warning: don't show a warning if a duplicate doc_id is found (False)
     :return: number added after deduplication
     """
     docs_deduplicated = []
     doc_ids = []
     for doc in docs:
         if doc.doc_id in doc_ids:
-            logging.error("Duplicate doc_id; unable to add_to_index: {0}".format(doc))
+            if not suppress_duplicates_warning:
+                logging.error("Duplicate doc_id; unable to add_to_index: {0}".format(doc))
         else:
             doc_ids.append(doc.doc_id)
             docs_deduplicated.append(doc)
