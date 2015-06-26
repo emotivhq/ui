@@ -54,7 +54,7 @@ def render_app(request):
         '/press': 'GiftStarter in the news: see what the buzz is about'
     }
     page_descriptions = {
-        '/': 'Group Gifts: Group Gifts: GiftStarter divides the perfect gift into pieces; giving friends and family the ability to purchase 1 or more pieces as they wish.',
+        '/': 'Group Gifts: GiftStarter divides the perfect gift into pieces; giving friends and family the ability to purchase 1 or more pieces as they wish.',
         '/about': 'GiftStarter is a Seattle based start-up intent on changing the way people give gifts by making it easy to group gift anything.',
         '/faq': 'Giving group gifts with GiftStarter is easy, but in case you have any questions, find out more here',
         '/giftideas': "Office, Weddings, baby, birthdays, any occasion - find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it, including a handmade card.",
