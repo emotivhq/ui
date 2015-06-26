@@ -36,6 +36,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.loggedIn = UserService.loggedIn;
     $scope.imageUpdated = imageUpdated;
     $scope.picEdit = false;
+    $scope.picUploading = false;
     var currentComment = "";
 
     $scope.userId = UserService.uid;
@@ -52,7 +53,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     function imageUpdated(data) {
         imageData = data;
-        $scope.picEdit = false;
     }
 
     $scope.editingComment = function(comment, editing) {
@@ -83,6 +83,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     };
 
     $scope.picSubmit = function() {
+        $scope.picUploading = true;
         if (imageData) {
             currentComment.img = imageData;
             GiftStartService.updateCommentImage(currentComment, imageData)
@@ -90,11 +91,14 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
                     Analytics.track('campaign', 'pitchin image update succeeded');
                     currentComment.img = response;
                     $rootScope.$broadcast('pitchin-image-changed', response);
+                    $scope.picUploading = false;
+                    imageData = null;
                 })
                 .error(function() {
                     Analytics.track('campaign', 'pitchin image update failed');
+                    $scope.picUploading = false;
+                    imageData = null;
                 });
-            imageData = null;
         }
         $scope.picEdit = false;
     };

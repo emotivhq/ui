@@ -113,7 +113,7 @@
         <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
         <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
             <div class="contributors__figure">
-                <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn)">
+                <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
                     <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                 </a>
                 <button class="userprofile__imageedit" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</button>
@@ -129,7 +129,7 @@
             <div class="contributors__edit">
               <button class="contributors__edit__button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</button>
               <button class="contributors__edit__button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</button>
-                <button class="contributors__edit__button savebtn" ng-show="isEditing(pitchIn)" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
