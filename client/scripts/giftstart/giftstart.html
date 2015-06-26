@@ -10,7 +10,7 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
             <div class="prodtitle">
                 <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
             </div>
@@ -56,7 +56,12 @@
             <p>We accept payment by Visa, MasterCard, Amex, or Discover.  Our payments are secure and processed by PayPal.</p>
             <ng-include src="'/scripts/pay/pay.html'"></ng-include>
         </div>
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox">
+        <div class="sign-box" ng-show="showSignBox">
+            <h2>Sign the Card:</h2>
+            <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
+            <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
+        </div>
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
             <div class="pitch-instructions">
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
                 <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
@@ -76,6 +81,7 @@
                 <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
                 <img class="share" src="/assets/twittericon.png" ng-click="twitterShare();" />
                 <img class="share" src="/assets/googleicon.png" ng-click="googlePlusShare();" />
+                <!--input id="share-url" type="text" /-->
             </div>
         </div>
     </div>
@@ -107,10 +113,12 @@
         <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
         <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
             <div class="contributors__figure">
-                <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn)">
+                <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
                     <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                 </a>
-                <gs-image-upload ng-show="isEditing(pitchIn)" on-image-updated="imageUpdated"></gs-image-upload>
+                <button class="userprofile__imageedit" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</button>
+                <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
+                <button class="userprofile__imagesave" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</button>
             </div>
             <div class="contributors__info">
                 <h3 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h3>
@@ -121,7 +129,7 @@
             <div class="contributors__edit">
               <button class="contributors__edit__button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</button>
               <button class="contributors__edit__button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</button>
-                <button class="contributors__edit__button savebtn" ng-show="isEditing(pitchIn)" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>

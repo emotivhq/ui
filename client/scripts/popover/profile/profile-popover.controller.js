@@ -52,7 +52,8 @@
         }
 
         $scope.cancel = function () {
-            PopoverService.setPopover('note');
+            //PopoverService.setPopover('note');
+            PopoverService.hidePopover();
         };
 
         $scope.action = {
@@ -60,10 +61,12 @@
                 if ($scope.imageUpdated) {
                     saveUpdatedImage();
                     Analytics.track('pitchin', 'user pitchin image '+($scope.useAsProfilePicture?'and profile image ':'')+'changed');
-                    PopoverService.setPopover('note');
+                    //PopoverService.setPopover('note');
+                    PopoverService.hidePopover();
                 } else {
                     Analytics.track('pitchin', 'user image not changed');
-                    PopoverService.setPopover('note');
+                    //PopoverService.setPopover('note');
+                    PopoverService.hidePopover();
                 }
                 $scope.editMode = false;
             }

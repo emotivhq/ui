@@ -20,19 +20,22 @@ import re
 import math
 from feeds import FeedProduct
 from uuid import uuid4
+import HTMLParser
 from google.appengine.ext import ndb
+from giftideas.giftideas_api import get_giftideas_json
 
 
 class SearchProduct(FeedProduct):
     """a searchable representation of a product, usually extracted from a FeedProduct"""
     doc_id = ndb.StringProperty(required=True)
 
-    def to_search_document(self, doc_id=None):
+    def to_search_document(self):
         """ self.to_search_document() -> search.Document
         Creates a search document for indexing
         """
+        self.doc_id = hashlib.md5(self.url.encode('ascii', 'replace')+':'+self.title.encode('ascii', 'replace')).hexdigest()
         doc = search.Document(
-            doc_id=doc_id,
+            doc_id=self.doc_id,
             fields=[
                 search.TextField(name='title', value=self.title),
                 search.HtmlField(name='description',
@@ -45,7 +48,6 @@ class SearchProduct(FeedProduct):
                                  value=self.extended_description),
                 search.TextField(name='keywords', value=self.keywords),
             ])
-        self.doc_id = doc.doc_id
         return doc
 
     @staticmethod
@@ -119,6 +121,27 @@ class SearchProduct(FeedProduct):
         dict_list = [product.dictify() for product in product_list]
         return json.dumps(dict_list)
 
+class IndexedUid(ndb.Model):
+    """dummy type so we can enforce uniques; get_or_insert this with a unique Key and uid, then see if uid of returned item matches the provided one """
+    uid = ndb.StringProperty(required=True)
+
+def add_search_keyword(index, keyword):
+    """
+    uniquely associate a given keyword with the provided index; if returns False, do not add search results
+    :param index: a SearchIndex
+    :param keyword: unique keyword
+    :return: True if a new association was formed, False if one already exists
+    """
+    uid = str(uuid4())
+    extant = IndexedUid.get_or_insert(index.name + ':' + keyword, uid=uid)
+    return uid == extant.uid
+
+def clear_all_search_keywords():
+    remaining = 1
+    while remaining > 0:
+        x = IndexedUid.query().fetch(100)
+        remaining = len(x)
+        ndb.delete_multi([y.key for y in x])
 
 def get_static_product_index():
     return search.Index(name='product-search-0')
@@ -137,40 +160,81 @@ def copy_index(source_index,target_index):
     delete_all_from_index(target_index)
     cursor = search.Cursor()
     total_retrieved = 0
-    try:
-        while cursor is not None:
-            options = search.QueryOptions(cursor=cursor, limit=1000)
-            query = search.Query(query_string='', options=options)
-            result = source_index.search(query)
-            number_retrieved = len(result.results)
-            total_retrieved += number_retrieved
-            if number_retrieved > 0:
-                logging.info('copy_index: {0} from {1} to {2}'.format(number_retrieved, source_index.name, target_index.name))
-                cursor = result.cursor
-                add_to_index(target_index,result.results)
-    except search.Error as x:
-        logging.exception('copy_index failed: {0}'.format(x.message))
-        return x.message
+    if len(source_index.search(search.Query(query_string='')).results) > 0:
+        try:
+            while cursor is not None:
+                options = search.QueryOptions(cursor=cursor, limit=1000)
+                query = search.Query(query_string='', options=options)
+                result = source_index.search(query)
+                number_retrieved = len(result.results)
+                total_retrieved += number_retrieved
+                if number_retrieved > 0:
+                    logging.info('copy_index: {0} from {1} to {2}'.format(number_retrieved, source_index.name, target_index.name))
+                    cursor = result.cursor
+                    add_to_index(target_index,result.results)
+        except search.Error as x:
+            logging.exception('copy_index failed: {0}'.format(x.message))
+            return x.message
     return total_retrieved
+
+def insert_giftideas_into_index(target_index):
+    category_jsons = get_giftideas_json()
+    giftideas_docs = []
+    html_parser = HTMLParser.HTMLParser()
+    for category_json in category_jsons:
+        category_slug = category_json['categorySlug'].strip()
+        keywords = category_slug
+        for product in category_json['productList']:
+            url = product['giftStartLink'].strip()
+            price = product['productPrice'].strip()
+            if len(url)>0 and price.replace('.','').isnumeric():
+                price = float(price)*100
+                title = html_parser.unescape(product['productName']).encode('utf8', 'replace').strip()
+                img = product['productImage'].strip()
+                img = img if img.startswith('http') else ('/assets/giftideas/category'+img)
+                description = product['productDescription'].encode('utf8', 'replace').strip()
+                extended_description = description
+                retailer = 'giftideas'
+                # logging.error("{2}: {1} {0} {3} {4}".format(title,price,url,img,description))
+                doc = search.Document(
+                    doc_id=hashlib.md5(url.encode('utf8', 'replace')+':'+title).hexdigest(),
+                    fields=[
+                        search.TextField(name='title', value=title),
+                        search.HtmlField(name='description',
+                                         value=description),
+                        search.TextField(name='url', value=url),
+                        search.TextField(name='img', value=img),
+                        search.NumberField(name='price', value=price),
+                        search.TextField(name='retailer', value=retailer),
+                        search.TextField(name='extended_description',
+                                         value=extended_description),
+                        search.TextField(name='keywords', value=keywords),
+                    ])
+                # logging.error("{0}".format(doc))
+                giftideas_docs.append(doc)
+    return add_to_index(target_index,giftideas_docs,True)
 
 def product_search(query):
     """ search('xbox 1') -> [SearchProduct...]
     Search for specified keywords, returning a list of products from all
     partners, sorted by relevance
     """
+    query = re.sub(r'\bgift(s)*\b', ' ', query.lower()).strip()
     escaped_query = re.sub(r'[^a-zA-Z\d\s]+', ' ', query)
-    index = get_static_product_index()
-
-    """ @type products: [SearchProduct] """
-    dynamic_products = []
-    logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
-    dynamic_products += [product for product in search_amazon(query)]
-    logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
-    dynamic_products += [product for product in search_prosperent(query)]
-    logging.info("Sorting products...\t" + datetime.utcnow().isoformat())
-    sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
-
-    logging.info("Returning...\t" + datetime.utcnow().isoformat())
+    index = get_dynamic_product_index()
+    logging.info("Beginning query for {0}...\t{1}".format(escaped_query,datetime.utcnow().isoformat()))
+    #if we've never searched for this keyword before, run the search and add results
+    if add_search_keyword(get_dynamic_product_index(),escaped_query):
+        dynamic_products = []
+        logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
+        dynamic_products += [product for product in search_amazon(query)]
+        logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
+        dynamic_products += [product for product in search_prosperent(query)]
+        logging.info("Adding products to index...\t" + datetime.utcnow().isoformat())
+        add_to_index(index, docs = [prod.to_search_document() for prod in dynamic_products])
+    # sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
+    sorted_products = search_products(index, escaped_query)
+    logging.info("Returning {0} results...\t{1}".format(len(sorted_products),datetime.utcnow().isoformat()))
     return SearchProduct.jsonify_product_list(sorted_products)
 
 
@@ -265,41 +329,57 @@ def make_prosperent_url(query):
            "&filterPrice=74.99,"
 
 
-def sort_by_relevance(index, keywords, dynamic_products):
-    """ sort_by_relavence('xbox 1', [Product...]) -> [Product...]
-    Sorts a list of products by relevance to the supplied keywords
-    """
-    logging.info("Building dynamic index...\t" + datetime.utcnow().isoformat())
-    dynamic_ids = put_search_products(index, dynamic_products)
-    logging.info("Searching products...\t" + datetime.utcnow().isoformat())
-    sorted_products = search_products(index, keywords)
-    logging.info("Found: "+str(len(sorted_products)))
-    logging.info("Cleaning up...\t" + datetime.utcnow().isoformat())
-    delete_from_index(index, dynamic_ids)
-    return sorted_products
+# def sort_by_relevance(index, keywords, dynamic_products):
+#     """ sort_by_relavence('xbox 1', [Product...]) -> [Product...]
+#     Sorts a list of products by relevance to the supplied keywords
+#     """
+#     logging.info("Building dynamic index...\t" + datetime.utcnow().isoformat())
+#     dynamic_ids = put_search_products(index, dynamic_products)
+#     logging.info("Searching products...\t" + datetime.utcnow().isoformat())
+#     sorted_products = search_products(index, keywords)
+#     logging.info("Found: "+str(len(sorted_products)))
+#     logging.info("Cleaning up...\t" + datetime.utcnow().isoformat())
+#     delete_from_index(index, dynamic_ids)
+#     return sorted_products
+#
+#
+# def put_search_products(index, products):
+#     """ put_documents([Product...]) -> (Index, [Id...])
+#     Puts an array of documents and returns the index and ids of the put docs
+#     """
+#
+#     docs = [prod.to_search_document(str(i))
+#             for i, prod in enumerate(products)]
+#     ids = [str(i) for i in range(len(docs))]
+#     add_to_index(index, docs)
+#     return ids
 
 
-def put_search_products(index, products):
-    """ put_documents([Product...]) -> (Index, [Id...])
-    Puts an array of documents and returns the index and ids of the put docs
-    """
-
-    docs = [prod.to_search_document(str(i))
-            for i, prod in enumerate(products)]
-    ids = [str(i) for i in range(len(docs))]
-    add_to_index(index, docs)
-    return ids
-
-
-def add_to_index(index, docs):
+def add_to_index(index, docs, suppress_duplicates_warning=False):
     """ add_to_index(Index, [Doc...]) -> None
     Adds all the provided documents to the given index
+    :param index: SearchIndex to which items should be added
+    :param docs: docs to add
+    :param suppress_duplicates_warning: don't show a warning if a duplicate doc_id is found (False)
+    :return: number added after deduplication
     """
+    docs_deduplicated = []
+    doc_ids = []
+    for doc in docs:
+        if doc.doc_id in doc_ids:
+            if not suppress_duplicates_warning:
+                logging.error("Duplicate doc_id; unable to add_to_index: {0}".format(doc))
+        else:
+            doc_ids.append(doc.doc_id)
+            docs_deduplicated.append(doc)
+    docs=docs_deduplicated
+    logging.info("Adding {0} docs to {1}".format(len(docs), index.name))
     k = search.MAXIMUM_DOCUMENTS_PER_PUT_REQUEST
     doc_sets = [docs[k*i:k*(i+1)] for i in range(len(docs)/k+1)]
     for doc_set in doc_sets:
         if len(doc_set) > 0:
             index.put(doc_set)
+    return len(docs)
 
 
 def delete_from_index(index, ids):

@@ -35,6 +35,9 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
     $scope.imageUpdated = imageUpdated;
+    $scope.picEdit = false;
+    $scope.picUploading = false;
+    var currentComment = "";
 
     $scope.userId = UserService.uid;
     $scope.commentEditing = [];     //keeping as array for one day when we can upload multiple images
@@ -45,8 +48,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.isSavingForLater = false;
 
     $scope.showLoginBox = false;
-
     $scope.showPayBox = false;
+    $scope.showSignBox = false;
 
     function imageUpdated(data) {
         imageData = data;
@@ -58,24 +61,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             commentName = comment.name;
             commentTxt = comment.note;
             commentImg = comment.img;
+            currentComment = comment;
         } else if (!editing) {              //saving edit
+            $scope.picEdit = false;
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
-            if (imageData) {
-                comment.img = imageData;
-                GiftStartService.updateCommentImage(comment, imageData)
-                    .success(function(response) {
-                        Analytics.track('campaign', 'pitchin image update succeeded');
-                        comment.img = response;
-                        GiftStartService.updateComment(comment);
-                    })
-                    .error(function() {
-                        Analytics.track('campaign', 'pitchin image update failed');
-                        GiftStartService.updateComment(comment);
-                    });
-                imageData = null;
-            } else {
-                GiftStartService.updateComment(comment);
-            }
+            GiftStartService.updateComment(comment);
+            currentComment = "";
         }
     };
 
@@ -84,10 +75,36 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         comment.name = commentName;
         comment.note = commentTxt;
         comment.img = commentImg;
+        $scope.picEdit = false;
     };
 
     $scope.isEditing = function(comment) {
         return $scope.commentEditing.indexOf(comment) != -1;
+    };
+
+    $scope.picSubmit = function() {
+        $scope.picUploading = true;
+        if (imageData) {
+            currentComment.img = imageData;
+            GiftStartService.updateCommentImage(currentComment, imageData)
+                .success(function(response) {
+                    Analytics.track('campaign', 'pitchin image update succeeded');
+                    currentComment.img = response;
+                    $rootScope.$broadcast('pitchin-image-changed', response);
+                    $scope.picUploading = false;
+                    imageData = null;
+                })
+                .error(function() {
+                    Analytics.track('campaign', 'pitchin image update failed');
+                    $scope.picUploading = false;
+                    imageData = null;
+                });
+        }
+        $scope.picEdit = false;
+    };
+
+    $scope.setPicEdit = function(edit) {
+        $scope.picEdit = edit;
     };
 
     $scope.getTileCost = function() {
@@ -96,6 +113,15 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $rootScope.$on('paybox-hidden', function() {
         $scope.showPayBox = false;
+        $scope.showSignBox = true;
+    });
+
+    $rootScope.$on('paybox-hidden-cancel', function() {
+        $scope.showPayBox = false;
+    });
+
+    $rootScope.$on('signbox-hidden', function() {
+        $scope.showSignBox = false;
     });
 
     if ($scope.giftStart.gc_name) {

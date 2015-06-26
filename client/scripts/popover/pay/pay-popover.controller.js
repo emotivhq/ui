@@ -68,7 +68,11 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
 
     $scope.hidePopover = function() {
         PopoverService.hidePopover();
-        $rootScope.$broadcast('paybox-hidden');
+        if($scope.submitted) {
+            $rootScope.$broadcast('paybox-hidden');
+        } else {
+            $rootScope.$broadcast('paybox-hidden-cancel');
+        }
     };
 
     $rootScope.$on('paybox-shown',$scope.initialize);
@@ -223,7 +227,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         //if(PopoverService.currentLocation=='pay') {
         //    PopoverService.nextPopover();
         //}
-        PopoverService.setPopover('note');
+        //PopoverService.setPopover('note');
         $scope.pitchingIn = false;
         $rootScope.$broadcast('paybox-hidden');
         $scope.number = '';

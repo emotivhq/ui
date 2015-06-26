@@ -485,9 +485,7 @@ class PaymentCardsHandler(webapp2.RequestHandler):
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
         if not all([bool(thing) for thing in [uid, token]]):
-            logging.warning("Invalid data used for payment cards request:"
-                            "\n{0}".format(self.request.body))
-            self.response.set_status(400, "Invalid data")
+            self.response.write(json.dumps({}))
             return
         # validate user and token
         if validate(uid, token, self.request.path):
