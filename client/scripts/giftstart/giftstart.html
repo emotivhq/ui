@@ -116,7 +116,9 @@
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn)">
                     <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                 </a>
-                <gs-image-upload ng-show="isEditing(pitchIn)" on-image-updated="imageUpdated"></gs-image-upload>
+                <button class="userprofile__imageedit" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</button>
+                <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
+                <button class="userprofile__imagesave" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</button>
             </div>
             <div class="contributors__info">
                 <h3 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h3>
