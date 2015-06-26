@@ -39,7 +39,11 @@ class PdfHandler(webapp2.RequestHandler):
             }
             form_data = urllib.urlencode(form_fields)
             urlfetch.set_default_fetch_deadline(90)
-            pdf_data = urlfetch.fetch(pdf_service_url,payload=form_data,method=urlfetch.POST, validate_certificate=False).content
+            try:
+                pdf_data = urlfetch.fetch(pdf_service_url,payload=form_data,method=urlfetch.POST, validate_certificate=False).content
+            except Exception as x:
+                logging.warn("Exception generating PDF: {0} {1}".format(x.message, x))
+                pdf_data = urlfetch.fetch(pdf_service_url,payload=form_data,method=urlfetch.POST, validate_certificate=False).content
             self.response.headers['Content-Type'] = 'application/pdf'
             self.response.out.write(pdf_data)
         except Exception as x:
