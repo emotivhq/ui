@@ -10,7 +10,7 @@
     var noteText = '';
     var skipNote = false;
 
-    var notePopoverController = function ($scope, $location, UserService, PopoverService, GiftStartService, Analytics) {
+    var notePopoverController = function ($scope, $rootScope, $location, UserService, PopoverService, GiftStartService, Analytics) {
         
         $scope.noteText = noteText;
         $scope.skipNote = skipNote;
@@ -35,18 +35,18 @@
                 if ($scope.skipNote) {
                     Analytics.track('pitchin', 'no note submitted');
                     GiftStartService.saveNote(' ');
-                    PopoverService.nextPopover();
                 } else {
                     Analytics.track('pitchin', 'note submitted');
                     GiftStartService.saveNote($scope.noteText);
-                    PopoverService.nextPopover();
                 }
+                PopoverService.setPopover('thanks');
+                $rootScope.$broadcast('signbox-hidden');
                 $scope.skipNote = skipNote = false;
                 $scope.noteText = noteText = '';
             }
         }
     };
 
-    app.controller('NotePopoverController', ['$scope', '$location', 'UserService', 'PopoverService','GiftStartService','Analytics', notePopoverController]);
+    app.controller('NotePopoverController', ['$scope', '$rootScope', '$location', 'UserService', 'PopoverService','GiftStartService','Analytics', notePopoverController]);
 }(angular.module('GiftStarterApp')));
 

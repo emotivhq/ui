@@ -104,6 +104,10 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         $scope.showPayBox = false;
     });
 
+    $rootScope.$on('signbox-hidden', function() {
+        $scope.showSignBox = false;
+    });
+
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
     } else {
