@@ -136,6 +136,14 @@ def add_search_keyword(index, keyword):
     extant = IndexedUid.get_or_insert(index.name + ':' + keyword, uid=uid)
     return uid == extant.uid
 
+def remove_search_keyword(index, keyword):
+    """
+    unassociate a given keyword with the provided index
+    :param index: a SearchIndex
+    :param keyword: unique keyword
+    """
+    ndb.Key("IndexedUid",index.name + ':' + keyword).delete()
+
 def clear_all_search_keywords():
     remaining = 1
     while remaining > 0:
@@ -227,11 +235,23 @@ def product_search(query):
     if add_search_keyword(get_dynamic_product_index(),escaped_query):
         dynamic_products = []
         logging.info("Searching amazon...\t" + datetime.utcnow().isoformat())
-        dynamic_products += [product for product in search_amazon(query)]
+        dynamic_search_failed = False
+        try:
+            dynamic_products += [product for product in search_amazon(query)]
+        except ConnectionError as x:
+            logging.error("ConnectionError for Amazon in product_search: "+str(x.message))
+            dynamic_search_failed = True
         logging.info("Searching prosperent...\t" + datetime.utcnow().isoformat())
-        dynamic_products += [product for product in search_prosperent(query)]
+        try:
+            dynamic_products += [product for product in search_prosperent(query)]
+        except ConnectionError as x:
+            logging.error("ConnectionError for Prosperent in product_search: "+str(x.message))
+            dynamic_search_failed = True
         logging.info("Adding products to index...\t" + datetime.utcnow().isoformat())
         add_to_index(index, docs = [prod.to_search_document() for prod in dynamic_products])
+        if(dynamic_search_failed):
+            logging.warn("Removing {1} from {0}: {1}".format(get_dynamic_product_index().name,escaped_query))
+            remove_search_keyword(get_dynamic_product_index(),escaped_query)
     # sorted_products = sort_by_relevance(index, escaped_query, dynamic_products)
     sorted_products = search_products(index, escaped_query)
     logging.info("Returning {0} results...\t{1}".format(len(sorted_products),datetime.utcnow().isoformat()))
@@ -242,12 +262,8 @@ def search_amazon(query):
     """ search_amazon('xbox 1') -> [Product...]
     Search for specified keywords on amazon, returning a list of products
     """
-    try:
-        response = requests.get(make_amazon_url(query)).text
-        return parse_amazon_products(response)
-    except ConnectionError as x:
-        logging.error("ConnectionError in product_search: "+str(x.message))
-        return []
+    response = requests.get(make_amazon_url(query)).text
+    return parse_amazon_products(response)
 
 
 def make_amazon_url(query):
