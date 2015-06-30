@@ -44,6 +44,8 @@
                 $rootScope.$broadcast('signbox-hidden');
                 $scope.skipNote = skipNote = false;
                 $scope.noteText = noteText = '';
+                $scope.name = UserService.name;
+                $scope.profilePicture = UserService.profileImageUrl;
             }
         }
     };
