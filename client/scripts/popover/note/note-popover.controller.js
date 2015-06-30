@@ -15,6 +15,7 @@
         $scope.noteText = noteText;
         $scope.skipNote = skipNote;
         $scope.profilePicture = UserService.profileImageUrl;
+        $scope.name = UserService.name;
 
         $scope.$on('pitchin-image-changed', function (event,imgUrl) {
             $scope.profilePicture = imgUrl;
@@ -34,10 +35,10 @@
             submit: function () {
                 if ($scope.skipNote) {
                     Analytics.track('pitchin', 'no note submitted');
-                    GiftStartService.saveNote(' ');
+                    GiftStartService.saveNote(' ', "poop");
                 } else {
                     Analytics.track('pitchin', 'note submitted');
-                    GiftStartService.saveNote($scope.noteText);
+                    GiftStartService.saveNote($scope.noteText, "poop");
                 }
                 PopoverService.setPopover('thanks');
                 $rootScope.$broadcast('signbox-hidden');
