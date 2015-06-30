@@ -35,10 +35,10 @@
             submit: function () {
                 if ($scope.skipNote) {
                     Analytics.track('pitchin', 'no note submitted');
-                    GiftStartService.saveNote(' ', "poop");
+                    GiftStartService.saveNote(' ', $scope.name);
                 } else {
                     Analytics.track('pitchin', 'note submitted');
-                    GiftStartService.saveNote($scope.noteText, "poop");
+                    GiftStartService.saveNote($scope.noteText, $scope.name);
                 }
                 PopoverService.setPopover('thanks');
                 $rootScope.$broadcast('signbox-hidden');
