@@ -37,7 +37,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.imageUpdated = imageUpdated;
     $scope.picEdit = false;
     $scope.picUploading = false;
-    var currentComment = "";
+    var currentComment;
 
     $scope.userId = UserService.uid;
     $scope.commentEditing = [];     //keeping as array for one day when we can upload multiple images
@@ -66,7 +66,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             $scope.picEdit = false;
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
             GiftStartService.updateComment(comment);
-            currentComment = "";
+            currentComment = null;
         }
     };
 
@@ -183,6 +183,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     });
 
     $scope.$on('note-saved', function() {
+        console.log("pitchins");
+        console.log($scope.pitchIns);
         $scope.pitchIns.shift();
         $scope.pitchIns.unshift(GiftStartService.newPitchIn);
     });
