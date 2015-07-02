@@ -58,7 +58,7 @@
 
         $scope.action = {
             submit: function () {
-                if ($scope.imageUpdated) {
+                if ($scope.imageSet) {
                     saveUpdatedImage();
                     Analytics.track('pitchin', 'user pitchin image '+($scope.useAsProfilePicture?'and profile image ':'')+'changed');
                     //PopoverService.setPopover('note');
