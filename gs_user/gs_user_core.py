@@ -155,6 +155,11 @@ uid_fns = {'facebook': lambda tok: facebook.get_uid(tok),
            'googleplus': lambda tok: googleplus.get_uid(tok),
            'emaillogin': lambda tok: login.login_core.get_uid(tok,create=True)}
 
+set_uid_fns = {'facebook': lambda user, id: user.set_facebook_uid(id),
+           'twitter': lambda user, id: user.set_twitter_uid(id),
+           'googleplus': lambda user, id: user.set_googleplus_id(id),
+           'emaillogin': lambda user, id: user.set_emaillogin_uid(id)}
+
 
 def is_valid_uid_pattern(uid):
     return len(uid) > 0 and uid[0] in valid_uid_prefixes
@@ -171,7 +176,8 @@ def update_or_create(service, token_set, referral):
     if service not in uid_fns:
         raise ValueError("Invalid service!  Must be facebook, googleplus, twitter, or emaillogin.")
 
-    uid = service_prefix[service] + uid_fns[service](token_set)
+    uid_unprefixed = uid_fns[service](token_set)
+    uid = service_prefix[service] + uid_unprefixed
     user_key = ndb.Key('User', uid)
     user = user_key.get()
 
@@ -179,7 +185,8 @@ def update_or_create(service, token_set, referral):
         img_url = cache_profile_image(uid, service, token_set)
         user = User(key=user_key, uid=uid, logged_in_with=service,
                     cached_profile_image_url=img_url)
-        if (referral is not None):
+        set_uid_fns[service](user, uid_unprefixed)
+        if referral is not None:
             user.referrer_channel = referral.channel
             user.referrer_type = referral.type
             user.referrer_uid = str(referral.uid)
