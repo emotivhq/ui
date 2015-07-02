@@ -60,6 +60,18 @@ class User(ndb.Model):
 
     paypal_vault_payer_id = ndb.StringProperty()
 
+    def set_emaillogin_uid(self, id):
+        self.emaillogin_uid = id
+
+    def set_facebook_uid(self, id):
+        self.facebook_uid = id
+
+    def set_twitter_uid(self, id):
+        self.twitter_uid = id
+
+    def set_googleplus_id(self, id):
+        self.googleplus_id = id
+
     def dictify(self, include_protected_data=False):
         json_data = {
                 'uid': self.uid,
@@ -80,6 +92,10 @@ class User(ndb.Model):
             json_data['shipping_city'] = self.shipping_city
             json_data['shipping_state'] = self.shipping_state
             json_data['shipping_zip'] = self.shipping_zip
+            json_data['emaillogin_uid'] = self.emaillogin_uid
+            json_data['facebook_uid'] = self.facebook_uid
+            json_data['twitter_uid'] = self.twitter_uid
+            json_data['googleplus_id'] = self.googleplus_id
         return json_data
 
     def jsonify(self, include_protected_data=False):

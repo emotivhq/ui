@@ -18,8 +18,6 @@ def get_extended_key(code, redirect_url):
     @param redirect_url: redirect_uri from prior call to https://www.facebook.com/dialog/oauth (must match)
     @rtype: FacebookTokenSet
     """
-    """
-    """
 
     response = requests.get("https://graph.facebook.com/oauth/access_token?"
                             "&client_id=" + APP_ID +

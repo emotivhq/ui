@@ -68,7 +68,8 @@ class PayHandler(webapp2.RequestHandler):
                 payment = data['payment']
                 logging.info("setting note for payment "+payment['gsid'])
                 result = pay_core.set_note_for_pitchin(data['uid'], payment['gsid'],
-                                           payment['parts'], payment['note'])
+                                           payment['parts'], payment['note'],
+                                           name=payment['firstName'] if 'firstName' in payment else None)
             else:
                 pitchin = data['pitchin']
                 logging.info("setting note for pitchin "+pitchin['gsid'])
