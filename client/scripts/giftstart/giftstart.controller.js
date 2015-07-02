@@ -112,7 +112,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     };
 
     $rootScope.$on('paybox-hidden', function() {
-            console.log("here");
         $scope.showPayBox = false;
         $scope.showSignBox = true;
     });
