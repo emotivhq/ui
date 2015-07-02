@@ -60,6 +60,18 @@ class User(ndb.Model):
 
     paypal_vault_payer_id = ndb.StringProperty()
 
+    def set_emaillogin_uid(self, id):
+        self.emaillogin_uid = id
+
+    def set_facebook_uid(self, id):
+        self.facebook_uid = id
+
+    def set_twitter_uid(self, id):
+        self.twitter_uid = id
+
+    def set_googleplus_id(self, id):
+        self.googleplus_id = id
+
     def dictify(self, include_protected_data=False):
         json_data = {
                 'uid': self.uid,
