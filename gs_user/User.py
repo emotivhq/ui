@@ -92,6 +92,10 @@ class User(ndb.Model):
             json_data['shipping_city'] = self.shipping_city
             json_data['shipping_state'] = self.shipping_state
             json_data['shipping_zip'] = self.shipping_zip
+            json_data['emaillogin_uid'] = self.emaillogin_uid
+            json_data['facebook_uid'] = self.facebook_uid
+            json_data['twitter_uid'] = self.twitter_uid
+            json_data['googleplus_id'] = self.googleplus_id
         return json_data
 
     def jsonify(self, include_protected_data=False):
