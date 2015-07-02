@@ -257,9 +257,10 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
         $http({method: 'POST', url: '/pay', data: data})
             .success(function (resp) {
                 self.newPitchIn = resp;
+                self.payment.note = "";
+                self.payment.firstName = "";
                 $rootScope.$broadcast('note-saved');
             });
-
     };
 
     this.saveImage = function(imageUrl) {

@@ -112,6 +112,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     };
 
     $rootScope.$on('paybox-hidden', function() {
+            console.log("here");
         $scope.showPayBox = false;
         $scope.showSignBox = true;
     });
@@ -183,8 +184,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     });
 
     $scope.$on('note-saved', function() {
-        console.log("pitchins");
-        console.log($scope.pitchIns);
         $scope.pitchIns.shift();
         $scope.pitchIns.unshift(GiftStartService.newPitchIn);
     });
@@ -196,11 +195,24 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         data: {action: 'get-pitch-ins', gsid: $scope.giftStart.gsid}
     })
         .success( function (pitchIns) {
+            var currentPids = [];
+            angular.forEach($scope.pitchIns, function(pitchIn) {
+                currentPids.unshift(pitchIn.parts.join('_'));
+            });
             angular.forEach(pitchIns, function(pitchIn) {
-            if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
-                this.unshift(pitchIn);
-            }
-        }, $scope.pitchIns);
+                if(currentPids.indexOf(pitchIn.parts.join('_'))<0) {
+                  $scope.pitchIns.unshift(pitchIn);
+                }
+            });
+            //if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
+            //    $scope.pitchIns.unshift(pitchIn);
+            //}
+        //});
+        //    angular.forEach(pitchIns, function(pitchIn) {
+        //    if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
+        //        this.unshift(pitchIn);
+        //    }
+        //}, $scope.pitchIns);
         })
         .error(function() {console && console.log && console.log("Failed to contact part sync.")})
     });
