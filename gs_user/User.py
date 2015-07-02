@@ -60,6 +60,12 @@ class User(ndb.Model):
 
     paypal_vault_payer_id = ndb.StringProperty()
 
+    gender = ndb.StringProperty()
+
+    locale = ndb.StringProperty()
+
+    timezone = ndb.StringProperty()
+
     def set_emaillogin_uid(self, id):
         self.emaillogin_uid = id
 
@@ -96,6 +102,9 @@ class User(ndb.Model):
             json_data['facebook_uid'] = self.facebook_uid
             json_data['twitter_uid'] = self.twitter_uid
             json_data['googleplus_id'] = self.googleplus_id
+            json_data['gender'] = self.gender
+            json_data['locale'] = self.locale
+            json_data['timezone'] = self.timezone
         return json_data
 
     def jsonify(self, include_protected_data=False):

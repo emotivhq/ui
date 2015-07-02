@@ -66,7 +66,7 @@ def add_name_to_pitchin(pitchin):
         user = gs_user_core.get_user(pitchin['uid'])
         if user is not None:
             if user.name is None or user.name is '':
-                gs_user_core.get_user_info(user)
+                gs_user_core.update_user_info(user)
                 user.put()
             pitchin['name'] = user.name
     return pitchin

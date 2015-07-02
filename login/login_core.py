@@ -49,8 +49,8 @@ def get_img_url(token_set):
     return noUserImgUrl
 
 
-def get_user_info(user):
-    #no automatic names for users yet
+def update_user_info(user):
+    #no automatic info for users yet
     return user
 
 

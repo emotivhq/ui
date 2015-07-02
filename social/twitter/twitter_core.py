@@ -48,16 +48,17 @@ def get_img_url(token_set):
     return str(img_url)
 
 
-def get_user_info(user):
+def update_user_info(user):
     """attempt to retrieve user info (name) from Twitter; update User"""
     try:
         auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=user.twitter_token_set.access_token,
                       resource_owner_secret=user.twitter_token_set.access_secret)
         response = requests.get("https://api.twitter.com/1.1/users/show.json?user_id=" + user.uid[1:],
                                 auth=auth)
-        twitter_user = json.loads(response.content)
-        user.name = twitter_user['name']
-    except:
-        logging.error("Failed to get twitter user info for {uid}."
-                      .format(uid=user.uid))
+        social_json = json.loads(response.content)
+        print("{0}".format(social_json))
+        user.name = social_json['name']
+    except Exception as x:
+        logging.error("Failed to get twitter user info for {uid}: {err}."
+                      .format(uid=user.uid,err=x))
     return user
