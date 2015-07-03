@@ -62,7 +62,9 @@ class User(ndb.Model):
 
     gender = ndb.StringProperty()
 
-    locale = ndb.StringProperty()
+    language = ndb.StringProperty()
+
+    country = ndb.StringProperty()
 
     timezone = ndb.StringProperty()
 
@@ -103,7 +105,8 @@ class User(ndb.Model):
             json_data['twitter_uid'] = self.twitter_uid
             json_data['googleplus_id'] = self.googleplus_id
             json_data['gender'] = self.gender
-            json_data['locale'] = self.locale
+            json_data['language'] = self.language
+            json_data['country'] = self.country
             json_data['timezone'] = self.timezone
         return json_data
 

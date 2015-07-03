@@ -35,8 +35,11 @@ def update_user_info(user):
             user.email = social_json['email']
         if user.gender is None and 'gender' in social_json:
             user.gender = social_json['gender']
-        if user.locale is None and 'locale' in social_json:
-            user.locale = social_json['locale']
+        if user.language is None and 'locale' in social_json:
+            locale = social_json['locale'].split('_')
+            if len(locale)>1:
+                user.language = locale[0]
+                user.country = locale[1]
         if user.timezone is None and 'timezone' in social_json:
             user.timezone = str(social_json['timezone'])
         if user.gender is None and 'gender' in social_json:

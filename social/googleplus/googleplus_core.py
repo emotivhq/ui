@@ -84,6 +84,17 @@ def update_user_info(user):
         social_json = json.loads(response.content)
         print("{0}".format(social_json))
         user.name = social_json['displayName']
+        if user.gender is None and 'gender' in social_json:
+            user.gender = social_json['gender']
+        if user.language is None and 'language' in social_json:
+            user.language = social_json['language']
+        if user.email is None:
+            try:
+                response = _request_with_refresh("https://www.googleapis.com/userinfo/email?alt=json", user.googleplus_token_set)
+                email_json = json.loads(response.content)
+                user.email = email_json['data']['email']
+            except:
+                logging.info("Unable to refresh email address via googleplus for {0}".format(user.uid))
     except Exception as x:
         logging.error("Failed to get google user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
