@@ -236,6 +236,37 @@ div.giftstart.wrapper
       width: 100%
       padding-left: 11px
 
+  .login-box
+    input
+      margin-left: 0
+    .vertical-line
+      display: none
+    .switchtxt
+      position: relative
+      width: 100%
+    .block
+      display: block
+      text-align: center
+      width: 100%
+      vertical-align: top
+      input
+        width: 100% !important
+    .userlogin
+      &__loginbtn
+        margin: 0 auto
+      &__passwordwrap, &__email, &__surname
+        margin-top: 5px
+        @include apply-at-size("phone")
+          width: 100%
+      &__password
+        padding: 0.9em !important
+    p
+      margin: 0
+    .social
+      margin-top: 0.5rem
+      &__icons
+        margin: 0 auto
+
   .pay-box
     div.payment
       display: block
