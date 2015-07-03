@@ -92,8 +92,10 @@ class ButtonAnalyticsEvent(ndb.Model):
             return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
         analytics_dict = {convert(k): v for k, v in d.items()}
-        analytics_dict['product_price'] = int(float(
-            analytics_dict['product_price'])*100)
+        analytics_dict['product_price'] = int(float(analytics_dict['product_price'])*100)
+        for key in ['scroll_depth','screen_w','screen_h','button_x','button_y','button_w','button_h']:
+            if key in analytics_dict:
+                analytics_dict[key] = int(analytics_dict[key])
         return ButtonAnalyticsEvent(**analytics_dict)
 
 
