@@ -48,6 +48,8 @@ def update_user_info(user):
             if(len(bday)>1):
                 user.birth_month = int(bday[0])
                 user.birth_day = int(bday[1])
+        if user.link_facebook is None and 'link' in social_json:
+            user.link_facebook = social_json['link']
     except Exception as x:
         logging.error("Failed to get facebook user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))

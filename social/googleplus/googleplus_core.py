@@ -104,6 +104,15 @@ def update_user_info(user):
             user.gender = social_json['gender']
         if user.language is None and 'language' in social_json:
             user.language = social_json['language']
+        if user.location is None and 'placesLived' in social_json:
+            try:
+                for place in social_json['placesLived']:
+                    if place['primary']:
+                        user.location = place['value']
+            except:
+                pass
+        if user.link_googleplus is None and 'url' in social_json:
+            user.link_googleplus = social_json['url']
         if user.email is None:
             user.email = get_email(user.uid, user.googleplus_token_set)
     except Exception as x:

@@ -80,6 +80,8 @@ def update_user_info(user):
             user.location = social_json['location']
         if user.email is None:
             user.email = get_email(user.twitter_token_set)
+        if user.link_twitter is None and 'screen_name' in social_json:
+            user.link_twitter = "http://twitter.com/"+social_json['screen_name']
     except Exception as x:
         logging.error("Failed to get twitter user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))

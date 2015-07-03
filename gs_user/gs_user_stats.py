@@ -67,6 +67,6 @@ def get_stats(uids):
                             [pitchin_attach_title_and_img(pi, parent_giftstarts)
                              for pi in filter_pitchins(user.uid, pitchins)],
                         'giftstarts': filter_giftstarts(user.uid, giftstarts)}
-             for user in users}
+             for user in users if user is not None}
 
     return stats

@@ -192,15 +192,15 @@ def update_or_create(service, token_set, referral):
             user.referrer_uid = str(referral.uid)
             user.referrer_uuid = referral.uuid
     else:
-        # Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
+        #Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
         if service == 'googleplus':
             if token_set.refresh_token is None:
+                update_user_info(user)
+                user.put()
                 return user
 
     setattr(user, service + '_token_set', token_set)
-
     update_user_info(user)
-
     user.put()
     return user
 
