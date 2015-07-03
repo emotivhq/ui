@@ -30,7 +30,8 @@ def update_user_info(user):
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         social_json = graph.get_object(user.uid[1:])
-        user.name = social_json['name']
+        if user.name is None:
+            user.name = social_json['name']
         if user.email is None and 'email' in social_json:
             user.email = social_json['email']
         if user.gender is None and 'gender' in social_json:
@@ -39,16 +40,16 @@ def update_user_info(user):
             locale = social_json['locale'].split('_')
             if len(locale)>1:
                 user.language = locale[0]
-                user.country = locale[1]
+                user.location = locale[1]
         if user.timezone is None and 'timezone' in social_json:
             user.timezone = str(social_json['timezone'])
-        if user.gender is None and 'gender' in social_json:
-            user.gender = social_json['gender']
         if user.birth_month is None and 'birthday' in social_json:
             bday = social_json['birthday'].split('/')
             if(len(bday)>1):
                 user.birth_month = int(bday[0])
                 user.birth_day = int(bday[1])
+        if user.link_facebook is None and 'link' in social_json:
+            user.link_facebook = social_json['link']
     except Exception as x:
         logging.error("Failed to get facebook user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))

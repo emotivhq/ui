@@ -64,7 +64,7 @@ class User(ndb.Model):
 
     language = ndb.StringProperty()
 
-    country = ndb.StringProperty()
+    location = ndb.StringProperty()
 
     timezone = ndb.StringProperty()
 
@@ -106,7 +106,7 @@ class User(ndb.Model):
             json_data['googleplus_id'] = self.googleplus_id
             json_data['gender'] = self.gender
             json_data['language'] = self.language
-            json_data['country'] = self.country
+            json_data['location'] = self.location
             json_data['timezone'] = self.timezone
         return json_data
 
