@@ -166,15 +166,17 @@
 
   .block
     display: table-cell
+    width: 255px
     @include apply-at-size("phone")
       display: block
+      width: auto
     vertical-align: top
 
   .vertical-line
     border-left: 1px solid #cdcdcd
     display: inline-block
     height: 100px
-    margin: 120px 20px
+    margin: 120px 20px 0 20px
     width: 0
     @include apply-at-size("phone")
       display: none
