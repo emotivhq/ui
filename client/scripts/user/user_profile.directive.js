@@ -24,8 +24,9 @@ var gsUserEdit = function ($http, UserService, Analytics) {
 
         scope.cancelEdit = function () {
             scope.canEdit = true;
+            scope.user.error_message = "";
+            scope.fieldisable = true;
             if (!scope.userinfo) {
-                scope.fieldisable = true;
                 scope.user.name = angular.copy(scope.copyUser.name);
                 scope.user.email = angular.copy(scope.copyUser.email);
                 scope.user.shipping_address = angular.copy(scope.copyUser.shipping_address);
@@ -38,13 +39,15 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                 scope.user.link_linkedin = angular.copy(scope.copyUserInfo.link_linkedin);
                 scope.user.link_googleplus = angular.copy(scope.copyUserInfo.link_googleplus);
                 scope.user.link_website = angular.copy(scope.copyUserInfo.link_website);
+                scope.user.birth_month = angular.copy(scope.copyUserInfo.birth_month);
                 scope.user.birth_day = angular.copy(scope.copyUserInfo.birth_day);
-                scope.blocked = true;
             }
+            scope.blocked = true;
         };
 
         scope.saveInput = function () {
             scope.loading = true;
+            scope.user.error_message = "";
             if (userProfileform.$valid) {
                 $http.post('/users', {
                     'uid': scope.user.uid,
@@ -67,7 +70,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                     .then(function (res) {
                         scope.loading = false;
                     }, function (errorRes) {
-                        alert("Error. Please try again.");
+                        scope.user.error_message = "Error. Please try again.";
                         userProfileform.$invalid = true;
                     });
                 scope.canEdit = true;
@@ -75,12 +78,12 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                 scope.blocked = true;
             }
             else {
-                alert("Please fill fields correctly");
+                scope.user.error_message = "It looks like some of your info is incorrect; please try again.";
                 scope.loading = false;
                 scope.canEdit = false;
                 scope.fieldisable = false;
             }
-        }
+        };
 
         scope.$on('logout-success', function() {
             scope.canEdit = true;

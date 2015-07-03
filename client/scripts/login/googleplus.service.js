@@ -49,7 +49,7 @@ GiftStarterApp.service('GooglePlusService', [
             AppStateService.set('login_service', 'googleplus');
             self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
                 '?scope=' + encodeURIComponent(
-                'https://www.googleapis.com/auth/plus.login') +
+                'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email') +
                 '&client_id=' +
                 encodeURIComponent($window.googlePlusClientId) +
                 '&redirect_uri=' +
