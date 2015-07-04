@@ -233,6 +233,12 @@
         });
 
         $rootScope.$on('password-reset-requested', function() {
+            if(self.loggedIn) {
+                self.logout();
+                window.location.reload();
+            } else {
+                $location.path('/', false);
+            }
             self.showReset();
         });
 
