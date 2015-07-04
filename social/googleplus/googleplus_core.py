@@ -63,6 +63,22 @@ def get_uid(token_set):
     return response['id']
 
 
+def get_email(uid, token_set):
+    """
+    get email address for user from GooglePlus
+    :param token_set:
+    :return: email address, or None if unavailable
+    """
+    try:
+        response = _request_with_refresh("https://www.googleapis.com/userinfo/email?alt=json", token_set)
+        content = json.loads(response.content)
+        return content['data']['email']
+    except:
+        logging.info("Unable to refresh email address via googleplus for {0}".format(uid))
+        return None
+
+
+
 def get_img_url(token_set):
     """get URL of avatar for user"""
     response = _request_with_refresh(IMG_QRY_URL, token_set)
@@ -76,14 +92,30 @@ def token_saver(token):
     pass
 
 
-def get_user_info(user):
+def update_user_info(user):
     """attempt to retrieve user info (name) from googleplus; update User"""
     try:
         response = _request_with_refresh("https://www.googleapis.com/plus/v1/people/" + user.uid[1:],
                                          user.googleplus_token_set)
-        gplus_user = json.loads(response.content)
-        user.name = gplus_user['displayName']
-    except:
-        logging.error("Failed to get google user info for {uid}."
-                      .format(uid=user.uid))
+        social_json = json.loads(response.content)
+        if user.name is None:
+            user.name = social_json['displayName']
+        if user.gender is None and 'gender' in social_json:
+            user.gender = social_json['gender']
+        if user.language is None and 'language' in social_json:
+            user.language = social_json['language']
+        if user.location is None and 'placesLived' in social_json:
+            try:
+                for place in social_json['placesLived']:
+                    if place['primary']:
+                        user.location = place['value']
+            except:
+                pass
+        if user.link_googleplus is None and 'url' in social_json:
+            user.link_googleplus = social_json['url']
+        if user.email is None:
+            user.email = get_email(user.uid, user.googleplus_token_set)
+    except Exception as x:
+        logging.error("Failed to get google user info for {uid}: {err}."
+                      .format(uid=user.uid,err=x))
     return user

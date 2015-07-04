@@ -115,21 +115,21 @@ def fetch_fb_image(uid, tok):
                            redirect=1)['data']
     return storage.image_cache.save_picture_to_gcs(uid + '.jpg', 'u/', img)
 
-cache_fns = {'facebook': lambda uid, tok: fetch_fb_image(uid, tok),
+cache_profile_image_fns = {'facebook': lambda uid, tok: fetch_fb_image(uid, tok),
              'twitter': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid, twitter.get_img_url(tok)),
              'googleplus': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,googleplus.get_img_url(tok)),
-             'emaillogin': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,login.login_core.get_img_url(tok)),}
+             'emaillogin': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,login.login_core.get_img_url(tok))}
 
 
 def cache_profile_image(uid, service, token_set):
     """
     obtain avatar image from service and cache in datastore
     @param uid: user ID
-    @param service: valid service name from cache_fns
+    @param service: valid service name from cache_profile_image_fns
     @param token_set: login token
     @return: URL of stored image
     """
-    return cache_fns[service](uid, token_set)
+    return cache_profile_image_fns[service](uid, token_set)
 
 service_prefix = {'facebook':'f',
                   'twitter':'t',
@@ -138,10 +138,10 @@ service_prefix = {'facebook':'f',
 
 valid_uid_prefixes = service_prefix.values()
 
-info_map = {'f': lambda u: facebook.get_user_info(u),
-            't': lambda u: twitter.get_user_info(u),
-            'g': lambda u: googleplus.get_user_info(u),
-            'e': lambda u: login.login_core.get_user_info(u)}
+update_user_info_fns = {'f': lambda u: facebook.update_user_info(u),
+            't': lambda u: twitter.update_user_info(u),
+            'g': lambda u: googleplus.update_user_info(u),
+            'e': lambda u: login.login_core.update_user_info(u)}
 
 token_pointer_map = {
     'f': lambda user: user.facebook_token_set.access_token,
@@ -192,22 +192,20 @@ def update_or_create(service, token_set, referral):
             user.referrer_uid = str(referral.uid)
             user.referrer_uuid = referral.uuid
     else:
-        # Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
+        #Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
         if service == 'googleplus':
-            if token_set.refresh_token is None:
-                return user
+            if token_set.refresh_token is None and user.googleplus_token_set is not None:
+                token_set.refresh_token = user.googleplus_token_set.refresh_token
 
     setattr(user, service + '_token_set', token_set)
-
-    get_user_info(user)
-
+    update_user_info(user)
     user.put()
     return user
 
 
-def get_user_info(user):
+def update_user_info(user):
     """attempt to inject user info provided by service (eg, Google+ displayName) into User"""
-    return info_map[user.uid[0]](user)
+    return update_user_info_fns[user.uid[0]](user)
 
 
 def get_user(uid):

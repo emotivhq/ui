@@ -64,7 +64,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             .then(function () {
                 idea.loading = false;
             }, function () {
-                alert("Error. Please try again.");
+                //alert("Error. Please try again.");
             })
     };
 
@@ -86,23 +86,24 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.showMoreCampaign = true;
     $scope.imgloading = false;
     $scope.months = [
-        {label: 'Jan', value: 0},
-        {label: 'Feb', value: 1},
-        {label: 'Mar', value: 2},
-        {label: 'Apr', value: 3},
-        {label: 'May', value: 4},
-        {label: 'Jun', value: 5},
-        {label: 'Jul', value: 6},
-        {label: 'Aug', value: 7},
-        {label: 'Sep', value: 8},
-        {label: 'Oct', value: 9},
-        {label: 'Nov', value: 10},
-        {label: 'Dec', value: 11}
+        {label: 'Jan', value: 1},
+        {label: 'Feb', value: 2},
+        {label: 'Mar', value: 3},
+        {label: 'Apr', value: 4},
+        {label: 'May', value: 5},
+        {label: 'Jun', value: 6},
+        {label: 'Jul', value: 7},
+        {label: 'Aug', value: 8},
+        {label: 'Sep', value: 9},
+        {label: 'Oct', value: 10},
+        {label: 'Nov', value: 11},
+        {label: 'Dec', value: 12}
     ];
     var imageData;
 
     $scope.editable = thisUser == UserService.uid;
     $scope.imageSet = false;
+    $scope.user.error_message = "";
 
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;

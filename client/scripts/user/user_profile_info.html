@@ -54,13 +54,14 @@
                     </div>
                 </div>
             </div>
-            <div class="calendar" ng-show="user.birth_month&&user.birth_day&&editable">
+            <div class="calendar" ng-show="(user.birth_month&&user.birth_day)||editable">
                 <p class="calendar__calendartext">Birth Date</p>
                 <div class="calendar__monthwrap">
                     <select ng-disabled="blocked" class="calendar__month" ng-model="user.birth_month" ng-options="month.value as month.label for month in months"></select>
                 </div>
                 <input type="number" name="date" min="1" max="31" class="calendar__date" ng-disabled="blocked" ng-model="user.birth_day"  />
             </div>
+           <div class="userprofile__errors">{{user.error_message}}</div>
             <div ng-show="editable" class="editlink editlink--white">
                 <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user" userinfo="true" loading="loading" ></gs-user-edit>
             </div>

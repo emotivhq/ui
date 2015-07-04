@@ -213,7 +213,7 @@ div.giftstart.wrapper
   .login-box, .pay-box, .sign-box
     float: right
     display: block
-    padding-top: 0px
+    padding-top: 0
     margin-right: 2%
     width: 40%
     @media screen and (max-width: $phone-tablet-boundary - 1)
@@ -235,6 +235,35 @@ div.giftstart.wrapper
     .userlogin__passwordwrap
       width: 100%
       padding-left: 11px
+
+  .login-box
+    input
+      margin-left: 0
+    .vertical-line
+      display: none
+    .switchtxt
+      position: relative
+      width: 100%
+    .block
+      display: block
+      text-align: center
+      width: 100%
+      vertical-align: top
+      input
+        width: 100% !important
+    .userlogin
+      &__loginbtn
+        margin: 0 auto
+      &__passwordwrap, &__email, &__surname
+        margin-top: 5px
+        @include apply-at-size("phone")
+          width: 100%
+    p
+      margin: 0
+    .social
+      margin-top: 0.5rem
+      &__icons
+        margin: 0 auto
 
   .pay-box
     div.payment

@@ -29,7 +29,7 @@ def pitchin_attach_title_and_img(pitchin_dict, giftstarts):
     gsid = pitchin_dict.get('gsid')
     found_gs = filter(lambda g: g is not None and g.gsid == gsid, giftstarts)
     if(len(found_gs)==0):
-        logging.error("No matching GS found for GSID {0} at pitchin_attach_title_and_img".format(gsid))
+        logging.error("No matching GS found for GSID {0} at pitchin_attach_title_and_img: {1}".format(gsid,pitchin_dict))
         title = '(campaign title missing)'
         img = ''
     else:
@@ -67,6 +67,6 @@ def get_stats(uids):
                             [pitchin_attach_title_and_img(pi, parent_giftstarts)
                              for pi in filter_pitchins(user.uid, pitchins)],
                         'giftstarts': filter_giftstarts(user.uid, giftstarts)}
-             for user in users}
+             for user in users if user is not None}
 
     return stats
