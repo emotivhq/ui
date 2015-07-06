@@ -1,88 +1,90 @@
-"""Token Set representing a LinkedIn login, and routines to get user info"""
+"""Token Set representing a Google Plus login, and routines to get user info"""
 __author__ = 'GiftStarter'
 
 import json
-
-import requests
+from datetime import datetime, timedelta
 from google.appengine.ext import ndb
-import logging
-from requests_oauthlib import OAuth1
+from requests_oauthlib import OAuth2Session
 import yaml
+import logging
 
-CLIENT_KEY = yaml.load(open('secret.yaml'))['linkedin_auth']['client_key']
-CLIENT_SECRET = yaml.load(open('secret.yaml'))['linkedin_auth']['client_secret']
+secret = yaml.load(open('secret.yaml'))
 
-APP_URL = yaml.load(open('config.yaml'))['app_url']
+CLIENT_ID = secret['linkedin_auth']['client_id']
+CLIENT_SECRET = secret['linkedin_auth']['client_secret']
 
+PROFILE_QRY_URL = 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,location,picture-url,picture-urls::(original),public-profile-url,email-address)?format=json'
 
 class LinkedinTokenSet(ndb.Model):
-    """linkedIn token set: (access_token, access_secret)"""
+    """linkedIn token set: (access_token, expires)"""
     access_token = ndb.StringProperty()
-    access_secret = ndb.StringProperty()
+    expires = ndb.DateTimeProperty()
 
-    def populate(self, access_token, access_secret):
+    def populate(self, access_token, expires_in):
         self.access_token = access_token
-        self.access_secret = access_secret
+        self.expires = datetime.now() + timedelta(int(expires_in) / 86400, int(expires_in) % 86400)
         return self
+
+    def to_token(self):
+        return {
+            'access_token': self.access_token,
+            'expires_in': str(int((self.expires - datetime.now()).total_seconds()))
+        }
+
+
+def _request(url, token_set):
+    """access provided googleplus URL with provided token; attempt to refresh token in the process"""
+    oauth = OAuth2Session(CLIENT_ID,token=token_set.to_token())
+    return oauth.get(url)
 
 
 def get_uid(token_set):
-    """get LinkedIn ID for user"""
-    url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(CLIENT_KEY, CLIENT_SECRET, resource_owner_key=token_set.access_token,
-                  resource_owner_secret=token_set.access_secret)
-    response = requests.get(url=url, auth=auth) #, params={'include_email':'true'})
-    linkedin_uid = json.loads(response.content)['id']
-
-    return str(linkedin_uid)
-
-def get_email(token_set):
-    """
-    get email address for user from LinkedIn
-    :param token_set:
-    :return: email address, or None if unavailable
-    """
-    url = 'https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true'
-    auth = OAuth1(CLIENT_KEY, CLIENT_SECRET, resource_owner_key=token_set.access_token,
-                  resource_owner_secret=token_set.access_secret)
-    response = requests.get(url=url, auth=auth) #, params={'include_email':'true'})
-    content = json.loads(response.content)
-    return content['email'] if 'email' in content else None
+    """get linkedin ID for user"""
+    content = json.loads(_request(PROFILE_QRY_URL,token_set).content)
+    return content['id']
 
 
 def get_img_url(token_set):
     """get URL of avatar for user"""
-    url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(CLIENT_KEY, CLIENT_SECRET, resource_owner_key=token_set.access_token,
-                  resource_owner_secret=token_set.access_secret)
-    response = requests.get(url=url, auth=auth)
-    img_url = json.loads(response.content)['profile_image_url'].replace("_normal.", ".")
-
-    return str(img_url)
+    content = json.loads(_request(PROFILE_QRY_URL,token_set).content)
+    try:
+        return content['pictureUrls']['values'][0]
+    except:
+        return content['pictureUrl']
 
 
 def update_user_info(user):
-    """attempt to retrieve user info (name) from LinkedIn; update User"""
+    """attempt to retrieve user info (name) from googleplus; update User"""
     try:
-        auth = OAuth1(CLIENT_KEY, CLIENT_SECRET, resource_owner_key=user.linkedin_token_set.access_token,
-                      resource_owner_secret=user.linkedin_token_set.access_secret)
-        response = requests.get("https://api.twitter.com/1.1/users/show.json?include_email=true&user_id=" + user.uid[1:],
-                                auth=auth)
-        social_json = json.loads(response.content)
+        social_json = json.loads(_request(PROFILE_QRY_URL,user.linkedin_token_set).content)
         if user.name is None:
-            user.name = social_json['name']
-        if user.timezone is None and 'utc_offset' in social_json:
             try:
-                user.timezone = str(int(social_json['utc_offset'])/3600)
+                user.name = social_json['formattedName']
+            except:
+                user.name = social_json['firstName']+' '+social_json['lastName']
+        if user.location is None and 'location' in social_json:
+            location = None
+            country = None
+            try:
+                location = social_json['location']['name']
             except:
                 pass
-        if user.location is None and 'location' in social_json:
-            user.location = social_json['location']
+            try:
+                country = social_json['location']['country']['code'].upper()
+            except:
+                pass
+            if location is not None:
+                user.location = location
+            if country is not None:
+                user.location = country if location is None else location+', '+country
+        if user.link_linkedin is None and 'publicProfileUrl' in social_json:
+            user.link_linkedin = social_json['publicProfileUrl']
         if user.email is None:
-            user.email = get_email(user.linkedin_token_set)
-        if user.link_linkedin is None and 'screen_name' in social_json:
-            user.link_linkedin = "http://linkedin.com/"+social_json['screen_name']
+            try:
+                user.email = social_json['emailAddress']
+            except:
+                logging.info("Unable to refresh email address via linkedin for {0}".format(user.uid))
     except Exception as x:
-        logging.error("Failed to get linkedin user info for {uid}: {err}."
+        logging.error("Failed to get google user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user

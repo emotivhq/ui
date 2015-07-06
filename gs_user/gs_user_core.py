@@ -3,7 +3,7 @@ __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
 from gs_user.User import User
-from social import facebook, twitter, googleplus
+from social import facebook, linkedin, twitter, googleplus
 import login.login_core
 import storage.image_cache
 import json
@@ -118,6 +118,7 @@ def fetch_fb_image(uid, tok):
 cache_profile_image_fns = {'facebook': lambda uid, tok: fetch_fb_image(uid, tok),
              'twitter': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid, twitter.get_img_url(tok)),
              'googleplus': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,googleplus.get_img_url(tok)),
+             'linkedin': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,linkedin.get_img_url(tok)),
              'emaillogin': lambda uid, tok: storage.image_cache.cache_user_image_from_url(uid,login.login_core.get_img_url(tok))}
 
 
@@ -134,6 +135,7 @@ def cache_profile_image(uid, service, token_set):
 service_prefix = {'facebook':'f',
                   'twitter':'t',
                   'googleplus':'g',
+                  'linkedin':'l',
                   'emaillogin':'e'}
 
 valid_uid_prefixes = service_prefix.values()
@@ -141,23 +143,27 @@ valid_uid_prefixes = service_prefix.values()
 update_user_info_fns = {'f': lambda u: facebook.update_user_info(u),
             't': lambda u: twitter.update_user_info(u),
             'g': lambda u: googleplus.update_user_info(u),
+            'l': lambda u: linkedin.update_user_info(u),
             'e': lambda u: login.login_core.update_user_info(u)}
 
 token_pointer_map = {
     'f': lambda user: user.facebook_token_set.access_token,
     't': lambda user: user.twitter_token_set.access_token,
     'g': lambda user: user.googleplus_token_set.access_token,
+    'l': lambda user: user.linkedin_token_set.access_token,
     'e': lambda user: user.emaillogin_token_set.email,
 }
 
 uid_fns = {'facebook': lambda tok: facebook.get_uid(tok),
            'twitter': lambda tok: twitter.get_uid(tok),
            'googleplus': lambda tok: googleplus.get_uid(tok),
+           'linkedin': lambda tok: linkedin.get_uid(tok),
            'emaillogin': lambda tok: login.login_core.get_uid(tok,create=True)}
 
 set_uid_fns = {'facebook': lambda user, id: user.set_facebook_uid(id),
            'twitter': lambda user, id: user.set_twitter_uid(id),
            'googleplus': lambda user, id: user.set_googleplus_id(id),
+           'linkedin': lambda user, id: user.set_linkedin_id(id),
            'emaillogin': lambda user, id: user.set_emaillogin_uid(id)}
 
 
@@ -174,7 +180,7 @@ def update_or_create(service, token_set, referral):
     @rtype: User
     """
     if service not in uid_fns:
-        raise ValueError("Invalid service!  Must be facebook, googleplus, twitter, or emaillogin.")
+        raise ValueError("Invalid service!  Must be one of: {0}".format(', '.join(uid_fns.keys())))
 
     uid_unprefixed = uid_fns[service](token_set)
     uid = service_prefix[service] + uid_unprefixed
@@ -252,6 +258,17 @@ def login_emaillogin_user(email, password, referrer):
     """
     token_set = login.login_core.get_email_token_set(email,password)
     return update_or_create('emaillogin', token_set, referrer)
+
+def login_linkedin_user(code, redirect_url, referrer):
+    """
+    exchange one-time code and redirect_uri for an access token; create/update and return User
+    @param code: one-time code from oauth service
+    @param redirect_url: redirect_uri from call to obtain code (must match)
+    @param referrer: how were they referred here (for tracking)?
+    @rtype: User
+    """
+    token_set = linkedin.submit_code(code, redirect_url)
+    return update_or_create('linkedin', token_set, referrer)
 
 def login_googleplus_user(code, redirect_url, referrer):
     """

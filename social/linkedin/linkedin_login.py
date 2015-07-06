@@ -5,59 +5,35 @@ import json
 
 import requests
 
-from requests_oauthlib import OAuth1
-from .. import OAuthTokenPair
 from linkedin_core import LinkedinTokenSet
 import yaml
 
-CLIENT_KEY = yaml.load(open('secret.yaml'))['linkedin_auth']['client_key']
-CLIENT_SECRET = yaml.load(open('secret.yaml'))['linkedin_auth']['client_secret']
 
-APP_URL = yaml.load(open('config.yaml'))['app_url']
+config = yaml.load(open('config.yaml'))
+secret = yaml.load(open('secret.yaml'))
 
-
-def get_auth_url(current_url):
-    """gets redirection URL for LinkedIn login"""
-    url = 'https://api.twitter.com/oauth/request_token'
-    auth = OAuth1(client_key=CLIENT_KEY, client_secret=CLIENT_SECRET,
-                  callback_uri=current_url)
-    response = requests.post(url=url, auth=auth)
-    result_dict = {k: v for k, v in [pair.split('=') for pair in
-                                     response.content.split('&')]}
-
-    if result_dict['oauth_callback_confirmed']:
-        oauth_token_pair = OAuthTokenPair(oauth_token=result_dict['oauth_token'],
-                                          oauth_secret=result_dict['oauth_token_secret'])
-        oauth_token_pair.put()
-        return json.dumps({
-            'url': 'https://api.twitter.com/oauth/authenticate?oauth_token=' +
-                   result_dict['oauth_token']})
-    else:
-        return None
+CLIENT_ID = secret['linkedin_auth']['client_id']
+CLIENT_SECRET = secret['linkedin_auth']['client_secret']
 
 
-def submit_verifier(oauth_token, oauth_verifier):
+def submit_code(code, redirect_url):
     """
-    exchange an OAuth Request Token for an OAuth Access Token
-    as per https://dev.twitter.com/oauth/reference/post/oauth/access_token
+    exchange a linkedin code for a login token, as per https://developer.linkedin.com/docs/oauth2
+    @param code: auth code provided by https://www.linkedin.com/uas/oauth2/authorization
+    @param redirect_url: may need to be registered in https://www.linkedin.com/developer/apps
+    @rtype: LinkedinTokenSet
     """
-    url = 'https://api.twitter.com/oauth/access_token'
-    oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token ==
-                                        oauth_token).fetch(1)[0].oauth_secret
-    auth = OAuth1(CLIENT_KEY, CLIENT_SECRET, resource_owner_key=oauth_token,
-                  resource_owner_secret=oauth_secret,
-                  verifier=oauth_verifier)
-    response = requests.post(url=url, auth=auth)
-    result_dict = {k: v for k, v in [pair.split('=') for pair in response.content.split('&')]}
-    return LinkedinTokenSet().populate(result_dict['oauth_token'], result_dict['oauth_token_secret'])
-
-
-def is_logged_in(token_set):
-    """verifies that current user is logged in with LinkedIn"""
-    url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(CLIENT_KEY, CLIENT_SECRET,
-                  resource_owner_key=token_set.access_token,
-                  resource_owner_secret=token_set.access_secret)
-    response = requests.get(url=url, auth=auth)
-    return response.status_code == 200
+    url = 'https://www.linkedin.com/uas/oauth2/accessToken'
+    redirect_url = redirect_url.rstrip('/') #no trailing slashes for linkedin
+    params = {
+        'grant_type': 'authorization_code',
+        'code': code,
+        'redirect_uri': redirect_url,
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET
+    }
+    response = requests.post(url=url, params=params)
+    result_dict = json.loads(response.content)
+    # logging.info("Logging in with linkedin - {0}".format(result_dict))
+    return LinkedinTokenSet().populate(result_dict['access_token'],result_dict['expires_in'])
 

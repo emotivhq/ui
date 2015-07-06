@@ -135,6 +135,7 @@ function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
     $rootScope.$on('facebook-logout-success', self.registerLogout);
     $rootScope.$on('twitter-logout-success', self.registerLogout);
     $rootScope.$on('googleplus-logout-success', self.registerLogout);
+    $rootScope.$on('linkedin-logout-success', self.registerLogout);
     $rootScope.$on('email-logout-success', self.registerLogout);
 
     if ($window.loginDeets) {

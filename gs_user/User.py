@@ -5,6 +5,7 @@ from google.appengine.ext import ndb
 from social.facebook import FacebookTokenSet
 from social.twitter import TwitterTokenSet
 from social.googleplus import GooglePlusTokenSet
+from social.linkedin import LinkedinTokenSet
 from login import EmailLoginPair
 import json
 
@@ -29,6 +30,9 @@ class User(ndb.Model):
 
     googleplus_id = ndb.StringProperty()
     googleplus_token_set = ndb.StructuredProperty(GooglePlusTokenSet)
+
+    linkedin_id = ndb.StringProperty()
+    linkedin_token_set = ndb.StructuredProperty(LinkedinTokenSet)
 
     link_facebook = ndb.StringProperty()
     link_twitter = ndb.StringProperty()
@@ -80,6 +84,9 @@ class User(ndb.Model):
     def set_googleplus_id(self, id):
         self.googleplus_id = id
 
+    def set_linkedin_id(self, id):
+        self.linkedin_id = id
+
     def dictify(self, include_protected_data=False):
         json_data = {
                 'uid': self.uid,
@@ -104,6 +111,7 @@ class User(ndb.Model):
             json_data['facebook_uid'] = self.facebook_uid
             json_data['twitter_uid'] = self.twitter_uid
             json_data['googleplus_id'] = self.googleplus_id
+            json_data['linkedin_id'] = self.linkedin_id
             json_data['gender'] = self.gender
             json_data['language'] = self.language
             json_data['location'] = self.location
