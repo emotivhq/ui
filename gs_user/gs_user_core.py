@@ -194,10 +194,8 @@ def update_or_create(service, token_set, referral):
     else:
         #Check for g+ users logging again (refresh tokens are only granted on authorization, not every login)
         if service == 'googleplus':
-            if token_set.refresh_token is None:
-                update_user_info(user)
-                user.put()
-                return user
+            if token_set.refresh_token is None and user.googleplus_token_set is not None:
+                token_set.refresh_token = user.googleplus_token_set.refresh_token
 
     setattr(user, service + '_token_set', token_set)
     update_user_info(user)
