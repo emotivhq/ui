@@ -341,9 +341,19 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         }
     };
 
-    $scope.facebookShare = function() {
+    $scope.facebookMsg = function() {
         Analytics.track('campaign', 'facebook share from campaign');
         FacebookService.inviteFriends(UserService.uid);
+    };
+    $scope.facebookShare = function() {
+        Analytics.track('campaign', 'facebook share from campaign');
+        //FacebookService.inviteFriends(UserService.uid, 'share');
+        FB.ui(
+         {
+          method: 'share',
+          href: $location.absUrl()
+        }, function(response){});
+        FB.Canvas.setAutoGrow();
     };
     $scope.twitterShare = function() {
         Analytics.track('campaign', 'twitter share from campaign');
