@@ -135,7 +135,7 @@ def cache_profile_image(uid, service, token_set):
 service_prefix = {'facebook':'f',
                   'twitter':'t',
                   'googleplus':'g',
-                  'linkedin':'l',
+                  'linkedin':'k',
                   'emaillogin':'e'}
 
 valid_uid_prefixes = service_prefix.values()
@@ -143,14 +143,14 @@ valid_uid_prefixes = service_prefix.values()
 update_user_info_fns = {'f': lambda u: facebook.update_user_info(u),
             't': lambda u: twitter.update_user_info(u),
             'g': lambda u: googleplus.update_user_info(u),
-            'l': lambda u: linkedin.update_user_info(u),
+            'k': lambda u: linkedin.update_user_info(u),
             'e': lambda u: login.login_core.update_user_info(u)}
 
 token_pointer_map = {
     'f': lambda user: user.facebook_token_set.access_token,
     't': lambda user: user.twitter_token_set.access_token,
     'g': lambda user: user.googleplus_token_set.access_token,
-    'l': lambda user: user.linkedin_token_set.access_token,
+    'k': lambda user: user.linkedin_token_set.access_token,
     'e': lambda user: user.emaillogin_token_set.email,
 }
 
