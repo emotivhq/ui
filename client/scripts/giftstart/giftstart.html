@@ -90,11 +90,11 @@
         <div class="prices block">
             <div class="price funded">
                 <h3>Gifted!</h3>
-                <h2>$<span class="giftstart product contribution">{{giftStart.funded / 100 | number : 2}}</span></h2>
+                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Tiles</h2>
             </div>
             <div class="price remaining">
                 <h3>Amount Needed</h3>
-                <h2>$<span class="giftstart product remaining">{{giftStart.remaining / 100 | number : 2}}</span></h2>
+                <h2><span class="giftstart product remaining">{{giftStart.nTotal}}</span> Tiles</h2>
             </div>
             <gs-funding-bar></gs-funding-bar>
         </div>

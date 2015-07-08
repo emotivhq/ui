@@ -202,11 +202,15 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.updateSelected = function() {
         self.giftStart.totalSelection = 0;
         self.giftStart.nSelected = 0;
+        self.giftStart.nBought = 0;
+        self.giftStart.nTotal = 0;
         self.giftStart.remaining = 0;
         self.giftStart.funded = 0;
         self.giftStart.parts.map(function(part) {
             self.giftStart.totalSelection += part.value * part.selected;
             self.giftStart.nSelected += 1 * part.selected;
+            self.giftStart.nBought += 1 * part.bought;
+            self.giftStart.nTotal += 1;
             self.giftStart.remaining += part.value *
                 !(part.selected || part.bought);
             self.giftStart.funded += part.value * part.bought;

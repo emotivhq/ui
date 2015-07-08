@@ -10,7 +10,7 @@
             <p class="chars-left" ng-show="noteText.length > 0" ng-class="{warning: (noteText.length > 214)}">{{250 - noteText.length}}</p>
         </div>
     </div>
-    <div>
+    <div class="note-skipbox">
         <input id="skipNote" type="checkbox" ng-model="skipNote">
         <label for="skipNote">No thanks, just put my name on the card.</label>
     </div>
