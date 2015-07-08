@@ -313,6 +313,7 @@
             if($scope.runValidation()) {
                 $scope.goToStep($scope.createStep + 1);
             }
+            jQuery('#giftstart-create-next').blur();
         };
 
         $scope.next = function() {
