@@ -40,10 +40,9 @@ def send_welcome_email(email_address):
     try:
 
         taskqueue.add(url="/email/sendfromqueue", method="PUT",
-                      payload=data)
-        requests.put(config['email_url'], data=data, countdown=60) #60*60*24*5)
-    except Exception:
-        logging.error("Unable to send welcome 5-day nudge email: {0}".format(data))
+                      payload=data, countdown=60*60*24*5)
+    except Exception as x:
+        logging.error("Unable to send welcome 5-day nudge email: {0} {1}".format(data, x))
 
 def save_email(uid, email):
     """
