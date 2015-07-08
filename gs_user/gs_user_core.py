@@ -190,7 +190,7 @@ def update_or_create(service, token_set, referral):
     if not user:
         img_url = cache_profile_image(uid, service, token_set)
         user = User(key=user_key, uid=uid, logged_in_with=service,
-                    cached_profile_image_url=img_url)
+                    cached_profile_image_url=img_url, is_system_default_profile_image=(service=='emaillogin'))
         set_uid_fns[service](user, uid_unprefixed)
         if referral is not None:
             user.referrer_channel = referral.channel

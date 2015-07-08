@@ -41,6 +41,7 @@ class User(ndb.Model):
     link_website = ndb.StringProperty()
 
     cached_profile_image_url = ndb.StringProperty()
+    is_system_default_profile_image = ndb.BooleanProperty(default=True)
     email = ndb.StringProperty()
     subscribed_to_mailing_list = ndb.BooleanProperty(default=False)
     phone_number = ndb.StringProperty()
@@ -87,11 +88,22 @@ class User(ndb.Model):
     def set_linkedin_id(self, id):
         self.linkedin_id = id
 
+    def set_cached_profile_image_url(self, url, is_system_default=False):
+        """
+        Sets profile image url for user
+        :param url: url of image
+        :param is_system_default: is this the default system image / not a custom image (False)
+        :return:
+        """
+        self.cached_profile_image_url = url
+        self.is_system_default_profile_image = is_system_default
+
     def dictify(self, include_protected_data=False):
         json_data = {
                 'uid': self.uid,
                 'name': self.name,
                 'img_url': self.cached_profile_image_url,
+                'is_system_default_img_url': self.is_system_default_profile_image,
                 'link_facebook': self.link_facebook,
                 'link_twitter': self.link_twitter,
                 'link_linkedin': self.link_linkedin,
