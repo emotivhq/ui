@@ -6,6 +6,7 @@ from social import twitter, googleplus, facebook
 import json
 from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
+from pay.PitchIn import PitchIn
 from gs_user_stats import get_stats
 from gs_email.gs_email_comm import send
 from pay.pay_core import delete_card_paypal_vault
@@ -466,12 +467,18 @@ class ImageUploadHandler(webapp2.RequestHandler):
                 base64data = ','.join(json_body.get('data').split(',')[1:])
                 img_data = base64data.decode('base64', 'strict')
                 fname = str(uuid.uuid4())
-                updated = image_cache.save_picture_to_gcs(fname + extension,
+                new_img_url = image_cache.save_picture_to_gcs(fname + extension,
                                                           'u/', img_data)
                 user = ndb.Key('User', uid).get()
-                user.cached_profile_image_url = updated
+                was_using_default_img = user.is_system_default_profile_image
+                user.set_cached_profile_image_url(new_img_url)
                 user.put()
-                self.response.write(updated)
+                self.response.write(new_img_url)
+                if was_using_default_img:
+                    for pitchin in PitchIn.query(PitchIn.is_system_default_img_url == True, PitchIn.uid == user.uid).fetch():
+                        pitchin.img_url = new_img_url
+                        pitchin.is_system_default_img_url = False
+                        pitchin.put()
             except TypeError as e:
                 logging.error(e)
                 logging.warning("Received profile image with invalid data")
