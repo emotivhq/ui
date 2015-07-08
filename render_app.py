@@ -38,6 +38,8 @@ def render_app(request):
                  secrets['facebook_auth']['app_id'] + "';"
     js_insert += "window.googlePlusClientId = '" + \
                  secrets['googleplus_auth']['client_id'] + "';"
+    js_insert += "window.linkedInClientId = '" + \
+                 secrets['linkedin_auth']['client_id'] + "';"
     js_insert += "angular.module('ngAB').value('spec', " + \
                  abtest.get_tests(request) + ");"
 

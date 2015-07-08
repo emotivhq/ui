@@ -7,7 +7,7 @@
 (function (app) {
 
     var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService,
-                                            FacebookService, GooglePlusService, emailLoginService, Analytics) {
+                                            FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
         if (typeof($scope.showCreate) == 'undefined') {
@@ -76,6 +76,9 @@
         };
         $scope.doLoginGoogleplus = function() {
             doSocialLogin(GooglePlusService.login);
+        };
+        $scope.doLoginLinkedin = function() {
+            doSocialLogin(LinkedInService.login);
         };
         $scope.doLoginEmail = function() {
             Analytics.track('user', 'login attempt with email');
@@ -180,6 +183,6 @@
 
     app.controller('LoginOrCreateController', [
         '$scope', '$rootScope', '$location', '$routeParams', '$timeout', '$http', 'AppStateService', 'UserService', 'TwitterService', 'FacebookService',
-        'GooglePlusService', 'emailLoginService', 'Analytics',
+        'LinkedInService','GooglePlusService', 'emailLoginService', 'Analytics',
         LoginOrCreateController]);
 }(angular.module('GiftStarterApp')));

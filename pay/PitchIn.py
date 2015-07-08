@@ -14,6 +14,7 @@ class PitchIn(ndb.Model):
     name = ndb.StringProperty(required=True)
     email = ndb.StringProperty(required=True)
     img_url = ndb.StringProperty(required=True)
+    is_system_default_img_url = ndb.BooleanProperty(default=True)
     note = ndb.StringProperty(required=True)
     parts = ndb.IntegerProperty(repeated=True)
     timestamp = ndb.DateTimeProperty(auto_now_add=True)
@@ -28,6 +29,7 @@ class PitchIn(ndb.Model):
             'uid': self.uid,
             'name': self.name,
             'img': self.img_url,
+            'is_system_default_img': self.is_system_default_img_url,
             'gsid': self.gsid,
             'note': self.note,
             'parts': self.parts,

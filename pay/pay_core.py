@@ -40,11 +40,12 @@ def set_note_for_pitchin(uid,gsid,parts,note,name=None,img_url=None):
             if name is not None:
                 pitchin.name=name
             if img_url is not None:
-                pitchin.img_url=img_url
+                set_img_for_pitchin_h(img_url, pitchin)
             pitchin.put()
             return pitchin
     logging.error("No pitch-in with gsid={0}, uid={1}, parts={2}".format(gsid,uid,parts))
     return None
+
 
 def set_img_for_pitchin(uid,gsid,parts,imgUrl):
     """set image for the given parts"""
@@ -54,11 +55,21 @@ def set_img_for_pitchin(uid,gsid,parts,imgUrl):
     pitch_ins = PitchIn.query(PitchIn.gsid == gsid, PitchIn.uid == uid).fetch()
     for pitchin in pitch_ins:
         if pitchin.parts==parts:
-            pitchin.img_url=imgUrl
+            set_img_for_pitchin_h(imgUrl, pitchin)
             pitchin.put()
             return pitchin
     logging.error("No pitch-in with gsid={0}, uid={1}, parts={2}".format(gsid,uid,parts))
     return None
+
+
+def set_img_for_pitchin_h(img_url, pitchin):
+    if pitchin.is_system_default_img_url and img_url != pitchin.img_url:
+        try:
+            if requests.get(img_url).content != requests.get(pitchin.img_url).content:
+                pitchin.is_system_default_img_url = False
+        except:
+            pitchin.is_system_default_img_url = False
+    pitchin.img_url = img_url
 
 def add_name_to_pitchin(pitchin):
     """set pitchin's name, if empty, to that of the User who pitched in"""
@@ -186,7 +197,7 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
                      email=email_address,
                      stripe_charge_json=charge_json if is_stripe else "",
                      paypal_charge_json="" if is_stripe else charge_json,
-                     last_four=card_last_four, img_url=usr_img,
+                     last_four=card_last_four, img_url=usr_img, is_system_default_img_url=user.is_system_default_profile_image,
                      name=card_name)
         pi.put()
 
@@ -473,7 +484,7 @@ def pay_with_fingerprint(fingerprint, uid, gsid, parts, note, subscribe_to_maili
                      stripe_charge_json=charge_json if is_stripe else "",
                      paypal_charge_json="" if is_stripe else charge_json,
                      last_four=card_last_four,
-                     img_url=user.cached_profile_image_url,
+                     img_url=user.cached_profile_image_url, is_system_default_img_url=user.is_system_default_profile_image,
                      name=card_name)
         pi.put()
 

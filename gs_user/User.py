@@ -5,6 +5,7 @@ from google.appengine.ext import ndb
 from social.facebook import FacebookTokenSet
 from social.twitter import TwitterTokenSet
 from social.googleplus import GooglePlusTokenSet
+from social.linkedin import LinkedinTokenSet
 from login import EmailLoginPair
 import json
 
@@ -30,6 +31,9 @@ class User(ndb.Model):
     googleplus_id = ndb.StringProperty()
     googleplus_token_set = ndb.StructuredProperty(GooglePlusTokenSet)
 
+    linkedin_id = ndb.StringProperty()
+    linkedin_token_set = ndb.StructuredProperty(LinkedinTokenSet)
+
     link_facebook = ndb.StringProperty()
     link_twitter = ndb.StringProperty()
     link_linkedin = ndb.StringProperty()
@@ -37,6 +41,7 @@ class User(ndb.Model):
     link_website = ndb.StringProperty()
 
     cached_profile_image_url = ndb.StringProperty()
+    is_system_default_profile_image = ndb.BooleanProperty(default=True)
     email = ndb.StringProperty()
     subscribed_to_mailing_list = ndb.BooleanProperty(default=False)
     phone_number = ndb.StringProperty()
@@ -80,11 +85,25 @@ class User(ndb.Model):
     def set_googleplus_id(self, id):
         self.googleplus_id = id
 
+    def set_linkedin_id(self, id):
+        self.linkedin_id = id
+
+    def set_cached_profile_image_url(self, url, is_system_default=False):
+        """
+        Sets profile image url for user
+        :param url: url of image
+        :param is_system_default: is this the default system image / not a custom image (False)
+        :return:
+        """
+        self.cached_profile_image_url = url
+        self.is_system_default_profile_image = is_system_default
+
     def dictify(self, include_protected_data=False):
         json_data = {
                 'uid': self.uid,
                 'name': self.name,
                 'img_url': self.cached_profile_image_url,
+                'is_system_default_img_url': self.is_system_default_profile_image,
                 'link_facebook': self.link_facebook,
                 'link_twitter': self.link_twitter,
                 'link_linkedin': self.link_linkedin,
@@ -104,6 +123,7 @@ class User(ndb.Model):
             json_data['facebook_uid'] = self.facebook_uid
             json_data['twitter_uid'] = self.twitter_uid
             json_data['googleplus_id'] = self.googleplus_id
+            json_data['linkedin_id'] = self.linkedin_id
             json_data['gender'] = self.gender
             json_data['language'] = self.language
             json_data['location'] = self.location

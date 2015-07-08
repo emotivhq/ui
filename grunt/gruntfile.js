@@ -96,6 +96,7 @@ module.exports = function(grunt) {
                     '../client//scripts/login/facebook.service.js',
                     '../client//scripts/login/twitter.service.js',
                     '../client//scripts/login/googleplus.service.js',
+                    '../client//scripts/login/linkedin.service.js',
                     '../client//scripts/login/email.service.js',
                     '../client//scripts/login/login-or-create.controller.js',
                     '../client//scripts/giftstart/giftstart.service.js',

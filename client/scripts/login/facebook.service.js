@@ -63,8 +63,10 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
         $rootScope.$broadcast('facebook-logout-success');
     };
 
-    this.inviteFriends = function(uid) {
-        ga('send', 'event', 'share campaign', 'facebook');
+    this.inviteFriends = function(uid, method) {
+        $window.FB.Canvas.setAutoGrow();
+        method = (typeof method === 'undefined') ? 'send' : method;
+        ga(method, 'event', 'share campaign', 'facebook');
 
         if (!device.mobile() && !device.tablet()) {
             $location.search('re', btoa(JSON.stringify({
@@ -77,7 +79,7 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
                         return v.toString(16);
                     })
             })));
-            ezfb.ui({method: 'send', link: $location.absUrl(),
+            ezfb.ui({method: method, link: $location.absUrl(), href: $location.absUrl(),
                 app_id: ezfb.app_id});
             $location.search('re', null);
         } else {

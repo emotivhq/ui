@@ -31,7 +31,7 @@ def submit_code(code, redirect_url):
     }
     str_params = '&'.join(['='.join(pair) for pair in params.items()])
     response = requests.post(base_url, data=str_params)
-    logging.info("Logging in with googleplus - {0}".format(response))
+    # logging.info("Logging in with googleplus - {0}".format(response))
     if response.status_code != 200:
         logging.warning(response.content)
     token = json.loads(response.content)
