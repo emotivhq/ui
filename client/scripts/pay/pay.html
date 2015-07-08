@@ -56,7 +56,7 @@
 
         <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 
-        <button class="large white-border pay" ng-click="paypalSubmit()" ng-class="{disabled: pitchingIn}">Pay ${{currentCharge / 100 | number : 2}} <img ng-show="pitchingIn" src="/assets/loading_transparent.gif"></button>
+        <button class="large pay" ng-click="paypalSubmit()" ng-class="{disabled: pitchingIn}">Pay ${{currentCharge / 100 | number : 2}} <img ng-show="pitchingIn" src="/assets/loading_transparent.gif"></button>
     </form>
     <div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div>
 
