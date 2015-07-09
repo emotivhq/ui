@@ -2,6 +2,7 @@
 __author__ = 'GiftStarter'
 
 from google.appengine.ext import ndb
+from google.appengine.api import taskqueue
 from gs_user.User import User
 from social import facebook, linkedin, twitter, googleplus
 import login.login_core
@@ -25,11 +26,23 @@ def send_welcome_email(email_address):
                        'template_name': "welcome_user",
                        'mime_type': 'html',
                        'template_kwargs': {}})
-
     try:
         requests.put(config['email_url'], data=data)
     except Exception:
         logging.error("Unable to send welcome email: {0}".format(data))
+
+    #email a welcome nudge 5 days later
+    data = json.dumps({'subject': "Arry from GiftStarter",
+                       'sender': "receipt@giftstarter.com", 'to': [email_address],
+                       'template_name': "welcome_user_nudge1",
+                       'mime_type': 'html',
+                       'template_kwargs': {}})
+    try:
+
+        taskqueue.add(url="/email/sendfromqueue", method="PUT",
+                      payload=data, countdown=60*60*24*5)
+    except Exception as x:
+        logging.error("Unable to send welcome 5-day nudge email: {0} {1}".format(data, x))
 
 def save_email(uid, email):
     """

@@ -47,13 +47,18 @@ input:focus, button:focus, select:focus, textarea:focus
 button
   font: $button-font
   vertical-align: top
-  background: $primary-color
+  background: white
   border: solid $primary-color 2px
-  color: #fff
+  border-radius: 25px
+  color: $primary-color
   cursor: pointer
   padding: 9px 10px 5px 10px
   +transition(all, 0.2s)
   -webkit-font-smoothing: antialiased
+  &.searchbtn
+    border-radius: 0
+    background: $primary-color
+    color: white
 
 button.share
   background: $share-color
@@ -61,7 +66,6 @@ button.share
 
 button.edit
   font: $p-font
-  color: #fff
 
 button:disabled, button:disabled:focus, button:disabled:active, button.disabled, button.disabled:active, button.disabled:hover, button.disabled:focus
   background: $disabled-color

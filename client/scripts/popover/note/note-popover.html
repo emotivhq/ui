@@ -2,7 +2,7 @@
     <div class="note-wrapper">
         <div class="profile-picture-wrapper">
             <img class="profile-picture" ng-src="{{profilePicture}}">
-            <button class="small white-border edit-picture-button" ng-click="editPhoto()">Edit Photo</button>
+            <button class="small edit-picture-button" ng-click="editPhoto()">Edit Photo</button>
         </div>
         <div class="note">
             <input id="name-box" type="text" ng-model="name" />
@@ -10,10 +10,10 @@
             <p class="chars-left" ng-show="noteText.length > 0" ng-class="{warning: (noteText.length > 214)}">{{250 - noteText.length}}</p>
         </div>
     </div>
-    <div>
+    <div class="note-skipbox">
         <input id="skipNote" type="checkbox" ng-model="skipNote">
         <label for="skipNote">No thanks, just put my name on the card.</label>
     </div>
-    <button class="large white-border" ng-click="action.submit()" ng-disabled="!skipNote && !noteText || noteText.length > 250 " ng-class="{disabled: !skipNote && !noteText}">Sign it!</button>
+    <button class="large" ng-click="action.submit()" ng-disabled="!skipNote && !noteText || noteText.length > 250 " ng-class="{disabled: !skipNote && !noteText}">Sign it!</button>
     <!-- div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div -->
 </div>
