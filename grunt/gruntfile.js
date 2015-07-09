@@ -1,4 +1,4 @@
-createSourceMaps = true;
+createSourceMaps = false;
 
 module.exports = function(grunt) {
 
