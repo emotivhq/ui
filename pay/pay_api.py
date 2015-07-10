@@ -4,6 +4,7 @@ __author__ = 'GiftStarter'
 import webapp2
 from google.appengine.ext import ndb
 from pay import pay_core
+from gs_user.User import User
 import json
 import yaml
 import stripe
@@ -76,14 +77,18 @@ class PayHandler(webapp2.RequestHandler):
                 result = pay_core.set_note_for_pitchin(data['uid'], pitchin['gsid'],
                                            pitchin['parts'], pitchin['note'],
                                            name=pitchin['name'] if 'name' in pitchin else None, img_url=pitchin['img'] if 'img' in pitchin else None)
+                if 'img' in pitchin:
+                    self.update_user_profile_image_if_never_set(data['uid'], pitchin['img'])
             self.response.write(json.dumps(None if result is None else result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-update':
             payment = data['payment']
             imgUrl = data['imgurl']
+            uid = data['uid']
             logging.info("setting image for "+payment['gsid'])
-            result = pay_core.set_img_for_pitchin(data['uid'], payment['gsid'],
+            result = pay_core.set_img_for_pitchin(uid, payment['gsid'],
                                        payment['parts'], imgUrl)
+            self.update_user_profile_image_if_never_set(uid, imgUrl)
             self.response.write(json.dumps(result if result is None else result.ext_dictify()))
 
         elif data['action'] == 'pitch-in-img-upload':
@@ -107,18 +112,31 @@ class PayHandler(webapp2.RequestHandler):
                     base64data = ','.join(data['imgdata'].split(',')[1:])
                     img_data = base64data.decode('base64', 'strict')
                     fname = str(uuid.uuid4())
-                    updated = image_cache.save_picture_to_gcs(fname + extension,
+                    img_url = image_cache.save_picture_to_gcs(fname + extension,
                                                               'u/', img_data)
-                    logging.info("saved image to "+updated)
-                    self.response.write(updated)
+                    logging.info("saved image to "+img_url)
+                    self.response.write(img_url)
                 except TypeError as e:
                     logging.error(e)
-                    logging.warning("Received profile image with invalid data")
+                    logging.warning("Received pitchin image with invalid data")
                     self.response.set_status(400, "Invalid image data")
 
         elif data['action'] == 'get-pitch-ins':
             pitchin_dicts = pay_core.get_pitch_in_dicts(data['gsid'])
             self.response.write(json.dumps(pitchin_dicts))
+
+    def update_user_profile_image_if_never_set(self, uid, imgUrl):
+        # if user has never set a profile image, use the one from this pitchin
+        try:
+            users = User.query(User.uid == uid).fetch()
+            if len(users):
+                u = users[0]
+                if u.is_system_default_profile_image:
+                    u.set_cached_profile_image_url(imgUrl)
+                    u.put()
+        except Exception as x:
+            logging.error(
+                "Unable to set profile image for {0}: {3}".format(uid, x))
 
 
 api = webapp2.WSGIApplication(
