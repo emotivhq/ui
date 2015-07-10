@@ -312,7 +312,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.campaignUrl = function() {
         if($location.path().length > 11) {
-                return $location.absUrl().split(/[#\?]/)[0];
+            return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
         } else {
             return "";
         }
