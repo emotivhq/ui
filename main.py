@@ -57,6 +57,14 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(render_app(self.request))
 
 
+class GiftStartRedirectHandler(webapp2.RequestHandler):
+    """handle all requests to /giftstart/.*"""
+    def get(self):
+        if(self.request.path.startswith('/g/')):
+            self.redirect(self.request.url.replace('/g/','/giftstart/',1), permanent=True)
+        if(self.request.path.startswith('/i/')):
+            self.redirect(self.request.url.replace('/i/','/giftstart?gs-id=',1), permanent=True)
+
 class GiftStartMainHandler(webapp2.RequestHandler):
     """handle all requests to /giftstart/.*"""
     def get(self):
@@ -64,6 +72,8 @@ class GiftStartMainHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
+    ('/i/.*', GiftStartRedirectHandler),
+    ('/g/.*', GiftStartRedirectHandler),
     ('/giftstart/.*', GiftStartMainHandler),
     ('/giftstart', GiftStartMainHandler),
     ('/create-giftstart', MainHandler),
