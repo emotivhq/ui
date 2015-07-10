@@ -318,6 +318,10 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         }
     };
 
+    $scope.copyLink = function() {
+        jQuery("#share-url").select();
+    };
+
     $scope.giftstartThisUrl = function() {
         return '/create?' + urlSerialize({
                 product_url: GiftStartService.giftStart.product_url,

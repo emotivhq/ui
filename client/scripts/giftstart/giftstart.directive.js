@@ -9,7 +9,6 @@ GiftStarterApp.directive('gsCopyUrl', ['$window', gsCopyUrl]);
 
 function gsCopyUrl($window) {
     function link(scope, element, attrs) {
-        console.log("nar");
         element.on('click', function () {
             if (!$window.getSelection().toString()) {
                 // Required for mobile Safari
