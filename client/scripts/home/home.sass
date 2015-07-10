@@ -1,13 +1,20 @@
 @import "../base"
 @import "../frame/column"
-@import "../static-pages/static-pages"
 
 $landing-page-padding-horz: 1.3125em
 $step-width: 210px //(2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
 
 .headerwrap
-  background: url("/assets/homepage_hero.jpg") no-repeat center top
-  margin-bottom: 10px !important
+  background: url("/assets/homepage_hero.jpg") center top //no-repeat
+  color: white
+  margin: 0 auto 10px auto
+  padding-top: 30px
+  text-align: center
+  h1
+    color: white
+  p
+    margin: 20px auto
+    width: 60%
 
 div.landing-page
   text-align: center

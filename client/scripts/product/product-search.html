@@ -1,9 +1,9 @@
 <!--<div class="product-link wrapper" ng-controller="ProductLinkController">-->
 <div id="product-search-anchor" class="product-link">
     <div class="search wrapper">
-        <span class="inputs">
+        <div class="inputs">
             <input id="product-search-input" class="text-input" type="text" name="product-link" placeholder="SEARCH HERE FOR THE PERFECT GIFT..." ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/><button id="product-search-button" class="submit searchbtn" ng-click="submit()">SEARCH</button>
-        </span>
+        </div>
     </div>
 
     <div id="categories-container">
@@ -110,5 +110,5 @@
             <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
         </div>
     </section>
-    <p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p>
+    <!--p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p-->
 </div>
