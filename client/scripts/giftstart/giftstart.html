@@ -81,8 +81,7 @@
                 <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
                 <img class="share" src="/assets/twittericon.png" ng-click="twitterShare();" />
                 <img class="share" src="/assets/googleicon.png" ng-click="googlePlusShare();" /><br/>
-                <input id="share-url" type="text" value="{{campaignUrl()}}" ng-click="copyLink()"/>
-                <button ng-click="copyLink()">COPY LINK</button>
+                Or share this link: <input id="share-url" type="text" value="{{campaignUrl()}}" gs-copy-url/>
             </div>
         </div>
     </div>
