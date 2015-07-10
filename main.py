@@ -49,13 +49,38 @@ class MainHandler(webapp2.RequestHandler):
                         self.redirect('/giftstart/' + gss[0].giftstart_url_title)
                         return
                 else:
-                    #bad login
+                    #bad login (usually, user hit Cancel during LinkedIn or Twitter dialog)
                     logging.error("Unable to find uid in request with staging_uuid {0} (likely they cancelled login): {1}".format(staging_uuid, self.request))
+                    try:
+                        gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid).fetch(1)
+                        if not len(gss):
+                            time.sleep(5)
+                            gss = GiftStart.query(GiftStart.staging_uuid == staging_uuid).fetch(1)
+                        if len(gss):
+                            gs=gss[0]
+                            params = {'product_url': gs.product_url,
+                                      'title': gs.product_title,
+                                      'price': gs.product_price,
+                                      'img_url': gs.product_img_url,
+                                      'source': 'login cancellation redirect'}
+                            logging.error('REDIRECTING TO /create?'+urllib.urlencode(params))
+                            self.redirect('/create?'+urllib.urlencode(params))
+                            return
+                    except:
+                        pass
                     self.redirect('/')
 
         # Just render the app
         self.response.write(render_app(self.request))
 
+
+class GiftStartRedirectHandler(webapp2.RequestHandler):
+    """handle all requests to /giftstart/.*"""
+    def get(self):
+        if(self.request.path.startswith('/g/')):
+            self.redirect(self.request.url.replace('/g/','/giftstart/',1), permanent=True)
+        if(self.request.path.startswith('/i/')):
+            self.redirect(self.request.url.replace('/i/','/giftstart?gs-id=',1), permanent=True)
 
 class GiftStartMainHandler(webapp2.RequestHandler):
     """handle all requests to /giftstart/.*"""
@@ -64,6 +89,8 @@ class GiftStartMainHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
+    ('/i/.*', GiftStartRedirectHandler),
+    ('/g/.*', GiftStartRedirectHandler),
     ('/giftstart/.*', GiftStartMainHandler),
     ('/giftstart', GiftStartMainHandler),
     ('/create-giftstart', MainHandler),
