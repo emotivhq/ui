@@ -9,6 +9,7 @@ import yaml
 import json
 import urllib
 from gs_user.gs_user_referral import UserReferral
+import logging
 
 config = yaml.load(open('config.yaml'))
 
@@ -36,35 +37,38 @@ def handle_login(method_handler):
             redirect_url = state.get('app_url')
         else:
             redirect_url = ''
-            
-        if login_service == 'facebook':
-            # Handle FB login
-            user = gs_user_core.login_facebook_user(query['code'], redirect_url, referrer)
-            self.request.cookies['uid'] = user.uid
-            self.request.cookies['token'] = user.facebook_token_set.access_token
-            if staging_uuid:
-                self.request.query_string += '&staging_uuid=' + staging_uuid
-        elif login_service == 'googleplus':
-            # Handle googleplus login
-            user = gs_user_core.login_googleplus_user(query['code'], redirect_url, referrer)
-            self.request.cookies['uid'] = user.uid
-            self.request.cookies['token'] = user.googleplus_token_set.access_token
-            if staging_uuid:
-                self.request.query_string += '&staging_uuid=' + staging_uuid
-        elif login_service == 'linkedin':
-            # Handle linkedin login
-            user = gs_user_core.login_linkedin_user(query['code'], redirect_url, referrer)
-            self.request.cookies['uid'] = user.uid
-            self.request.cookies['token'] = user.linkedin_token_set.access_token
-            if staging_uuid:
-                self.request.query_string += '&staging_uuid=' + staging_uuid
-        elif query.get('oauth_token'):
-            # Handle twitter login
-            user = gs_user_core.login_twitter_user(query['oauth_token'], query['oauth_verifier'], referrer)
-            self.request.cookies['uid'] = user.uid
-            self.request.cookies['token'] = user.twitter_token_set.access_token
-            if staging_uuid:
-                self.request.query_string += '&staging_uuid=' + staging_uuid
+
+        try:
+            if login_service == 'facebook':
+                # Handle FB login
+                user = gs_user_core.login_facebook_user(query['code'], redirect_url, referrer)
+                self.request.cookies['uid'] = user.uid
+                self.request.cookies['token'] = user.facebook_token_set.access_token
+                if staging_uuid:
+                    self.request.query_string += '&staging_uuid=' + staging_uuid
+            elif login_service == 'googleplus':
+                # Handle googleplus login
+                user = gs_user_core.login_googleplus_user(query['code'], redirect_url, referrer)
+                self.request.cookies['uid'] = user.uid
+                self.request.cookies['token'] = user.googleplus_token_set.access_token
+                if staging_uuid:
+                    self.request.query_string += '&staging_uuid=' + staging_uuid
+            elif login_service == 'linkedin':
+                # Handle linkedin login
+                user = gs_user_core.login_linkedin_user(query['code'], redirect_url, referrer)
+                self.request.cookies['uid'] = user.uid
+                self.request.cookies['token'] = user.linkedin_token_set.access_token
+                if staging_uuid:
+                    self.request.query_string += '&staging_uuid=' + staging_uuid
+            elif query.get('oauth_token'):
+                # Handle twitter login
+                user = gs_user_core.login_twitter_user(query['oauth_token'], query['oauth_verifier'], referrer)
+                self.request.cookies['uid'] = user.uid
+                self.request.cookies['token'] = user.twitter_token_set.access_token
+                if staging_uuid:
+                    self.request.query_string += '&staging_uuid=' + staging_uuid
+        except Exception as x:
+            logging.error("Unable to authenticate user (likely they cancelled login): {0} ; {1}".format(x, self.request))
 
         return method_handler(*args, **kwargs)
     return wrapper
