@@ -55,7 +55,7 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
 
     this.saveForLater = function(retailer, url, price, title, description, imgUrl) {
         if(!UserService.loggedIn) {
-            PopoverService.setPopover('login');
+            $rootScope.$broadcast('header-show-login');
         } else {
             Analytics.track('product', 'save for later');
             return $http.post('/users', {
