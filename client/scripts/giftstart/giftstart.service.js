@@ -404,7 +404,6 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     };
 
     this.updateCommentImage = function(pitchIn, imageData) {
-        console && console.log && console.log(imageData);
         var contentType = imageData.split(';')[0].replace('data:', '');
         var data = {
             payment: pitchIn, action: 'pitch-in-img-upload',

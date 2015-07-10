@@ -21,6 +21,14 @@
 
         $scope.imageUpdated = imageUpdated;
 
+        $scope.userHasDefaultProfileImage = false;
+
+        UserService.isSystemDefaultProfileImage(UserService.uid,
+            function(data) {
+                $scope.userHasDefaultProfileImage = data;
+            }
+        );
+
         function imageUpdated(data) {
             console && console.log && console.log("imageUpdated: "+data);
             $scope.imageSet = true;
