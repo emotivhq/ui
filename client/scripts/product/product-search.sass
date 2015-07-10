@@ -20,7 +20,9 @@ gs-product-search
       margin: 0 auto
       text-align: center
 
-    span.inputs
+    div.inputs
+      background-color: rgba(255, 255, 255, 0.7)
+      display: inline-block
       input
         background: #eee
         border: 0
@@ -28,6 +30,7 @@ gs-product-search
         height: 34px
         -webkit-input-placeholder: #333
         padding: 0.18em 0.6em
+        margin: 10px 0 10px 10px
         width: 25em
         -webkit-font-smoothing: antialiased
         @media screen and (max-width: $phone-tablet-boundary)
@@ -36,6 +39,7 @@ gs-product-search
           width: 100%
           max-width: 500px
       button
+        margin: 10px 10px 10px 0
         @media screen and (max-width: $phone-tablet-boundary)
           width: 100%
           max-width: 500px
@@ -245,13 +249,16 @@ gs-product-search
       width: 49%
       p
         margin: 2px 0
+        width: 100%
       ul
         margin-top: 2px
     vertical-align: top
+    p
+      margin: 0
     ul
       padding-left: 0
     li
       list-style-type: none
       a
-        color: #333
+        color: white
         font-family: Gotham, sans-serif
