@@ -13,7 +13,9 @@
             <span><a ng-click="showCreate=false; resetForm();" class="userlogin__createacclink linky">Login</a></span>
         </div>
     </div>
-    <div class="vertical-line" ng-show="showSocials"/>
+    <div class="vertical-line-block">
+        <div class="vertical-line" ng-show="showSocials"/>
+    </div>
     <div class="userlogin__sociallogin block" ng-show="showSocials">
         <p>Or {{showCreate?"create account":"login"}} with social media:</p>
         <div class="social">
