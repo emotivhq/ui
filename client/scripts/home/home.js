@@ -75,6 +75,9 @@ GiftStarterApp.controller('HomeController', [
             $interval(fadeInComment, 7000);
         }
 
+        $scope.buttonClick = function(destination) {
+            $location.path("/" + destination);
+        };
 
     }
 ]);
