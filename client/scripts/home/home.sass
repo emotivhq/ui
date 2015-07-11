@@ -1,13 +1,20 @@
 @import "../base"
 @import "../frame/column"
-@import "../static-pages/static-pages"
 
 $landing-page-padding-horz: 1.3125em
 $step-width: 210px //(2 * $column-width - 4 * $step-margin-width - 2 * $landing-page-padding-horz) / 3
 
 .headerwrap
-  background: url("/assets/homepage_hero.jpg") no-repeat center top
-  margin-bottom: 10px !important
+  background: url("/assets/homepageHero.png") center/cover //no-repeat top
+  color: white
+  margin: 0 auto 10px auto
+  padding-top: 30px
+  text-align: center
+  h1
+    color: white
+  p
+    margin: 0 auto 20px auto
+    width: 60%
 
 div.landing-page
   text-align: center
@@ -55,12 +62,12 @@ div.landing-page
 
   h1
     font-family: "Roboto Bold", sans-serif
-    font-size: 40pt
+    font-size: 38pt
     @media screen and (max-width: $phone-tablet-boundary)
       font-size: 30pt
   h3
     font-size: 25pt
-    margin-bottom: 5px
+    margin: 5px
     @media screen and (max-width: $phone-tablet-boundary)
       font-size: 20pt
       margin: 15px

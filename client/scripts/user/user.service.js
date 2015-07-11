@@ -38,6 +38,15 @@ function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
         }
     };
 
+    this.isSystemDefaultProfileImage = function(uid, callback) {
+        $http({method: 'GET', url: '/users/' + uid + '.json'}).success(
+            function(data) {
+                var u = data[Object.keys(data)[0]];
+                callback(u.is_system_default_profile_image);
+            }
+        );
+    };
+
     this.registerLogin = function(uid, profileImageUrl, token,
                                   onMailingList, name, has_pitched_in) {
         Analytics.track('login', uid);

@@ -1,0 +1,48 @@
+@import "../../base"
+@import "../../static-pages/static-pages"
+
+.whatisgiftstarter
+  .title
+    font-size: 1.15em
+  &.why-giftstarter
+    margin: 0 auto
+    width: 90%
+    .item
+      display: inline-block
+      @include apply-at-size("phone")
+        width: 100%
+      height: 350px
+      width: 33%
+      vertical-align: middle
+      p
+        margin: 14px auto
+        text-align: left
+        width: 90%
+      &.one
+        background: url("/assets/whatisgiftstarter/one.png") 0/210px no-repeat
+        background-position: center
+      &.two
+        background: url("/assets/whatisgiftstarter/two.png") 0/210px no-repeat
+        background-position: center
+      &.three
+        background: url("/assets/whatisgiftstarter/three.png") 0/210px no-repeat
+        background-position: center
+      .ghost
+        display: inline-block
+        height: 100%
+        margin: -0.15em
+        vertical-align: middle
+      .content
+        display: inline-block
+        vertical-align: middle
+  &.how-it-works
+    img
+      max-width: 478px
+      width: 100%
+    p
+      margin: 20px auto
+      text-align: center
+      width: 60%
+    button
+      margin-bottom: 20px
+      width: 200px

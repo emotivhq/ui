@@ -14,8 +14,9 @@
             </div>
         </div>
         <div>
-            <input id="useAsProfilePicture" type="checkbox" ng-model="useAsProfilePicture">
-            <label for="useAsProfilePicture">Use this as my default profile picture</label>
+            <input id="useAsProfilePicture" ng-hide="userHasDefaultProfileImage" type="checkbox" ng-model="useAsProfilePicture">
+            <label for="useAsProfilePicture" ng-hide="userHasDefaultProfileImage">Use this as my default profile picture</label>
+            <label for="useAsProfilePicture" ng-show="userHasDefaultProfileImage">Since you've never added an image before, this will become your profile picture.</label>
         </div>
         <button class="large white-border" ng-click="action.submit()" ng-class="{disabled: !imageSet}">Submit Photo</button>
         <div class="cancel-button"><p class="cancel-button" ng-click="cancel()">Cancel</p></div>

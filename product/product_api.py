@@ -28,13 +28,13 @@ class ProductHandler(webapp2.RequestHandler):
                         data['product_url'])))
 
         elif data.get('action') == 'get-tax-and-shipping':
-            title = str(data.get('title').lower())
+            title = data.get('title').decode('ascii', 'ignore').lower()
             shipping_address = data['shipping_address']
             shipping_city = data['shipping_city']
             shipping_state = data['shipping_state']
             shipping_zip = data['shipping_zip']
             is_gift_card = 'gift' in title and 'card' in title
-            is_gift_card |= 'ghostruck' in title.lower()
+            is_gift_card |= 'ghostruck' in title
             tax_percent = product_tax.lookup(shipping_address, shipping_city,
                                              shipping_state, shipping_zip,
                                              is_gift_card)

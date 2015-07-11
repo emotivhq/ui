@@ -310,6 +310,14 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         }
     };
 
+    $scope.campaignUrl = function() {
+        if($location.path().length > 11) {
+            return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
+        } else {
+            return "";
+        }
+    };
+
     $scope.giftstartThisUrl = function() {
         return '/create?' + urlSerialize({
                 product_url: GiftStartService.giftStart.product_url,

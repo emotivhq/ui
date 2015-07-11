@@ -55,10 +55,16 @@ button
   padding: 9px 10px 5px 10px
   +transition(all, 0.2s)
   -webkit-font-smoothing: antialiased
+  &:hover
+    background: $primary-color
+    color: white
   &.searchbtn
     border-radius: 0
     background: $primary-color
     color: white
+  &.red
+    color: white
+    background: $primary-color
 
 button.share
   background: $share-color
