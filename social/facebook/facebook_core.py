@@ -54,3 +54,14 @@ def update_user_info(user):
         logging.error("Failed to get facebook user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+def publish_to_wall(user):
+    try:
+        graph = GraphAPI(user.facebook_token_set.access_token)
+        graph.put_object("me", "feed",
+                         message="Who's in SFO? I'll be around on-and-off for the next 3 months:",
+                         name= "500 Startups",
+                         link= "http://500.co/")
+    except:
+        pass
+
