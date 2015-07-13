@@ -88,11 +88,15 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             currentComment.img = imageData;
             GiftStartService.updateCommentImage(currentComment, imageData)
                 .success(function(response) {
+                    console&&console.log&&console.log("pitchin image changed");
                     Analytics.track('campaign', 'pitchin image update succeeded');
                     currentComment.img = response;
                     $rootScope.$broadcast('pitchin-image-changed', response);
                     $scope.picUploading = false;
                     imageData = null;
+                    var data = {payment: currentComment, action: 'pitch-in-img-update',
+                    uid: currentComment.uid, imgurl: currentComment.img};
+                    $http({method: 'POST', url: '/pay', data: data});
                 })
                 .error(function() {
                     Analytics.track('campaign', 'pitchin image update failed');
