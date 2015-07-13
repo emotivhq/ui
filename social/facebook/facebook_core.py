@@ -5,6 +5,11 @@ from . import GraphAPI
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
 import logging
+import requests
+import json
+
+
+fb_api_url_permissions = "https://graph.facebook.com/me/permissions"
 
 
 class FacebookTokenSet(ndb.Model):
@@ -55,13 +60,36 @@ def update_user_info(user):
                       .format(uid=user.uid,err=x))
     return user
 
+def has_permission_to_publish(user):
+    """
+    do we have permission to publish to this user's wall?
+    :param user:
+    :return: True if we are allowed to publis on this user's wall
+    """
+    return 'publish' in get_permissions(user)
+
+def get_permissions(user):
+    """https://developers.facebook.com/docs/graph-api/reference/user/permissions"""
+    permissions = []
+    if user.facebook_token_set is None or user.facebook_token_set.access_token is None:
+        return permissions
+    req_params = {'access_token': user.facebook_token_set.access_token}
+    data = json.loads(requests.get(fb_api_url_permissions,params=req_params).content)['data']
+    for item in data:
+        if item['status'] == 'granted':
+            permissions.append(item['permission'])
+    return permissions
+
 def publish_to_wall(user):
+    """https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed"""
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         graph.put_object("me", "feed",
                          message="Who's in SFO? I'll be around on-and-off for the next 3 months:",
                          name= "500 Startups",
                          link= "http://500.co/")
-    except:
-        pass
+        return True
+    except Exception as x:
+        logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))
+        return False
 
