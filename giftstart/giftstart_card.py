@@ -21,13 +21,14 @@ card_template = JINJA_ENVIRONMENT.get_template('card.html')
 def make_givers(pitchins):
     givers = []
     for pi in pitchins:
-        givers.append({
-            'uid': pi.uid,
-            'img_url': pi.img_url,
-            'comment': pi.note,
-            'name': pi.name,
-            'no_comment': not bool(pi.note),
-        })
+        user_name = pi.name
+        if user_name is None or user_name == '':
+            users = User.query(User.uid == pi.uid).fetch()
+            if users and len(users)>0:
+                user_name = users[0].name
+        data = {'uid': pi.uid, 'img_url': pi.img_url, 'comment': pi.note, 'name': user_name,
+                 'no_comment': not bool(pi.note)}
+        givers.append(data)
     return givers
 
 
