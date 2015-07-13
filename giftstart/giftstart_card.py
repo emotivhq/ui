@@ -28,7 +28,6 @@ def make_givers(pitchins):
                 user_name = users[0].name
         data = {'uid': pi.uid, 'img_url': pi.img_url, 'comment': pi.note, 'name': user_name,
                  'no_comment': not bool(pi.note)}
-        print data
         givers.append(data)
     return givers
 
