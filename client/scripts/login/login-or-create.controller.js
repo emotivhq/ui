@@ -69,9 +69,9 @@
             doSocialLogin(FacebookService.login);
         };
         $scope.doLoginTwitter = function() {
+            //TwitterService.getSharePermissionUrl(function(data){console.log(data.url);});
             doSocialLogin(function() {
-                TwitterService.getAuthUrl(); // false);
-                TwitterService.login();
+                TwitterService.getAuthUrl(function(){TwitterService.login();});
             })
         };
         $scope.doLoginGoogleplus = function() {

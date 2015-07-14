@@ -55,35 +55,33 @@ GiftStarterApp.service('TwitterService', [
         };
 
 
-        this.getAuthUrl = function() { //requirePermissionToPost) {
+        this.getAuthUrl = function(successCallback, failureCallback) {
             AppStateService.set('login_service', 'twitter');
             $http({method: 'POST', url: '/users', data: {
                 action: 'get-auth-url', service: 'twitter',
-                //require_post_permission: requirePermissionToPost?'1':'0',
                 redirect_url: AppStateService.getOauthRedirectUrl()}})
-                .success(function(data) {self.auth_url = data['url'];})
-                .error(function(data) {console && console.log && console.log(data);});
+                .success(function(data) {
+                    self.auth_url = data['url'];
+                    if (successCallback) {successCallback(self.auth_url);}
+                })
+                .error(function(data) {
+                    console && console.log && console.log(data);
+                    if(failureCallback) {failureCallback(data);}
+                });
             AppStateService.remove('login_service');
         };
 
-        this.getSharePermissionUrl = function() {
-            var deferred = $q.defer();
+        this.getSharePermissionUrl = function(successCallback,failureCallback) {
             $http({method: 'POST', url: '/users', data: {
                 action: 'get-auth-url', service: 'twitter',
                 requirePermissionToPost: 1,
                 redirect_url: AppStateService.getOauthRedirectUrl()}})
                 .success(function(data) {
-                    deferred.resolve(data);
+                    if(successCallback) {successCallback(data);}
                 })
                 .error(function(data) {
-                    console && console.log && console.log(data);
-                    deferred.reject('ERROR');
+                    if(failureCallback) {failureCallback(data);}
                 });
-            deferred.promise.then(function(resolve){
-                return resolve;
-            }, function(reject){
-                return false;
-            });
         };
 
         function twitterOauthCallback(oauthToken, oauthVerifier) {
