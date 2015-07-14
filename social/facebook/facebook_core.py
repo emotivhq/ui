@@ -82,7 +82,7 @@ def get_permissions(user):
 
 def publish_to_wall(user, message, link=None, linkName=None):
     """https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed"""
-    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if "SELF" or "NO_FRIENDS", force re-auth?)
+    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         graph.put_object("me", "feed",
