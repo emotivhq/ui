@@ -39,6 +39,18 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
         $window.open(url, '_self');
     };
 
+    this.getSharePermissionUrl = function() {
+        var url = 'https://www.facebook.com/dialog/oauth' +
+            '?client_id=' + window.fbAppId +
+            '&response_type=code' +
+            '&redirect_uri=' + $window.location.protocol + '//' +
+            $window.location.host +
+            '&state=' + AppStateService.base64State() +
+            '&scope=publish_actions'; //user_birthday
+        console&console.log&&console.log("FB share URL: "+url)&&console.log("\n\n\n");
+        return url;
+    };
+
     this.getLongTermToken = function(token) {
         $http({method: 'POST', url: '/users',
             data: {service: 'facebook', action: 'get-long-term-token',

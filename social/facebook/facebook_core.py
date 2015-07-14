@@ -66,7 +66,7 @@ def has_permission_to_publish(user):
     :param user:
     :return: True if we are allowed to publis on this user's wall
     """
-    return 'publish' in get_permissions(user)
+    return 'publish_actions' in get_permissions(user)
 
 def get_permissions(user):
     """https://developers.facebook.com/docs/graph-api/reference/user/permissions"""
@@ -80,14 +80,15 @@ def get_permissions(user):
             permissions.append(item['permission'])
     return permissions
 
-def publish_to_wall(user):
+def publish_to_wall(user, message, link=None, linkName=None):
     """https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed"""
+    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if not Friends or higher, force re-auth?)
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         graph.put_object("me", "feed",
-                         message="Who's in SFO? I'll be around on-and-off for the next 3 months:",
-                         name= "500 Startups",
-                         link= "http://500.co/")
+                         message=message,
+                         name= link,
+                         link= linkName)
         return True
     except Exception as x:
         logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))
