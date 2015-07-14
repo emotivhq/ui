@@ -54,14 +54,36 @@ GiftStarterApp.service('TwitterService', [
                 .error(function(data) {console && console.log && console.log(data);});
         };
 
-        this.getAuthUrl = function() {
+
+        this.getAuthUrl = function() { //requirePermissionToPost) {
             AppStateService.set('login_service', 'twitter');
             $http({method: 'POST', url: '/users', data: {
                 action: 'get-auth-url', service: 'twitter',
+                //require_post_permission: requirePermissionToPost?'1':'0',
                 redirect_url: AppStateService.getOauthRedirectUrl()}})
                 .success(function(data) {self.auth_url = data['url'];})
                 .error(function(data) {console && console.log && console.log(data);});
             AppStateService.remove('login_service');
+        };
+
+        this.getSharePermissionUrl = function() {
+            var deferred = $q.defer();
+            $http({method: 'POST', url: '/users', data: {
+                action: 'get-auth-url', service: 'twitter',
+                requirePermissionToPost: 1,
+                redirect_url: AppStateService.getOauthRedirectUrl()}})
+                .success(function(data) {
+                    deferred.resolve(data);
+                })
+                .error(function(data) {
+                    console && console.log && console.log(data);
+                    deferred.reject('ERROR');
+                });
+            deferred.promise.then(function(resolve){
+                return resolve;
+            }, function(reject){
+                return false;
+            });
         };
 
         function twitterOauthCallback(oauthToken, oauthVerifier) {

@@ -389,8 +389,9 @@ class UserHandler(webapp2.RequestHandler):
                 self.response.write(twitter.is_logged_in(data['uid']))
 
         elif data['action'] == 'get-auth-url':
+            require_post_permission = 'require_post_permission' in data and int(data['require_post_permission'])>0
             if data['service'] == 'twitter':
-                self.response.write(twitter.get_auth_url(data['redirect_url']))
+                self.response.write(twitter.get_auth_url(data['redirect_url'], require_post_permission))
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':

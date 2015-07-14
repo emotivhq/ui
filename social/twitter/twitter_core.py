@@ -80,6 +80,7 @@ def update_user_info(user):
                 pass
         if user.location is None and 'location' in social_json:
             user.location = social_json['location']
+        print "TWITTER EMAIL: "+get_email(user.twitter_token_set)
         if user.email is None:
             user.email = get_email(user.twitter_token_set)
         if user.link_twitter is None and 'screen_name' in social_json:

@@ -70,7 +70,7 @@
         };
         $scope.doLoginTwitter = function() {
             doSocialLogin(function() {
-                TwitterService.getAuthUrl();
+                TwitterService.getAuthUrl(); // false);
                 TwitterService.login();
             })
         };
