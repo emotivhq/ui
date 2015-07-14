@@ -5,6 +5,11 @@ from . import GraphAPI
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
 import logging
+import requests
+import json
+
+
+fb_api_url_permissions = "https://graph.facebook.com/me/permissions"
 
 
 class FacebookTokenSet(ndb.Model):
@@ -30,6 +35,8 @@ def update_user_info(user):
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         social_json = graph.get_object(user.uid[1:])
+        if user.facebook_uid is None:
+            user.facebook_uid = social_json['id']
         if user.name is None:
             user.name = social_json['name']
         if user.email is None and 'email' in social_json:
@@ -54,3 +61,38 @@ def update_user_info(user):
         logging.error("Failed to get facebook user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+def has_permission_to_publish(user):
+    """
+    do we have permission to publish to this user's wall?
+    :param user:
+    :return: True if we are allowed to publis on this user's wall
+    """
+    return 'publish_actions' in get_permissions(user)
+
+def get_permissions(user):
+    """https://developers.facebook.com/docs/graph-api/reference/user/permissions"""
+    permissions = []
+    if user.facebook_token_set is None or user.facebook_token_set.access_token is None:
+        return permissions
+    req_params = {'access_token': user.facebook_token_set.access_token}
+    data = json.loads(requests.get(fb_api_url_permissions,params=req_params).content)['data']
+    for item in data:
+        if item['status'] == 'granted':
+            permissions.append(item['permission'])
+    return permissions
+
+def publish_to_wall(user, message, link=None, linkName=None):
+    """https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed"""
+    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
+    try:
+        graph = GraphAPI(user.facebook_token_set.access_token)
+        graph.put_object("me", "feed",
+                         message=message,
+                         name= link,
+                         link= linkName)
+        return True
+    except Exception as x:
+        logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))
+        return False
+

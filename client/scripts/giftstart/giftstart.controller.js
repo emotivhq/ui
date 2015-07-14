@@ -228,7 +228,18 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         }
     });
 
-    var syncPitchInsTimer = $interval(function(){GiftStartService.syncPitchIns("GiftStartService");}, 1000, false);
+    var syncPitchInsTimerIsFast = true;
+
+    var syncPitchInsTimer = $interval(function(){
+        GiftStartService.syncPitchIns("GiftStartService");
+        if (syncPitchInsTimerIsFast && ($scope.secondsLeft <= 0 || $scope.campaignComplete())) {
+            $interval.cancel(syncPitchInsTimer);
+            syncPitchInsTimerIsFast = false;
+            syncPitchInsTimer = $interval(function () {
+                GiftStartService.syncPitchIns("GiftStartService");
+            }, 60000, false);
+        }
+    }, 1000, false);
 
     // Synchronize parts on mouse activity
     $scope.mouseActivityCallback = function(source) {

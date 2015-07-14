@@ -98,6 +98,8 @@ def update_user_info(user):
         response = _request_with_refresh("https://www.googleapis.com/plus/v1/people/" + user.uid[1:],
                                          user.googleplus_token_set)
         social_json = json.loads(response.content)
+        if user.googleplus_id is None:
+            user.googleplus_id = social_json['id']
         if user.name is None:
             user.name = social_json['displayName']
         if user.gender is None and 'gender' in social_json:
