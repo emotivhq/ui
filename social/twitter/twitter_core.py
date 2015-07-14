@@ -69,6 +69,8 @@ def update_user_info(user):
         response = requests.get("https://api.twitter.com/1.1/users/show.json?include_email=true&user_id=" + user.uid[1:],
                                 auth=auth)
         social_json = json.loads(response.content)
+        if user.twitter_uid is None:
+            user.twitter_uid = social_json['id']
         if user.name is None:
             user.name = social_json['name']
         if user.timezone is None and 'utc_offset' in social_json:

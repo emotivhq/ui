@@ -57,6 +57,8 @@ def update_user_info(user):
     """attempt to retrieve user info (name) from googleplus; update User"""
     try:
         social_json = json.loads(_request(PROFILE_QRY_URL,user.linkedin_token_set).content)
+        if user.linkedin_id is None:
+            user.linkedin_id = social_json['id']
         if user.name is None:
             try:
                 user.name = social_json['formattedName']

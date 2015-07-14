@@ -35,6 +35,8 @@ def update_user_info(user):
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         social_json = graph.get_object(user.uid[1:])
+        if user.facebook_uid is None:
+            user.facebook_uid = social_json['id']
         if user.name is None:
             user.name = social_json['name']
         if user.email is None and 'email' in social_json:
