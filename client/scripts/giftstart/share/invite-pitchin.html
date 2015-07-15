@@ -1,14 +1,14 @@
-<div class="share pitchin">
+<div class="share pitchin" ng-controller="ShareController">
     <h1>Invite Friends to Pitch-in</h1>
     <p>Your GiftStarter campaign is successfully set up! Invite friends to help pitch-in
     and increase your chances of fully funding the gift!</p>
 
     <div class="block">
     <h4>YOUR MESSAGE</h4>
-    <textarea>Hey! I just pitched in on a {{giftname}} for {{recipientname}} on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!
-        {{campaignurl}}
+    <textarea>Hey! I just pitched in on a {{giftStart.product_title}} for {{recipientname}} on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!
+        {{campaignUrl()}}
 
-        {{name}}</textarea>
+        {{giftStart.gc_name}}</textarea>
     </div>
 
     <div class="share-where block">
@@ -28,7 +28,7 @@
     <div>
         <h4>SHARE A LINK!</h4>
         <p>Use this link to invite friends and family to GiftStarter through any means you'd like:</p>
-        <input value="{{campaignurl}}" />
+        <input value="{{campaignUrl()}}" />
     </div>
 
     <h4>SKIP AND SHARE LATER</h4>
