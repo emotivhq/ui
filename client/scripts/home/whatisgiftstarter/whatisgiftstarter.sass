@@ -38,7 +38,9 @@
       width: 100%
     p
       margin: 20px auto
-      text-align: center
+      text-align: left
+      @include apply-at-size("phone")
+        text-align: center
       width: 60%
     button
       margin-bottom: 20px
