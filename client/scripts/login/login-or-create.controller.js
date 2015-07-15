@@ -70,9 +70,15 @@
         };
         $scope.doLoginTwitter = function() {
             doSocialLogin(function() {
-                TwitterService.getAuthUrl();
-                TwitterService.login();
-            })
+                TwitterService.getAuthUrl().then(function(url) {
+                    TwitterService.login();
+                });
+            });
+        };
+        $scope.doShareTwitter = function() {
+            TwitterService.getSharePermissionUrl().then(function(url){
+                window.open(url);
+            });
         };
         $scope.doLoginGoogleplus = function() {
             doSocialLogin(GooglePlusService.login);
