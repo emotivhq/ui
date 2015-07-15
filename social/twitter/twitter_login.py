@@ -19,8 +19,8 @@ APP_URL = yaml.load(open('config.yaml'))['app_url']
 def get_auth_url(current_url, require_post_permission):
     """gets redirection URL for Twitter login"""
     url = 'https://api.twitter.com/oauth/request_token'
-    if not require_post_permission:
-        url += '?x_auth_access_type=read'
+    # if not require_post_permission:
+    #     url += '?x_auth_access_type=read'
     auth = OAuth1(client_key=APP_KEY, client_secret=APP_SECRET,
                   callback_uri=current_url)
     response = requests.post(url=url, auth=auth)
