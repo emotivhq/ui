@@ -10,7 +10,9 @@ from requests_oauthlib import OAuth1
 import yaml
 
 APP_KEY = yaml.load(open('secret.yaml'))['twitter_auth']['app_key']
+APP_KEY_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_key_sharing']
 APP_SECRET = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret']
+APP_SECRET_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret_sharing']
 
 APP_URL = yaml.load(open('config.yaml'))['app_url']
 
@@ -26,10 +28,16 @@ class TwitterTokenSet(ndb.Model):
         return self
 
 
-def get_uid(token_set):
+def get_uid(token_set, is_sharing_auth=False):
+    if is_sharing_auth:
+        key = APP_KEY_SHARING
+        secret = APP_SECRET_SHARING
+    else:
+        key = APP_KEY
+        secret = APP_SECRET
     """get Twitter ID for user"""
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=token_set.access_token,
+    auth = OAuth1(key, secret, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth) #, params={'include_email':'true'})
     twitter_uid = json.loads(response.content)['id']

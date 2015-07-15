@@ -326,8 +326,8 @@ def add_twitter_sharing_tokens(oauth_token, oauth_verifier):
     @param referrer: how were they referred here (for tracking)?
     @rtype: User
     """
-    token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
-    uid = twitter.get_uid(token_set)
+    token_set = twitter.submit_verifier(oauth_token, oauth_verifier, True)
+    uid = twitter.get_uid(token_set, True)
     user = get_user(service_prefix['twitter']+uid)
     return twitter.twitter_core.add_sharing_tokens(user, token_set)
 

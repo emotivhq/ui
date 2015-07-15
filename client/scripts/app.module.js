@@ -59,7 +59,7 @@ angular.module('GiftStarterApp').service('AppStateService', [
         function base64State(isSharingLogin) {
             state.path = window.location.pathname; //self.path;
             state.app_url = $window.location.protocol + '//' + $window.location.host + '/';
-            if(isSharingLogin) {state.is_sharing_login = 1;}
+            state.is_sharing_login = isSharingLogin?1:0;
             console && console.log && console.log('encoding state', state);
             return btoa(JSON.stringify(state));
         }
