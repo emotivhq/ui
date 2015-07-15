@@ -39,6 +39,23 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
         $window.open(url, '_self');
     };
 
+    this.checkSharePermission = function() {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'has-share-auth', service: 'facebook'}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
     this.getSharePermissionUrl = function() {
         var url = 'https://www.facebook.com/dialog/oauth' +
             '?client_id=' + window.fbAppId +

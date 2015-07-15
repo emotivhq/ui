@@ -25,12 +25,15 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.ensureFacebookSharePermission = function() {
-        alert('TBD: '+FacebookService.getSharePermissionUrl());
+        FacebookService.checkSharePermission().then(function(hasPermission) {
+            if(hasPermission!='1') {
+                window.location = FacebookService.getSharePermissionUrl();
+            }
+        });
     };
 
     $scope.ensureTwitterSharePermission = function() {
         TwitterService.getSharePermissionUrl().then(function(url){
-            //window.open(url);
             window.location = url;
         });
     };

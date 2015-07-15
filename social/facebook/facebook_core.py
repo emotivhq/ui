@@ -66,7 +66,7 @@ def has_permission_to_publish(user):
     """
     do we have permission to publish to this user's wall?
     :param user:
-    :return: True if we are allowed to publis on this user's wall
+    :return: True if we are allowed to publish on this user's wall
     """
     return 'publish_actions' in get_permissions(user)
 

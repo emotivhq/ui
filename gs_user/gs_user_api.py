@@ -396,6 +396,11 @@ class UserHandler(webapp2.RequestHandler):
             if data['service'] == 'twitter':
                 self.response.write(twitter.get_auth_url(data['redirect_url'], True))
 
+        elif data['action'] == 'has-share-auth':
+            if data['service'] == 'facebook':
+                user = ndb.Key('User', uid).get()
+                self.response.write("1" if facebook.facebook_core.has_permission_to_publish(user) else 0)
+
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
                 referrer = UserReferral.from_dict(data.get('referrer', {}))
