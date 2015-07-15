@@ -12,7 +12,7 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
 
     $scope.openQuestions = [];
 
-    var allOpen = false;
+    $scope.allOpen = false;
 
     var question = function(question, answer) {
         this.question = question;
@@ -151,19 +151,16 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
     };
 
     $scope.toggleAll = function() {
-        if (allOpen) {
+        if ($scope.allOpen) {
             $scope.openQuestions.length = 0;
-            allOpen = false;
+            $scope.allOpen = false;
         } else {
-            console&&console.log&&console.log($scope.items);
             for (var sectionIndex = 0; sectionIndex < $scope.items.length; sectionIndex++) {
-            console&&console.log&&console.log($scope.items[sectionIndex]);
                 for (var questionIndex = 0; questionIndex < $scope.items[sectionIndex].questions.length; questionIndex++) {
-            console&&console.log&&console.log($scope.items[sectionIndex].questions[questionIndex]);
                     $scope.openQuestions.push($scope.items[sectionIndex].questions[questionIndex]);
                 }
             }
-            allOpen = true;
+            $scope.allOpen = true;
         }
     };
 
