@@ -33,8 +33,15 @@ def get_uid(token_set):
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth) #, params={'include_email':'true'})
     twitter_uid = json.loads(response.content)['id']
-
     return str(twitter_uid)
+
+
+def add_sharing_tokens(user, token_set):
+    # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
+    user.twitter_sharing_token_set = token_set
+    user.put()
+    return user
+
 
 def get_email(token_set):
     """

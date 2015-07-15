@@ -318,6 +318,19 @@ def login_twitter_user(oauth_token, oauth_verifier, referrer):
     token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
     return update_or_create('twitter', token_set, referrer)
 
+def add_twitter_sharing_tokens(oauth_token, oauth_verifier):
+    """
+    exchange an OAuth Request Token for an OAuth Access Token and add these as sharing tokens for the User
+    @param oauth_token: OAuth Request Token
+    @param oauth_verifier: from the OAuth web-flow
+    @param referrer: how were they referred here (for tracking)?
+    @rtype: User
+    """
+    token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
+    uid = twitter.get_uid(token_set)
+    user = get_user(service_prefix['twitter']+uid)
+    return twitter.twitter_core.add_sharing_tokens(user, token_set)
+
 
 def get_card_tokens(user):
     """
