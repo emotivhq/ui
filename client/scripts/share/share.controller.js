@@ -23,4 +23,15 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             return "";
         }
     };
+
+    $scope.ensureFacebookSharePermission = function() {
+        alert('TBD: '+FacebookService.getSharePermissionUrl());
+    };
+
+    $scope.ensureTwitterSharePermission = function() {
+        TwitterService.getSharePermissionUrl().then(function(url){
+            //window.open(url);
+            window.location = url;
+        });
+    };
 }
