@@ -7,11 +7,13 @@ import requests
 
 from requests_oauthlib import OAuth1
 from .. import OAuthTokenPair
-from twitter_core import TwitterTokenSet
+from twitter_core import TwitterTokenSet, get_uid
 import yaml
 
 APP_KEY = yaml.load(open('secret.yaml'))['twitter_auth']['app_key']
+APP_KEY_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_key_sharing']
 APP_SECRET = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret']
+APP_SECRET_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret_sharing']
 
 APP_URL = yaml.load(open('config.yaml'))['app_url']
 
@@ -19,8 +21,8 @@ APP_URL = yaml.load(open('config.yaml'))['app_url']
 def get_auth_url(current_url, require_post_permission):
     """gets redirection URL for Twitter login"""
     url = 'https://api.twitter.com/oauth/request_token'
-    # if not require_post_permission:
-    #     url += '?x_auth_access_type=read'
+    if require_post_permission:
+        url += '?x_auth_access_type=write'
     auth = OAuth1(client_key=APP_KEY, client_secret=APP_SECRET,
                   callback_uri=current_url)
     response = requests.post(url=url, auth=auth)

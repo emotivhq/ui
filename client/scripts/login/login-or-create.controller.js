@@ -77,7 +77,8 @@
         };
         $scope.doShareTwitter = function() {
             TwitterService.getSharePermissionUrl().then(function(url){
-                window.open(url);
+                //window.open(url);
+                window.location = url;
             });
         };
         $scope.doLoginGoogleplus = function() {

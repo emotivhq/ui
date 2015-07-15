@@ -24,6 +24,7 @@ class User(ndb.Model):
 
     twitter_uid = ndb.StringProperty()
     twitter_token_set = ndb.StructuredProperty(TwitterTokenSet)
+    twitter_sharing_token_set = ndb.StructuredProperty(TwitterTokenSet)
 
     facebook_uid = ndb.StringProperty()
     facebook_token_set = ndb.StructuredProperty(FacebookTokenSet)

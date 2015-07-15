@@ -33,6 +33,7 @@ def handle_login(method_handler):
         login_service = state.get('login_service')
         referrer = UserReferral.from_dict(state.get('referrer', {}))
         staging_uuid = state.get('staging_uuid')
+        is_sharing_login = state.get('is_sharing_login')==1
         if state.get('app_url'):
             redirect_url = state.get('app_url')
         else:
@@ -62,9 +63,17 @@ def handle_login(method_handler):
                     self.request.query_string += '&staging_uuid=' + staging_uuid
             elif query.get('oauth_token'):
                 # Handle twitter login
-                user = gs_user_core.login_twitter_user(query['oauth_token'], query['oauth_verifier'], referrer)
-                self.request.cookies['uid'] = user.uid
-                self.request.cookies['token'] = user.twitter_token_set.access_token
+                if(is_sharing_login):
+                    # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
+                    user = gs_user_core.add_twitter_sharing_tokens(query['oauth_token'], query['oauth_verifier'])
+                    # if user has logged in before, we already have their standard login tokens
+                    if user.twitter_token_set is not None and user.twitter_token_set.access_token is not None:
+                        self.request.cookies['uid'] = user.uid
+                        self.request.cookies['token'] = user.twitter_token_set.access_token
+                else:
+                    user = gs_user_core.login_twitter_user(query['oauth_token'], query['oauth_verifier'], referrer)
+                    self.request.cookies['uid'] = user.uid
+                    self.request.cookies['token'] = user.twitter_token_set.access_token
                 if staging_uuid:
                     self.request.query_string += '&staging_uuid=' + staging_uuid
         except Exception as x:

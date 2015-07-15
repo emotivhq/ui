@@ -80,9 +80,8 @@ GiftStarterApp.service('TwitterService', [
             var deferred = $q.defer();
             var doDeferred = function() {
                 $http({method: 'POST', url: '/users', data: {
-                    action: 'get-auth-url', service: 'twitter',
-                    requirePermissionToPost: 1,
-                    redirect_url: AppStateService.getOauthRedirectUrl()}})
+                    action: 'get-share-auth-url', service: 'twitter',
+                    redirect_url: AppStateService.getOauthRedirectUrlForSharing()}})
                     .success(function(data) {
                         deferred.resolve(data.url);
                     })
