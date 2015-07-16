@@ -39,7 +39,6 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             $scope.sharePermissionGplus = hasPermission=='1';
         });
         //twitter permissions URL must be generated dynamically
-        if(!$scope.sharePermissionTwitter) {
         if(!$scope.sharePermission["twitter"]) {
             TwitterService.getSharePermissionUrl().then(function(url){
                 sharePermissionUrlTwitter = url;

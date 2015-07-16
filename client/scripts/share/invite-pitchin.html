@@ -10,8 +10,8 @@
 
 {{giftStart.gc_name}}</textarea>
         <h3>DEV TOOLS:
-            <a class="linky" ng-click="ensureFacebookSharePermission()" ng-hide="sharePermissionFacebook">[ensure FB]</a><a class="linky" ng-click="shareFacebook('I just created a new gift on GiftStarter!')" ng-show="sharePermissionFacebook">[share FB]</a>
-            <a class="linky" ng-click="ensureTwitterSharePermission()" ng-hide="sharePermissionTwitter">[ensure TW]</a><a class="linky" ng-click="shareTwitter('I just created a new gift on GiftStarter!')" ng-show="sharePermissionTwitter">[share TW]</a>
+            <a class="linky" ng-click="ensureFacebookSharePermission()" ng-hide="sharePermission['facebook']">[ensure FB]</a><a class="linky" ng-click="shareFacebook('I just created a new gift on GiftStarter!')" ng-show="sharePermission['facebook']">[share FB]</a>
+            <a class="linky" ng-click="ensureTwitterSharePermission()" ng-hide="sharePermission['twitter']">[ensure TW]</a><a class="linky" ng-click="shareTwitter('I just created a new gift on GiftStarter!')" ng-show="sharePermission['twitter']">[share TW]</a>
             <a class="linky" ng-click="ensureGplusSharePermission()" ng-hide="sharePermissionGplus">[ensure G+]</a><a class="linky" ng-click="shareGplus('I just created a new gift on GiftStarter!')" ng-show="sharePermissionGplus">[share G+]</a>
             <a class="linky" ng-click="shareLinkedin('I just created a new gift on GiftStarter!')">[share LI]</a>
         </h3>
