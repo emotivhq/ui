@@ -73,7 +73,10 @@ def has_permission_to_publish(user):
     :param user:
     :return: True if we are allowed to publish on this user's wall
     """
-    return 'publish_actions' in get_permissions(user)
+    try:
+        return 'publish_actions' in get_permissions(user)
+    except:
+        return False
 
 def get_permissions(user):
     """https://developers.facebook.com/docs/graph-api/reference/user/permissions"""
