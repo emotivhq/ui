@@ -2,14 +2,20 @@
   &.pitchin
     text-align: center
     textarea
+      height: 200px
       width: 100%
     .share-where
       display: inline-block
+      div
+        display: inline-block
+        vertical-align: top
       &-social
-        width: 40%
+        width: calc(40% - 1.5em)
+        .social__icons
+          width: 100%
       &-email
-        width: 60%
-    .block
+        width: calc(60% - 1.5em)
+    div.block
       display: inline-block
-      max-width: 500px
+      max-width: 598px
       width: 100%

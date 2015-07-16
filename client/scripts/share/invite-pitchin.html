@@ -4,18 +4,22 @@
     and increase your chances of fully funding the gift!</p>
 
     <div class="block">
-        <h3>DEV TOOLS: <a ng-click="ensureFacebookSharePermission()">[ensureFacebook]</a> <a ng-click="ensureTwitterSharePermission()">[ensureTwitter]</a> </h3>
     <h4>YOUR MESSAGE</h4>
     <textarea>Hey! I just pitched in on a {{giftStart.product_title}} for {{recipientname}} on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!
-        {{campaignUrl()}}
+{{campaignUrl()}}
 
-        {{giftStart.gc_name}}</textarea>
+{{giftStart.gc_name}}</textarea>
+        <h3>DEV TOOLS: <a ng-click="ensureFacebookSharePermission()">[ensureFacebook]</a> <a ng-click="ensureTwitterSharePermission()">[ensureTwitter]</a> </h3>
     </div>
 
     <div class="share-where block">
         <div class="share-where-social">
             <h4>SHARE ON SOCIAL MEDIA</h4>
             <p>Select which networks you would like to post on:</p>
+            <a class="social__link linky" ng-click="doLoginFacebook()"><img class="social__icons" src="/assets/login/facebook.png"></a>
+            <a class="social__link linky" ng-click="doLoginTwitter()"><img class="social__icons" src="/assets/login/twitter.png"></a>
+            <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/login/linkedin.png"></a>
+            <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/login/google.png"></a>
         </div>
         <div class="share-where-email">
             <h4>SEND AN EMAIL</h4>
