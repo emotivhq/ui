@@ -142,5 +142,5 @@ def publish_to_status(user, message):
             return False
         return True
     except Exception as x:
-        logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))
+        logging.error("Unable to post to twitter for {0}: {1}".format(user.uid, x))
         return False

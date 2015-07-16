@@ -55,6 +55,19 @@ def _request_with_refresh(url, token_set):
                               token=token_set.to_token())
     return oauth.get(url)
 
+def _put_with_refresh(url, token_set, data):
+    """access provided googleplus URL with provided token; attempt to refresh token in the process"""
+    if token_set.refresh_token:
+        oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
+                              token=token_set.to_token(),
+                              auto_refresh_url=REFRESH_URL,
+                              auto_refresh_kwargs=REFRESH_EXTRAS,
+                              token_updater=token_saver)
+    else:
+        oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
+                              token=token_set.to_token())
+    return oauth.put(url, data=data)
+
 
 def get_uid(token_set):
     """get googleplus ID for user"""
@@ -64,7 +77,7 @@ def get_uid(token_set):
 
 
 def add_login_tokens(user, token_set):
-    user.googleplus_token_set_token_set = token_set
+    user.googleplus_token_set = token_set
     user.put()
 
 
@@ -129,10 +142,37 @@ def update_user_info(user):
 
 
 def has_permission_to_publish(user):
+    """
+    do we have permission to publish posts for this user?
+    :param user:
+    :return: True if we are allowed to publish posts
+    """
     logging.error("TBD: googleplus has_permission_to_publish")
     return False
 
 
-def publish_to_feed(user):
-    logging.error("TBD: googleplus publish_to_feed")
+def publish_to_post(user, message, link=None, link_name=None):
+    """
+    publish a GooglePlus post, as per https://developers.google.com/+/domains/posts/creating
+    :param user: user for whom has_permission_to_publish() is known to be true
+    :param message: message body
+    :param link: link to add to message (None)
+    :param link_name: text to label the link (None)
+    :return: True if publish succeeded, False if it failed
+    """
+    try:
+        data = {
+            "object": {
+                "originalContent": message
+            },
+            "attachments": [
+                { "id": link_name, "url": link }
+            ]
+        }
+        response = _put_with_refresh("https://www.googleapis.com/plusDomains/v1/people/" + user.uid[1:] + "/activities",
+                                         user.googleplus_token_set, data=data)
+        social_json = json.loads(response.content)
+    except Exception as x:
+        logging.error("Unable to post to googleplus for {0}: {1}".format(user.uid, x))
+        return False
     pass

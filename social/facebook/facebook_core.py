@@ -115,6 +115,6 @@ def publish_to_feed(user, message, link=None, link_name=None):
             graph.put_wall_post(message=message)
         return True
     except Exception as x:
-        logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))
+        logging.error("Unable to post to facebook for {0}: {1}".format(user.uid, x))
         return False
 

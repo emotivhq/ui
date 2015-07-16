@@ -403,6 +403,8 @@ class UserHandler(webapp2.RequestHandler):
                 self.response.write("1" if user and facebook.facebook_core.has_permission_to_publish(user) else 0)
             if data['service'] == 'twitter':
                 self.response.write("1" if user and twitter.twitter_core.has_permission_to_publish(user) else 0)
+            if data['service'] == 'googleplus':
+                self.response.write("1" if user and googleplus.googleplus_core.has_permission_to_publish(user) else 0)
 
         elif data['action'] == 'do-share':
             if is_validated:
@@ -414,6 +416,8 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(facebook.facebook_core.publish_to_feed(user, message, link, link_name))
                 if data['service'] == 'twitter':
                     self.response.write(twitter.twitter_core.publish_to_status(user, message))
+                if data['service'] == 'googleplus':
+                    self.response.write(googleplus.googleplus_core.publish_to_feed(user, message, link, link_name))
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
