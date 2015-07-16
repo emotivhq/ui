@@ -65,7 +65,6 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
             $window.location.host +
             '&state=' + AppStateService.base64StateForSharing() +
             '&scope=publish_actions'; //user_birthday
-        console&console.log&&console.log("FB share URL: "+url)&&console.log("\n\n\n");
         return url;
     };
 

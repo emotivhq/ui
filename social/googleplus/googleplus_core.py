@@ -121,3 +121,11 @@ def update_user_info(user):
         logging.error("Failed to get google user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+
+def has_permission_to_publish(user):
+    pass
+
+
+def publish_to_feed(user):
+    pass

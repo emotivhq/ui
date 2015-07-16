@@ -62,6 +62,39 @@ GiftStarterApp.service('GooglePlusService', [
             self.loginRequested = true;
         };
 
+        this.checkSharePermission = function() {
+                var deferred = $q.defer();
+                var doDeferred = function() {
+                    $http({method: 'POST', url: '/users', data: {
+                        action: 'has-share-auth', service: 'googleplus'}})
+                        .success(function(data) {
+                            deferred.resolve(data);
+                        })
+                        .error(function(data) {
+                            console && console.log && console.log(data);
+                            deferred.reject(data);
+                        });
+                    return deferred.promise
+                };
+                return doDeferred();
+            };
+
+        this.getSharePermissionUrl = function() {
+            AppStateService.set('login_service', 'googleplus');
+            self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
+                '?scope=' + encodeURIComponent(
+                'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.stream.write') +
+                '&client_id=' +
+                encodeURIComponent($window.googlePlusClientId) +
+                '&redirect_uri=' +
+                encodeURIComponent($window.location.protocol + '//' +
+                    $window.location.host + '/') +
+                '&response_type=code' +
+                '&state=' + AppStateService.base64StateForSharing() +
+                '&access_type=offline';
+            return url;
+        };
+
         this.logout = function() {
             $rootScope.$broadcast('googleplus-logout-success');
         };

@@ -75,8 +75,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
-        link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
-        linkName = $scope.giftStart.product_title;
+        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        if (!linkName) {linkName = $scope.giftStart.product_title;}
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
             FacebookService.doShare(message, link, linkName).then(function (success) {
                 alert(success);
@@ -92,5 +92,15 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             });
         }
     };
+
+    $scope.shareLinkedin = function(message, link, linkName) {
+        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        if (!linkName) {linkName = $scope.giftStart.product_title;}
+        window.open("https://www.linkedin.com/shareArticle?mini=true"
+            +"&url="+link
+            +"&title="+linkName
+            +"&summary="+message
+        )
+    }
 
 }
