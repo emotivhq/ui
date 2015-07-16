@@ -18,6 +18,11 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareSuccess = false;
 
+    $scope.pressedFacebook = false;
+    $scope.pressedTwitter = false;
+    $scope.pressedLinkedIn = false;
+    $scope.pressedGoogle = false;
+
     $scope.shareClick = function() {
         $scope.shareSuccess = true;
     };
@@ -31,43 +36,57 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.ensureFacebookSharePermission = function() {
-        FacebookService.checkSharePermission().then(function(hasPermission) {
-            if(hasPermission!='1') {
-                window.location = FacebookService.getSharePermissionUrl();
-            } else {
-                alert('Nothing to do; user has publish permission on Facebook!')
-            }
-        });
-    };
-
-    $scope.ensureTwitterSharePermission = function() {
-        TwitterService.checkSharePermission().then(function(hasPermission) {
-            if(hasPermission!='1') {
-                TwitterService.getSharePermissionUrl().then(function(url){
-                    window.location = url;
-                });
-            } else {
-                alert('Nothing to do; user has publish permission on Twitter!')
-            }
-        });
-    };
-
-    $scope.shareFacebook = function(message, link, linkName) {
-        link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
-        linkName = $scope.giftStart.product_title;
-        if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
-            FacebookService.doShare(message, link, linkName).then(function (success) {
-                alert(success);
+        if($scope.pressedFacebook){
+            $scope.pressedFacebook = false;
+        } else {
+            $scope.pressedFacebook = true;
+            FacebookService.checkSharePermission().then(function (hasPermission) {
+                if (hasPermission != '1') {
+                    window.location = FacebookService.getSharePermissionUrl();
+                } else {
+                    alert('Nothing to do; user has publish permission on Facebook!')
+                }
             });
         }
     };
 
-    $scope.shareTwitter = function(message) {
-        message += " "+$location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
-        if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message)) {
-            TwitterService.doShare(message).then(function (success) {
-                alert(success);
+    $scope.ensureTwitterSharePermission = function() {
+        if($scope.pressedTwitter){
+            $scope.pressedTwitter = false;
+        } else {
+            $scope.pressedTwitter = true;
+            TwitterService.checkSharePermission().then(function (hasPermission) {
+                if (hasPermission != '1') {
+                    TwitterService.getSharePermissionUrl().then(function (url) {
+                        window.location = url;
+                    });
+                } else {
+                    alert('Nothing to do; user has publish permission on Twitter!')
+                }
             });
+        }
+    };
+
+    $scope.shareFacebook = function(message, link, linkName) {
+        if(pressedFacebook) {
+            link = $location.absUrl().replace('localhost:8080', 'www.dev.giftstarter.co');
+            linkName = $scope.giftStart.product_title;
+            if (window.confirm("Warning!  This will ACTUALLY post a live message:\n" + message + " " + link)) {
+                FacebookService.doShare(message, link, linkName).then(function (success) {
+                    alert(success);
+                });
+            }
+        }
+    };
+
+    $scope.shareTwitter = function(message) {
+        if(pressedTwitter) {
+            message += " " + $location.absUrl().replace('localhost:8080', 'www.dev.giftstarter.co');
+            if (window.confirm("Warning!  This will ACTUALLY post a live message:\n" + message)) {
+                TwitterService.doShare(message).then(function (success) {
+                    alert(success);
+                });
+            }
         }
     };
 
