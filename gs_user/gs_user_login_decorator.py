@@ -10,6 +10,8 @@ import json
 import urllib
 from gs_user.gs_user_referral import UserReferral
 import logging
+from gs_user.User import User
+from social import twitter, facebook
 
 config = yaml.load(open('config.yaml'))
 
@@ -36,10 +38,7 @@ def handle_login(method_handler):
         is_sharing_login = state.get('is_sharing_login') == 1
         prior_uid = state.get('prior_uid')
         prior_token = state.get('prior_token')
-        if prior_uid == -1 or not gs_user_core.validate(prior_uid, prior_token):
-            prior_uid = None
-            prior_token = None
-        # else:
+        prior_user = User.get_by_id(prior_uid) if prior_uid != -1 and gs_user_core.validate(prior_uid, prior_token) else None
         #     prior_login_service = gs_user_core.get_social_service(prior_uid)
         if state.get('app_url'):
             redirect_url = state.get('app_url')
@@ -48,17 +47,26 @@ def handle_login(method_handler):
 
         try:
             if is_sharing_login:
-                if prior_uid:
-                    if login_service == 'twitter':
-                        # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
-                        gs_user_core.add_twitter_sharing_tokens(prior_uid,query['oauth_token'], query['oauth_verifier'])
-                    if login_service == 'facebook':
-                        gs_user_core.add_facebook_login_tokens(prior_uid,query['code'], redirect_url)
-                    #resume prior login
-                    self.request.cookies['uid'] = prior_uid
-                    self.request.cookies['token'] = prior_token
+                if prior_user:
+                    try:
+                        if login_service == 'twitter':
+                            if not twitter.twitter_core.has_permission_to_publish(prior_user):
+                                # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
+                                gs_user_core.add_twitter_sharing_tokens(prior_user.uid, query['oauth_token'], query['oauth_verifier'])
+                        if login_service == 'facebook':
+                            if not facebook.facebook_core.has_permission_to_publish(prior_user):
+                                gs_user_core.add_facebook_login_tokens(prior_user.uid, query['code'], redirect_url)
+                        #resume prior login
+                        # self.request.cookies['uid'] = prior_uid
+                        # self.request.cookies['token'] = prior_token
+                    except Exception as x:
+                        logging.error("Unable to authenticate user for sharing: {0} {1}".format(self.request,state))
+                        self.response.write('An error has occurred.  Please <a onclick="window.close()" href="javascript:window.close()">close</a> this window and try again.')
+                        return # self.redirect('/header')
+                    self.response.write('<script>window.close()</script>You are now able to post on {0}.  Please <a onclick="window.close()" href="javascript:window.close()">close</a> this window and continue.'.format(login_service))
+                    return #self.redirect('/header')
                 else:
-                    logging.error("Received a sharing login, but no valid prior_uid to attach: {0} {1}".format(self.request,state))
+                    logging.error("Received a sharing login, but no valid prior_user to attach: {0} {1}".format(self.request,state))
             else:
                 if login_service == 'facebook':
                     # Handle FB login

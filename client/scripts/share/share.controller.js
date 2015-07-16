@@ -16,6 +16,29 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.giftStart = GiftStartService.giftStart;
 
+    $scope.sharePermissionFacebook = false;
+    var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
+    $scope.sharePermissionTwitter = false;
+    var sharePermissionUrlTwitter = null;
+
+    var refreshPermissionsStatus = function() {
+        TwitterService.getSharePermissionUrl().then(function(url){
+            sharePermissionUrlTwitter = url;
+        });
+        FacebookService.checkSharePermission().then(function(hasPermission) {
+            if(hasPermission=='1') {
+                $scope.sharePermissionFacebook = true;
+            }
+        });
+        TwitterService.checkSharePermission().then(function(hasPermission) {
+            if(hasPermission=='1') {
+                $scope.sharePermissionTwitter = true;
+            }
+        });
+    };
+
+    refreshPermissionsStatus();
+
     $scope.shareSuccess = false;
 
     $scope.pressedFacebook = false;
@@ -43,35 +66,11 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.ensureFacebookSharePermission = function() {
-        if($scope.pressedFacebook){
-            $scope.pressedFacebook = false;
-        } else {
-            $scope.pressedFacebook = true;
-            FacebookService.checkSharePermission().then(function (hasPermission) {
-                if (hasPermission != '1') {
-                    window.location = FacebookService.getSharePermissionUrl();
-                } else {
-                    alert('Nothing to do; user has publish permission on Facebook!')
-                }
-            });
-        }
+        window.open(sharePermissionUrlFacebook)
     };
 
     $scope.ensureTwitterSharePermission = function() {
-        if($scope.pressedTwitter){
-            $scope.pressedTwitter = false;
-        } else {
-            $scope.pressedTwitter = true;
-            TwitterService.checkSharePermission().then(function (hasPermission) {
-                if (hasPermission != '1') {
-                    TwitterService.getSharePermissionUrl().then(function (url) {
-                        window.location = url;
-                    });
-                } else {
-                    alert('Nothing to do; user has publish permission on Twitter!')
-                }
-            });
-        }
+        window.open(sharePermissionUrlTwitter)
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
