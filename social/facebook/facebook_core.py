@@ -74,7 +74,14 @@ def has_permission_to_publish(user):
     :return: True if we are allowed to publish on this user's wall
     """
     try:
-        return 'publish_actions' in get_permissions(user)
+        if 'publish_actions' in get_permissions(user):
+            if user.facebook_uid is None:
+                try:
+                    user.facebook_uid = 'f'+get_uid(user.facebook_token_set)
+                    user.put()
+                except:
+                    pass
+            return True
     except:
         return False
 
