@@ -23,14 +23,23 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     $scope.sharePermission["google"] = false;
     var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
     var sharePermissionUrlTwitter = null;
+    $scope.sharePermissionGplus = false;
+    var sharePermissionUrlGplus = GooglePlusService.getSharePermissionUrl();
+
 
     $scope.refreshPermissionsStatus = function() {
+        //check to see if user has permission to post
         FacebookService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["facebook"] = hasPermission=='1';
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["twitter"] = hasPermission=='1';
         });
+        GooglePlusService.checkSharePermission().then(function(hasPermission) {
+            $scope.sharePermissionGplus = hasPermission=='1';
+        });
+        //twitter permissions URL must be generated dynamically
+        if(!$scope.sharePermissionTwitter) {
         if(!$scope.sharePermission["twitter"]) {
             TwitterService.getSharePermissionUrl().then(function(url){
                 sharePermissionUrlTwitter = url;
@@ -85,9 +94,13 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         window.open(sharePermissionUrlTwitter);
     };
 
+    $scope.ensureGplusSharePermission = function() {
+        window.open(sharePermissionUrlGplus);
+    };
+
     $scope.shareFacebook = function(message, link, linkName) {
-        link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
-        linkName = $scope.giftStart.product_title;
+        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        if (!linkName) {linkName = $scope.giftStart.product_title;}
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
             FacebookService.doShare(message, link, linkName).then(function (success) {
                 alert(success);
@@ -103,5 +116,15 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             });
         }
     };
+
+    $scope.shareLinkedin = function(message, link, linkName) {
+        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        if (!linkName) {linkName = $scope.giftStart.product_title;}
+        window.open("https://www.linkedin.com/shareArticle?mini=true"
+            +"&url="+link
+            +"&title="+linkName
+            +"&summary="+message
+        )
+    }
 
 }

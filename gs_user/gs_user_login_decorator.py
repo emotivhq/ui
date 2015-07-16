@@ -11,7 +11,7 @@ import urllib
 from gs_user.gs_user_referral import UserReferral
 import logging
 from gs_user.User import User
-from social import twitter, facebook
+from social import twitter, facebook, googleplus
 
 config = yaml.load(open('config.yaml'))
 
@@ -57,15 +57,18 @@ def handle_login(method_handler):
                         if login_service == 'facebook':
                             if not facebook.facebook_core.has_permission_to_publish(prior_user):
                                 gs_user_core.add_facebook_login_tokens(prior_user.uid, query['code'], redirect_url)
+                        if login_service == 'googleplus':
+                            if not googleplus.googleplus_core.has_permission_to_publish(prior_user):
+                                gs_user_core.add_googleplus_login_tokens(prior_user.uid, query['code'], redirect_url)
                         #resume prior login
                         # self.request.cookies['uid'] = prior_uid
                         # self.request.cookies['token'] = prior_token
                     except Exception as x:
                         logging.error("Unable to authenticate user for sharing: {0} {1}".format(self.request,state))
-                        self.response.write(closejs+'An error has occurred.  Please <a onclick="closeme()" href="javascript:closeme()">close</a> this window and try again.')
-                        return # self.redirect('/header')
-                    self.response.write(closejs+'<script>closeme()</script>You are now able to post on {0}.  Please <a onclick="closeme()" href="javascript:closeme()">close</a> this window and continue.'.format(login_service))
-                    return #self.redirect('/header')
+                        self.response.write(closejs+'An error has occurred.  Please <a onclick="closeme()" href="#">close</a> this window and try again.')
+                        return
+                    self.response.write(closejs+'<script>closeme()</script>You are now able to post on {0}.  Please <a onclick="closeme()" href="#">close</a> this window and continue.'.format(login_service))
+                    return
                 else:
                     logging.error("Received a sharing login, but no valid prior_user to attach: {0} {1}".format(self.request,state))
             else:
