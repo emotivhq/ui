@@ -9,7 +9,13 @@
 {{campaignUrl()}}
 
 {{giftStart.gc_name}}</textarea>
-        <h3>DEV TOOLS: <a ng-click="ensureFacebookSharePermission()">[ensureFacebook]</a> <a ng-click="ensureTwitterSharePermission()">[ensureTwitter]</a> </h3>
+        <h3>DEV TOOLS:
+            <a class="linky" ng-click="ensureFacebookSharePermission()">[ensureFacebook]</a>
+            <a class="linky" ng-click="ensureTwitterSharePermission()">[ensureTwitter]</a>
+            <br/>
+            <a class="linky" ng-click="shareFacebook('I just created a new gift on GiftStarter!')">[shareFacebook]</a>
+            <a class="linky" ng-click="shareTwitter('I just created a new gift on GiftStarter!')">[shareTwitter]</a>
+        </h3>
     </div>
 
     <div class="share-where block">

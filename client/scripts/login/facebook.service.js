@@ -69,6 +69,24 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
         return url;
     };
 
+    this.doShare = function(message, link, linkName) {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'do-share', service: 'facebook',
+                    message: message, link: link, link_name: linkName}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
     this.getLongTermToken = function(token) {
         $http({method: 'POST', url: '/users',
             data: {service: 'facebook', action: 'get-long-term-token',

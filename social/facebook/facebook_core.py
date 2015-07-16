@@ -87,15 +87,22 @@ def get_permissions(user):
             permissions.append(item['permission'])
     return permissions
 
-def publish_to_wall(user, message, link=None, linkName=None):
-    """https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed"""
+def publish_to_feed(user, message, link=None, link_name=None):
+    """
+    publish a message on the user's Facebook feed, as per https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed
+    :param user: user for whom has_permission_to_publish() is known to be true
+    :param message: message body
+    :param link: link to add to message (None)
+    :param link_name: text to label the link (None)
+    :return: True if publish succeeded, False if it failed
+    """
     # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
-        graph.put_object("me", "feed",
-                         message=message,
-                         name= link,
-                         link= linkName)
+        if link:
+            graph.put_wall_post(message=message, attachment={"name": link_name, "link": link})
+        else:
+            graph.put_wall_post(message=message)
         return True
     except Exception as x:
         logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))

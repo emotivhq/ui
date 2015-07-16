@@ -114,3 +114,26 @@ def has_permission_to_publish(user):
     if user.twitter_sharing_token_set is not None:
         return user.uid == 't'+str(get_uid(user.twitter_sharing_token_set, True))
     return False
+
+
+def publish_to_status(user, message):
+    """
+    update the user's Twitter status (eg "tweet"), as per https://dev.twitter.com/rest/reference/post/statuses/update
+    :param user: user for whom has_permission_to_publish() is known to be true
+    :param message: message body
+    :return: True if publish succeeded, False if it failed
+    """
+    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
+    try:
+
+
+        auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING, resource_owner_key=user.twitter_sharing_token_set.access_token,
+                      resource_owner_secret=user.twitter_sharing_token_set.access_secret)
+        data = {'status': message}
+        response = requests.post("https://api.twitter.com/1.1/statuses/update.json", auth=auth, data=data)
+        if "errors" in json.loads(response.content):
+            return False
+        return True
+    except Exception as x:
+        logging.error("Unable to post to wall for {0}: {1}".format(user.uid, x))
+        return False

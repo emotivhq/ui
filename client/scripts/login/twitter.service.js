@@ -112,6 +112,24 @@ GiftStarterApp.service('TwitterService', [
             return doDeferred();
         };
 
+        this.doShare = function(message) {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'do-share', service: 'twitter',
+                    message: message}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
         function twitterOauthCallback(oauthToken, oauthVerifier) {
             self.oauth_token = oauthToken;
             self.verfier = oauthVerifier;

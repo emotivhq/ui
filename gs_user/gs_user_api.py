@@ -296,7 +296,8 @@ class UserHandler(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
-        is_validated_self = validate(uid, token, self.request.path) and 'uid' in data and uid == data['uid']
+        is_validated = validate(uid, token, self.request.path)
+        is_validated_self = is_validated and 'uid' in data and uid == data['uid']
 
         if data['action'] == 'update-profile':
             if(is_validated_self):
@@ -401,6 +402,17 @@ class UserHandler(webapp2.RequestHandler):
                 self.response.write("1" if uid and facebook.facebook_core.has_permission_to_publish(ndb.Key('User', uid).get()) else 0)
             if data['service'] == 'twitter':
                 self.response.write("1" if uid and twitter.twitter_core.has_permission_to_publish(ndb.Key('User', uid).get()) else 0)
+
+        elif data['action'] == 'do-share':
+            if is_validated:
+                user = ndb.Key('User', uid).get()
+                message = data['message']
+                link = data['link'] if 'link' in data else None
+                link_name = data['link_name'] if 'link_name' in data else None
+                if data['service'] == 'facebook':
+                    self.response.write(facebook.facebook_core.publish_to_feed(user, message, link, link_name))
+                if data['service'] == 'twitter':
+                    self.response.write(twitter.twitter_core.publish_to_status(user, message))
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
