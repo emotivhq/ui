@@ -113,8 +113,9 @@ def has_permission_to_publish(user):
     """
     if user.twitter_sharing_token_set is not None:
         try:
-            return user.uid == 't'+str(get_uid(user.twitter_sharing_token_set, True))
-        except:
+            get_uid(user.twitter_sharing_token_set, True)
+            return True
+        except Exception as x:
             pass
     return False
 
