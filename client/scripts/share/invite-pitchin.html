@@ -22,19 +22,24 @@
         <div class="share-where-social">
             <h4>SHARE ON SOCIAL MEDIA</h4>
             <p>Select which networks you would like to post on:</p>
-            <a class="social__link linky" ng-click="doLoginFacebook()"><img class="social__icons" src="/assets/login/facebook.png"></a>
-            <a class="social__link linky" ng-click="doLoginTwitter()"><img class="social__icons" src="/assets/login/twitter.png"></a>
+            <a class="social__link linky" ng-click="nsureFacebookSharePermission()"><img class="social__icons" src="/assets/login/facebook.png"></a>
+            <a class="social__link linky" ng-click="ensureTwitterSharePermission()"><img class="social__icons" src="/assets/login/twitter.png"></a>
             <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/login/linkedin.png"></a>
             <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/login/google.png"></a>
         </div>
         <div class="share-where-email">
             <h4>SEND AN EMAIL</h4>
             <p>Enter email addresses seperated by a comma, or import gmail contacts to select email addresses:</p>
-            <h4>IMPORT GMAIL CONTACTS</h4>
-            <textarea>Enter email addresses, separated by commas</textarea>
+            <h4><a href="">IMPORT GMAIL CONTACTS</a></h4>
+            <textarea placeholder="Enter email addresses, separated by commas"></textarea>
         </div>
     </div>
-    <button>SHARE</button>
+    <div class="share-buttons">
+        <p ng-show="shareSuccess">YOUR SHARE SUCCESSFULLY POSTED!</p>
+        <button class="red" ng-hide="shareSuccess" ng-click="shareClick()">SHARE</button>
+        <button ng-show="shareSuccess">SHARE AGAIN</button>
+        <button ng-show="shareSuccess">FINISH</button>
+    </div>
 
     <div>
         <h4>SHARE A LINK!</h4>
@@ -42,6 +47,6 @@
         <input value="{{campaignUrl()}}" />
     </div>
 
-    <h4>SKIP AND SHARE LATER</h4>
+    <h4><a href="">SKIP AND SHARE LATER</a></h4>
     <p>You can share your campaign at any time from your profile page or the campaign page!</p>
 </div>

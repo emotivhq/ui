@@ -4,18 +4,29 @@
     textarea
       height: 200px
       width: 100%
-    .share-where
-      display: inline-block
-      div
+    .share
+      &-where
         display: inline-block
-        vertical-align: top
-      &-social
-        width: calc(40% - 1.5em)
-        .social__icons
-          width: 100%
-      &-email
-        width: calc(60% - 1.5em)
+        div
+          display: inline-block
+          vertical-align: top
+        &-social
+          margin-right: 20px
+          width: calc(40% - 1.5em)
+          .social__icons
+            width: 100%
+        &-email
+          width: calc(60% - 1.5em)
+      &-buttons
+        p
+          background-color: #eee
+          padding: 10px
     div.block
       display: inline-block
       max-width: 598px
+      text-align: left
       width: 100%
+    button
+      width: 200px
+    h4
+      font-weight: normal

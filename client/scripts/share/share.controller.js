@@ -16,6 +16,12 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.giftStart = GiftStartService.giftStart;
 
+    $scope.shareSuccess = false;
+
+    $scope.shareClick = function() {
+        $scope.shareSuccess = true;
+    };
+
     $scope.campaignUrl = function() {
         if($location.path().length > 11) {
             return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
