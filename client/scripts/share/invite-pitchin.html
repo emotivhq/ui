@@ -19,7 +19,7 @@
         <div class="share-where-social">
             <h4>SHARE ON SOCIAL MEDIA</h4>
             <p>Select which networks you would like to post on:</p>
-            <a class="social__link linky" ng-click="ensureFacebookSharePermission()"><img class="social__icons" src="/assets/share/facebook.png"></a>
+            <a class="social__link linky" ng-click="selectedSocials['facebook']=false"><img class="social__icons" src="/assets/share/facebook.png" ng-hide="!sharePermission['facebook'] || !selectedSocials['facebook']"></a><img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-show="!selectedSocials['facebook']" ng-click="toggleButton('facebook')"/>
             <a class="social__link linky" ng-click="ensureTwitterSharePermission()"><img class="social__icons" src="/assets/share/twitter.png"></a>
             <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/share/linkedin.png"></a>
             <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/share/google.png"></a>

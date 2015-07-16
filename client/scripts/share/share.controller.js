@@ -16,19 +16,22 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.giftStart = GiftStartService.giftStart;
 
-    $scope.sharePermissionFacebook = false;
+    $scope.sharePermission = [];
+    $scope.sharePermission["facebook"] = false;
+    $scope.sharePermission["twitter"] = false;
+    $scope.sharePermission["linkedin"] = false;
+    $scope.sharePermission["google"] = false;
     var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
-    $scope.sharePermissionTwitter = false;
     var sharePermissionUrlTwitter = null;
 
     $scope.refreshPermissionsStatus = function() {
         FacebookService.checkSharePermission().then(function(hasPermission) {
-            $scope.sharePermissionFacebook = hasPermission=='1';
+            $scope.sharePermission["facebook"] = hasPermission=='1';
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
-            $scope.sharePermissionTwitter = hasPermission=='1';
+            $scope.sharePermission["twitter"] = hasPermission=='1';
         });
-        if(!$scope.sharePermissionTwitter) {
+        if(!$scope.sharePermission["twitter"]) {
             TwitterService.getSharePermissionUrl().then(function(url){
                 sharePermissionUrlTwitter = url;
             });
@@ -42,19 +45,27 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareSuccess = false;
 
-    $scope.pressedFacebook = false;
-    $scope.pressedTwitter = false;
-    $scope.pressedLinkedIn = false;
-    $scope.pressedGoogle = false;
+    $scope.selectedSocials = [];
+    $scope.selectedSocials["facebook"] = false;
+    $scope.selectedSocials["twitter"] = false;
+    $scope.selectedSocials["linkedin"] = false;
+    $scope.selectedSocials["google"] = false;
 
     $scope.shareClick = function() {
         $scope.shareSuccess = true;
 
-        if($scope.pressedFacebook) {
+        if($scope.selectedSocials["facebook"]) {
             $scope.shareFacebook();
         }
-        if($scope.pressedTwitter) {
+        if($scope.selectedSocials["twitter"]) {
             $scope.shareTwitter();
+        }
+    };
+
+    $scope.toggleButton = function(social) {
+        $scope.selectedSocials[social] = !$scope.selectedSocials[social];
+        if($scope.selectedSocials[social] && !$scope.sharePermission[social]) {
+            $scope.ensureFacebookSharePermission();
         }
     };
 
