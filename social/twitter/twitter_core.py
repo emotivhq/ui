@@ -112,7 +112,10 @@ def has_permission_to_publish(user):
     :return: True if we are allowed to publish on this user's feed
     """
     if user.twitter_sharing_token_set is not None:
-        return user.uid == 't'+str(get_uid(user.twitter_sharing_token_set, True))
+        try:
+            return user.uid == 't'+str(get_uid(user.twitter_sharing_token_set, True))
+        except:
+            pass
     return False
 
 
