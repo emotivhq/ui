@@ -21,7 +21,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     $scope.sharePermissionTwitter = false;
     var sharePermissionUrlTwitter = null;
 
-    var refreshPermissionsStatus = function() {
+    $scope.refreshPermissionsStatus = function() {
         FacebookService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermissionFacebook = hasPermission=='1';
         });
@@ -35,8 +35,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         }
     };
 
-    refreshPermissionsStatus();
-    var permissionsTimer = $interval(refreshPermissionsStatus,4*60*1000); //twitter URL expires after 5m
+    $scope.refreshPermissionsStatus();
+    var permissionsTimer = $interval($scope.refreshPermissionsStatus,4*60*1000); //twitter URL expires after 5m
     $scope.$on("$destroy",function() {$interval.cancel(permissionsTimer);});
 
 
@@ -67,11 +67,11 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.ensureFacebookSharePermission = function() {
-        window.open(sharePermissionUrlFacebook)
+        window.open(sharePermissionUrlFacebook);
     };
 
     $scope.ensureTwitterSharePermission = function() {
-        window.open(sharePermissionUrlTwitter)
+        window.open(sharePermissionUrlTwitter);
     };
 
     $scope.shareFacebook = function(message, link, linkName) {

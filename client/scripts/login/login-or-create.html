@@ -37,3 +37,8 @@
         <br/><br/>
     </div>
 </div>
+<script>
+    function handlePopupClosed() {
+        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();
+    }
+</script>
