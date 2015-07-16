@@ -22,22 +22,25 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     var sharePermissionUrlTwitter = null;
 
     var refreshPermissionsStatus = function() {
-        TwitterService.getSharePermissionUrl().then(function(url){
-            sharePermissionUrlTwitter = url;
-        });
         FacebookService.checkSharePermission().then(function(hasPermission) {
-            if(hasPermission=='1') {
-                $scope.sharePermissionFacebook = true;
-            }
+            $scope.sharePermissionFacebook = hasPermission=='1';
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
-            if(hasPermission=='1') {
-                $scope.sharePermissionTwitter = true;
-            }
+            $scope.sharePermissionTwitter = hasPermission=='1';
         });
+        if(!$scope.sharePermissionTwitter) {
+            TwitterService.getSharePermissionUrl().then(function(url){
+                sharePermissionUrlTwitter = url;
+            });
+        }
     };
 
     refreshPermissionsStatus();
+    var permissionsTimer = $interval(refreshPermissionsStatus,4*60*1000); //twitter URL expires after 5m
+    $scope.$on("$destroy",function() {
+        $interval.cancel(permissionsTimer);
+    });
+
 
     $scope.shareSuccess = false;
 
