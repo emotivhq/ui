@@ -22,7 +22,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     $scope.sharePermission["linkedin"] = false;
     $scope.sharePermission["google"] = false;
     var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
-    var sharePermissionUrlTwitter = null;\
+    var sharePermissionUrlTwitter = null;
     var sharePermissionUrlGplus = GooglePlusService.getSharePermissionUrl();
 
 
