@@ -30,12 +30,15 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         //check to see if user has permission to post
         FacebookService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["facebook"] = hasPermission=='1';
+            if($scope.selectedSocials["facebook"]) {$scope.selectedSocials["facebook"] = $scope.sharePermission["facebook"];}
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["twitter"] = hasPermission=='1';
+            if($scope.selectedSocials["twitter"]) {$scope.selectedSocials["twitter"] = $scope.sharePermission["twitter"];}
         });
         GooglePlusService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["google"] = hasPermission=='1';
+            if($scope.selectedSocials["google"]) {$scope.selectedSocials["google"] = $scope.sharePermission["google"];}
         });
         //twitter permissions URL must be generated dynamically
         if(!$scope.sharePermission["twitter"]) {
