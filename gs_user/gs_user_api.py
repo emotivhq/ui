@@ -399,6 +399,8 @@ class UserHandler(webapp2.RequestHandler):
         elif data['action'] == 'has-share-auth':
             if data['service'] == 'facebook':
                 self.response.write("1" if uid and facebook.facebook_core.has_permission_to_publish(ndb.Key('User', uid).get()) else 0)
+            if data['service'] == 'twitter':
+                self.response.write("1" if uid and twitter.twitter_core.has_permission_to_publish(ndb.Key('User', uid).get()) else 0)
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':

@@ -29,14 +29,21 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             if(hasPermission!='1') {
                 window.location = FacebookService.getSharePermissionUrl();
             } else {
-                alert('Nothing to do!')
+                alert('Nothing to do; user has publish permission on Facebook!')
             }
         });
     };
 
     $scope.ensureTwitterSharePermission = function() {
-        TwitterService.getSharePermissionUrl().then(function(url){
-            window.location = url;
+        TwitterService.checkSharePermission().then(function(hasPermission) {
+            if(hasPermission!='1') {
+                TwitterService.getSharePermissionUrl().then(function(url){
+                    window.location = url;
+                });
+            } else {
+                alert('Nothing to do; user has publish permission on Twitter!')
+            }
         });
     };
+
 }

@@ -75,6 +75,24 @@ GiftStarterApp.service('TwitterService', [
             return doDeferred()
         };
 
+        this.checkSharePermission = function() {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'has-share-auth', service: 'twitter'}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
+
         this.getSharePermissionUrl = function() {
             var deferred = $q.defer();
             var doDeferred = function() {

@@ -103,3 +103,14 @@ def update_user_info(user):
         logging.error("Failed to get twitter user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+
+def has_permission_to_publish(user):
+    """
+    do we have permission to publish to this user's feed?
+    :param user:
+    :return: True if we are allowed to publish on this user's feed
+    """
+    if user.twitter_sharing_token_set is not None:
+        return user.uid == 't'+str(get_uid(user.twitter_sharing_token_set, True))
+    return False
