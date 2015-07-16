@@ -21,10 +21,14 @@
         <div class="share-where-social">
             <h4>SHARE ON SOCIAL MEDIA</h4>
             <p>Select which networks you would like to post on:</p>
-            <a class="social__link linky" ng-click="selectedSocials['facebook']=false"><img class="social__icons" src="/assets/share/facebook.png" ng-hide="!sharePermission['facebook'] || !selectedSocials['facebook']"></a><img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-show="!selectedSocials['facebook']" ng-click="toggleButton('facebook')"/>
-            <a class="social__link linky" ng-click="ensureTwitterSharePermission()"><img class="social__icons" src="/assets/share/twitter.png"></a>
-            <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/share/linkedin.png"></a>
-            <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/share/google.png"></a>
+            <a class="social__link linky" ng-click="selectedSocials['facebook']=false"><img class="social__icons" src="/assets/share/facebook.png" ng-hide="!sharePermission['facebook'] || !selectedSocials['facebook']"></a>
+            <img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-show="!selectedSocials['facebook']" ng-click="selectSocial('facebook')"/>
+            <a class="social__link linky" ng-click="selectedSocials['twitter']=false"><img class="social__icons" src="/assets/share/twitter.png" ng-hide="!sharePermission['twitter'] || !selectedSocials['twitter']"></a>
+            <img class="social__icons linky" src=/assets/share/twitter-share-unselected.png ng-show="!selectedSocials['twitter']" ng-click="selectSocial('twitter')"/>
+            <a class="social__link linky" ng-click="selectedSocials['linkedin']=false"><img class="social__icons" src="/assets/share/linkedin.png" ng-hide="!sharePermission['linkedin'] || !selectedSocials['linkedin']"></a>
+            <img class="social__icons linky" src=/assets/share/linkedin-share-unselected.png ng-show="!selectedSocials['linkedin']" ng-click="selectSocial('linkedin')"/>
+            <a class="social__link linky" ng-click="selectedSocials['google']=false"><img class="social__icons" src="/assets/share/google.png" ng-hide="!sharePermission['google'] || !selectedSocials['google']"></a>
+            <img class="social__icons linky" src=/assets/share/google-share-unselected.png ng-show="!selectedSocials['google']" ng-click="selectSocial('google')"/>
         </div>
         <div class="share-where-email">
             <h4>SEND AN EMAIL</h4>

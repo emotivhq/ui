@@ -70,9 +70,9 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         }
     };
 
-    $scope.toggleButton = function(social) {
-        $scope.selectedSocials[social] = !$scope.selectedSocials[social];
-        if($scope.selectedSocials[social] && !$scope.sharePermission[social]) {
+    $scope.selectSocial = function(social) {
+        $scope.selectedSocials[social] = true;
+        if(!$scope.sharePermission[social]) {
             $scope.ensureFacebookSharePermission();
         }
     };
