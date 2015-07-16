@@ -62,9 +62,9 @@ def handle_login(method_handler):
                         # self.request.cookies['token'] = prior_token
                     except Exception as x:
                         logging.error("Unable to authenticate user for sharing: {0} {1}".format(self.request,state))
-                        self.response.write(closejs+'An error has occurred.  Please <a onclick="closeme()" href="javascript:closeme()">close</a> this window and try again.')
+                        self.response.write(closejs+'An error has occurred.  Please <a onclick="closeme()" href="#">close</a> this window and try again.')
                         return # self.redirect('/header')
-                    self.response.write(closejs+'<script>closeme()</script>You are now able to post on {0}.  Please <a onclick="closeme()" href="javascript:closeme()">close</a> this window and continue.'.format(login_service))
+                    self.response.write(closejs+'<script>closeme()</script>You are now able to post on {0}.  Please <a onclick="closeme()" href="#">close</a> this window and continue.'.format(login_service))
                     return #self.redirect('/header')
                 else:
                     logging.error("Received a sharing login, but no valid prior_user to attach: {0} {1}".format(self.request,state))
