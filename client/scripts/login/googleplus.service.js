@@ -5,8 +5,8 @@
  */
 
 GiftStarterApp.service('GooglePlusService', [
-            '$http','$rootScope','$window','$location','AppStateService',
-    function($http,  $rootScope,  $window,  $location,  AppStateService) {
+            '$http','$rootScope','$window','$location', '$q', 'AppStateService',
+    function($http,  $rootScope,  $window,  $location,  $q, AppStateService) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -81,7 +81,7 @@ GiftStarterApp.service('GooglePlusService', [
 
         this.getSharePermissionUrl = function() {
             AppStateService.set('login_service', 'googleplus');
-            self.auth_url = 'https://accounts.google.com/o/oauth2/auth' +
+            url = 'https://accounts.google.com/o/oauth2/auth' +
                 '?scope=' + encodeURIComponent(
                 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.stream.write') +
                 '&client_id=' +

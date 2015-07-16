@@ -63,6 +63,11 @@ def get_uid(token_set):
     return response['id']
 
 
+def add_login_tokens(user, token_set):
+    user.googleplus_token_set_token_set = token_set
+    user.put()
+
+
 def get_email(uid, token_set):
     """
     get email address for user from GooglePlus
@@ -124,8 +129,10 @@ def update_user_info(user):
 
 
 def has_permission_to_publish(user):
-    pass
+    logging.error("TBD: googleplus has_permission_to_publish")
+    return False
 
 
 def publish_to_feed(user):
+    logging.error("TBD: googleplus publish_to_feed")
     pass

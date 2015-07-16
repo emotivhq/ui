@@ -11,7 +11,7 @@ import urllib
 from gs_user.gs_user_referral import UserReferral
 import logging
 from gs_user.User import User
-from social import twitter, facebook
+from social import twitter, facebook, googleplus
 
 config = yaml.load(open('config.yaml'))
 
@@ -57,6 +57,9 @@ def handle_login(method_handler):
                         if login_service == 'facebook':
                             if not facebook.facebook_core.has_permission_to_publish(prior_user):
                                 gs_user_core.add_facebook_login_tokens(prior_user.uid, query['code'], redirect_url)
+                        if login_service == 'googleplus':
+                            if not googleplus.googleplus_core.has_permission_to_publish(prior_user):
+                                gs_user_core.add_googleplus_login_tokens(prior_user.uid, query['code'], redirect_url)
                         #resume prior login
                         # self.request.cookies['uid'] = prior_uid
                         # self.request.cookies['token'] = prior_token

@@ -20,14 +20,22 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
     $scope.sharePermissionTwitter = false;
     var sharePermissionUrlTwitter = null;
+    $scope.sharePermissionGplus = false;
+    var sharePermissionUrlGplus = GooglePlusService.getSharePermissionUrl();
+
 
     $scope.refreshPermissionsStatus = function() {
+        //check to see if user has permission to post
         FacebookService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermissionFacebook = hasPermission=='1';
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermissionTwitter = hasPermission=='1';
         });
+        GooglePlusService.checkSharePermission().then(function(hasPermission) {
+            $scope.sharePermissionGplus = hasPermission=='1';
+        });
+        //twitter permissions URL must be generated dynamically
         if(!$scope.sharePermissionTwitter) {
             TwitterService.getSharePermissionUrl().then(function(url){
                 sharePermissionUrlTwitter = url;
@@ -72,6 +80,10 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.ensureTwitterSharePermission = function() {
         window.open(sharePermissionUrlTwitter);
+    };
+
+    $scope.ensureGplusSharePermission = function() {
+        window.open(sharePermissionUrlGplus);
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
