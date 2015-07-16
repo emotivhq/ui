@@ -37,9 +37,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     refreshPermissionsStatus();
     var permissionsTimer = $interval(refreshPermissionsStatus,4*60*1000); //twitter URL expires after 5m
-    $scope.$on("$destroy",function() {
-        $interval.cancel(permissionsTimer);
-    });
+    $scope.$on("$destroy",function() {$interval.cancel(permissionsTimer);});
 
 
     $scope.shareSuccess = false;
