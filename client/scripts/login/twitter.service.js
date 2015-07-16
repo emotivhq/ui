@@ -72,13 +72,13 @@ GiftStarterApp.service('TwitterService', [
                     });
                     return deferred.promise
                 };
-            AppStateService.remove('login_service');
             return doDeferred()
         };
 
         this.getSharePermissionUrl = function() {
             var deferred = $q.defer();
             var doDeferred = function() {
+                AppStateService.set('login_service', 'twitter');
                 $http({method: 'POST', url: '/users', data: {
                     action: 'get-share-auth-url', service: 'twitter',
                     redirect_url: AppStateService.getOauthRedirectUrlForSharing()}})

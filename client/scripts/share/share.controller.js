@@ -28,6 +28,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         FacebookService.checkSharePermission().then(function(hasPermission) {
             if(hasPermission!='1') {
                 window.location = FacebookService.getSharePermissionUrl();
+            } else {
+                alert('Nothing to do!')
             }
         });
     };

@@ -24,6 +24,7 @@ angular.module('GiftStarterApp').service('AppStateService', [
         function remove(key) {delete state[key]}
 
         this.base64State = base64State;
+        this.base64StateForSharing = base64StateForSharing;
         this.getOauthRedirectUrl = getOauthRedirectUrl;
         this.getOauthRedirectUrlForSharing = getOauthRedirectUrlForSharing;
         this.overlayState = overlayState;
@@ -55,11 +56,17 @@ angular.module('GiftStarterApp').service('AppStateService', [
                 + '/?state=' + self.base64State(true);
         }
 
+        function base64StateForSharing() {
+            return base64State(true)
+        }
+
         // Returns encoded app state for persisting across OAuth transitions
         function base64State(isSharingLogin) {
             state.path = window.location.pathname; //self.path;
             state.app_url = $window.location.protocol + '//' + $window.location.host + '/';
             state.is_sharing_login = isSharingLogin?1:0;
+            state.prior_uid = $rootScope.uid;
+            state.prior_token = $rootScope.token;
             console && console.log && console.log('encoding state', state);
             return btoa(JSON.stringify(state));
         }

@@ -57,12 +57,13 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
         };
 
     this.getSharePermissionUrl = function() {
+        AppStateService.set('login_service', 'facebook');
         var url = 'https://www.facebook.com/dialog/oauth' +
             '?client_id=' + window.fbAppId +
             '&response_type=code' +
             '&redirect_uri=' + $window.location.protocol + '//' +
             $window.location.host +
-            '&state=' + AppStateService.base64State() +
+            '&state=' + AppStateService.base64StateForSharing() +
             '&scope=publish_actions'; //user_birthday
         console&console.log&&console.log("FB share URL: "+url)&&console.log("\n\n\n");
         return url;

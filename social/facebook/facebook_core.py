@@ -30,6 +30,11 @@ def get_uid(token_set):
     return fb_user['id']
 
 
+def add_login_tokens(user, token_set):
+    user.facebook_token_set = token_set
+    user.put()
+
+
 def update_user_info(user):
     """attempt to retrieve user info (name) from Facebook; update User"""
     try:
