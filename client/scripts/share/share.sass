@@ -2,7 +2,7 @@
 
 .share
   &.pitchin
-    border: solid $gs-green 2px
+    border: solid $gs-green 3px
     margin: 0 4%
     text-align: center
     #title
@@ -33,8 +33,14 @@
           flex-flow: column
           width: calc(60% - 1.5em)
         &-link
+          max-width: 500px
+          margin: 50px auto
           input
             max-width: 500px
+            width: 90%
+          p
+            margin: 14px auto
+            text-align: left
             width: 90%
       &-buttons
         p
@@ -47,6 +53,7 @@
       text-align: left
       width: 100%
     button
+      margin: 30px
       width: 300px
     h4
       font-weight: normal
