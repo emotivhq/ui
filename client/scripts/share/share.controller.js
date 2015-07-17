@@ -89,12 +89,12 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareGplus = function(link) {
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
-        window.open("https://plus.google.com/share?url="+link)
+        window.open("https://plus.google.com/share?url="+link);
         $scope.sharePermission["google"] = true;
     };
 
     $scope.shareLinkedin = function(message, link, linkName) {
-        if (!message) {message = 'I just created a new gift on GiftStarter!'}
+        if (!message) {message = jQuery('#shareMessage').html();}
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
         window.open("https://www.linkedin.com/shareArticle?mini=true"
@@ -122,13 +122,13 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareClick = function() {
         $scope.shareSuccess = true;
-        alert(jQuery('#shareMessage').innerHTML);
+        var msg = jQuery('#shareMessage').html();
 
         if($scope.selectedSocials["facebook"]) {
-            $scope.shareFacebook();
+            $scope.shareFacebook(msg);
         }
         if($scope.selectedSocials["twitter"]) {
-            $scope.shareTwitter();
+            $scope.shareTwitter(msg);
         }
         //if($scope.selectedSocials["linkedin"]) {
         //    $scope.shareLinkedin();
@@ -141,7 +141,6 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     $scope.selectSocial = function(social) {
         $scope.selectedSocials[social] = true;
         if(!$scope.sharePermission[social]) {
-            console.log(ensurePermission);
             ensurePermission[social]();
         }
     };
