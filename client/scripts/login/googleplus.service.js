@@ -83,7 +83,7 @@ GiftStarterApp.service('GooglePlusService', [
             AppStateService.set('login_service', 'googleplus');
             url = 'https://accounts.google.com/o/oauth2/auth' +
                 '?scope=' + encodeURIComponent(
-                'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.stream.write') +
+                'https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/plus.stream.write') +
                 '&client_id=' +
                 encodeURIComponent($window.googlePlusClientId) +
                 '&redirect_uri=' +
@@ -93,6 +93,24 @@ GiftStarterApp.service('GooglePlusService', [
                 '&state=' + AppStateService.base64StateForSharing() +
                 '&access_type=offline';
             return url;
+        };
+
+        this.doShare = function(message) {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'do-share', service: 'googleplus',
+                    message: message}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
         };
 
         this.logout = function() {

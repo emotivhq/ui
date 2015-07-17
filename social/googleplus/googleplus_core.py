@@ -55,7 +55,7 @@ def _request_with_refresh(url, token_set):
                               token=token_set.to_token())
     return oauth.get(url)
 
-def _put_with_refresh(url, token_set, data):
+def _post_with_refresh(url, token_set, data):
     """access provided googleplus URL with provided token; attempt to refresh token in the process"""
     if token_set.refresh_token:
         oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
@@ -66,7 +66,7 @@ def _put_with_refresh(url, token_set, data):
     else:
         oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
                               token=token_set.to_token())
-    return oauth.put(url, data=data)
+    return oauth.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
 
 
 def get_uid(token_set):
@@ -76,8 +76,8 @@ def get_uid(token_set):
     return response['id']
 
 
-def add_login_tokens(user, token_set):
-    user.googleplus_token_set = token_set
+def add_sharing_tokens(user, token_set):
+    user.googleplus_sharing_token_set = token_set
     user.put()
 
 
@@ -147,11 +147,24 @@ def has_permission_to_publish(user):
     :param user:
     :return: True if we are allowed to publish posts
     """
-    logging.error("TBD: googleplus has_permission_to_publish")
+    try:
+        if user.googleplus_sharing_token_set is not None:
+            expires_in_seconds = int((user.googleplus_sharing_token_set.expires-datetime.now()).total_seconds())
+            if expires_in_seconds<300: #if will expire in 5 minutes or less, treat as invalid
+                return False
+            if user.googleplus_id is None:
+                try:
+                    user.googleplus_id = 'g'+get_uid(user.googleplus_sharing_token_set)
+                    user.put()
+                except:
+                    pass
+            return True
+    except:
+        pass
     return False
 
 
-def publish_to_post(user, message, link=None, link_name=None):
+def publish_to_post(user, message):
     """
     publish a GooglePlus post, as per https://developers.google.com/+/domains/posts/creating
     :param user: user for whom has_permission_to_publish() is known to be true
@@ -163,16 +176,20 @@ def publish_to_post(user, message, link=None, link_name=None):
     try:
         data = {
             "object": {
-                "originalContent": message
+                "originalContent": message,
+                "url": "http://goo.gl/f08WO"
             },
-            "attachments": [
-                { "id": link_name, "url": link }
-            ]
+            "access": {
+                "domainRestricted": True
+            }
         }
-        response = _put_with_refresh("https://www.googleapis.com/plusDomains/v1/people/" + user.uid[1:] + "/activities",
-                                         user.googleplus_token_set, data=data)
-        social_json = json.loads(response.content)
+        # "https://www.googleapis.com/plusDomains/v1/activities/" + get_uid(user.googleplus_sharing_token_set)[1:] + "/comments",
+        response = _post_with_refresh("https://www.googleapis.com/plusDomains/v1/people/" + get_uid(user.googleplus_sharing_token_set) + "/activities",
+                                         user.googleplus_sharing_token_set, data=data)
+        if 'error' in json.loads(response.content):
+            logging.error("Error while sharing via googleplus: {0}".format(response.content))
+            return False
+        return True
     except Exception as x:
         logging.error("Unable to post to googleplus for {0}: {1}".format(user.uid, x))
         return False
-    pass

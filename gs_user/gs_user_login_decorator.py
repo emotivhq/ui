@@ -48,6 +48,16 @@ def handle_login(method_handler):
         try:
             if is_sharing_login:
                 if prior_user:
+                    #resume prior login
+                    # self.request.cookies['uid'] = prior_uid
+                    # self.request.cookies['token'] = prior_token
+                    # callback_uid = ''
+                    # callback_token = ''
+                    # tokens might change, so send them back to the caller for refresh
+                    # if login_service == gs_user_core.get_social_service(prior_uid):
+                    #     callback_uid = prior_uid
+                    #     callback_token = new_token
+                    #     # handlePopupClosed("'+callback_uid+'","'+callback_token+'")
                     closejs = '<script>function closeme(){top.opener.handlePopupClosed();window.close();}</script>'
                     try:
                         if login_service == 'twitter':
@@ -56,13 +66,10 @@ def handle_login(method_handler):
                                 gs_user_core.add_twitter_sharing_tokens(prior_user.uid, query['oauth_token'], query['oauth_verifier'])
                         if login_service == 'facebook':
                             if not facebook.facebook_core.has_permission_to_publish(prior_user):
-                                gs_user_core.add_facebook_login_tokens(prior_user.uid, query['code'], redirect_url)
+                                gs_user_core.add_facebook_sharing_tokens(prior_user.uid, query['code'], redirect_url)
                         if login_service == 'googleplus':
                             if not googleplus.googleplus_core.has_permission_to_publish(prior_user):
-                                gs_user_core.add_googleplus_login_tokens(prior_user.uid, query['code'], redirect_url)
-                        #resume prior login
-                        # self.request.cookies['uid'] = prior_uid
-                        # self.request.cookies['token'] = prior_token
+                                gs_user_core.add_googleplus_sharing_tokens(prior_user.uid, query['code'], redirect_url)
                     except Exception as x:
                         logging.error("Unable to authenticate user for sharing: {0} {1}".format(self.request,state))
                         self.response.write(closejs+'An error has occurred.  Please <a onclick="closeme()" href="#">close</a> this window and try again.')
@@ -70,7 +77,7 @@ def handle_login(method_handler):
                     self.response.write(closejs+'<script>closeme()</script>You are now able to post on {0}.  Please <a onclick="closeme()" href="#">close</a> this window and continue.'.format(login_service))
                     return
                 else:
-                    logging.error("Received a sharing login, but no valid prior_user to attach: {0} {1}".format(self.request,state))
+                    logging.error("Received a sharing login, but no valid prior_user {0} to attach: {1} {2}".format(prior_uid,self.request,state))
             else:
                 if login_service == 'facebook':
                     # Handle FB login

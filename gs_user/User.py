@@ -28,9 +28,11 @@ class User(ndb.Model):
 
     facebook_uid = ndb.StringProperty()
     facebook_token_set = ndb.StructuredProperty(FacebookTokenSet)
+    facebook_sharing_token_set = ndb.StructuredProperty(FacebookTokenSet)
 
     googleplus_id = ndb.StringProperty()
     googleplus_token_set = ndb.StructuredProperty(GooglePlusTokenSet)
+    googleplus_sharing_token_set = ndb.StructuredProperty(GooglePlusTokenSet)
 
     linkedin_id = ndb.StringProperty()
     linkedin_token_set = ndb.StructuredProperty(LinkedinTokenSet)

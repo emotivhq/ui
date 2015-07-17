@@ -309,18 +309,18 @@ def login_facebook_user(code, redirect_url, referrer):
     token_set = facebook.get_extended_key(code, redirect_url)
     return update_or_create('facebook', token_set, referrer)
 
-def add_facebook_login_tokens(uid, code, redirect_url):
+def add_facebook_sharing_tokens(uid, code, redirect_url):
     token_set = facebook.get_extended_key(code, redirect_url)
     user = get_user(uid)
-    return facebook.facebook_core.add_login_tokens(user, token_set)
+    return facebook.facebook_core.add_sharing_tokens(user, token_set)
 
-def add_googleplus_login_tokens(uid, code, redirect_url):
+def add_googleplus_sharing_tokens(uid, code, redirect_url):
     token_set = googleplus.submit_code(code, redirect_url)
     user = get_user(uid)
     #refresh tokens are only granted on authorization, not every login
-    if token_set.refresh_token is None and user.googleplus_token_set is not None:
-        token_set.refresh_token = user.googleplus_token_set.refresh_token
-    return googleplus.googleplus_core.add_login_tokens(user, token_set)
+    if token_set.refresh_token is None and user.googleplus_sharing_token_set is not None:
+        token_set.refresh_token = user.googleplus_sharing_token_set.refresh_token
+    return googleplus.googleplus_core.add_sharing_tokens(user, token_set)
 
 
 def login_twitter_user(oauth_token, oauth_verifier, referrer):
