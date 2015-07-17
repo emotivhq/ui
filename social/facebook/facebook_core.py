@@ -89,7 +89,7 @@ def get_permissions(user, is_sharing=False):
     """https://developers.facebook.com/docs/graph-api/reference/user/permissions"""
     permissions = []
     if is_sharing:
-        if user.facebook_token_set is None or user.facebook_sharing_token_set.access_token is None:
+        if user.facebook_sharing_token_set is None or user.facebook_sharing_token_set.access_token is None:
             return permissions
         req_params = {'access_token': user.facebook_sharing_token_set.access_token}
     else:
