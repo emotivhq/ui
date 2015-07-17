@@ -25,7 +25,7 @@
             <img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-show="!selectedSocials['facebook']" ng-click="selectSocial('facebook')"/>
             <a class="social__link linky" ng-click="selectedSocials['twitter']=false"><img class="social__icons" src="/assets/share/twitter.png" ng-hide="!sharePermission['twitter'] || !selectedSocials['twitter']"></a>
             <img class="social__icons linky" src=/assets/share/twitter-share-unselected.png ng-show="!selectedSocials['twitter']" ng-click="selectSocial('twitter')"/>
-            <a class="social__link linky" ng-click="selectedSocials['linkedin']=false"><img class="social__icons" src="/assets/share/linkedin.png" ng-hide="!sharePermission['linkedin'] || !selectedSocials['linkedin']"></a>
+            <a class="social__link linky" ng-click="selectedSocials['linkedin']=false"><img class="social__icons" src="/assets/share/linkedin.png" ng-hide="!selectedSocials['linkedin']"></a>
             <img class="social__icons linky" src=/assets/share/linkedin-share-unselected.png ng-show="!selectedSocials['linkedin']" ng-click="selectSocial('linkedin')"/>
             <a class="social__link linky" ng-click="selectedSocials['google']=false"><img class="social__icons" src="/assets/share/google.png" ng-hide="!sharePermission['google'] || !selectedSocials['google']"></a>
             <img class="social__icons linky" src=/assets/share/google-share-unselected.png ng-show="!selectedSocials['google']" ng-click="selectSocial('google')"/>
