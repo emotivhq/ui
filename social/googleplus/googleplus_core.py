@@ -176,8 +176,7 @@ def publish_to_post(user, message):
     try:
         data = {
             "object": {
-                "originalContent": message,
-                "url": "http://goo.gl/f08WO"
+                "originalContent": message
             },
             "access": {
                 "domainRestricted": True
