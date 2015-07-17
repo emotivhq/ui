@@ -15,7 +15,10 @@
     .message
       flex-flow: column
     textarea
+      border-width: 1px
       flex: 1 1 auto
+      font-size: 13px
+      line-height: 20px
       width: 100%
     .share
       &-where
@@ -32,10 +35,13 @@
           display: flex !important
           flex-flow: column
           width: calc(60% - 1.5em)
+          p
+            margin-top: 0
         &-link
           max-width: 500px
           margin: 50px auto
           input
+            border-width: 1px
             max-width: 500px
             width: 90%
           p
@@ -49,7 +55,7 @@
     div.block
       display: flex
       flex: 0 1 auto
-      max-width: calc(590px - 4%)
+      max-width: none //calc(590px - 4%)
       text-align: left
       width: 100%
     button
@@ -60,3 +66,5 @@
       font-weight: normal
     a
       text-decoration: underline
+    p
+      font-size: 13px
