@@ -5,7 +5,7 @@
 
     <div class="block">
     <h4>YOUR MESSAGE</h4>
-    <textarea>Hey! I just pitched in on a {{giftStart.product_title}} for {{recipientname}} on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!
+    <textarea id="shareMessage">Hey! I just pitched in on a {{giftStart.product_title}} for {{recipientname}} on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!
 {{campaignUrl()}}
 
 {{giftStart.gc_name}}</textarea>
@@ -40,7 +40,7 @@
     <div class="share-buttons">
         <p ng-show="shareSuccess">YOUR SHARE SUCCESSFULLY POSTED!</p>
         <button class="red" ng-hide="shareSuccess" ng-click="shareClick()">SHARE</button>
-        <button ng-show="shareSuccess" ng-click="shareSuccess=false">SHARE AGAIN</button>
+        <button ng-show="shareSuccess" ng-click="shareReset()">SHARE AGAIN</button>
         <button ng-show="shareSuccess">FINISH</button>
     </div>
 
