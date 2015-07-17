@@ -1,9 +1,21 @@
+@import "../base"
+
 .share
   &.pitchin
+    border: solid $gs-green 2px
     margin: 0 4%
     text-align: center
+    #title
+      background-color: $gs-green
+      padding: 20px
+      h1
+        color: white !important
+    #content
+      display: flex
+    .message
+      flex-flow: column
     textarea
-      height: 200px
+      flex: 1 1 auto
       width: 100%
     .share
       &-where
@@ -17,6 +29,8 @@
           .social__icons
             width: 100%
         &-email
+          display: flex !important
+          flex-flow: column
           width: calc(60% - 1.5em)
         &-link
           input
@@ -27,12 +41,13 @@
           background-color: #eee
           padding: 10px
     div.block
-      display: inline-block
-      max-width: calc(598px - 4%)
+      display: flex
+      flex: 0 1 auto
+      max-width: calc(590px - 4%)
       text-align: left
       width: 100%
     button
-      width: 200px
+      width: 300px
     h4
       font-weight: normal
     a
