@@ -67,9 +67,9 @@ def handle_login(method_handler):
                         if login_service == 'facebook':
                             if not facebook.facebook_core.has_permission_to_publish(prior_user):
                                 gs_user_core.add_facebook_sharing_tokens(prior_user.uid, query['code'], redirect_url)
-                        if login_service == 'googleplus':
-                            if not googleplus.googleplus_core.has_permission_to_publish(prior_user):
-                                gs_user_core.add_googleplus_sharing_tokens(prior_user.uid, query['code'], redirect_url)
+                        # if login_service == 'googleplus':
+                        #     if not googleplus.googleplus_core.has_permission_to_publish(prior_user):
+                        #         gs_user_core.add_googleplus_sharing_tokens(prior_user.uid, query['code'], redirect_url)
                     except Exception as x:
                         logging.error("Unable to authenticate user for sharing: {0} {1}".format(self.request,state))
                         self.response.write(closejs+'An error has occurred.  Please <a onclick="closeme()" href="#">close</a> this window and try again.')
