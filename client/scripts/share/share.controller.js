@@ -78,6 +78,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
+        Analytics.track('facebook', 'linkedin share submitted');
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
@@ -88,6 +89,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareTwitter = function(message) {
+        Analytics.track('campaign', 'twitter share submitted');
         message += " "+$location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message)) {
             TwitterService.doShare(message).then(function (success) {
@@ -97,12 +99,14 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareGplus = function(link) {
+        Analytics.track('campaign', 'gplus share submitted');
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         window.open("https://plus.google.com/share?url="+link);
         $scope.sharePermission["google"] = true;
     };
 
     $scope.shareLinkedin = function(message, link, linkName) {
+        Analytics.track('campaign', 'linkedin share submitted');
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
@@ -112,20 +116,35 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         }
     };
 
-    $scope.shareEmail = function(message, subject, recipients) {
-            $http.put('/email/sharecampaign.json',{
-                "message": message,
-                "subject": subject,
-                "recipients": recipients
-            })
-            .success(function (res) {
-                    alert('email sent')
-            })
-            .error(function (res) {
-                alert(res['error']);
-            });
+    $scope.shareEmail = function(to, from, message, share_url) {
+        Analytics.track('campaign', 'email share submitted');
+        $scope.sending = true;
+        $http({
+            method: 'PUT',
+            url: '/giftstart/share',
+            data: {
+                to: to,
+                from: from,
+                message: message,
+                share_url: share_url,
+                gsid: GiftStartService.giftStart.gsid,
+                sender_name: UserService.name,
+                sender_uid: UserService.uid
+            }
+        })
+        .success(function() {
+            Analytics.track('campaign', 'email share succeeded');
+            $scope.sending = false;
+            $scope.toEmails = '';
+            $scope.fromEmail = '';
+            $scope.message = '';
+            $scope.hidePopover();
+        })
+        .error(function() {
+            $scope.sending = false;
+            Analytics.track('campaign', 'email share failed');
+        });
     };
-
 
     $scope.shareSuccess = false;
 
