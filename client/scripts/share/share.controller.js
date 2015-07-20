@@ -116,33 +116,26 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         }
     };
 
-    $scope.shareEmail = function(to, from, message, share_url) {
+    $scope.shareEmail = function(to, message, share_url, gsid) {
         Analytics.track('campaign', 'email share submitted');
         $scope.sending = true;
         $http({
             method: 'PUT',
-            url: '/giftstart/share',
+            url: '/email/sharecampaign.json',
             data: {
                 to: to,
-                from: from,
                 message: message,
                 share_url: share_url,
-                gsid: GiftStartService.giftStart.gsid,
-                sender_name: UserService.name,
-                sender_uid: UserService.uid
+                gsid: gsid
             }
         })
         .success(function() {
             Analytics.track('campaign', 'email share succeeded');
-            $scope.sending = false;
-            $scope.toEmails = '';
-            $scope.fromEmail = '';
-            $scope.message = '';
-            $scope.hidePopover();
+            alert('True');
         })
         .error(function() {
-            $scope.sending = false;
-            Analytics.track('campaign', 'email share failed');
+            alert('False');
+
         });
     };
 

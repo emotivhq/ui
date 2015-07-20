@@ -87,6 +87,33 @@ class FromQueueHandler(webapp2.RequestHandler):
         else:
             gs_email_comm.send(**{k: v for k, v in params.items() if k in SEND_PARAMS})
 
+class ShareCampaignHandler(webapp2.RedirectHandler):
+    def put(self):
+        params = json.loads(self.request.body)
+        from_email = params["from_email"]
+        try:
+            if from_email == None or not validEmailRegex.match(from_email):
+                raise Exception("A valid email address is required.")
+            msg = ""
+            for name in params:
+                if name != "from_email":
+                    msg += "{0}: {1} \n".format(name, params[name])
+
+            requests.put(config['email_url'],
+                 data=json.dumps({
+                     'subject': "Contact Us Message",
+                     'sender': "giftconcierge@giftstarter.com",
+                     'mime_type': 'html',
+                     'to': "giftconcierge@giftstarter.com",
+                     'template_name': "contact_us",
+                     'template_kwargs': { "from_email" : from_email,
+                                          "msg" : msg }
+                 }))
+            self.response.write(json.dumps({"ok": "Success!"}))
+        except Exception as e:
+            self.response.set_status(403)
+            self.response.write(json.dumps({"error": e.message}))
+
 class ContactUsHandler(webapp2.RedirectHandler):
     """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""
     def put(self):
@@ -120,5 +147,6 @@ handler = webapp2.WSGIApplication([
     ('/email/send.json', SendHandler),
     ('/email/sendfromqueue', FromQueueHandler),
     ('/email/preview/.*', EmailPreviewHandler),
-    ('/email/contactus.json', ContactUsHandler)
+    ('/email/contactus.json', ContactUsHandler),
+    ('/email/sharecampaign.json', ShareCampaignHandler)
 ], debug=True)
