@@ -62,7 +62,6 @@ def handle_login(method_handler):
                     try:
                         if login_service == 'twitter':
                             if not twitter.twitter_core.has_permission_to_publish(prior_user):
-                                # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
                                 gs_user_core.add_twitter_sharing_tokens(prior_user.uid, query['oauth_token'], query['oauth_verifier'])
                         if login_service == 'facebook':
                             if not facebook.facebook_core.has_permission_to_publish(prior_user):

@@ -154,7 +154,7 @@ def update_user_info(user):
 #                 return False
 #             if user.googleplus_id is None:
 #                 try:
-#                     user.googleplus_id = 'g'+get_uid(user.googleplus_sharing_token_set)
+#                     user.googleplus_id = get_uid(user.googleplus_sharing_token_set)
 #                     user.put()
 #                 except:
 #                     pass

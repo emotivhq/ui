@@ -347,6 +347,7 @@ def add_twitter_sharing_tokens(uid, oauth_token, oauth_verifier):
     @param oauth_verifier: from the OAuth web-flow
     @rtype: User
     """
+    # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
     sharing_token_set = twitter.submit_verifier(oauth_token, oauth_verifier, True)
     user = get_user(uid)
     return twitter.twitter_core.add_sharing_tokens(user, sharing_token_set)

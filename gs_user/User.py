@@ -36,6 +36,7 @@ class User(ndb.Model):
 
     linkedin_id = ndb.StringProperty()
     linkedin_token_set = ndb.StructuredProperty(LinkedinTokenSet)
+    linkedin_sharing_token_set = ndb.StructuredProperty(LinkedinTokenSet)
 
     link_facebook = ndb.StringProperty()
     link_twitter = ndb.StringProperty()

@@ -115,7 +115,7 @@ def has_permission_to_publish(user):
         try:
             twitter_id = get_uid(user.twitter_sharing_token_set, True)
             if(user.twitter_uid is None):
-                user.twitter_uid = 't'+twitter_id
+                user.twitter_uid = twitter_id
                 user.put()
             return True
         except Exception as x:

@@ -77,7 +77,7 @@ def has_permission_to_publish(user):
         if 'publish_actions' in get_permissions(user, True):
             if user.facebook_uid is None:
                 try:
-                    user.facebook_uid = 'f'+get_uid(user.facebook_sharing_token_set)
+                    user.facebook_uid = get_uid(user.facebook_sharing_token_set)
                     user.put()
                 except:
                     pass
