@@ -110,15 +110,20 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
                 alert(success);
             });
         }
-        //if (!message) {message = jQuery('#shareMessage').html();}
-        //if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
-        //if (!linkName) {linkName = $scope.giftStart.product_title;}
-        //window.open("https://www.linkedin.com/shareArticle?mini=true"
-        //    +"&url="+link
-        //    +"&title="+linkName
-        //    +"&summary="+message
-        //);
-        //$scope.sharePermission["linkedin"] = true;
+    };
+
+    $scope.shareEmail = function(message, subject, recipients) {
+            $http.put('/email/sharecampaign.json',{
+                "message": message,
+                "subject": subject,
+                "recipients": recipients
+            })
+            .success(function (res) {
+                    alert('email sent')
+            })
+            .error(function (res) {
+                alert(res['error']);
+            });
     };
 
 
