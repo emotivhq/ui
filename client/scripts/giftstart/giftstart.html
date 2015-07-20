@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <a href="#share-panel"><button class="pitch-in button green" ng-click="showShare=true" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN WITH FRIENDS</span></button></a>
+            <a href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN WITH FRIENDS</span></button></a>
             <!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
@@ -112,7 +112,7 @@
     </div>
 
     <div id="share-panel">
-        <a id="closebtn" href="" ng-show="showShare" ng-click="showShare=false">CLOSE</a>
+        <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">CLOSE</a>
         <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
     </div>
 
