@@ -95,11 +95,33 @@ def update_user_info(user):
     return user
 
 def has_permission_to_publish(user):
-    return True
+    """
+    do we have permission to publish a comment for this user?
+    :param user:
+    :return: True if we are allowed to publish
+    """
+    if user.linkedin_sharing_token_set is not None:
+        try:
+            if(user.linkedin_uid is None):
+                social_json = json.loads(_request(PROFILE_QRY_URL,user.linkedin_token_set).content)
+                user.linkedin_id = social_json['id']
+                user.put()
+        except Exception as x:
+            pass
+        expires_in_seconds = int((user.linkedin_sharing_token_set.expires-datetime.now()).total_seconds())
+        logging.error(user.linkedin_sharing_token_set.expires)
+        logging.error(expires_in_seconds)
+        if expires_in_seconds<300: #if will expire in 5 minutes or less, treat as invalid
+            return False
+        return True
+    return False
+
 
 def add_sharing_tokens(user, token_set):
-    user.linkedin_token_set = token_set
+    user.linkedin_sharing_token_set = token_set
     user.put()
+    return user
+
 
 def publish_comment(user, message, link=None, link_title=None):
     """
@@ -125,7 +147,7 @@ def publish_comment(user, message, link=None, link_title=None):
                 "visibility": {"code": "anyone"}
             }
         response = requests.post(
-            SHARE_URL+'&oauth2_access_token='+user.linkedin_token_set.access_token,
+            SHARE_URL+'&oauth2_access_token='+user.linkedin_sharing_token_set.access_token,
             data=json.dumps(data),
             headers={'content-type': 'application/json'}
         ).content

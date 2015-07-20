@@ -80,6 +80,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
+        Analytics.track('facebook', 'linkedin share submitted');
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
@@ -90,6 +91,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareTwitter = function(message) {
+        Analytics.track('campaign', 'twitter share submitted');
         message += " "+$location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message)) {
             TwitterService.doShare(message).then(function (success) {
@@ -99,12 +101,14 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareGplus = function(link) {
+        Analytics.track('campaign', 'gplus share submitted');
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         window.open("https://plus.google.com/share?url="+link);
         $scope.sharePermission["google"] = true;
     };
 
     $scope.shareLinkedin = function(message, link, linkName) {
+        Analytics.track('campaign', 'linkedin share submitted');
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
         if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
@@ -112,17 +116,30 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
                 alert(success);
             });
         }
-        //if (!message) {message = jQuery('#shareMessage').html();}
-        //if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
-        //if (!linkName) {linkName = $scope.giftStart.product_title;}
-        //window.open("https://www.linkedin.com/shareArticle?mini=true"
-        //    +"&url="+link
-        //    +"&title="+linkName
-        //    +"&summary="+message
-        //);
-        //$scope.sharePermission["linkedin"] = true;
     };
 
+    $scope.shareEmail = function(to, message, share_url, gsid) {
+        Analytics.track('campaign', 'email share submitted');
+        $scope.sending = true;
+        $http({
+            method: 'PUT',
+            url: '/email/sharecampaign.json',
+            data: {
+                to: to,
+                message: message,
+                share_url: share_url,
+                gsid: gsid
+            }
+        })
+        .success(function() {
+            Analytics.track('campaign', 'email share succeeded');
+            alert('True');
+        })
+        .error(function() {
+            alert('False');
+
+        });
+    };
 
     $scope.shareSuccess = false;
 

@@ -67,8 +67,8 @@ class FacebookShareHandler(webapp2.RequestHandler):
         fb_id = user.facebook_uid
         try:
             if(fb_id is None):
-                fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens)
-                user.fb_id = fb_id
+                fb_id = facebook.facebook_core.get_uid(fb_tokens)
+                user.facebook_uid = fb_id
                 user.put()
         except Exception as e:
             logging.error("facebook_share: Unable to set current user's FB ID: "+str(e))
