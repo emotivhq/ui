@@ -19,8 +19,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     $scope.sharePermission = [];
     $scope.sharePermission["facebook"] = false;
     $scope.sharePermission["twitter"] = false;
-    $scope.sharePermission["linkedin"] = true;
-    $scope.sharePermission["google"] = true;
+    $scope.sharePermission["linkedin"] = false;
+    $scope.sharePermission["google"] = false;
     var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
     var sharePermissionUrlTwitter = null;
 
@@ -60,50 +60,12 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         window.open(sharePermissionUrlTwitter);
     };
 
-    $scope.shareSuccess = false;
-
-    $scope.selectedSocials = [];
-    $scope.selectedSocials["facebook"] = false;
-    $scope.selectedSocials["twitter"] = false;
-    $scope.selectedSocials["linkedin"] = false;
-    $scope.selectedSocials["google"] = false;
-
-    var ensurePermission = [];
-    ensurePermission["facebook"] = $scope.ensureFacebookSharePermission;
-    ensurePermission["twitter"] = $scope.ensureTwitterSharePermission;
-    ensurePermission["linkedin"] = $scope.shareLinkedin;
-    ensurePermission["google"] = $scope.shareGplus;
-
-    $scope.shareClick = function() {
-        $scope.shareSuccess = true;
-
-        if($scope.selectedSocials["facebook"]) {
-            $scope.shareFacebook();
-        }
-        if($scope.selectedSocials["twitter"]) {
-            $scope.shareTwitter();
-        }
-        //if($scope.selectedSocials["linkedin"]) {
-        //    $scope.shareLinkedin();
-        //}
-        //if($scope.selectedSocials["google"]) {
-        //    $scope.shareGoogle();
-        //}
-    };
-
-    $scope.selectSocial = function(social) {
-        if(!$scope.sharePermission[social]) {
-            ensurePermission[social]();
-        }
-        $scope.selectedSocials[social] = true;
-    };
-
-    $scope.campaignUrl = function() {
-        if($location.path().length > 11) {
-            return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
-        } else {
-            return "";
-        }
+    $scope.shareReset = function() {
+        $scope.selectedSocials["facebook"] = false;
+        $scope.selectedSocials["twitter"] = false;
+        $scope.selectedSocials["linkedin"] = false;
+        $scope.selectedSocials["google"] = false;
+        $scope.shareSuccess = false;
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
@@ -127,18 +89,67 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareGplus = function(link) {
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
-        window.open("https://plus.google.com/share?url="+link)
+        window.open("https://plus.google.com/share?url="+link);
+        $scope.sharePermission["google"] = true;
     };
 
     $scope.shareLinkedin = function(message, link, linkName) {
-        if (!message) {message = 'I just created a new gift on GiftStarter!'}
+        if (!message) {message = jQuery('#shareMessage').html();}
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
         window.open("https://www.linkedin.com/shareArticle?mini=true"
             +"&url="+link
             +"&title="+linkName
             +"&summary="+message
-        )
-    }
+        );
+        $scope.sharePermission["linkedin"] = true;
+    };
 
+
+    $scope.shareSuccess = false;
+
+    $scope.selectedSocials = [];
+    $scope.selectedSocials["facebook"] = false;
+    $scope.selectedSocials["twitter"] = false;
+    $scope.selectedSocials["linkedin"] = false;
+    $scope.selectedSocials["google"] = false;
+
+    var ensurePermission = [];
+    ensurePermission["facebook"] = $scope.ensureFacebookSharePermission;
+    ensurePermission["twitter"] = $scope.ensureTwitterSharePermission;
+    ensurePermission["linkedin"] = $scope.shareLinkedin;
+    ensurePermission["google"] = $scope.shareGplus;
+
+    $scope.shareClick = function() {
+        $scope.shareSuccess = true;
+        var msg = jQuery('#shareMessage').html();
+
+        if($scope.selectedSocials["facebook"]) {
+            $scope.shareFacebook(msg);
+        }
+        if($scope.selectedSocials["twitter"]) {
+            $scope.shareTwitter(msg);
+        }
+        //if($scope.selectedSocials["linkedin"]) {
+        //    $scope.shareLinkedin();
+        //}
+        //if($scope.selectedSocials["google"]) {
+        //    $scope.shareGoogle();
+        //}
+    };
+
+    $scope.selectSocial = function(social) {
+        $scope.selectedSocials[social] = true;
+        if(!$scope.sharePermission[social]) {
+            ensurePermission[social]();
+        }
+    };
+
+    $scope.campaignUrl = function() {
+        if($location.path().length > 11) {
+            return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
+        } else {
+            return "";
+        }
+    };
 }
