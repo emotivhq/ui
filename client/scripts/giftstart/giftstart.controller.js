@@ -51,9 +51,15 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showPayBox = false;
     $scope.showSignBox = false;
 
+    $scope.showShare = false;
+
     function imageUpdated(data) {
         imageData = data;
     }
+
+    $scope.showSharePanel = function(show) {
+        $scope.showShare = show;
+    };
 
     $scope.editingComment = function(comment, editing) {
         if (editing) {                      //edit mode on

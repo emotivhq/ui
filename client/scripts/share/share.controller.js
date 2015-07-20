@@ -16,6 +16,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.giftStart = GiftStartService.giftStart;
 
+    $scope.message = "Hey! I just pitched in on a " + $scope.giftStart.product_title + " on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!\n\n" + $scope.campaignUrl() + "\n\n" + $scope.giftStart.gc_name;
+
     $scope.sharePermission = [];
     $scope.sharePermission["facebook"] = false;
     $scope.sharePermission["twitter"] = false;
@@ -138,16 +140,15 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareClick = function() {
         $scope.shareSuccess = true;
-        var msg = jQuery('#shareMessage').html();
 
         if($scope.selectedSocials["facebook"]) {
-            $scope.shareFacebook(msg);
+            $scope.shareFacebook($scope.message);
         }
         if($scope.selectedSocials["twitter"]) {
-            $scope.shareTwitter(msg);
+            $scope.shareTwitter($scope.message);
         }
         if($scope.selectedSocials["linkedin"]) {
-            $scope.shareLinkedin(msg);
+            $scope.shareLinkedin($scope.message);
         }
         //if($scope.selectedSocials["google"]) {
         //    $scope.shareGoogle();

@@ -8,10 +8,7 @@
     <div id="content">
         <div class="block message">
         <h4>YOUR MESSAGE</h4>
-        <textarea id="shareMessage">Hey! I just pitched in on a {{giftStart.product_title}} for {{recipientname}} on GiftStarter, a website where you can buy anything online and split the cost with friends! Follow the link below to pitch in too and be a part of this great gift!
-{{campaignUrl()}}
-
-{{giftStart.gc_name}}</textarea>
+        <textarea id="shareMessage" ng-model="message"></textarea>
             <!--h3>DEV TOOLS:
                 <a class="linky" ng-click="ensureFacebookSharePermission()" ng-hide="sharePermission['facebook']">[ensure FB]</a><a class="linky" ng-click="shareFacebook('I just created a new gift on GiftStarter!')" ng-show="sharePermission['facebook']">[share FB]</a>
                 <a class="linky" ng-click="ensureTwitterSharePermission()" ng-hide="sharePermission['twitter']">[ensure TW]</a><a class="linky" ng-click="shareTwitter('I just created a new gift on GiftStarter!')" ng-show="sharePermission['twitter']">[share TW]</a>
@@ -46,9 +43,9 @@
 
     <div class="share-buttons">
         <p ng-show="shareSuccess">YOUR SHARE SUCCESSFULLY POSTED!</p>
-        <button class="red" ng-hide="shareSuccess" ng-click="shareClick()">SHARE</button>
+        <button class="red" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']" ng-click="shareClick()">SHARE</button>
         <button ng-show="shareSuccess" ng-click="shareReset()">SHARE AGAIN</button>
-        <button ng-show="shareSuccess">FINISH</button>
+        <button ng-show="shareSuccess" ng-click="$parent.showSharePanel(false); shareReset()">FINISH</button>
     </div>
 
     <div class="share-where-link">
