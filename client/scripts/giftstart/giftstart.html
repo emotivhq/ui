@@ -80,8 +80,8 @@
                 </div>
             </div>
 
-            <button class="pitch-in button green" ng-click="showShare=true" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN WITH FRIENDS</span></button>
-            <div class="invite block">
+            <a href="#share-panel"><button class="pitch-in button green" ng-click="showShare=true" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN WITH FRIENDS</span></button></a>
+            <!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
                 <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
@@ -89,7 +89,7 @@
                 <img class="share" src="/assets/googleicon.png" ng-click="googlePlusShare();" /><br/>
                 Or share this link:
                 <input id="share-url" type="text" value="{{campaignUrl()}}" gs-copy-url readonly/>
-            </div>
+            </div-->
         </div>
     </div>
 
