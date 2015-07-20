@@ -62,22 +62,22 @@ GiftStarterApp.service('GooglePlusService', [
             self.loginRequested = true;
         };
 
-        this.checkSharePermission = function() {
-                var deferred = $q.defer();
-                var doDeferred = function() {
-                    $http({method: 'POST', url: '/users', data: {
-                        action: 'has-share-auth', service: 'googleplus'}})
-                        .success(function(data) {
-                            deferred.resolve(data);
-                        })
-                        .error(function(data) {
-                            console && console.log && console.log(data);
-                            deferred.reject(data);
-                        });
-                    return deferred.promise
-                };
-                return doDeferred();
-            };
+        //this.checkSharePermission = function() {
+        //        var deferred = $q.defer();
+        //        var doDeferred = function() {
+        //            $http({method: 'POST', url: '/users', data: {
+        //                action: 'has-share-auth', service: 'googleplus'}})
+        //                .success(function(data) {
+        //                    deferred.resolve(data);
+        //                })
+        //                .error(function(data) {
+        //                    console && console.log && console.log(data);
+        //                    deferred.reject(data);
+        //                });
+        //            return deferred.promise
+        //        };
+        //        return doDeferred();
+        //    };
 
         //this.getSharePermissionUrl = function() {
         //    AppStateService.set('login_service', 'googleplus');

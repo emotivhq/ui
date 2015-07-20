@@ -132,8 +132,6 @@ def publish_to_status(user, message):
     """
     # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
     try:
-
-
         auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING, resource_owner_key=user.twitter_sharing_token_set.access_token,
                       resource_owner_secret=user.twitter_sharing_token_set.access_secret)
         data = {'status': message}
