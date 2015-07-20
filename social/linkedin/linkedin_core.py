@@ -7,6 +7,8 @@ from google.appengine.ext import ndb
 from requests_oauthlib import OAuth2Session
 import yaml
 import logging
+import requests
+import uuid
 
 secret = yaml.load(open('secret.yaml'))
 
@@ -14,6 +16,9 @@ CLIENT_ID = secret['linkedin_auth']['client_id']
 CLIENT_SECRET = secret['linkedin_auth']['client_secret']
 
 PROFILE_QRY_URL = 'https://api.linkedin.com/v1/people/~:(id,first-name,last-name,formatted-name,location,picture-url,picture-urls::(original),public-profile-url,email-address)?format=json'
+
+SHARE_URL = "https://api.linkedin.com/v1/people/~/shares?format=json"
+
 
 class LinkedinTokenSet(ndb.Model):
     """linkedIn token set: (access_token, expires)"""
@@ -31,12 +36,10 @@ class LinkedinTokenSet(ndb.Model):
             'expires_in': str(int((self.expires - datetime.now()).total_seconds()))
         }
 
-
 def _request(url, token_set):
     """access provided googleplus URL with provided token; attempt to refresh token in the process"""
     oauth = OAuth2Session(CLIENT_ID,token=token_set.to_token())
     return oauth.get(url)
-
 
 def get_uid(token_set):
     """get linkedin ID for user"""
@@ -90,3 +93,45 @@ def update_user_info(user):
         logging.error("Failed to get google user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+def has_permission_to_publish(user):
+    return True
+
+def add_sharing_tokens(user, token_set):
+    user.linkedin_token_set = token_set
+    user.put()
+
+def publish_comment(user, message, link=None, link_title=None):
+    """
+    publish a message via LinkedIn feed, as per https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed
+    :param user: user for whom has_permission_to_publish() is known to be true
+    :param message: message body
+    :return: True if publish succeeded, False if it failed
+    """
+    try:
+        if link is None:
+            data = {
+                "comment": message,
+                "visibility": {"code": "anyone"}
+            }
+        else:
+            #linkedin prevents repeated sharing of same link even if prior was deleted!
+            link += '&' if '?' in link else '?'
+            link += 'rand='+str(uuid.uuid4())
+            content = {"title": link_title} if link_title is None else {"title": link_title, "submitted-url": link}
+            data = {
+                "comment": message,
+                "content": content,
+                "visibility": {"code": "anyone"}
+            }
+        response = requests.post(
+            SHARE_URL+'&oauth2_access_token='+user.linkedin_token_set.access_token,
+            data=json.dumps(data),
+            headers={'content-type': 'application/json'}
+        ).content
+        if "errors" in response:
+            return False
+        return "updateKey" in response
+    except Exception as x:
+        logging.error("Unable to post to linkedin for {0}: {1}".format(user.uid, x))
+        return False

@@ -314,6 +314,11 @@ def add_facebook_sharing_tokens(uid, code, redirect_url):
     user = get_user(uid)
     return facebook.facebook_core.add_sharing_tokens(user, token_set)
 
+def add_linkedin_sharing_tokens(uid, code, redirect_url):
+    token_set = linkedin.submit_code(code, redirect_url)
+    user = get_user(uid)
+    return linkedin.linkedin_core.add_sharing_tokens(user, token_set)
+
 # def add_googleplus_sharing_tokens(uid, code, redirect_url):
 #     token_set = googleplus.submit_code(code, redirect_url)
 #     user = get_user(uid)

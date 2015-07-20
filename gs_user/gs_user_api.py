@@ -2,7 +2,7 @@
 __author__ = 'GiftStarter'
 
 import webapp2
-from social import twitter, googleplus, facebook
+from social import twitter, googleplus, facebook, linkedin
 import json
 from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
@@ -405,6 +405,8 @@ class UserHandler(webapp2.RequestHandler):
                 self.response.write("1" if user and twitter.twitter_core.has_permission_to_publish(user) else 0)
             # if data['service'] == 'googleplus':
             #     self.response.write("1" if user and googleplus.googleplus_core.has_permission_to_publish(user) else 0)
+            if data['service'] == 'linkedin':
+                self.response.write("1" if user and linkedin.linkedin_core.has_permission_to_publish(user) else 0)
 
         elif data['action'] == 'do-share':
             if is_validated:
@@ -418,6 +420,8 @@ class UserHandler(webapp2.RequestHandler):
                     self.response.write(twitter.twitter_core.publish_to_status(user, message))
                 # if data['service'] == 'googleplus':
                 #     self.response.write(googleplus.googleplus_core.publish_to_post(user, message))
+                if data['service'] == 'linkedin':
+                    self.response.write(linkedin.linkedin_core.publish_comment(user, message, link, link_name))
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':

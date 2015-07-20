@@ -6,12 +6,12 @@
 
 GiftStarterApp.controller('ShareController', [
             '$scope','$rootScope','GiftStartService','$location','$interval', '$timeout',
-            'FacebookService','TwitterService','GooglePlusService','Analytics',
+            'FacebookService','TwitterService','GooglePlusService','LinkedInService','Analytics',
             'ProductService', 'UserService', 'AppStateService', '$window', '$document', '$http', 'PopoverService','LocalStorage',
     ShareController]);
 
 function ShareController($scope, $rootScope, GiftStartService,  $location,  $interval, $timeout,
-         FacebookService,  TwitterService,  GooglePlusService,  Analytics,
+         FacebookService,  TwitterService,  GooglePlusService, LinkedInService, Analytics,
          ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
 
     $scope.giftStart = GiftStartService.giftStart;
@@ -23,6 +23,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     $scope.sharePermission["google"] = false;
     var sharePermissionUrlFacebook = FacebookService.getSharePermissionUrl();
     var sharePermissionUrlTwitter = null;
+    var sharePermissionUrlLinkedIn = LinkedInService.getSharePermissionUrl();
 
 
     $scope.refreshPermissionsStatus = function() {
@@ -34,6 +35,10 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         TwitterService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["twitter"] = hasPermission=='1';
             if($scope.selectedSocials["twitter"]) {$scope.selectedSocials["twitter"] = $scope.sharePermission["twitter"];}
+        });
+        LinkedInService.checkSharePermission().then(function(hasPermission) {
+            $scope.sharePermission["linkedin"] = hasPermission=='1';
+            if($scope.selectedSocials["linkedin"]) {$scope.selectedSocials["linkedin"] = $scope.sharePermission["linkedin"];}
         });
         //GooglePlusService.checkSharePermission().then(function(hasPermission) {
         //    $scope.sharePermission["google"] = hasPermission=='1';
@@ -58,6 +63,10 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.ensureTwitterSharePermission = function() {
         window.open(sharePermissionUrlTwitter);
+    };
+
+    $scope.ensureLinkedInSharePermission = function() {
+        window.open(sharePermissionUrlLinkedIn);
     };
 
     $scope.shareReset = function() {
@@ -94,15 +103,22 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareLinkedin = function(message, link, linkName) {
-        if (!message) {message = jQuery('#shareMessage').html();}
         if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         if (!linkName) {linkName = $scope.giftStart.product_title;}
-        window.open("https://www.linkedin.com/shareArticle?mini=true"
-            +"&url="+link
-            +"&title="+linkName
-            +"&summary="+message
-        );
-        $scope.sharePermission["linkedin"] = true;
+        if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
+            LinkedInService.doShare(message, link, linkName).then(function (success) {
+                alert(success);
+            });
+        }
+        //if (!message) {message = jQuery('#shareMessage').html();}
+        //if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        //if (!linkName) {linkName = $scope.giftStart.product_title;}
+        //window.open("https://www.linkedin.com/shareArticle?mini=true"
+        //    +"&url="+link
+        //    +"&title="+linkName
+        //    +"&summary="+message
+        //);
+        //$scope.sharePermission["linkedin"] = true;
     };
 
 
@@ -117,7 +133,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     var ensurePermission = [];
     ensurePermission["facebook"] = $scope.ensureFacebookSharePermission;
     ensurePermission["twitter"] = $scope.ensureTwitterSharePermission;
-    ensurePermission["linkedin"] = $scope.shareLinkedin;
+    ensurePermission["linkedin"] = $scope.ensureLinkedInSharePermission;
     ensurePermission["google"] = $scope.shareGplus;
 
     $scope.shareClick = function() {
@@ -130,9 +146,9 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         if($scope.selectedSocials["twitter"]) {
             $scope.shareTwitter(msg);
         }
-        //if($scope.selectedSocials["linkedin"]) {
-        //    $scope.shareLinkedin();
-        //}
+        if($scope.selectedSocials["linkedin"]) {
+            $scope.shareLinkedin(msg);
+        }
         //if($scope.selectedSocials["google"]) {
         //    $scope.shareGoogle();
         //}
