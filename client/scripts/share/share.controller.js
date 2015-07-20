@@ -27,6 +27,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     var sharePermissionUrlTwitter = null;
     var sharePermissionUrlLinkedIn = LinkedInService.getSharePermissionUrl();
 
+    $scope.emailRecipients = "";
+
 
     $scope.refreshPermissionsStatus = function() {
         //check to see if user has permission to post
@@ -118,7 +120,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         }
     };
 
-    $scope.shareEmail = function(to, message, share_url, gsid) {
+    $scope.shareEmail = function(to, message, link) {
+        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
         Analytics.track('campaign', 'email share submitted');
         $scope.sending = true;
         $http({
@@ -127,12 +130,11 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             data: {
                 to: to,
                 message: message,
-                share_url: share_url,
-                gsid: gsid
+                share_url: link,
+                gsid: $scope.giftStart.gsid
             }
         })
         .success(function() {
-            Analytics.track('campaign', 'email share succeeded');
             alert('True');
         })
         .error(function() {
@@ -170,6 +172,9 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         //if($scope.selectedSocials["google"]) {
         //    $scope.shareGoogle();
         //}
+        if($scope.emailRecipients.trim().length>0) {
+            $scope.shareEmail($scope.emailRecipients, msg)
+        }
     };
 
     $scope.selectSocial = function(social) {

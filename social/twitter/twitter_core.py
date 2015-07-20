@@ -94,7 +94,6 @@ def update_user_info(user):
                 pass
         if user.location is None and 'location' in social_json:
             user.location = social_json['location']
-        print "TWITTER EMAIL: "+get_email(user.twitter_token_set)
         if user.email is None:
             user.email = get_email(user.twitter_token_set)
         if user.link_twitter is None and 'screen_name' in social_json:
@@ -123,6 +122,16 @@ def has_permission_to_publish(user):
     return False
 
 
+def get_twitter_shorturl_length():
+    try:
+        auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING)
+        response = json.loads(requests.get("https://api.twitter.com/1.1/help/configuration.json", auth=auth).content)
+        return int(response["short_url_length"])
+    except Exception as x:
+        logging.error("Unable to fetch twitter short_url_length: {0}".format(response.content))
+        return 22
+
+
 def publish_to_status(user, message):
     """
     update the user's Twitter status (eg "tweet"), as per https://dev.twitter.com/rest/reference/post/statuses/update
@@ -130,13 +139,15 @@ def publish_to_status(user, message):
     :param message: message body
     :return: True if publish succeeded, False if it failed
     """
-    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
     try:
+        shorturl_length = get_twitter_shorturl_length()
+        max_message_len = 140-shorturl_length
         auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING, resource_owner_key=user.twitter_sharing_token_set.access_token,
                       resource_owner_secret=user.twitter_sharing_token_set.access_secret)
-        data = {'status': message}
+        data = {'status': message[:max_message_len]} #only first 140 chars
         response = requests.post("https://api.twitter.com/1.1/statuses/update.json", auth=auth, data=data)
         if "errors" in json.loads(response.content):
+            logging.error("Unable to post to twitter for {0}: {1}".format(user.uid, response.content))
             return False
         return True
     except Exception as x:

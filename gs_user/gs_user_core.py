@@ -111,8 +111,8 @@ def subscribe_mailchimp_h(list_id, email, firstname='', lastname='', double_opt_
     })
 
     response = requests.post(mailchimp_url, post_data)
-    print post_data
-    print response.content
+    # print post_data
+    # print response.content
     if response.status_code != 200:
         if json.loads(response.content)['code'] != 214:
             # Make sure the error is not related to user already being

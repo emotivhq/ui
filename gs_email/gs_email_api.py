@@ -15,6 +15,8 @@ from gs_email.gs_email_preview import EmailPreviewHandler
 import requests
 import yaml
 import re
+from share import email_share
+from gs_user.gs_user_api import getUidFromCookies, getTokenFromCookies, validate
 
 REQUIRED_PARAMS = ['to', 'sender', 'subject', 'body']
 REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
@@ -88,27 +90,22 @@ class FromQueueHandler(webapp2.RequestHandler):
             gs_email_comm.send(**{k: v for k, v in params.items() if k in SEND_PARAMS})
 
 class ShareCampaignHandler(webapp2.RedirectHandler):
+    """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""
     def put(self):
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        if not validate(uid, token, self.request.path):
+            raise Exception("You must be logged in to send email")
+        user = ndb.Key('User', uid).get()
         params = json.loads(self.request.body)
-        from_email = params["from_email"]
+        to = params["to"]
+        message = "<br />".join(params["message"].split("\n"))
+        share_url = params["share_url"]
+        gsid = params["gsid"]
         try:
-            if from_email == None or not validEmailRegex.match(from_email):
-                raise Exception("A valid email address is required.")
-            msg = ""
-            for name in params:
-                if name != "from_email":
-                    msg += "{0}: {1} \n".format(name, params[name])
-
-            requests.put(config['email_url'],
-                 data=json.dumps({
-                     'subject': "Contact Us Message",
-                     'sender': "giftconcierge@giftstarter.com",
-                     'mime_type': 'html',
-                     'to': "giftconcierge@giftstarter.com",
-                     'template_name': "contact_us",
-                     'template_kwargs': { "from_email" : from_email,
-                                          "msg" : msg }
-                 }))
+            # if from_email == None or not validEmailRegex.match(from_email):
+            #     raise Exception("A valid email address is required.")
+            email_share(to, user.email if user.email is not None else "giftconcierge@giftstarter.com", message, gsid, user.name, share_url, user.uid)
             self.response.write(json.dumps({"ok": "Success!"}))
         except Exception as e:
             self.response.set_status(403)

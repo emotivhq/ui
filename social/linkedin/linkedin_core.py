@@ -109,8 +109,6 @@ def has_permission_to_publish(user):
         except Exception as x:
             pass
         expires_in_seconds = int((user.linkedin_sharing_token_set.expires-datetime.now()).total_seconds())
-        logging.error(user.linkedin_sharing_token_set.expires)
-        logging.error(expires_in_seconds)
         if expires_in_seconds<300: #if will expire in 5 minutes or less, treat as invalid
             return False
         return True
@@ -118,6 +116,7 @@ def has_permission_to_publish(user):
 
 
 def add_sharing_tokens(user, token_set):
+    #linkedin needs a separate token so we can check if sharing is expired (separate from main login expiry)
     user.linkedin_sharing_token_set = token_set
     user.put()
     return user
@@ -152,6 +151,7 @@ def publish_comment(user, message, link=None, link_title=None):
             headers={'content-type': 'application/json'}
         ).content
         if "errors" in response:
+            logging.error("Unable to post to linkedin for {0}: {1}".format(user.uid, response))
             return False
         return "updateKey" in response
     except Exception as x:

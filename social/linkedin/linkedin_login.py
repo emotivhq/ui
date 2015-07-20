@@ -34,6 +34,5 @@ def submit_code(code, redirect_url):
     }
     response = requests.post(url=url, params=params)
     result_dict = json.loads(response.content)
-    # logging.info("Logging in with linkedin - {0}".format(result_dict))
     return LinkedinTokenSet().populate(result_dict['access_token'],result_dict['expires_in'])
 
