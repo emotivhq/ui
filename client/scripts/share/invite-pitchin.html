@@ -9,12 +9,6 @@
         <div class="block message">
         <h4>YOUR MESSAGE</h4>
         <textarea id="shareMessage" ng-model="message"></textarea>
-            <!--h3>DEV TOOLS:
-                <a class="linky" ng-click="ensureFacebookSharePermission()" ng-hide="sharePermission['facebook']">[ensure FB]</a><a class="linky" ng-click="shareFacebook('I just created a new gift on GiftStarter!')" ng-show="sharePermission['facebook']">[share FB]</a>
-                <a class="linky" ng-click="ensureTwitterSharePermission()" ng-hide="sharePermission['twitter']">[ensure TW]</a><a class="linky" ng-click="shareTwitter('I just created a new gift on GiftStarter!')" ng-show="sharePermission['twitter']">[share TW]</a>
-                <a class="linky" ng-click="ensureGplusSharePermission()" ng-hide="sharePermission['google']">[ensure G+]</a><a class="linky" ng-click="shareGplus()" ng-show="sharePermission['google']">[share G+]</a>
-                <a class="linky" ng-click="ensureLinkedInSharePermission()" ng-hide="sharePermission['linkedin']">[ensure LI]</a><a class="linky" ng-click="shareLinkedIn()" ng-show="sharePermission['linkedin']">[share LinkedIn]</a>
-            </h3-->
         </div>
 
         <div class="share-where block">
@@ -34,8 +28,8 @@
             </div>
             <div class="share-where-email">
                 <h4>SEND AN EMAIL</h4>
-                <p>Enter email addresses seperated by a comma, or import gmail contacts to select email addresses:</p>
-                <a href=""><h4>IMPORT GMAIL CONTACTS</h4></a>
+                <p>Enter email addresses separated by a comma<!--, or import gmail contacts to select email addresses-->:</p>
+                <!--a href=""><h4>IMPORT GMAIL CONTACTS</h4></a-->
                 <textarea ng-model="emailRecipients" placeholder="Enter email addresses, separated by commas"></textarea>
             </div>
         </div>
@@ -43,7 +37,7 @@
 
     <div class="share-buttons">
         <p ng-show="shareSuccess">YOUR SHARE SUCCESSFULLY POSTED!</p>
-        <button class="red" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']" ng-click="shareClick()">SHARE</button>
+        <button class="red" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">SHARE</button>
         <button ng-show="shareSuccess" ng-click="shareReset()">SHARE AGAIN</button>
         <button ng-show="shareSuccess" ng-click="$parent.showSharePanel(false); shareReset()">FINISH</button>
     </div>
