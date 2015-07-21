@@ -13,17 +13,23 @@
         font-size: 1.75em
     #content
       display: flex
+      display: -webkit-flex
       flex-flow: row
+      -webkit-flex-flow: row
       @include apply-at-size("phone")
         flex-flow: column
+        -webkit-flex-flow: column
     .message
       flex-flow: column
+      -webkit-flex-flow: column
       #shareMessage
         @include apply-at-size("phone")
           height: 250px
     textarea
       border-width: 1px
       flex: 1 1 auto
+      -webkit-flex: 1 1 auto
+      -ms-flex: 1 1 auto
       font-size: 13px
       line-height: 20px
       width: 100%
@@ -31,8 +37,10 @@
       &-where
         display: inline-block
         flex-flow: row
+        -webkit-flex-flow: row
         @include apply-at-size("phone")
           flex-flow: column
+          -webkit-flex-flow: column
         div
           display: inline-block
           vertical-align: top
@@ -51,8 +59,12 @@
             text-align: center
         &-email
           display: flex !important
+          display: -webkit-flex !important
           flex: 1 1 auto
+          -webkit-flex: 1 1 auto
+          -ms-flex: 1 1 auto
           flex-flow: column
+          -webkit-flex-flow: column
           width: calc(60% - 1.5em)
           p
             margin-top: 0
@@ -86,7 +98,10 @@
             padding: 0 10%
     div.block
       display: flex
+      display: -webkit-flex
       flex: 0 1 auto
+      -webkit-flex: 0 1 auto
+      -ms-flex: 0 1 auto
       max-width: none //calc(590px - 4%)
       text-align: left
       width: 100%
