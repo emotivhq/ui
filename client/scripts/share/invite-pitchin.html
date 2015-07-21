@@ -1,0 +1,58 @@
+<div id="shareControllerWrapper" class="share pitchin" ng-controller="ShareController">
+    <div id="title">
+        <h1>Invite Friends to Pitch-in</h1>
+        <!--p>Your GiftStarter campaign is successfully set up! Invite friends to help pitch-in
+        and increase your chances of fully funding the gift!</p-->
+    </div>
+
+    <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+
+    <div ng-show="loggedIn()" id="share-block">
+        <div id="content">
+            <div class="block message">
+            <h4>YOUR MESSAGE</h4>
+            <textarea id="shareMessage" ng-model="message"></textarea>
+            </div>
+
+            <div class="share-where block">
+                <div class="share-where-social">
+                    <h4>SHARE ON SOCIAL MEDIA</h4>
+                    <p>Select which networks you would like to post on:</p>
+                    <div id="social-icons-container">
+                        <a class="social__link linky" ng-click="selectedSocials['facebook']=false"><img class="social__icons" src="/assets/share/facebook.png" ng-show="selectedSocials['facebook']"></a>
+                        <img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-hide="selectedSocials['facebook']" ng-click="selectSocial('facebook')"/>
+                        <a class="social__link linky" ng-click="selectedSocials['twitter']=false"><img class="social__icons" src="/assets/share/twitter.png" ng-show="selectedSocials['twitter']"></a>
+                        <img class="social__icons linky" src=/assets/share/twitter-share-unselected.png ng-hide="selectedSocials['twitter']" ng-click="selectSocial('twitter')"/>
+                        <a class="social__link linky" ng-click="selectedSocials['linkedin']=false"><img class="social__icons" src="/assets/share/linkedin.png" ng-show="selectedSocials['linkedin']"></a>
+                        <img class="social__icons linky" src=/assets/share/linkedin-share-unselected.png ng-hide="selectedSocials['linkedin']" ng-click="selectSocial('linkedin')"/>
+                        <!--<a class="social__link linky" ng-click="selectedSocials['google']=false"><img class="social__icons" src="/assets/share/google.png" ng-hide="!sharePermission['google'] || !selectedSocials['google']"></a>-->
+                        <!--<img class="social__icons linky" src=/assets/share/google-share-unselected.png ng-show="!selectedSocials['google']" ng-click="selectSocial('google')"/>-->
+                    </div>
+                </div>
+                <div class="share-where-email">
+                    <h4>SEND AN EMAIL</h4>
+                    <p>Enter email addresses separated by a comma<!--, or import gmail contacts to select email addresses-->:</p>
+                    <!--a href=""><h4>IMPORT GMAIL CONTACTS</h4></a-->
+                    <textarea ng-model="emailRecipients" placeholder="Enter email addresses, separated by commas"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="share-buttons">
+            <p ng-show="shareSuccess">YOUR SHARE SUCCESSFULLY POSTED!</p>
+            <p class="twitter-note" ng-show="selectedSocials['twitter'] && message.length>118">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>
+            <button class="red" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">SHARE</button>
+            <button ng-show="shareSuccess" ng-click="shareReset()">SHARE AGAIN</button>
+            <button ng-show="shareSuccess" ng-click="$parent.showSharePanel(false); shareReset()">FINISH</button>
+        </div>
+
+        <div class="share-where-link">
+            <h4>SHARE A LINK!</h4>
+            <p>Use this link to invite friends and family to GiftStarter through any means you'd like:</p>
+            <input value="{{campaignUrl()}}" gs-copy-url readonly/>
+        </div>
+
+        <!--a href=""><h4>SKIP AND SHARE LATER</h4></a>
+        <p>You can share your campaign at any time from your profile page or the campaign page!</p-->
+    </div>
+</div>

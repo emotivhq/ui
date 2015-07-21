@@ -5,6 +5,11 @@ from . import GraphAPI
 from datetime import datetime, timedelta
 from google.appengine.ext import ndb
 import logging
+import requests
+import json
+
+
+fb_api_url_permissions = "https://graph.facebook.com/me/permissions"
 
 
 class FacebookTokenSet(ndb.Model):
@@ -25,11 +30,18 @@ def get_uid(token_set):
     return fb_user['id']
 
 
+def add_sharing_tokens(user, token_set):
+    user.facebook_sharing_token_set = token_set
+    user.put()
+
+
 def update_user_info(user):
     """attempt to retrieve user info (name) from Facebook; update User"""
     try:
         graph = GraphAPI(user.facebook_token_set.access_token)
         social_json = graph.get_object(user.uid[1:])
+        if user.facebook_uid is None:
+            user.facebook_uid = social_json['id']
         if user.name is None:
             user.name = social_json['name']
         if user.email is None and 'email' in social_json:
@@ -54,3 +66,60 @@ def update_user_info(user):
         logging.error("Failed to get facebook user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+def has_permission_to_publish(user):
+    """
+    do we have permission to publish to this user's wall?
+    :param user:
+    :return: True if we are allowed to publish on this user's wall
+    """
+    try:
+        if 'publish_actions' in get_permissions(user, True):
+            if user.facebook_uid is None:
+                try:
+                    user.facebook_uid = get_uid(user.facebook_sharing_token_set)
+                    user.put()
+                except:
+                    pass
+            return True
+    except:
+        return False
+
+def get_permissions(user, is_sharing=False):
+    """https://developers.facebook.com/docs/graph-api/reference/user/permissions"""
+    permissions = []
+    if is_sharing:
+        if user.facebook_sharing_token_set is None or user.facebook_sharing_token_set.access_token is None:
+            return permissions
+        req_params = {'access_token': user.facebook_sharing_token_set.access_token}
+    else:
+        if user.facebook_token_set is None or user.facebook_token_set.access_token is None:
+            return permissions
+        req_params = {'access_token': user.facebook_token_set.access_token}
+    data = json.loads(requests.get(fb_api_url_permissions,params=req_params).content)['data']
+    for item in data:
+        if item['status'] == 'granted':
+            permissions.append(item['permission'])
+    return permissions
+
+def publish_to_feed(user, message, link=None, link_name=None):
+    """
+    publish a message on the user's Facebook feed, as per https://developers.facebook.com/docs/graph-api/reference/v2.4/user/feed
+    :param user: user for whom has_permission_to_publish() is known to be true
+    :param message: message body
+    :param link: link to add to message (None)
+    :param link_name: text to label the link (None)
+    :return: True if publish succeeded, False if it failed
+    """
+    # TODO: deal with visibility problem http://stackoverflow.com/a/28152591 (check visibility, if SELF or NO_FRIENDS, force re-auth?)
+    try:
+        graph = GraphAPI(user.facebook_sharing_token_set.access_token)
+        if link:
+            graph.put_wall_post(message=message, attachment={"name": link_name, "link": link})
+        else:
+            graph.put_wall_post(message=message)
+        return True
+    except Exception as x:
+        logging.error("Unable to post to facebook for {0}: {1}".format(user.uid, x))
+        return False
+

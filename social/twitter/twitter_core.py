@@ -10,7 +10,9 @@ from requests_oauthlib import OAuth1
 import yaml
 
 APP_KEY = yaml.load(open('secret.yaml'))['twitter_auth']['app_key']
+APP_KEY_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_key_sharing']
 APP_SECRET = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret']
+APP_SECRET_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret_sharing']
 
 APP_URL = yaml.load(open('config.yaml'))['app_url']
 
@@ -26,14 +28,26 @@ class TwitterTokenSet(ndb.Model):
         return self
 
 
-def get_uid(token_set):
+def add_sharing_tokens(user, token_set):
+    # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
+    user.twitter_sharing_token_set = token_set
+    user.put()
+    return user
+
+
+def get_uid(token_set, is_sharing_auth=False):
+    if is_sharing_auth:
+        key = APP_KEY_SHARING
+        secret = APP_SECRET_SHARING
+    else:
+        key = APP_KEY
+        secret = APP_SECRET
     """get Twitter ID for user"""
     url = 'https://api.twitter.com/1.1/account/verify_credentials.json'
-    auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=token_set.access_token,
+    auth = OAuth1(key, secret, resource_owner_key=token_set.access_token,
                   resource_owner_secret=token_set.access_secret)
     response = requests.get(url=url, auth=auth) #, params={'include_email':'true'})
     twitter_uid = json.loads(response.content)['id']
-
     return str(twitter_uid)
 
 def get_email(token_set):
@@ -69,6 +83,8 @@ def update_user_info(user):
         response = requests.get("https://api.twitter.com/1.1/users/show.json?include_email=true&user_id=" + user.uid[1:],
                                 auth=auth)
         social_json = json.loads(response.content)
+        if user.twitter_uid is None:
+            user.twitter_uid = social_json['id']
         if user.name is None:
             user.name = social_json['name']
         if user.timezone is None and 'utc_offset' in social_json:
@@ -86,3 +102,59 @@ def update_user_info(user):
         logging.error("Failed to get twitter user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+
+def has_permission_to_publish(user):
+    """
+    do we have permission to publish to this user's feed?
+    :param user:
+    :return: True if we are allowed to publish on this user's feed
+    """
+    if user.twitter_sharing_token_set is not None:
+        try:
+            twitter_id = get_uid(user.twitter_sharing_token_set, True)
+            if(user.twitter_uid is None):
+                user.twitter_uid = twitter_id
+                user.put()
+            return True
+        except Exception as x:
+            pass
+    return False
+
+
+def get_twitter_shorturl_length():
+    try:
+        auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING)
+        response = json.loads(requests.get("https://api.twitter.com/1.1/help/configuration.json", auth=auth).content)
+        return int(response["short_url_length"])
+    except Exception as x:
+        logging.error("Unable to fetch twitter short_url_length: {0}".format(response.content))
+        return 22
+
+
+def publish_to_status(user, message, link):
+    """
+    update the user's Twitter status (eg "tweet"), as per https://dev.twitter.com/rest/reference/post/statuses/update
+    :param user: user for whom has_permission_to_publish() is known to be true
+    :param message: message body
+    :param link: link to append
+    :return: True if publish succeeded, False if it failed
+    """
+    try:
+        max_message_len = 140
+        if link is None:
+            message=message[:max_message_len]
+        else:
+            max_message_len = 139-get_twitter_shorturl_length()
+            message=message[:max_message_len]+' '+link
+        auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING, resource_owner_key=user.twitter_sharing_token_set.access_token,
+                      resource_owner_secret=user.twitter_sharing_token_set.access_secret)
+        data = {'status': message}
+        response = requests.post("https://api.twitter.com/1.1/statuses/update.json", auth=auth, data=data)
+        if "errors" in json.loads(response.content):
+            logging.error("Unable to post to twitter for {0}: {1}".format(user.uid, response.content))
+            return False
+        return True
+    except Exception as x:
+        logging.error("Unable to post to twitter for {0}: {1}".format(user.uid, x))
+        return False

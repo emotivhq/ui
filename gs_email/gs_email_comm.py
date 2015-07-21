@@ -7,6 +7,7 @@ import yaml
 import jinja2
 import os
 import logging
+import cgi
 
 secrets = yaml.load(open('secret.yaml'))
 
@@ -41,6 +42,8 @@ EMAIL_TEMPLATES = {
         "campaign_create_user.html"),
     'campaign_share_email': JINJA_ENVIRONMENT.get_template(
         "campaign_share_email.html"),
+    'campaign_share_email_2': JINJA_ENVIRONMENT.get_template(
+        "campaign_share_email_2.html"),
     'contact_us': JINJA_ENVIRONMENT.get_template(
         "contact_us.html"),
     'thank_you_notification': JINJA_ENVIRONMENT.get_template(
@@ -139,6 +142,9 @@ def send_from_template(subject, template_name, template_kwargs, sender, to,
             "was type {etype}".format(etype=str(type(template_kwargs)))
         raise Exception(e)
 
+    if template_name == "campaign_share_email_2":
+        template_kwargs['message']="<br />".join(cgi.escape(template_kwargs['message'].encode('utf-8')).split("\n"))
+
     message_text = EMAIL_TEMPLATES[template_name].render(template_kwargs)
 
     if 'frame' in template_kwargs.keys():
@@ -147,6 +153,8 @@ def send_from_template(subject, template_name, template_kwargs, sender, to,
             message_text = frame_template.render({'body': message_text})
         except:
             logging.error("Failed when framing email")
+
+    # logging.error("Sending: to {0} from {1}: {2}".format(to.encode('utf-8'), sender.encode('utf-8'), message_text.encode('utf-8')))
 
     send(subject, message_text, sender, to, cc=cc, bcc=bcc,
          mime_type=mime_type, img_url=img_url)

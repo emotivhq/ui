@@ -18,16 +18,20 @@ gs-image-upload
       position: absolute
       bottom: 1.5em
       left: 1.5em
-      button.rotate
-        width: 1.35em
-        height: 1.35em
-        background-image: url("/assets/rotate_button_white.png")
-        background-size: contain
-      button.image
-        width: 1.35em
-        height: 1.35em
-        background-image: url("/assets/camera_button_white.png")
-        background-size: contain
+      button
+        border-color: #fff
+        background-color: $primary-color
+        color: #fff
+        &.rotate
+          width: 1.35em
+          height: 1.35em
+          background-image: url("/assets/rotate_button_white.png")
+          background-size: contain
+        &.image
+          width: 1.35em
+          height: 1.35em
+          background-image: url("/assets/camera_button_white.png")
+          background-size: contain
   input.thanks-image-input
     display: none
 

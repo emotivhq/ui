@@ -2,7 +2,7 @@
 __author__ = 'GiftStarter'
 
 import webapp2
-from social import twitter, googleplus, facebook
+from social import twitter, googleplus, facebook, linkedin
 import json
 from gs_user_core import update_or_create, get_user, \
     subscribe_to_mailing_list, subscribe_to_sweepstakes, validate, get_card_tokens, send_welcome_email
@@ -296,7 +296,8 @@ class UserHandler(webapp2.RequestHandler):
         data = json.loads(self.request.body)
         uid = getUidFromCookies(self.request)
         token = getTokenFromCookies(self.request)
-        is_validated_self = validate(uid, token, self.request.path) and 'uid' in data and uid == data['uid']
+        is_validated = validate(uid, token, self.request.path)
+        is_validated_self = is_validated and 'uid' in data and uid == data['uid']
 
         if data['action'] == 'update-profile':
             if(is_validated_self):
@@ -390,7 +391,39 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'get-auth-url':
             if data['service'] == 'twitter':
-                self.response.write(twitter.get_auth_url(data['redirect_url']))
+                self.response.write(twitter.get_auth_url(data['redirect_url'], False))
+
+        elif data['action'] == 'get-share-auth-url':
+            if data['service'] == 'twitter':
+                self.response.write(twitter.get_auth_url(data['redirect_url'], True))
+
+        elif data['action'] == 'has-share-auth':
+            user = ndb.Key('User', uid).get() if uid else None
+            service = data['service']
+            if service == 'facebook':
+                self.response.write("1" if user and facebook.facebook_core.has_permission_to_publish(user) else 0)
+            if service == 'twitter':
+                self.response.write("1" if user and twitter.twitter_core.has_permission_to_publish(user) else 0)
+            # if service == 'googleplus':
+            #     self.response.write("1" if user and googleplus.googleplus_core.has_permission_to_publish(user) else 0)
+            if service == 'linkedin':
+                self.response.write("1" if user and linkedin.linkedin_core.has_permission_to_publish(user) else 0)
+
+        elif data['action'] == 'do-share':
+            if is_validated:
+                user = ndb.Key('User', uid).get()
+                message = data['message']
+                link = data['link'] if 'link' in data else None
+                link_name = data['link_name'] if 'link_name' in data else None
+                service = data['service']
+                if service == 'facebook':
+                    self.response.write(facebook.facebook_core.publish_to_feed(user, message, link, link_name))
+                if service == 'twitter':
+                    self.response.write(twitter.twitter_core.publish_to_status(user, message, link))
+                # if service == 'googleplus':
+                #     self.response.write(googleplus.googleplus_core.publish_to_post(user, message))
+                if service == 'linkedin':
+                    self.response.write(linkedin.linkedin_core.publish_comment(user, message, link, link_name))
 
         elif data['action'] == 'submit-verifier':
             if data['service'] == 'twitter':
@@ -531,7 +564,7 @@ api = webapp2.WSGIApplication([('/users/subscribe.json', SubscribeHandler),
                                ('/users/partner/.*.json', PartnerHandler),
                                ('/users/profile/.*.json', UserProfileHandler),
                                ('/users/notify/.*.json', UserNotifyHandler),
-                               ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
+                               # ('/users/.*/network/facebook/giftstart-invite/.*.json', facebook_share.FacebookShareHandler),
                                ('/users/.*/img/new.json', ImageUploadHandler),
                                ('/users/.*/cards.json', PaymentCardsHandler),
                                ('/users/.*.json', StatsHandler),

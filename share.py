@@ -6,7 +6,6 @@ import requests
 import yaml
 import json
 from giftstart import GiftStart
-from gs_user import User
 
 config = yaml.load(open('config.yaml'))
 
@@ -40,10 +39,6 @@ def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
     @param sender_uid:
     """
     gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
-    if sender_uid != -1 and sender_uid:
-        sender_img = User.query(User.uid == sender_uid).fetch()[0].cached_profile_image_url
-    else:
-        sender_img = None
     requests.put(config['email_url'],
                  data=json.dumps({
                      'subject': "Join us on a gift together",

@@ -32,15 +32,17 @@ function cardService($rootScope, $http, UserService, Analytics) {
     this.deleteCard = deleteCard;
 
     function fetchCards() {
-        Analytics.track('client', 'user cards fetch started');
-        return $http({method: 'GET', url: '/users/' + UserService.uid +
-            '/cards.json'})
-            .success(handleCardResponse)
-            .error(function(reason) {
-                $rootScope.$broadcast('cards-fetch-failure');
-                Analytics.track('client', 'user cards fetch failed');
+        if(UserService.uid!=-1) {
+            Analytics.track('client', 'user cards fetch started');
+            return $http({method: 'GET', url: '/users/' + UserService.uid +
+                '/cards.json'})
+                .success(handleCardResponse)
+                .error(function(reason) {
+                    $rootScope.$broadcast('cards-fetch-failure');
+                    Analytics.track('client', 'user cards fetch failed');
 
-            });
+                });
+        }
     }
 
     function deleteCard(fingerprint) {

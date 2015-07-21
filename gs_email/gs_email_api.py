@@ -15,6 +15,8 @@ from gs_email.gs_email_preview import EmailPreviewHandler
 import requests
 import yaml
 import re
+from gs_user.gs_user_api import getUidFromCookies, getTokenFromCookies, validate
+from giftstart import GiftStart
 
 REQUIRED_PARAMS = ['to', 'sender', 'subject', 'body']
 REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
@@ -87,6 +89,57 @@ class FromQueueHandler(webapp2.RequestHandler):
         else:
             gs_email_comm.send(**{k: v for k, v in params.items() if k in SEND_PARAMS})
 
+class ShareCampaignHandler(webapp2.RedirectHandler):
+    """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""
+    def put(self):
+        uid = getUidFromCookies(self.request)
+        token = getTokenFromCookies(self.request)
+        if not validate(uid, token, self.request.path):
+            raise Exception("You must be logged in to send email")
+        user = ndb.Key('User', uid).get()
+        params = json.loads(self.request.body)
+        to = params["to"]
+        message = params["message"] #"<br />".join(params["message"].split("\n"))
+        share_url = params["share_url"]
+        gsid = params["gsid"]
+        try:
+            emails = re.sub("([,;\"\}\{\s]+)"," ",to).split(" ")
+            for email in emails:
+                if validEmailRegex.match(email):
+                    email_share(email, user.email if user.email is not None else "giftconcierge@giftstarter.com", message, gsid, user.name, share_url)
+            self.response.write(json.dumps({"ok": "Success!"}))
+        except Exception as e:
+            self.response.set_status(403)
+            self.response.write(json.dumps({"error": e.message}))
+
+def email_share(to, sender, message, gsid, sender_name, share_url):
+    """
+    enqueue an email to share the specified giftstart with someone
+    @param to:
+    @param sender:
+    @param message:
+    @param gsid:
+    @param sender_name:
+    @param share_url:
+    """
+    gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    requests.put(config['email_url'],
+                 data=json.dumps({
+                     'subject': "Help "+sender_name+" give this gift!",
+                     'sender': sender, 'to': to,
+                     'template_name': "campaign_share_email_2",
+                     'mime_type': 'html',
+                     'img_url': gs.product_img_url,
+                     'template_kwargs': {
+                         'message': message,
+                         'sender_name': sender_name,
+                         'sender_email': sender,
+                         'campaign_name': gs.giftstart_title,
+                         'campaign_link': share_url,
+                         'frame': 'base_frame'
+                     }
+                 }))
+
 class ContactUsHandler(webapp2.RedirectHandler):
     """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""
     def put(self):
@@ -120,5 +173,6 @@ handler = webapp2.WSGIApplication([
     ('/email/send.json', SendHandler),
     ('/email/sendfromqueue', FromQueueHandler),
     ('/email/preview/.*', EmailPreviewHandler),
-    ('/email/contactus.json', ContactUsHandler)
+    ('/email/contactus.json', ContactUsHandler),
+    ('/email/sharecampaign.json', ShareCampaignHandler)
 ], debug=True)

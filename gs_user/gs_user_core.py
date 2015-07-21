@@ -111,8 +111,8 @@ def subscribe_mailchimp_h(list_id, email, firstname='', lastname='', double_opt_
     })
 
     response = requests.post(mailchimp_url, post_data)
-    print post_data
-    print response.content
+    # print post_data
+    # print response.content
     if response.status_code != 200:
         if json.loads(response.content)['code'] != 214:
             # Make sure the error is not related to user already being
@@ -150,6 +150,7 @@ service_prefix = {'facebook':'f',
                   'googleplus':'g',
                   'linkedin':'k',
                   'emaillogin':'e'}
+service_prefix_reverse = {v: k for k, v in service_prefix.items()}
 
 valid_uid_prefixes = service_prefix.values()
 
@@ -183,6 +184,8 @@ set_uid_fns = {'facebook': lambda user, id: user.set_facebook_uid(id),
 def is_valid_uid_pattern(uid):
     return len(uid) > 0 and uid[0] in valid_uid_prefixes
 
+def get_social_service(uid):
+    return service_prefix_reverse(uid[0]) if uid else None
 
 def update_or_create(service, token_set, referral):
     """
@@ -306,6 +309,24 @@ def login_facebook_user(code, redirect_url, referrer):
     token_set = facebook.get_extended_key(code, redirect_url)
     return update_or_create('facebook', token_set, referrer)
 
+def add_facebook_sharing_tokens(uid, code, redirect_url):
+    token_set = facebook.get_extended_key(code, redirect_url)
+    user = get_user(uid)
+    return facebook.facebook_core.add_sharing_tokens(user, token_set)
+
+def add_linkedin_sharing_tokens(uid, code, redirect_url):
+    token_set = linkedin.submit_code(code, redirect_url)
+    user = get_user(uid)
+    return linkedin.linkedin_core.add_sharing_tokens(user, token_set)
+
+# def add_googleplus_sharing_tokens(uid, code, redirect_url):
+#     token_set = googleplus.submit_code(code, redirect_url)
+#     user = get_user(uid)
+#     #refresh tokens are only granted on authorization, not every login
+#     if token_set.refresh_token is None and user.googleplus_sharing_token_set is not None:
+#         token_set.refresh_token = user.googleplus_sharing_token_set.refresh_token
+#     return googleplus.googleplus_core.add_sharing_tokens(user, token_set)
+
 
 def login_twitter_user(oauth_token, oauth_verifier, referrer):
     """
@@ -317,6 +338,19 @@ def login_twitter_user(oauth_token, oauth_verifier, referrer):
     """
     token_set = twitter.submit_verifier(oauth_token, oauth_verifier)
     return update_or_create('twitter', token_set, referrer)
+
+def add_twitter_sharing_tokens(uid, oauth_token, oauth_verifier):
+    """
+    exchange an OAuth Request Token for an OAuth Access Token and add these as sharing tokens for the User
+    @param uid: the User to update
+    @param oauth_token: OAuth Request Token
+    @param oauth_verifier: from the OAuth web-flow
+    @rtype: User
+    """
+    # twitter requires a separate set of access tokens (or a separate App) to allow read-access sometimes, read-write other times
+    sharing_token_set = twitter.submit_verifier(oauth_token, oauth_verifier, True)
+    user = get_user(uid)
+    return twitter.twitter_core.add_sharing_tokens(user, sharing_token_set)
 
 
 def get_card_tokens(user):

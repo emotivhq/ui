@@ -104,6 +104,7 @@ module.exports = function(grunt) {
                     '../client//scripts/giftstart/giftstart.directive.js',
                     '../client//scripts/giftstart/thanks/thanks.directive.js',
                     '../client//scripts/giftstart/create/giftstart-create.controller.js',
+                    '../client//scripts/share/share.controller.js',
                     '../client//scripts/product/product.service.js',
                     '../client//scripts/product/product.directive.js',
                     '../client//scripts/giftstart/overlay/overlay.directive.js',

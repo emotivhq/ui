@@ -215,7 +215,7 @@ div.giftstart.wrapper
         white-space: normal
 
 
-  .login-box, .pay-box, .sign-box
+  .login-box, .pay-box, .sign-box, .share-box
     float: right
     display: block
     padding-top: 0
@@ -249,7 +249,7 @@ div.giftstart.wrapper
     .switchtxt
       position: relative
       width: 100%
-    .block
+    .login-block
       display: block
       text-align: center
       width: 100%
@@ -257,6 +257,7 @@ div.giftstart.wrapper
       input
         width: 100% !important
     .userlogin
+      display: block
       &__loginbtn
         margin: 0 auto
       &__passwordwrap, &__email, &__surname
@@ -274,6 +275,16 @@ div.giftstart.wrapper
     div.payment
       display: block
       margin: 0 auto
+
+  .share-box
+    text-align: center
+    a
+      color: black
+      text-decoration: underline
+    h2
+      text-align: left
+    p
+      text-align: left
 
   div.block.col2
     float: right
@@ -374,15 +385,28 @@ div.giftstart.wrapper
       @media screen and (max-width: $phone-tablet-boundary - 1)
         margin-top: 5px
       p
-        font-size: 125%
+        display: inline
+        font-size: 0.86em
         @media screen and (max-width: $phone-tablet-boundary - 1)
           margin-bottom: 0
-        .ordinal
-          color: #DF484B
+      .ordinal
+        color: $primary-color
+        line-height: 31px
+      .ordinal_circle
+        border: $primary-color 2px solid
+        border-radius: 50%
+        display: inline-block
+        margin: 5px auto
+        height: 36px
+        width: 36px
+        text-align: center
+        vertical-align: middle
 
     button.pitch-in
       display: block
-      margin: 5px auto 0 auto
+      margin: 10px auto
+      max-width: 500px
+      width: 100%
 
     h3.invite-friends
       margin-top: 35px
@@ -578,3 +602,12 @@ div.giftstart.wrapper
 
         p
           margin-top: 0
+
+  #share-panel
+    position: relative
+    #closebtn
+      color: white
+      position: absolute
+      right: 7%
+      top: 10px
+      text-decoration: underline

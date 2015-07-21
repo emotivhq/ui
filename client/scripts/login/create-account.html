@@ -6,6 +6,6 @@
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Email Address" required /><br/>
         <div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="btn userlogin__loginbtn" ng-disabled="$parent.working">Create account</button>
+        <button class="userlogin__loginbtn" ng-disabled="$parent.working">Create account</button>
     </form>
 </div>

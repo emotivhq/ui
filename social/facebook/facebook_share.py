@@ -1,4 +1,5 @@
-"""handle requests to share a giftstart on FaceBook"""
+"""OBVIATED: use facebook_core.publish_to_wall
+ (handle requests to share a giftstart on FaceBook)"""
 
 __author__ = 'jon'
 
@@ -66,9 +67,8 @@ class FacebookShareHandler(webapp2.RequestHandler):
         fb_id = user.facebook_uid
         try:
             if(fb_id is None):
-                #todo: figure out why users don't always get their facebook_uid set when they are created
-                fb_id = user.facebook_uid = facebook.facebook_core.get_uid(fb_tokens)
-                user.fb_id = fb_id
+                fb_id = facebook.facebook_core.get_uid(fb_tokens)
+                user.facebook_uid = fb_id
                 user.put()
         except Exception as e:
             logging.error("facebook_share: Unable to set current user's FB ID: "+str(e))
@@ -82,7 +82,7 @@ class FacebookShareHandler(webapp2.RequestHandler):
         @param gift_path: URI under /giftstart/ of giftstart
         @param message: message for Post
         @param tags: FB tags
-        @param deny: FB privacy['deny']
+        @param deny: FB privacy['deny'] (IDs of users who cannot see the message)
         :return:
         """
         gift_url = "https://www.giftstarter.com/giftstart/"+gift_path

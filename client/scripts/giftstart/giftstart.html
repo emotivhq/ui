@@ -10,7 +10,7 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="prodtitle">
                 <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
             </div>
@@ -61,12 +61,22 @@
             <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
             <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
         </div>
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
-            <div class="pitch-instructions">
-                <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
-                <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
+        <div class="share-box" ng-show="showShareBox">
+            <h2>Share with Friends:</h2>
+            <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
+            <a href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span>INVITE FRIENDS TO PITCH IN</span></button></a>
+            <a href="" ng-click="shareBox(false)">SKIP THIS STEP</a>
+        </div>
+
+        <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
+
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
+            <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
+                <div class="ordinal_circle"><span class="ordinal">1</span></div><p> CLICK ON THE TILES YOU WANT TO PURCHASE</p><br/>
+                <div class="ordinal_circle"><span class="ordinal">2</span></div><p> PITCH IN!</p>
             </div>
-            <button class="pitch-in button" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
+            <button class="pitch-in button red" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
+
             <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
                 <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button">GIFTSTART IT</button></a>
@@ -75,7 +85,9 @@
                     <div class="product-message" ng-bind-html="productMessage"></div>
                 </div>
             </div>
-            <div class="invite block">
+
+            <a href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN</span></button></a>
+            <!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
                 <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
@@ -83,7 +95,7 @@
                 <img class="share" src="/assets/googleicon.png" ng-click="googlePlusShare();" /><br/>
                 Or share this link:
                 <input id="share-url" type="text" value="{{campaignUrl()}}" gs-copy-url readonly/>
-            </div>
+            </div-->
         </div>
     </div>
 
@@ -103,6 +115,11 @@
             <div><h3>Time Left in Campaign:</h3></div>
             <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2></div>
         </div>
+    </div>
+
+    <div id="share-panel">
+        <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">CLOSE</a>
+        <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
     </div>
 
     <gs-thanks></gs-thanks>

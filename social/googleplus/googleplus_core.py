@@ -55,12 +55,30 @@ def _request_with_refresh(url, token_set):
                               token=token_set.to_token())
     return oauth.get(url)
 
+def _post_with_refresh(url, token_set, data):
+    """access provided googleplus URL with provided token; attempt to refresh token in the process"""
+    if token_set.refresh_token:
+        oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
+                              token=token_set.to_token(),
+                              auto_refresh_url=REFRESH_URL,
+                              auto_refresh_kwargs=REFRESH_EXTRAS,
+                              token_updater=token_saver)
+    else:
+        oauth = OAuth2Session(secret['googleplus_auth']['client_id'],
+                              token=token_set.to_token())
+    return oauth.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+
 
 def get_uid(token_set):
     """get googleplus ID for user"""
     response = json.loads(_request_with_refresh(UID_QRY_URL,
                                                 token_set).content)
     return response['id']
+
+
+def add_sharing_tokens(user, token_set):
+    user.googleplus_sharing_token_set = token_set
+    user.put()
 
 
 def get_email(uid, token_set):
@@ -98,6 +116,8 @@ def update_user_info(user):
         response = _request_with_refresh("https://www.googleapis.com/plus/v1/people/" + user.uid[1:],
                                          user.googleplus_token_set)
         social_json = json.loads(response.content)
+        if user.googleplus_id is None:
+            user.googleplus_id = social_json['id']
         if user.name is None:
             user.name = social_json['displayName']
         if user.gender is None and 'gender' in social_json:
@@ -119,3 +139,58 @@ def update_user_info(user):
         logging.error("Failed to get google user info for {uid}: {err}."
                       .format(uid=user.uid,err=x))
     return user
+
+
+# def has_permission_to_publish(user):
+#     """
+#     do we have permission to publish posts for this user?
+#     :param user:
+#     :return: True if we are allowed to publish posts
+#     """
+#     try:
+#         if user.googleplus_sharing_token_set is not None:
+#             expires_in_seconds = int((user.googleplus_sharing_token_set.expires-datetime.now()).total_seconds())
+#             if expires_in_seconds<300: #if will expire in 5 minutes or less, treat as invalid
+#                 return False
+#             if user.googleplus_id is None:
+#                 try:
+#                     user.googleplus_id = get_uid(user.googleplus_sharing_token_set)
+#                     user.put()
+#                 except:
+#                     pass
+#             return True
+#     except:
+#         pass
+#     return False
+
+
+# def publish_to_post(user, message):
+#     """
+#     NONFUNCTIONAL!  Google Domains only allows posting to other users within the same domain!!
+#     FURTHERMORE, The permissions https://www.googleapis.com/auth/plus.login (needed for login) and https://www.googleapis.com/auth/plus.me (needed for posting) are mutually exclusive
+#     https://plusone.google.com/_/+1/confirm?hl=en&url=
+#     publish a GooglePlus post, as per https://developers.google.com/+/domains/posts/creating
+#     :param user: user for whom has_permission_to_publish() is known to be true
+#     :param message: message body
+#     :param link: link to add to message (None)
+#     :param link_name: text to label the link (None)
+#     :return: True if publish succeeded, False if it failed
+#     """
+#     try:
+#         data = {
+#             "object": {
+#                 "originalContent": message
+#             },
+#             "access": {
+#                 "domainRestricted": True
+#             }
+#         }
+#         response = _post_with_refresh("https://www.googleapis.com/plusDomains/v1/people/" + get_uid(user.googleplus_sharing_token_set) + "/activities",
+#                                          user.googleplus_sharing_token_set, data=data)
+#         if 'error' in json.loads(response.content):
+#             logging.error("Error while sharing via googleplus: {0}".format(response.content))
+#             return False
+#         return True
+#     except Exception as x:
+#         logging.error("Unable to post to googleplus for {0}: {1}".format(user.uid, x))
+#         return False

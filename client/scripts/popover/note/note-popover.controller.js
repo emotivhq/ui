@@ -40,7 +40,7 @@
                     Analytics.track('pitchin', 'note submitted');
                     GiftStartService.saveNote($scope.noteText, $scope.name);
                 }
-                PopoverService.setPopover('thanks');
+                //PopoverService.setPopover('thanks');
                 $rootScope.$broadcast('signbox-hidden');
                 $scope.skipNote = skipNote = false;
                 $scope.noteText = noteText = '';

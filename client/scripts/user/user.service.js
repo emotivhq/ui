@@ -58,6 +58,9 @@ function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
         self.onMailingList = onMailingList;
         self.hasPitchedIn = has_pitched_in;
 
+        $rootScope.uid = uid;
+        $rootScope.token = token;
+
         $cookieStore.put('uid', uid);
         $cookieStore.put('token', token);
 
@@ -86,6 +89,9 @@ function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
         self.loggedIn = false;
         self.uid = -1;
         self.profileImageUrl = '';
+
+        $rootScope.uid = -1;
+        $rootScope.token = -1;
 
         $cookieStore.remove('uid');
         $cookieStore.remove('token');

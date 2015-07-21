@@ -5,8 +5,8 @@
  */
 
 GiftStarterApp.service('TwitterService', [
-            '$http','$rootScope','$window','$location','AppStateService',
-    function($http,  $rootScope,  $window,  $location,  AppStateService) {
+            '$http','$rootScope','$window','$location','$q','AppStateService',
+    function($http,  $rootScope,  $window,  $location,  $q,  AppStateService) {
 
         this.uid = -1;
         this.usr_img = '';
@@ -54,14 +54,80 @@ GiftStarterApp.service('TwitterService', [
                 .error(function(data) {console && console.log && console.log(data);});
         };
 
-        this.getAuthUrl = function() {
+
+        this.getAuthUrl = function(successCallback, failureCallback) {
+            var deferred = $q.defer();
             AppStateService.set('login_service', 'twitter');
-            $http({method: 'POST', url: '/users', data: {
-                action: 'get-auth-url', service: 'twitter',
-                redirect_url: AppStateService.getOauthRedirectUrl()}})
-                .success(function(data) {self.auth_url = data['url'];})
-                .error(function(data) {console && console.log && console.log(data);});
-            AppStateService.remove('login_service');
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'get-auth-url', service: 'twitter',
+                    redirect_url: AppStateService.getOauthRedirectUrl()}})
+                    .success(function(data) {
+                        self.auth_url = data['url'];
+                        deferred.resolve(self.auth_url);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                    return deferred.promise
+                };
+            return doDeferred()
+        };
+
+        this.checkSharePermission = function() {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'has-share-auth', service: 'twitter'}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
+
+        this.getSharePermissionUrl = function() {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                AppStateService.set('login_service', 'twitter');
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'get-share-auth-url', service: 'twitter',
+                    redirect_url: AppStateService.getOauthRedirectUrlForSharing()}})
+                    .success(function(data) {
+                        deferred.resolve(data.url);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
+        this.doShare = function(message, link) {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'do-share', service: 'twitter',
+                    link: link, message: message}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
         };
 
         function twitterOauthCallback(oauthToken, oauthVerifier) {

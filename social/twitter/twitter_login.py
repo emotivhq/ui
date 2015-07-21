@@ -7,20 +7,28 @@ import requests
 
 from requests_oauthlib import OAuth1
 from .. import OAuthTokenPair
-from twitter_core import TwitterTokenSet
+from twitter_core import TwitterTokenSet, get_uid
 import yaml
 
 APP_KEY = yaml.load(open('secret.yaml'))['twitter_auth']['app_key']
+APP_KEY_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_key_sharing']
 APP_SECRET = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret']
+APP_SECRET_SHARING = yaml.load(open('secret.yaml'))['twitter_auth']['app_secret_sharing']
 
 APP_URL = yaml.load(open('config.yaml'))['app_url']
 
 
-def get_auth_url(current_url):
+def get_auth_url(current_url, is_sharing_auth=False):
     """gets redirection URL for Twitter login"""
     url = 'https://api.twitter.com/oauth/request_token'
-    auth = OAuth1(client_key=APP_KEY, client_secret=APP_SECRET,
-                  callback_uri=current_url)
+    if is_sharing_auth:
+        # url += '?x_auth_access_type=write'
+        key = APP_KEY_SHARING
+        secret = APP_SECRET_SHARING
+    else:
+        key = APP_KEY
+        secret = APP_SECRET
+    auth = OAuth1(client_key=key, client_secret=secret, callback_uri=current_url)
     response = requests.post(url=url, auth=auth)
     result_dict = {k: v for k, v in [pair.split('=') for pair in
                                      response.content.split('&')]}
@@ -36,15 +44,20 @@ def get_auth_url(current_url):
         return None
 
 
-def submit_verifier(oauth_token, oauth_verifier):
+def submit_verifier(oauth_token, oauth_verifier, is_sharing_auth=False):
     """
     exchange an OAuth Request Token for an OAuth Access Token
     as per https://dev.twitter.com/oauth/reference/post/oauth/access_token
     """
     url = 'https://api.twitter.com/oauth/access_token'
-    oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token ==
-                                        oauth_token).fetch(1)[0].oauth_secret
-    auth = OAuth1(APP_KEY, APP_SECRET, resource_owner_key=oauth_token,
+    oauth_secret = OAuthTokenPair.query(OAuthTokenPair.oauth_token == oauth_token).fetch(1)[0].oauth_secret
+    if is_sharing_auth:
+        key = APP_KEY_SHARING
+        secret = APP_SECRET_SHARING
+    else:
+        key = APP_KEY
+        secret = APP_SECRET
+    auth = OAuth1(key, secret, resource_owner_key=oauth_token,
                   resource_owner_secret=oauth_secret,
                   verifier=oauth_verifier)
     response = requests.post(url=url, auth=auth)

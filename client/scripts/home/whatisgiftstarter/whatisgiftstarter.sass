@@ -19,14 +19,11 @@
         text-align: left
         width: 90%
       &.one
-        background: url("/assets/whatisgiftstarter/one.png") 0/210px no-repeat
-        background-position: center
+        background: url("/assets/whatisgiftstarter/one.png") center/210px no-repeat
       &.two
-        background: url("/assets/whatisgiftstarter/two.png") 0/210px no-repeat
-        background-position: center
+        background: url("/assets/whatisgiftstarter/two.png") center/210px no-repeat
       &.three
-        background: url("/assets/whatisgiftstarter/three.png") 0/210px no-repeat
-        background-position: center
+        background: url("/assets/whatisgiftstarter/three.png") center/210px no-repeat
       .ghost
         display: inline-block
         height: 100%
@@ -41,8 +38,14 @@
       width: 100%
     p
       margin: 20px auto
-      text-align: center
+      text-align: left
+      @include apply-at-size("phone")
+        text-align: center
       width: 60%
     button
       margin-bottom: 20px
       width: 200px
+    #howitworks-paragraph
+      display: inline
+      @include apply-at-size("phone")
+        display: none

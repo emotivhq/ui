@@ -12,9 +12,13 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
 
     $scope.openQuestions = [];
 
+    var allOpen = false;
+
+    $scope.questionCount = 0;
     var question = function(question, answer) {
         this.question = question;
         this.answer = answer;
+        $scope.questionCount++;
     };
 
     var section = function(name, questions) {
@@ -145,6 +149,20 @@ function FaqController($scope,  $location,  $timeout, Analytics) {
         } else {
             $scope.openQuestions.push(question);
             Analytics.track("faq", question.question);
+        }
+    };
+
+    $scope.toggleAll = function() {
+        if (allOpen) {
+            $scope.openQuestions.length = 0;
+            allOpen = false;
+        } else {
+            for (var sectionIndex = 0; sectionIndex < $scope.items.length; sectionIndex++) {
+                for (var questionIndex = 0; questionIndex < $scope.items[sectionIndex].questions.length; questionIndex++) {
+                    $scope.openQuestions.push($scope.items[sectionIndex].questions[questionIndex]);
+                }
+            }
+            allOpen = true;
         }
     };
 

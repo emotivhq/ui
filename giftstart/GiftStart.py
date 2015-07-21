@@ -60,6 +60,7 @@ class GiftStart(ndb.Model):
             'price': self.product_price,
             'product_url': self.product_url, 'sales_tax': self.sales_tax,
             'shipping': self.shipping, 'service_fee': self.service_fee,
+            'shipping_name': self.shipping_name,
             'total_price': self.total_price,
             'product_title': self.product_title,
             'retailer_logo': self.retailer_logo,

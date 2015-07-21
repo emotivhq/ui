@@ -39,6 +39,53 @@ function FacebookService(ezfb,  $http,  $rootScope,  $location,  $window,
         $window.open(url, '_self');
     };
 
+    this.checkSharePermission = function() {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'has-share-auth', service: 'facebook'}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
+    this.getSharePermissionUrl = function() {
+        AppStateService.set('login_service', 'facebook');
+        var url = 'https://www.facebook.com/dialog/oauth' +
+            '?client_id=' + window.fbAppId +
+            '&response_type=code' +
+            '&redirect_uri=' + $window.location.protocol + '//' +
+            $window.location.host +
+            '&state=' + AppStateService.base64StateForSharing() +
+            '&scope=publish_actions'; //user_birthday
+        return url;
+    };
+
+    this.doShare = function(message, link, linkName) {
+            var deferred = $q.defer();
+            var doDeferred = function() {
+                $http({method: 'POST', url: '/users', data: {
+                    action: 'do-share', service: 'facebook',
+                    message: message, link: link, link_name: linkName}})
+                    .success(function(data) {
+                        deferred.resolve(data);
+                    })
+                    .error(function(data) {
+                        console && console.log && console.log(data);
+                        deferred.reject(data);
+                    });
+                return deferred.promise
+            };
+            return doDeferred();
+        };
+
     this.getLongTermToken = function(token) {
         $http({method: 'POST', url: '/users',
             data: {service: 'facebook', action: 'get-long-term-token',
