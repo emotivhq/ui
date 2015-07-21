@@ -179,4 +179,8 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
             return "";
         }
     };
+
+    $scope.loggedIn = function() {
+        return UserService.loggedIn;
+    };
 }
