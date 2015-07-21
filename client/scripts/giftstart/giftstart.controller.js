@@ -53,6 +53,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.showShare = UserService.loggedIn && $location.hash() == "share-panel";
 
+    $scope.showThanksInvite = false;
+
     function imageUpdated(data) {
         imageData = data;
     }
@@ -132,6 +134,8 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $rootScope.$on('signbox-hidden', function() {
         $scope.showSignBox = false;
+        $scope.showShare = true;
+        $scope.showThanksInvite = true;
     });
 
     if ($scope.giftStart.gc_name) {
