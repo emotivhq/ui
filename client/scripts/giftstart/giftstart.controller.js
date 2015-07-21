@@ -66,12 +66,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     };
 
     $scope.showSharePanel = function(show) {
-        if (UserService.loggedIn) {
+        //if (UserService.loggedIn) {
             $scope.showShare = show;
-        } else {
-            $rootScope.$broadcast('loginbox-show-login');
-            $scope.showLoginBox = true;
-        }
+        //} else {
+        //    $rootScope.$broadcast('loginbox-show-login');
+        //    $scope.showLoginBox = true;
+        //}
     };
 
     $scope.editingComment = function(comment, editing) {
