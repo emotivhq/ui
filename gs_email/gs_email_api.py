@@ -99,13 +99,14 @@ class ShareCampaignHandler(webapp2.RedirectHandler):
         user = ndb.Key('User', uid).get()
         params = json.loads(self.request.body)
         to = params["to"]
-        message = "<br />".join(params["message"].split("\n"))
+        message = params["message"] #"<br />".join(params["message"].split("\n"))
         share_url = params["share_url"]
         gsid = params["gsid"]
         try:
-            # if from_email == None or not validEmailRegex.match(from_email):
-            #     raise Exception("A valid email address is required.")
-            email_share(to, user.email if user.email is not None else "giftconcierge@giftstarter.com", message, gsid, user.name, share_url, user.uid)
+            emails = re.sub("([,;\"\}\{\s]+)"," ",to).split(" ")
+            for email in emails:
+                if validEmailRegex.match(email):
+                    email_share(email, user.email if user.email is not None else "giftconcierge@giftstarter.com", message, gsid, user.name, share_url, user.uid)
             self.response.write(json.dumps({"ok": "Success!"}))
         except Exception as e:
             self.response.set_status(403)
