@@ -167,7 +167,6 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.selectSocial = function(social) {
-        $scope.selectedSocials[social] = true;
         if(!$scope.sharePermission[social]) {
             ensurePermission[social]();
         }
