@@ -50,17 +50,17 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showLoginBox = false;
     $scope.showPayBox = false;
     $scope.showSignBox = false;
+    $scope.showShareBox = false;
 
     $scope.showShare = UserService.loggedIn && $location.hash() == "share-panel";
 
-    $scope.showThanksInvite = false;
 
     function imageUpdated(data) {
         imageData = data;
     }
 
     $scope.showSharePanel = function(show) {
-            $scope.showThanksInvite = false;
+            $scope.showShareBox = false;
             $scope.showShare = show;
     };
 
@@ -136,8 +136,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $rootScope.$on('signbox-hidden', function() {
         $scope.showSignBox = false;
         $scope.showShare = false;
-        $scope.showThanksInvite = true;
+        $scope.showShareBox = true;
     });
+
+    $scope.shareBox = function (show) {
+        $scope.showShareBox = show;
+    };
 
     if ($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
@@ -483,7 +487,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     function loggedOut() {
         $scope.loggedIn = false;
         $scope.showShare = false;
-        $scope.showThanksInvite = false;
+        $scope.showShareBox = false;
         loginChanged();
     }
 

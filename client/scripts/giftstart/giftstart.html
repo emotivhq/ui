@@ -10,7 +10,7 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="prodtitle">
                 <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
             </div>
@@ -61,10 +61,16 @@
             <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
             <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
         </div>
+        <div class="share-box" ng-show="showShareBox">
+            <h2>Share with Friends:</h2>
+            <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
+            <a href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span>INVITE FRIENDS TO PITCH IN</span></button></a>
+            <a href="" ng-click="shareBox(false)">SKIP THIS STEP</a>
+        </div>
 
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
 
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
+        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <div class="ordinal_circle"><span class="ordinal">1</span></div><p> CLICK ON THE TILES YOU WANT TO PURCHASE</p><br/>
                 <div class="ordinal_circle"><span class="ordinal">2</span></div><p> PITCH IN!</p>
