@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="fullwidth block" id="login-box-top">
+    <div class="fullwidth block">
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
             <div class="prodtitle">
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <a ng-href="{{getSharePanelHref()}}"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN WITH FRIENDS</span></button></a>
+            <a ng-href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN WITH FRIENDS</span></button></a>
             <!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />

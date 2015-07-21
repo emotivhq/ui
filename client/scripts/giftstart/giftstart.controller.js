@@ -51,27 +51,14 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showPayBox = false;
     $scope.showSignBox = false;
 
-    if(UserService.loggedIn && $location.hash() == "login-box-top") {
-        $location.hash("share-panel");
-    }
-
     $scope.showShare = UserService.loggedIn && $location.hash() == "share-panel";
 
     function imageUpdated(data) {
         imageData = data;
     }
 
-    $scope.getSharePanelHref = function() {
-        return UserService.loggedIn?"#share-panel":"#login-box-top"
-    };
-
     $scope.showSharePanel = function(show) {
-        //if (UserService.loggedIn) {
             $scope.showShare = show;
-        //} else {
-        //    $rootScope.$broadcast('loginbox-show-login');
-        //    $scope.showLoginBox = true;
-        //}
     };
 
     $scope.editingComment = function(comment, editing) {
