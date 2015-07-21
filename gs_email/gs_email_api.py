@@ -106,13 +106,13 @@ class ShareCampaignHandler(webapp2.RedirectHandler):
             emails = re.sub("([,;\"\}\{\s]+)"," ",to).split(" ")
             for email in emails:
                 if validEmailRegex.match(email):
-                    email_share(email, user.email if user.email is not None else "giftconcierge@giftstarter.com", message, gsid, user.name, share_url, user.uid)
+                    email_share(email, user.email if user.email is not None else "giftconcierge@giftstarter.com", message, gsid, user.name, share_url)
             self.response.write(json.dumps({"ok": "Success!"}))
         except Exception as e:
             self.response.set_status(403)
             self.response.write(json.dumps({"error": e.message}))
 
-def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
+def email_share(to, sender, message, gsid, sender_name, share_url):
     """
     enqueue an email to share the specified giftstart with someone
     @param to:
@@ -121,12 +121,11 @@ def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
     @param gsid:
     @param sender_name:
     @param share_url:
-    @param sender_uid:
     """
     gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
     requests.put(config['email_url'],
                  data=json.dumps({
-                     'subject': "Join us on a gift together",
+                     'subject': "Help "+sender_name+" give this gift!",
                      'sender': sender, 'to': to,
                      'template_name': "campaign_share_email_2",
                      'mime_type': 'html',
