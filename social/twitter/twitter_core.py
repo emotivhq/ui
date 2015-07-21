@@ -132,19 +132,24 @@ def get_twitter_shorturl_length():
         return 22
 
 
-def publish_to_status(user, message):
+def publish_to_status(user, message, link):
     """
     update the user's Twitter status (eg "tweet"), as per https://dev.twitter.com/rest/reference/post/statuses/update
     :param user: user for whom has_permission_to_publish() is known to be true
     :param message: message body
+    :param link: link to append
     :return: True if publish succeeded, False if it failed
     """
     try:
-        shorturl_length = get_twitter_shorturl_length()
-        max_message_len = 140-shorturl_length
+        max_message_len = 140
+        if link is None:
+            message=message[:max_message_len]
+        else:
+            max_message_len = 139-get_twitter_shorturl_length()
+            message=message[:max_message_len]+' '+link
         auth = OAuth1(APP_KEY_SHARING, APP_SECRET_SHARING, resource_owner_key=user.twitter_sharing_token_set.access_token,
                       resource_owner_secret=user.twitter_sharing_token_set.access_secret)
-        data = {'status': message[:max_message_len]} #only first 140 chars
+        data = {'status': message}
         response = requests.post("https://api.twitter.com/1.1/statuses/update.json", auth=auth, data=data)
         if "errors" in json.loads(response.content):
             logging.error("Unable to post to twitter for {0}: {1}".format(user.uid, response.content))

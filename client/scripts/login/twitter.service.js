@@ -112,12 +112,12 @@ GiftStarterApp.service('TwitterService', [
             return doDeferred();
         };
 
-        this.doShare = function(message) {
+        this.doShare = function(message, link) {
             var deferred = $q.defer();
             var doDeferred = function() {
                 $http({method: 'POST', url: '/users', data: {
                     action: 'do-share', service: 'twitter',
-                    message: message}})
+                    link: link, message: message}})
                     .success(function(data) {
                         deferred.resolve(data);
                     })

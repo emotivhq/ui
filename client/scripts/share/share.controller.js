@@ -82,24 +82,16 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     };
 
     $scope.shareFacebook = function(message, link, linkName) {
-        Analytics.track('facebook', 'linkedin share submitted');
-        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
-        if (!linkName) {linkName = $scope.giftStart.product_title;}
-       // if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
-            FacebookService.doShare(message, link, linkName);//.then(function (success) {
-       //        alert(success);
-       //     });
-       // }
+        Analytics.track('campaign', 'facebook share submitted');
+        //if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        //if (!linkName) {linkName = $scope.giftStart.product_title;}
+        FacebookService.doShare(message, link, linkName);
     };
 
-    $scope.shareTwitter = function(message) {
+    $scope.shareTwitter = function(message, link) {
         Analytics.track('campaign', 'twitter share submitted');
-        message += " "+$location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');
-        //if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message)) {
-            TwitterService.doShare(message);//.then(function (success) {
-        //        alert(success);
-        //    });
-        //}
+        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        TwitterService.doShare(message, link);
     };
 
     $scope.shareGplus = function(link) {
@@ -111,13 +103,9 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.shareLinkedin = function(message, link, linkName) {
         Analytics.track('campaign', 'linkedin share submitted');
-        if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
-        if (!linkName) {linkName = $scope.giftStart.product_title;}
-        //if(window.confirm("Warning!  This will ACTUALLY post a live message:\n"+message+" "+link)) {
-            LinkedInService.doShare(message, link, linkName);//.then(function (success) {
-        //        alert(success);
-        //    });
-        //}
+        //if (!link) {link = $location.absUrl().replace('localhost:8080','www.dev.giftstarter.co');}
+        //if (!linkName) {linkName = $scope.giftStart.product_title;}
+        LinkedInService.doShare(message, link, linkName);
     };
 
     $scope.shareEmail = function(to, message, link) {

@@ -417,7 +417,7 @@ class UserHandler(webapp2.RequestHandler):
                 if data['service'] == 'facebook':
                     self.response.write(facebook.facebook_core.publish_to_feed(user, message, link, link_name))
                 if data['service'] == 'twitter':
-                    self.response.write(twitter.twitter_core.publish_to_status(user, message))
+                    self.response.write(twitter.twitter_core.publish_to_status(user, message, link))
                 # if data['service'] == 'googleplus':
                 #     self.response.write(googleplus.googleplus_core.publish_to_post(user, message))
                 if data['service'] == 'linkedin':
