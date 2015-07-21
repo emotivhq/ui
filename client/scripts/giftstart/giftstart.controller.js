@@ -57,6 +57,10 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         imageData = data;
     }
 
+    $scope.getSharePanelHref = function() {
+        return UserService.loggedIn?"#share-panel":"#login-box-top"
+    };
+
     $scope.showSharePanel = function(show) {
         if (UserService.loggedIn) {
             $scope.showShare = show;
