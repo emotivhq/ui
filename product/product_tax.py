@@ -9,6 +9,9 @@ import jinja2
 import requests
 import re
 import logging
+import json
+
+GOOGLE_MAPS_API_URL="http://maps.googleapis.com/maps/api/geocode/json?address="
 
 JINJA_ENVIRONMENT = jinja2.Environment()
 
@@ -70,23 +73,30 @@ def lookup(address, city, state, zipcode, is_gift_card):
         return 0
     if not state:
         state=" "
+    #get the correct state for tax purposes, regardless of what the user says
+    if zipcode:
+        response = requests.get(GOOGLE_MAPS_API_URL+zipcode)
+        try:
+            addresses = json.loads(response.content)["results"][0]["address_components"]
+            for i in range(len(addresses)):
+                addy = addresses[i]
+                if "types" in addy and "administrative_area_level_1" in addy["types"]:
+                    oldstate = state
+                    state = addy["short_name"]
+                    logging.warning("correcting {0} to {1} for {2}".format(oldstate, state, zipcode))
+        except Exception as x:
+            logging.error("Unable to get state from Google Maps for {0}: {1}".format(response.content, x))
 
-    request = TAX_CLOUD_SOAP_TEMPLATE.render({
-        'api_id': TAX_CLOUD_API_ID,
-        'api_key': TAX_CLOUD_API_KEY,
-        'price': 100,
-        'address': address,
-        'city': city,
-        'state': state,
-        'zip': zipcode
-    }).encode('utf-8')
+    data = {'api_id': TAX_CLOUD_API_ID, 'api_key': TAX_CLOUD_API_KEY, 'price': 100, 'address': address,
+                'city': city, 'state': state, 'zip': zipcode}
+    request = TAX_CLOUD_SOAP_TEMPLATE.render(data).encode('utf-8')
     headers = {"Content-Type": "text/xml; charset=UTF-8"}
 
     response = requests.post(url='https://api.taxcloud.net/1.0/', headers=headers, data=request)
     tax_amount = 0
     try:
         tax_amount = float(re.findall('<TaxAmount>(.+)</TaxAmount>', response.content)[0]) / 100.0
-        logging.info("Found tax {4} for {0}, {1}, {2}, {3}".format(address,city,state,zipcode,tax_amount))
+        logging.info("Found tax {1} for {0}".format(data,tax_amount))
     except IndexError:
-        logging.error("Bad response from TaxCloud for {0}, {1}, {2}, {3}: {4}".format(address,city,state,zipcode,response.content))
+        logging.error("Bad response from TaxCloud for {0}: {1}".format(data,response.content))
     return tax_amount
