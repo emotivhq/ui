@@ -78,6 +78,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         $scope.selectedSocials["twitter"] = false;
         $scope.selectedSocials["linkedin"] = false;
         $scope.selectedSocials["google"] = false;
+        $scope.emailRecipients = "";
         $scope.shareSuccess = false;
     };
 
