@@ -91,7 +91,7 @@
       text-align: left
       width: 100%
     button
-      margin: 30px
+      margin: 10px 30px
       max-width: calc(100% - 60px)
       width: 300px
     h4
@@ -101,3 +101,8 @@
       text-decoration: underline
     p
       font-size: 13px
+      &#twitterNote
+        margin: 10px auto
+        width: 40%
+        @include apply-at-size("phone")
+          width: 90%
