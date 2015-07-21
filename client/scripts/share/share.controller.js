@@ -161,7 +161,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         //    $scope.shareGoogle();
         //}
         if($scope.emailRecipients.trim().length>0) {
-            $scope.shareEmail($scope.emailRecipients, msg)
+            $scope.shareEmail($scope.emailRecipients, $scope.message)
         }
     };
 

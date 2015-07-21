@@ -6,7 +6,6 @@ import requests
 import yaml
 import json
 from giftstart import GiftStart
-from gs_user import User
 
 config = yaml.load(open('config.yaml'))
 

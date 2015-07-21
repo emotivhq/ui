@@ -3,7 +3,7 @@ team_notification_email:  'jon@giftstarter.com'
 product_api_url:          'https://product-dev-gift-starter.appspot.com/static/dev'
 
 app_url:                  'https://www.dev.giftstarter.com'
-email_url:                'http://www.dev.giftstarter.com/email/send.json'
+email_url:                'http://localhost:8080/email/send.json'
 storage_url:              '/giftstarter-pictures/dev/'
 
 facebook_app:             'dev-giftstarter'

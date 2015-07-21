@@ -15,8 +15,8 @@ from gs_email.gs_email_preview import EmailPreviewHandler
 import requests
 import yaml
 import re
-from share import email_share
 from gs_user.gs_user_api import getUidFromCookies, getTokenFromCookies, validate
+from giftstart import GiftStart
 
 REQUIRED_PARAMS = ['to', 'sender', 'subject', 'body']
 REQUIRED_PARAMS_TEMPLATE = ['to', 'sender', 'subject', 'template_name',
@@ -111,6 +111,35 @@ class ShareCampaignHandler(webapp2.RedirectHandler):
         except Exception as e:
             self.response.set_status(403)
             self.response.write(json.dumps({"error": e.message}))
+
+def email_share(to, sender, message, gsid, sender_name, share_url, sender_uid):
+    """
+    enqueue an email to share the specified giftstart with someone
+    @param to:
+    @param sender:
+    @param message:
+    @param gsid:
+    @param sender_name:
+    @param share_url:
+    @param sender_uid:
+    """
+    gs = GiftStart.query(GiftStart.gsid == gsid).fetch(1)[0]
+    requests.put(config['email_url'],
+                 data=json.dumps({
+                     'subject': "Join us on a gift together",
+                     'sender': sender, 'to': to,
+                     'template_name': "campaign_share_email_2",
+                     'mime_type': 'html',
+                     'img_url': gs.product_img_url,
+                     'template_kwargs': {
+                         'message': message,
+                         'sender_name': sender_name,
+                         'sender_email': sender,
+                         'campaign_name': gs.giftstart_title,
+                         'campaign_link': share_url,
+                         'frame': 'base_frame'
+                     }
+                 }))
 
 class ContactUsHandler(webapp2.RedirectHandler):
     """PUT handler to send an email for a specific template; see TEMPLATE_PARAMS"""

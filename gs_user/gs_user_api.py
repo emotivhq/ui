@@ -399,13 +399,14 @@ class UserHandler(webapp2.RequestHandler):
 
         elif data['action'] == 'has-share-auth':
             user = ndb.Key('User', uid).get() if uid else None
-            if data['service'] == 'facebook':
+            service = data['service']
+            if service == 'facebook':
                 self.response.write("1" if user and facebook.facebook_core.has_permission_to_publish(user) else 0)
-            if data['service'] == 'twitter':
+            if service == 'twitter':
                 self.response.write("1" if user and twitter.twitter_core.has_permission_to_publish(user) else 0)
-            # if data['service'] == 'googleplus':
+            # if service == 'googleplus':
             #     self.response.write("1" if user and googleplus.googleplus_core.has_permission_to_publish(user) else 0)
-            if data['service'] == 'linkedin':
+            if service == 'linkedin':
                 self.response.write("1" if user and linkedin.linkedin_core.has_permission_to_publish(user) else 0)
 
         elif data['action'] == 'do-share':
@@ -414,13 +415,14 @@ class UserHandler(webapp2.RequestHandler):
                 message = data['message']
                 link = data['link'] if 'link' in data else None
                 link_name = data['link_name'] if 'link_name' in data else None
-                if data['service'] == 'facebook':
+                service = data['service']
+                if service == 'facebook':
                     self.response.write(facebook.facebook_core.publish_to_feed(user, message, link, link_name))
-                if data['service'] == 'twitter':
+                if service == 'twitter':
                     self.response.write(twitter.twitter_core.publish_to_status(user, message, link))
-                # if data['service'] == 'googleplus':
+                # if service == 'googleplus':
                 #     self.response.write(googleplus.googleplus_core.publish_to_post(user, message))
-                if data['service'] == 'linkedin':
+                if service == 'linkedin':
                     self.response.write(linkedin.linkedin_core.publish_comment(user, message, link, link_name))
 
         elif data['action'] == 'submit-verifier':
