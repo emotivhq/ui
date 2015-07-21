@@ -378,8 +378,17 @@ div.giftstart.wrapper
         font-size: 125%
         @media screen and (max-width: $phone-tablet-boundary - 1)
           margin-bottom: 0
-        .ordinal
-          color: #DF484B
+      .ordinal
+        color: $primary-color
+        line-height: 31px
+      .ordinal_circle
+        border: $primary-color 2px solid
+        border-radius: 50%
+        display: inline-block
+        height: 36px
+        width: 36px
+        text-align: center
+        vertical-align: middle
 
     button.pitch-in
       display: block

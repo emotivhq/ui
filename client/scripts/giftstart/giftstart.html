@@ -66,8 +66,8 @@
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox">
             <div class="pitch-instructions">
-                <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">1.</span> Click on the tiles you want to purchase</p>
-                <p ng-show="secondsLeft > 0 && !campaignComplete()"><span class="ordinal">2.</span> Pitch in!</p>
+                <p ng-show="secondsLeft > 0 && !campaignComplete()"><div class="ordinal_circle"><span class="ordinal">1</span></div> Click on the tiles you want to purchase</p>
+                <p ng-show="secondsLeft > 0 && !campaignComplete()"><div class="ordinal_circle"><span class="ordinal">2</span></div> Pitch in!</p>
             </div>
             <button class="pitch-in button red" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
 
