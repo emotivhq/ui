@@ -51,7 +51,11 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.showPayBox = false;
     $scope.showSignBox = false;
 
-    $scope.showShare = false;
+    if(UserService.loggedIn && $location.hash() == "login-box-top") {
+        $location.hash("share-panel");
+    }
+
+    $scope.showShare = UserService.loggedIn && $location.hash() == "share-panel";
 
     function imageUpdated(data) {
         imageData = data;
@@ -486,6 +490,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     function loggedOut() {
         $scope.loggedIn = false;
+        $scope.showShare = false;
         loginChanged();
     }
 

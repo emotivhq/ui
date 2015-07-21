@@ -63,6 +63,9 @@ angular.module('GiftStarterApp').service('AppStateService', [
         // Returns encoded app state for persisting across OAuth transitions
         function base64State(isSharingLogin) {
             state.path = window.location.pathname; //self.path;
+            if(window.location.hash!="" && window.location.hash!="#") {
+                state.hash = window.location.hash.slice(1);
+            }
             state.app_url = $window.location.protocol + '//' + $window.location.host + '/';
             state.is_sharing_login = isSharingLogin?1:0;
             state.prior_uid = $rootScope.uid;
@@ -89,6 +92,9 @@ angular.module('GiftStarterApp').service('AppStateService', [
                 $location.path('/giftstart/' + state.title_url);
             } else if (state.path) {
                 $location.path(state.path);
+                if (state.hash) {
+                    $location.hash(state.hash);
+                }
             }
             $rootScope.$broadcast('state-parsed');
         }
