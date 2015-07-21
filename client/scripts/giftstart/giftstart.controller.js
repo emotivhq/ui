@@ -60,6 +60,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     }
 
     $scope.showSharePanel = function(show) {
+            $scope.showThanksInvite = false;
             $scope.showShare = show;
     };
 
@@ -134,7 +135,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $rootScope.$on('signbox-hidden', function() {
         $scope.showSignBox = false;
-        $scope.showShare = true;
+        $scope.showShare = false;
         $scope.showThanksInvite = true;
     });
 
@@ -482,6 +483,7 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     function loggedOut() {
         $scope.loggedIn = false;
         $scope.showShare = false;
+        $scope.showThanksInvite = false;
         loginChanged();
     }
 
