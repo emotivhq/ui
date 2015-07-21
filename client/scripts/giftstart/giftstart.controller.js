@@ -58,7 +58,12 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     }
 
     $scope.showSharePanel = function(show) {
-        $scope.showShare = show;
+        if (UserService.loggedIn) {
+            $scope.showShare = show;
+        } else {
+            $rootScope.$broadcast('loginbox-show-login');
+            $scope.showLoginBox = true;
+        }
     };
 
     $scope.editingComment = function(comment, editing) {
