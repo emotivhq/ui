@@ -37,6 +37,7 @@
 
     <div class="share-buttons">
         <p ng-show="shareSuccess">YOUR SHARE SUCCESSFULLY POSTED!</p>
+        <p class="twitter-note" ng-show="selectedSocials['twitter'] && message.length>118">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>
         <button class="red" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">SHARE</button>
         <button ng-show="shareSuccess" ng-click="shareReset()">SHARE AGAIN</button>
         <button ng-show="shareSuccess" ng-click="$parent.showSharePanel(false); shareReset()">FINISH</button>
