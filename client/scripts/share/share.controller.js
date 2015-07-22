@@ -29,20 +29,24 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.emailRecipients = "";
 
+    var ensuring = [];
+    ensuring["facebook"] = false;
+    ensuring["twitter"] = false;
+    ensuring["linkedin"] = false;
 
     $scope.refreshPermissionsStatus = function() {
         //check to see if user has permission to post
         FacebookService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["facebook"] = hasPermission=='1';
-            if($scope.selectedSocials["facebook"]) {$scope.selectedSocials["facebook"] = $scope.sharePermission["facebook"];}
+            if(ensuring["facebook"]) {alert(); $scope.selectedSocials["facebook"] = $scope.sharePermission["facebook"]; ensuring["facebook"] = false;}
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["twitter"] = hasPermission=='1';
-            if($scope.selectedSocials["twitter"]) {$scope.selectedSocials["twitter"] = $scope.sharePermission["twitter"];}
+            if(ensuring["twitter"]) {alert(); $scope.selectedSocials["twitter"] = $scope.sharePermission["twitter"]; ensuring["twitter"] = false;}
         });
         LinkedInService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["linkedin"] = hasPermission=='1';
-            if($scope.selectedSocials["linkedin"]) {$scope.selectedSocials["linkedin"] = $scope.sharePermission["linkedin"];}
+            if(ensuring["linkedin"]) {$scope.selectedSocials["linkedin"] = $scope.sharePermission["linkedin"]; ensuring["linkedin"] = false;}
         });
         //GooglePlusService.checkSharePermission().then(function(hasPermission) {
         //    $scope.sharePermission["google"] = hasPermission=='1';
@@ -62,14 +66,17 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
 
     $scope.ensureFacebookSharePermission = function() {
+        ensuring["facebook"] = true;
         window.open(sharePermissionUrlFacebook);
     };
 
     $scope.ensureTwitterSharePermission = function() {
+        ensuring["twitter"] = true;
         window.open(sharePermissionUrlTwitter);
     };
 
     $scope.ensureLinkedInSharePermission = function() {
+        ensuring["linkedin"] = true;
         window.open(sharePermissionUrlLinkedIn);
     };
 
