@@ -15,19 +15,14 @@ body *
 
 p, label, li
   font: $p-font
-  line-height: 1.5
 
 p.small, label.small
   font-size: 1em
 
 a
   font: $p-font
-h1
-  a
-    font: $h1-font
-    font-size: 1em
-    color: $primary-color
-    text-decoration: none
+  &.button
+    text-transform: uppercase
 
 input, button, select, textarea
   font: $p-font
@@ -42,17 +37,16 @@ select
 
 input:focus, button:focus, select:focus, textarea:focus
   outline: none
-  +box-shadow(#333, 0, 0, 0.1em)
+  +box-shadow($font-color, 0, 0, 0.1em)
 
 button
   font: $button-font
   vertical-align: top
-  background: white
   border: solid $primary-color 2px
   border-radius: 25px
-  color: $primary-color
   cursor: pointer
   padding: 9px 10px 5px 10px
+  text-transform: uppercase
   +transition(all, 0.2s)
   -webkit-font-smoothing: antialiased
   &:hover
@@ -62,9 +56,12 @@ button
     border-radius: 0
     background: $primary-color
     color: white
-  &.red
-    color: white
+  &.primary, &.red
     background: $primary-color
+    color: white
+  &.secondary, &.white
+    background: white
+    color: $primary-color
   &.green
     border-color: $gs-green
     color: $gs-green
@@ -111,12 +108,12 @@ button.white-border.disabled
 
 button.cancel
   position: absolute
-  top: 0%
-  right: 0%
+  top: 0
+  right: 0
   background: rgba(0, 0, 0, 0)
   color: #bbb
-  border: solid 0px black
-  font-family: "Roboto condensed"
+  border: solid 0 black
+  font-family: Gotham, sans-serif
   font-size: 1.5em
 button.cancel:hover
   color: $primary-color
@@ -135,27 +132,30 @@ span.circle
 h1
   font: $h1-font
   color: #000
-  margin-top: 0px
-  margin-bottom: 0px
-
-h1.accent
-  color: $primary-color
-h1.white
-  color: #fff
+  text-transform: capitalize
+  &.accent
+    color: $primary-color
+  &.white
+    color: #fff
+  a
+    font: $h1-font
+    font-size: 1em
+    color: $primary-color
+    text-decoration: none
 
 h2
   font: $h2-font
   color: $primary-color
-  margin-top: 0px
-  margin-bottom: 0px
-h2.black
-  color: #000
+  text-transform: capitalize
+  &.black
+    color: #000
 
 h3
   font: $h3-font
   color: #000
-h3.accent
-  color: $primary-color
+  text-transform: uppercase
+  &.accent
+    color: $primary-color
 
 h4
   font: $h4-font
