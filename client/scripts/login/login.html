@@ -8,7 +8,7 @@
             <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
         </div>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="userlogin__loginbtn" ng-disabled="$parent.working">Log In</button>
+        <button class="userlogin__loginbtn red" ng-disabled="$parent.working">Log In</button>
     </form>
 </div>
 
@@ -30,6 +30,6 @@
         <!--<input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.reenterpassword" placeholder="Re-enter the Password" required>-->
         <a class="userlogin__forgot linky" ng-click="$parent.showReset=false">Cancel</a>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="userlogin__loginbtn" ng-disabled="$parent.working">Change Password</button>
+        <button class="userlogin__loginbtn red" ng-disabled="$parent.working">Change Password</button>
     </form>
 </div>
