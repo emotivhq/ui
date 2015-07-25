@@ -3,21 +3,15 @@
 // ---------------------- STATIC PAGES ----------------------
 .static-pages
   clear: both
-  font-family: "Roboto", sans-serif !important
   padding-bottom: 50px
   text-align: center
 
   a
     color: $primary-color
-    font-family: "Roboto", sans-serif
-
-  h1, h2, h3, h4, h5, h6
-    font-family: "Roboto", sans-serif
-    color: $font-color
 
   .headerwrap
     color: white
-    margin: 0px auto 50px auto
+    margin: 0 auto 50px auto
     height: 300px
     padding-top: 30px
     text-align: center
@@ -25,32 +19,33 @@
 
     h1
       color: white
-      @include apply-at-size("phone", "portrait")
-        font-size: 1.5em
-      @include apply-at-size("phone", "landscape")
-        font-size: 2em
-      @include apply-at-size("tablet", "portrait")
-        font-size: 2.25em
-      @include apply-at-size("tablet", "landscape")
-        font-size: 2.5em
+      //@include apply-at-size("phone", "portrait")
+      //  font-size: 1.5em
+      //@include apply-at-size("phone", "landscape")
+      //  font-size: 2em
+      //@include apply-at-size("tablet", "portrait")
+      //  font-size: 2.25em
+      //@include apply-at-size("tablet", "landscape")
+      //  font-size: 2.5em
       -webkit-font-smoothing: antialiased
 
     p
+      font-size: 15px
       //font: 1.2em "Roboto", sans-serif
       //line-height: 25px
-      @include  apply-at-size("phone", "portrait")
-        font-size: 0.8em
-        line-height: 18px
-      @include  apply-at-size("phone", "landscape")
-        font-size: 1em
-        line-height: 20px
-      @include apply-at-size("tablet", "portrait")
-        font-size: 0.9em
-        line-height: 20px
-      @include apply-at-size("tablet", "landscape")
-        font-size: 1.125em
-        line-height: 22px
-      letter-spacing: 1px
+      //@include  apply-at-size("phone", "portrait")
+      //  font-size: 0.8em
+      //  line-height: 18px
+      //@include  apply-at-size("phone", "landscape")
+      //  font-size: 1em
+      //  line-height: 20px
+      //@include apply-at-size("tablet", "portrait")
+      //  font-size: 0.9em
+      //  line-height: 20px
+      //@include apply-at-size("tablet", "landscape")
+      //  font-size: 1.125em
+      //  line-height: 22px
+      //letter-spacing: 1px
       margin: 10px auto 7px auto
       width: 60%
       @include apply-at-size("tablet")
@@ -75,6 +70,4 @@
       color: white
 
   h2
-    color: $font-color
-    font: 2.25em "Roboto", sans-serif
     padding: 15px 0 30px 0
