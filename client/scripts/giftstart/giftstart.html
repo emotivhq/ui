@@ -72,8 +72,8 @@
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ordinal_circle"><span class="ordinal">1</span></div><p> CLICK ON THE TILES YOU WANT TO PURCHASE</p><br/>
-                <div class="ordinal_circle"><span class="ordinal">2</span></div><p> PITCH IN!</p>
+                <div class="ordinal_circle"><span class="ordinal">1</span></div><h3> CLICK ON THE TILES YOU WANT TO PURCHASE</h3><br/>
+                <div class="ordinal_circle"><span class="ordinal">2</span></div><h3> PITCH IN!</h3>
             </div>
             <button class="pitch-in button red" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
 
@@ -125,7 +125,7 @@
     <gs-thanks></gs-thanks>
     <div class="groupcard">
         <div class="title title--groupcard">
-            <h3 class="title__name">Group Card</h3>
+            <h2 class="title__name">Group Card</h2>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
         </div>
         <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
