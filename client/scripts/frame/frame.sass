@@ -1,4 +1,5 @@
 @import "../base"
+@import "../classes"
 
 html
   background-color: #E5E5E5
@@ -23,6 +24,7 @@ a
   font: $p-font
   text-decoration: none
   &.button
+    @extend .linky
     text-decoration: underline
     text-transform: uppercase
 

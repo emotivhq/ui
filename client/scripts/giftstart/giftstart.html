@@ -134,9 +134,9 @@
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
                     <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                 </a>
-                <button class="userprofile__imageedit" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</button>
+                <a class="userprofile__imageedit button" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</a>
                 <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
-                <button class="userprofile__imagesave" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</button>
+                <a class="userprofile__imagesave button" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</a>
             </div>
             <div class="contributors__info">
                 <h4 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
@@ -145,9 +145,9 @@
                 <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
             </div>
             <div class="contributors__edit">
-              <a class="contributors__edit__button button linky" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
-              <button class="contributors__edit__button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</button>
-                <button class="contributors__edit__button savebtn" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
+                <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</a>
+                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
