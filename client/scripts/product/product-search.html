@@ -98,8 +98,8 @@
                     <p class="description" ng-bind-html="product.description"></p>
                     <p class="price block">${{product.price / 100 | number : 2}}</p>
                     <div class="buttons">
-                        <button class="giftstart" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart!</button>
-                        <button class="giftstart" ng-click="saveForLater($index);$event.stopPropagation();">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
+                        <button class="giftstart primary" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart it</button>
+                        <button class="giftstart green" ng-click="saveForLater($index);$event.stopPropagation();">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
                         <div class="product-message" ng-show="product.selected" ng-bind-html="productMessage"></div>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="page-buttons" ng-show="products.length > 10" >
-            <button ng-click="decrementPage()">Previous</button><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><button ng-click="incrementPage()">Next</button>
+            <a class="button linky" ng-click="decrementPage()">Previous</a><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><a class="button linky" ng-click="incrementPage()">Next</a>
         </div>
     </section>
     <!--p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p-->

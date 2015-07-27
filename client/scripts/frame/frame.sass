@@ -44,6 +44,7 @@ input:focus, button:focus, select:focus, textarea:focus
 button
   font: $button-font
   vertical-align: top
+  background-color: white
   border: solid $primary-color 2px
   border-radius: 25px
   cursor: pointer
@@ -60,10 +61,18 @@ button
     color: white
   &.primary, &.red
     background: $primary-color
+    border-color: $primary-color
     color: white
+    &-green
+      background: $gs-green
+      border-color: $gs-green
   &.secondary, &.white
     background: white
+    border-color: $primary-color
     color: $primary-color
+    &-green
+      border-color: $gs-green
+      color: $gs-green
   &.green
     border-color: $gs-green
     color: $gs-green
@@ -155,14 +164,17 @@ h2
 
 h3
   font: $h3-font
-  color: #000
-  text-transform: uppercase
-  &.accent
-    color: $primary-color
+  color: $font-color
+  text-transform: capitalize
+  &.black
+    color: #000
 
 h4
   font: $h4-font
   color: #000
+  text-transform: uppercase
+  &.accent
+    color: $primary-color
 
 /*  ANGULAR VIEW  */
 #angular-view

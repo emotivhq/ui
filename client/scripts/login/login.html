@@ -22,7 +22,7 @@
 </div>
 
 <div class="userlogin__form" ng-show="$parent.showReset">
-    <h3>Reset Your Password:</h3>
+    <h4>Reset Your Password:</h4>
     <form ng-submit="$parent.doResetPassword()">
         <input class="userlogin__email" type="hidden" name="resetcode" ng-model="$parent.resetCode" placeholder="Enter the reset code" required />
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
