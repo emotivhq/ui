@@ -47,7 +47,7 @@ button
   font: $button-font
   vertical-align: top
   background-color: white
-  border: solid $primary-color 2px
+  border: solid 2px
   border-radius: 25px
   cursor: pointer
   padding: 9px 10px 5px 10px
@@ -63,11 +63,14 @@ button
     color: white
   &.primary, &.red
     background: $primary-color
-    border-color: $primary-color
+    border-color: white
     color: white
     &-green
       background: $gs-green
-      border-color: $gs-green
+      &:hover
+        background: $gs-green
+        border-color: $gs-darkgreen
+        color: white
   &.secondary, &.white
     background: white
     border-color: $primary-color
@@ -75,6 +78,10 @@ button
     &-green
       border-color: $gs-green
       color: $gs-green
+      &:hover
+        background: $gs-green
+        border-color: $gs-green
+        color: white
   &.green
     border-color: $gs-green
     color: $gs-green
