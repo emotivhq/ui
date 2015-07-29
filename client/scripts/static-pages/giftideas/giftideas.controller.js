@@ -95,4 +95,8 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         });
     }
 
+    $scope.goToLink = function(destination) {
+        window.location.href = destination;
+    };
+
 }

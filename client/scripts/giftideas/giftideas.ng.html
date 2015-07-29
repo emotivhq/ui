@@ -12,10 +12,10 @@
                     <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
                 </div>
                 <div class="gsbuttons">
-                    <a href="{{product.giftStartLink}}" target="_self" class="button red" ng-show="product.hasPrice">GIFTSTART IT!</a>
-                    <a href="#" onclick="olark('api.box.expand')" class="button red" ng-show="!product.hasPrice">CONTACT THE GIFT CONCIERGE</a>
+                    <button ng-click="goToLink(product.giftStartLink)" target="_self" class="primary gsbutton" ng-show="product.hasPrice">GIFTSTART IT!</button>
+                    <button onclick="olark('api.box.expand')" class="primary gsbutton" ng-show="!product.hasPrice">CONTACT THE GIFT CONCIERGE</button>
                     <div ng-show="product.hasPrice" class="saveforlater">
-                        <a href="#" ng-click="saveGiftIdeaForLater(product);" class="button" ng-show="product.hasPrice">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></a>
+                        <button ng-click="saveGiftIdeaForLater(product);" class="primary gsbutton" ng-show="product.hasPrice">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
                         <div class="product-message" ng-bind-html="productMessage"></div>
                     </div>
                 </div>
