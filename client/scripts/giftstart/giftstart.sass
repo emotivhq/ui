@@ -467,8 +467,6 @@ div.giftstart.wrapper
     $green-block: #a3a311
     $red-title: #e8695b
     $red-block: #e54028
-    $title-colors: #ff952b, #12584c, #d8d82b, #e8695b
-    $block-colors: #e17f24, #238471, #a3a311, #e54028
 
     .title
       &--groupcard
@@ -498,14 +496,6 @@ div.giftstart.wrapper
         background-color: $green-block
       &.red
         background-color: $red-block
-      .orange
-        background-color: $orange-title
-      .teal
-        background-color: $teal-title
-      .green
-        background-color: $green-title
-      .red
-        background-color: $red-title
 
       &--row
         display: table-row
@@ -539,8 +529,16 @@ div.giftstart.wrapper
       &__titleblock
         position: absolute
         height: 96px
-        width: 100%
+        width: $box-size
         z-index: 1
+        &.orange
+          background-color: $orange-title
+        &.teal
+          background-color: $teal-title
+        &.green
+          background-color: $green-title
+        &.red
+          background-color: $red-title
 
       &__img
         width: 80%

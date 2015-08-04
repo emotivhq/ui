@@ -342,13 +342,13 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     var colorMap = [];
 
-    $scope.randomColor = function() {
-        if (colorMap[this.$id] == null) {
+    $scope.randomColor = function(index) {
+        if (colorMap[index] == null) {
             var colors = ["red", "green", "orange", "teal"];
-            colorMap[this.$id] = colors[Math.floor(Math.random() * colors.length)];
+            colorMap[index] = colors[Math.floor(Math.random() * colors.length)];
         }
-        return colorMap[this.$id];
-    }
+        return colorMap[index];
+    };
 
     $scope.campaignUrl = function() {
         if($location.path().length > 11) {
