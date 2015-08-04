@@ -490,6 +490,22 @@ div.giftstart.wrapper
       @include apply-at-size("phone")
         display: block
         width: 100%
+      &.orange
+        background-color: $orange-block
+      &.teal
+        background-color: $teal-block
+      &.green
+        background-color: $green-block
+      &.red
+        background-color: $red-block
+      .orange
+        background-color: $orange-title
+      .teal
+        background-color: $teal-title
+      .green
+        background-color: $green-title
+      .red
+        background-color: $red-title
 
       &--row
         display: table-row
@@ -501,12 +517,7 @@ div.giftstart.wrapper
           @include apply-at-size("tablet", "portrait")
             display: table-row
 
-      &:nth-child(even)
-        background: $orange-block
-        position: relative
-
-      &:nth-child(odd)
-        background: $green-block
+      &:nth-child
         position: relative
 
       &--only
@@ -530,14 +541,6 @@ div.giftstart.wrapper
         height: 96px
         width: 100%
         z-index: 1
-        &.orange
-          background-color: $orange-title
-        &.teal
-          background-color: $teal-title
-        &.green
-          background-color: $green-title
-        &.red
-          background-color: $red-title
 
       &__img
         width: 80%

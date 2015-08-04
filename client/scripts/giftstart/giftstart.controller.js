@@ -344,8 +344,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
 
     $scope.randomColor = function() {
         if (colorMap[this.$id] == null) {
-            console.log(this.$id);
-            console.log(colorMap);
             var colors = ["red", "green", "orange", "teal"];
             colorMap[this.$id] = colors[Math.floor(Math.random() * colors.length)];
         }
