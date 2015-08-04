@@ -459,6 +459,16 @@ div.giftstart.wrapper
     width: 100%
     @include apply-at-size("phone")
       display: block
+    $orange-title: #ff952b
+    $orange-block: #e17f24
+    $teal-title: #12584c
+    $teal-block: #238471
+    $green-title: #d8d82b
+    $green-block: #a3a311
+    $red-title: #e8695b
+    $red-block: #e54028
+    $title-colors: #ff952b, #12584c, #d8d82b, #e8695b
+    $block-colors: #e17f24, #238471, #a3a311, #e54028
 
     .title
       &--groupcard
@@ -492,11 +502,11 @@ div.giftstart.wrapper
             display: table-row
 
       &:nth-child(even)
-        background: $contibutors-even
+        background: $orange-block
         position: relative
 
       &:nth-child(odd)
-        background: $contibutors-odd
+        background: $green-block
         position: relative
 
       &--only
@@ -514,6 +524,20 @@ div.giftstart.wrapper
 
       &__name
         text-align: center
+
+      &__titleblock
+        position: absolute
+        height: 96px
+        width: 100%
+        z-index: 1
+        &.orange
+          background-color: $orange-title
+        &.teal
+          background-color: $teal-title
+        &.green
+          background-color: $green-title
+        &.red
+          background-color: $red-title
 
       &__img
         width: 80%
@@ -545,6 +569,7 @@ div.giftstart.wrapper
         height: 10rem
         width: 10rem
         text-align: center
+        z-index: 2
 
         gs-image-upload
           padding-bottom: 0 !important

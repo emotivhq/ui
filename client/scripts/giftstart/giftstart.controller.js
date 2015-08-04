@@ -340,6 +340,18 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         }
     };
 
+    var colorMap = [];
+
+    $scope.randomColor = function() {
+        if (colorMap[this.$id] == null) {
+            console.log(this.$id);
+            console.log(colorMap);
+            var colors = ["red", "green", "orange", "teal"];
+            colorMap[this.$id] = colors[Math.floor(Math.random() * colors.length)];
+        }
+        return colorMap[this.$id];
+    }
+
     $scope.campaignUrl = function() {
         if($location.path().length > 11) {
             return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
