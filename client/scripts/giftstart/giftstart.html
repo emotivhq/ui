@@ -129,7 +129,7 @@
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
         </div>
         <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
-        <div class="contributors {{randomColor($index)}}" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
+        <div class="contributors {{randomColor($index)}}">
             <div class="contributors__titleblock {{randomColor($index)}}"></div>
             <div class="contributors__figure">
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
