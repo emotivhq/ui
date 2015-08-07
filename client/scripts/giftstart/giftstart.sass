@@ -459,8 +459,6 @@ div.giftstart.wrapper
     width: 100%
     @include apply-at-size("phone")
       display: block
-    $orange-title: #ff952b
-    $orange-block: #e17f24
     $teal-title: #12584c
     $teal-block: #238471
     $green-title: #d8d82b
@@ -487,7 +485,7 @@ div.giftstart.wrapper
       max-width: calc(100% - 34px)
       vertical-align: top
       &.orange
-        background-color: $orange-block
+        background-color: $gs-darkorange
       &.teal
         background-color: $teal-block
       &.green
@@ -528,7 +526,7 @@ div.giftstart.wrapper
         max-width:  calc(100% - 34px)
         z-index: 1
         &.orange
-          background-color: $orange-title
+          background-color: $gs-orange
         &.teal
           background-color: $teal-title
         &.green
