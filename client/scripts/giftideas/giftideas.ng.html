@@ -12,10 +12,10 @@
                     <h4 class="textleft"><span ng-bind-html="product.productDescription"></span></h4>
                 </div>
                 <div class="gsbuttons">
-                    <a href="{{product.giftStartLink}}" target="_self" class="button" ng-show="product.hasPrice">GIFTSTART IT!</a>
-                    <a href="#" onclick="olark('api.box.expand')" class="button" ng-show="!product.hasPrice">CONTACT THE GIFT CONCIERGE</a>
+                    <button ng-click="goToLink(product.giftStartLink)" target="_self" class="primary gsbutton" ng-show="product.hasPrice">GIFTSTART IT!</button>
+                    <button onclick="olark('api.box.expand')" class="primary gsbutton" ng-show="!product.hasPrice">CONTACT THE GIFT CONCIERGE</button>
                     <div ng-show="product.hasPrice" class="saveforlater">
-                        <a href="#" ng-click="saveGiftIdeaForLater(product);" class="button" ng-show="product.hasPrice">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></a>
+                        <button ng-click="saveGiftIdeaForLater(product);" class="primary gsbutton" ng-show="product.hasPrice">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
                         <div class="product-message" ng-bind-html="productMessage"></div>
                     </div>
                 </div>
@@ -24,15 +24,14 @@
         <div class="clear"></div>
     </div>
 
-    <audio ng-src="{{category.categoryAudio}}" autoplay="autoplay" id="categoryAudio"></audio>
     <div ng-show="category" class="products">
         <div class="head" ng-show="!product">
             <div class="hero">
-                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" onclick="$('#categoryAudio').load()">
+                <img src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}">
             </div>
             <div class="titles">
                 <h1><span ng-bind-html="category.categoryName"></span></h1>
-                <h3>Our Favorite Gifts & Most Popular GiftStarts</h3>
+                <h4>Our Favorite Gifts & Most Popular GiftStarts</h4>
                 <div><span ng-bind-html="category.categoryBlurb"></span></div>
             </div>
         </div>

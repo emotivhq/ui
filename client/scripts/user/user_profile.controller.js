@@ -148,6 +148,10 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             });
     }
 
+    $scope.goToLink = function(destination) {
+        $location.path("/" + destination);
+    };
+
 };
 
 app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', 'Analytics', UserprofileController]);

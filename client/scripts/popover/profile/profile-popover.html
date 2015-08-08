@@ -10,7 +10,7 @@
                 <img id="profile-image" ng-src="{{profilePicture}}" ng-hide="editMode" src=""/>
                 <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
                 <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
-                <button class="edit" ng-show="!editMode" ng-click="editMode=true;" onclick="$('#profile-image-container gs-image-upload div div button.image').click()">EDIT</button>
+                <a class="edit button" ng-show="!editMode" ng-click="editMode=true;" onclick="$('#profile-image-container gs-image-upload div div button.image').click()">EDIT</a>
             </div>
         </div>
         <div>
@@ -19,6 +19,6 @@
             <label for="useAsProfilePicture" ng-show="userHasDefaultProfileImage">Since you've never added an image before, this will become your profile picture.</label>
         </div>
         <button class="large white-border" ng-click="action.submit()" ng-class="{disabled: !imageSet}">Submit Photo</button>
-        <div class="cancel-button"><p class="cancel-button" ng-click="cancel()">Cancel</p></div>
+        <div class="cancel-button"><a class="cancel-button button" ng-click="cancel()">Cancel</a></div>
     </div>
 </div>

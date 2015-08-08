@@ -42,7 +42,7 @@
             <div ng-repeat-end="" class="h--hide"></div>
         </div>
         <div class="useridea__findbtn">
-            <a href="search/" class="useridea__findlink">Find more gift ideas</a>
+            <button href="search/" ng-click="goToLink('giftideas')" class="useridea__findlink primary-green">Find more gift ideas</button>
         </div>
         <div ng-show="showMore">
             <a class="useridea__viewmorelink linky" ng-show=" userIdea.length>10"  ng-click="quantity=userIdea.length; showMore=false">

@@ -60,7 +60,6 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         $http({method: 'GET', url: '/assets/giftideas/'+category+'.json'}).success(function (data) {
             $scope.groups = [];
             $scope.category = data;
-            $scope.category.categoryAudio = ($scope.category.categorySlug=="Baby"&&!product)?"/assets/allie.mp3":"";
             $scope.categoryPath = $scope.basePath+'/'+category;
             var prior=null;
             var setmeta=false;
@@ -95,5 +94,9 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
             }
         });
     }
+
+    $scope.goToLink = function(destination) {
+        window.location.href = destination;
+    };
 
 }
