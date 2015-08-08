@@ -100,16 +100,10 @@ div.giftstart.wrapper
       height: 100%
       width: 100%
       margin: 0 auto
-      font-size: 1.5vw
-      @media screen and (min-width: 1200px)
-        font-size: 19px
       @media screen and (max-width: $phone-tablet-boundary)
         width: 80%
-        font-size: 3vw
-      @media screen and (max-width: 580px)
-        font-size: 3.5vw
       background-color: white
-      border: 2px solid lightgrey
+      border: 2px solid $gs-lightgray
       .receipt-tiles
         height: 60%
         padding: 50px
@@ -122,14 +116,11 @@ div.giftstart.wrapper
             width: 100%
             float: none
           .num-tiles
-            font-size: 160%
             clear: both
             margin-top: 1em
             width: 100%
             text-align: center
           .cost-tiles
-            font-size: 80%
-            font-weight: lighter
             margin-top: 1em
             width: 100%
             text-align: center
@@ -146,7 +137,7 @@ div.giftstart.wrapper
             float: none
       .receipt-total
         height: 40%
-        background-color: lightgrey
+        background-color: $gs-lightgray
         padding: 50px
         vertical-align: top
         @media screen and (max-width: 580px)
@@ -156,9 +147,6 @@ div.giftstart.wrapper
           display: block
           width: 100%
           text-align: left
-          font-size: 160%
-          @media screen and (max-width: 580px)
-            font-size: 120%
           @media screen and (max-width: $phone-tablet-boundary)
             text-align: center
             width: 100%
@@ -166,9 +154,6 @@ div.giftstart.wrapper
           .total-price
             display: inline-block
             float: right
-            font-weight: bold
-            @media screen and (min-width: 580px) and (max-width: $phone-tablet-boundary)
-              font-size: 120%
             @media screen and (max-width: $phone-tablet-boundary)
               float: none
               display: block
@@ -177,8 +162,6 @@ div.giftstart.wrapper
         .purchase-note
           display: block
           clear: both
-          font-size: 70%
-          line-height: 150%
           width: 100%
           margin: 1em 0 0 0
           @media screen and (min-width: 580px) and (max-width: $phone-tablet-boundary)

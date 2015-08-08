@@ -36,13 +36,13 @@
                     <div class="receipt-tiles">
                         <div class="img-wrap" style="background-image:url('{{giftStart.product_img_url}}')"></div>
                         <div class="info-tiles">
-                            <div class="num-tiles">{{giftStart.nSelected}} TILES</div>
-                            <div class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</div>
+                            <h2 class="num-tiles">{{giftStart.nSelected}} TILES</h2>
+                            <h4 class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</h4>
                         </div>
                     </div>
                     <div class="receipt-total">
-                        <div class="purchase-total">PURCHASE TOTAL: <div class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</div></div>
-                        <div class="purchase-note">Includes all costs of taxes, shipping, handling, fees, and handmade card.</div>
+                        <h4 class="purchase-total">PURCHASE TOTAL: <h2 class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>
+                        <p class="purchase-note">Includes all costs of taxes, shipping, handling, fees, and handmade card.</p>
                     </div>
                 </div>
             </div>
