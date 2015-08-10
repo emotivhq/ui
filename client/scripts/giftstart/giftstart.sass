@@ -462,6 +462,7 @@ div.giftstart.wrapper
       $box-size: calc((1200px - ((35px * 2) + (52px * 2))) / 3)
       display: inline-block
       padding-bottom: 50px
+      position: relative
       margin: 17px
       height: $box-size
       width: $box-size
@@ -505,8 +506,7 @@ div.giftstart.wrapper
       &__titleblock
         position: absolute
         height: 96px
-        width: $box-size
-        max-width:  calc(100% - 34px)
+        width: 100%
         z-index: 1
         &.orange
           background-color: $gs-orange
