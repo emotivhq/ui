@@ -84,7 +84,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
             'display: inline-block; margin-right: 5px; width: 26px; vertical-align: middle');
         buttonText.innerHTML = 'GiftStart It!';
         buttonText.setAttribute('style', 
-            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif');
+            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif; margin: 14px 0; padding: 0');
         buttonLink.setAttribute('style', 
             'text-decoration: none; color: white');
         buttonDiv.setAttribute('style', 

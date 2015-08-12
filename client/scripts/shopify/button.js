@@ -130,7 +130,7 @@
             'display: inline-block; margin-right: 5px; width: 26px; vertical-align: middle');
         self.buttonText.innerHTML = 'GiftStart It!';
         self.buttonText.setAttribute('style', 
-            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif');
+            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif; margin: 14px 0; padding: 0');
         self.buttonLink.setAttribute('style', 
             'text-decoration: none; color: white');
         self.buttonDiv.setAttribute('style', 
