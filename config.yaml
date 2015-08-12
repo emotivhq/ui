@@ -1,13 +1,13 @@
 
-team_notification_email:  'team@giftstarter.com'
-product_api_url:          'https://product-dev-gift-starter.appspot.com/static'
+team_notification_email:  'jon@giftstarter.com'
+product_api_url:          'https://product-dev-gift-starter.appspot.com/static/dev'
 
-app_url:                  'https://www.giftstarter.com'
-email_url:                'http://www.giftstarter.com/email/send.json'
-storage_url:              '/giftstarter-pictures/'
+app_url:                  'https://www.dev.giftstarter.com'
+email_url:                'https://www.dev.giftstarter.com/email/send.json'
+storage_url:              '/giftstarter-pictures/dev/'
 
-facebook_app:             'giftstarterapp'
-facebook_app_id:          '301135316704582'
+facebook_app:             'dev-giftstarter'
+facebook_app_id:          '336526276498819'
 
 baseServiceFeeRate:       0.08
 
@@ -16,10 +16,10 @@ couponCodes:               ['GiftMe!','CollisionGift','Collision15','StartupGift
 commonSearchWords:         ['amazon','apple','baby+crib','baby','baby+crib','bag','barbecue+grill','bassinet','battlestar','bicycle','bike','birthday','bose','butter+london','butter+london','camera','car','computer','cradle','crib+bedding','crib+bedding','cuisinart','diaper+bag','dog+bed','duvet','dyson+vacuum','fat+cork','fat+cork','fatcork','fish+tank','fitbit','flower','flowers','frends','gopro','high+chair','high+chair','home+theater','home+theater','icpooch','ipad','iphone','ipod','keurig','lawn+mower','lumix+gh4','macbook','microsoft+office','nikon','phone','playard','playstation','rei','rocking+chair','rug','samsung','shoes','sofa','stroller','sturtevants','t5i','television','toaster+oven','tv','Vitamix','wedding+gifts','wedding','wine','wireless+speaker','Xbox+one','xbox']
 
 googleanalytics:
-  key:                    'UA-51616127-6'
+  key:                    'UA-51616127-7'
 
 mixpanel:
-  key:                    'e62cefc2003d70c2c10c3fdb1fc46917'
+  key:                    '2cfdda518bed5ee0bc7e9ad48c8c8f48'
 
 prosperent:
   key:                    '0ea6828d486ddb94138d277e9007790b'
