@@ -101,35 +101,49 @@
     this.initializeButton = function() {
         // Create elements...
         self.button = document.querySelector('#gsbutton');
+        self.buttonDiv = document.createElement('div');
         self.buttonLink = document.createElement('a');
         self.buttonLink.setAttribute('target', '_blank');
         self.buttonLink.setAttribute('style', 'display: block; height: 100%;');
         self.buttonImg = document.createElement('img');
+        self.buttonText = document.createElement('p');
 
         // Apply styles...
-        var buttonClass= self.button.getAttribute('class');
-        if (buttonClass) {
-            if (/black/.test(buttonClass)) {
-                self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/logo-button-black.png');
-            } else if (/white/.test(buttonClass)) {
-                self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/logo-button-white.png');
-            } else if (/nobg/.test(buttonClass)) {
-                self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_nobg.png');
-            } else if (/bg/.test(buttonClass)) {
-                self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_bg.png');
-            } else {
-                self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_nobg.png');
-            }
-        } else {
-            self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_nobg.png');
-        }
-        self.buttonImg.setAttribute('style', 'max-height: 92%; margin-top: 3%; padding: 0 8px;');
-        self.button.setAttribute('style', 'display: none;');
-        self.button.setAttribute('title', 'Gift this together with friends and family!');
+        // var buttonClass= self.button.getAttribute('class');
+        // if (buttonClass) {
+        //     if (/black/.test(buttonClass)) {
+        //         self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/logo-button-black.png');
+        //     } else if (/white/.test(buttonClass)) {
+        //         self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/logo-button-white.png');
+        //     } else if (/nobg/.test(buttonClass)) {
+        //         self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_nobg.png');
+        //     } else if (/bg/.test(buttonClass)) {
+        //         self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_bg.png');
+        //     } else {
+        //         self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_nobg.png');
+        //     }
+        // } else {
+        //     self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/gs_button_nobg.png');
+        // }
+        self.buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/PartnerButtonIcon.png');
+        self.buttonImg.setAttribute('style', 
+            'display: inline-block; margin-right: 5px; width: 26px; vertical-align: middle');
+        self.buttonText.innerHTML = 'GiftStart It!';
+        self.buttonText.setAttribute('style', 
+            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif');
+        self.buttonLink.setAttribute('style', 
+            'text-decoration: none; color: white');
+        self.buttonDiv.setAttribute('style', 
+            'min-height: 26px; min-width: 32px; background-color: #e44028; padding: 0 10px;');
+        self.button.setAttribute('title',
+            'Gift this together with friends and family!');
+        self.button.setAttribute('style', 'max-height: 100%;');
 
 
         // Put onto the dom...
-        self.buttonLink.appendChild(self.buttonImg);
+        self.buttonDiv.appendChild(self.buttonImg);
+        self.buttonDiv.appendChild(self.buttonText);
+        self.buttonLink.appendChild(self.buttonDiv);
         self.button.appendChild(self.buttonLink);
         self.moveAfterPurchaseButton();
     };
