@@ -191,6 +191,18 @@
          "productThumb":"/forHer/julepThumb.jpg",
          "imageAltText":"GiftStarter 6 Boxes of Julep Maven for 6 Months",
          "giftStartLink":"http://bit.ly/1tYHdYr"
+      },
+
+     {
+         "productName":"sharon's test",
+         "productNameShort":"6 Months of Julep&#8482; Maven",
+         "productSlug":"6-Boxes-of-Julep-Maven-for-6-Months",
+         "productPrice":"999.99",
+         "productDescription":"The Julep Mavens get first access to brand-new nail colors and beauty products at an unbeatable price—over $40 of product for just $19.99/month.  Each month they can preview the latest collection, customize their boxes, and access a Secret Store with lots of exclusive deals. Plus, they get free shipping and 20% off other great beauty products at julep.com. This is a great group gift that keeps on giving for many many months.",
+         "productImage":"/forHer/julep.jpg",
+         "productThumb":"/forHer/julepThumb.jpg",
+         "imageAltText":"GiftStarter 6 Boxes of Julep Maven for 6 Months",
+         "giftStartLink":"http://bit.ly/1tYHdYr"
       }
      
   ]
