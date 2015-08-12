@@ -167,5 +167,9 @@ def remember_user(cookies, path):
             if user_deets:
                 js_insert = "window.loginDeets = ['{uid}', '{img_url}', " \
                             "'{token}', '{on_mailing_list}', '{name}', " \
-                            "'{has_pitched_in}'];".format(**user_deets)
+                            "'{has_pitched_in}'];" \
+                            "analytics.identify('{{ uid }}', {" \
+                            "name: '{{ name }}'," \
+                            "email: '{{ token }}'" \
+                            "});".format(**user_deets)
     return js_insert
