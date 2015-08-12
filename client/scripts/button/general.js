@@ -79,19 +79,19 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         //     buttonImg.setAttribute('src',
         //             gs_domain + '/assets/gs_button_nobg.png');
         // }
-        buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/PartnerButtonIcon.png');
+        buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/icon_teal.png');
         buttonImg.setAttribute('style', 
             'display: inline-block; margin-right: 5px; width: 26px; vertical-align: middle');
         buttonText.innerHTML = 'GiftStart It!';
         buttonText.setAttribute('style', 
-            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif; margin: 14px 0; padding: 0');
+            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif; margin: 14px 0; padding: 0; letter-spacing: 0.5');
         buttonLink.setAttribute('style', 
-            'text-decoration: none; color: white');
+            'text-decoration: none; color: black');
         buttonDiv.setAttribute('style', 
-            'min-height: 26px; min-width: 32px; background-color: #e44028; padding: 0 10px;');
+            'min-height: 26px; min-width: 32px; padding: 0 10px;');
         button.setAttribute('title',
             'Gift this together with friends and family!');
-        button.setAttribute('style', 'max-height: 100%;');
+        button.setAttribute('style', 'max-height: 100%; border: 1px solid black');
 
 
         // Put onto the dom...
