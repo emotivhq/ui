@@ -79,7 +79,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         //     buttonImg.setAttribute('src',
         //             gs_domain + '/assets/gs_button_nobg.png');
         // }
-        buttonImg.setAttribute('src', 'PartnerButtonIcon.png');
+        buttonImg.setAttribute('src', 'https://www.giftstarter.com/assets/PartnerButtonIcon.png');
         buttonImg.setAttribute('style', 
             'display: inline-block; margin-right: 5px; width: 26px; vertical-align: middle');
         buttonText.innerHTML = 'GiftStart It!';
