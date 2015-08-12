@@ -57,34 +57,47 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
     function initializeButton() {
         // Create elements...
         button = document.querySelector('#gsbutton' + buttonId);
+        buttonDiv = document.createElement('div');
         buttonLink = document.createElement('a');
         buttonLink.setAttribute('target', '_blank');
         buttonLink.setAttribute('style', 'display: block; height: 100%;');
         buttonImg = document.createElement('img');
+        buttonText = document.createElement('p');
 
         // Apply styles...
         if (!button) {return;}
-        var buttonClass = button.getAttribute('class');
-        if (buttonClass) {
-            if (buttonClass.indexOf('bg') > 0) {
-                buttonImg.setAttribute('src',
-                        gs_domain + '/assets/gs_button_bg.png');
-            } else {
-                buttonImg.setAttribute('src',
-                        gs_domain + '/assets/gs_button_nobg.png');
-            }
-        } else {
-            buttonImg.setAttribute('src',
-                    gs_domain + '/assets/gs_button_nobg.png');
-        }
-        buttonImg.setAttribute('style',
-            'max-height: 100%;');
+        // var buttonClass = button.getAttribute('class');
+        // if (buttonClass) {
+        //     if (buttonClass.indexOf('bg') > 0) {
+        //         buttonImg.setAttribute('src',
+        //                 gs_domain + '/assets/gs_button_bg.png');
+        //     } else {
+        //         buttonImg.setAttribute('src',
+        //                 gs_domain + '/assets/gs_button_nobg.png');
+        //     }
+        // } else {
+        //     buttonImg.setAttribute('src',
+        //             gs_domain + '/assets/gs_button_nobg.png');
+        // }
+        buttonImg.setAttribute('src', 'PartnerButtonIcon.png');
+        buttonImg.setAttribute('style', 
+            'display: inline-block; margin-right: 5px; width: 26px; vertical-align: middle');
+        buttonText.innerHTML = 'GiftStart It!';
+        buttonText.setAttribute('style', 
+            'display: inline-block; font-size: 14px; font-family: Gotham, sans-serif');
+        buttonLink.setAttribute('style', 
+            'text-decoration: none; color: white');
+        buttonDiv.setAttribute('style', 
+            'min-height: 26px; min-width: 32px; background-color: #e44028; padding: 0 10px;');
         button.setAttribute('title',
             'Gift this together with friends and family!');
+        button.setAttribute('style', 'max-height: 100%;');
 
 
         // Put onto the dom...
-        buttonLink.appendChild(buttonImg);
+        buttonDiv.appendChild(buttonImg);
+        buttonDiv.appendChild(buttonText);
+        buttonLink.appendChild(buttonDiv);
         button.appendChild(buttonLink);
     }
 
