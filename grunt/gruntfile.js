@@ -190,7 +190,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    // Prod task.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'uglify', 'cssmin', 'clean']);
+    // Dev task.
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
 
 };
