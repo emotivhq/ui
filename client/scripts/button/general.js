@@ -115,7 +115,7 @@ window.makeGiftStartButton = function(productUrl, title, price, imgUrl,
         buttonLink.setAttribute('href', url);
         if (price > 75) {
             button.setAttribute('style',
-                ' display: inline-block; text-align: center;');
+                ' display: inline-block; text-align: center; border: 1px solid black');
 
             button.onclick = sendClick;
             sendData(makeData('create'));
