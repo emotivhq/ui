@@ -5,6 +5,18 @@
    "categoryBlurb":"There is nothing quite like the relationship between a pet lover and their pet. We refer to them as our “fur children” (though not all have fur) and they become an important part of our family. At GiftStarter, we know that finding the perfect gift for the pet lover in your life can be a challenge - and we can help. We’ve curated our favorite gift ideas that are sure to please our fine furred and feathered friends, as well their “parents.”",
    "categoryMetaDescription":"Find the perfect and meaningful gift for the pet lover in your life with our specially curated gift ideas.  From dog beds, bird houses, a practical Dyson vacuum.",
    "productList":[
+       {
+         "productName":"Petcube Camera",
+         "productNameShort":"Petcube Camera",
+         "productSlug":"Petcube-Camera",
+         "productPrice":"199",
+         "productDescription":"<p>Petcube is an interactive wireless pet camera that helps you stay connected to your pets when you are not at home. Petcube pet monitor system lets you watch, talk and play laser games with your dog or cat from anywhere using your smartphone. You can share access to your pet video cam with your friends, family or anyone else on Petcube network.</p><br /><p><strong>CAMERA SPECIFICATIONS:</strong></p><br /><p>Petcube Camera features a 138&deg; degree wide angle camera streaming HD 720p video, built-in 5mW 3R safe laser (certified &amp; safe), 2-way audio stream through built-in microphone and a speaker so users can actually listen and talk to their pets and a 3 ft US plug micro USB power adapter with 5V output / 2A current.</p><br /><p>Petcube app requires iOS 7.0 or greater and Android 4.0 or greater.</p><br /><p>Learn more here:&nbsp;https://petcube.com/news/what-people-say-about-petcube/</p><br /><p>Youtube Video:&nbsp;https://www.youtube.com/watch?v=B6A5AnPFrMw</p>",
+         "productMetaDescription":"Petcube is an interactive wireless pet camera that helps you stay connected to your pets when you are not at home.",
+         "productImage":"https://petcube.com/images/release/store/petcube_camera.png?v=0.7.1",
+         "productThumb":"/petlovers/petcube-camera-thumb.jpg",
+         "imageAltText":"Petcube Camera",
+         "giftStartLink":"http://bit.ly/1gBse0n"
+     },
      {
          "productName":"icPooch - Internet Pet Treat Dispenser includes 6oz of icPooch Cookies",
          "productNameShort":"icPooch-Pet Treat Dispenser",
