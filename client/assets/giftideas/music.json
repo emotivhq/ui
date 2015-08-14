@@ -5,7 +5,7 @@
    "categoryBlurb":"Looking for the perfect gift for someone who has everything or loves the gift of music? At GiftStarter, we know that it can be a challenge when it comes to finding the perfect gift. Whether it’s for a birthday, anniversary, or just because... it’s time to bring everyone together to get a bigger, better gift. And we can help. To make it easy, we have curated our favorite ideas for group gifting.  Let them know from their community of family and friends how special they are with a group gift from GiftStarter.",
    "categoryMetaDescription":" ",
    "productList":[
-            {
+      {
          "productName":"Bohemian Guitar BOHO MOTOR OIL",
          "productNameShort":"Bohemian Guitar BOHO MOTOR O",
          "productSlug":"Bohemian-Guitar-BOHO-MOTOR-O",
@@ -52,7 +52,6 @@
          "productThumb":"/forHim/surfWaxthumb.jpg",
          "imageAltText":"Bohemian Guitar BOHO SURFWAX",
          "giftStartLink":"http://bit.ly/1gBqggt"
-     },
-       
+     }
    ]
 }
