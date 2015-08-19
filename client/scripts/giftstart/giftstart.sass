@@ -427,6 +427,7 @@ div.giftstart.wrapper
       display: inline-block
       width: 49.5%
       h2
+        color: $gs-darkorange
         display: inline
         margin-right: 7px
       h4
@@ -448,12 +449,6 @@ div.giftstart.wrapper
     width: 100%
     @include apply-at-size("phone")
       display: block
-    $teal-title: #12584c
-    $teal-block: #238471
-    $green-title: #d8d82b
-    $green-block: #a3a311
-    $red-title: #e8695b
-    $red-block: #e54028
 
     .title
       &--groupcard
@@ -477,11 +472,11 @@ div.giftstart.wrapper
       &.orange
         background-color: $gs-darkorange
       &.teal
-        background-color: $teal-block
+        background-color: $gs-lightteal
       &.green
-        background-color: $green-block
+        background-color: $gs-lime
       &.red
-        background-color: $red-block
+        background-color: $gs-red
 
       &--row
         display: table-row
@@ -519,11 +514,11 @@ div.giftstart.wrapper
         &.orange
           background-color: $gs-orange
         &.teal
-          background-color: $teal-title
+          background-color: $gs-darkteal
         &.green
-          background-color: $green-title
+          background-color: $gs-lightlime
         &.red
-          background-color: $red-title
+          background-color: $gs-lightred
 
       &__img
         width: 80%
