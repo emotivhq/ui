@@ -101,15 +101,15 @@
 
     <div class="fullwidth block fullwidth--last">
         <div class="prices block">
+            <gs-funding-bar></gs-funding-bar>
             <div class="price funded">
-                <h4>Gifted!</h4>
                 <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
+                <h4>Funded</h4>
             </div>
             <div class="price remaining">
-                <h4>Needed:</h4>
                 <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
+                <h4>Remaining</h4>
             </div>
-            <gs-funding-bar></gs-funding-bar>
         </div>
         <div class="completion block">
             <div><h4>Time Left in Campaign:</h4></div>
