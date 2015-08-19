@@ -308,12 +308,8 @@
 
           return string;
         }
-        $('.testbtn').click(function() {
-            $.post('https://www.googleapis.com/upload/drive/u/0/folders/0BxON7eF3wDQiflo5ZGJMSnVBWkVuT1lQMFl6QklSYnpPLW1CTE1tUTZSX1pQb2VoX2pGaTA?uploadType=media');
-        });
 
     </script>
-    <div><button class="testbtn">Click!</button></div>
     <div style=" display:inline-block; float:left; min-width:750px; white-space: nowrap">
         <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" placeholder="teacher"/><br>
         <label for="url">Product URL</label> <input type="text" id="url" required="" size="80"/><br>
@@ -323,7 +319,7 @@
         <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="40" value="" placeholder="/teacher/visa-gift-card.png"/><br>
         <label for="imagethumb" style="color:#999999">Product Thumbnail URL</label> <input type="text" id="imagethumb" required="" size="40" value=""/><br>
         <label style="color:#999999" for="alttext">Image ALT text*</label> <input type="text" id="alttext" required="" size="40" /><br>
-        <label for="price">Product Price</label> <input type="text" id="price" required="" /><br>
+        <label for="price">Product Price</label> <input type="text" id="price" required="" placeholder="e.g. 299.67 for $299.67"/><br>
         <label style="color:#999999;vertical-align:top" for="description">Description*</label> <textarea type="text" id="description" required="" rows="5" cols="60"> </textarea><br>
         <label style="color:#999999;vertical-align:top" for="metadescription">Meta Description*</label> <textarea type="text" id="metadescription" required="" rows="3" cols="60"> </textarea><br>
         <label for="source">Referrer (a tracking string)</label> <input type="text" id="source" required="" /><br><br>
