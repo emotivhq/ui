@@ -87,6 +87,10 @@
             $('#image').val('/'+$('#catslug').val()+'/'+$('#slug').val().toLowerCase()+'.jpg');
             $('#imagethumb').val('/'+$('#catslug').val()+'/'+$('#slug').val().toLowerCase()+'-thumb.jpg');
         }
+        function checkSlug() {
+            this.value = this.value.replace(/ /g, "-");
+            setImageVals();
+        }
 
         function get_html_translation_table(table, quote_style) {
           //  discuss at: http://phpjs.org/functions/get_html_translation_table/
@@ -275,7 +279,7 @@
             string = string == null ? '' : string + '';
 
             if (!hash_map) {
-            return false;
+                return false;
             }
 
             if (quote_style && quote_style === 'ENT_QUOTES') {
@@ -283,36 +287,40 @@
             }
 
             if ( !! double_encode || double_encode == null) {
-            for (symbol in hash_map) {
-              if (hash_map.hasOwnProperty(symbol)) {
-                string = string.split(symbol)
-                  .join(hash_map[symbol]);
-              }
-            }
-            } else {
-            string = string.replace(/([\s\S]*?)(&(?:#\d+|#x[\da-f]+|[a-zA-Z][\da-z]*);|$)/g, function(ignore, text, entity) {
-              for (symbol in hash_map) {
-                if (hash_map.hasOwnProperty(symbol)) {
-                  text = text.split(symbol)
-                    .join(hash_map[symbol]);
+                for (symbol in hash_map) {
+                  if (hash_map.hasOwnProperty(symbol)) {
+                    string = string.split(symbol)
+                      .join(hash_map[symbol]);
+                  }
                 }
-              }
+            } else {
+                string = string.replace(/([\s\S]*?)(&(?:#\d+|#x[\da-f]+|[a-zA-Z][\da-z]*);|$)/g, function(ignore, text, entity) {
+                  for (symbol in hash_map) {
+                    if (hash_map.hasOwnProperty(symbol)) {
+                      text = text.split(symbol)
+                        .join(hash_map[symbol]);
+                    }
+                  }
 
-              return text + entity;
-            });
+                  return text + entity;
+                });
+            }
+
+          return string;
         }
-
-  return string;
-}
+        $('.testbtn').click(function() {
+            $.post('https://www.googleapis.com/upload/drive/u/0/folders/0BxON7eF3wDQiflo5ZGJMSnVBWkVuT1lQMFl6QklSYnpPLW1CTE1tUTZSX1pQb2VoX2pGaTA?uploadType=media');
+        });
 
     </script>
-    <div style="display:inline-block; float:left; min-width:750px; white-space: nowrap">
-        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" onchange="this.value=this.value.toLowerCase();setImageVals()"/><br>
+    <div><button class="testbtn">Click!</button></div>
+    <div style=" display:inline-block; float:left; min-width:750px; white-space: nowrap">
+        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" placeholder="teacher"/><br>
         <label for="url">Product URL</label> <input type="text" id="url" required="" size="80"/><br>
         <label for="title">Product Title</label> <input type="text" id="title" required="" size="80" onchange="setShortTitle()"/><br>
         <label style="color:#999999" for="titleshort">Short Title*</label> <input type="text" id="titleshort" required="" size="40" maxlength="28" onchange="setProductSlug()"/> (max 28 chars)<br>
-        <label style="color:#999999" for="slug">Product Slug*</label> <input type="text" id="slug" required="" size="40" onchange="setImageVals()"/><br>
-        <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="40" value=""/><br>
+        <label style="color:#999999" for="slug">Product Slug*</label> <input type="text" id="slug" required="" size="40"/><br>
+        <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="40" value="" placeholder="/teacher/visa-gift-card.png"/><br>
         <label for="imagethumb" style="color:#999999">Product Thumbnail URL</label> <input type="text" id="imagethumb" required="" size="40" value=""/><br>
         <label style="color:#999999" for="alttext">Image ALT text*</label> <input type="text" id="alttext" required="" size="40" /><br>
         <label for="price">Product Price</label> <input type="text" id="price" required="" /><br>
@@ -333,6 +341,12 @@
             oninit : "setPlainText",
             width: 620,
             toolbar: "bold italic underline styleselect fontsizeselect bullist numlist outdent indent removeformat subscript superscript code"
+        });
+        $('#slug').on('change', checkSlug);
+        $('#catslug').on('change', function () {
+            this.value = this.value.toLowerCase();
+            this.value = this.value.replace(/ /g, "-");
+            setImageVals();
         });
     </script>
 </body>
