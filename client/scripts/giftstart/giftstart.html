@@ -36,13 +36,13 @@
                     <div class="receipt-tiles">
                         <div class="img-wrap" style="background-image:url('{{giftStart.product_img_url}}')"></div>
                         <div class="info-tiles">
-                            <h2 class="num-tiles">{{giftStart.nSelected}} TILES</h2>
+                            <h2 class="num-tiles">{{giftStart.nSelected}} PIECES</h2>
                             <h4 class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</h4>
                         </div>
                     </div>
                     <div class="receipt-total">
                         <h4 class="purchase-total">PURCHASE TOTAL: <h2 class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>
-                        <p class="purchase-note">Includes all costs of taxes, shipping, handling, fees, and handmade card.</p>
+                        <p class="purchase-note">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ordinal_circle"><span class="ordinal">1</span></div><h4> CLICK ON THE TILES YOU WANT TO PURCHASE</h4><br/>
+                <div class="ordinal_circle"><span class="ordinal">1</span></div><h4> CLICK ON THE PIECES YOU WANT TO PURCHASE</h4><br/>
                 <div class="ordinal_circle"><span class="ordinal">2</span></div><h4> PITCH IN!</h4>
             </div>
             <button class="pitch-in button red" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
@@ -103,11 +103,11 @@
         <div class="prices block">
             <div class="price funded">
                 <h4>Gifted!</h4>
-                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Tiles</h2>
+                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
             </div>
             <div class="price remaining">
                 <h4>Needed:</h4>
-                <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Tiles</h2>
+                <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
             </div>
             <gs-funding-bar></gs-funding-bar>
         </div>
@@ -126,7 +126,7 @@
     <div class="groupcard">
         <div class="title title--groupcard">
             <h2 class="title__name">Group Card</h2>
-            <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
+            <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
         </div>
         <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
         <div class="contributors {{randomColor($index)}}">

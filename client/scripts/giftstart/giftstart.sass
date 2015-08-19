@@ -104,6 +104,9 @@ div.giftstart.wrapper
         width: 80%
       background-color: white
       border: 2px solid $gs-lightgray
+      @include apply-at-size("phone")
+        h2
+          margin: 0
       .receipt-tiles
         height: 60%
         padding: 50px
@@ -117,7 +120,6 @@ div.giftstart.wrapper
             float: none
           .num-tiles
             clear: both
-            margin-top: 1em
             width: 100%
             text-align: center
           .cost-tiles
@@ -163,7 +165,7 @@ div.giftstart.wrapper
           display: block
           clear: both
           width: 100%
-          margin: 1em 0 0 0
+          margin: 0
           @media screen and (min-width: 580px) and (max-width: $phone-tablet-boundary)
             margin-top: 50px
 
