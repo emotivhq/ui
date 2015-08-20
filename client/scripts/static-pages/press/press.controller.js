@@ -23,7 +23,7 @@ function PressController($scope,  $location,  $timeout) {
         new pressItem(
             "http://www.adamsfinancialconcepts.com/index.php/resources/radio-show?filter_order=a.publish_up&filter_order_Dir=desc&format=html",
             "kkol.png",
-            "In 20 years, what will be remembered as the most significant accomplishment of the Obama Administration? What does the future have in store for the stock market? Making group gifting easier and bringing people together, GiftStarter CEO Arry Yu, joins us to her story.  Full radio podcast here: <a href=\"http://www.adamsfinancialconcepts.com/media/com_podcastmanager/08.14.15_AboutMoney_GiftStarter_ArryYu.mp3\">LINK</a>"
+            "In 20 years, what will be remembered as the most significant accomplishment of the Obama Administration? What does the future have in store for the stock market? Making group gifting easier and bringing people together, GiftStarter CEO Arry Yu, joins us to her story.  Full radio podcast here: <a href='http://www.adamsfinancialconcepts.com/media/com_podcastmanager/08.14.15_AboutMoney_GiftStarter_ArryYu.mp3'>LINK</a>"
         ),
         new pressItem(
             "http://simplyathomemom.com/2015/07/27/back-to-school-gift-ideas-with-giftstarter/",
