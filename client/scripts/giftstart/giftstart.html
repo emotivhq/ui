@@ -113,7 +113,7 @@
         </div>
         <div class="completion block">
             <p>This campaign ends {{giftStart.deadline | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
-            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2><h4>Left for Pitch-ins</h4></div>
+            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2><h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4></div>
         </div>
     </div>
 
@@ -150,7 +150,7 @@
             <div class="contributors__edit">
                 <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
                 <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</a>
-                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 250 || pitchIn.name.length > 38" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
