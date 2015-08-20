@@ -476,6 +476,8 @@ div.giftstart.wrapper
       position: relative
       margin: 17px
       height: $box-size
+      @include apply-at-size("phone")
+        height: auto
       width: $box-size
       max-width: calc(100% - 34px)
       vertical-align: top
