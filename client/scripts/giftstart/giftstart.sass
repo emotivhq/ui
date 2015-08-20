@@ -410,7 +410,7 @@ div.giftstart.wrapper
     img.share:active
       +filter-brightness(1.6)
 
-  div.block.prices
+  .block.prices
     padding: 12px 0
     margin-left: auto
     margin-right: auto
@@ -423,7 +423,7 @@ div.giftstart.wrapper
       padding-left: 5%
     h1
       color: black
-    div.price
+    .price
       display: inline-block
       width: 49.5%
       h2
@@ -432,14 +432,23 @@ div.giftstart.wrapper
         margin-right: 7px
       h4
         display: inline
-    div.price.remaining
+    .price.remaining
       text-align: right
 
-  div.block.completion
-    text-align: center
+  .block.completion
+    text-align: left
     @media screen and (min-width: $phone-tablet-boundary)
       width: 39%
       margin-left: 7.5%
+    .countdown
+      color: $gs-teal
+      display: inline
+      margin-right: 7px
+    p
+      margin-bottom: 7px
+      margin-top: 0
+    h4
+      display: inline
 
   .groupcard
     clear: both
@@ -514,7 +523,7 @@ div.giftstart.wrapper
         &.orange
           background-color: $gs-orange
         &.teal
-          background-color: $gs-darkteal
+          background-color: $gs-teal
         &.green
           background-color: $gs-lightlime
         &.red
