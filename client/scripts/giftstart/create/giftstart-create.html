@@ -4,7 +4,7 @@
     <ng-include ng-show="fromReferral" src="'/scripts/giftstart/brand-pillow/brand-pillow-video.html'"></ng-include>
 
     <div ng-hide="showLoginBox">
-        <div ng-show="isCreateStepTiles()"><h2 class="state-title">How many pitch-in tiles do you want?</h2><div class="state-subtitle">Create Your Gifting Event: step 2 of 4</div></div>
+        <div ng-show="isCreateStepTiles()"><h2 class="state-title">How many pitch-in pieces do you want?</h2><div class="state-subtitle">Create Your Gifting Event: step 2 of 4</div></div>
         <div ng-show="isCreateStepStory()"><h2 class="state-title">Your Gifting Event</h2><div class="state-subtitle">Create Your Gifting Event: step 3 of 4</div></div>
         <div ng-show="isCreateStepShipping()"><h2 class="state-title">Shipping Details</h2><div class="state-subtitle">Create Your Gifting Event: step 4 of 4</div></div>
     </div>
@@ -20,12 +20,12 @@
         <form name="campaignForm" ng-hide="showLoginBox" novalidate>
 
             <div ng-show="isCreateStepTiles()" id="num-part-selection">
-                <div class="desc"><strong>Things to consider:</strong><br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?<br />We recommend picking the smallest amount per tile because remember, a person can always buy more than one tile.</div>
-                <div class="more-parts">Add Tiles<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
-                <div class="fewer-parts-mobile">Remove Tiles<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
-                <span class="parts-control"><span class="numtiles"> {{x*y}} Tiles</span>
+                <div class="desc"><strong>Things to consider:</strong><br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?<br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>
+                <div class="more-parts">Add Pieces<br/><img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png"></div>
+                <div class="fewer-parts-mobile">Remove Pieces<br/><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"></div>
+                <span class="parts-control"><span class="numtiles"> {{x*y}} Pieces</span>
                 <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span></span>
-                <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Remove Tiles</div>
+                <div class="fewer-parts"><img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png"><br/>Remove Pieces</div>
                 <!-- button class="help float-right" ng-click="help()">Help</button -->
                 <span class="disclaimer">* Shipping is included.</span>
             </div>
@@ -325,7 +325,7 @@
 
     <div class="progress-nav" ng-hide="showLoginBox">
         <div class="back-indicator" ng-class="{'invisible': isCreateStepTiles()}"><img id="giftstart-create-prev" class="linky prev" ng-click="prevStep()" src="/assets/circle_black_lt.png"><br/>PREVIOUS<br/>STEP</div>
-        <div class="step-indicator"><img src="/assets/circle_green_check.png" alt="Find a gift"/><br/>FIND<br/>A GIFT</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_black.png" alt="Adjust the tiles"/><img ng-show="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(1)" alt="Adjust the tiles" /><br/>Adjust<br/>the tiles</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepShipping()" src="/assets/circle_black.png" alt="Tell the story"/><img ng-show="isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(2)" alt="Tell the story" /><br/>Tell the<br/>story</div><img class="step-indicator-divider" src="/assets/hbar_black.png" alt="Shipping datails"/><div class="step-indicator"><img src="/assets/circle_black.png" /><br/>Shipping<br/>details</div>
+        <div class="step-indicator"><img src="/assets/circle_green_check.png" alt="Find a gift"/><br/>FIND<br/>A GIFT</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_black.png" alt="Adjust the tiles"/><img ng-show="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(1)" alt="Adjust the pieces" /><br/>Adjust<br/>the pieces</div><img class="step-indicator-divider" src="/assets/hbar_black.png" /><div class="step-indicator"><img ng-hide="isCreateStepShipping()" src="/assets/circle_black.png" alt="Tell the story"/><img ng-show="isCreateStepShipping()" src="/assets/circle_green_check.png" class="linky" ng-click="goToStep(2)" alt="Tell the story" /><br/>Tell the<br/>story</div><img class="step-indicator-divider" src="/assets/hbar_black.png" alt="Shipping datails"/><div class="step-indicator"><img src="/assets/circle_black.png" /><br/>Shipping<br/>details</div>
         <button id="giftstart-create-next" class="next primary" ng-hide="isCreateStepShipping()" ng-click="nextStep()">NEXT STEP</button>
         <button id="giftstart-create-submit" class="next primary" ng-show="isCreateStepShipping()" ng-click="next()">NEXT STEP</button><img ng-show="isSubmittingData" class="loader" src="/assets/loading_transparent.gif">
     </div>

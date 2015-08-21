@@ -101,19 +101,19 @@
 
     <div class="fullwidth block fullwidth--last">
         <div class="prices block">
+            <gs-funding-bar></gs-funding-bar>
             <div class="price funded">
-                <h4>Gifted!</h4>
                 <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
+                <h4>Gifted</h4>
             </div>
             <div class="price remaining">
-                <h4>Needed:</h4>
                 <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
+                <h4>Remaining</h4>
             </div>
-            <gs-funding-bar></gs-funding-bar>
         </div>
         <div class="completion block">
-            <div><h4>Time Left in Campaign:</h4></div>
-            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2></div>
+            <p>This campaign ends {{giftStart.deadline | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
+            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2><h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4></div>
         </div>
     </div>
 
@@ -122,13 +122,15 @@
         <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
     </div>
 
+    <hr />
+
     <gs-thanks></gs-thanks>
     <div class="groupcard">
         <div class="title title--groupcard">
             <h2 class="title__name">Group Card</h2>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
         </div>
-        <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
+        <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide"></div>
         <div class="contributors {{randomColor($index)}}">
             <div class="contributors__titleblock {{randomColor($index)}}"></div>
             <div class="contributors__figure">
@@ -144,11 +146,12 @@
                 <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)"/>
                 <p class="contributors__info" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
                 <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
+                <p id="textcount" ng-show="isEditing(pitchIn)">{{230 - pitchIn.note.length}}</p>
             </div>
             <div class="contributors__edit">
                 <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
                 <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</a>
-                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
