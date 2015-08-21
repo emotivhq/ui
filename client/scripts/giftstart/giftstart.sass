@@ -490,27 +490,24 @@ div.giftstart.wrapper
       &.red
         background-color: $gs-red
 
-      &--row
-        display: table-row
-        @include apply-at-size("tablet", "portrait")
-          display: none
-
-      &--pre
-        &:nth-child(2n)
-          @include apply-at-size("tablet", "portrait")
-            display: table-row
-
       &:nth-child
         position: relative
 
       &__info
         color: white
         overflow-wrap: break-word
-        padding: 0 3% 3%
+        padding: 0 15px
         input
+          margin-top: 10px
           width: 100%
+        p
+          padding: 0
         textarea
           width: 100%
+        #textcount
+          line-height: 10px
+          margin: 0
+          text-align: right
 
       &__name
         color: white
