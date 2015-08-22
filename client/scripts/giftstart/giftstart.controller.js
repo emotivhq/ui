@@ -246,7 +246,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     var syncPitchInsTimerIsFast = true;
 
     var syncPitchInsTimer = $interval(function(){
-        console&&console.log&&console.log("deadline: " + GiftStartService.giftStart.deadline);
         GiftStartService.syncPitchIns("GiftStartService");
         if (syncPitchInsTimerIsFast && ($scope.secondsLeft <= 0 || $scope.campaignComplete())) {
             $interval.cancel(syncPitchInsTimer);
