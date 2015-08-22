@@ -143,9 +143,9 @@
             </div>
             <div class="contributors__info">
                 <h4 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
-                <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)"/>
+                <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)" placeholder="Name"/>
                 <p class="contributors__info" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
-                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
+                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment"/>
                 <p id="textcount" ng-show="isEditing(pitchIn)">{{230 - pitchIn.note.length}}</p>
             </div>
             <div class="contributors__edit">
