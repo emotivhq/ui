@@ -504,6 +504,11 @@
         $scope.updateGiftStartImage();
         $scope.priceChanged();
 
+        $(".endDate").datepicker({
+            minDate: "+5d",
+            maxDate: "+34d"
+        });
+
         $rootScope.$on('login-success', function(){
             $scope.showLoginBox = false;
             $scope.next();

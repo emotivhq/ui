@@ -249,8 +249,8 @@
                         </div>
                     </span>
                 </div>
-                <div class="campaign-length">
-                    <h2>3. When do you need the Gift?</h2>
+                <div class="campaign-end">
+                    <h2>3. When should the gift be delivered?</h2>
                     <label>Max: 34 days.  Your campaign will end 5 days earlier to allow for gift fulfillment.</label>
                     <input ui-date
                            type="text"
@@ -278,8 +278,12 @@
                     </div>
                     <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)+6}} Days</label>
                 </div>
+                <div class="campaign-length">
+                    <h2>4. When should the campaign end?</h2>
+                    <div ui-date></div>
+                </div>
                 <div class="coupon-code">
-                    <h2>4. Do you have a promo code?</h2>
+                    <h2>5. Do you have a promo code?</h2>
                     <input type="text"
                            id="coupon"
                            name="coupon"
