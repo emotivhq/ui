@@ -250,37 +250,33 @@
                     </span>
                 </div>
                 <div class="campaign-length">
-                    <h2>3. When should the gift be delivered?</h2>
-                    <label>Max: 34 days.  Your campaign will end 5 days earlier to allow for gift fulfillment.</label>
+                    <h2>3. When do you need the gift to be delivered?</h2>
+                    <label>Currently we only allow delivery dates less than 34 days away.</label>
                     <input ui-date
                            type="text"
                            class="endDate"
-                           ng-model="campaignEndDate"
-                           name="campaignEndDate"
+                           ng-model="deliveryDate"
+                           name="deliveryDate"
                            placeholder="mm/dd/yyyy"
-                           name="campaignEndDate"
-                           ng-focus="hideValidationError.campaignEndDate = true"
-                           ng-blur="hideValidationError.campaignEndDate = false"
+                           ng-focus="hideValidationError.deliveryDate = true"
+                           ng-blur="hideValidationError.deliveryDate = false; deliveryDateChanged()"
                            required="">
-                    <div ng-show="(campaignForm.$submitted || campaignForm.campaignEndDate.$touched || validationTrigger.createButtonClicked) && !hideValidationError.campaignEndDate" class="errorWrapper">
-                        <div ng-show="campaignForm.campaignEndDate.$error.required">
+                    <div ng-show="(campaignForm.$submitted || campaignForm.deliveryDate.$touched || validationTrigger.createButtonClicked) && !hideValidationError.deliveryDate" class="errorWrapper">
+                        <div ng-show="campaignForm.deliveryDate.$error.required">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Please select a date 7-34 days from now!
+                                Please select a date!
                             </div>
                         </div>
                         <div ng-show="!dateChosenValid()">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Please select a date 7-34 days from now!
+                                Please select a date!
                             </div>
                         </div>
                     </div>
-                    <label ng-class="{error: !dateChosenValid()}">{{getCampaignLength(campaignEndDate)+6}} Days</label>
-                </div>
-                <div class="campaign-length">
-                    <h2>4. When should the campaign end?</h2>
-                    <div ui-date></div>
+                    <p ng-hide="dueDateEmpty()">Your campaign will end on {{campaignEndDate.toDateString()}}. <a class="button" ng-click="changeDueDate = !changeDueDate">CHANGE</a></p>
+                    <div ng-show="changeDueDate" class="endRange" ng-class="{opaque: dueDateEmpty()}" ui-date></div>
                 </div>
                 <div class="coupon-code">
                     <h2>5. Do you have a promo code?</h2>
