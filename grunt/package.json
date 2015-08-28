@@ -9,5 +9,8 @@
     "grunt-contrib-uglify": "~0.5.0",
     "grunt-remove": "latest",
     "grunt-sass": "^0.18.1"
+  },
+  "dependencies": {
+    "grunt-contrib-clean": "~0.6.0"
   }
 }

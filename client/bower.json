@@ -34,5 +34,8 @@
     "angucomplete": "*",
     "angular-ui-date": "~0.0.6",
     "bootstrap": "*"
+  },
+  "resolutions": {
+    "angular": "1.3.17"
   }
 }

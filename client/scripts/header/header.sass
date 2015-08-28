@@ -22,11 +22,12 @@
     padding: 5px
 
     input
-      background: #eee
       border: 0
       color: #333
       height: 34px
       -webkit-input-placeholder: #333
+      font-size: 1.2em;
+      
 
   .header-menu-button
     display: none
@@ -45,7 +46,7 @@
     #logo
       @media screen and (max-width: $phone-tablet-boundary)
         display: none
-
+    
     #logo-mobile
       display: table-cell
       margin: 0 auto
@@ -242,3 +243,15 @@
         color: #bbb
       #no-notifications-msg
         margin: 0 10px
+  
+  .navbar-brand
+    height: 60px
+  	
+  .navbar-nav
+    padding: 17px 15px 0;
+
+  .navbar-default .navbar-nav>li>a
+    font-size: 1.2em
+
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form
+    padding: 17px 15px 0;
