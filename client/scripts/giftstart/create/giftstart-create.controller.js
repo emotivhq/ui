@@ -261,7 +261,7 @@
 
         $scope.deliveryDateChanged = function(dateText) {
             $scope.campaignEndDate = new Date($scope.deliveryDate);
-            $scope.campaignEndDate.setDate($scope.campaignEndDate.getDate() - 5);
+            $scope.campaignEndDate.setDate($scope.campaignEndDate.getDate() - 6);
             $(".endRange").datepicker("option", "maxDate", $scope.campaignEndDate);
             $(".endRange").datepicker("setDate", $scope.campaignEndDate);
         };
@@ -305,7 +305,7 @@
         };
 
         $scope.runValidation = function() {
-            var keys = Object.keys($scope.hideValidationError)
+            var keys = Object.keys($scope.hideValidationError);
             var hasErrors = false;
             keys.forEach(function (key) {
                 if ($scope.validationCreateStep[key] == $scope.createStep) {
@@ -327,7 +327,7 @@
         $scope.isCreateStepShipping = function() {return $scope.createStep==3;};
 
         $scope.goToStep = function(i) {
-            $scope.createStep=Math.max(Math.min(i,3),1)
+            $scope.createStep=Math.max(Math.min(i,3),1);
             $('html,body').animate({scrollTop: $('#giftstart-create-controls').offset().top-100}, 500);
         };
 
