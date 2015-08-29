@@ -252,6 +252,7 @@
                 <div class="campaign-length">
                     <h2>3. When do you need the gift to be delivered?</h2>
                     <label>Currently we only allow delivery dates less than 34 days away.</label>
+                    <h4>Delivery Date <a class="button" ng-click="changeDeliveryDate()">CHANGE</a></h4>
                     <input ui-date
                            type="text"
                            class="endDate"
@@ -275,7 +276,9 @@
                             </div>
                         </div>
                     </div>
-                    <p ng-hide="dueDateEmpty()">Your campaign will end on {{campaignEndDate.toDateString()}}. <a class="button" ng-click="changeDueDate = !changeDueDate">CHANGE</a></p>
+                    <h4 ng-hide="dueDateEmpty()">Campaign End Date <!--a class="button" ng-click="changeDueDate = !changeDueDate">CHANGE</a--></h4>
+                    <p class="endDate-text" ng-hide="dueDateEmpty()">Your campaign will end on </p><h2 class="endDate-date" ng-hide="dueDateEmpty()">{{campaignEndDate.toDateString()}}</h2><p class="endDate-text" ng-hide="dueDateEmpty()">.</p>
+                    <p id="endDate-comment" ng-hide="dueDateEmpty()">Your campaign needs to end at least 5 days before your delivery date.</p>
                     <div ng-show="changeDueDate" class="endRange" ng-class="{opaque: dueDateEmpty()}" ui-date></div>
                 </div>
                 <div class="coupon-code">

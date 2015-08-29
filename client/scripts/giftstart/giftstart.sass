@@ -425,13 +425,19 @@ div.giftstart.wrapper
       color: black
     .price
       display: inline-block
-      width: 49.5%
+      width: 49%
       h2
         color: $gs-darkorange
         display: inline
         margin-right: 7px
+        @include apply-at-size("phone")
+          display: block
+          font-size: 1.5em
       h4
         display: inline
+        @include apply-at-size("phone")
+          display: block
+          font-size: 1em
     .price.remaining
       text-align: right
 
@@ -444,11 +450,20 @@ div.giftstart.wrapper
       color: $gs-teal
       display: inline
       margin-right: 7px
+      @include apply-at-size("phone")
+        font-size: 1.5em
     p
       margin-bottom: 7px
       margin-top: 0
+      @include apply-at-size("phone")
+        text-align: center
+    div
+      @include apply-at-size("phone")
+        text-align: center
     h4
       display: inline
+      @include apply-at-size("phone")
+        font-size: 1em
 
   .groupcard
     clear: both

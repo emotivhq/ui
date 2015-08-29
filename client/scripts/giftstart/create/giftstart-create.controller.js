@@ -255,11 +255,15 @@
             }
         };
 
+        $scope.changeDeliveryDate = function() {
+            $(".endDate").datepicker("show");
+        };
+
         $scope.deliveryDateChanged = function(dateText) {
             $scope.campaignEndDate = new Date($scope.deliveryDate);
             $scope.campaignEndDate.setDate($scope.campaignEndDate.getDate() - 5);
-            $(".endRange").datepicker("setDate", $scope.campaignEndDate);
             $(".endRange").datepicker("option", "maxDate", $scope.campaignEndDate);
+            $(".endRange").datepicker("setDate", $scope.campaignEndDate);
         };
 
         var endDateChanged = function(dateText) {
