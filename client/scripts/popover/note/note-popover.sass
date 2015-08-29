@@ -19,7 +19,7 @@
   textarea:focus
     +box-shadow(rgba(0, 0, 0, 0), 0, 0, 0)
 
-  div.note
+  .note
     width: 100%
     border: solid 1px rgba(255, 255, 255, 1)
     background-color: #fff
@@ -43,10 +43,13 @@
     #name-box
       margin-bottom: 12px
 
-  textarea
-    width: 100%
-    padding: 0 calc((100% - ((1200px - ((35px * 2) + (52px * 2) + (15px * 4))) / 3))/2)
-    height: 3em
+    input
+      padding: 0 calc((100% - ((1200px - ((35px * 2) + (52px * 2) + (15px * 4))) / 3))/2)
+
+    textarea
+      width: 100%
+      padding: 0 calc((100% - ((1200px - ((35px * 2) + (52px * 2) + (15px * 4))) / 3))/2)
+      height: 3em
 
   .note-skipbox
     padding: 0 10px

@@ -151,7 +151,7 @@
             <div class="contributors__edit">
                 <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
                 <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</a>
-                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
