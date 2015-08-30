@@ -29,19 +29,28 @@
         </div>
       </form>
       <ul class="nav navbar-nav navbar-right">
+       <li id="nav_notifications" class="menu-login dropdown" ng-show="header.loggedIn" ng-mouseenter="header.notificationsHoverIn()" ng-mouseleave="header.notificationsHoverOut()" ng-class="{hideMobileNotifications: !notifyOpen}">
+        <a name="notificationlist" href="#" data-toggle="dropdown" class="menu-notifications dropdown-toggle" ng-hide="notifyOpen" role="button" aria-expanded="false"><img class="header-notifications" ng-src="/assets/notifications-{{notificationHover && 'open' || numNotifications==0 && 'none' || 'new'}}.png" ng-hide="notifyOpen" /> {{numNotificationsUnseen}}</a>
+		<ul id="notification-list" class="dropdown-menu" role="menu">
+            <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.seen, notificationsUnread: !item.seen}"><a href="{{item.link}}" ng-click="header.notificationClick(item)">{{item.title}}</a>
+            </li>
+            <li id="no-notifications-msg" ng-show="numNotifications==0" ng-click="header.closeNotifications()">You have no notifications</li>
+        </ul>
+    </li>
         <li class="dropdown" ng-show="header.loggedIn" ng-class="{hideOnMobile: notifyOpen}">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+			
+		<a class="menu-user dropdown-toggle" data-toggle="dropdown" ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()" ng-show="header.loggedIn" role="button" aria-expanded="false">
+			<img class="header-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl" /> {{header.userName}} <span class="caret"></span>
+		</a>
           <ul class="dropdown-menu" role="menu">
-            <img class="header-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl" /><a class="menu-user" ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()" ng-show="header.loggedIn">{{header.userName}}</a>
-        	<hr class="mobile-rule" />
-        	<ul class="submenu">
-            	<li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
-            	<li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
-            	<li><a ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
-            	<li id="mobile_notifications"><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotificationsUnseen}})</a></li>
-            	<li class="hidden"><a class="coming-soon">Settings</a></li>
-            	<li><a class="linky" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
-        	</ul>
+            <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
+            <li><a ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
+            <li id="mobile_notifications"><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotificationsUnseen}})</a></li>
+            <li><a ng-href="/faq" ng-click="header.closeMobileMenu()">FAQ</a></li>
+            <li class="dropdown-divider" role="presentation"></li>
+			<li class="hidden"><a class="coming-soon">Settings</a></li>
+            <li><a class="linky" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
           </ul>
         </li>
 	<li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="{{isHeaderOnly?'#nav_login':''}}" ng-hide="header.loggedIn || header.portaling" ng-click="header.showLogin(); actions.menuItemClicked(true);" class="btn btn-link">Login</a></li>
