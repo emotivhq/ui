@@ -54,7 +54,8 @@
             <div ng-repeat-start="pitchIn in pitchIns"
                  ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]"
                  class="contributors--pre h--hide"></div>
-            <div class="contributors" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
+            <div class="contributors {{randomColor($index)}}" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
+                <div class="contributors__titleblock {{randomColor($index)}}"></div>
                 <div class="contributors__figure">
                     <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
                         <img class="contributors__img" ng-src="{{pitchIn.img}}"/>
@@ -96,18 +97,6 @@
     }
 
     @font-face {
-        font-family: "Roboto Condensed";
-        font-weight: 300;
-        src: url('/assets/fonts/RobotoCondensed-Light-webfont.woff');
-    }
-
-    @font-face {
-        font-family: "Roboto Condensed";
-        font-weight: 700;
-        src: url('/assets/fonts/RobotoCondensed-Bold-webfont.woff');
-    }
-
-    @font-face {
         font-family: "Roboto Slab";
         src: url('/assets/fonts/RobotoSlab-Thin-webfont.woff');
     }
@@ -118,7 +107,7 @@
     }
 
     @font-face {
-        font-family: "Roboto";
+        font-family: Roboto;
         src: url('/assets/fonts/Roboto-Regular.woff');
     }
 
@@ -194,7 +183,7 @@
     }
 
     .desc {
-        font-family: 'Roboto Condensed', sans-serif;
+        font-family: Roboto, sans-serif;
     }
 
     .contributors__img {
@@ -306,22 +295,6 @@
         .groupcard .contributors--pre:nth-child(2n) {
             display: table-row;
         }
-    }
-
-    .groupcard .contributors:nth-child(even) {
-        background: #e2e2e2;
-        position: relative;
-    }
-
-    .groupcard .contributors:nth-child(odd) {
-        background: #efefef;
-        position: relative;
-    }
-
-    .groupcard .contributors--only {
-        width: 33%;
-        display: block;
-        margin: 0 auto;
     }
 
     @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
