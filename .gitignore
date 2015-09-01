@@ -44,47 +44,6 @@ tl.testing-*.*
 VERSION
 client/stylesheets/compiled.csssudo
 
-git rm -rf --cached
-
-
-# Keep dependencies out of SCM
-cffi-1.1.2-py2.7.egg-info
-cryptography-0.9.3-py2.7.egg-info
-enum34-1.0.4-py2.7.egg-info
-GoogleAppEngineCloudStorageClient-1.9.22.1-py2.7.egg-info
-idna-2.0.dist-info
-ipaddress-1.0.11.dist-info
-lxml-3.4.4-py2.7.egg-info
-manuel-1.8.0-py2.7.egg-info
-oauthlib-0.7.2-py2.7.egg-info
-paypalrestsdk-1.10.0-py2.7.egg-info
-pyasn1-0.1.8-py2.7.egg-info
-pycparser-2.14-py2.7.egg-info
-requests_oauthlib-0.5.0.dist-info
-setuptools-18.0.1.dist-info
-six-1.9.0.dist-info
-stripe-1.23.0-py2.7.egg-info
-tl.testing-0.5-py2.7.egg-info
-OpenSSL
-cffi*
-cryptography*
-enum
-funcsigs*
-idna
-mock
-paypalrestsdk-1.10.0-py2.7.egg-info
-pbr-1.3.0.dist-info
-pbr
-pkg_resources
-pyasn1
-pycparser
-_cffi_backend.so
-get-pip.py
-ipaddress.py
-pyOpenSSL-0.15.1.dist-info
-
-
-
 client/stylesheets/compiled.csssudo.map
 
 build.sh
