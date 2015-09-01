@@ -161,7 +161,7 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 mangle: false,
-                compress: true
+                compress: {}
             },
             build: {
                 src: '../client/scripts/out/app.js',
@@ -190,7 +190,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    // Dev task.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
+    // Prod task.
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat', 'uglify', 'cssmin', 'clean']);
 
 };
