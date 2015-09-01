@@ -266,7 +266,6 @@ def send_pitchin_notification(giftstart, charge_id, charge_amount_cents, last_fo
     }
 
     if(uid!=giftstart.gift_champion_uid):
-
         data = json.dumps({'subject': "Someone Pitched In!",
                            'sender': "giftconcierge@giftstarter.com",
                            'to': [giftstart.gc_email],
