@@ -57,9 +57,9 @@
             <div class="contributors {{randomColor($index)}}" ng-class="{true: 'contributors--only'}[pitchIns.length == 1]">
                 <div class="contributors__titleblock {{randomColor($index)}}"></div>
                 <div class="contributors__figure">
-                    <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}">
+                    <!--<div class="img-border">-->
                         <img class="contributors__img" ng-src="{{pitchIn.img}}"/>
-                    </a>
+                    <!--</div>-->
                 </div>
                 <div class="contributors__info">
                     <h3 class="contributors__name">{{pitchIn.name}}</h3>
@@ -186,10 +186,10 @@
         font-family: Roboto, sans-serif;
     }
 
-    .contributors__img {
-        width: 47% !important;
-        margin: 5% 25% !important
-    }
+    /*.contributors__img {*/
+        /*width: 47% !important;*/
+        /*margin: 5% 25% !important*/
+    /*}*/
 
     .contributor__description {
         width: 60%;
@@ -231,6 +231,7 @@
     .title {
         color: black;
         text-align: center;
+        border-radius: 25px;
     }
 
     .groupcard {
@@ -256,7 +257,7 @@
 
     .groupcard .title--groupcard {
         margin: 0 auto 5rem;
-        display: table-caption;
+        /*display: table-caption;*/
     }
 
     @media only screen and (max-width: 667px) {
@@ -276,13 +277,9 @@
     }
 
     .groupcard .contributors {
-        display: table-cell !important;
-        width: 33% !important;
+        display: inline-block;
+        width: 26% !important;
         vertical-align: top;
-    }
-
-    .groupcard .contributors--row {
-        display: table-row;
     }
 
     @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
@@ -291,29 +288,29 @@
         }
     }
 
-    @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
-        .groupcard .contributors--pre:nth-child(2n) {
-            display: table-row;
-        }
-    }
+    /*@media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {*/
+        /*.groupcard .contributors--pre:nth-child(2n) {*/
+            /*display: table-row;*/
+        /*}*/
+    /*}*/
 
-    @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
-        .groupcard .contributors--only {
-            width: 50%;
-        }
-    }
+    /*@media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {*/
+        /*.groupcard .contributors--only {*/
+            /*width: 50%;*/
+        /*}*/
+    /*}*/
 
-    @media only screen and (max-width: 667px) {
-        .groupcard .contributors--only {
-            width: 100%;
-        }
-    }
+    /*@media only screen and (max-width: 667px) {*/
+        /*.groupcard .contributors--only {*/
+            /*width: 100%;*/
+        /*}*/
+    /*}*/
 
-    @media only screen and (max-width: 375px) and (orientation: portrait) {
-        .groupcard .contributors--only {
-            width: 100%;
-        }
-    }
+    /*@media only screen and (max-width: 375px) and (orientation: portrait) {*/
+        /*.groupcard .contributors--only {*/
+            /*width: 100%;*/
+        /*}*/
+    /*}*/
 
     .groupcard .contributors__info {
         padding: 0 10% 3%;
@@ -328,13 +325,19 @@
     }
 
     .groupcard .contributors__img {
-        width: 26%;
+        width: 100%;
         margin: 8% 0 1%;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         -ms-border-radius: 50%;
-        border: 2px solid #fff;
+        border: 6px solid #d6d6d6;
+        border-radius: 50%;
         vertical-align: top;
-        cursor: pointer;
     }
+
+    /*.img-border {*/
+        /*border: 6px solid #d6d6d6;*/
+        /*border-radius: 50%;*/
+        /*width: 80%*/
+    /*}*/
 </style>
