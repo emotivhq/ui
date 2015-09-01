@@ -223,6 +223,7 @@ libraries:
 
 env_variables:
   OAUTHLIB_INSECURE_TRANSPORT: 1
+  PRERENDER_TOKEN: 'rgoheOAM1S1n4zzDsub9'
 
 skip_files:
 - grunt/.*
