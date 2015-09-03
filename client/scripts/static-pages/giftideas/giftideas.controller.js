@@ -36,7 +36,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         );
         if(saver) {
             saver.success(function (response) {
-                $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>.";
                 $scope.isSavingForLater = false;
             })
             .error(function (response) {
