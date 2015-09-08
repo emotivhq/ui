@@ -157,7 +157,7 @@
         <div ng-repeat-end class="h--hide"></div>
         <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
-    <div ng-show="campaignComplete()" class="btn btn--pdf">
+    <div ng-show="secondsLeft <= 0 || campaignComplete()" class="btn btn--pdf">
         <a href="" ng-click="toPDFPage()" class="btn__link">
             View Card PDF
         </a>
