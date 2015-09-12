@@ -1,6 +1,6 @@
 <div class="userlogin__form" ng-hide="$parent.showForgot || $parent.showReset">
     <h4>Login with an email address:</h4>
-    <form ng-submit="$parent.doLoginEmail()">
+    <form ng-submit="$parent.doLoginEmail()" class="login_action">
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
         <div class="userlogin__passwordwrap"><input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Enter your password" required></div>
         <a class="userlogin__forgot linky" ng-click="$parent.showForgot=true">Forgot password</a>
@@ -8,7 +8,7 @@
             <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
         </div>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="userlogin__loginbtn red" ng-disabled="$parent.working">Log In</button>
+        <button class="userlogin__loginbtn red login_action" ng-disabled="$parent.working">Log In</button>
     </form>
 </div>
 
