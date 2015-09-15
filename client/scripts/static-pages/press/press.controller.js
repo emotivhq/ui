@@ -16,6 +16,11 @@ function PressController($scope,  $location,  $timeout) {
 
     $scope.items = [
         new pressItem(
+            "http://blog.timetrade.com/2015/08/21/wbey-episode-3-amazon-prime-day-giftstarter-top-retail-trends-of-2015/",
+            "timetrade.png",
+            "GiftStarter.com is a new service promising to help people never give a bad gift again. Instead of finding a cheap gift, or hunting people down who have agreed to go in on group gift, GiftStarter is an online service that allows people to choose a product and pay for it in increments.  Video Link: https://youtu.be/s_XH5fPG9_g"
+        ),
+        new pressItem(
             "http://www.bizjournals.com/seattle/print-edition/2015/08/14/friends-help-friends-give-gifts-giftstarter-brings.html",
             "pugetsound.png",
             "Friends help friends give gifts: GiftStarter brings crowdfunding to the party.  How?  GiftStarter lets friends and family collectively buy anything that is sold online.  Meet Arry Yu, CEO.  She's got a gift, and it's in the cloud."
