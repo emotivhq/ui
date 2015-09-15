@@ -1,12 +1,2 @@
-/*
-    Document   : client/styles/ui.scss
-    Created on : 2015-09-15 08:03 PM
-    Author     : thinq4yourself
-    Description:
-    Purpose of the stylesheet follows.
-    To change this template use Tools | Templates.
-*/
-
-root {
-    display: block;
-}
+// Load UI Components
+@import "ui/ui";

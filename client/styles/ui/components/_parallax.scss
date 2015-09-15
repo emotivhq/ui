@@ -1,0 +1,50 @@
+.parallax .container {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	padding: 80px 0;
+	position: relative;
+	/* Responsive */
+	@media (max-width: 991px) {
+		background-attachment: scroll !important;
+		background-position: 50% 50% !important;
+	}
+	&:after {
+		display: block;
+	}
+	h3 {
+		color: #fff;
+		margin-bottom: 7px;
+	}
+	p {
+		margin-bottom: 23px;
+	}
+	.text-center {
+		color: $color-light;
+		position: relative;
+		z-index: 2;
+		@media (min-width: 992px) {
+			padding: 0 28%;
+		}
+		@media (max-width: 991px) {
+			padding: 0 8%;
+		}
+	}
+	.contact-info-wrap {
+		padding: 50px 0;
+		/* Responsive */
+		@media (min-width: 641px) {
+			margin: {
+				bottom: 70px;
+				top: 70px;
+			}
+		}
+		&:after {
+			background-color: rgba(black, .9);
+		}
+	}
+}
+

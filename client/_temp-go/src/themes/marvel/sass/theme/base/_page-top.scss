@@ -1,0 +1,29 @@
+/* Page Top */
+.page-top {
+	.main & .container {
+		background-color: #fcfbf7;
+	}
+	.page-top-in {
+		display: table;
+		height: 297px;
+		width: 100%;
+	}
+	.title-group {
+		display: table-cell;
+		font-size: $fontsize-14;
+		text-align: center;
+		vertical-align: middle;
+		h1 {
+			font-size: 3.428em;
+			line-height: 1;
+			margin-bottom: 10px;
+		}
+		@media (min-width: 769px) {
+			padding: {
+				left: 65%;
+				right: 60px;
+			}
+		}
+	}
+}
+

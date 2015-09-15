@@ -1,0 +1,112 @@
+/* accordion */
+.panel-group {
+	margin-bottom: 50px;
+	.pgl-panel {
+		background-color: transparent;
+		border-radius: 0;
+		box-shadow: none;
+		+ .pgl-panel {
+			margin-top: 10px;
+		}
+		.panel-title {
+			font-size: $fontsize-15;
+			text-transform: uppercase;
+			a {
+				display: block;
+			}
+		}
+	}
+}
+.pgl-panel {
+	border: none;
+	> .panel-heading {
+		background-color: transparent;
+		border: none;
+		padding: 0;
+	}
+	.panel-body {
+		border: 1px solid $color-dark;
+		padding: 0 30px 10px;
+		hr {
+			margin-top: 0;
+		}
+		.post-leave-comment {
+			margin-bottom: 30px;
+		}
+	}
+	.panel-title {
+		a {
+			border: 1px solid $color-dark;
+			border-bottom: none;
+			padding: 18px 30px;
+			&:after {
+				color: $color-dark;
+				content: "-";
+				float: right;
+				font-size: $fontsize-18;
+				font-weight: 500;
+				line-height: .8;
+			}
+		}
+		.collapsed {
+			border: 1px solid $color-dark;
+			&:after {
+				color: $color-root-title;
+				content: "+";
+			}
+		}
+	}
+	> .panel-heading + .panel-collapse > .panel-body {
+		border-top-color: transparent;
+	}
+	.collapse.in .panel-body {
+		border-top: none;
+	}
+}
+
+/* accordion2 */
+.panel-group2 {
+	margin-bottom: 50px;
+	.panel-default {
+		border-radius: 0;
+		border-color: transparent;
+		box-shadow: none;
+		+ .panel {
+			margin-top: 0;
+		}
+		> .panel-heading {
+			background-color: transparent;
+			border-color: transparent;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			padding: 0 0 13px;
+		}
+		> .panel-heading + .panel-collapse > .panel-body {
+			background-color: whitesmoke;
+			border-top-color: transparent;
+			margin-bottom: 15px;
+			padding: 15px 20px;
+			position: relative;
+			&:after {
+				@include arrow-up;
+			}
+			p {
+				margin: 0;
+			}
+		}
+		h4 {
+			padding-top: 15px;
+		}
+		.panel-title {
+			font-weight: 400;
+			position: relative;
+			text-transform: none;
+			label {
+				display: block;
+				a {
+					display: inline-block;
+				}
+			}
+		}
+	}
+}

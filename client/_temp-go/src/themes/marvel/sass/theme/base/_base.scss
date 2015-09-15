@@ -1,0 +1,54 @@
+body {
+	color: $color-lighter;
+	font: {
+		family: $font-primary;
+		size: $body-font-size;
+	}
+	line-height: 1.7;
+}
+h1, h2, h3, h4, h5, h6 {
+	color: $color-darker;
+	line-height: 1.4;
+	margin: 0 0 20px;
+	text-transform: uppercase;
+}
+h1 {
+	font-weight: 300;
+}
+
+h2, h3, h4, h5, h6 {
+	font-weight: 600;
+}
+h1 {
+	font-size: $fontsize-48;
+}
+h2 {
+	font-size: $fontsize-24
+}
+h3 {
+	font-size: $fontsize-18;
+}
+h4 {
+	font-size: $fontsize-15;
+}
+a {
+	color: $color-dark;
+	@include transition(all .4s);
+	outline: none;
+	&:hover {
+		color: $color-primary;
+		outline: none;
+		text-decoration: none;
+	}
+	&:focus {
+		color: $color-darker;
+		outline: none;
+		text-decoration: none;
+	}
+}
+p, ul, ol {
+	margin-bottom: 20px;
+}
+address {
+	line-height: 1.7;
+}

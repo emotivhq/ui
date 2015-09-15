@@ -1,0 +1,41 @@
+/* Scroll to Top */
+.scroll-to-top {
+	@include transition (all 0.3s);
+	border: 2px solid $color-darker;
+	border-radius: 50%;
+	bottom: 20px;
+	color: $color-darker;
+	display: block;
+	font-size: $fontsize-24;
+	height: 32px;
+	line-height: .8;
+	@include opacity(0);
+	padding: 0 5px;
+	position: fixed;
+	text-align: center;
+	right: 30px;
+	width: 32px;
+	z-index: 1040;
+	&:hover {
+		background-color: $color-primary;
+		border-color: $color-primary;
+		color: #fff;
+		@include opacity(1);
+	}
+	&.visible {
+		@include opacity(1);
+	}
+	span {
+		display: inline-block;
+		padding: 0 5px;
+	}
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+
+	.scroll-to-top.hidden-mobile {
+		display: none !important;
+	}	
+
+}

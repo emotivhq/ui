@@ -1,0 +1,89 @@
+.nav-tabs {
+	text-transform: uppercase;
+	> li {
+		> a {
+			border-radius: 0;
+			color: #aaa;
+			&:hover, &:focus {
+				background-color: transparent;
+				color: $color-darker;
+			}
+		}
+		&.active > a,
+		&.active > a:hover,
+		&.active > a:focus {
+			color: $color-darker;
+		}
+	}
+}
+
+.pro-tabs {
+	border-bottom: none;
+	font: {
+		size: $fontsize-18;
+		weight: 600;
+	}
+	margin-bottom: 22px;
+	> li {
+		margin-bottom: 0;
+		> a {
+			border: none;
+			margin-right: 0;
+			padding: 0 30px 0 0;
+		}
+		&.active > a,
+		&.active > a:hover,
+		&.active > a:focus {
+			border: none;
+		}
+	}
+}
+
+.pro-tabs.text-center, .grid-tabs.text-center {
+	> li {
+		display: inline-block;
+		float: none;
+	}
+}
+
+.pro-tabs.text-center {
+	> li > a {
+		padding: 0 15px;
+	}
+}
+
+/* grid-tabs */
+.grid-tabs {
+	> li {
+		> a {
+			border-top-width: 2px;
+		}
+		&.active > a,
+		&.active > a:hover,
+		&.active > a:focus {
+			border-top-color: $color-primary;
+			border-top-width: 2px;
+		}
+	}
+}
+
+/* narrow-tabs */
+.narrow-tabs {
+	
+	> li {
+		+ li {
+			> a:before {
+				content: "/";
+				padding-right: 4px;
+			}
+		}
+		> a {
+			padding: 0 2px 0 0;
+		}
+	}
+	&.text-center {
+		> li > a {
+			padding: 0 2px 0 0;
+		}
+	}
+}

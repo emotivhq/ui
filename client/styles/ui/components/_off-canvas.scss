@@ -1,0 +1,133 @@
+.uk-offcanvas {
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	touch-action: none;
+	background: rgba($color-darker, 0.1);
+}
+.uk-offcanvas.uk-active {
+	display: block;
+}
+
+/* Sub-object `uk-offcanvas-page` */
+.uk-offcanvas-page {
+	position: fixed;
+	-webkit-transition: margin-left 0.3s ease-in-out;
+	transition: margin-left 0.3s ease-in-out;
+}
+
+/* Sub-object `uk-offcanvas-bar` */
+.uk-offcanvas-bar {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	-webkit-transform: translateX(-100%);
+	transform: translateX(-100%);
+	z-index: 1001;
+	width: 307px;
+	max-width: 100%;
+	background: $color-dark;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transition: -webkit-transform 0.3s ease-in-out;
+	transition: transform 0.3s ease-in-out;
+	-ms-scroll-chaining: none;
+}
+.uk-offcanvas.uk-active .uk-offcanvas-bar.uk-offcanvas-bar-show {
+	-webkit-transform: translateX(0%);
+	transform: translateX(0%);
+}
+
+/* Modifier `uk-offcanvas-bar-flip */
+.uk-offcanvas-bar-flip {
+	left: auto;
+	right: 0;
+	-webkit-transform: translateX(100%);
+	transform: translateX(100%);
+}
+
+/* Panel in offcanvas */
+.uk-offcanvas .uk-panel {
+	color: #fff;
+	margin: 20px;
+	h3, a {
+		color: #fff;
+	}
+	h3 a:hover, h3 a:focus {
+		color: $color-primary;
+	}
+	.product-price ins {
+		color: $color-primary;
+	}
+}
+
+.uk-panel {
+	.list-thumbs-pro .product + .product, .cart-subtotals {
+		border-top-color: rgba(white,.1);
+	}
+}
+
+/* uk-nav-offcanvas */
+.uk-nav-offcanvas, .uk-nav-sub {
+	@extend .list-unstyled;
+}
+
+.uk-nav-offcanvas {
+	a {
+		color: #fff;
+		display: block;
+		&:hover, &:focus {
+			color: $color-primary;
+		}
+	}
+	> li {
+		> a {
+			border-top: 1px solid rgba($color-darker, 0.3);
+			@include box-shadow(0 1px 0 rgba(white, 0.05) inset);
+			padding: 10px 20px;
+		}
+		&.uk-open {
+			margin-bottom: 20px;
+			> a {
+				background-color: #404040;
+			}
+		}
+		&.uk-active > a {
+			background-color: #1a1a1a;
+			color: #fff;
+		}
+	}
+}
+
+.uk-nav-sub {
+	padding-left: 40px;
+	padding-top: 20px;
+	li {
+		line-height: 2;
+	}
+	.active a {
+		color: $color-primary;
+	}
+}
+
+@media (min-width: 992px) {
+	.hidden-lg {
+		display: none !important;
+	}
+}
+
+@media (max-width: 991px) {
+	.uk-navbar-toggle {
+		color: #fff;
+		float: left;
+		padding-top: 18px;
+		&:hover, &:focus {
+			color: $color-primary;
+		}
+	}
+}

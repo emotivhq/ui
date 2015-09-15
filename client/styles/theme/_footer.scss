@@ -1,0 +1,147 @@
+/* #Footer */
+#footer {
+	color: $color-light;
+	font-size: $root-font-size;
+	.container {
+		padding: {
+			bottom: 60px;
+			top: 60px;
+		}
+		/* Responsive */
+		@media (max-width: 767px) {
+			padding: {
+				left: 30px;
+				right: 30px;
+			}
+		}
+	}
+	h4 {
+		color: $color-dark;
+	}
+	a {
+		color: $color-light;
+		&:hover {
+			color: $color-primary;
+		}
+	}
+	address a, .footer-copyright p a {
+		color: $color-dark;
+		&:hover {
+			color: $color-primary;
+		}
+	}
+	p {
+		margin-bottom: 12px;
+	}
+	ul {
+		@extend .list-unstyled;
+		li {
+			margin-bottom: 5px;
+		}
+	}
+	.social-icons, .card-icons {
+		@extend .list-inline;
+		margin-left: 0;
+		li {
+			padding-left: 0;
+			padding-right: 0;
+		}
+	}
+	.tweet-date {
+		color: $color-light;
+		display: block;
+		margin-top: 8px;
+	}
+	.latest-tweets a {
+		color: $color-primary;
+		&:hover {
+			color: $color-root;
+		}
+	}
+	.footer-copyright {
+		@extend .text-right;
+	}
+	.card-icons a {
+		color: rgba(black, .5);
+		font-size: $fontsize-24;
+		&:hover {
+			color: $color-primary;
+		}
+	}
+}
+.social-icons {
+	li {
+		margin-right: -4px;
+	}
+	a {
+		display: block;
+		height: 40px;
+		line-height: 2.8;
+		overflow: hidden;
+		text-align: center;
+		width: 40px;
+		@include cont-after;
+		.fa:before {
+			position: relative;
+			z-index: 2;
+		}
+		&:after {
+			background-color: $color-primary;
+			bottom: 0;
+			top: auto;
+			@include transition(.2s ease-in-out all);
+			@include translate3d(0, 100%, 0);
+			z-index: 1;
+		}
+		&:hover {
+			color: $color-root-title !important;
+			&:after {
+				@include translate3d(0, 0, 0);
+			}
+		}
+	}
+}
+
+#footer.bg-color6 {
+	background-color: transparent !important;
+	.container {
+		background-color: $dark-bg;
+		padding: {
+			left: 30px;
+			right: 30px;
+		}
+	}
+	color: $color-root;
+	h4 {
+		color: $color-root-title;
+	}
+	a {
+		color: $color-root;
+		&:hover {
+			color: $color-primary;
+		}
+	}
+	address a, .footer-copyright p a {
+		color: $color-root-title;
+		&:hover {
+			color: $color-primary;
+		}
+	}
+	.latest-tweets a {
+		color: $color-primary;
+		&:hover {
+			color: $color-root;
+		}
+	}
+	.social-icons {
+		a {
+			background-color: $color-dark;
+		}
+	}
+	.card-icons a {
+		color: rgba(white, .5);
+		&:hover {
+			color: $color-primary;
+		}
+	}
+}

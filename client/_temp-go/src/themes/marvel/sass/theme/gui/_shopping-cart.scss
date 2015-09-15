@@ -1,0 +1,153 @@
+.featured-boxes {
+	h3 {
+		margin: 0 0 30px;
+	}
+}
+
+.quantity {
+	display: inline-block;
+	text-align: center;
+	input {
+		background: whitesmoke;
+		border: none;
+		float: left;
+		height: 50px;
+		text-align: center;
+		@media (max-width: 991px) {
+			padding: {
+				left: 2px;
+				right: 2px;
+			}
+		}
+	}
+	.qty {
+		width: 50px;
+	}
+	.minus {
+		margin-right: 1px;
+	}
+	.plus {
+		margin-left: 1px;
+	}
+	@media (max-width: 767px) {
+		.minus, .plus {
+			display: none;
+		}
+	}
+}
+
+.shop_table {
+	width: 100%;
+	.product-remove a {
+		font-size: 1.3em;
+	}
+	th {
+		background: $dark-bg;
+		border: 1px solid $dark-bg;
+		border-bottom: none;
+		color: white;
+		font-size: $fontsize-14;
+		font-weight: 600;
+		padding: 10px 30px;
+		@media (max-width: 991px) {
+			padding: {
+				left: 20px;
+				right: 20px;
+			}
+		}
+	}
+	td {
+		border: 1px solid $color-root-title;
+		padding: 30px;
+		@media (max-width: 991px) {
+			padding: 20px;
+		}
+	}
+	.thumb-item-img {
+		border-right: none;
+		padding-right: 0;
+		position: static;
+		@media (min-width: 992px) {
+			width: 110px;
+		}
+	}
+	.product-name {
+		border-left: none;
+	}
+	.product-remove {
+		text-align: center;
+		width: 30px;
+	}
+	td.product-price {
+		font-weight: 100;
+	}
+	.product-quantity {
+		@media (min-width: 992px) {
+			width: 187px;
+		}
+	}
+	td.product-quantity {
+		text-align: center;
+	}
+	td.product-subtotal {
+		width: 80px;
+	}
+}
+.product-subtotal, .total .amount {
+	color: $color-primary;
+}
+.featured-box {
+	margin-bottom: 50px;
+	h4 {
+		@include title-border;
+	}
+}
+
+.featured-box-secondary {
+	font-size: .928em;
+	input.form-control {
+		height: 37px;
+	}
+	.formDropdown {
+		height: 37px;
+		margin-bottom: 0;
+		padding-top: 7px;
+	}
+	p {
+		margin-bottom: 15px;
+	}
+}
+
+.cart-totals {
+	margin-bottom: 15px;
+	width: 100%;
+	th {
+		font-weight: 400;
+	}
+	td {
+		text-align: right;
+	}
+	th, td {
+		border-top: 1px solid $color-root-title;
+		padding: 14px 0;
+		vertical-align: top;
+	}
+	tr:first-child th, tr:first-child td {
+		border-top: none;
+	}
+	.cart-subtotal:first-child th, .cart-subtotal:first-child td {
+		padding-top: 0;
+	}
+}
+
+.featured-box-cart {
+	.form-horizontal .control-label {
+		text-align: left;
+	}
+	@media (max-width: 480px) {
+		&:not(.featured-box-secondary) {
+			overflow-x: scroll;
+			padding-bottom: 30px;
+		}
+	}
+}
