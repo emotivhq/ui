@@ -1,3 +1,4 @@
+/client/_temp-go/ 
 /client/stylesheets/*.css
 /client/bower_components/*
 /client/client.iml
