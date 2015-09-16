@@ -1,11 +1,9 @@
 // Shared variables and mixins
-@import 
-    "global/var"                        // global variables
-    "mixins/mixins"                     // global variables
-,   "bootstrap/bootstrap/mixins"        // Bootstrap mixins
-//,   "bourbon/bourbon"                   // Bourbon mixins
-//,   "fonts"                             // Font mixins
-;
+@import "global/var"; 					// global variables
+@import "mixins/mixins";				// global variables
+@import "_bootstrap/bootstrap/mixins";	// Bootstrap mixins
+//@import "_bourbon/bourbon";			// Bourbon mixins
+//@import "fonts";						// Font mixins
 
 // Globals
 @import "global/base";

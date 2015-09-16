@@ -33,6 +33,15 @@ module.exports = function(grunt) {
                     dest: '../client/scripts/out/css',
                     ext: '.css'
                 }]
+            },
+            build: {
+                files: [{
+                    expand: true,
+                    cwd: '../client',
+                    src: 'styles/**/*.{scss,sass}',
+                    dest: '../client/stylesheets/app-main',
+                    ext: '.css'
+                }]
             }
         },
         concat: {
@@ -154,6 +163,15 @@ module.exports = function(grunt) {
                 },
                 src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
                 dest: '../client/stylesheets/compiled.css'
+            },
+            appcss: {
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapName: '../client/stylesheets/app-main.css.map',
+                    sourceMapStyle: 'link'
+                },
+                src: ['../client/stylesheets/app-main/**/*.css'],
+                dest: '../client/stylesheets/app-main.css'
             }
         },
 		// Make sure code styles are up to par and there are no obvious mistakes
@@ -171,7 +189,6 @@ module.exports = function(grunt) {
                 force: true
             },
             src: ['../client/scripts/out/css','../client/stylesheets/**/*.map','../client/scripts/out/*.map']
-
         },
         uglify: {
             options: {
@@ -193,7 +210,21 @@ module.exports = function(grunt) {
                     '../client/stylesheets/compiled.css': '../client/stylesheets/compiled.css'
                 }
             }
-        }
+        },
+		// Empties folders & files to start fresh
+		clean: {
+  			options: {
+                force: true
+            },
+			build: {
+   				dot: true,
+				src: ['../client/stylesheets/app-main']
+  			},
+  			release: {
+   				dot: true,
+				src: ['../client/stylesheets/app-main', '../client/stylesheets/app-main.css']
+  			}
+		}
     });
 
     // Load the plugins
@@ -206,8 +237,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
-    // Dev task.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
-    grunt.registerTask('jshint', ['jshint']);
+    // Dev tasks.
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the whole app
+    grunt.registerTask('jshint', ['jshint']);							// Run jshint, catch errors, fix, code better
+	
+	// New SASS tasks, called sassy
+	grunt.registerTask('sassy', ['build-sass', 'rel-sass']);			// soup to nuts clean, build, release SASS
+    grunt.registerTask('build-sass', ['build-clean', 'sass:build']);	// clean & build dev SASS
+    grunt.registerTask('rel-sass', ['rel-clean', 'concat:appcss']); 	// clean & release built SASS
+	grunt.registerTask('build-clean', ['clean:build']); 				// clean only build SASS
+	grunt.registerTask('rel-clean', ['clean:release']); 				// clean only release SASS
+
 
 };
