@@ -1,3 +1,10 @@
+/* 
+ * Angulartics Module 
+ * Load core, Segment, Inspectlet, and GTM submodules. 
+ * Remove submodules as necessary.
+ *
+*/
+
 var gsAngulartics = angular.module('gsAngulartics', [
 	'angulartics',
 	'angulartics.segment',
