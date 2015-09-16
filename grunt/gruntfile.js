@@ -55,11 +55,16 @@ module.exports = function(grunt) {
                     '../client//bower_components/angular-resource/angular-resource.min.js',
                     '../client//bower_components/devicejs/lib/device.min.js',
                     '../client//bower_components/angular-ui-date/src/date.js',
+                    '../client//bower_components/angulartics/dist/angulartics.min.js',
+                    '../client//bower_components/angulartics/dist/angulartics-gtm.min.js',
+                    '../client//bower_components/angulartics/dist/angulartics-inspectlet.min.js',
+                    '../client//bower_components/angulartics-segment/dist/angulartics-segment.min.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.module.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.service.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.factory.js',
                     '../client//scripts/utilities/ng-ab/ng-ab.config.js',
                     '../client//scripts/viewport-units-buggyfill.js',
+                    '../client//scripts/utilities/angulartics.module.js',
                     '../client//scripts/app.module.js',
                     '../client//scripts/app.config.js',
                     '../client//scripts/app.run.js',
@@ -151,6 +156,16 @@ module.exports = function(grunt) {
                 dest: '../client/stylesheets/compiled.css'
             }
         },
+		// Make sure code styles are up to par and there are no obvious mistakes
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc',
+                reporter: require('jshint-stylish')
+            },
+            all: {
+                src: ['gruntfile.js', '../client/scripts/{,*/}*.js']
+            }
+        },
         clean: {
             options: {
                 force: true
@@ -189,6 +204,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Dev task.
     grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);
