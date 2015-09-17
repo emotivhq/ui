@@ -9,7 +9,7 @@ handlers:
 # Dynamic Sitemaps
 - url: /sitemap-giftideas.xml
   script: sitemap.sitemap_api.handler
-  secure: alway
+  secure: always
 
 #PDF Creator
 - url: /pdfify
