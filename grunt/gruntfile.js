@@ -58,6 +58,7 @@ module.exports = function(grunt) {
 					'../client/bower_components/pace/pace.min.js',
 					'../client/bower_components/chosen/chosen.jquery.min.js', 
 					'../client/bower_components/bootstrap/dist/bootstrap.min.js',
+					'../client/bower_components/uikit/js/uikit.min.js',
                     '../client/bower_components/devicejs/lib/device.min.js',
                     '../client/bower_components/sequencejs/scripts/sequence.min.js',
 					'../client/bower_components/flexslider/jquery.flexslider-min.js',
@@ -238,6 +239,14 @@ module.exports = function(grunt) {
             build: {
                 src: '../client/scripts/out/app.js',
                 dest: '../client/scripts/out/app.js'
+            },
+            vendor: {
+                src: '../client/scripts/out/vendor.js',
+                dest: '../client/scripts/webapp/vendor.js'
+            },
+            angular: {
+                src: '../client/scripts/out/angular.js',
+                dest: '../client/scripts/webapp/angular.js'
             }
         },
 		cssmin: {
@@ -253,9 +262,24 @@ module.exports = function(grunt) {
       				ext: '.min.css'
     			}]
   			}
-		}
-					 
-		
+		},
+		bump: {
+            options: {
+                files: ['package.json', '../client/bower.json', '../app.yaml'],
+                updateConfigs: [],
+                commit: true,
+                commitMessage: 'Build & release v%VERSION%',
+                commitFiles: ['package.json', '../client/bower.json', '../app.yaml'],
+                createTag: true,
+                tagName: 'v%VERSION%',
+                tagMessage: 'Version %VERSION%',
+                push: false, // True if you want to auto deploy while doing $ grunt beep, etc
+                pushTo: 'github',
+                gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
+                globalReplace: false
+            }
+        }
+	
     });
 
     // Load the plugins
@@ -267,9 +291,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-bump');
 
     // Build tasks.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass:dist', 'sassy', 'concat']);	// the default task build the whole app
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass:dist', 'sassy', 'concat', 'uglify']);	// the default task build the whole app
     grunt.registerTask('jshint', ['jshint']);							// Run jshint, catch errors, fix, code better
 	
 	// New SASS tasks, I call it sassy
@@ -280,6 +305,16 @@ module.exports = function(grunt) {
 	grunt.registerTask('build-clean', ['clean:build']); 				// clean only build SASS
 	grunt.registerTask('rel-clean', ['clean:release']); 				// clean only release SASS
 	grunt.registerTask('comp-clean', ['clean:compiled']); 				// clean only compiled app SASS
+
+	// Built in versioning, Archer style (https://www.youtube.com/watch?v=C6NRA69SdoM)
+	grunt.registerTask('beep', ['bump:patch']);
+	grunt.registerTask('boop', ['bump:minor']);
+	grunt.registerTask('bop', ['bump:major']); // you better be sure you know what you're doing here. 00 bops given
+	grunt.registerTask('prebeep', ['bump:prepatch']);
+	grunt.registerTask('preboop', ['bump:preminor']);
+	grunt.registerTask('prebop', ['bump:premajor']);
+	grunt.registerTask('prerelease', ['bump:prerelease']);
+	// for a full list of bump commands, see https://www.npmjs.com/package/grunt-bump
 
 
 };

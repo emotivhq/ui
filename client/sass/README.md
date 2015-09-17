@@ -25,7 +25,7 @@ This documentation is a work in progress. Joel Serino, Sept 15, 2015
 - `ui.scss` - Loads the UI & its components
 
 ## SASS Dev Workflow - Grunt
-We call the new SASS structure `sassy`. Below are the dev tasks, first in order for build, then all of them. For a a complete up-to-date list,see `./grunt/gruntfile`
+We call the new SASS structure `sassy`. Below are the dev tasks, first in order for build, then all of them. For a a complete up-to-date list,see `./grunt/gruntfile.js`
 
 ### Build & Release tasks
 1. `$ grunt sassy` - Soup to nuts clean, build, release SASS (new site code from `./sass`)
