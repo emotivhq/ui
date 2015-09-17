@@ -1,0 +1,53 @@
+/* font size */
+/* color */
+/* bg color */
+body {
+  color: #666;
+  font-family: 'Dosis', sans-serif;
+  font-size: 16px;
+  line-height: 1.7; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #000;
+  line-height: 1.4;
+  margin: 0 0 20px;
+  text-transform: uppercase; }
+
+h1 {
+  font-weight: 300; }
+
+h2, h3, h4, h5, h6 {
+  font-weight: 600; }
+
+h1 {
+  font-size: 3.2em; }
+
+h2 {
+  font-size: 1.6em; }
+
+h3 {
+  font-size: 1.2em; }
+
+h4 {
+  font-size: 1em; }
+
+a {
+  color: #333;
+  -webkit-transition: all .4s;
+  -o-transition: all .4s;
+  transition: all .4s;
+  outline: none; }
+  a:hover {
+    color: #dd4e4e;
+    outline: none;
+    text-decoration: none; }
+  a:focus {
+    color: #000;
+    outline: none;
+    text-decoration: none; }
+
+p, ul, ol {
+  margin-bottom: 20px; }
+
+address {
+  line-height: 1.7; }

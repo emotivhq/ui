@@ -269,7 +269,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Build tasks.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'concat']);	// the default task build the whole app
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass:dist', 'sassy', 'concat']);	// the default task build the whole app
     grunt.registerTask('jshint', ['jshint']);							// Run jshint, catch errors, fix, code better
 	
 	// New SASS tasks, I call it sassy
