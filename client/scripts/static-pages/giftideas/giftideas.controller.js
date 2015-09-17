@@ -16,6 +16,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     var pathParts = $scope.path.replace('//','/').split('/');
     $scope.basePath = pathParts[1];
     var category = pathParts.length>2?pathParts[2]:false;
+    console.log("category: " + category);
     var product = pathParts.length>3?pathParts[3]:false;
 
     // hack for mailing list error where we linked to the wrong category
@@ -36,7 +37,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         );
         if(saver) {
             saver.success(function (response) {
-                $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>.";
                 $scope.isSavingForLater = false;
             })
             .error(function (response) {

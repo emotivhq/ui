@@ -1,6 +1,12 @@
 # GiftStarter
 The main repo for GiftStarter, the most awesome group-gifting experience.
 
+### Dev:
+[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
+
+### Master:
+[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=master)](https://codeship.com/projects/99954)
+
 ## Setup
 1. Clone GiftStarter git repo
 2. Install prerequisites if you don’t have them

@@ -36,13 +36,13 @@
                     <div class="receipt-tiles">
                         <div class="img-wrap" style="background-image:url('{{giftStart.product_img_url}}')"></div>
                         <div class="info-tiles">
-                            <h2 class="num-tiles">{{giftStart.nSelected}} TILES</h2>
+                            <h2 class="num-tiles">{{giftStart.nSelected}} PIECES</h2>
                             <h4 class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</h4>
                         </div>
                     </div>
                     <div class="receipt-total">
                         <h4 class="purchase-total">PURCHASE TOTAL: <h2 class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>
-                        <p class="purchase-note">Includes all costs of taxes, shipping, handling, fees, and handmade card.</p>
+                        <p class="purchase-note">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ordinal_circle"><span class="ordinal">1</span></div><h4> CLICK ON THE TILES YOU WANT TO PURCHASE</h4><br/>
+                <div class="ordinal_circle"><span class="ordinal">1</span></div><h4> CLICK ON THE PIECES YOU WANT TO PURCHASE</h4><br/>
                 <div class="ordinal_circle"><span class="ordinal">2</span></div><h4> PITCH IN!</h4>
             </div>
             <button class="pitch-in button red" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
@@ -101,19 +101,19 @@
 
     <div class="fullwidth block fullwidth--last">
         <div class="prices block">
+            <gs-funding-bar></gs-funding-bar>
             <div class="price funded">
-                <h4>Gifted!</h4>
-                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Tiles</h2>
+                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
+                <h4>Gifted</h4>
             </div>
             <div class="price remaining">
-                <h4>Needed:</h4>
-                <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Tiles</h2>
+                <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
+                <h4>Remaining</h4>
             </div>
-            <gs-funding-bar></gs-funding-bar>
         </div>
         <div class="completion block">
-            <div><h4>Time Left in Campaign:</h4></div>
-            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2></div>
+            <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
+            <div><h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2><h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4></div>
         </div>
     </div>
 
@@ -122,13 +122,15 @@
         <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
     </div>
 
+    <hr />
+
     <gs-thanks></gs-thanks>
     <div class="groupcard">
         <div class="title title--groupcard">
             <h2 class="title__name">Group Card</h2>
-            <span class="title__catchline">To sign the card, first pitch-in by purchasing some tiles above</span>
+            <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
         </div>
-        <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" ng-class="{true: 'contributors--row'}[$index % 3 == 0 && !$first]" class="contributors--pre h--hide"></div>
+        <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide"></div>
         <div class="contributors {{randomColor($index)}}">
             <div class="contributors__titleblock {{randomColor($index)}}"></div>
             <div class="contributors__figure">
@@ -141,20 +143,21 @@
             </div>
             <div class="contributors__info">
                 <h4 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
-                <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)"/>
+                <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)" placeholder="Name"/>
                 <p class="contributors__info" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
-                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)"/>
+                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment"/>
+                <p id="textcount" ng-show="isEditing(pitchIn)">{{230 - pitchIn.note.length}}</p>
             </div>
             <div class="contributors__edit">
                 <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
                 <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</a>
-                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">SAVE</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
         <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - be the first one on the card!</p>
     </div>
-    <div ng-show="campaignComplete()" class="btn btn--pdf">
+    <div ng-show="secondsLeft <= 0 || campaignComplete()" class="btn btn--pdf">
         <a href="" ng-click="toPDFPage()" class="btn__link">
             View Card PDF
         </a>

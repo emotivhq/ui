@@ -1,5 +1,5 @@
-application: gift-starter
-version: 46
+application: www-dev-gift-starter
+version: 17
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -223,6 +223,7 @@ libraries:
 
 env_variables:
   OAUTHLIB_INSECURE_TRANSPORT: 1
+  PRERENDER_TOKEN: 'rgoheOAM1S1n4zzDsub9'
 
 skip_files:
 - grunt/.*

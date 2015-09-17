@@ -44,7 +44,7 @@
       cursor: pointer
 
   &__productlist
-    display: table
+    //display: table
     border-spacing: 1rem
     margin: 0 auto
     @include apply-at-size("phone")
@@ -129,22 +129,23 @@
       background: #fff
 
   &__productlist--row
-    display: table-row
+    //display: table-row
     @include apply-at-size("phone")
       display: none
 
   &__productlistitem
-    display: table-cell
-    border: 1px solid #000
-    background: #12584c
+    display: inline-block //table-cell
+    border: 1px solid $gs-black
+    background: $gs-teal
     max-width: 18%
+    margin: 0.8%
     @include apply-at-size("phone")
       display: block
       margin: 0.5rem auto
       max-width: 88%
 
   &__producttitle
-    background: #12584c
+    background: $gs-teal
     color: #fff
     padding: 0.65rem 0.65rem 0 0.65rem
     font-size: 0.85rem

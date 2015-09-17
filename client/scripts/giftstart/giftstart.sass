@@ -49,8 +49,8 @@ div.giftstart.wrapper
 
   @media screen and (max-width: $tablet-computer-boundary)
     width: 100%
-  @media screen and (min-width: $tablet-computer-boundary)
-    width: 2*$column-width
+  //@media screen and (min-width: $tablet-computer-boundary)
+  //  width: 2*$column-width
 
   span.circle
     margin-right: 0.4em
@@ -104,6 +104,9 @@ div.giftstart.wrapper
         width: 80%
       background-color: white
       border: 2px solid $gs-lightgray
+      @include apply-at-size("phone")
+        h2
+          margin: 0
       .receipt-tiles
         height: 60%
         padding: 50px
@@ -117,7 +120,6 @@ div.giftstart.wrapper
             float: none
           .num-tiles
             clear: both
-            margin-top: 1em
             width: 100%
             text-align: center
           .cost-tiles
@@ -163,7 +165,7 @@ div.giftstart.wrapper
           display: block
           clear: both
           width: 100%
-          margin: 1em 0 0 0
+          margin: 0
           @media screen and (min-width: 580px) and (max-width: $phone-tablet-boundary)
             margin-top: 50px
 
@@ -408,7 +410,7 @@ div.giftstart.wrapper
     img.share:active
       +filter-brightness(1.6)
 
-  div.block.prices
+  .block.prices
     padding: 12px 0
     margin-left: auto
     margin-right: auto
@@ -421,18 +423,47 @@ div.giftstart.wrapper
       padding-left: 5%
     h1
       color: black
-    div.price
+    .price
       display: inline-block
-      width: 48%
-    div.price.remaining
+      width: 49%
+      h2
+        color: $gs-darkorange
+        display: inline
+        margin-right: 7px
+        @include apply-at-size("phone")
+          display: block
+          font-size: 1.5em
+      h4
+        display: inline
+        @include apply-at-size("phone")
+          display: block
+          font-size: 1em
+    .price.remaining
       text-align: right
-    font-family: "Roboto", sans-serif
 
-  div.block.completion
-    text-align: center
+  .block.completion
+    text-align: left
     @media screen and (min-width: $phone-tablet-boundary)
       width: 39%
       margin-left: 7.5%
+    .countdown
+      color: $gs-teal
+      display: inline
+      margin-right: 7px
+      @include apply-at-size("phone")
+        font-size: 1.5em
+    p
+      margin-bottom: 7px
+      margin-top: 0
+      @include apply-at-size("phone")
+        text-align: center
+    div
+      @include apply-at-size("phone")
+        text-align: center
+    h4
+      display: inline
+      @include apply-at-size("phone")
+        font-size: 1em
 
   .groupcard
     clear: both
@@ -440,14 +471,6 @@ div.giftstart.wrapper
     text-align: center
     display: block
     width: 100%
-    @include apply-at-size("phone")
-      display: block
-    $teal-title: #12584c
-    $teal-block: #238471
-    $green-title: #d8d82b
-    $green-block: #a3a311
-    $red-title: #e8695b
-    $red-block: #e54028
 
     .title
       &--groupcard
@@ -457,6 +480,7 @@ div.giftstart.wrapper
 
       &__name
         font-size: 3.2rem
+        margin: 20px auto 5px auto
 
     .contributors
       $box-size: calc((1200px - ((35px * 2) + (52px * 2))) / 3)
@@ -465,27 +489,19 @@ div.giftstart.wrapper
       position: relative
       margin: 17px
       height: $box-size
+      @include apply-at-size("phone")
+        height: auto
       width: $box-size
       max-width: calc(100% - 34px)
       vertical-align: top
       &.orange
         background-color: $gs-darkorange
       &.teal
-        background-color: $teal-block
+        background-color: $gs-lightteal
       &.green
-        background-color: $green-block
+        background-color: $gs-lime
       &.red
-        background-color: $red-block
-
-      &--row
-        display: table-row
-        @include apply-at-size("tablet", "portrait")
-          display: none
-
-      &--pre
-        &:nth-child(2n)
-          @include apply-at-size("tablet", "portrait")
-            display: table-row
+        background-color: $gs-red
 
       &:nth-child
         position: relative
@@ -493,11 +509,18 @@ div.giftstart.wrapper
       &__info
         color: white
         overflow-wrap: break-word
-        padding: 0 10% 3%
+        padding: 0 15px
         input
+          margin-top: 10px
           width: 100%
+        p
+          padding: 0
         textarea
           width: 100%
+        #textcount
+          line-height: 10px
+          margin: 0
+          text-align: right
 
       &__name
         color: white
@@ -513,11 +536,11 @@ div.giftstart.wrapper
         &.orange
           background-color: $gs-orange
         &.teal
-          background-color: $teal-title
+          background-color: $gs-teal
         &.green
-          background-color: $green-title
+          background-color: $gs-lightlime
         &.red
-          background-color: $red-title
+          background-color: $gs-lightred
 
       &__img
         width: 80%
@@ -575,7 +598,6 @@ div.giftstart.wrapper
         color: #fff
 
   .fullwidth--last
-    border-bottom: 1px solid #eee
     padding-bottom: 1.5rem
 
     div.comment

@@ -25,6 +25,7 @@
 
         $scope.inputPrice = ProductService.product.price / 100;
         $scope.totalPrice = 0;
+        $scope.deliveryDate = null;
         $scope.campaignEndDate = null;
         $scope.getCampaignLength = function (date) {
             if (angular.isDate(date)) {
@@ -84,6 +85,7 @@
         $scope.fromReferral = false;
 
         $scope.dateChosenValid = dateChosenValid;
+        $scope.changeDueDate = false;
 
         $scope.shippingChanged = function () {
             if ($scope.shippingZip&&$scope.shippingZip.length == 5) {
@@ -241,9 +243,33 @@
         }
 
         function dateChosenValid() {
-            return !($scope.getCampaignLength($scope.campaignEndDate) >= 29 ||
-            $scope.getCampaignLength($scope.campaignEndDate) < 1);
+            return !($scope.getCampaignLength($scope.deliveryDate) >= 29 ||
+            $scope.getCampaignLength($scope.deliveryDate) < 1);
         }
+
+        $scope.dueDateEmpty = function() {
+            if($('.endDate')[0].value) {
+                return false;
+            } else {
+                return true;
+            }
+        };
+
+        $scope.changeDeliveryDate = function() {
+            $(".endDate").datepicker("show");
+        };
+
+        $scope.deliveryDateChanged = function(dateText) {
+            $scope.campaignEndDate = new Date($scope.deliveryDate);
+            $scope.campaignEndDate.setDate($scope.campaignEndDate.getDate() - 6);
+            $(".endRange").datepicker("option", "maxDate", $scope.campaignEndDate);
+            $(".endRange").datepicker("setDate", $scope.campaignEndDate);
+        };
+
+        var endDateChanged = function(dateText) {
+            $scope.campaignEndDate = new Date(dateText);
+            $(".endRange").datepicker("setDate", $scope.campaignEndDate);
+        };
 
         $scope.validationCreateStep = {
             title: 2,
@@ -253,7 +279,7 @@
             shippingZip: 3,
             shippingName: 3,
             shippingEmail: 3,
-            campaignEndDate: 3,
+            deliveryDate: 3,
             gcEmail: 2
         };
 
@@ -266,7 +292,7 @@
                 shippingZip: true,
                 shippingName: true,
                 shippingEmail: true,
-                campaignEndDate: true,
+                deliveryDate: true,
                 gcEmail: true
             };
         }
@@ -279,7 +305,7 @@
         };
 
         $scope.runValidation = function() {
-            var keys = Object.keys($scope.hideValidationError)
+            var keys = Object.keys($scope.hideValidationError);
             var hasErrors = false;
             keys.forEach(function (key) {
                 if ($scope.validationCreateStep[key] == $scope.createStep) {
@@ -287,7 +313,7 @@
                 }
                 switch($scope.createStep) {
                     case 2: hasErrors = $scope.campaignForm.title.$error.required||$scope.campaignForm.description.$error.required||$scope.campaignForm.gcEmail.$error.required; break;
-                    case 3: hasErrors = $scope.campaignForm.shippingState.$error.required||$scope.campaignForm.shippingZip.$error.required||$scope.campaignForm.shippingName.$error.required||$scope.campaignForm.shippingEmail.$error.required||$scope.campaignForm.campaignEndDate.$error.required; break;
+                    case 3: hasErrors = $scope.campaignForm.shippingState.$error.required||$scope.campaignForm.shippingZip.$error.required||$scope.campaignForm.shippingName.$error.required||$scope.campaignForm.shippingEmail.$error.required||$scope.campaignForm.deliveryDate.$error.required; break;
                 }
             });
             $scope.validationTrigger.createButtonClicked = true;
@@ -301,7 +327,7 @@
         $scope.isCreateStepShipping = function() {return $scope.createStep==3;};
 
         $scope.goToStep = function(i) {
-            $scope.createStep=Math.max(Math.min(i,3),1)
+            $scope.createStep=Math.max(Math.min(i,3),1);
             $('html,body').animate({scrollTop: $('#giftstart-create-controls').offset().top-100}, 500);
         };
 
@@ -503,6 +529,18 @@
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
+
+        $(".endDate").datepicker({
+            minDate: "+7d",
+            maxDate: "+34d",
+            onSelect: $scope.deliveryDateChanged
+        });
+
+        $(".endRange").datepicker({
+            minDate: "+7d",
+            maxDate: "+34d",
+            onSelect: endDateChanged
+        });
 
         $rootScope.$on('login-success', function(){
             $scope.showLoginBox = false;

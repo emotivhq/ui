@@ -168,8 +168,10 @@ def remember_user(cookies, path):
                 js_insert = "window.loginDeets = ['{uid}', '{img_url}', " \
                             "'{token}', '{on_mailing_list}', '{name}', " \
                             "'{has_pitched_in}'];".format(**user_deets)
-                js_insert += "analytics.identify('{ uid }', {" \
-                            "name: '{ name }'," \
-                            "email: '{ token }'" \
-                            "});"
+                js_insert += " analytics.identify('{uid}', {{" \
+							 "name: '{name}', " \
+							 "email: '{token}'" \
+							 "}});".format(**user_deets)
+                # Disabled for now since GA is injected with GTM, this throws an error
+                # js_insert += " ga('set', '&uid', '{uid}');".format(**user_deets)
     return js_insert

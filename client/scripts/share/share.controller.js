@@ -16,7 +16,7 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
 
     $scope.giftStart = GiftStartService.giftStart;
 
-    $scope.message = "Hey! I just pitched in on a gift for " + $scope.giftStart.shipping_name + " using GiftStarter, a web service where you can buy anything online and split the cost with friends! " + $scope.giftStart.product_title + " will be such an exciting gift for them to receive. Please help to make it happen by following the link below to pitch in too!\n\nLINK: " + $scope.campaignUrl() + "\n\n" + $scope.giftStart.gc_name;
+    $scope.message = "Hey! I just pitched in on a gift for " + $scope.giftStart.shipping_name + " using GiftStarter, a web service where you can buy anything online and split the cost with friends! " + $scope.giftStart.product_title + " will be such an exciting gift for them to receive. Please help to make it happen by following the link below to pitch in too!\n\nLINK: " + $scope.campaignUrl();
 
     $scope.sharePermission = [];
     $scope.sharePermission["facebook"] = false;
@@ -38,11 +38,11 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
         //check to see if user has permission to post
         FacebookService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["facebook"] = hasPermission=='1';
-            if(ensuring["facebook"]) {alert(); $scope.selectedSocials["facebook"] = $scope.sharePermission["facebook"]; ensuring["facebook"] = false;}
+            if(ensuring["facebook"]) {$scope.selectedSocials["facebook"] = $scope.sharePermission["facebook"]; ensuring["facebook"] = false;}
         });
         TwitterService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["twitter"] = hasPermission=='1';
-            if(ensuring["twitter"]) {alert(); $scope.selectedSocials["twitter"] = $scope.sharePermission["twitter"]; ensuring["twitter"] = false;}
+            if(ensuring["twitter"]) {$scope.selectedSocials["twitter"] = $scope.sharePermission["twitter"]; ensuring["twitter"] = false;}
         });
         LinkedInService.checkSharePermission().then(function(hasPermission) {
             $scope.sharePermission["linkedin"] = hasPermission=='1';
