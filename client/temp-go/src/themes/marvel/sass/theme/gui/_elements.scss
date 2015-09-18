@@ -1,0 +1,278 @@
+.divider {
+	background-color: $color-primary;
+	display: block;
+	height: 2px;
+	margin: 15px auto;
+	width: 60px;
+}
+
+.align-left {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.bg-color1 {
+	background-color: $color-primary !important;
+}
+
+.bg-color2 {
+	background-color: $color-secondary !important;
+}
+
+.bg-color3 {
+	background-color: rgba(white, .5) !important;
+}
+
+.bg-color4 {
+	background-color: $color-root-title !important;
+}
+
+.bg-color5 {
+	background-color: #fff !important;
+}
+
+.bg-color6 {
+	background-color: $dark-bg !important;
+}
+
+.bg-color7 {
+	background-color: rgba($color-darker, .8) !important;
+}
+
+.bg-img-1 {
+	background-image: url(../images/content/demo-about.jpg);
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.bg-img-2 {
+	background-image: url(../images/bg/bg-demo-2.jpg);
+	background-repeat: no-repeat;
+	background-position: -100px 45%;
+}
+
+.bg-img-3 {
+	background-image: url(../images/bg/bg-demo-1.jpg);
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+
+.bg-pattern-dark {
+	background-image: url(../images/patterns/bg-pattern-dark.jpg);
+}
+
+.mask2 {
+	@include cont-after;
+	z-index: 1;
+	&:after {
+		background-color: rgba(212,145,92,.2);
+	}
+}
+
+.mask3 {
+	@include cont-after;
+	&:after {
+		background-color: rgba($color-darker,.8);
+	}
+}
+
+.btn {
+	border-color: #fff;
+	border-radius: 0;
+	font: {
+		size: $fontsize-15;
+		weight: 600;
+	}
+	padding: 9px 15px;
+}
+
+.btn-primary {
+    background-color: $color-primary;
+    border-color: $color-primary;
+    color: #fff;
+	&:hover {
+		background-color: $color-darker;
+		border-color: $color-darker;
+		color: #fff;
+	}
+}
+
+.btn-default {
+    background-color: $color-darker;
+    border-color: $color-darker;
+    color: #fff;
+	&:hover {
+		background-color: $color-primary;
+		border-color: $color-primary;
+		color: #fff;
+	}
+}
+.btn-dark {
+	background-color: $dark-bg;
+    border-color: $dark-bg;
+	color: #fff;
+	&:hover {
+		background-color: $color-darker;
+		border-color: $color-darker;
+		color: #fff;
+	}
+}
+.btn-lightdark {
+	background-color: $color-dark;
+    border-color: $color-dark;
+	color: #fff;
+	&:hover {
+		background-color: $color-darker;
+		border-color: $color-darker;
+		color: #fff;
+	}
+}
+.btn-grey {
+	background-color: $light-bg;
+    border-color: $light-bg;
+    color: $color-dark;
+	&:hover {
+		background-color: $color-dark;
+		border-color: $color-dark;
+		color: #fff;
+	}
+}
+.btn-greyer {
+	background-color: $color-root;
+    border-color: $color-root;
+    color: #fff;
+	&:hover {
+		background-color: $color-dark;
+		border-color: $color-dark;
+		color: #fff;
+	}
+}
+
+.btn-active {
+	background-color: $color-primary;
+	border-color: $color-primary;
+	color: #fff;
+}
+
+.btn-sm {
+	line-height: 1.2;
+	padding: 7px 15px;
+}
+
+.btn-lg {
+	line-height: 1.4;
+	padding: 14px 20px;
+}
+
+.icon-circle {
+	border: 1px solid #fff;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	font-size: $fontsize-24;
+	height: 50px;
+	line-height: 50px;
+	margin: 0 auto;
+	width: 50px;
+}
+.close {
+	color: $color-dark;
+	font-size: $fontsize-36;
+	text-shadow: none;
+	&:hover, &:focus {
+		color: $color-primary;
+	}
+}
+.container-fluid {
+	padding-left: 0;
+	padding-right: 0;
+}
+.row-fluid {
+	margin-left: 0;
+	margin-right: 0;
+	> [class^="col-"] {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+blockquote {	
+	font-size: $fontsize-18;
+	margin-bottom: 25px;
+	padding-bottom: 0;
+	padding-top: 0;
+}
+blockquote footer:before, blockquote small:before, blockquote .small:before {
+    content: "";
+}
+
+.icons {
+	background-image: url(../images/icons/sprite.png);
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 34px;
+	width: 34px;
+}
+
+.icon-plane {
+	background-position: 0 0;
+}
+
+.icon-refresh {
+	background-position: -34px 0;
+}
+
+.icon-call {
+	background-position: -68px 0;
+}
+
+.icon-dress, .icon-shirt, .icon-coffee, .icon-cosmetics, .icon-babytoys, .icon-furniture, .icon-jewelry {
+	height: 16px;
+	width: 16px;
+	vertical-align: top;
+}
+
+.icon-dress {
+	background-position: 0 -44px;
+}
+
+.icon-shirt {
+	background-position: -16px -44px;
+}
+
+.icon-coffee {
+	background-position: -32px -44px;
+}
+
+.icon-cosmetics {
+	background-position: -48px -44px;
+}
+
+.icon-babytoys {
+	background-position: -64px -44px;
+}
+
+.icon-furniture {
+	background-position: -80px -44px;
+}
+
+.icon-jewelry {
+	background-position: -96px -44px;
+}
+
+.top-tall {
+	.container {
+		padding-top: 35px;
+	}
+}
+
+.push-left {
+	margin-left: 134px;
+}
+
+@media (max-width: 991px) {
+	.clear-left {
+		clear: left;
+	}
+}

@@ -1,0 +1,251 @@
+label {
+	font-weight: 300;
+}
+input, button, textarea {
+	border: 1px solid $color-root-title;
+}
+input, textarea {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+input[type="radio"], input[type="checkbox"] {
+	+ label {
+		-moz-user-select: none;
+		line-height: 1.2;
+		padding-left: 30px;
+		position: relative;
+		&:before {
+			background-color: $color-root-title;
+			content: "";
+			display: block;
+			height: 18px;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 18px;
+		}
+	}
+}
+input[type="checkbox"]:checked + label::before {
+	background-color: $color-dark;
+}
+
+.form-control {
+	background-color: #fff;
+	border-color: $color-root-title;
+	border-bottom-color: $color-root-title;
+	box-shadow: none;
+	border-radius: 0;
+	height: 40px;
+	&:focus {
+		border-color: $color-dark;
+		box-shadow: none;
+	}
+}
+textarea.form-control {
+	resize: none;
+}
+
+.error {
+	color: $color-primary;
+}
+
+/* chosen */
+.chosen-select {
+	height: 38px;
+	padding: 0 10px;
+	width: 100%;
+}
+
+.chosen-container {
+	font-size: $fontsize-15;
+	width: 100% !important;
+	.chosen-drop {
+		background-color: #ececec;
+		border-color: $color-root-title;
+		border-right-color: $color-root-title;
+		box-shadow: none;
+	}
+	.chosen-results {
+		margin: 0;
+		padding: 0;
+		li{
+			padding: 8px 15px;
+			white-space: nowrap;
+			&.highlighted {
+				background-color: $dark-bg;
+				background-image: none;
+			}
+			&.active-result {
+				display: block;
+			}
+		}
+	}
+}
+
+.chosen-container-single {
+	.chosen-search {
+		display: none;
+	}
+	.chosen-default {
+		color: $color-lighter;
+	}
+	.chosen-single {
+		background: white;
+		border-color: $color-root-title;
+		border-radius: 0;
+		box-shadow: none;
+		color: $color-lighter;
+		height: 38px;
+		line-height: 2.4;
+		padding: 0 0 0 15px;
+		span {
+			margin-right: 0;
+			padding-right: 34px;
+		}
+		abbr, div b {
+			background-image: url('../images/chosen-sprite.png');
+		}
+		div {
+			background-color: #ececec;
+			border-left: 1px solid $color-root-title;
+			right: 0;
+			width: 16px;
+		}
+	}
+	.chosen-drop {
+		border-radius: 0;
+	}
+}
+
+.chosen-container-active.chosen-with-drop .chosen-single {
+    background-image: none;
+    border-color: $color-root-title;
+    box-shadow: none;
+	div {
+		background-color: #ececec;
+		border-left: 1px solid $color-root-title;
+	}
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+	background-image: url('../images/chosen-sprite.png');
+}
+
+/* form-newsletter */
+.form-newsletter {
+	.form-control {
+		background-color: #fff;
+		width: 270px;
+	}
+}
+
+/* form-newsletter2 */
+.banner-inner {
+	padding: 57px 30px 35px;
+	h4 {
+		color: #fff;
+		font-size: $fontsize-16;
+		margin-bottom: 8px;
+		text-transform: none;
+	}
+	.form-newsletter {
+		margin-top: 14px;
+		text-align: right;
+		.form-group {
+			margin-right: 5px;
+		}
+		.form-control {
+			background-color: $color-dark;
+			border: none;
+			height: 50px;
+			width: 220px;
+		}
+		.btn {
+			height: 50px;
+			@media (min-width: 992px) {
+				min-width: 156px;
+			}
+		}
+	}
+	@media (max-width: 767px) {
+		padding-top: 35px;
+		.form-newsletter.form-inline {
+			text-align: left;
+		}
+	}
+	@media (min-width: 361px) {
+		.form-newsletter.form-inline {
+			.form-group {
+				display: inline-block;
+				margin-bottom: 0;
+				vertical-align: middle;
+			}
+		}
+	}
+	@media (max-width: 360px) {
+		.form-newsletter {
+			.form-group {
+				margin-right: 0;
+			}
+			.form-control {
+				width: 100%;
+			}
+		}
+	}
+}
+
+/* form-wrapper */
+.form-wrapper {
+	background-color: rgba($color-dark, .4);
+	.modal-content {
+		border: none;
+		border-radius: 0;
+		@include box-shadow(0 0 5px rgba($color-darker,.15));
+		padding: 10px 30px 20px;
+	}
+	.nav-tabs {
+		clear: both;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: flex;
+		max-width: 540px;
+		position: relative;
+		-ms-box-orient: horizontal;
+		-ms-box-pack: center;
+		-webkit-flex-flow: row wrap;
+		-moz-flex-flow: row wrap;
+		-ms-flex-flow: row wrap;
+		flex-flow: row wrap;
+		-webkit-justify-content: center;
+		-moz-justify-content: center;
+		-ms-justify-content: center;
+		justify-content: center;
+		margin: {
+			bottom: 30px;
+			top: 50px;
+		}
+		li {
+			display: block;
+			text-align: center;
+			-webkit-flex: 1;
+			-moz-flex: 1;
+			-ms-flex: 1;
+			flex: 1;
+			a {
+				border-radius: 0;
+				position: relative;
+				display: block;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+	.checkbox a {
+		margin-left: 15px;
+	}
+}
