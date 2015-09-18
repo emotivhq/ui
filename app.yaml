@@ -106,6 +106,14 @@ handlers:
   static_dir: client/assets
   application_readable: true
   secure: always
+- url: /images
+  static_dir: client/images
+  application_readable: true
+  secure: always
+- url: /marvel
+  static_dir: client/temp-go/public
+  application_readable: true
+  secure: always
   # yuck: link creator was broken for a while, so had to create some aliases instead of editing a billion bitly links
 - url: /pet-lovers/
   static_dir: client/assets/giftideas/category/pet-lovers/

@@ -2,12 +2,12 @@
 @import "../classes"
 
 html
-  background-color: #E5E5E5
+  //background-color: #E5E5E5
 
 body
   margin: 0 auto
   max-width: 1200px
-  background-color: #FFFFFF
+  //background-color: #FFFFFF
 
 body *
   +box-sizing(border-box)
@@ -15,21 +15,13 @@ body *
 // ----------------------- GENERAL STYLING -----------------------
 
 p, label, li, div
-  font: $p-font
+  //font: $p-font
 
 p.small, label.small
   font-size: 1em
 
-a
-  font: $p-font
-  text-decoration: none
-  &.button
-    @extend .linky
-    text-decoration: underline
-    text-transform: uppercase
-
 input, button, select, textarea
-  font: $p-font
+  //font: $p-font
   padding: 0.075em 0.5em
 
 input, select, textarea
@@ -41,9 +33,9 @@ select
 
 input:focus, button:focus, select:focus, textarea:focus
   outline: none
-  +box-shadow($font-color, 0, 0, 0.1em)
+  //+box-shadow($font-color, 0, 0, 0.1em)
 
-button
+.old-button
   font: $button-font
   vertical-align: top
   background-color: white
@@ -94,11 +86,11 @@ button
       border-color: $gs-lightteal
       color: white
 
-button.share
+.old-button.share
   background: $share-color
   border-color: $share-color
 
-button.edit
+.old-button.edit
   font: $p-font
 
 button:disabled, button:disabled:focus, button:disabled:active, button.disabled, button.disabled:active, button.disabled:hover, button.disabled:focus
@@ -162,26 +154,22 @@ h1
   a
     font: $h1-font
     font-size: 1em
-    color: $primary-color
     text-decoration: none
 
 h2
   font: $h2-font
-  color: $font-color
   text-transform: capitalize
   &.black
     color: #000
 
 h3
   font: $h3-font
-  color: $font-color
   text-transform: capitalize
   &.black
     color: #000
 
 h4
   font: $h4-font
-  color: #000
   text-transform: uppercase
   &.accent
     color: $primary-color

@@ -1,4 +1,3 @@
-/* Custom styles & hacks */
 body {
   font-family:'Roboto', 'Dosis', sans-serif;
 }
@@ -37,7 +36,7 @@ input:focus {
   height: 100%;
 }
 .push-left {
-  margin-left: 65px !important;
+  margin-left: 65px;
 }
 .nav-searchbar .btn-primary {
   height: 40px;
@@ -146,7 +145,7 @@ md-autocomplete input:not(.md-input) {
   opacity: .95;
 }
 .bg-img-gift {
-  background-image: url("/marvel/images/bg/social-bg.png");
+  background-image: url("/images/bg/social-bg.png");
 }
 @media (max-width: 480px) {
   .thumb-item-img .thumb-act-first {
@@ -189,4 +188,3 @@ md-autocomplete input:not(.md-input) {
     background-position: 8px 17px !important;
   }
 }
-.tour-info {padding-left: 10px;}

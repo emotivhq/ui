@@ -5,19 +5,22 @@
     <title>{% if page_title %}{{page_title}}{% else %}GiftStarter, Group Gifting Starts Here{% endif %}</title>
     <meta name="description" content="{% if page_description %}{{page_description}}{% else %}Looking for a better way to group gift? GiftStarter's patent-pending technology divides the perfect gift into &quot;tiles,&quot; giving friends and family the ability to gift as much as they wish. {% endif %}">
 	{% include 'common/meta.html' %}
-    {# UNNCOMMENT THESE WHEN DONE DEVELOPING #}
+    {# ###############################################################
+	 # UNNCOMMENT THESE WHEN DONE DEVELOPING 
+	 # ###############################################################}
 	{# <script src="//cdn.optimizely.com/js/3400480911.js"></script> #}
 	{# <script src="//load.sumome.com/" data-sumo-site-id="405509ff06e00d2745f35aa3824ee44664c233d67b35238b8a7ee141180907b5" async></script> #}
 	<link rel="prefetch" href="/assets/fonts/Gotham-Book.woff" />
 	<link rel="prefetch" href="/assets/fonts/Gotham-BookItalic.woff" />
-	<!--link rel="prefetch" href="/assets/fonts/Roboto-Bold.woff" /-->
 	<link rel="prefetch" href="/assets/fonts/Roboto-Medium.woff" />
-	<link rel="stylesheet" href="/stylesheets/app-main.css">
-	<link rel="stylesheet" href="/stylesheets/compiled.css">
-	<script src="/scripts/webapp/vendor.js"></script>
-	<script src="/scripts/webapp/angular.js"></script>
-	<script src="/scripts/webapp/app.js"></script>
-	<script src="/scripts/ui/marvel.js"></script>
+	<!--link rel="stylesheet" href="/stylesheets/app-main.css"-->
+	<link rel="stylesheet" href="/stylesheets/app-main/css/vendor.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/css/theme.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/css/style.css" id="layoutstyle">
+  	<link rel="stylesheet" href="/stylesheets/app-main/css/custom.css">
+	<link rel="stylesheet" href="/stylesheets/compiled.min.css">
+	<script>paceOptions = {elements: false,document: true,restartOnRequestAfter: false}</script>
+	<script src="/scripts/out/app.js"></script>
 	<script src="/scripts/utilities/browser-specific-css.js"></script>
 	<!-- browser detect -->
 	<script type="text/javascript">
@@ -63,6 +66,7 @@
         {{js_insert|safe}}
     </script>
 	<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
 </head>
 <body ng-cloak>
     <gs-menu></gs-menu>
@@ -83,7 +87,8 @@
 	{% endif %}
 
     <gs-popover></gs-popover>
-
+	<script src="/scripts/webapp/vendor.js"></script>
+	<script src="/scripts/ui/marvel.js"></script>
 	{% if hide_body %}
     <script type='text/javascript'>
         $(document).ready(function() {

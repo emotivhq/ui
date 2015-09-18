@@ -84,7 +84,7 @@
   padding: 9px 15px; }
 
 .btn-primary {
-  background-color: #dd4e4e;
+  background-color: #dd4e4e !important;
   border-color: #dd4e4e;
   color: #fff; }
   .btn-primary:hover {

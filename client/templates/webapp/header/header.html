@@ -1,74 +1,49 @@
 {% raw %}
-<header ng-controller="HeaderController as header">
-  <div id="header">
-    <div class="headerLogoWrapper">
-      <div class="header-menu-button">
-          <a ng-href="{{isHeaderOnly?'#nav_mobile':''}}"><img src="/assets/menu-mobile.png" ng-click="header.toggleMobileMenu(); header.closeNotifications()"/></a>
-      </div>
-      <a href="/"><img id="logo" src="/assets/webLogo.png" /><img id="logo-mobile" src="/assets/logo-mobile.png" /></a>
-      <div class="header-menu-button">
-          <a href="#searchbar"><img src="/assets/search-mobile.png" ng-click="search = !search"/></a>
-      </div>
-    </div>
-    <form id="searchbar" ng-class="{hideMobileSearch: !search}">
-        <input id="product-search-input-head"
-               class="text-input"
-               type="text"
-               name="product-link"
-               placeholder="SEARCH FOR A GIFT"
-               onkeypress="if(event.keyCode==13){jQuery('#product-search-button-head').click();}" />
 
-        <button id="product-search-button-head" class="submit searchbtn" onclick="top.location='/search/'+jQuery('#product-search-input-head').val()">SEARCH</button>
+<!-- Begin Header -->
+    <header id="header" class="header-light" ng-controller="HeaderController as header">
 
-    </form>
-    <div id="nav_mobile" class="menuwrapper" ng-class="{hideMobileMenu: !menu && !notifyOpen}">
-      <ul id="menu">
-        <li id="nav_start" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="{{isHeaderOnly?'#nav_start':''}}">START</a><hr class="mobile-rule" />
-          <ul class="submenu">
-            <li><a href="/#productsearch" ng-click="header.closeMobileMenu(); search = !search">Search for a Gift</a></li>
-            <li><a href="/giftideas" ng-click="header.closeMobileMenu()">Browse Gift Ideas</a></li>
-            <li><a href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
-            <li><a class="coming-soon">Pitch-in on a gift *Coming Soon*</a></li>
-            <li><a class="coming-soon">Say thanks for a gift *Coming Soon*</a></li>
-            <li><a class="coming-soon">Pick up an e-gift *Coming Soon*</a></li>
-          </ul>
-        </li>
-        <li id="nav_help" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="/faq{{isHeaderOnly?'#nav_help':''}}">HELP</a><hr class="mobile-rule" />
-          <ul class="submenu">
-            <li><a href="/howitworks" ng-click="header.closeMobileMenu()">How It Works</a></li>
-            <li><a href="/faq" ng-click="header.closeMobileMenu()">FAQ</a></li>
-            <li><a href="/concierge" ng-click="header.closeMobileMenu()">Contact the Gift Concierge</a></li>
-            <li><a class="coming-soon">Learn more *Coming Soon*</a></li>
-          </ul>
-        </li>
-        <li class="menu-login" ng-show="header.loggedIn" ng-class="{hideOnMobile: notifyOpen}"><img class="header-picture" ng-src="{{header.userImageUrl}}" ng-show="header.loggedIn && header.userImageUrl"/><a class="menu-user" ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()" ng-show="header.loggedIn">{{header.userName}}</a>
-          <hr class="mobile-rule" />
-          <ul class="submenu">
-            <li><a ng-href="{{header.userProfileUrl}}" ng-click="header.closeMobileMenu()">Profile Page</a></li>
-            <li><a ng-href="{{header.userProfileUrl}}#mycampaigns" ng-click="header.closeMobileMenu()">My Campaigns</a></li>
-            <li><a ng-href="{{header.userProfileUrl}}#savedgiftideas" ng-click="header.closeMobileMenu()">Saved Gift Ideas</a></li>
-            <li id="mobile_notifications"><a ng-click="header.openNotifications()" class="linky">Notifications ({{numNotificationsUnseen}})</a></li>
-            <li><a class="coming-soon">Settings *Coming Soon*</a></li>
-            <li><a class="linky logout_action" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a></li>
-          </ul>
-        </li>
-        <li id="nav_notifications" class="menu-login" ng-show="header.loggedIn" ng-mouseenter="header.notificationsHoverIn()" ng-mouseleave="header.notificationsHoverOut()" ng-class="{hideMobileNotifications: !notifyOpen}"><img class="header-notifications" ng-src="/assets/notifications-{{notificationHover && 'open' || numNotifications==0 && 'none' || 'new'}}.png" ng-hide="notifyOpen"/><a name="notificationlist" href="" class="menu-notifications" ng-hide="notifyOpen">{{numNotificationsUnseen}}</a>
-          <ul id="notification-list" class="submenu">
-            <li ng-repeat="item in notifications" ng-class="{notificationsRead: item.seen, notificationsUnread: !item.seen}"><a href="{{item.link}}" ng-click="header.notificationClick(item)">{{item.title}}</a></li>
-            <li id="no-notifications-msg" ng-show="numNotifications==0" ng-click="header.closeNotifications()">You have no notifications</li>
-          </ul>
-        </li>
-        <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a href="/#loginpanel" ng-hide="header.loggedIn || header.portaling" ng-click="header.closeMobileMenu()">CREATE ACCOUNT</a></li>
-        <li class="menu-login" ng-class="{hideOnMobile: notifyOpen}"><a ng-href="{{isHeaderOnly?'#nav_login':''}}" ng-hide="header.loggedIn || header.portaling" ng-click="header.showLogin(); actions.menuItemClicked(true); header.closeMobileMenu()">LOG IN</a></li>
-      </ul>
-    </div>
-    <div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">
-      <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
-      <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
-    </div>
-    <div class="nomobile">
-      <div class="blackout-screen" ng-show="showBlackout" ng-click="header.closeLogin(); header.closeNotifications()"></div>
-    </div>
-  </div>
-</header>
+		
+      <div class="container head-justify">
+
+		<div class="navbar-header headerLogoWrapper">
+      		<div class="header-menu-button">
+          		<a ng-href="{{isHeaderOnly?'#nav_mobile':''}}"><img src="/assets/menu-mobile.png" ng-click="header.toggleMobileMenu(); header.closeNotifications()"/></a>
+      		</div>
+      		<a href="/"><img id="logo" src="/assets/webLogo.png" /><img id="logo-mobile" src="/assets/logo-mobile.png" /></a>
+      		<div class="header-menu-button">
+          		<a href="#searchbar"><img src="/assets/search-mobile.png" ng-click="search = !search"/></a>
+      		</div>
+    	</div>
+		  
+        <ul class="nav-icons pull-right">
+          <li class="hidden-lg">
+            <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas>
+              <span class="sr-only">Toggle navigation</span>
+              <i class="fa fa-bars"></i> Menu
+            </a>
+          </li>
+        </ul>
 {% endraw %}
+		  
+        {% include 'header/nav.html' %}
+
+{% raw %}		  
+
+    		<div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">
+      			<img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
+      			<ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+    		</div>
+    		<div class="nomobile">
+      			<div class="blackout-screen" ng-show="showBlackout" ng-click="header.closeLogin(); header.closeNotifications()"></div>
+    		</div>
+		  
+		  
+		</div>
+
+    </header>
+    <!-- End Header -->
+
+{% endraw %}
+
+	{% include 'header/search.html' %}

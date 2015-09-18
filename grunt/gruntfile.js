@@ -21,11 +21,11 @@ module.exports = function(grunt) {
         },
         sass: {
             // This doesn't work.  Bleh.
-            // options: {
-            //    sourceMap: createSourceMaps,
-            //    sourceMapStyle: 'link'
-            //},
-            dist: {
+            options: {
+            	sourceMap: createSourceMaps,
+            	sourceMapStyle: 'link'
+            },
+            trash: {
                 files: [{
                     expand: true,
                     cwd: '../client',
@@ -34,18 +34,21 @@ module.exports = function(grunt) {
                     ext: '.css'
                 }]
             },
-            build: {
+            sassy: {
                 files: [{
                     expand: true,
                     cwd: '../client',
-                    src: 'sass/**/*.{scss,sass}',
+                    src: ['sass/*.{scss,sass}', 'sass/css/*.css'],
                     dest: '../client/stylesheets/app-main',
                     ext: '.css'
                 }]
             }
         },
         concat: {
-			build: {
+/* THIS IS CURRENTLY BROKEN, TURNING OFF FOR NOW
+ * @TODO: JS 09/17
+ */
+			trash: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapStyle: 'link'
@@ -146,24 +149,27 @@ module.exports = function(grunt) {
                 ],
                 dest: '../client/scripts/out/app.js'
             },
+
 			vendor: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapStyle: 'link'
                 },
                 src: [
-					'../client/bower_components/excanvas/excanvas.js',
-					'../client/bower_components/Respond/dest/respond.min.js',
+					'../client/bower_components/pace/pace.min.js',
                     '../client/bower_components/jquery/dist/jquery.min.js',
                     '../client/bower_components/jquery-ui/jquery-ui.min.js',
-					'../client/bower_components/pace/pace.min.js',
+					'../client/bower_components/excanvas/excanvas.js',
+					'../client/bower_components/Respond/dest/respond.min.js',
 					'../client/bower_components/chosen/chosen.jquery.min.js', 
 					'../client/bower_components/bootstrap/dist/bootstrap.min.js',
 					'../client/bower_components/uikit/js/uikit.min.js',
                     '../client/bower_components/devicejs/lib/device.min.js',
                     '../client/bower_components/sequencejs/scripts/sequence.min.js',
 					'../client/bower_components/flexslider/jquery.flexslider-min.js',
-                    '../client/bower_components/OwlCarousel2/dist/owl.carousel.min.js'
+                    '../client/bower_components/OwlCarousel2/dist/owl.carousel.min.js',
+                    '../client/bower_components/imagesloaded/imagesloaded.pkgd.min.js',
+                    '../client/bower_components/masonry/dist/masonry.pkgd.min.js'
 					 ],
                 dest: '../client/scripts/webapp/vendor.js'
             },
@@ -294,7 +300,7 @@ module.exports = function(grunt) {
                 src: '../client/bower_components/jquery/dist/jquery.min.map',
                 dest: '../client/scripts/out/jquery.min.map'
             },
-            css: {
+            trash: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapName: '../client/stylesheets/compiled.css.map',
@@ -303,7 +309,7 @@ module.exports = function(grunt) {
                 src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
                 dest: '../client/stylesheets/compiled.css'
             },
-            appcss: {
+            sassy: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapName: '../client/stylesheets/app-main.css.map',
@@ -333,9 +339,9 @@ module.exports = function(grunt) {
   			},
   			release: {
    				dot: true,
-				src: ['../client/stylesheets/app-main.css']
+				src: ['../client/stylesheets/app-main*.css']
   			},
-			compiled: {
+			trash: {
 				dot: true,
 				src: ['../client/scripts/out/css','../client/stylesheets/**/*.map','../client/scripts/out/*.map']
 			}
@@ -364,13 +370,14 @@ module.exports = function(grunt) {
         },
 		cssmin: {
             options: {
-                shorthandCompacting: false,
-                roundingPrecision: -1
+                shorthandCompacting: true,
+                //roundingPrecision: -1
             },
 			target: {
     			files: [{
-      				cwd: '../client/stylesheets',
-      				src: ['*.css', '!*.min.css'],
+      				expand: true,
+					cwd: '../client/stylesheets',
+      				src: ['app-main.css', 'compiled.css', '!*.min.css'],
       				dest: '../client/stylesheets',
       				ext: '.min.css'
     			}]
@@ -406,14 +413,14 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-bump');
 
     // Build tasks.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass:dist', 'sassy', 'concat']);	// the default task build the whole app
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the whole app
     grunt.registerTask('jshint', ['jshint']);							// Run jshint, catch errors, fix, code better
 	
 	// New SASS tasks, I call it sassy
 	grunt.registerTask('sassy', ['build-sass', 'rel-sass']);			// soup to nuts clean, build, release SASS
-    grunt.registerTask('build-sass', ['build-clean', 'sass:build']);	// clean & build dev SASS
-    grunt.registerTask('rel-sass', ['rel-clean', 'concat:appcss']); 	// clean & release built base app SASS
-    grunt.registerTask('comp-sass', ['comp-clean', 'concat:css']); 		// clean & release built compiled app SASS
+    grunt.registerTask('build-sass', ['build-clean', 'sass:sassy']);	// clean & build dev SASS
+    grunt.registerTask('rel-sass', ['rel-clean', 'concat:sassy']); 	// clean & release built base app SASS
+    grunt.registerTask('comp-sass', ['comp-clean', 'concat:trash']); 		// clean & release built compiled app SASS
 	grunt.registerTask('build-clean', ['clean:build']); 				// clean only build SASS
 	grunt.registerTask('rel-clean', ['clean:release']); 				// clean only release SASS
 	grunt.registerTask('comp-clean', ['clean:compiled']); 				// clean only compiled app SASS

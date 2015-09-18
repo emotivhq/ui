@@ -453,6 +453,7 @@ window.theme = {};
 }).apply(this, [jQuery]);
 
 // Lightbox
+/*
 (function($) {
 
 	 $('.popup-img').magnificPopup({
@@ -471,3 +472,4 @@ window.theme = {};
 	}); 
 
 }).apply(this, [jQuery]);
+*/

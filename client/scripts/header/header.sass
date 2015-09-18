@@ -1,8 +1,6 @@
 @import "../base"
 
 #header
-  background-color: white
-  height: 50px
   @media screen and (max-width: $phone-tablet-boundary)
     height: 70px
   max-width: 1200px
@@ -55,7 +53,8 @@
 
     img
       @include apply-at-size("desktop")
-        height: 40px
+        height: 55px
+        padding-top: 15px
       @media screen and (max-width: $phone-tablet-boundary)
         height: 70px
 
