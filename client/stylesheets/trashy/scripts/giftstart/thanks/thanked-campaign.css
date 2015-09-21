@@ -1,0 +1,28 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+gs-thanked-campaigns {
+  width: 100%; }
+  gs-thanked-campaigns a {
+    text-decoration: none; }
+  gs-thanked-campaigns div.thanked-campaigns.wrapper {
+    background: #eaeaea;
+    padding: 1em; }
+  gs-thanked-campaigns img.thanks-image, gs-thanked-campaigns div.description-container {
+    width: 100%; }
+    @media screen and (min-width: 1030px) {
+      gs-thanked-campaigns img.thanks-image, gs-thanked-campaigns div.description-container {
+        width: 47%;
+        display: inline-block;
+        vertical-align: top; } }
+  @media screen and (min-width: 1030px) {
+    gs-thanked-campaigns img.thanks-image {
+      margin-right: 4%; } }
+  gs-thanked-campaigns p.campaign-description {
+    text-align: left;
+    white-space: pre-line; }

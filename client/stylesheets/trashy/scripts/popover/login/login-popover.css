@@ -1,0 +1,68 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+body.popoverShown {
+  overflow: hidden; }
+
+div.login-popover .loading {
+  background: url(/assets/loading.gif) no-repeat;
+  background-size: 20px 20px; }
+div.login-popover input[type=submit].loading {
+  background-position: 125px 6px; }
+div.login-popover input[type=submit].getPw.loading {
+  background-position: 150px 6px; }
+div.login-popover div.block {
+  text-align: left;
+  width: 18em; }
+  div.login-popover div.block p {
+    margin-top: 0; }
+@media screen and (max-width: 1030px) {
+  div.login-popover {
+    padding-left: 0;
+    padding-right: 0; } }
+div.login-popover div.login-button {
+  margin-bottom: 1.5em;
+  cursor: pointer; }
+  div.login-popover div.login-button img {
+    width: 100%; }
+  @media screen and (max-width: 1030px) {
+    div.login-popover div.login-button {
+      width: 80%;
+      margin: 0.5em auto; } }
+div.login-popover div.login-button:last-of-type {
+  margin-bottom: 0; }
+div.login-popover form.emailLogin {
+  width: 100%; }
+  div.login-popover form.emailLogin div {
+    width: 202px;
+    margin: 5px auto; }
+    div.login-popover form.emailLogin div input {
+      width: 100%;
+      border: none;
+      color: #000; }
+    div.login-popover form.emailLogin div span {
+      display: block; }
+    div.login-popover form.emailLogin div span.or {
+      margin-bottom: 10px;
+      text-align: center; }
+  div.login-popover form.emailLogin div input[type=submit], div.login-popover form.emailLogin div input[type=button] {
+    font-family: BlanchCondensed, sans-serif;
+    background-color: #fff;
+    color: #e44028;
+    font-size: 1.5em;
+    padding: 5px;
+    font-weight: bold; }
+  div.login-popover form.emailLogin div.loginButton {
+    margin: 10px auto; }
+  div.login-popover form.emailLogin div.errorMsg {
+    color: #fff; }
+  div.login-popover form.emailLogin a {
+    font-weight: 100;
+    text-decoration: underline; }
+  div.login-popover form.emailLogin a.forgotPwdLink {
+    float: right; }

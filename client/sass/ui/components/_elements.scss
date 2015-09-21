@@ -40,25 +40,25 @@
 }
 
 .bg-img-1 {
-	background-image: url(../images/content/demo-about.jpg);
+	background-image: url(/images/content/demo-about.jpg);
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
 }
 
 .bg-img-2 {
-	background-image: url(../images/bg/bg-demo-2.jpg);
+	background-image: url(/images/bg/bg-demo-2.jpg);
 	background-repeat: no-repeat;
 	background-position: -100px 45%;
 }
 
 .bg-img-3 {
-	background-image: url(../images/bg/bg-demo-1.jpg);
+	background-image: url(/images/bg/bg-demo-1.jpg);
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 }
 
 .bg-pattern-dark {
-	background-image: url(../images/patterns/bg-pattern-dark.jpg);
+	background-image: url(/images/patterns/bg-pattern-dark.jpg);
 }
 
 .mask2 {
@@ -207,7 +207,7 @@ blockquote footer:before, blockquote small:before, blockquote .small:before {
 }
 
 .icons {
-	background-image: url(../images/icons/sprite.png);
+	background-image: url(/images/icons/sprite.png);
 	background-position: 0 0;
 	background-repeat: no-repeat;
 	display: inline-block;

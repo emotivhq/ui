@@ -129,6 +129,7 @@ md-autocomplete input:not(.md-input) {
 }
 .search-wrap.affix>.container {
   margin-bottom: 0;
+  margin-left: inherit;
 }
 .featured-note .container {
   padding-top: 75px;
@@ -190,3 +191,31 @@ md-autocomplete input:not(.md-input) {
   }
 }
 .tour-info {padding-left: 10px;}
+.tour-tour .btn-sm {
+      padding:5px
+    }
+    .tour-tour .btn-group .btn+.btn {
+      margin-left:5px
+    }
+    .fb-share-button.fb_iframe_widget {
+      line-height:23px
+    }
+    .pace {
+      -webkit-pointer-events:none;
+      pointer-events:none;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      user-select:none
+    }
+    .pace-inactive {
+      display:none
+    }
+    .pace .pace-progress {
+      background:#E44028;
+      position:fixed;
+      z-index:2000;
+      top:0;
+      right:100%;
+      width:100%;
+      height:2px
+    }

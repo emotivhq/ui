@@ -1,0 +1,53 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+#profile-image-container {
+  height: 200px;
+  width: 200px; }
+  #profile-image-container .edit {
+    border: 1px solid #fff;
+    width: 43% !important;
+    position: relative !important; }
+  #profile-image-container .cancel {
+    background: #e54028;
+    color: #fff !important;
+    padding: 0 0.725rem 0.2rem;
+    text-transform: lowercase; }
+  #profile-image-container .uploader {
+    position: absolute;
+    left: 0.5em;
+    top: 0.05em; }
+
+div.profile-popover {
+  width: 100%; }
+  @media screen and (min-width: 42em) {
+    div.profile-popover {
+      width: 42em; } }
+  div.profile-popover .leftcol {
+    float: left;
+    width: 48%; }
+    div.profile-popover .leftcol img {
+      width: 45%;
+      margin: 0px 1%; }
+  div.profile-popover .rightcol {
+    float: right;
+    width: 48%; }
+    div.profile-popover .rightcol .profile-wrapper {
+      height: 260px; }
+  div.profile-popover .smalltext {
+    font-size: 12px; }
+  div.profile-popover .sup {
+    padding-bottom: 2px;
+    font-size-adjust: 0.8; }
+  div.profile-popover img.profile-picture {
+    vertical-align: top;
+    width: 48%;
+    margin-bottom: 0.7em;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%; }

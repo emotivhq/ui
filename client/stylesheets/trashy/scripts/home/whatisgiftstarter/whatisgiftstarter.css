@@ -1,0 +1,175 @@
+@charset "UTF-8";
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+.static-pages {
+  clear: both;
+  padding-bottom: 50px;
+  text-align: center; }
+  .static-pages a {
+    color: #e44028; }
+  .static-pages .headerwrap {
+    color: white;
+    margin: 0 auto 50px auto;
+    height: 300px;
+    padding-top: 30px;
+    text-align: center;
+    width: 100%; }
+    .static-pages .headerwrap h1 {
+      color: white;
+      -webkit-font-smoothing: antialiased; }
+      @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .static-pages .headerwrap h1 {
+          font-size: 1.5em; } }
+      @media only screen and (max-width: 667px) and (orientation: landscape) {
+        .static-pages .headerwrap h1 {
+          font-size: 2em; } }
+      @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+        .static-pages .headerwrap h1 {
+          font-size: 2.25em; } }
+      @media only screen and (min-width: 668px) and (max-width: 1024px) and (orientation: landscape) {
+        .static-pages .headerwrap h1 {
+          font-size: 2.5em; } }
+    .static-pages .headerwrap p {
+      font-size: 15px;
+      margin: 10px auto 7px auto;
+      width: 60%;
+      -webkit-font-smoothing: antialiased; }
+      @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .static-pages .headerwrap p {
+          font-size: 0.8em; } }
+      @media only screen and (max-width: 667px) and (orientation: landscape) {
+        .static-pages .headerwrap p {
+          font-size: 1em; } }
+      @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+        .static-pages .headerwrap p {
+          font-size: 0.9em; } }
+      @media only screen and (min-width: 668px) and (max-width: 1024px) and (orientation: landscape) {
+        .static-pages .headerwrap p {
+          font-size: 1.125em; } }
+      @media only screen and (min-width: 668px) and (max-width: 1024px) {
+        .static-pages .headerwrap p {
+          width: 80%; } }
+      @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+        .static-pages .headerwrap p {
+          width: 80%; } }
+      @media only screen and (max-width: 667px) {
+        .static-pages .headerwrap p {
+          width: 80%; } }
+      @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .static-pages .headerwrap p {
+          width: 80%; } }
+  .static-pages a.button {
+    background-color: white;
+    border: #e44028 2px solid;
+    border-radius: 25px;
+    clear: left;
+    color: #e44028;
+    display: inline-block;
+    font: 1.25em Gotham, sans-serif;
+    padding: 14px 53px 10px 53px;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s; }
+    .static-pages a.button:hover {
+      background-color: #ea7063;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)";
+      filter: alpha(opacity=70);
+      zoom: 1; }
+    .static-pages a.button.red {
+      background-color: #e44028;
+      color: white;
+      -webkit-font-smoothing: antialiased;
+      -webkit-transition: all 0.3s ease-in-out;
+      -moz-transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-in-out;
+      -webkit-transition: all 0.2s;
+      -moz-transition: all 0.2s;
+      -ms-transition: all 0.2s;
+      -o-transition: all 0.2s;
+      transition: all 0.2s; }
+      .static-pages a.button.red:hover {
+        background-color: #ea7063;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)";
+        filter: alpha(opacity=70);
+        zoom: 1; }
+  .static-pages h2 {
+    padding: 15px 0 30px 0; }
+
+.whatisgiftstarter.why-giftstarter {
+  margin: 0 auto;
+  width: 90%; }
+  .whatisgiftstarter.why-giftstarter .item {
+    display: inline-block;
+    height: 350px;
+    width: 33%;
+    vertical-align: middle; }
+    @media only screen and (max-width: 667px) {
+      .whatisgiftstarter.why-giftstarter .item {
+        width: 100%; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .whatisgiftstarter.why-giftstarter .item {
+        width: 100%; } }
+    .whatisgiftstarter.why-giftstarter .item p {
+      margin: 14px auto;
+      text-align: left;
+      width: 90%; }
+    .whatisgiftstarter.why-giftstarter .item.one {
+      background: url("/assets/whatisgiftstarter/one.png") center/210px no-repeat; }
+    .whatisgiftstarter.why-giftstarter .item.two {
+      background: url("/assets/whatisgiftstarter/two.png") center/210px no-repeat; }
+    .whatisgiftstarter.why-giftstarter .item.three {
+      background: url("/assets/whatisgiftstarter/three.png") center/210px no-repeat; }
+    .whatisgiftstarter.why-giftstarter .item .ghost {
+      display: inline-block;
+      height: 100%;
+      margin: -0.15em;
+      vertical-align: middle; }
+    .whatisgiftstarter.why-giftstarter .item .content {
+      display: inline-block;
+      width: calc(100% - 1px);
+      vertical-align: middle; }
+.whatisgiftstarter.how-it-works img {
+  max-width: 478px;
+  width: 100%; }
+.whatisgiftstarter.how-it-works p {
+  margin: 20px auto;
+  text-align: left;
+  width: 60%; }
+  @media only screen and (max-width: 667px) {
+    .whatisgiftstarter.how-it-works p {
+      text-align: center; } }
+  @media only screen and (max-width: 375px) and (orientation: portrait) {
+    .whatisgiftstarter.how-it-works p {
+      text-align: center; } }
+.whatisgiftstarter.how-it-works button {
+  margin-bottom: 20px;
+  width: 200px; }
+.whatisgiftstarter.how-it-works #howitworks-paragraph {
+  display: inline; }
+  @media only screen and (max-width: 667px) {
+    .whatisgiftstarter.how-it-works #howitworks-paragraph {
+      display: none; } }
+  @media only screen and (max-width: 375px) and (orientation: portrait) {
+    .whatisgiftstarter.how-it-works #howitworks-paragraph {
+      display: none; } }

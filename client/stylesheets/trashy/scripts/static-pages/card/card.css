@@ -1,0 +1,132 @@
+@font-face {
+  font-family: Roboto; }
+
+section.card {
+  width: 5.64706in;
+  height: 3.764706in;
+  background: #fff;
+  margin: 1.15in auto;
+  position: relative; }
+
+section.card:first-of-type {
+  margin-top: 0; }
+
+section.bow.card img.bow.image {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+section.bow.card div.product {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center; }
+  section.bow.card div.product img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    max-height: 75%;
+    max-width: 75%; }
+
+section.whats-giftstarter.card {
+  background: url('/assets/headerBackground.png');
+  text-align: center; }
+  section.whats-giftstarter.card div.wrapper {
+    margin: 0 0.3in;
+    position: relative; }
+    section.whats-giftstarter.card div.wrapper img.logo {
+      height: 0.8in; }
+    section.whats-giftstarter.card div.wrapper p.copy {
+      text-align: left;
+      margin: 0.1in 0; }
+    section.whats-giftstarter.card div.wrapper p.signoff {
+      margin-top: 0.1in;
+      margin-bottom: 0; }
+    section.whats-giftstarter.card div.wrapper p.signature {
+      margin-top: 0;
+      font-weight: 700;
+      color: #d45; }
+  section.whats-giftstarter.card footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0.125in; }
+    section.whats-giftstarter.card footer p {
+      margin: 0;
+      color: #fff; }
+
+section.grid.card {
+  text-align: center; }
+  section.grid.card div.wrapper {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    max-height: 87.5%; }
+    section.grid.card div.wrapper div.grid {
+      margin-right: 0.75in;
+      margin-left: 0.25in;
+      font-size: 0;
+      position: relative;
+      transform: translateY(-87%); }
+      section.grid.card div.wrapper div.grid img.product {
+        max-height: 3.29in;
+        max-width: 4.64in;
+        min-height: 2.5in;
+        min-width: 3.5in; }
+      section.grid.card div.wrapper div.grid div.overlay {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        top: 0;
+        position: absolute; }
+        section.grid.card div.wrapper div.grid div.overlay div.part img {
+          border-radius: 49%;
+          border: 1px solid transparent !important;
+          top: 50%;
+          position: relative;
+          transform: translateY(-50%);
+          max-height: 100%;
+          max-width: 100%;
+          padding: 7%;
+          -webkit-box-sizing: border-box; }
+  section.grid.card p {
+    position: absolute;
+    right: -1.1in;
+    -webkit-transform: rotate(-90deg) translateX(90%); }
+  section.grid.card a {
+    position: absolute;
+    right: -1.4in;
+    -webkit-transform: rotate(-90deg) translateX(-50%);
+    width: 3.5in; }
+
+section.giver.card img {
+  position: absolute;
+  top: 0.5in;
+  left: 0.5in;
+  width: 1.5in;
+  height: 1.5in;
+  border-radius: 50%; }
+section.giver.card div {
+  position: absolute;
+  top: 50%;
+  left: 2.25in;
+  margin-right: 0.3in;
+  margin-top: 0.3in;
+  transform: translateY(-50%); }
+  section.giver.card div p.comment {
+    margin-bottom: 0.5in; }
+    section.giver.card div p.comment span.nocomment {
+      color: #888; }
+  section.giver.card div p.name {
+    font-size: 0.4in;
+    margin-bottom: 0; }
+
+section.gift-champion.giver.card div p.the-giftstarter {
+  font-size: 0.3in;
+  color: #888;
+  margin-top: 0.1in;
+  margin-bottom: 0; }

@@ -13,12 +13,25 @@
 	<link rel="prefetch" href="/assets/fonts/Gotham-Book.woff" />
 	<link rel="prefetch" href="/assets/fonts/Gotham-BookItalic.woff" />
 	<link rel="prefetch" href="/assets/fonts/Roboto-Medium.woff" />
-	<!--link rel="stylesheet" href="/stylesheets/app-main.css"-->
-	<link rel="stylesheet" href="/stylesheets/app-main/css/vendor.min.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/css/theme.min.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/css/style.css" id="layoutstyle">
-  	<link rel="stylesheet" href="/stylesheets/app-main/css/custom.css">
-	<link rel="stylesheet" href="/stylesheets/compiled.min.css">
+	<link rel="stylesheet" href="/stylesheets/app/vendor.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app/gs.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app/style.css" id="layoutstyle">
+  	<link rel="stylesheet" href="/stylesheets/app/custom.css">
+    {# ###############################################################
+	 # IF app-main.min.css breaks due to sass/grunt issues, 
+	 # use these prebuilt versions in a pinch
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/bootstrap.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/layout.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/global.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/theme.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/ui.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/colors.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/custom.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/owl.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/animate.css">
+  	<!--link rel="stylesheet" href="/stylesheets/app-main.min.css"-->
+	 # ###############################################################}
+	<link rel="stylesheet" href="/stylesheets/compiled.css">
 	<script>paceOptions = {elements: false,document: true,restartOnRequestAfter: false}</script>
 	<script src="/scripts/out/app.js"></script>
 	<script src="/scripts/utilities/browser-specific-css.js"></script>
@@ -67,6 +80,11 @@
     </script>
 	<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
+  	<!--[if lte IE 8]>
+		<script src="/scripts/vendor/respond.js"></script>
+		<script src="/scripts/vendor/excanvas.js"></script>
+	<![endif]-->
+	<script src="/scripts/vendor/modernizr.js"></script>
 </head>
 <body ng-cloak>
     <gs-menu></gs-menu>
@@ -89,6 +107,7 @@
     <gs-popover></gs-popover>
 	<script src="/scripts/webapp/vendor.js"></script>
 	<script src="/scripts/ui/marvel.js"></script>
+	<script src="/scripts/ui/affix.js"></script>
 	{% if hide_body %}
     <script type='text/javascript'>
         $(document).ready(function() {

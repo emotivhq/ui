@@ -1,0 +1,95 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+.staffpicks {
+  white-space: nowrap;
+  overflow: hidden; }
+  @media only screen and (max-width: 667px) {
+    .staffpicks {
+      display: none; } }
+  @media only screen and (max-width: 375px) and (orientation: portrait) {
+    .staffpicks {
+      display: none; } }
+  .staffpicks .product-item {
+    background-color: #363636;
+    color: white;
+    display: inline-block;
+    height: 368px;
+    padding: 10px;
+    position: relative;
+    margin: 10px;
+    text-align: left;
+    width: 520px;
+    white-space: normal;
+    vertical-align: top;
+    -webkit-font-smoothing: antialiased; }
+    @media only screen and (max-width: 667px) {
+      .staffpicks .product-item {
+        display: none; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .staffpicks .product-item {
+        display: none; } }
+    .staffpicks .product-item .left-col {
+      float: left;
+      height: 348px;
+      margin-right: 10px; }
+    .staffpicks .product-item .title {
+      font-size: 1.125em;
+      line-height: 90%;
+      margin: 5px; }
+    .staffpicks .product-item .avatar {
+      border: 3px solid #e0e0e0;
+      border-radius: 50%;
+      display: block;
+      position: relative;
+      margin: 0 auto;
+      width: 75px;
+      z-index: 2; }
+      @media only screen and (max-width: 667px) {
+        .staffpicks .product-item .avatar {
+          display: none; } }
+      @media only screen and (max-width: 375px) and (orientation: portrait) {
+        .staffpicks .product-item .avatar {
+          display: none; } }
+    .staffpicks .product-item hr {
+      margin: 5px; }
+    .staffpicks .product-item .corner-box {
+      background-color: #a6a6a6;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 50px;
+      width: 162px;
+      z-index: 1; }
+    .staffpicks .product-item p {
+      line-height: 14px; }
+    .staffpicks .product-item .bottom {
+      position: absolute;
+      right: 10px;
+      bottom: 5px;
+      width: 142px;
+      vertical-align: bottom; }
+      .staffpicks .product-item .bottom p {
+        margin: 5px; }
+  .staffpicks .rotate {
+    display: inline-block;
+    overflow: hidden;
+    height: 378px;
+    width: 69.5%;
+    white-space: nowrap;
+    vertical-align: top; }
+  .staffpicks #titlexo {
+    display: inline-block;
+    margin: 10px 0;
+    min-width: 30%;
+    text-align: left; }
+  .staffpicks #clear {
+    clear: both; }
+  .staffpicks #outer {
+    min-width: 1200px;
+    text-align: left; }

@@ -1,0 +1,51 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+gs-image-upload {
+  display: block;
+  width: 100%;
+  margin-bottom: 3em; }
+  gs-image-upload div.image-upload.wrapper {
+    height: 0;
+    padding-bottom: 100%; }
+    gs-image-upload div.image-upload.wrapper canvas {
+      background-image: url("/assets/camera_bg.png");
+      background-size: cover;
+      cursor: all-scroll;
+      -ms-transform: scale(0.5) translate(-50%, -50%);
+      -webkit-transform: scale(0.5) translate(-50%, -50%);
+      transform: scale(0.5) translate(-50%, -50%); }
+    gs-image-upload div.image-upload.wrapper div.uploader {
+      position: absolute;
+      bottom: 1.5em;
+      left: 1.5em; }
+      gs-image-upload div.image-upload.wrapper div.uploader button {
+        border-color: #fff;
+        border-radius: 0;
+        background-color: #e44028;
+        color: #fff;
+        width: 25px;
+        height: 25px;
+        background-size: cover; }
+        gs-image-upload div.image-upload.wrapper div.uploader button.rotate {
+          background-image: url("/assets/rotate_button_white.png"); }
+        gs-image-upload div.image-upload.wrapper div.uploader button.image {
+          background-image: url("/assets/camera_button_white.png"); }
+  gs-image-upload input.thanks-image-input {
+    display: none; }
+
+gs-image-upload.white-buttons div.image-upload.wrapper div.uploader button {
+  border-color: #fff;
+  background-color: #fff;
+  color: #e44028; }
+gs-image-upload.white-buttons div.image-upload.wrapper div.uploader button:hover {
+  color: #ea7063; }
+gs-image-upload.white-buttons div.image-upload.wrapper div.uploader button.rotate {
+  background-image: url("/assets/rotate_button_primary.png"); }
+gs-image-upload.white-buttons div.image-upload.wrapper div.uploader button.image {
+  background-image: url("/assets/camera_button_primary.png"); }

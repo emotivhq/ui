@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
 
         remove: {
-            fileList: ['../client/scripts/out/*.js'] 		// @TODO: we need to clean out more than this - JS 09/16 
+            fileList: ['../client/scripts/out/*.js', '../client/scripts/out/css'] 		// @TODO: we need to clean out more than this - JS 09/16 
         },
         ngtemplates: {
             GiftStarterApp: {
@@ -20,17 +20,45 @@ module.exports = function(grunt) {
             }
         },
         sass: {
-            // This doesn't work.  Bleh.
             options: {
             	sourceMap: createSourceMaps,
             	sourceMapStyle: 'link'
             },
-            trash: {
+            trashy: {
                 files: [{
                     expand: true,
                     cwd: '../client',
-                    src: 'scripts/**/*.sass',
-                    dest: '../client/scripts/out/css',
+                    /* Undoing this and including manually to start taking out the trash 
+					 * @todo: @fedora 09/21/15
+					*/
+					// src: 'scripts/**/*.sass',
+					src: [
+						'scripts/brandbar/**/*.sass',
+						'scripts/butter/**/*.sass',
+						'scripts/button/**/*.sass',
+						'scripts/frame/**/*.sass',
+						'scripts/giftideas/**/*.sass',
+						'scripts/giftgivenbar/**/*.sass',
+						'scripts/giftstart/**/*.sass',
+						'scripts/header/**/*.sass',
+						'scripts/home/**/*.sass',
+						'scripts/inspirationalexamples/**/*.sass',
+						'scripts/login/**/*.sass',
+						'scripts/marketingbanner/**/*.sass',
+						'scripts/menu/**/*.sass',
+						'scripts/partnerportal/**/*.sass',
+						'scripts/pay/**/*.sass',
+						'scripts/popover/**/*.sass',
+						'scripts/product/**/*.sass',
+						'scripts/share/**/*.sass',
+						'scripts/shopify/**/*.sass',
+						'scripts/staffpicks/**/*.sass',
+						'scripts/static-pages/**/*.sass',
+						'scripts/user/**/*.sass',
+						'scripts/utilities/**/*.sass',
+						'scripts/*.sass'
+					],
+                    dest: '../client/stylesheets/trashy',
                     ext: '.css'
                 }]
             },
@@ -45,9 +73,9 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-/* THIS IS CURRENTLY BROKEN, TURNING OFF FOR NOW
- * @TODO: JS 09/17
- */
+		/* THIS {trash:} IS CURRENTLY BROKEN, TURNING OFF FOR NOW
+		 * @TODO: JS 09/17
+		 */
 			trash: {
                 options: {
                     sourceMap: createSourceMaps,
@@ -156,20 +184,23 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
-					'../client/bower_components/pace/pace.min.js',
                     '../client/bower_components/jquery/dist/jquery.min.js',
-                    '../client/bower_components/jquery-ui/jquery-ui.min.js',
-					'../client/bower_components/excanvas/excanvas.js',
-					'../client/bower_components/Respond/dest/respond.min.js',
+					'../client/scripts/vendor/jquery.ui.js',
+					'../client/scripts/vendor/jquery.validation.js',
+					'../client/bower_components/pace/pace.min.js',
+                    //'../client/bower_components/jquery-ui/jquery-ui.min.js',
+					//'../client/bower_components/excanvas/excanvas.js',
+					//'../client/bower_components/Respond/dest/respond.min.js',
 					'../client/bower_components/chosen/chosen.jquery.min.js', 
-					'../client/bower_components/bootstrap/dist/bootstrap.min.js',
+					'../client/bower_components/bootstrap/dist/js/bootstrap.min.js',
 					'../client/bower_components/uikit/js/uikit.min.js',
                     '../client/bower_components/devicejs/lib/device.min.js',
-                    '../client/bower_components/sequencejs/scripts/sequence.min.js',
-					'../client/bower_components/flexslider/jquery.flexslider-min.js',
                     '../client/bower_components/OwlCarousel2/dist/owl.carousel.min.js',
+					'../client/bower_components/flexslider/jquery.flexslider-min.js',
                     '../client/bower_components/imagesloaded/imagesloaded.pkgd.min.js',
-                    '../client/bower_components/masonry/dist/masonry.pkgd.min.js'
+                    '../client/bower_components/masonry/dist/masonry.pkgd.min.js',
+                    '../client/bower_components/sequencejs/scripts/sequence.min.js',
+					'../client/scripts/vendor/sequence-theme.modern-slide-in.min.js'
 					 ],
                 dest: '../client/scripts/webapp/vendor.js'
             },
@@ -179,7 +210,7 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
-					'../client/bower_components/angular/angular.min.js',
+                    '../client/bower_components/angular/angular.min.js',
                     '../client/bower_components/angucomplete/angucomplete.js',
                     '../client/bower_components/angular-route/angular-route.min.js',
                     '../client/bower_components/angular-touch/angular-touch.min.js',
@@ -188,6 +219,7 @@ module.exports = function(grunt) {
                     '../client/bower_components/angular-cookies/angular-cookies.min.js',
                     '../client/bower_components/angular-sanitize/angular-sanitize.min.js',
                     '../client/bower_components/angular-resource/angular-resource.min.js',
+                    '../client/bower_components/devicejs/lib/device.min.js',
                     '../client/bower_components/angular-ui-date/src/date.js',
                     '../client/bower_components/angulartics/dist/angulartics.min.js',
                     '../client/bower_components/angulartics/dist/angulartics-gtm.min.js',
@@ -196,7 +228,7 @@ module.exports = function(grunt) {
 					'../client/bower_components/angular-chosen-localytics/chosen.js',
 					'../client/bower_components/angular-flexslider/angular-flexslider.js',
 					'../client/bower_components/angular-boostrap/angular-bootstrap.min.js'
-					 ],
+				],
                 dest: '../client/scripts/webapp/angular.js'
             },			
 			app: {
@@ -284,8 +316,8 @@ module.exports = function(grunt) {
                     '../client/scripts/button/campaign-giftstart-it.directive.js',
                     '../client/scripts/header/giftstart-it-header.directive.js',
                     '../client/scripts/header/subscribe-header.directive.js',
-                    '../client/scripts/header/subscribe-header.directive.js'
-                ],
+                    '../client/scripts/header/subscribe-header.directive.js'				
+				],
                 dest: '../client/scripts/webapp/app.js'
             },
 			combine: {
@@ -300,14 +332,28 @@ module.exports = function(grunt) {
                 src: '../client/bower_components/jquery/dist/jquery.min.map',
                 dest: '../client/scripts/out/jquery.min.map'
             },
-            trash: {
+            trashy: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/assets/bootstrap.css', '../client/scripts/out/css/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.css'],
+                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css'],
                 dest: '../client/stylesheets/compiled.css'
+            },
+            sassyvendor: {
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapName: '../client/stylesheets/vendor.css.map',
+                    sourceMapStyle: 'link'
+                },
+                src: [
+					'../client/bower_components/OwlCarousel2/assets/owl.carousel.min.css', 
+					'../client/bower_components/OwlCarousel2/assets/owl.theme.default.min.css', 
+					'../client/bower_components/flexslider/flexslider.css', 
+					'../client/bower_components/chosen/chosen.css'
+					],
+                dest: '../client/stylesheets/app-main/vendor.css'
             },
             sassy: {
                 options: {
@@ -326,7 +372,7 @@ module.exports = function(grunt) {
                 reporter: require('jshint-stylish')
             },
             all: {
-                src: ['gruntfile.js', '../client/scripts/{,*/}*.js']
+                src: ['gruntfile.js', '../client/scripts/{,*/}*.js', '!../client/out/**/*.js', '!../client/vendor/**/*.js']
             }
         },
 		// Empties folders & files to start fresh
@@ -334,16 +380,31 @@ module.exports = function(grunt) {
   			options: {
                 force: true
             },
-			build: {
+			sassy: {
 				src: ['../client/stylesheets/app-main']
   			},
-  			release: {
-   				dot: true,
-				src: ['../client/stylesheets/app-main*.css']
+			sassycss: {
+				src: ['../client/stylesheets/app-main.css']
   			},
-			trash: {
+			trashy: {
 				dot: true,
-				src: ['../client/scripts/out/css','../client/stylesheets/**/*.map','../client/scripts/out/*.map']
+				src: ['../client/stylesheets/trashy']
+			},
+			trashycss: {
+				dot: true,
+				src: ['../client/stylesheets/compiled.css']
+			},
+			out: {
+				dot: true,
+				src: ['../client/scripts/out/css','../client/scripts/out/**/*.map','../client/scripts/out/*.js']
+			},
+			webapp: {
+				dot: true,
+				src: ['../client/scripts/webapp/**/*.js']
+			},
+			cssmin: {
+				dot: true,
+				src: ['../client/stylesheets/*min.css']
 			}
 		},
         uglify: {
@@ -377,7 +438,7 @@ module.exports = function(grunt) {
     			files: [{
       				expand: true,
 					cwd: '../client/stylesheets',
-      				src: ['app-main.css', 'compiled.css', '!*.min.css'],
+      				src: ['app-main.css', 'compiled.css', 'vendor.css', '!*.min.css'],
       				dest: '../client/stylesheets',
       				ext: '.min.css'
     			}]
@@ -414,17 +475,40 @@ module.exports = function(grunt) {
 
     // Build tasks.
     grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the whole app
-    grunt.registerTask('jshint', ['jshint']);							// Run jshint, catch errors, fix, code better
+    grunt.registerTask('jshint', ['jshint']);								// Run jshint, catch errors, fix, code better
 	
-	// New SASS tasks, I call it sassy
-	grunt.registerTask('sassy', ['build-sass', 'rel-sass']);			// soup to nuts clean, build, release SASS
-    grunt.registerTask('build-sass', ['build-clean', 'sass:sassy']);	// clean & build dev SASS
-    grunt.registerTask('rel-sass', ['rel-clean', 'concat:sassy']); 	// clean & release built base app SASS
-    grunt.registerTask('comp-sass', ['comp-clean', 'concat:trash']); 		// clean & release built compiled app SASS
-	grunt.registerTask('build-clean', ['clean:build']); 				// clean only build SASS
-	grunt.registerTask('rel-clean', ['clean:release']); 				// clean only release SASS
-	grunt.registerTask('comp-clean', ['clean:compiled']); 				// clean only compiled app SASS
+	/* 
+	 *** SASS tasks, I call it sassy *** 
+	*/
+	grunt.registerTask('sassy', ['build-sassy', 'rel-sassy', 'cssmin']);	// soup to nuts clean, build, release SASS
+    // Individual sassy tasks
+	grunt.registerTask('build-sassy', ['clean-sassy', 'sass:sassy']);		// clean & build dev SASS
+    grunt.registerTask('rel-sassy', ['clean-sassycss', 'concat:sassyvendor', 'concat:sassy']); 	// clean & release built base app SASS
+	grunt.registerTask('clean-sassy', ['clean:sassy']); 					// clean only build SASS
+	grunt.registerTask('clean-sassycss', ['clean:sassycss']); 				// clean only released SASS
 
+	/* 
+	 *** OLD sass tasks, I call it trashy *** 
+	*/
+	grunt.registerTask('trashy', ['build-trashy', 'rel-trashy', 'cssmin']);	// soup to nuts clean, build, release trashy sass
+    // Individual trashy tasks
+	grunt.registerTask('build-trashy', ['clean-trashy', 'sass:trashy']);	// clean & build dev trashy sass
+    grunt.registerTask('rel-trashy', ['clean-trashycss', 'concat:trashy']); // clean & release built compiled trashy sass
+	grunt.registerTask('clean-trashy', ['clean:trashy']); 					// clean only compiled trashy sass
+	grunt.registerTask('clean-trashycss', ['clean:trashycss']); 			// clean only released trashy sass
+
+	/* 
+	 *** Javascript tasks ***
+	*/
+	grunt.registerTask('scripts', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
+    // Individual js tasks
+	grunt.registerTask('build-scripts', ['build-clean', 'sass:sassy']);		// clean & build dev js
+    grunt.registerTask('rel-scripts', ['rel-clean', 'concat:vendor', 'concat:angular', 'concat:app']); 		// clean & release built base app js
+    grunt.registerTask('comp-scripts', ['comp-clean', 'concat:trash']); 	// clean & release built compiled app js
+	grunt.registerTask('build-clean', ['clean:build']); 					// clean only build js
+	grunt.registerTask('rel-clean', ['clean:release']); 					// clean only release js
+	grunt.registerTask('comp-clean', ['clean:compiled']); 					// clean only compiled app js
+	
 	// Built in versioning, Archer style (https://www.youtube.com/watch?v=C6NRA69SdoM)
 	grunt.registerTask('beep', ['bump:patch']);
 	grunt.registerTask('boop', ['bump:minor']);

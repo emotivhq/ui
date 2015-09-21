@@ -1,0 +1,62 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+section.what-is-it.wrapper {
+  margin: 2em auto;
+  width: 100%; }
+  @media screen and (min-width: 64em) {
+    section.what-is-it.wrapper {
+      width: 64em; } }
+  section.what-is-it.wrapper header h1 {
+    padding: 0 0.4em;
+    width: 100%;
+    margin-bottom: 0.5em; }
+    section.what-is-it.wrapper header h1 span {
+      color: #e44028; }
+  section.what-is-it.wrapper p {
+    font-size: 16px;
+    text-align: justify; }
+  section.what-is-it.wrapper div.copy, section.what-is-it.wrapper div.video {
+    padding: 4%;
+    display: inline-block;
+    width: 100%;
+    vertical-align: top; }
+    @media screen and (min-width: 32em) {
+      section.what-is-it.wrapper div.copy, section.what-is-it.wrapper div.video {
+        width: 45%; } }
+    @media screen and (min-width: 64em) {
+      section.what-is-it.wrapper div.copy, section.what-is-it.wrapper div.video {
+        padding: 1em;
+        width: 29em; } }
+    section.what-is-it.wrapper div.copy p:first-of-type, section.what-is-it.wrapper div.video p:first-of-type {
+      margin-top: 0; }
+  section.what-is-it.wrapper div.video {
+    padding: 1em;
+    background: #414141; }
+    section.what-is-it.wrapper div.video iframe {
+      width: 100%; }
+      @media screen and (min-width: 64em) {
+        section.what-is-it.wrapper div.video iframe {
+          width: 432px;
+          height: 243px; } }
+  section.what-is-it.wrapper div.email {
+    width: 100%;
+    padding: 1em; }
+    section.what-is-it.wrapper div.email p {
+      margin-top: 0; }
+    section.what-is-it.wrapper div.email input, section.what-is-it.wrapper div.email button {
+      width: 100%; }
+    section.what-is-it.wrapper div.email input {
+      font-size: 18px;
+      margin-right: 0.25em; }
+      @media screen and (min-width: 32em) {
+        section.what-is-it.wrapper div.email input {
+          width: 21em; } }
+    @media screen and (min-width: 32em) {
+      section.what-is-it.wrapper div.email button {
+        width: 4em; } }

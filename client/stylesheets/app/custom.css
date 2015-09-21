@@ -128,6 +128,7 @@ md-autocomplete input:not(.md-input) {
 }
 .search-wrap.affix>.container {
   margin-bottom: 0;
+  margin-left: inherit;
 }
 .featured-note .container {
   padding-top: 75px;

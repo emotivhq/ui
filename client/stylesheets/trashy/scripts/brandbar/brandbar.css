@@ -1,0 +1,15 @@
+#brandbar {
+  background-color: #e27f24 !important;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 0 auto;
+  vertical-align: middle;
+  width: 100%; }
+  #brandbar .brandbox {
+    display: inline-block;
+    width: 19%; }
+    #brandbar .brandbox img {
+      width: 100%;
+      max-width: 150px;
+      height: auto; }

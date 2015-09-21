@@ -1,0 +1,31 @@
+iframe[name='google_conversion_frame'] {
+  height: 0 !important;
+  width: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  margin-top: -13px;
+  float: left; }
+
+#wp-content {
+  margin: 0 auto;
+  padding: 0.75em 1.5em;
+  text-align: left; }
+  #wp-content p {
+    font-size: 16px; }
+  @media screen and (max-width: 1802.5px) {
+    #wp-content {
+      width: 100%; } }
+  @media screen and (min-width: 1802.5px) {
+    #wp-content {
+      width: 60em; } }
+  #wp-content article {
+    margin: 3em 0; }
+    #wp-content article footer {
+      display: none; }
+  #wp-content div, #wp-content span {
+    font: 12px / 2 Gotham, sans-serif; }
+  #wp-content img {
+    max-width: 95% !important;
+    height: auto !important; }
+  #wp-content figure {
+    max-width: 95% !important; }
