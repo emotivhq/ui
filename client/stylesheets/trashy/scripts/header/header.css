@@ -7,13 +7,12 @@ iframe[name='google_conversion_frame'] {
   float: left; }
 
 #header {
-  max-width: 1200px;
   width: 100%;
   vertical-align: middle;
   -webkit-font-smoothing: antialiased; }
   @media screen and (max-width: 1030px) {
     #header {
-      height: 70px; } }
+      max-width: 1200px; } }
   @media screen and (max-width: 1030px) {
     #header .nomobile {
       display: none; } }

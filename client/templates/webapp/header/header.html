@@ -1,10 +1,7 @@
 {% raw %}
-
 <!-- Begin Header -->
 <header id="header" class="header-light" ng-controller="HeaderController as header">
-
     <div class="container head-justify">
-
         <div class="navbar-header headerLogoWrapper">
             <div class="header-menu-button">
                 <a ng-href="{{isHeaderOnly?'#nav_mobile':''}}">
@@ -22,14 +19,14 @@
             </div>
         </div>
 
-        <ul class="nav-icons pull-right">
+<!--         <ul class="nav-icons pull-right">
             <li class="hidden-lg">
                 <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas>
                     <span class="sr-only">Toggle navigation</span>
                     <i class="fa fa-bars"></i> Menu
                 </a>
             </li>
-        </ul>
+        </ul> -->
         {% endraw %} {% include 'header/nav.html' %} {% raw %}
 
         <div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">
@@ -39,10 +36,7 @@
         <div class="nomobile">
             <div class="blackout-screen" ng-show="showBlackout" ng-click="header.closeLogin(); header.closeNotifications()"></div>
         </div>
-
-
     </div>
-
 </header>
 <!-- End Header -->
 

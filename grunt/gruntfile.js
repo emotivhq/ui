@@ -414,11 +414,11 @@ module.exports = function(grunt) {
 			},
 			trashycss: {
 				dot: true,
-				src: ['../client/stylesheets/compiled.css']
+				src: ['../client/scripts/out/css', '../client/stylesheets/compiled.css']
 			},
 			out: {
 				dot: true,
-				src: ['../client/scripts/out/css','../client/scripts/out/**/*.map','../client/scripts/out/*.js']
+				src: ['../client/scripts/out/**/*.map','../client/scripts/out/**/*.js']
 			},
 			webapp: {
 				dot: true,
@@ -427,6 +427,10 @@ module.exports = function(grunt) {
 			cssmin: {
 				dot: true,
 				src: ['../client/stylesheets/*min.css']
+			},
+			views: {
+				dot: true,
+				src: ['../client/scripts/out/angular-template.js']
 			}
 		},
         uglify: {
@@ -529,12 +533,17 @@ module.exports = function(grunt) {
 	*/
 	grunt.registerTask('scripts', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
     // Individual js tasks
-	grunt.registerTask('build-scripts', ['build-clean', 'sass:sassy']);		// clean & build dev js
-    grunt.registerTask('rel-scripts', ['rel-clean', 'concat:vendor', 'concat:angular', 'concat:app']); 		// clean & release built base app js
-    grunt.registerTask('comp-scripts', ['comp-clean', 'concat:trash']); 	// clean & release built compiled app js
-	grunt.registerTask('build-clean', ['clean:build']); 					// clean only build js
-	grunt.registerTask('rel-clean', ['clean:release']); 					// clean only release js
+	grunt.registerTask('build-scripts', ['clean-app', 'clean-trash', 'concat:trash', 'concat:vendor', 'concat:angular', 'concat:app']);		// clean & build dev js
+    grunt.registerTask('rel-scripts', ['uglify']); 		// clean & release built base app js
+	grunt.registerTask('clean-app', ['clean:webapp']); 					// clean only build js
+	grunt.registerTask('clean-trash', ['clean:out']); 					// clean only release js
 	grunt.registerTask('comp-clean', ['clean:compiled']); 					// clean only compiled app js
+	
+	/* 
+	 *** View & template tasks ***
+	*/
+	grunt.registerTask('views', ['clean-views', 'ngtemplates', 'scripts']);		// soup to nuts clean, build, release views into javascript templates using ngtemplate
+	grunt.registerTask('clean-views', ['clean:views']); 			// clean only release js
 	
 	// Built in versioning, Archer style (https://www.youtube.com/watch?v=C6NRA69SdoM)
 	grunt.registerTask('beep', ['bump:patch']);
