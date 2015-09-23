@@ -1,49 +1,49 @@
 {% raw %}
 
 <!-- Begin Header -->
-    <header id="header" class="header-light" ng-controller="HeaderController as header">
+<header id="header" class="header-light" ng-controller="HeaderController as header">
 
-		
-      <div class="container head-justify">
+    <div class="container head-justify">
 
-		<div class="navbar-header headerLogoWrapper">
-      		<div class="header-menu-button">
-          		<a ng-href="{{isHeaderOnly?'#nav_mobile':''}}"><img src="/assets/menu-mobile.png" ng-click="header.toggleMobileMenu(); header.closeNotifications()"/></a>
-      		</div>
-      		<a href="/"><img id="logo" src="/assets/webLogo.png" /><img id="logo-mobile" src="/assets/logo-mobile.png" /></a>
-      		<div class="header-menu-button">
-          		<a href="#searchbar"><img src="/assets/search-mobile.png" ng-click="search = !search"/></a>
-      		</div>
-    	</div>
-		  
-        <ul class="nav-icons pull-right">
-          <li class="hidden-lg">
-            <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas>
-              <span class="sr-only">Toggle navigation</span>
-              <i class="fa fa-bars"></i> Menu
+        <div class="navbar-header headerLogoWrapper">
+            <div class="header-menu-button">
+                <a ng-href="{{isHeaderOnly?'#nav_mobile':''}}">
+                    <img src="/assets/menu-mobile.png" ng-click="header.toggleMobileMenu(); header.closeNotifications()" />
+                </a>
+            </div>
+            <a href="/">
+                <img id="logo" src="/assets/webLogo.png" />
+                <img id="logo-mobile" src="/assets/logo-mobile.png" />
             </a>
-          </li>
+            <div class="header-menu-button">
+                <a href="#searchbar">
+                    <img src="/assets/search-mobile.png" ng-click="search = !search" />
+                </a>
+            </div>
+        </div>
+
+        <ul class="nav-icons pull-right">
+            <li class="hidden-lg">
+                <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas>
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-bars"></i> Menu
+                </a>
+            </li>
         </ul>
-{% endraw %}
-		  
-        {% include 'header/nav.html' %}
+        {% endraw %} {% include 'header/nav.html' %} {% raw %}
 
-{% raw %}		  
+        <div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">
+            <img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
+            <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+        </div>
+        <div class="nomobile">
+            <div class="blackout-screen" ng-show="showBlackout" ng-click="header.closeLogin(); header.closeNotifications()"></div>
+        </div>
 
-    		<div class="loginwrapper" ng-show="showLoginwrapper" ng-keyup="header.loginKeyPress($event)">
-      			<img id="closebtn" src="/assets/x.png" ng-click="header.closeLogin()" />
-      			<ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
-    		</div>
-    		<div class="nomobile">
-      			<div class="blackout-screen" ng-show="showBlackout" ng-click="header.closeLogin(); header.closeNotifications()"></div>
-    		</div>
-		  
-		  
-		</div>
 
-    </header>
-    <!-- End Header -->
+    </div>
 
-{% endraw %}
+</header>
+<!-- End Header -->
 
-	{% include 'header/search.html' %}
+{% endraw %} {% include 'header/search.html' %}

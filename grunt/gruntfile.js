@@ -15,7 +15,10 @@ module.exports = function(grunt) {
                     prefix: '/'
                 },
                 cwd: '../client',
-                src: 'scripts/**/*.html',
+                src: [
+						'views/**/*.html',
+						'scripts/**/*.html'
+					],
                 dest: '../client/scripts/out/angular-template.js'
             }
         },
@@ -372,9 +375,28 @@ module.exports = function(grunt) {
                 reporter: require('jshint-stylish')
             },
             all: {
-                src: ['gruntfile.js', '../client/scripts/{,*/}*.js', '!../client/out/**/*.js', '!../client/vendor/**/*.js']
+                src: [
+					'gruntfile.js', 
+					'../client/scripts/{,*/}*.js', 
+					'!../client/out/**/*.js', 
+					'!../client/vendor/**/*.js'
+				]
             }
         },
+    	jslint: { 													 
+    	    client: {
+    	        src: [
+					'../client/scripts/**/*.js'
+				],
+    	        directives: {
+    	            browser: true,
+    	            predef: ['jQuery']
+    	        },
+    	        options: {
+    	            junit: 'out/client-junit.xml'
+    	        }
+    	    }
+    	},	
 		// Empties folders & files to start fresh
 		clean: {
   			options: {
@@ -471,11 +493,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-bump');
 
     // Build tasks.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the whole app
-    grunt.registerTask('jshint', ['jshint']);								// Run jshint, catch errors, fix, code better
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the old app
+	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']);
+	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint', 'jslint']); // Build with jshint, catch errors with jslint, fix, code better
+	grunt.registerTask('test', ['karma']);
+	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']); // Build the app ready to test
+	
 	
 	/* 
 	 *** SASS tasks, I call it sassy *** 

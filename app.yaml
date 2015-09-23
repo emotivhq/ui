@@ -102,6 +102,9 @@ handlers:
 - url: /bower_components
   static_dir: client/bower_components
   secure: always
+- url: /plugins
+  static_dir: client/bower_components
+  secure: always
 - url: /assets
   static_dir: client/assets
   application_readable: true
