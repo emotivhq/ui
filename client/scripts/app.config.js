@@ -13,7 +13,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/providence',
-        {templateUrl: '/views/providence/providence.html', reloadOnSearch: false})    
+        {templateUrl: '/views/providence/providence.html', reloadOnSearch: false})
         .when('/test',
         {templateUrl: '/views/home/home.html', reloadOnSearch: false})
         .when('/create',

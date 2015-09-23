@@ -1,6 +1,6 @@
 {% raw %}
 <!-- Begin Header -->
-<header id="header" class="header-light" ng-controller="HeaderController as header">
+<header id="header" class="header-light" ng-controller="HeaderController as header" ng-hide="isProvidence">
     <div class="container head-justify">
         <div class="navbar-header headerLogoWrapper">
             <div class="header-menu-button">
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-<!--         <ul class="nav-icons pull-right">
+        <!--  <ul class="nav-icons pull-right">
             <li class="hidden-lg">
                 <a href="#offcanvas" class="uk-navbar-toggle" data-uk-offcanvas>
                     <span class="sr-only">Toggle navigation</span>
