@@ -1,0 +1,34 @@
+# GiftStarter Javascript Development Workflow
+This is the breakdown of common javascript tasks in Grunt. For more info on [Grunt](http://gruntjs.com), see [their docs](http://gruntjs.com/getting-started).
+
+### Test Environment:
+[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
+
+## Build & Dev Javascript Tasks
+These are all the current development tasks done at build time for javascript work. 
+
+- **`grunt scripts`** - soup to nuts clean, build, release scripts
+  - *Runs 'build-scripts', 'rel-scripts'*
+- **`grunt build-scripts`** - clean & build dev js
+  - *Runs ['clean-app', 'clean-trash', 'concat:trash', 'concat:vendor', 'concat:angular', 'concat:app'*
+- **`grunt rel-scripts`** - uglifies newly built scripts (runs `uglify`)
+- **`grunt clean-app `**- removes built script in `./client/scripts/webapp/`
+  - *Runs 'remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify'*
+- **`grunt clean-trash`** - removes built scripts in `./client/scripts/out/`
+  - *Runs 'remove', 'ngtemplates', 'sass', 'sassy', 'concat'*
+- **`grunt jshint`** -runs [jshint](https://www.npmjs.com/package/grunt-contrib-jshint) on all custom scripts  in the build
+- **`grunt jlint`** -runs [jslint](https://www.npmjs.com/package/grunt-jslint) on all custom scripts  in the build
+
+
+Here they are straight from `./grunt/gruntfile.js`.
+```
+	/* 
+	 *** Javascript tasks ***
+	*/
+	grunt.registerTask('scripts', ['build-scripts', 'rel-scripts']);
+    // Individual js tasks
+	grunt.registerTask('build-scripts', ['clean-app', 'clean-trash', 'concat:trash', 'concat:vendor', 'concat:angular', 'concat:app']);
+    grunt.registerTask('rel-scripts', ['uglify']);
+	grunt.registerTask('clean-app', ['clean:webapp']);
+	grunt.registerTask('clean-trash', ['clean:out']);
+	```

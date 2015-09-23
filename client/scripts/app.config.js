@@ -12,6 +12,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
     $routeProvider
         .when('/',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        .when('/test',
+        {templateUrl: '/views/home/home.html', reloadOnSearch: false})
         .when('/create',
         {templateUrl: '/scripts/giftstart/create/giftstart-create.html', reloadOnSearch: false})
         .when('/giftstart',

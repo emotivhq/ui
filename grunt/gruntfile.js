@@ -15,7 +15,10 @@ module.exports = function(grunt) {
                     prefix: '/'
                 },
                 cwd: '../client',
-                src: 'scripts/**/*.html',
+                src: [
+						'views/**/*.html',
+						'scripts/**/*.html'
+					],
                 dest: '../client/scripts/out/angular-template.js'
             }
         },
@@ -372,9 +375,28 @@ module.exports = function(grunt) {
                 reporter: require('jshint-stylish')
             },
             all: {
-                src: ['gruntfile.js', '../client/scripts/{,*/}*.js', '!../client/out/**/*.js', '!../client/vendor/**/*.js']
+                src: [
+					'gruntfile.js', 
+					'../client/scripts/{,*/}*.js', 
+					'!../client/out/**/*.js', 
+					'!../client/vendor/**/*.js'
+				]
             }
         },
+    	jslint: { 													 
+    	    client: {
+    	        src: [
+					'../client/scripts/**/*.js'
+				],
+    	        directives: {
+    	            browser: true,
+    	            predef: ['jQuery']
+    	        },
+    	        options: {
+    	            junit: 'out/client-junit.xml'
+    	        }
+    	    }
+    	},	
 		// Empties folders & files to start fresh
 		clean: {
   			options: {
@@ -392,11 +414,11 @@ module.exports = function(grunt) {
 			},
 			trashycss: {
 				dot: true,
-				src: ['../client/stylesheets/compiled.css']
+				src: ['../client/scripts/out/css', '../client/stylesheets/compiled.css']
 			},
 			out: {
 				dot: true,
-				src: ['../client/scripts/out/css','../client/scripts/out/**/*.map','../client/scripts/out/*.js']
+				src: ['../client/scripts/out/**/*.map','../client/scripts/out/**/*.js']
 			},
 			webapp: {
 				dot: true,
@@ -405,6 +427,10 @@ module.exports = function(grunt) {
 			cssmin: {
 				dot: true,
 				src: ['../client/stylesheets/*min.css']
+			},
+			views: {
+				dot: true,
+				src: ['../client/scripts/out/angular-template.js']
 			}
 		},
         uglify: {
@@ -471,11 +497,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-bump');
 
     // Build tasks.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the whole app
-    grunt.registerTask('jshint', ['jshint']);								// Run jshint, catch errors, fix, code better
+    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the old app
+	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']);
+	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint', 'jslint']); // Build with jshint, catch errors with jslint, fix, code better
+	grunt.registerTask('test', ['karma']);
+	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']); // Build the app ready to test
+	
 	
 	/* 
 	 *** SASS tasks, I call it sassy *** 
@@ -502,12 +533,17 @@ module.exports = function(grunt) {
 	*/
 	grunt.registerTask('scripts', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
     // Individual js tasks
-	grunt.registerTask('build-scripts', ['build-clean', 'sass:sassy']);		// clean & build dev js
-    grunt.registerTask('rel-scripts', ['rel-clean', 'concat:vendor', 'concat:angular', 'concat:app']); 		// clean & release built base app js
-    grunt.registerTask('comp-scripts', ['comp-clean', 'concat:trash']); 	// clean & release built compiled app js
-	grunt.registerTask('build-clean', ['clean:build']); 					// clean only build js
-	grunt.registerTask('rel-clean', ['clean:release']); 					// clean only release js
+	grunt.registerTask('build-scripts', ['clean-app', 'clean-trash', 'concat:trash', 'concat:vendor', 'concat:angular', 'concat:app']);		// clean & build dev js
+    grunt.registerTask('rel-scripts', ['uglify']); 		// clean & release built base app js
+	grunt.registerTask('clean-app', ['clean:webapp']); 					// clean only build js
+	grunt.registerTask('clean-trash', ['clean:out']); 					// clean only release js
 	grunt.registerTask('comp-clean', ['clean:compiled']); 					// clean only compiled app js
+	
+	/* 
+	 *** View & template tasks ***
+	*/
+	grunt.registerTask('views', ['clean-views', 'ngtemplates', 'scripts']);		// soup to nuts clean, build, release views into javascript templates using ngtemplate
+	grunt.registerTask('clean-views', ['clean:views']); 			// clean only release js
 	
 	// Built in versioning, Archer style (https://www.youtube.com/watch?v=C6NRA69SdoM)
 	grunt.registerTask('beep', ['bump:patch']);
