@@ -5,12 +5,13 @@
  */
 (function (app) {
     var SearchController = function ($scope, $location) {
+        var self = this;        
         this.thisRoute = $location.path().toString();
         $scope.isProvidence = self.thisRoute == '/providence';
     };
     app.controller('SearchController', [
         '$scope',
         '$location',
-        SearchController]);
-})
+        SearchController
+        ]);
 }(angular.module('GiftStarterApp')));
