@@ -16,6 +16,11 @@ function PressController($scope,  $location,  $timeout) {
 
     $scope.items = [
         new pressItem(
+            "http://www.investorideas.com/news/2015/technology/09221.asp",
+            "investorideas.png",
+            "GiftStarter has built a quick, easy-to-use campaign launch and payment parsing process, allowing users to select gifts... , invite friends and family, regardless of their location and be left assured that GiftStarter's coordination expertise and commitment to service will take care of the money collection, gift ordering, shipping and participant group card creation – resulting in a gifting experience that us seamless from start to finish! <br />  <a href='http://www.investorideas.com/news/2015/technology/09221.asp'>LINK</a>"
+        ),
+        new pressItem(
             "http://blog.timetrade.com/2015/08/21/wbey-episode-3-amazon-prime-day-giftstarter-top-retail-trends-of-2015/",
             "timetrade.png",
             "GiftStarter.com is a new service promising to help people never give a bad gift again. Instead of finding a cheap gift, or hunting people down who have agreed to go in on group gift, GiftStarter is an online service that allows people to choose a product and pay for it in increments.  Video Link: https://youtu.be/s_XH5fPG9_g"
