@@ -92,6 +92,13 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
     this.createGiftStart = function() {
         console&&console.log&&console.log("createGiftStart");
         Analytics.track('campaign', 'created');
+		Analytics.eventTrack('New GiftStart', { 
+			gsid: self.giftStart.gsid, 
+			champion: UserService.uid, 
+			name: this.title, 
+			price: this.totalPrice,
+			category: 'Campaign'
+		});
         // Check to see that name is populated (for fb-login it is not yet)
         if (!self.gcName) {self.gcName = UserService.name}
 
