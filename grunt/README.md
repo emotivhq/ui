@@ -8,17 +8,6 @@ This is the breakdown of common tasks in Grunt. For more info on [Grunt](http://
 ## Build & Dev Tasks
 These are all the current development tasks done at build time.
 
-<<<<<<< HEAD
-- **`dev`** - the main dev task that builds the whole code stack to view locally
-  - Runs 'remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify'
-- **`debug`** - Build & check with `jshint`, catch errors with `jslint`, fix, code better
-  - Runs 'remove', 'ngtemplates', 'trashy', 'sassy', 'jshint', 'jslint'
-- **`test`** - Runs client side tests
-- **`build `**- Builds the entire app - ready to test or deploy
-  - Runs 'remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify'
-- **`default`** - the default task that builds the original code stack. Done for legacy support.
-  - Runs 'remove', 'ngtemplates', 'sass', 'sassy', 'concat'
-=======
 - **`grunt dev`** - the main dev task that builds the whole code stack to view locally
   - *Runs 'remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify'*
 - **`grunt debug`** - Build & check with `jshint`, catch errors with `jslint`, fix, code better
@@ -28,25 +17,10 @@ These are all the current development tasks done at build time.
   - *Runs 'remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify'*
 - **`grunt`** - the default task that builds the original code stack. Done for legacy support.
   - *Runs 'remove', 'ngtemplates', 'sass', 'sassy', 'concat'*
->>>>>>> 9d404981a05e18c1b50d9d1336a6c9ad1e64432c
 
 Here they are straight from `./grunt/gruntfile.js`.
 ```
     // Build tasks.
-<<<<<<< HEAD
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the old app
-	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']);
-	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint']); // Build with jshint, catch errors, fix, code better
-	grunt.registerTask('test', ['karma']);
-	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']); // Build the app ready to test
-	
-    grunt.registerTask('jshint', ['jshint']);								// Run jshint, catch errors, fix, code better
-```
-
-### Release tasks
-We call the new release structure `beep-boop-bop`. Below are the release tasks, in order for patch, minor, major and prereleases. 
-For a a complete up-to-date list,see `./grunt/gruntfile.js`
-=======
 	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']);
 	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint']); 
 	grunt.registerTask('test', ['karma']);
@@ -81,7 +55,6 @@ For a a complete up-to-date list,see `./grunt/gruntfile.js`. [We use Semantic Ve
 - **`grunt preboop`** - Releases a pre-release Minor version (ie - `1.2-alpha-1.0`)
 - **`grunt prebop`** - Releases a pre-release Major version (ie - `2-alpha-1.0.1`)
 - **`grunt prerelease`** - Releases a pre-release Major version (ie - `2.0.0-alpha`)
->>>>>>> 9d404981a05e18c1b50d9d1336a6c9ad1e64432c
 
 ```
 	grunt.registerTask('beep', ['bump:patch']);

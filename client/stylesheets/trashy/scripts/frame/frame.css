@@ -175,9 +175,9 @@ h1 {
     font-size: 1em;
     text-decoration: none; }
 
-/* h2 {
+h2 {
   font: 500 2.667em Roboto, sans-serif;
-  text-transform: capitalize; } */
+  text-transform: capitalize; }
   h2.black {
     color: #000; }
 
