@@ -30,7 +30,7 @@
         this.portaling = $location.path().indexOf('/portal') === 0;
 
         $scope.isHeaderOnly = self.thisRoute == '/header';
-        $scope.isProvidence = self.thisRoute == '/providence';
+        $scope.isProvidence = self.thisRoute == '/yourvillage';
         
         $scope.search = false;
         $scope.menu = false;

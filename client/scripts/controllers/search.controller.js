@@ -7,7 +7,7 @@
     var SearchController = function ($scope, $location) {
         var self = this;        
         this.thisRoute = $location.path().toString();
-        $scope.isProvidence = self.thisRoute == '/providence';
+        $scope.isProvidence = self.thisRoute == '/yourvillage';
     };
     app.controller('SearchController', [
         '$scope',
