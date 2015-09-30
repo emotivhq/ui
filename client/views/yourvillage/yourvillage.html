@@ -1,13 +1,10 @@
-<link href="http://fonts.googleapis.com/css?family=Dosis:300,400,500,600,700" rel="stylesheet" type="text/css">
+
 <div class="text-center affix bg-color4" data-spy="affix" style="padding: 10px; width: 100%; text-transform: uppercase; border-bottom: 1px solid #e2e2e2; z-index: 10;">
-    Questions? Call Us: <span style="color:#E44028;">(111) 123-1234</span>
+    Questions? Call Us: <span id="contactNumber"></span>
 </div>
 <div role="main" class="main yourvillage" style="padding-top: 47px;">
     <section class="product-tab top-tall">
         <div class="container">
-            <!-- <a class="center-block text-center" href="/">
-                <img id="logo" src="/assets/webLogo.png">
-            </a> -->
             <span class="center-block text-center">
                 <img id="logo" src="/assets/webLogo.png">
             </span>
@@ -19,13 +16,13 @@
                 <h1 class="h1 text-center" style="color: #000; padding-bottom: 15px">Create A GiftStarter Campaign And Easily:</h1>
                 <ul>
                     <li>
-                        <h2 class="h4">Break any product or service into affordable pieces.</h2>
+                        <h2 class="h4" style="text-transform: none;">Break any product or service into affordable pieces.</h2>
                     </li>
                     <li>
-                        <h2 class="h4">Get support from family &amp; friends.</h2>
+                        <h2 class="h4" style="text-transform: none;">Get support from family &amp; friends.</h2>
                     </li>
                     <li>
-                        <h2 class="h4">Save time and money when it matters most.</h2>
+                        <h2 class="h4" style="text-transform: none;">Save time and money when it matters most.</h2>
                     </li>
                 </ul>
             </div>
@@ -106,9 +103,25 @@
             </div>
         </div>
     </section>
-    <script>
-        var isIOS = /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
-        if(isIOS) {
+</div>
+
+<script>
+    $(function () {
+        var $elContactNumber = $('#contactNumber'),
+            contactNumber = '+1-111-123-1234',
+            contactNumberDisplay = '(111) 123-1234';
+        if(isIOS()) {
+            setAffix();
+            $elContactNumber.html('<a href="tel:' + contactNumber + '" style="color:#E44028;">' + contactNumberDisplay + '</a>');
+        } else {
+            $elContactNumber.html(contactNumberDisplay).css('color', '#E44028');
+        };
+
+        function isIOS() {
+            return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
+        }
+
+        function setAffix() {
             var affix = $('[data-spy="affix"]'),
                 input = $('input');
             input.on('focus', function () {
@@ -118,5 +131,5 @@
                 affix.fadeIn();
             });
         }
-    </script>
-</div>
+    });
+</script>
