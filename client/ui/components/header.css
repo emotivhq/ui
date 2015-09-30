@@ -342,13 +342,13 @@ a.ui.inverted.red.header:hover {
 /*--- Orange ---*/
 
 .ui.orange.header {
-  color: #F2711C !important;
+  color: #D26911 !important;
 }
 a.ui.orange.header:hover {
-  color: #f26202 !important;
+  color: #c35c07 !important;
 }
 .ui.orange.dividing.header {
-  border-bottom: 2px solid #F2711C;
+  border-bottom: 2px solid #D26911;
 }
 
 /* Inverted */
@@ -402,13 +402,13 @@ a.ui.inverted.yellow.header:hover {
 /*--- Green ---*/
 
 .ui.green.header {
-  color: #21BA45 !important;
+  color: #78CB5B !important;
 }
 a.ui.green.header:hover {
-  color: #16ab39 !important;
+  color: #65cb41 !important;
 }
 .ui.green.dividing.header {
-  border-bottom: 2px solid #21BA45;
+  border-bottom: 2px solid #78CB5B;
 }
 
 /* Inverted */
@@ -442,13 +442,13 @@ a.ui.inverted.teal.header:hover {
 /*--- Blue ---*/
 
 .ui.blue.header {
-  color: #2185D0 !important;
+  color: #80A6CD !important;
 }
 a.ui.blue.header:hover {
-  color: #1678c2 !important;
+  color: #6999ca !important;
 }
 .ui.blue.dividing.header {
-  border-bottom: 2px solid #2185D0;
+  border-bottom: 2px solid #80A6CD;
 }
 
 /* Inverted */
