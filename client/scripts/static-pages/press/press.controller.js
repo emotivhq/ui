@@ -16,9 +16,24 @@ function PressController($scope,  $location,  $timeout) {
 
     $scope.items = [
         new pressItem(
+            "http://www.forbes.com/sites/learnvest/2015/09/22/new-parents-reveal-their-smartest-baby-money-moves/",
+            "forbes.png",
+            "When baby makes three, all kinds of seeming “must-haves” can take a toll on your bottom line—from hand-knit nursery blankets to souped-up strollers. According to the U.S. Department of Agriculture, the average middle-income family shells out about $13,000 in just the first year of a baby’s life. So how can moms and dads navigate the budget-busting new-baby minefield?"
+        ),
+        new pressItem(
+            "http://www.huffingtonpost.com/learnvest/new-parents-dish-on-the-b_b_8186200.html",
+            "huffingtonpost.jpg",
+            "New parents dish on 'The Best Baby Money Decision I Ever Made' including from GiftStarter cofounder, Christie Gettler Tarazon."
+        ),
+        new pressItem(
+            "http://www.investorideas.com/news/2015/technology/09221.asp",
+            "investorideas.png",
+            "GiftStarter has built a quick, easy-to-use campaign launch and payment parsing process, allowing users to select gifts... , invite friends and family, regardless of their location and be left assured that GiftStarter's coordination expertise and commitment to service will take care of the money collection, gift ordering, shipping and participant group card creation – resulting in a gifting experience that us seamless from start to finish! <br />  <a href='http://www.investorideas.com/news/2015/technology/09221.asp'>LINK</a>"
+        ),
+        new pressItem(
             "http://blog.timetrade.com/2015/08/21/wbey-episode-3-amazon-prime-day-giftstarter-top-retail-trends-of-2015/",
             "timetrade.png",
-            "GiftStarter.com is a new service promising to help people never give a bad gift again. Instead of finding a cheap gift, or hunting people down who have agreed to go in on group gift, GiftStarter is an online service that allows people to choose a product and pay for it in increments.  Video Link: https://youtu.be/s_XH5fPG9_g"
+            "GiftStarter.com is a new service promising to help people never give a bad gift again. Instead of finding a cheap gift, or hunting people down who have agreed to go in on group gift, GiftStarter is an online service that allows people to choose a product and pay for it in increments. <a href='https://youtu.be/s_XH5fPG9_g'>Video Link</a>"
         ),
         new pressItem(
             "http://www.bizjournals.com/seattle/print-edition/2015/08/14/friends-help-friends-give-gifts-giftstarter-brings.html",
