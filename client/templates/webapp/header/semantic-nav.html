@@ -1,0 +1,105 @@
+<!-- Main Menu -->
+<div class="ui secondary fixed main menu" ng-hide="header.loggedIn">
+<div class="ui container">
+  <div class="header item">  	
+	  <a class="headerLogoWrapper" href="/">
+		<img id="logo" src="/assets/webLogo.png" />
+        <img id="logo-mobile" src="/assets/logo-mobile.png" />
+	  </a>	
+	</div>
+  <div class="right menu">
+  <a class="toc item">
+     <i class="sidebar icon"></i>
+  </a>
+  <a href="/" class="item">
+    Home
+  </a>
+  <a href="/is" class="item">
+    Learn More
+  </a>
+  <a href="/giftideas" class="item">
+    Discover
+  </a>
+  <a href="/login" class="item">Login</a>
+  <div class="item">
+	<a href="/join" class="ui button primary">Join</a>
+  </div>
+  </div>
+</div>
+</div>
+
+<!-- Mobile Main Menu -->
+<div class="ui vertical inverted sidebar menu">
+  <a class="active item">Home</a>
+  <a class="item">Learn More</a>
+  <a class="item">Discover</a>
+  <a class="item">Login</a>
+  <a class="item">Signup</a>
+</div>
+
+<!-- User Menu -->
+<div class="ui borderless main menu" ng-show="header.loggedIn || header.portaling">
+<div class="ui container">
+	<div class="header item">  	
+	  <a class="headerLogoWrapper" href="#">
+		<img id="logo" src="/assets/webLogo.png" />
+        <img id="logo-mobile" src="/assets/logo-mobile.png" />
+	  </a>	
+	</div>
+    <div class="search item">
+      <div class="ui action left icon input">
+        <i class="search icon"></i>
+        <input type="text" placeholder="Search">
+        <button class="ui button">Search</button>
+      </div>
+    </div>
+  <div class="right menu">
+  <a class="toc item">
+    <i class="sidebar icon"></i>
+  </a>    
+	<a class="item">Link 1</a>
+  <div class="ui dropdown item" tabindex="0">
+    Explore
+    <i class="dropdown icon"></i>
+    <div class="menu transition hidden" tabindex="-1">
+  <div class="item">
+    <div class="ui input"><input type="text" placeholder="Search..."></div>
+  </div>
+  <div class="item">
+    Home
+    <div class="menu">
+      <a class="active item">Search</a>
+      <a class="item">Add</a>
+      <a class="item">Remove</a>
+    </div>
+  </div>
+  <a class="item">
+    <i class="grid layout icon"></i> Browse
+  </a>
+  <a class="item">
+    Messages
+  </a>
+  <div class="ui dropdown item">
+    More
+    <i class="dropdown icon"></i>
+    <div class="menu">
+      <a class="item"><i class="edit icon"></i> Edit Profile</a>
+      <a class="item"><i class="globe icon"></i> Choose Language</a>
+      <a class="item"><i class="settings icon"></i> Account Settings</a>
+    </div>
+  </div>
+    </div>
+  </div>
+  <a class="item logout_action" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a>
+  </div>
+</div>
+</div>
+
+<!-- Mobile User Menu -->
+<div class="ui vertical inverted sidebar menu">
+  <a class="active item">Home</a>
+  <a class="item">Search</a>
+  <a class="item">Discover</a>
+  <a class="item">My Profile</a>
+  <a class="item">Logout</a>
+</div>

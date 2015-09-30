@@ -1,0 +1,28 @@
+@import ../../base
+
+gs-thanked-campaigns
+  width: 100%
+
+  a
+    text-decoration: none
+
+  div.thanked-campaigns.wrapper
+    background: #eaeaea
+    padding: 1em
+
+  img.thanks-image, div.description-container
+    width: 100%
+    @media screen and (min-width: $phone-tablet-boundary)
+      width: 47%
+      display: inline-block
+      vertical-align: top
+
+  img.thanks-image
+    @media screen and (min-width: $phone-tablet-boundary)
+      margin-right: 4%
+
+  p.campaign-description
+    text-align: left
+    white-space: pre-line
+
+

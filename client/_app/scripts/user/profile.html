@@ -1,0 +1,36 @@
+<div class="user-wrapper" ng-controller="ProfileController">
+    <header>
+        <div id="profile-image-container" ng-class="{edit: editMode}">
+            <img id="profile-image" ng-src="{{user.img_url}}" ng-hide="editMode" src=""/>
+            <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
+            <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
+            <button class="edit" ng-show="editable && !editMode" ng-click="editMode=true;">EDIT</button>
+            <button class="upload" ng-click="submit()" ng-show="editMode" ng-class="{disabled: !imageSet}">SAVE</button>
+        </div>
+        <h1>{{user.name}}</h1>
+    </header>
+    <section>
+        <article class="giftstarts">
+            <div><img src="/assets/giftstartRibbon.png"></div>
+            <div class="ribbontext">{{user.giftstarts.length}}</div>
+            <div class="giftstarts">
+                <div class="giftstart" ng-repeat="gs in user.giftstarts">
+                    <a ng-href="/giftstart/{{gs.giftstart_url_title}}">
+                        <p class="title">{{gs.title}}</p><p class="description">{{gs.description}}</p>
+                    </a>
+                </div>
+            </div>
+        </article>
+        <article class="pitchins">
+            <div><img src="/assets/pitchinRibbon.png"></div>
+            <div class="ribbontext">{{user.pitchins.length}}</div>
+            <div class="pitchins">
+                <div class="pitchin" ng-repeat="pi in user.pitchins">
+                    <a ng-href="/giftstart/{{pi.giftstart_url_title}}">
+                        <p class="title">{{pi.gs_title}}</p><p class="description">{{pi.note}}</p>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </section>
+</div>

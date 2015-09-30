@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="GiftStarterApp">
+<head lang="en" ng-controller="HeadController">
+    <base href="/">
+    <title>{% if page_title %}{{page_title}}{% else %}GiftStarter - GiftStarter, Group Gifting Starts Here{% endif %}</title>
+    <meta name="description" content="{% if page_description %}{{page_description}}{% else %}Looking for a better way to group gift? GiftStarter's patent-pending technology divides the perfect gift into &quot;tiles,&quot; giving friends and family the ability to gift as much as they wish. {% endif %}">
+    {% include 'meta.html' %}
+    <!--script src="//cdn.optimizely.com/js/3400480911.js"></script-->
+	<!--script src="//load.sumome.com/" data-sumo-site-id="405509ff06e00d2745f35aa3824ee44664c233d67b35238b8a7ee141180907b5" async></script-->
+    {% include 'fonts.html' %}
+    {% include 'css-includes.html' %}
+    {% include 'js-includes.html' %}
+    <script>
+        {{js_insert|safe}}
+    </script>
+
+</head>
+<body ng-cloak>
+    <gs-menu></gs-menu>
+    <gs-toast></gs-toast>
+
+    {% if not hide_header %}{% include 'header.html' %}{% endif %}
+
+    {% if hide_body %}<div id="angular-view" ng-view gs-view style="display:none"></div>{% else %}<div id="angular-view" ng-view gs-view></div>{% endif %}
+
+    {% if not hide_footer %}{% include 'footer.html' %}{% endif %}
+
+    <gs-popover></gs-popover>
+
+    {% if hide_body %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('a').attr("target","_top");
+            $('#login_button').attr("onclick","window.top.location.href='/#login';return false;");
+            $('#logout_button').attr("onclick","window.top.location.href='/#logout';return false;");
+            $('#header-menu-button img').attr("onclick","window.top.location.href='/#menu';return false;");
+            $('.popover-container').attr("style","display:none");
+        });
+    </script>
+    {% else %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            if(window.location.hash=="#login"){$('#login_button').click()}
+            else if(window.location.hash=="#logout"){$('#logout_button').click()}
+            else if(window.location.hash=="#menu"){$('#header-menu-button img').click()}
+            window.viewportUnitsBuggyfill.init();
+        });
+    </script>
+    {% endif %}
+    <a href="https://plus.google.com/116424249306917038363" rel="publisher"></a>
+</body>
+</html>

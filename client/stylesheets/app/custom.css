@@ -189,3 +189,9 @@ md-autocomplete input:not(.md-input) {
     background-position: 8px 17px !important;
   }
 }
+.nav-main-menu > li.megamenu .dropdown-menu.small {
+    width: 202px;
+}
+.small .mega-menu-content {
+    padding: 15px 25px 5px 25px;
+}

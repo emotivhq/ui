@@ -96,6 +96,9 @@ handlers:
 - url: /scripts
   static_dir: client/scripts
   secure: always
+- url: /ui
+  static_dir: client/ui
+  secure: always
 - url: /views
   static_dir: client/views
   secure: always

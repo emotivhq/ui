@@ -1,0 +1,48 @@
+<!-- script type="text/javascript" src="https://js.stripe.com/v2/"></script -->
+<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
+<script src="/scripts/out/vendor.js"></script>
+<script src="/scripts/out/angular.js"></script>
+<script src="/scripts/out/app.js"></script>
+<script src="/scripts/utilities/browser-specific-css.js"></script>
+<!--script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script-->
+<!-- browser detect -->
+<script type="text/javascript">
+
+    //$.browser.msie deprecated as of jQuery 1.9
+    //$.browser.safari deprecated as of jQuery 1.9
+    //$.browser.version deprecated as of jQuery 1.9
+    var userAgent = window.navigator.userAgent;
+    var is_chrome = userAgent.indexOf('Chrome') > -1;
+    var is_explorer = userAgent.indexOf('MSIE') > -1;
+    var is_firefox = userAgent.indexOf('Firefox') > -1;
+    var is_safari = userAgent.indexOf('Safari') > -1;
+    var is_opera = userAgent.toLowerCase().indexOf("op") > -1;
+    if ((is_chrome)&&(is_safari)) {is_safari=false;}
+    if ((is_chrome)&&(is_opera)) {is_chrome=false;}
+    disallow_browser = false;
+    if (userAgent.match(/(iPod|iPhone|iPad)/)) {
+        //no iOS7 Safari
+//        if(is_safari) {
+//            disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
+//        }
+    } else {
+        if (is_safari) {
+            //minimum Safari desktop version: 7
+            disallow_browser = window.navigator.userAgent.match(/version\/[123456]/i);
+        } else if (is_explorer) {
+            //minimum Internet Explorer desktop version: 8
+            disallow_browser = userAgent.match(/MSIE [1234567]/);
+        }
+    }
+    if(disallow_browser && document.location.href.indexOf('/oldbrowser')<0) {
+        document.location.href = '/oldbrowser';
+    } else if(document.location.href.indexOf('/oldbrowser')>=0 && !disallow_browser) {
+        document.location.href = '/';
+    }
+</script>
+
+<!-- Segment Analytics -->
+<script type="text/javascript">
+	var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+	//analytics.load("UwmO6RLC40jF049MpqxjLTxQNiCLYoWe");
+</script>

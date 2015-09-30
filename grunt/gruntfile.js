@@ -79,7 +79,7 @@ module.exports = function(grunt) {
 		/* THIS {trash:} IS CURRENTLY BROKEN, TURNING OFF FOR NOW
 		 * @TODO: JS 09/17
 		 */
-			trash: {
+			scripts: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapStyle: 'link'
@@ -226,7 +226,7 @@ module.exports = function(grunt) {
                     '../client/bower_components/angular-ui-date/src/date.js',
                     '../client/bower_components/angulartics/dist/angulartics.min.js',
                     '../client/bower_components/angulartics/dist/angulartics-gtm.min.js',
-                    '../client/bower_components/angulartics/dist/angulartics-inspectlet.min.js',
+                    '../client/bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
                     '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
 					'../client/bower_components/angular-chosen-localytics/chosen.js',
 					'../client/bower_components/angular-flexslider/angular-flexslider.js',
@@ -240,7 +240,6 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
-                    '../client/scripts/utilities/angulartics.module.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.module.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.service.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.factory.js',
@@ -273,6 +272,7 @@ module.exports = function(grunt) {
                     '../client/scripts/utilities/toast.service.js',
                     '../client/scripts/utilities/toast.directive.js',
                     '../client/scripts/utilities/analytics.service.js',
+                    '../client/scripts/utilities/angulartics.module.js',
                     '../client/scripts/utilities/head.controller.js',
                     '../client/scripts/user/user.service.js',
                     '../client/scripts/user/profile.controller.js',
@@ -323,7 +323,7 @@ module.exports = function(grunt) {
 				],
                 dest: '../client/scripts/webapp/app.js'
             },
-			combine: {
+			core: {
                 options: {
                     sourceMap: createSourceMaps,
                     sourceMapStyle: 'link'
@@ -431,6 +431,14 @@ module.exports = function(grunt) {
 			views: {
 				dot: true,
 				src: ['../client/scripts/out/angular-template.js']
+			},
+			semantic: {
+				dot: true,
+				src: ['../client/ui/*semantic*{js,css}']
+			},
+			ui: {
+				dot: true,
+				src: ['../client/interface/**/*', '../client/ui/**/*', '../client/_ui']
 			}
 		},
         uglify: {
@@ -438,21 +446,21 @@ module.exports = function(grunt) {
                 mangle: false,
                 compress: true
             },
-            build: {
-                src: '../client/scripts/webapp/app.js',
-                dest: '../client/scripts/webapp/app.js'
-            },
             vendor: {
                 src: '../client/scripts/webapp/vendor.js',
-                dest: '../client/scripts/webapp/vendor.js'
+                dest: '../client/scripts/webapp/vendor.min.js'
             },
             angular: {
                 src: '../client/scripts/webapp/angular.js',
-                dest: '../client/scripts/webapp/angular.js'
+                dest: '../client/scripts/webapp/angular.min.js'
+            },
+            app: {
+                src: '../client/scripts/webapp/app.js',
+                dest: '../client/scripts/webapp/app.min.js'
             },
             core: {
                 src: '../client/scripts/webapp/core.js',
-                dest: '../client/scripts/webapp/core.js'
+                dest: '../client/scripts/webapp/core.min.js'
             }
         },
 		cssmin: {
@@ -468,6 +476,23 @@ module.exports = function(grunt) {
       				dest: '../client/stylesheets',
       				ext: '.min.css'
     			}]
+  			}
+		},
+		copy: {
+  			main: {
+				files: [
+      				{src: ['../client/ui/semantic.css'], dest: '../client/ui/ui.css', filter: 'isFile'},
+      				{src: ['../client/ui/semantic.js'], dest: '../client/ui/ui.js', filter: 'isFile'},
+      				{src: ['../client/ui/semantic.min.css'], dest: '../client/ui/ui.min.css', filter: 'isFile'},
+      				{src: ['../client/ui/semantic.min.js'], dest: '../client/ui/ui.min.js', filter: 'isFile'},
+  				],
+			},
+		},
+		copyto: {
+  			ui: {
+    			files: [
+      				{cwd: '../_ui/_dist', src: ['**/*'], dest: '../client/ui/', expand: true}
+    			]
   			}
 		},
 		bump: {
@@ -499,14 +524,19 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-jslint');
 	grunt.loadNpmTasks('grunt-bump');
+	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-copy-to');
 
     // Build tasks.
     grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the old app
-	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']);
+	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat']);
 	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint', 'jslint']); // Build with jshint, catch errors with jslint, fix, code better
 	grunt.registerTask('test', ['karma']);
-	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify']); // Build the app ready to test
+	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify', 'ui']); // Build the app ready to test
 	
+	/** Include UI **/
+	// Build in the UI
+	grunt.registerTask('ui', ['clean:ui', 'copyto:ui', 'copy', 'clean:semantic']);
 	
 	/* 
 	 *** SASS tasks, I call it sassy *** 
@@ -531,12 +561,13 @@ module.exports = function(grunt) {
 	/* 
 	 *** Javascript tasks ***
 	*/
-	grunt.registerTask('scripts', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
+	grunt.registerTask('scripts', ['build-scripts']);		// soup to nuts clean, build, release scripts
+	grunt.registerTask('js', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
     // Individual js tasks
-	grunt.registerTask('build-scripts', ['clean-app', 'clean-trash', 'concat:trash', 'concat:vendor', 'concat:angular', 'concat:app']);		// clean & build dev js
+	grunt.registerTask('build-scripts', ['clean-app', 'clean-scripts', 'ngtemplates', 'concat:scripts', 'concat:vendor', 'concat:angular', 'concat:app', 'concat:core']);		// clean & build dev js
     grunt.registerTask('rel-scripts', ['uglify']); 		// clean & release built base app js
 	grunt.registerTask('clean-app', ['clean:webapp']); 					// clean only build js
-	grunt.registerTask('clean-trash', ['clean:out']); 					// clean only release js
+	grunt.registerTask('clean-scripts', ['clean:out']); 					// clean only release js
 	grunt.registerTask('comp-clean', ['clean:compiled']); 					// clean only compiled app js
 	
 	/* 
