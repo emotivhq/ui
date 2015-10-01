@@ -3075,6 +3075,10 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/search/',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        .when('/discover',
+        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        .when('/discover/:term*',
+        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas/:term*',
@@ -3720,45 +3724,45 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div class=\"ui stackable two column grid\">\n" +
     "        <div class=\"column\">\n" +
     "            <div class=\"ui fluid link card\">\n" +
-    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                <a class=\"image\" href=\"/giftideas/abcdoula\">\n" +
     "                    <img src=\"images/products/abcdoula.png\">\n" +
     "                </a>\n" +
     "                <div class=\"content\">\n" +
-    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">ABC Doula</a>\n" +
+    "                    <a class=\"header\" href=\"/giftideas/abcdoula\">ABC Doula</a>\n" +
     "                    <div class=\"meta\">Portland, OR &amp; Seattle, WA</div>\n" +
     "                    <div class=\"description\">\n" +
     "                        <strong>A</strong>fter <strong>B</strong>aby <strong>C</strong>omes Doula Service is a  team of postpartum doulas in Portland, OR offering in-home postpartum care to families with newborns.\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <a class=\"ui bottom attached button brown\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                <a class=\"ui bottom attached button brown\" href=\"/giftideas/abcdoula\">\n" +
     "                    <span>Find your Doula <i class=\"arrow right icon\"></i></span>\n" +
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"column\">\n" +
     "            <div class=\"ui fluid link card\">\n" +
-    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                <a class=\"image\" href=\"/giftideas/lishfood\">\n" +
     "                    <img src=\"images/products/lishfood.png\">\n" +
     "                </a>\n" +
     "                <div class=\"content\">\n" +
-    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/lishfood\">Lish Food</a>\n" +
+    "                    <a class=\"header\" href=\"/giftideas/lishfood\">Lish Food</a>\n" +
     "                    <div class=\"meta\">Seattle, WA Only</div>\n" +
     "                    <div class=\"description\">\n" +
     "                        Lish gives you convenient access to delicious, wholesome meals prepared fresh by top local chefs, including alums from The French Laundry and Canlis.\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <a class=\"ui bottom attached button olive\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                <a class=\"ui bottom attached button olive\" href=\"/giftideas/lishfood\">\n" +
     "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"column\">\n" +
     "            <div class=\"ui fluid link card\">\n" +
-    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                <a class=\"image\" href=\"/giftideas/farmtofit\">\n" +
     "                    <img src=\"images/products/farmtofit.png\">\n" +
     "                </a>\n" +
     "                <div class=\"content\">\n" +
-    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">Farm To Fit</a>\n" +
+    "                    <a class=\"header\" href=\"/giftideas/farmtofit\">Farm To Fit</a>\n" +
     "                    <div class=\"meta\">\n" +
     "                        Portland, OR Only\n" +
     "                    </div>\n" +
@@ -3766,24 +3770,24 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        Farm to Fit is a local meal delivery service with calorie specific meal plans. We also offer Gluten Free &amp; Diabetic Friendly options.\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <a class=\"ui bottom attached button orange\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                <a class=\"ui bottom attached button orange\" href=\"/giftideas/farmtofit\">\n" +
     "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"column\">\n" +
     "            <div class=\"ui fluid link card\">\n" +
-    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                <a class=\"image\" href=\"/giftideas/fullbellyfare\">\n" +
     "                    <img src=\"images/products/fullbellyfare.png\">\n" +
     "                </a>\n" +
     "                <div class=\"content\">\n" +
-    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
+    "                    <a class=\"header\" href=\"/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
     "                    <div class=\"meta\">Portland, OR Only</div>\n" +
     "                    <div class=\"description\">\n" +
     "                        Portland's healthy meal delivery service! Vegetarian? Paleo? Vegan? Dairy free? Soy free? Your gourmet food delivery service is here!\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <a class=\"ui bottom attached button grey\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                <a class=\"ui bottom attached button grey\" href=\"/giftideas/fullbellyfare\">\n" +
     "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
     "                </a>\n" +
     "            </div>\n" +
@@ -3903,7 +3907,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"titles\">\n" +
-    "                <button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui large button icon primary\" ng-show=\"product.hasPrice\">\n" +
+    "                <button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui huge button icon primary top attached\" ng-show=\"product.hasPrice\">\n" +
     "                    <i class=\"gift icon\"></i>\n" +
     "                    Gift It\n" +
     "                </button>\n" +
@@ -3918,7 +3922,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "                <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">Contact The Gift Concierge</button>\n" +
     "                <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
-    "                    <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon large\" ng-show=\"product.hasPrice\">\n" +
+    "                    <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon large button bottom attached\" ng-show=\"product.hasPrice\">\n" +
     "                        <i class=\"bookmark icon\"></i>\n" +
     "                        Save for Later\n" +
     "                        <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
@@ -4019,7 +4023,38 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/outdoors\">\n" +
+    "            <img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/outdoors\">Outdoors</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/outdoors\">\n" +
+    "                <i class=\"unhide icon\"></i> View Outdoors\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/green\">\n" +
+    "            <img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/green\">Green</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/green\">\n" +
+    "                <i class=\"unhide icon\"></i> View Green\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>        <div class=\"card\">\n" +
     "            <a class=\"image\" href=\"/giftideas/home\">\n" +
     "                <img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\" class=\"load\" />\n" +
     "            </a>\n" +
@@ -4049,17 +4084,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <a class=\"center\" href=\"/giftideas/cute\">\n" +
     "                <i class=\"unhide icon\"></i> View Cute\n" +
     "            </a>\n" +
-    "            <div class=\"content\">\n" +
-    "                <a class=\"header\" href=\"/giftideas/cute\">Cute</a>\n" +
-    "                <div class=\"description\">\n" +
-    "                    Know someone who absolutely loves cute things? This is the place for that kind of stuff.\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"extra content bottom button attached\">\n" +
-    "                <a class=\"center\" href=\"/giftideas/cute\">\n" +
-    "                    <i class=\"view icon\"></i> View Cute\n" +
-    "                </a>\n" +
-    "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"card\">\n" +
@@ -4393,38 +4417,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/outdoors\">\n" +
-    "            <img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/outdoors\">Outdoors</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                ...\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"extra content bottom button attached\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/outdoors\">\n" +
-    "                <i class=\"unhide icon\"></i> View Outdoors\n" +
-    "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/green\">\n" +
-    "            <img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/green\">Green</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                ...\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"extra content bottom button attached\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/green\">\n" +
-    "                <i class=\"unhide icon\"></i> View Green\n" +
-    "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+    "\n" +
     "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/military\">\n" +
     "            <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
@@ -4441,22 +4434,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/military\">\n" +
-    "            <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/military\">Military</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                ...\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"extra content bottom button attached\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/military\">\n" +
-    "                <i class=\"unhide icon\"></i> View Military\n" +
-    "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+    "\n" +
     "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/giftcard\">\n" +
     "            <img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\" class=\"load\" />\n" +
@@ -4473,7 +4451,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"clear\"></div>\n" +
