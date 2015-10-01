@@ -22,6 +22,9 @@
         border-bottom: 1px solid #e2e2e2;
         z-index: 10;
     }
+    .hello-bar a {
+        color:#E44028;
+    }
     .product-tab .container {
         padding-left: 15px;
         padding-right: 15px;
@@ -52,10 +55,22 @@
         text-decoration: underline;
         color: white;
     }
+    .newsletter-form a {
+        color: #fff;
+    }
+    .newsletter-form .btn a {
+        text-decoration: none;
+    }
+    .newsletter-form h3 {
+        margin-bottom: 0;
+    }
+    .newsletter-form .btn {
+        width: auto;
+    }
 </style>
 
 <div class="text-center affix bg-color4 hello-bar" data-spy="affix">
-    Questions? Call Us: <span id="contactNumber"></span>
+    Questions? Call Us: <span class="contactNumber"></span>
 </div>
 <div role="main" class="main yourvillage">
     <section class="product-tab top-tall">
@@ -151,14 +166,20 @@
                 <div clas="col-xs-12">
                     <div class="newsletter">
                         <div class="newsletter-form">
-                            <h2 class="h2">We're Here To Help</h2>
+                            <h2 class="h2">We're Here To Help.<br /> Give Us A Call.</h2>
+                            <h3 class="h1">
+                                <i class="fa fa-arrow-right"></i>&nbsp;
+                                <span class="contactNumber btn"></span>
+                                &nbsp;<i class="fa fa-arrow-left"></i>
+                            </h3>
+                            <!-- <h2 class="h2">We're Here To Help</h2>
                             <p>Enter your phone number and a "Mommy Happiness Expert" will contact you soon.</p>
                             <form role="form">
                                 <div class="form-group">
                                     <input type="tel" class="form-control" placeholder="Click To Enter Your Phone Number">
                                 </div>
                                 <button type="submit" class="btn btn-default">Get Help</button>
-                            </form>
+                            </form> -->
                             <p><small>or <a href="mailto:giftconcierge@giftstarter.com">send us an email</a></small>
                             </p>
                         </div>
@@ -171,7 +192,7 @@
 
 <script>
     $(function () {
-        var $elContactNumber = $('#contactNumber'),
+        var $elContactNumber = $('.contactNumber'),
             contactNumber = '+1-111-123-1234',
             contactNumberDisplay = '(111) 123-1234',
             $body = $('body');
@@ -182,10 +203,10 @@
             if(isIOS()) {
                 fixIOSAffix();
             }
-            $elContactNumber.html('<a href="tel:' + contactNumber + '" style="color:#E44028;">' + contactNumberDisplay + '</a>');
+            $elContactNumber.html('<a href="tel:' + contactNumber + '">' + contactNumberDisplay + '</a>');
         } else {
-            $elContactNumber.html(contactNumberDisplay).css('color', '#E44028');
-        };
+            $elContactNumber.html(contactNumberDisplay)
+        }
 
         function isIOS() {
             return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
