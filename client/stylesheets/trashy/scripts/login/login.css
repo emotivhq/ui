@@ -39,7 +39,10 @@ iframe[name='google_conversion_frame'] {
     clear: both; }
     .userlogin__form input {
       border: 1px solid #cdcdcd;
-      padding: .8em; }
+      padding: .8em;
+      box-shadow: none; }
+      .userlogin__form input:-moz-placeholder {
+        box-shadow: none !important; }
   .userlogin__email, .userlogin__passwordwrap, .userlogin__name, .userlogin__surname, .userlogin__reentermail, .userlogin__reenterpassword {
     display: inline-block;
     border: 1px solid #cdcdcd;
