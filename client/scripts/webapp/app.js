@@ -539,7 +539,7 @@ function ngABConfig($httpProvider) {
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics']);
+        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 'mgo-angular-wizard']);
 
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
@@ -1040,7 +1040,23 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  \t\tCreate Account\n" +
     "\t\t</button>\n" +
     "    </form>\n" +
-    "</div>\n"
+    "</div>\n" +
+    "<wizard on-finish=\"finishedWizard()\"> \n" +
+    "    <wz-step title=\"Starting\">\n" +
+    "        <h1>This is the first step</h1>\n" +
+    "        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>\n" +
+    "        <input type=\"submit\" wz-next value=\"Continue\" />\n" +
+    "    </wz-step>\n" +
+    "    <wz-step title=\"Continuing\">\n" +
+    "        <h1>Continuing</h1>\n" +
+    "        <p>You have continued here!</p>\n" +
+    "        <input type=\"submit\" wz-next value=\"Go on\" />\n" +
+    "    </wz-step>\n" +
+    "    <wz-step title=\"More steps\">\n" +
+    "        <p>Even more steps!!</p>\n" +
+    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\"></button>\n" +
+    "    </wz-step>\n" +
+    "</wizard>"
   );
 
 

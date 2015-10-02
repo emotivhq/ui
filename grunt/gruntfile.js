@@ -203,7 +203,8 @@ module.exports = function(grunt) {
                     '../client/bower_components/imagesloaded/imagesloaded.pkgd.min.js',
 //					'../client/bower_components/masonry/dist/masonry.pkgd.min.js',
 //					'../client/bower_components/sequencejs/scripts/sequence.min.js',
-//					'../client/scripts/vendor/sequence-theme.modern-slide-in.min.js'
+//					'../client/scripts/vendor/sequence-theme.modern-slide-in.min.js',
+					'../client/bower_components/lodash/dist/lodash.min.js'
 					 ],
                 dest: '../client/scripts/webapp/vendor.js'
             },
@@ -228,11 +229,13 @@ module.exports = function(grunt) {
                     '../client/bower_components/angulartics/dist/angulartics-gtm.min.js',
                     '../client/bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
                     '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
+                    '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
 //					'../client/bower_components/angular-chosen-localytics/chosen.js',
 //					'../client/bower_components/angular-flexslider/angular-flexslider.js',
 //					'../client/bower_components/angular-aria/angular-aria.min.js',
 //					'../client/bower_components/angular-animate/angular-animate.min.js',
-//					'../client/bower_components/angular-material/angular-material.min.js'
+//					'../client/bower_components/angular-material/angular-material.min.js',
+					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js'
 				],
                 dest: '../client/scripts/webapp/angular.js'
             },			
@@ -343,7 +346,7 @@ module.exports = function(grunt) {
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css'],
+                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css'],
                 dest: '../client/stylesheets/compiled.css'
             },
             sassyvendor: {
