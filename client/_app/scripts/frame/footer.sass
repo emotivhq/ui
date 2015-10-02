@@ -1,0 +1,235 @@
+@import "../base"
+@import "column"
+
+$footer-column-width: 37.3em
+$wrapper-padding: 1em
+
+footer
+  background-color: #333
+  display: table
+  padding: 40px 0
+  width: 100%
+  -webkit-font-smoothing: antialiased
+
+  .footblock
+    display: table-cell
+    @media screen and (max-width: $phone-tablet-boundary)
+      display: inline-block
+    vertical-align: top
+    margin: 0 0 40px 0
+    padding: 0
+    color: #e2e2e2
+    font-size: 14px
+    line-height: 22px
+    .socialicon
+      margin-right: 6px
+      width: 28px
+      vertical-align: middle
+    .logo
+      width: 50px
+      height: 50px
+      margin-left: -10px
+    &.left
+      width: 80%
+      .footcol
+        @media screen and (max-width: $phone-tablet-boundary)
+          margin: 0 1% 40px 6%
+      @media screen and (max-width: $phone-tablet-boundary)
+        text-align: center
+        width: 100%
+        margin-left: 0
+    &.right
+      position: relative
+      width: 19%
+      font-size: 10px
+      text-align: center
+      vertical-align: bottom
+      @media screen and (max-width: $phone-tablet-boundary)
+        width: 100%
+      #comodo
+        &-desktop
+          display: block
+          position: absolute
+          right: 40px
+          top: 25px
+        &-mobile
+          display: none
+        @media screen and (max-width: $phone-tablet-boundary)
+          &-mobile
+            display: inline-block
+            margin-left: -7px
+            vertical-align: -webkit-baseline-middle
+          &-desktop
+            display: none
+      #patentpending
+        &-desktop
+          color: white
+          display: block
+          font-size: 12px
+          position: absolute
+          right: 50px
+          top: 0
+        &-mobile
+          display: none
+        @media screen and (max-width: $phone-tablet-boundary)
+          &-mobile
+            display: inline-block
+          &-desktop
+            display: none
+      #logo
+        .bullet
+          display: none
+          @media screen and (max-width: $phone-tablet-boundary)
+            display: inline-block
+
+  .footcol
+    display: inline-block
+    width: 15%
+    margin: 0 0 0 6%
+    text-align: left
+    vertical-align: top
+    color: #e2e2e2
+    line-height: 26px
+    #mce-EMAIL
+      width: 100%
+    @media screen and (max-width: $phone-boundary)
+      width: 42%
+    .colhead
+      display: block
+      margin-bottom: 10px
+      font-size: 16px
+      text-transform: uppercase
+      font-family: Roboto, sans-serif
+    input, button
+      margin: 2px 0
+      vertical-align: middle
+      border: 1px solid #666 !important
+    input
+      padding: 8px
+      margin-top: 8px
+      font-size: 12px
+      line-height: 14px
+      color: #222
+    button
+      padding: 8px
+      margin-top: 8px
+      width: 100%
+      font-size: 14px
+      line-height: 16px
+      text-transform: uppercase
+      color: #fff
+      background-color: #333
+    a
+      font: $p-font
+      color: #e2e2e2
+      text-decoration: none
+      display: inline-block
+      white-space: nowrap
+    .nobr
+      white-space: nowrap
+    &.social
+      a
+        line-height: 42px
+    &.joinus
+      width: 230px
+      #desc
+        font-family: Gotham, sans-serif
+
+  div.patent-pending
+    text-align: center
+    margin: 0
+    p
+      color: #aaa
+
+  div.wrapper
+    padding: $wrapper-padding 0
+    margin: 0 auto
+
+    @media screen and (min-width: 75em)
+      width: 75em
+
+    @media screen and (min-width: 37.5em) and (max-width: 75em)
+      width: 37.5em
+
+    @media screen and (max-width: 37.5em)
+      width: 100%
+
+  div.subscribe
+    header
+      div.social
+        display: inline-block
+        vertical-align: top
+      h1
+        display: inline-block
+        margin: 0 0.3em 0 0
+      img.social
+        padding: 0.5em
+        height: 56px
+        @media screen and (max-width: 37.5em)
+          padding: 0.1em
+          height: 40px
+          vertical-align: initial
+
+        vertical-align: top
+        margin-left: 0.1em
+        +border-radius(50%)
+    p
+      margin-bottom: 1.5em
+    input.email
+      //+border-radius(0.4em)
+      width: 20em
+      @media screen and (max-width: 37.5em)
+        width: 100%
+      padding: 0.75em 1em
+    button
+      @media screen and (max-width: 37.5em)
+        width: 100%
+
+  div.block
+    @media screen and (min-width: 37.5em)
+      width: $footer-column-width
+
+    @media screen and (max-width: 37.5em)
+      width: 100%
+
+    display: inline-block
+    padding: $margin-vert $margin-horz
+    vertical-align: top
+
+  div.block.founders
+    @media screen and (min-width: 75em)
+      padding-top: 4em
+
+    div.founder
+      @media screen and (min-width: 37.5em)
+        width: ($footer-column-width - 2*$margin-horz)/3
+
+      @media screen and (max-width: 37.5em)
+        width: 33%
+
+      text-align: center
+      padding: 0
+      img
+        +border-radius(50%)
+        max-width: 80%
+        max-height: 100%
+        width: auto
+        height: auto
+        margin: 0 10%
+        //@media screen and (max-width: 37.5em)
+        //  padding: 0 0.2em
+      p
+        margin: 0.2em 0 0 0
+        color: #585858
+
+  #privacy-and-terms
+    margin: 1em
+    text-align: center
+    color: #fff
+    span.text-divider
+      margin: 0 1em
+    a
+      font: $p-font
+      color: #fff
+      text-decoration: none
+      display: inline-block

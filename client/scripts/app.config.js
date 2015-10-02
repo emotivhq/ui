@@ -28,7 +28,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/giftstart/print/print.html', reloadOnSearch: false})
         .when('/login',
         {templateUrl: '/views/login/login.html', reloadOnSearch: false})
-        .when('/join:uid',
+        .when('/join',
         {templateUrl: '/views/join/join.html', reloadOnSearch: false})
         .when('/users/:uid',
         {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
@@ -76,6 +76,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .otherwise({redirectTo: '/'});
 
     $locationProvider.hashPrefix('!').html5Mode({enabled: true});
+	$locationProvider.html5Mode(true);
 
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }

@@ -1,0 +1,49 @@
+/**
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
+
+setTimeout(function() {
+    // For the HubSpot Sidekick bug.  Seriously.
+    // https://trello.com/c/8qqEvQL6/182-high-chrome-browser-view-is-not-working
+    angular.module('GiftStarterApp')
+        .directive('gsMenu', gsMenu);
+}, 0);
+setTimeout(function() {
+    // Fallback for if it still doesn't load
+    if (document.getElementById('angular-view') === null) {
+        window.location.reload();
+    }
+}, 3000);
+
+function gsMenu(UserService, PopoverService) {
+
+    function link(scope, element) {
+        if (!device.mobile()) {element.style = "display: None"}
+
+        scope.expanded = false;
+        scope.loggedIn = UserService.loggedIn;
+        scope.login = login;
+        scope.logout = logout;
+        scope.expand = expand;
+        scope.close = close;
+
+        scope.$on('logout-success', loginChanged);
+        scope.$on('login-success', loginChanged);
+        scope.$on('menu-open', expand);
+        scope.$on('menu-close', close);
+
+        function loginChanged() {scope.loggedIn = UserService.loggedIn}
+        function expand() {scope.expanded = true}
+        function close() {scope.expanded = false}
+        function login() {PopoverService.setPopover('login')}
+        function logout() {UserService.logout()}
+    }
+
+    return {
+        restrict: 'E',
+        templateUrl: '/scripts/menu/menu.ng.html',
+        link: link
+    };
+}

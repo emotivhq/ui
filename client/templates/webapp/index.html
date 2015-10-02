@@ -14,10 +14,6 @@
 	<link rel="prefetch" href="/assets/fonts/Gotham-Book.woff" />
 	<link rel="prefetch" href="/assets/fonts/Gotham-BookItalic.woff" />
 	<link rel="prefetch" href="/assets/fonts/Roboto-Medium.woff" />
-	<link rel="stylesheet" href="/stylesheets/app/vendor.min.css">
-  	<link rel="stylesheet" href="/stylesheets/app/gs.min.css">
-  	<link rel="stylesheet" href="/stylesheets/app/style.css" id="layoutstyle">
-  	<link rel="stylesheet" href="/stylesheets/app/custom.css">
     {# ###############################################################
 	 # IF app-main.min.css breaks due to sass/grunt issues, 
 	 # use these prebuilt versions in a pinch
@@ -30,19 +26,28 @@
   	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/custom.css">
   	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/owl.css">
   	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/animate.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" integrity="sha256-hMIwZV8FylgKjXnmRI2YY0HLnozYr7Cuo1JvRtzmPWs= sha512-k+wW4K+gHODPy/0gaAMUNmCItIunOZ+PeLW7iZwkDZH/wMaTrSJTt7zK6TGy6p+rnDBghAxdvu1LX2Ohg0ypDw==" crossorigin="anonymous">
   	<!--link rel="stylesheet" href="/stylesheets/app-main.min.css"-->
+	<link rel="stylesheet" href="/stylesheets/app/vendor.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app/gs.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app/style.css" id="layoutstyle">
+  	<link rel="stylesheet" href="/stylesheets/app/custom.css">
 	 # ###############################################################}
+  	<link rel="stylesheet" href="/plugins/pace/themes/red/pace-theme-minimal.css">
+	<link rel="stylesheet" href="/ui/ui.min.css">
+	<link rel="stylesheet" href="/stylesheets/ui/custom.css">
 	<link rel="stylesheet" href="/stylesheets/compiled.css">
 	<script>paceOptions = {elements: false,document: true, restartOnRequestAfter: false}</script>
-	
 	<script src="/plugins/pace/pace.min.js"></script>
 	<script src="/scripts/webapp/vendor.js"></script>
 	<script src="/scripts/webapp/angular.js"></script>
 	<script src="/scripts/webapp/app.js"></script>
-
-	
 	{# ###############################################################
+	<script src="https://www.giftstarter.com/scripts/out/app.js"></script>
 	<script src="/scripts/out/app.js"></script>
+	<script src="/scripts/webapp/vendor.js"></script>
+	<script src="/scripts/webapp/angular.js"></script>
+	<script src="/scripts/webapp/app.js"></script>
 	# ###############################################################}
 	<script src="/scripts/utilities/browser-specific-css.js"></script>
 	<!-- browser detect -->
@@ -107,7 +112,7 @@
     {% if hide_body %}
 	<div id="angular-view" ng-view gs-view style="display:none"></div>
 	{% else %}
-	<div id="angular-view" ng-view gs-view></div>
+	<div id="angular-view" ng-view gs-view class="ui main container"></div>
 	{% endif %}
 
     {% if not hide_footer %}
@@ -115,9 +120,8 @@
 	{% endif %}
 
     <gs-popover></gs-popover>
-	<script src="/scripts/webapp/vendor.js"></script>
-	<script src="/scripts/ui/marvel.js"></script>
-	<script src="/scripts/ui/affix.js"></script>
+	<script src="/ui/ui.min.js"></script>
+	<script src="/scripts/ui/ui.js"></script>
 	{% if hide_body %}
     <script type='text/javascript'>
         $(document).ready(function() {

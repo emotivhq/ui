@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html ng-app="GiftStarterApp">
+<head lang="en" ng-controller="HeadController">
+    <base href="/">
+    <title>{% if page_title %}{{page_title}}{% else %}GiftStarter, Group Gifting Starts Here{% endif %}</title>
+    <meta name="description" content="{% if page_description %}{{page_description}}{% else %}Looking for a better way to group gift? GiftStarter's patent-pending technology divides the perfect gift into &quot;tiles,&quot; giving friends and family the ability to gift as much as they wish. {% endif %}">
+	{% include 'common/meta.html' %}
+    {# ###############################################################
+	 # UNNCOMMENT THESE WHEN DONE DEVELOPING 
+	 # ###############################################################}
+	{# <script src="//cdn.optimizely.com/js/3400480911.js"></script> #}
+	{# <script src="//load.sumome.com/" data-sumo-site-id="405509ff06e00d2745f35aa3824ee44664c233d67b35238b8a7ee141180907b5" async></script> #}
+	<link rel="prefetch" href="/assets/fonts/Gotham-Book.woff" />
+	<link rel="prefetch" href="/assets/fonts/Gotham-BookItalic.woff" />
+	<link rel="prefetch" href="/assets/fonts/Roboto-Medium.woff" />
+    {# ###############################################################
+	 # IF app-main.min.css breaks due to sass/grunt issues, 
+	 # use these prebuilt versions in a pinch
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/bootstrap.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/layout.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/global.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/theme.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/ui.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/colors.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/custom.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/owl.css">
+  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/animate.css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" integrity="sha256-hMIwZV8FylgKjXnmRI2YY0HLnozYr7Cuo1JvRtzmPWs= sha512-k+wW4K+gHODPy/0gaAMUNmCItIunOZ+PeLW7iZwkDZH/wMaTrSJTt7zK6TGy6p+rnDBghAxdvu1LX2Ohg0ypDw==" crossorigin="anonymous">
+  	<!--link rel="stylesheet" href="/stylesheets/app-main.min.css"-->
+	<link rel="stylesheet" href="/stylesheets/app/vendor.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app/gs.min.css">
+  	<link rel="stylesheet" href="/stylesheets/app/style.css" id="layoutstyle">
+  	<link rel="stylesheet" href="/stylesheets/app/custom.css">
+	 # ###############################################################}
+  	<link rel="stylesheet" href="/plugins/pace/themes/red/pace-theme-minimal.css">
+	<link rel="stylesheet" href="/ui/ui.min.css">
+	<link rel="stylesheet" href="/stylesheets/ui/custom.css">
+	<link rel="stylesheet" href="/stylesheets/compiled.css">
+	<script>paceOptions = {elements: false,document: true, restartOnRequestAfter: false}</script>
+	<script src="/plugins/pace/pace.min.js"></script>
+	<script src="/scripts/webapp/vendor.js"></script>
+	<script src="/scripts/webapp/angular.js"></script>
+	<script src="/scripts/webapp/app.js"></script>
+	{# ###############################################################
+	<script src="https://www.giftstarter.com/scripts/out/app.js"></script>
+	<script src="/scripts/out/app.js"></script>
+	<script src="/scripts/webapp/vendor.js"></script>
+	<script src="/scripts/webapp/angular.js"></script>
+	<script src="/scripts/webapp/app.js"></script>
+	# ###############################################################}
+	<script src="/scripts/utilities/browser-specific-css.js"></script>
+	<!-- browser detect -->
+	<script type="text/javascript">
+
+    //$.browser.msie deprecated as of jQuery 1.9
+    //$.browser.safari deprecated as of jQuery 1.9
+    //$.browser.version deprecated as of jQuery 1.9
+    var userAgent = window.navigator.userAgent;
+    var is_chrome = userAgent.indexOf('Chrome') > -1;
+    var is_explorer = userAgent.indexOf('MSIE') > -1;
+    var is_firefox = userAgent.indexOf('Firefox') > -1;
+    var is_safari = userAgent.indexOf('Safari') > -1;
+    var is_opera = userAgent.toLowerCase().indexOf("op") > -1;
+    if ((is_chrome)&&(is_safari)) {is_safari=false;}
+    if ((is_chrome)&&(is_opera)) {is_chrome=false;}
+    disallow_browser = false;
+    if (userAgent.match(/(iPod|iPhone|iPad)/)) {
+        //no iOS7 Safari
+	//        if(is_safari) {
+	//            disallow_browser = userAgent.match(/AppleWebKit/)&& userAgent.match(/OS 7/);
+	//        }
+    } else {
+        if (is_safari) {
+            //minimum Safari desktop version: 7
+            disallow_browser = window.navigator.userAgent.match(/version\/[123456]/i);
+        } else if (is_explorer) {
+            //minimum Internet Explorer desktop version: 8
+            disallow_browser = userAgent.match(/MSIE [1234567]/);
+        }
+    }
+    if(disallow_browser && document.location.href.indexOf('/oldbrowser')<0) {
+        document.location.href = '/oldbrowser';
+    } else if(document.location.href.indexOf('/oldbrowser')>=0 && !disallow_browser) {
+        document.location.href = '/';
+    }
+	</script>
+	<!-- Segment Analytics -->
+	<script type="text/javascript">
+		var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+		//analytics.load("UwmO6RLC40jF049MpqxjLTxQNiCLYoWe");
+	</script>
+	<script>
+        {{js_insert|safe}}
+    </script>
+	<script type="text/javascript" src="https://www.googleadservices.com/pagead/conversion_async.js" charset="utf-8"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
+  	<!--[if lte IE 8]>
+		<script src="/scripts/vendor/respond.js"></script>
+		<script src="/scripts/vendor/excanvas.js"></script>
+	<![endif]-->
+	<script src="/scripts/vendor/modernizr.js"></script>
+</head>
+<body ng-cloak>
+    <gs-menu></gs-menu>
+    <gs-toast></gs-toast>
+
+    {% if not hide_header %}
+	{% include 'header/header.html' %}
+	{% endif %}
+
+    {% if hide_body %}
+	<div id="angular-view" ng-view gs-view style="display:none"></div>
+	{% else %}
+	<div id="angular-view" ng-view gs-view class="ui main container"></div>
+	{% endif %}
+
+    {% if not hide_footer %}
+	{% include 'footer/footer.html' %}
+	{% endif %}
+
+    <gs-popover></gs-popover>
+	<script src="/ui/ui.min.js"></script>
+	<script src="/scripts/ui/ui.js"></script>
+	{% if hide_body %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('a').attr("target","_top");
+            $('#login_button').attr("onclick","window.top.location.href='/#login';return false;");
+            $('#logout_button').attr("onclick","window.top.location.href='/#logout';return false;");
+            $('#header-menu-button img').attr("onclick","window.top.location.href='/#menu';return false;");
+            $('.popover-container').attr("style","display:none");
+        });
+    </script>
+    {% else %}
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            if(window.location.hash=="#login"){$('#login_button').click()}
+            else if(window.location.hash=="#logout"){$('#logout_button').click()}
+            else if(window.location.hash=="#menu"){$('#header-menu-button img').click()}
+            window.viewportUnitsBuggyfill.init();
+        });
+    </script>
+    {% endif %}
+    <a href="https://plus.google.com/116424249306917038363" rel="publisher"></a>
+</body>
+</html>

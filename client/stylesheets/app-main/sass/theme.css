@@ -96,6 +96,9 @@
     margin-left: -10px;
     margin-right: -10px; }
 
+.small .mega-menu-content {
+  padding: 15px 25px 5px 25px; }
+
 .menu-column:after {
   border-left: 1px solid #ededed;
   content: "";
@@ -180,6 +183,8 @@
           position: relative; }
         .nav-main-menu > li.megamenu .dropdown-menu [class^="col-"] {
           position: static; }
+        .nav-main-menu > li.megamenu .dropdown-menu.small {
+          width: 202px; }
   .nav-main-menu .open > a, .nav-main-menu .open > a:hover, .nav-main-menu .open > a:focus {
     background-color: transparent;
     border-color: transparent; }

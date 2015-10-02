@@ -10,11 +10,12 @@
 /manuel/*
 /tl/*
 /_markerlib/*
-grunt/node_modules
+*node_modules
 requests_oauthlib
 stripe
 cloudstorage
 oauthlib
+*marvel*
 
 app.iml
 .idea

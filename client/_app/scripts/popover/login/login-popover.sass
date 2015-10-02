@@ -1,0 +1,63 @@
+@import "../../base"
+
+body.popoverShown
+  overflow: hidden
+div.login-popover
+  .loading
+    background: url(/assets/loading.gif) no-repeat
+    background-size: 20px 20px
+  input[type=submit].loading
+    background-position: 125px 6px
+  input[type=submit].getPw.loading
+    background-position: 150px 6px
+  div.block
+    text-align: left
+    width: 18em
+    p
+      margin-top: 0
+  @media screen and (max-width: $phone-tablet-boundary)
+    padding-left: 0
+    padding-right: 0
+
+  div.login-button
+    margin-bottom: 1.5em
+    cursor: pointer
+    img
+      width: 100%
+    @media screen and (max-width: $phone-tablet-boundary)
+      width: 80%
+      margin: 0.5em auto
+  div.login-button:last-of-type
+    margin-bottom: 0
+
+  form.emailLogin
+    width: 100%
+    div
+      width: 202px
+      margin: 5px auto
+      input
+        width: 100%
+        border: none
+        color: #000
+      span
+        display: block
+      span.or
+        margin-bottom: 10px
+        text-align: center
+    div
+      input[type=submit], input[type=button]
+        font-family: BlanchCondensed, sans-serif
+        background-color: #fff
+        color: $primary-color
+        font-size: 1.5em
+        padding: 5px
+        font-weight: bold
+    div.loginButton
+      margin: 10px auto
+    div.errorMsg
+      color: #fff
+    a
+      font-weight: 100
+      text-decoration: underline
+    a.forgotPwdLink
+      float: right

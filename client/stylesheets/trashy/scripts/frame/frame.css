@@ -19,8 +19,7 @@ iframe[name='google_conversion_frame'] {
   display: none; }
 
 body {
-  margin: 0 auto;
-  max-width: 1200px; }
+  margin: 0 auto; }
 
 body * {
   box-sizing: border-box;

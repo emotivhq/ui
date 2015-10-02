@@ -1,0 +1,63 @@
+@import "../../base"
+
+$profile-popover-width: 42em
+
+#profile-image-container
+  height: 200px
+  width: 200px
+  //gs-image-upload
+  //  div.image-upload.wrapper
+  //    div.uploader
+  //      bottom: 0
+  //      @media screen and (max-width: $phone-tablet-boundary)
+  //        left: 0
+  canvas
+    //margin-bottom: -100%
+
+  .edit
+    border: 1px solid #fff
+    width: 43% !important
+    position: relative !important
+
+  .cancel
+    background: #e54028
+    color: #fff !important
+    padding: 0 0.725rem 0.2rem
+    text-transform: lowercase
+
+  .uploader
+    position: absolute
+    left: 0.5em
+    top: 0.05em
+
+div.profile-popover
+  width: 100%
+  @media screen and (min-width: $profile-popover-width)
+    width: $profile-popover-width
+
+  .leftcol
+    float: left
+    width: 48%
+    img
+      width: 45%
+      margin: 0px 1%
+
+  .rightcol
+    float: right
+    width: 48%
+    .profile-wrapper
+      height: 260px
+
+  .smalltext
+    font-size: 12px
+
+  .sup
+    padding-bottom: 2px
+    font-size-adjust: 0.8
+
+  img.profile-picture
+    vertical-align: top
+    width: 48%
+    margin-bottom: 0.7em
+    +border-radius(50%)
+

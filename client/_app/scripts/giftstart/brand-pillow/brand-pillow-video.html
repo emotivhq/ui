@@ -1,0 +1,49 @@
+<div class="gsintro-2" ng-show="showIntroCopy">
+    <div id="pillow-wrapper">
+        <div id="pillow-header-copy">
+            <header class="welcome">
+                <img id="pillow-header-img" src="/assets/welcomeBanner.png">
+            </header>
+            <p id="pillow-copy">GiftStarter helps friends and family come together to pitch in on bigger, better gifts!  You've already found a product to giftstart, well done!  All you need now is a compelling story, and you're ready to share this giftstart with your friends and family!</p>
+        </div>
+        <div id="pillow-video-div">
+            <iframe id="pillow-iframe" src="//www.youtube.com/embed/tA2gcLIJYBU" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+<style>
+    div.gsintro-2 {
+        width: 120%;
+        background-color: #f0f0f0;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+        padding: 2em 15%;
+        margin: 0 -10%;
+        text-align: left;
+    }
+    #pillow-header-copy {vertical-align: top;}
+    #pillow-header-img {width: 100%;}
+    #pillow-copy {margin-bottom: 2em;}
+    #pillow-iframe {width: 100%;}
+
+    @media screen and (min-width: 33em) {
+        #pillow-header-img {width: 80%;}
+        #pillow-wrapper {
+            width: 30em;
+            margin: 0 auto;
+        }
+        #pillow-iframe {height: 16.875em;}
+    }
+    @media screen and (min-width: 66em) {
+        #pillow-wrapper {width: 62em;}
+        #pillow-header-copy {
+            display: inline-block;
+            width: 30em;
+            margin-right: 1.5em;
+        }
+        #pillow-video-div {
+            display: inline-block;
+            width: 30em;
+        }
+    }
+
+</style>

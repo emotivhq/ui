@@ -1,0 +1,85 @@
+@import ../base
+
+
+#giftstart-squares
+  padding: 0 1vw
+  text-align: center
+  width: 95%
+  max-width: 95%
+  //max-width: 1200px
+  //+transform(translateX(-50%))
+  div.column
+    float: left
+  div.column.one
+    width: 16.6666666%
+  div.column.two
+    width: 33.333333%
+  div.column.three
+    width: 50%
+    div.giftstart-square
+      width: 33%
+  div.giftstart-square.big
+    height: 32vw
+    width: 100%
+    p
+      font-size: 1.5em
+  div.giftstart-square
+    vertical-align: bottom
+    padding: 0.25em
+    position: relative
+    height: 16vw
+    width: 100%
+    float: left
+
+    div.square-overlay
+      +transition(all, 0.2s)
+      opacity: 1
+      height: 100%
+      width: 100%
+      background-size: 150%
+      background-position: 0, 0
+      background-repeat: no-repeat
+      p
+        +transition(all, 0.2s)
+        opacity: 1
+        padding: 1em
+        background: rgba(0, 0, 0, 0.3)
+        color: #ffffff
+        height: 100%
+        width: 100%
+        text-shadow: rgba(0, 0, 0, 0.7) 0 0 5px
+    div.square-overlay:hover
+      opacity: 1
+      background-size: 120%
+      background-position: 20%, 20%
+      p
+        opacity: 0
+
+    p
+      margin: 0
+      @media screen and (max-width: $phone-tablet-boundary)
+        overflow: hidden
+
+//@media screen and (min-width: $tablet-computer-boundary)
+//  #giftstart-squares
+//    margin-left: -27vw
+
+@media screen and (max-width: $phone-tablet-boundary)
+  #giftstart-squares
+    margin-left: 4vw
+    div.column.one
+      width: 29vw
+    div.column.two
+      width: 56vw
+    div.column.three
+      width: 90vw
+    div.giftstart-square.big
+      height: 58vw
+      width: 58vw
+    div.giftstart-square
+      height: 29vw
+      width: 29vw
+
+@media screen and (max-width: $phone-boundary)
+  #giftstart-squares
+    margin-left: 1vw

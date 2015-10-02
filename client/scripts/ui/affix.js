@@ -1,5 +1,5 @@
 (function ($) {
-    var $affixSearch = $('#search-wrap'),
+    var $affixSearch = $('#header'),
         $topBreakElement = $affixSearch.next(),
         $bottomBreakElement = $affixSearch,
         $affixPlaceholder = $('#affix-placeholder'),

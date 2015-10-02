@@ -1,5 +1,5 @@
 application: www-dev-gift-starter
-version: 18
+version: 1-19-0
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -95,6 +95,9 @@ handlers:
   secure: never
 - url: /scripts
   static_dir: client/scripts
+  secure: always
+- url: /ui
+  static_dir: client/ui
   secure: always
 - url: /views
   static_dir: client/views

@@ -7,12 +7,16 @@ iframe[name='google_conversion_frame'] {
   float: left; }
 
 #header {
+  background: #fff;
+  top: 0px;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 1px;
   width: 100%;
   vertical-align: middle;
   -webkit-font-smoothing: antialiased; }
   @media screen and (max-width: 1030px) {
     #header {
-      max-width: 1200px; } }
+      height: 70px; } }
   @media screen and (max-width: 1030px) {
     #header .nomobile {
       display: none; } }
@@ -54,8 +58,7 @@ iframe[name='google_conversion_frame'] {
           display: none; } }
     @media only screen and (min-width: 1025px) {
       #header .headerLogoWrapper img {
-        height: 55px;
-        padding-top: 15px; } }
+        height: 35px; } }
     @media screen and (max-width: 1030px) {
       #header .headerLogoWrapper img {
         height: 70px; } }
@@ -185,38 +188,4 @@ iframe[name='google_conversion_frame'] {
     background-color: white;
     border-bottom: 2px solid #eee;
     position: absolute;
-    width: 100%;
-    max-width: 1200px;
-    top: 70px;
-    z-index: 999; }
-    @media only screen and (min-width: 1025px) {
-      #header .loginwrapper {
-        top: 50px; } }
-    #header .loginwrapper #closebtn {
-      margin-left: calc(99% - 30px);
-      width: 30px; }
-  #header .blackout-screen {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99; }
-  @media only screen and (min-width: 1025px) {
-    #header #mobile_notifications {
-      display: none; } }
-  @media screen and (max-width: 1030px) {
-    #header #nav_notifications.hideMobileNotifications {
-      display: none; } }
-  #header #nav_notifications .submenu {
-    border-left: 0 !important;
-    border-right: 8px solid #e44028;
-    right: 0; }
-  #header #nav_notifications img {
-    height: 23px; }
-  #header #nav_notifications #notification-list .notificationsUnread {
-    background-color: white; }
-  #header #nav_notifications #notification-list .notificationsRead {
-    color: #bbb; }
-  #header #nav_notifications #notification-list #no-notifications-msg {
-    margin: 0 10px; }
+    width: 100%; }

@@ -1,0 +1,32 @@
+
+// Shared variables and mixins
+@import "../global/var"; 					// global variables
+@import "../mixins/mixins";				// global variables
+@import "../_bootstrap/bootstrap/mixins";	// Bootstrap mixins
+//@import "_bourbon/bourbon";				// Bourbon mixins
+//@import "fonts";						// Font mixins
+
+
+// Load UI Components
+@import "components/elements";
+@import "components/forms";
+@import "components/search";
+@import "components/sections";
+@import "components/carousel";
+@import "components/modern-slide-in";
+@import "components/sliders";
+@import "components/tabs";
+@import "components/parallax";
+@import "components/featured-foot";
+@import "components/category";
+@import "components/products";
+@import "components/shopping-cart";
+@import "components/countdown";
+@import "components/common";
+@import "components/accordion";
+@import "components/sidebar";
+@import "components/filter";
+@import "components/off-canvas";
+@import "components/blog";
+@import "components/page-error";
+@import "components/scroll-top-top";

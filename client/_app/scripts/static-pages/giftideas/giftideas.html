@@ -1,0 +1,20 @@
+<div class="giftideas wrapper static-pages" ng-controller="GiftideasController">
+    <!-- ==== HEADERWRAP ==== -->
+    <div class="headerwrap" name="home" title="GiftStarter Team" ng-show="!category">
+        <h1>FIND THE PERFECT GIFT</h1>
+        <p>It's that easy.  Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it... including a handmade card.</p>
+    </div><!-- /headerwrap -->
+
+    <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
+
+    <div class="clear">
+        <p>&nbsp;</p>
+        <h4 class="centered">Looking for something else?</h4>
+        <gs-product-search></gs-product-search>
+    </div>
+
+    <div ng-show="category || product" id="disclaimer">
+        If the item you GiftStart has color, size or other options, please contact the Gift Concierge to ensure you get the item that best meets your specifications or if you have any other questions regarding your product selection.
+    </div>
+
+</div>
