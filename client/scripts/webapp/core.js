@@ -3527,10 +3527,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        padding-left: 15px;\n" +
     "        padding-right: 15px;\n" +
     "    }\n" +
-    "    .product-tab.hero .h1 {\n" +
-    "        color: #000;\n" +
-    "        padding-bottom: 15px;\n" +
-    "    }\n" +
     "    .h1, .h2, .h3, .h4, .h5 {\n" +
     "        text-transform: none;\n" +
     "    }\n" +
@@ -3577,9 +3573,10 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        }\n" +
     "    }\n" +
     "</style>\n" +
-    "\n" +
-    "<div class=\"text-center affix bg-color4 hello-bar\" data-spy=\"affix\">\n" +
-    "    Questions? Call Us: <span class=\"contactNumber\"></span>\n" +
+    "<div class=\"ui grey one item menu top fixed\">\n" +
+    "    <div class=\"active item\">\n" +
+    "        Questions? Call Us: <span class=\"contactNumber\"></span>\n" +
+    "    </div>\n" +
     "</div>\n" +
     "<div role=\"main\" class=\"main yourvillage\">\n" +
     "    <section class=\"product-tab top-tall\">\n" +
@@ -3595,19 +3592,17 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"container\">\n" +
     "            <div class=\"row\">\n" +
     "                <div class=\"col-xs-12\">\n" +
-    "                    <h1 class=\"h1 text-center\">Create a GiftStarter Campaign and Easily:</h1>\n" +
-    "                    <div class=\"col-md-4 col-md-offset-4\">\n" +
-    "                        <ul>\n" +
-    "                            <li>\n" +
-    "                                <h2 class=\"h4\">Break any product or service into affordable pieces.</h2>\n" +
-    "                            </li>\n" +
-    "                            <li>\n" +
-    "                                <h2 class=\"h4\">Get support from family &amp; friends.</h2>\n" +
-    "                            </li>\n" +
-    "                            <li>\n" +
-    "                                <h2 class=\"h4\">Save time and money when it matters most.</h2>\n" +
-    "                            </li>\n" +
-    "                        </ul>\n" +
+    "                    <h1 class=\"ui huge header\">Create a GiftStarter Campaign and Easily:</h1>\n" +
+    "                    <div class=\"ui bulleted list\">\n" +
+    "                        <div class=\"item\">\n" +
+    "                            <h3 class=\"ui header\">Break any product or service into affordable pieces.</h3>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"item\">\n" +
+    "                            <h3 class=\"ui header\">Get support from family &amp; friends.</h3>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"item\">\n" +
+    "                            <h3 class=\"ui header\">Save time and money when it matters most.</h3>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
