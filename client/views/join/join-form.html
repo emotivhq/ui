@@ -1,4 +1,4 @@
-<div class="userlogin__form">
+<div class="userlogin__form hidden">
     <h4>Create account with email address:</h4>
     <form ng-submit="$parent.doCreateEmail()" class="create_action">
         <input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="First Name" required /><br/>
@@ -13,18 +13,24 @@
     </form>
 </div>
 <wizard on-finish="finishedWizard()"> 
+<form ng-submit="$parent.doCreateEmail()" class="create_action">
     <wz-step title="Starting">
-        <h1>This is the first step</h1>
+        <h3>This is the first step</h3>
         <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
+		<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Email Address" required />
         <input type="submit" wz-next value="Continue" />
     </wz-step>
     <wz-step title="Continuing">
-        <h1>Continuing</h1>
+        <h3>Continuing</h3>
         <p>You have continued here!</p>
+		<input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="First Name" required />
+		<input class="userlogin__surname" type="text" name="surname" ng-model="$parent.surname" placeholder="Last Name" required />
         <input type="submit" wz-next value="Go on" />
     </wz-step>
     <wz-step title="More steps">
         <p>Even more steps!!</p>
+		<div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
 		<button class="userlogin__loginbtn create_action ui right labeled icon button" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working" wz-next value="Create Account"></button>
     </wz-step>
+</form>
 </wizard>

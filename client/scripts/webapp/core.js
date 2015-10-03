@@ -3272,7 +3272,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/join/join-form.html',
-    "<div class=\"userlogin__form\">\n" +
+    "<div class=\"userlogin__form hidden\">\n" +
     "    <h4>Create account with email address:</h4>\n" +
     "    <form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action\">\n" +
     "        <input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required /><br/>\n" +
@@ -3287,55 +3287,118 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </form>\n" +
     "</div>\n" +
     "<wizard on-finish=\"finishedWizard()\"> \n" +
+    "<form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action\">\n" +
     "    <wz-step title=\"Starting\">\n" +
-    "        <h1>This is the first step</h1>\n" +
+    "        <h3>This is the first step</h3>\n" +
     "        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>\n" +
+    "\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Email Address\" required />\n" +
     "        <input type=\"submit\" wz-next value=\"Continue\" />\n" +
     "    </wz-step>\n" +
     "    <wz-step title=\"Continuing\">\n" +
-    "        <h1>Continuing</h1>\n" +
+    "        <h3>Continuing</h3>\n" +
     "        <p>You have continued here!</p>\n" +
+    "\t\t<input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required />\n" +
+    "\t\t<input class=\"userlogin__surname\" type=\"text\" name=\"surname\" ng-model=\"$parent.surname\" placeholder=\"Last Name\" required />\n" +
     "        <input type=\"submit\" wz-next value=\"Go on\" />\n" +
     "    </wz-step>\n" +
     "    <wz-step title=\"More steps\">\n" +
     "        <p>Even more steps!!</p>\n" +
+    "\t\t<div class=\"userlogin__passwordwrap\"><input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><input ng-show=\"$parent.showPassword\" class=\"userlogin__password\" type=\"text\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><div class=\"userlogin__eye\" ng-click=\"$parent.showPassword=!$parent.showPassword\"></div></div>\n" +
     "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\"></button>\n" +
     "    </wz-step>\n" +
+    "</form>\n" +
     "</wizard>"
   );
 
 
   $templateCache.put('/views/join/join.html',
-    "<div class=\"userlogin\" ng-controller=\"LoginOrCreateController\">\n" +
-    "    <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
-    "        <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
-    "            <span>Already have an account? </span>\n" +
-    "            <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "<div class=\"ui grid join container\">\n" +
+    "    <div class=\"eight wide column\">\n" +
+    "        <div class=\"\" ng-controller=\"LoginOrCreateController\">\n" +
+    "            <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "                <div class=\"ui icon message\">\n" +
+    "                    <i class=\"users icon\"></i>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <div class=\"header\">\n" +
+    "                            Rather use social media?\n" +
+    "                        </div>\n" +
+    "                        <p>It only takes a few clicks...</p>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
+    "                <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "                    <span>Already have an account? </span>\n" +
+    "                    <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"vertical-line-block\">\n" +
-    "        <div class=\"vertical-line\" ng-show=\"showSocials\"/>\n" +
-    "    </div>\n" +
-    "    <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "        <h4>Or {{showCreate?\"create account\":\"login\"}} with social media:</h4>\n" +
-    "        <div class=\"social\">\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\"><img class=\"social__icons\" src=\"/assets/login/facebook.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\"><img class=\"social__icons\" src=\"/assets/login/twitter.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\"><img class=\"social__icons\" src=\"/assets/login/linkedin.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\"><img class=\"social__icons\" src=\"/assets/login/google.png\"></a>\n" +
+    "    <div class=\"eight wide column\">\n" +
+    "\n" +
+    "        <div class=\"masthead segment bg-gradient\">\n" +
+    "            <div class=\"ui container\">\n" +
+    "                <div class=\"introduction\">\n" +
+    "\n" +
+    "                    <h1 class=\"ui inverted header\">\n" +
+    "        <span class=\"tagline\">\n" +
+    "          Giving is a language of love.\n" +
+    "        </span>\n" +
+    "\t\t\t\t\t\t<p><br><br><br><br><br><br></p>\n" +
+    "      </h1>\n" +
+    "                    <div class=\"ui hidden divider\"></div>\n" +
+    "\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
     "        </div>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showCreate\">\n" +
-    "            <span>Don't have an account? </span>\n" +
-    "           <span><a ng-click=\"showCreate=true; resetForm();\" class=\"userlogin__createacclink linky\">Create</a></span>\n" +
+    "    </div>\n" +
+    "\n" +
+    "\n" +
+    "    <div class=\"ui social basic modal\">\n" +
+    "        <i class=\"close icon\"></i>\n" +
+    "        <div class=\"header\">\n" +
+    "            Archive Old Messages\n" +
+    "        </div>\n" +
+    "        <div class=\"image content\">\n" +
+    "            <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "                <div class=\"social\">\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
+    "                    </a>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"actions\">\n" +
+    "            <div class=\"two fluid ui inverted buttons\">\n" +
+    "                <div class=\"ui blue basic inverted button\">\n" +
+    "                    <i class=\"twitter icon\"></i>\n" +
+    "                    No\n" +
+    "                </div>\n" +
+    "                <div class=\"ui blue basic inverted button\">\n" +
+    "                    <i class=\"facebook icon\"></i>\n" +
+    "                    Yes\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "</div>\n" +
-    "<script>\n" +
-    "    function handlePopupClosed() {\n" +
-    "        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
-    "    }\n" +
-    "</script>"
+    "\n" +
+    "    <script>\n" +
+    "        function handlePopupClosed() {\n" +
+    "            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
+    "        }\n" +
+    "    </script>"
   );
 
 

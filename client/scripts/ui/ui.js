@@ -33,5 +33,9 @@ $(document)
       $('.ui.sidebar')
         .sidebar('attach events', '.toc.item')
       ;
+	  $('#btn').click(function(){
+  		$('.ui.social.modal').modal('show');
+	  });
+	
     })
   ;

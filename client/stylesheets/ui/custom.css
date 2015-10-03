@@ -42,6 +42,7 @@
 /* main containers */
 .main.container {
     margin-top: 7em;
+    margin-bottom: 3em;
 }
 
 /* mobile menus */
@@ -57,6 +58,18 @@
         display: block;
       }
     }
+
+/* join masthead */
+.join .masthead {background-color: #000000;}
+.join .masthead.bg-gradient:after {
+    background-image: url("/images/bg/colorful-gradient.jpg");
+}
+.join .masthead,.join .masthead:after {
+    -ms-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    -moz-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    -webkit-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+}
 
 /* footer */
 .footer .logo {
