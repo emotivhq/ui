@@ -1048,18 +1048,29 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>\n" +
     "\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Email Address\" required />\n" +
     "        <input type=\"submit\" wz-next value=\"Continue\" />\n" +
+    "\t\t<button class=\"ui right labeled icon button\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\tContinue\n" +
+    "\t\t</button>\n" +
+    "\t\t\n" +
     "    </wz-step>\n" +
     "    <wz-step title=\"Continuing\">\n" +
     "        <h3>Continuing</h3>\n" +
     "        <p>You have continued here!</p>\n" +
     "\t\t<input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required />\n" +
     "\t\t<input class=\"userlogin__surname\" type=\"text\" name=\"surname\" ng-model=\"$parent.surname\" placeholder=\"Last Name\" required />\n" +
-    "        <input type=\"submit\" wz-next value=\"Go on\" />\n" +
+    "\t\t<button class=\"ui right labeled icon button\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\tContinue\n" +
+    "\t\t</button>\n" +
     "    </wz-step>\n" +
     "    <wz-step title=\"More steps\">\n" +
     "        <p>Even more steps!!</p>\n" +
     "\t\t<div class=\"userlogin__passwordwrap\"><input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><input ng-show=\"$parent.showPassword\" class=\"userlogin__password\" type=\"text\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><div class=\"userlogin__eye\" ng-click=\"$parent.showPassword=!$parent.showPassword\"></div></div>\n" +
-    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\"></button>\n" +
+    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\">\n" +
+    "\t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\tCreate Account\n" +
+    "\t\t</button>\n" +
     "    </wz-step>\n" +
     "</form>\n" +
     "</wizard>"
@@ -7792,6 +7803,7 @@ GiftStarterApp.service('LinkedInService', [
                                             FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
+		$scope.fullContainer = true;
         if (typeof($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }

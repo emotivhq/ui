@@ -111,7 +111,7 @@
     {% if hide_body %}
 	<div id="angular-view" ng-view gs-view style="display:none"></div>
 	{% else %}
-	<div id="angular-view" ng-view gs-view class="ui main container"></div>
+	<div id="angular-view" ng-view gs-view class="ui main container" ng-class="{fullContainer: fullContainer}"></div>
 	{% endif %}
 
     {% if not hide_footer %}

@@ -10,6 +10,7 @@
                                             FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
 
         $scope.working = false;
+		$scope.fullContainer = true;
         if (typeof($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }

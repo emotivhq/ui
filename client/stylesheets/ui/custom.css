@@ -44,7 +44,11 @@
     margin-top: 7em;
     margin-bottom: 3em;
 }
-
+.main.full-container {
+    margin-top: 5em;
+    margin-bottom: 2em;
+	width: 100%;
+}
 /* mobile menus */
 
 /* media queries */
