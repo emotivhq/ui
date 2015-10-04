@@ -33,9 +33,27 @@ $(document)
       $('.ui.sidebar')
         .sidebar('attach events', '.toc.item')
       ;
-	  $('#btn').click(function(){
+	  $('.button.social').click(function(){
   		$('.ui.social.modal').modal('show');
 	  });
-	
+
+$('.create_action.ui.form')
+  .form({
+    fields: {
+      email: {
+        identifier  : 'email',
+        rules: [
+          {
+            type   : 'email',
+            prompt : 'Please enter a valid e-mail'
+          }
+        ]
+      },
+      name     : 'empty',
+      surname   : 'empty',
+      password : ['minLength[6]', 'empty']
+    }
+  })
+;	
     })
   ;

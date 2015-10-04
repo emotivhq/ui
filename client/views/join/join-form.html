@@ -13,18 +13,30 @@
     </form>
 </div>
 <wizard on-finish="finishedWizard()"> 
-<form ng-submit="$parent.doCreateEmail()" class="create_action">
-    <wz-step title="Starting">
-        <h3>This is the first step</h3>
-        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>
-		<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Email Address" required />
-		<button class="ui right labeled icon button" type="submit" wz-next value="Continue">
-  		<i class="right arrow icon"></i>
-  		Continue
+<form ng-submit="$parent.doCreateEmail()" class="create_action ui form">
+    <wz-step title="" canexit="emailValidation">
+        <h2 class="vertical small">Create a new account</h2>
+        <p>Sign up with your e-mail address.</p>
+		<div class="field ui left icon input" style="width:100%">
+			<i class="user icon"></i>
+			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required style="width:100%" />
+		</div>
+		<div class="ui middle aligned center aligned vertical medium grid">
+		<div class="column six">
+		<div class="inline field">
+			<div class="ui checkbox column wide four">
+  				<input type="checkbox" name="public">
+  				<label>It's ok to send me (very occasional) <br />email about the Giftstarter service.</label>
+			</div>
+   		</div>
+		<button class="ui right labeled icon button submit" type="submit" wz-next value="Continue">
+  			<i class="right arrow icon"></i>
+  			Continue
 		</button>
-		
+		</div>
+		</div>
     </wz-step>
-    <wz-step title="Continuing">
+    <wz-step title="">
         <h3>Continuing</h3>
         <p>You have continued here!</p>
 		<input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="First Name" required />
@@ -34,7 +46,7 @@
   		Continue
 		</button>
     </wz-step>
-    <wz-step title="More steps">
+    <wz-step title="">
         <p>Even more steps!!</p>
 		<div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
 		<button class="userlogin__loginbtn create_action ui right labeled icon button" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working" wz-next value="Create Account">

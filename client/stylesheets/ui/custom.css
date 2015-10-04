@@ -1,3 +1,11 @@
+/* globals */
+html {
+    font-size: 16px;
+}
+.vertical.small {margin: 1em auto;}
+.vertical.medium {margin: 2em auto;}
+.vertical.large {margin: 3em auto;}
+
 /* top menu */
 .main.menu {
     margin-top: 0;
@@ -64,7 +72,7 @@
     }
 
 /* join masthead */
-.join .masthead {background-color: #000000;}
+.joiny .masthead {background-color: #000000;}
 .join .masthead.bg-gradient:after {
     background-image: url("/images/bg/colorful-gradient.jpg");
 }
@@ -74,6 +82,9 @@
     -webkit-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
     transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
 }
+
+/* angular wizard */
+.steps-indicator {margin: 3.5em 0}
 
 /* footer */
 .footer .logo {

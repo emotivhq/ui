@@ -1042,19 +1042,30 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </form>\n" +
     "</div>\n" +
     "<wizard on-finish=\"finishedWizard()\"> \n" +
-    "<form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action\">\n" +
-    "    <wz-step title=\"Starting\">\n" +
-    "        <h3>This is the first step</h3>\n" +
-    "        <p>Here you can use whatever you want. You can use other directives, binding, etc.</p>\n" +
-    "\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Email Address\" required />\n" +
-    "        <input type=\"submit\" wz-next value=\"Continue\" />\n" +
-    "\t\t<button class=\"ui right labeled icon button\" type=\"submit\" wz-next value=\"Continue\">\n" +
-    "  \t\t<i class=\"right arrow icon\"></i>\n" +
-    "  \t\tContinue\n" +
+    "<form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action ui form\">\n" +
+    "    <wz-step title=\"\" canexit=\"emailValidation\">\n" +
+    "        <h2 class=\"vertical small\">Create a new account</h2>\n" +
+    "        <p>Sign up with your e-mail address.</p>\n" +
+    "\t\t<div class=\"field ui left icon input\" style=\"width:100%\">\n" +
+    "\t\t\t<i class=\"user icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required style=\"width:100%\" />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical medium grid\">\n" +
+    "\t\t<div class=\"column six\">\n" +
+    "\t\t<div class=\"inline field\">\n" +
+    "\t\t\t<div class=\"ui checkbox column wide four\">\n" +
+    "  \t\t\t\t<input type=\"checkbox\" name=\"public\">\n" +
+    "  \t\t\t\t<label>It's ok to send me (very occasional) <br />email about the Giftstarter service.</label>\n" +
+    "\t\t\t</div>\n" +
+    "   \t\t</div>\n" +
+    "\t\t<button class=\"ui right labeled icon button submit\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\tContinue\n" +
     "\t\t</button>\n" +
-    "\t\t\n" +
+    "\t\t</div>\n" +
+    "\t\t</div>\n" +
     "    </wz-step>\n" +
-    "    <wz-step title=\"Continuing\">\n" +
+    "    <wz-step title=\"\">\n" +
     "        <h3>Continuing</h3>\n" +
     "        <p>You have continued here!</p>\n" +
     "\t\t<input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required />\n" +
@@ -1064,7 +1075,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  \t\tContinue\n" +
     "\t\t</button>\n" +
     "    </wz-step>\n" +
-    "    <wz-step title=\"More steps\">\n" +
+    "    <wz-step title=\"\">\n" +
     "        <p>Even more steps!!</p>\n" +
     "\t\t<div class=\"userlogin__passwordwrap\"><input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><input ng-show=\"$parent.showPassword\" class=\"userlogin__password\" type=\"text\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><div class=\"userlogin__eye\" ng-click=\"$parent.showPassword=!$parent.showPassword\"></div></div>\n" +
     "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\">\n" +
@@ -1073,7 +1084,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\t\t</button>\n" +
     "    </wz-step>\n" +
     "</form>\n" +
-    "</wizard>"
+    "</wizard>\n"
   );
 
 
@@ -1082,15 +1093,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div class=\"eight wide column\">\n" +
     "        <div class=\"\" ng-controller=\"LoginOrCreateController\">\n" +
     "            <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
-    "                <div class=\"ui icon message\">\n" +
-    "                    <i class=\"users icon\"></i>\n" +
-    "                    <div class=\"content\">\n" +
-    "                        <div class=\"header\">\n" +
-    "                            Rather use social media?\n" +
-    "                        </div>\n" +
-    "                        <p>It only takes a few clicks...</p>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
     "                <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
     "                <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
     "                    <span>Already have an account? </span>\n" +
@@ -1105,13 +1107,20 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <div class=\"ui container\">\n" +
     "                <div class=\"introduction\">\n" +
     "\n" +
-    "                    <h1 class=\"ui inverted header\">\n" +
-    "        <span class=\"tagline\">\n" +
-    "          Giving is a language of love.\n" +
-    "        </span>\n" +
-    "\t\t\t\t\t\t<p><br><br><br><br><br><br></p>\n" +
-    "      </h1>\n" +
-    "                    <div class=\"ui hidden divider\"></div>\n" +
+    "                   <iframe width=\"560\" height=\"315\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"ui icon message vertical medium\">\n" +
+    "    \t\t\t\t\t<i class=\"facebook icon blue\"></i>\n" +
+    "    \t\t\t\t\t<div class=\"content column two\">\n" +
+    "        \t\t\t\t\t<div class=\"header\">\n" +
+    "            \t\t\t\t\tRather use social media?\n" +
+    "        \t\t\t\t\t</div>\n" +
+    "        \t\t\t\t\t<p>It only takes a few clicks to sign up.</p>\n" +
+    "    \t\t\t\t\t</div>\n" +
+    "    \t\t\t\t\t<div class=\"column three\">\n" +
+    "        \t\t\t\t\t<a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
+    "    \t\t\t\t\t</div>\n" +
+    "\t\t\t\t\t</div>\n" +
     "\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -1119,14 +1128,14 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "\n" +
-    "    <div class=\"ui social basic modal\">\n" +
+    "    <div class=\"ui social basic modal middle aligned center aligned\">\n" +
     "        <i class=\"close icon\"></i>\n" +
-    "        <div class=\"header\">\n" +
-    "            Archive Old Messages\n" +
+    "        <div class=\"ui middle center aligned header\">\n" +
+    "            Create Your Account\n" +
     "        </div>\n" +
-    "        <div class=\"image content\">\n" +
-    "            <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "        <div class=\"middle center aligned grid\">\n" +
+    "\t\t\t<div class=\"image content container\">\n" +
+    "            <div class=\"userlogin__sociallogin login-block\" ng-hide=\"showSocials\">\n" +
     "                <div class=\"social\">\n" +
     "                    <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
     "                        <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
@@ -1146,20 +1155,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"actions\">\n" +
-    "            <div class=\"two fluid ui inverted buttons\">\n" +
-    "                <div class=\"ui blue basic inverted button\">\n" +
-    "                    <i class=\"twitter icon\"></i>\n" +
-    "                    No\n" +
-    "                </div>\n" +
-    "                <div class=\"ui blue basic inverted button\">\n" +
-    "                    <i class=\"facebook icon\"></i>\n" +
-    "                    Yes\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
+    "\t\t</div>\n" +
     "    </div>\n" +
-    "\n" +
     "    <script>\n" +
     "        function handlePopupClosed() {\n" +
     "            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +

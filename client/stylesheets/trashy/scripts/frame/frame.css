@@ -102,7 +102,7 @@ input:focus, button:focus, select:focus, textarea:focus {
   border-color: #5f8493; }
 
 .old-button.edit {
-  font: 12px / 2 Gotham, sans-serif; }
+  font: 16px / 2 Gotham, sans-serif; }
 
 button:disabled, button:disabled:focus, button:disabled:active, button.disabled, button.disabled:active, button.disabled:hover, button.disabled:focus {
   background: #e2e2e2;
@@ -162,7 +162,7 @@ span.circle {
 
 h1 {
   color: #000;
-  font: 700 4.167em Roboto, sans-serif;
+  font: 500 4.167em Roboto, sans-serif;
   margin: 10px auto;
   text-transform: capitalize; }
   h1.accent {
@@ -170,18 +170,18 @@ h1 {
   h1.white {
     color: #fff; }
   h1 a {
-    font: 700 4.167em Roboto, sans-serif;
+    font: 500 4.167em Roboto, sans-serif;
     font-size: 1em;
     text-decoration: none; }
 
 h2 {
-  font: 500 2.667em Roboto, sans-serif;
+  font: 300 2.667em Roboto, sans-serif;
   text-transform: capitalize; }
   h2.black {
     color: #000; }
 
 h3 {
-  font: 500 1.667em Roboto, sans-serif;
+  font: 300 1.667em Roboto, sans-serif;
   text-transform: capitalize; }
   h3.black {
     color: #000; }
