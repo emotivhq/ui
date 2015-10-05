@@ -30,6 +30,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/views/login/login.html', reloadOnSearch: false})
         .when('/join',
         {templateUrl: '/views/join/join.html', reloadOnSearch: false})
+        .when('/is',
+        {templateUrl: '/views/is/is.html', reloadOnSearch: false})
         .when('/users/:uid',
         {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
         .when('/user/:uid',
