@@ -1249,8 +1249,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            width: 50% !important;\n" +
     "        }\n" +
     "    }\n" +
-    "    .main.container {\n" +
-    "        margin-top: 5em;\n" +
+    "    .ui.fixed.menu+.ui.grid {\n" +
+    "        margin-top: 5rem;\n" +
     "    }\n" +
     "</style>\n" +
     "<div class=\"ui grey one item menu top fixed\">\n" +
@@ -1258,115 +1258,102 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        Questions? Call Us: <span class=\"contactNumber\"></span>\n" +
     "    </div>\n" +
     "</div>\n" +
-    "<div role=\"main\" class=\"ui main container text\">\n" +
-    "    <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
-    "    <h1 class=\"ui center aligned huge header\">Create a GiftStarter Campaign and Easily:</h1>\n" +
-    "    <div class=\"ui big list\">\n" +
-    "        <div class=\"item\">\n" +
-    "            <i class=\"check square icon red\"></i>\n" +
-    "            <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"item\">\n" +
-    "            <i class=\"check square icon red\"></i>\n" +
-    "            <div class=\"content\">Get support from family &amp; friends.</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"item\">\n" +
-    "            <i class=\"check square icon red\"></i>\n" +
-    "            <div class=\"content\">Save time and money when it matters most.</div>\n" +
+    "\n" +
+    "<div class=\"ui grid stackable providence container\">\n" +
+    "    <div class=\"sixteen wide column\">\n" +
+    "        <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
+    "        <div class=\"ui center aligned huge header\">Create a GiftStarter Campaign and Easily:</div>\n" +
+    "        <div class=\"ui big list\">\n" +
+    "            <div class=\"item\">\n" +
+    "                <i class=\"check square icon red\"></i>\n" +
+    "                <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
+    "            </div>\n" +
+    "            <div class=\"item\">\n" +
+    "                <i class=\"check square icon red\"></i>\n" +
+    "                <div class=\"content\">Get support from family &amp; friends.</div>\n" +
+    "            </div>\n" +
+    "            <div class=\"item\">\n" +
+    "                <i class=\"check square icon red\"></i>\n" +
+    "                <div class=\"content\">Save time and money when it matters most.</div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\n" +
-    "    <!--     <div class=\"ui two column grid container\">\n" +
-    "        <div class=\"column\">\n" +
-    "            <div class=\"ui segment\">Content</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"column\">\n" +
-    "            <div class=\"ui segment\">Content</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"column\">\n" +
-    "            <div class=\"ui segment\">Content</div>\n" +
-    "        </div>\n" +
-    "        <div class=\"column\">\n" +
-    "            <div class=\"ui segment\">Content</div>\n" +
-    "        </div>\n" +
-    "    </div> -->\n" +
-    "\n" +
-    "    <!--     <section class=\"product-tab top-tall bg-color4\">\n" +
-    "        <div class=\"container bg-color4\">\n" +
+    "</div>\n" +
+    "<div class=\"ui grid stackable container\">\n" +
+    "    <div class=\"sixteen wide column\">\n" +
+    "        <h1 class=\"ui center aligned header\">\n" +
+    "                Get The Help You Need\n" +
+    "                <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
+    "            </h1>\n" +
+    "        <div class=\"ui two column grid\">\n" +
     "            <div class=\"row\">\n" +
-    "                <div class=\"col-xs-12\">\n" +
-    "                    <h1 class=\"h2 text-center\">Get The Help You Need</h1>\n" +
-    "                    <p class=\"text-center\">Not quite sure what will make your life easier? We have teamed up with Providence (YourVillage) to provide a few suggestions based on what other mothers have found useful.</p>\n" +
-    "                    <div class=\"tab-content\">\n" +
-    "                        <div class=\"row\">\n" +
-    "                            <div class=\"col-xs-6\">\n" +
-    "                                <div class=\"thumb-item\">\n" +
-    "                                    <div class=\"thumb-item-img\">\n" +
-    "                                        <a href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
-    "                                            <img class=\"img-responsive thumbnail center-block\" src=\"images/products/abcdoula.png\">\n" +
-    "                                            <h3 class=\"h4 text-center\">ABC Duola <i class=\"fa fa-arrow-right\"></i></h3>\n" +
-    "                                        </a>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
-    "                            <div class=\"col-xs-6\">\n" +
-    "                                <div class=\"thumb-item\">\n" +
-    "                                    <div class=\"thumb-item-img\">\n" +
-    "                                        <a href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
-    "                                            <img class=\"img-responsive thumbnail center-block\" src=\"images/products/lishfood.png\">\n" +
-    "                                            <h3 class=\"h4 text-center\">Lish <i class=\"fa fa-arrow-right\"></i></h3>\n" +
-    "                                        </a>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
+    "                <div class=\"column\">\n" +
+    "                    <div class=\"ui fluid brown card\">\n" +
+    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                            <img src=\"images/products/abcdoula.png\">\n" +
+    "                        </a>\n" +
+    "                        <div class=\"content\">\n" +
+    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">ABC Doula</a>\n" +
     "                        </div>\n" +
-    "                        <div class=\"row\">\n" +
-    "                            <div class=\"col-xs-6\">\n" +
-    "                                <div class=\"thumb-item\">\n" +
-    "                                    <div class=\"thumb-item-img\">\n" +
-    "                                        <a href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
-    "                                            <img class=\"img-responsive thumbnail center-block\" src=\"images/products/farmtofit.png\">\n" +
-    "                                            <h3 class=\"h4 text-center\">Farm To Fit <i class=\"fa fa-arrow-right\"></i></h3>\n" +
-    "                                        </a>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
-    "                            <div class=\"col-xs-6\">\n" +
-    "                                <div class=\"thumb-item\">\n" +
-    "                                    <div class=\"thumb-item-img\">\n" +
-    "                                        <a href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
-    "                                            <img class=\"img-responsive thumbnail center-block\" src=\"images/products/fullbellyfare.png\">\n" +
-    "                                            <h3 class=\"h4 text-center\">Full Belly Fare <i class=\"fa fa-arrow-right\"></i></h3>\n" +
-    "                                        </a>\n" +
-    "                                    </div>\n" +
-    "                                </div>\n" +
-    "                            </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"column\">\n" +
+    "                    <div class=\"ui fluid olive card\">\n" +
+    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                            <img src=\"images/products/lishfood.png\">\n" +
+    "                        </a>\n" +
+    "                        <div class=\"content\">\n" +
+    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/lishfood\">Lish</a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"column\">\n" +
+    "                    <div class=\"ui fluid yellow card\">\n" +
+    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                            <img src=\"images/products/farmtofit.png\">\n" +
+    "                        </a>\n" +
+    "                        <div class=\"content\">\n" +
+    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">Farm To Fit</a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"column\">\n" +
+    "                    <div class=\"ui fluid teal card\">\n" +
+    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                            <img src=\"images/products/fullbellyfare.png\">\n" +
+    "                        </a>\n" +
+    "                        <div class=\"content\">\n" +
+    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "    </section> -->\n" +
-    "    <!--     <section class=\"featured-foot bg-color2\">\n" +
-    "        <div class=\"container bg-color2\">\n" +
-    "            <div class=\"row row-fluid\">\n" +
-    "                <div clas=\"col-xs-12\">\n" +
-    "                    <div class=\"newsletter\">\n" +
-    "                        <div class=\"newsletter-form\">\n" +
-    "                            <h2 class=\"h2\">We're here to help.<br />Give us a call.</h2>\n" +
-    "                            <h3 class=\"h1\">\n" +
-    "                                <i class=\"fa fa-arrow-right\"></i>&nbsp;\n" +
-    "                                <span class=\"contactNumber btn\"></span>\n" +
-    "                                &nbsp;<i class=\"fa fa-arrow-left\"></i>\n" +
-    "                            </h3>\n" +
-    "                            <p><small>or <a href=\"mailto:giftconcierge@giftstarter.com\">send us an email</a></small>\n" +
-    "                            </p>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"ui grid stackable container\">\n" +
+    "    <div class=\"sixteen wide column\">\n" +
+    "        <div class=\"ui attached segment\">\n" +
+    "            <div class=\"ui header huge centered\">\n" +
+    "                We're here to help.\n" +
+    "                <div class=\"sub header\">\n" +
+    "                    Our \"Mommy Happiness\" specialist are always here to help. Give us a call or send us an email.\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "    </section> -->\n" +
+    "        <div class=\"ui two bottom attached buttons\">\n" +
+    "            <a class=\"ui grey button\" href=\"mailto:giftconcierge@giftstarter.com\">\n" +
+    "                <i class=\"mail icon\"></i>\n" +
+    "                Email\n" +
+    "            </a>\n" +
+    "            <a class=\"ui positive button\" href=\"tel:+1-206-486-4849\">\n" +
+    "                <i class=\"phone icon\"></i>\n" +
+    "                Call\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
     "</div>\n" +
     "\n" +
     "<script>\n" +
