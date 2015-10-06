@@ -11,6 +11,10 @@
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
         this.mobile = device.mobile() || device.tablet();
+		function isSlim() {
+        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+    	}
+		this.makeSlim = isSlim();
 
         this.subliminalOffset = -3.0;
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
@@ -30,6 +34,7 @@
         this.portaling = $location.path().indexOf('/portal') === 0;
 
         $scope.isHeaderOnly = self.thisRoute == '/header';
+		$scope.slimHeader = isSlim();
 
         $scope.search = false;
         $scope.menu = false;
@@ -299,10 +304,16 @@
         '$anchorScroll',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
+		function isSlim() {
+        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+    	}
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
         $anchorScroll();
+		this.makeSlim = isSlim();
+		$rootScope.slimHeader = isSlim();
+		$rootScope.greybg = false;
       });
     })
 

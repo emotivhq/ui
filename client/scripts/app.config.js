@@ -99,6 +99,7 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
 //        }).error(function(){
             $scope.content = '';
             $scope.error = true;
+			$scope.bg = 'white';
 //        });
     }
 

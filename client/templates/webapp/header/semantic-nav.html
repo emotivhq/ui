@@ -1,5 +1,5 @@
 {# <!-- Main Menu --> #}
-<div class="ui secondary fixed main menu" ng-hide="header.loggedIn">
+<div class="ui secondary fixed main menu" ng-hide="header.loggedIn || fullContainer">
 <div class="ui container">
   <div class="header item">  	
 	  <a class="headerLogoWrapper" href="/">
@@ -23,6 +23,29 @@
   <a href="/login" class="item">Login</a>
   <div class="item">
 	<a href="/join" class="ui button secondary">Join</a>
+  </div>
+  </div>
+</div>
+</div>
+
+{# <!-- Slim Menu --> #}
+<div class="ui secondary main menu" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
+<div class="ui container">
+  <div class="header item">  	
+	  <a class="headerLogoWrapper" href="/">
+		<img id="logo" src="/assets/webLogo.png" />
+        <img id="logo-mobile" src="/assets/logo-mobile.png" />
+	  </a>	
+	</div>
+  <div class="right menu">
+  <a class="toc item">
+     <i class="sidebar icon"></i>
+  </a>
+	  <div class="item">
+		  Already have an account?
+	  </div>
+  <div class="item">
+	<a href="/login" class="ui button secondary basic grey">Login</a>
   </div>
   </div>
 </div>

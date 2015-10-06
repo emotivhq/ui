@@ -7,10 +7,6 @@ iframe[name='google_conversion_frame'] {
   float: left; }
 
 #header {
-  background: #fff;
-  top: 0px;
-  z-index: 1;
-  box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 1px;
   width: 100%;
   vertical-align: middle;
   -webkit-font-smoothing: antialiased; }

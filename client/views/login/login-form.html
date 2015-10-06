@@ -1,9 +1,14 @@
-<div class="userlogin__form" ng-hide="$parent.showForgot || $parent.showReset">
-    <h4>Login with your email address:</h4>
-    <form ng-submit="$parent.doLoginEmail()" class="login_action">
-        <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
-        <div class="userlogin__passwordwrap"><input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Enter your password" required></div>
-        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=true">Forgot password</a>
+<div class="userlogin__form ui stacked segment" ng-hide="$parent.showForgot || $parent.showReset">
+    <h3 class="vertical small bottom">Login with your email address:</h3>
+    <form ng-submit="$parent.doLoginEmail()" class="login_action login ui form">
+		<div class="field ui left icon input">
+			<i class="user icon"></i>
+			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required />
+		</div>
+		<div class="field ui left icon input">
+			<i class="hide icon"></i>
+			<input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required />
+		</div>
         <div class="userlogin__wrapper">
             <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
         </div>
@@ -12,20 +17,28 @@
   		<i class="right arrow icon"></i>
   		Login
 		</button>
+        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=true">Did you forgot your password?</a>
     </form>
 </div>
 
-<div class="userlogin__form" ng-show="$parent.showForgot">
-    <form ng-submit="$parent.doForgotPassword()">
-        <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
-        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=false">Cancel</a>
+<div class="userlogin__form ui stacked segment" ng-show="$parent.showForgot">
+    <h3>Password Reminder</h3>
+	<form ng-submit="$parent.doForgotPassword()" class="ui form">
+		<div class="field ui left icon input">
+			<i class="user icon"></i>
+			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required />
+		</div>
         <div class="userlogin__message">{{$parent.message}}</div>
-        <button class="userlogin__loginbtn" ng-disabled="$parent.working">Get Password</button>
-    </form>
+		<button class="userlogin__loginbtn ui right labeled icon button" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working">
+  		<i class="forward mail icon"></i>
+  		Get Password
+		</button>    
+	</form>
+        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=false">Nevermind, I remember it now...</a>
 </div>
 
 <div class="userlogin__form" ng-show="$parent.showReset">
-    <h4>Reset Your Password:</h4>
+    <h3>Reset Your Password:</h3>
     <form ng-submit="$parent.doResetPassword()">
         <input class="userlogin__email" type="hidden" name="resetcode" ng-model="$parent.resetCode" placeholder="Enter the reset code" required />
         <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />

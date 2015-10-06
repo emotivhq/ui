@@ -14,45 +14,66 @@
 </div>
 <wizard on-finish="finishedWizard()"> 
 <form ng-submit="$parent.doCreateEmail()" class="create_action ui form">
-    <wz-step title="" canexit="emailValidation">
-        <h2 class="vertical small">Create a new account</h2>
+    <wz-step title="" canexit="">
+        <h2 class="vertical small bottom">Create a new account</h2>
         <p>Sign up with your e-mail address.</p>
 		<div class="field ui left icon input" style="width:100%">
-			<i class="user icon"></i>
+			<i class="mail icon"></i>
 			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required style="width:100%" />
 		</div>
-		<div class="ui middle aligned center aligned vertical medium grid">
+		<div class="ui middle aligned center aligned vertical medium top bottom grid">
 		<div class="column six">
 		<div class="inline field">
-			<div class="ui checkbox column wide four">
-  				<input type="checkbox" name="public">
+			<div class="ui checkbox checked column wide four">
+  				<input type="checkbox" name="public" checked="">
   				<label>It's ok to send me (very occasional) <br />email about the Giftstarter service.</label>
 			</div>
    		</div>
 		<button class="ui right labeled icon button submit" type="submit" wz-next value="Continue">
   			<i class="right arrow icon"></i>
-  			Continue
+  			Next
 		</button>
 		</div>
 		</div>
     </wz-step>
-    <wz-step title="">
-        <h3>Continuing</h3>
-        <p>You have continued here!</p>
-		<input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="First Name" required />
-		<input class="userlogin__surname" type="text" name="surname" ng-model="$parent.surname" placeholder="Last Name" required />
-		<button class="ui right labeled icon button" type="submit" wz-next value="Continue">
-  		<i class="right arrow icon"></i>
-  		Continue
-		</button>
+    <wz-step title="" canexit="">
+        <h2 class="vertical small bottom">Set Up Your Account</h2>
+        <p>GiftsStarter is all abut you. How do you want people to recognize you?</p>
+		<div class="ui middle aligned center grid">			
+		<div class="column centered">			
+		<div class="field ui left icon input">
+			<i class="terminal icon"></i>
+			<input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="Your First Name" required />
+		</div>
+		<div class="field ui left icon input">
+			<i class="terminal icon"></i>
+			<input class="userlogin__surname" type="text" name="surname" ng-model="$parent.surname" placeholder="Your Last Name" required />
+		</div>
+		</div></div>
+		<div class="ui middle aligned center aligned vertical large top bottom grid">
+			<button class="ui right labeled icon button" type="submit" wz-next value="Continue">
+  				<i class="right arrow icon"></i>
+  				Next
+			</button>
+		</div>
     </wz-step>
-    <wz-step title="">
-        <p>Even more steps!!</p>
-		<div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><input ng-show="$parent.showPassword" class="userlogin__password" type="text" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required /><div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div></div>
-		<button class="userlogin__loginbtn create_action ui right labeled icon button" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working" wz-next value="Create Account">
-			<i class="right arrow icon"></i>
+    <wz-step title="" canexit="">
+        <h2 class="vertical small bottom">That' It! Let's Go...</h2>
+        <p>Enter a strong password to finish your account stup. Or, take a minute to watch this funny video about how GiftStarter worked for a group of friends. Then get started.</p>
+		<div class="field ui left icon input">
+			<i class="protect icon"></i>
+			<input class="userlogin__password" type="password" name="password" ng-hide="$parent.showPassword" ng-model="$parent.password" placeholder="Strong Password" required />
+		</div>
+		<div class="ui middle aligned center aligned vertical large top bottom grid">
+		<button class="userlogin__loginbtn create_action ui right labeled icon button primary red" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working" wz-next value="Create Account">
+			<i class="add user icon"></i>
   			Create Account
 		</button>
+		</div>
+		<div class="userlogin__message ui small message" ng-show="$parent.message">
+  			<i class="close icon"></i>
+  			<div class="content">{{$parent.message}}</div>
+		</div>
     </wz-step>
 </form>
 </wizard>

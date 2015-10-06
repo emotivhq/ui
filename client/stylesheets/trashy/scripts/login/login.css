@@ -47,7 +47,6 @@ iframe[name='google_conversion_frame'] {
     display: inline-block;
     border: 1px solid #cdcdcd;
     width: 100%;
-    height: 38px;
     margin-top: 18px; }
     @media only screen and (max-width: 667px) {
       .userlogin__email, .userlogin__passwordwrap, .userlogin__name, .userlogin__surname, .userlogin__reentermail, .userlogin__reenterpassword {
@@ -68,18 +67,6 @@ iframe[name='google_conversion_frame'] {
     @media only screen and (max-width: 375px) and (orientation: portrait) {
       .userlogin__passwordwrap {
         padding: 0; } }
-  .userlogin__password {
-    width: 76%;
-    height: 100%;
-    display: inline-block;
-    border: 0 !important;
-    outline: 0 !important;
-    margin: 0 0 0 0.8em;
-    padding: 0 !important; }
-    .userlogin__password:hover, .userlogin__password:active, .userlogin__password:focus {
-      outline: none;
-      border: none;
-      box-shadow: none; }
   .userlogin__eye {
     display: inline-block;
     margin-left: 2%;
@@ -113,7 +100,7 @@ iframe[name='google_conversion_frame'] {
     @media only screen and (max-width: 375px) and (orientation: portrait) {
       .userlogin__remember {
         left: 0; } }
-  .userlogin__rememberlabel, .userlogin__forgot, .userlogin__createacclink {
+  .userlogin__rememberlabel, .userlogin__createacclink {
     text-transform: uppercase;
     color: #333; }
   .userlogin__rememberlabel {
@@ -193,7 +180,7 @@ iframe[name='google_conversion_frame'] {
     border-left: 1px solid #cdcdcd;
     display: inline-block;
     height: 100px;
-    margin: 0 20px;
+    margin: 100px 20px;
     width: 0; }
     @media only screen and (max-width: 667px) {
       .userlogin .vertical-line {

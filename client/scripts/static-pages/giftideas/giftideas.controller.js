@@ -17,6 +17,12 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.basePath = pathParts[1];
     var category = pathParts.length > 2 ? pathParts[2] : false;
     var product = pathParts.length > 3 ? pathParts[3] : false;
+	// lazy load images
+     jQuery('.load').visibility({
+        type: 'image',
+        transition: 'vertical flip in',
+        duration: 500
+      });
 
     // hack for mailing list error where we linked to the wrong category
     if(category && !product && (category === 'lunarnewyear' || category === 'farewell' || category === 'pisces') && $location.search()['utm_campaign'] === '18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015') {
