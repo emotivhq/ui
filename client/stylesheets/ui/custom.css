@@ -1,84 +1,92 @@
 /* globals */
-html, body {
+ html, body {
     font-size: 16px;
 }
-.vertical.small.bottom {margin-bottom: 1em;}
-.vertical.medium.bottom {margin-bottom: 2em;}
-.vertical.large.bottom {margin-bottom: 3em;}
-.vertical.small.top {margin-top: 1em;}
-.vertical.medium.top {margin-top: 2em;}
-.vertical.large.top {margin-top: 3em;}
-
+.vertical.small.bottom {
+    margin-bottom: 1em;
+}
+.vertical.medium.bottom {
+    margin-bottom: 2em;
+}
+.vertical.large.bottom {
+    margin-bottom: 3em;
+}
+.vertical.small.top {
+    margin-top: 1em;
+}
+.vertical.medium.top {
+    margin-top: 2em;
+}
+.vertical.large.top {
+    margin-top: 3em;
+}
 .ui.checkbox .box, .ui.checkbox label {
-	cursor: pointer;
+    cursor: pointer;
 }
 /* bgs */
-body.pushable>.pusher.grey {background: #90A4AE;}
-
+ body.pushable>.pusher.grey {
+    background: #90A4AE;
+}
 /* header */
-header.slim {height: 60px !important;}
+ header.slim {
+    height: 60px !important;
+}
 /* top menu */
-.main.menu {
+ .main.menu {
     margin-top: 0;
     border-radius: 0;
     border: none;
     box-shadow: none;
-    transition:
-      box-shadow 0.5s ease,
-      padding 0.5s ease
-    ;
-  }
-  .main.menu .item img.logo {
+    transition: box-shadow 0.5s ease, padding 0.5s ease;
+}
+.main.menu .item img.logo {
     margin-right: 1.5em;
-  }
-
-  .overlay {
+}
+.overlay {
     float: left;
     margin: 0em 3em 1em 0em;
-  }
-  .overlay .menu {
+}
+.overlay .menu {
     position: relative;
     left: 0;
     transition: left 0.5s ease;
-  }
-
-  .main.menu.fixed {
+}
+.main.menu.fixed {
     background-color: #FFFFFF;
     border: 0px solid #DDD;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-	z-index: 10 !important;
-  }
-  .slim .main.menu {
+    z-index: 10 !important;
+}
+.slim .main.menu {
     background-color: transparent;
     border:none;
     box-shadow: none;
-  }
+}
 .overlay.fixed .menu {
     left: 800px;
-  }
-.ui.menu {
-	margin-top:0
 }
-.right.menu .toc.item {
-      display: none;
-    }
+.ui.menu {
+    margin-top:0
+}
+.right.menu .item:not(.toc), .right.menu .item, .search.menu .item, .right.menu .menu {
+    display: none;
+}
 /* end top menus */
 
 /* main containers */
-.main.container {
+ .main.container {
     margin-top: 7em;
     margin-bottom: 3em;
 }
 .main.full {
     margin-top: 3em;
     margin-bottom: 2em;
-	width: 100%;
+    width: 100%;
 }
 .fade {
     opacity: 1;
 }
-.fade.ng-enter,
-.fade.ng-leave {
+.fade.ng-enter, .fade.ng-leave {
     -webkit-transition: all 1s ease;
     transition: all 1s ease;
 }
@@ -97,36 +105,43 @@ header.slim {height: 60px !important;}
 /* mobile menus */
 
 /* media queries */
-@media only screen and (max-width: 700px) {
-      .right.menu .item,
-	.search.menu .item,
-      .right.menu .menu {
-        display: none;
-      }
-      .right.menu .toc.item {
+ @media only screen and (min-width: 723px) {
+    .right.menu .item:not(.toc), .right.menu .item, .search.menu .item, .right.menu .menu {
         display: block;
-      }
     }
-
+    .right.menu .item.toc {
+        display: none;
+    }
+}
 /* join masthead */
-.joiny .masthead {background-color: #000000;}
+ .joiny .masthead {
+    background-color: #000000;
+}
 .join .masthead.bg-gradient:after {
     background-image: url("/images/bg/colorful-gradient.jpg");
 }
-.join .masthead,.join .masthead:after {
+.join .masthead, .join .masthead:after {
     -ms-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
     -moz-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
     -webkit-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
     transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
 }
-
 /* statistics */
-.ui.statistic>.value, .ui.statistics .statistic>.value {font-size: 2.5rem;}
-
+ .ui.statistic>.value, .ui.statistics .statistic>.value {
+    font-size: 2.5rem;
+}
 /* angular wizard */
-.steps-indicator {position:absolute; padding: 0;}
-.join .ui.input {display: -webkit-inline-box;display: -webkit-inline-flex;display: -ms-inline-flex;display: flex;}
+ .steps-indicator {
+    position:absolute;
+    padding: 0;
+}
+.join .ui.input {
+    display: -webkit-inline-box;
+    display: -webkit-inline-flex;
+    display: -ms-inline-flex;
+    display: flex;
+}
 /* footer */
-.footer .logo {
-	width: 55px;
+ .footer .logo {
+    width: 55px;
 }
