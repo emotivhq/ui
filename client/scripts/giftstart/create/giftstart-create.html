@@ -60,7 +60,7 @@
                     <div ng-show="campaignForm.title.$error.required">
                         <div class="arrowUp"></div>
                         <div class="errorMessage">
-                            Don't forget to name the gifting event!
+                            Don't forget to name the gifting event.
                         </div>
                     </div>
                 </div>
@@ -71,12 +71,15 @@
                     <div ng-show="campaignForm.description.$error.required">
                         <div class="arrowUp"></div>
                         <div class="errorMessage">
-                            Don't forget to describe it!
+                            Don't forget to describe the event.
                         </div>
                     </div>
                 </div>
                 <div id="not-long-enough" ng-hide="descriptionLongEnough">
-                    <p>Woah there! Looks like your GiftStart description is a bit short. We know, brevity is the soul of wit - but how about we add to the story to get people more involved? Here are a few questions for inspiration:</p>
+                    <p>Woah there. Looks like your GiftStart description is a bit short. 
+						We know, brevity is the soul of wit - but how about we add to the story to get people more involved? 
+						Here are a few questions for inspiration:
+					</p>
                     <ul>
                         <li>Why does the recipient deserve this gift?</li>
                         <li>Is there a story behind the gift or why the recipient might need/want it?</li>
@@ -90,13 +93,13 @@
                         <div ng-show="campaignForm.gcEmail.$error.required">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Don't forget your email address!
+                                Don't forget your email address.
                             </div>
                         </div>
                         <div ng-show="campaignForm.gcEmail.$error.email">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Your email address is invalid!
+                                That email address doesn't look right.
                             </div>
                         </div>
                     </div>
@@ -121,7 +124,7 @@
                             <div ng-show="campaignForm.shippingName.$error.required">
                                 <div class="arrowUp"></div>
                                 <div class="errorMessage">
-                                    Don't forget recipient's name!
+                                    Don't forget their name.
                                 </div>
                             </div>
                         </div>
@@ -138,18 +141,18 @@
                                ng-blur="hideValidationError.shippingEmail = false"
                                onkeypress="return event.keyCode!=13"
                                required="" />
-                        <label>* Email will only be sent after the gift is received</label>
+                        <label>* An email will only be sent after the gift is received</label>
                         <div ng-show="(campaignForm.$submitted || campaignForm.shippingEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingEmail" class="errorWrapper">
                             <div ng-show="campaignForm.shippingEmail.$error.required">
                                 <div class="arrowUp"></div>
                                 <div class="errorMessage">
-                                    Don't forget recipient's email address!
+                                    Don't forget their email address.
                                 </div>
                             </div>
                             <div ng-show="campaignForm.shippingEmail.$error.email">
                                 <div class="arrowUp"></div>
                                 <div class="errorMessage">
-                                    Recipient's email address is invalid!
+                                    That email address is not quite right.
                                 </div>
                             </div>
                         </div>
@@ -225,7 +228,7 @@
                             <div ng-show="campaignForm.shippingState.$error.required">
                                 <div class="arrowUp"></div>
                                 <div class="errorMessage">
-                                    Don't forget to add the state!
+                                    Don't forget to add the state.
                                 </div>
                             </div>
                         </div>
@@ -247,7 +250,7 @@
                             <div ng-show="campaignForm.shippingZip.$error.required">
                                 <div class="arrowUp"></div>
                                 <div class="errorMessage">
-                                    Don't forget to add the zip!
+                                    Don't forget to add the zip.
                                 </div>
                             </div>
                         </div>
@@ -262,13 +265,13 @@
                         <div ng-show="campaignForm.deliveryDate.$error.required">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Please select a date!
+                                Please select a date.
                             </div>
                         </div>
                         <div ng-show="!dateChosenValid()">
                             <div class="arrowUp"></div>
                             <div class="errorMessage">
-                                Please select a date!
+                                Please select a date.
                             </div>
                         </div>
                     </div>
