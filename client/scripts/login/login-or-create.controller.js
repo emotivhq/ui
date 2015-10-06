@@ -9,7 +9,8 @@
     var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService,
                                             FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
 
-        $scope.working = false;
+        $scope.greybg = true;
+		$scope.working = false;
         if (typeof($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }
@@ -41,11 +42,43 @@
         };
         $scope.resetForm();
 
-        if(UserService.loggedIn) {
+        /* semantic ui triggers */
+		if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
         }
+		jQuery('.button.social').click(function(){
+  			jQuery('.ui.social.modal').modal('show');
+	  	});
+		jQuery('.create_action.ui.form').form({
+		    fields: {
+		        email: {
+		            identifier: 'email',
+		            rules: [{
+		                type: 'email',
+		                prompt: 'Please enter a valid e-mail'
+		            }]
+		        },
+		        name: 'empty',
+		        surname: 'empty',
+		        password: ['minLength[6]', 'empty']
+		    }
+		});
+		jQuery('.userlogin__form')
+  			// if a direction if specified it will be obeyed
+  		.transition('fade up in')
+		;
 
-        function doSocialLogin(successFunction, maxRetries) {
+		$scope.emailValidation = function(context){
+			return context.firstName === $scope.email;
+		}
+		$scope.nameValidation = function(context){
+			return context.firstName === $scope.name;
+			return context.lastName === $scope.surname;
+		}
+		$scope.passwordValidation = function(context){
+			return context.password === $scope.password;
+		}		
+		function doSocialLogin(successFunction, maxRetries) {
             maxRetries = typeof maxRetries !== 'undefined' ? maxRetries : 3;
             if(AppStateService.get('staged_giftstart')) {
                 console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);

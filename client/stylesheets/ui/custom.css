@@ -1,3 +1,22 @@
+/* globals */
+html, body {
+    font-size: 16px;
+}
+.vertical.small.bottom {margin-bottom: 1em;}
+.vertical.medium.bottom {margin-bottom: 2em;}
+.vertical.large.bottom {margin-bottom: 3em;}
+.vertical.small.top {margin-top: 1em;}
+.vertical.medium.top {margin-top: 2em;}
+.vertical.large.top {margin-top: 3em;}
+
+.ui.checkbox .box, .ui.checkbox label {
+	cursor: pointer;
+}
+/* bgs */
+body.pushable>.pusher.grey {background: #90A4AE;}
+
+/* header */
+header.slim {height: 60px !important;}
 /* top menu */
 .main.menu {
     margin-top: 0;
@@ -28,6 +47,11 @@
     border: 0px solid #DDD;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   }
+  .slim .main.menu {
+    background-color: transparent;
+    border:none;
+    box-shadow: none;
+  }
 .overlay.fixed .menu {
     left: 800px;
   }
@@ -42,8 +66,33 @@
 /* main containers */
 .main.container {
     margin-top: 7em;
+    margin-bottom: 3em;
 }
-
+.main.full {
+    margin-top: 3em;
+    margin-bottom: 2em;
+	width: 100%;
+}
+.fade {
+    opacity: 1;
+}
+.fade.ng-enter,
+.fade.ng-leave {
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
+}
+.fade.ng-enter {
+    opacity: 0;
+}
+.fade.ng-enter-active {
+    opacity: 1;
+}
+.fade.ng-leave {
+    opacity: 1;
+}
+.fade.ng-leave-active {
+    opacity: 0;
+}
 /* mobile menus */
 
 /* media queries */
@@ -58,6 +107,21 @@
       }
     }
 
+/* join masthead */
+.joiny .masthead {background-color: #000000;}
+.join .masthead.bg-gradient:after {
+    background-image: url("/images/bg/colorful-gradient.jpg");
+}
+.join .masthead,.join .masthead:after {
+    -ms-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    -moz-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    -webkit-transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+    transition: background 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.680, -0.550, 0.265, 1.4) 0s;
+}
+
+/* angular wizard */
+.steps-indicator {position:absolute; padding: 0;}
+.join .ui.input {display: -webkit-inline-box;display: -webkit-inline-flex;display: -ms-inline-flex;display: flex;}
 /* footer */
 .footer .logo {
 	width: 55px;

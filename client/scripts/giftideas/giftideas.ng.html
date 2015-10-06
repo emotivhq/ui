@@ -38,73 +38,136 @@
         <div class="clear"></div>
         <div class="grid">
             <div ng-repeat="group in groups" class="group" ng-class-odd="'left'" ng-class-even="'right'">
-                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='tile' title="{{product.productNameStripped}}"><a href="{{categoryPath}}/{{product.productSlug}}"><img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" /><div class="tilelabel"><span ng-bind-html="product.productNameShort"></span><br/><span class="price">${{product.productPrice}}</span></div></a></div>
+                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='tile' title="{{product.productNameStripped}}">
+					<a href="{{categoryPath}}/{{product.productSlug}}">
+						<img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
+						<div class="tilelabel"><span ng-bind-html="product.productNameShort"></span><br/><span class="price">${{product.productPrice}}</span></div>
+					</a>
+				</div>
             </div>
         </div>
         <div class="clear"></div>
     </div>
 
     <h1>Top Categories for Group Gifting</h1>
-    <div class="grid categories">
+<div class="categories ui four stackable link cards">
+
+    <div class="card">
+        <a class="image" href="/giftideas/music">
+            <img src="/assets/giftideas/category/music.jpg" alt="Music" class="load" />
+        </a>
+        <div class="content hidden">
+            <a class="header" href="/giftideas/music">Music</a>
+            <div class="content">
+                Looking for the perfect gift for someone who has everything or loves the gift of music?
+            </div>
+        </div>
+        <div class="extra content">
+            <a class="center" href="/giftideas/music">
+                <i class="add icon"></i> Music
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <a class="image" href="/giftideas/luma">
+            <img src="/assets/giftideas/category/luma-diamonds.jpg" alt="Luma Diamonds" class="load" />
+        </a>
+        <div class="content hidden">
+            <a class="header" href="/giftideas/luma">Luma Diamonds</a>
+            <div class="content">
+                ...
+            </div>
+        </div>
+        <div class="extra content">
+            <a class="center" href="/giftideas/luma">
+                <i class="add icon"></i> Luma
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <a class="image" href="/giftideas/kids">
+            <img src="/assets/giftideas/category/kids.jpg" alt="Kids" class="load" />
+        </a>
+        <div class="content hidden">
+            <a class="header" href="/giftideas/kids">Kids</a>
+            <div class="content">
+                ...
+            </div>
+        </div>
+        <div class="extra content">
+            <a class="center" href="/giftideas/kids">
+                <i class="add icon"></i> Kids
+            </a>
+        </div>
+    </div>
+    <div class="card">
+        <a class="image" href="/giftideas/home">
+            <img src="/assets/giftideas/category/home.jpg" alt="Home" class="load" />
+        </a>
+        <div class="content hidden">
+            <a class="header" href="/giftideas/home">Home</a>
+            <div class="content">
+                ...
+            </div>
+        </div>
+        <div class="extra content">
+            <a class="center" href="/giftideas/home">
+                <i class="add icon"></i> Home
+            </a>
+        </div>
+    </div>
+
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/music"><img src="/assets/giftideas/category/music.jpg" alt="Music"/><div class="tilelabel">Music</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/luma"><img src="/assets/giftideas/category/luma.png" alt="Luma Diamonds"/><div class="tilelabel">Luma Diamonds</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/cute"><img src="/assets/giftideas/category/cute.jpg" alt="Cute" class="load" /><div class="tilelabel">Cute</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/baby"><img src="/assets/giftideas/category/Baby.jpg" alt="Baby" class="load" /><div class="tilelabel">Baby</div></a></div>
         </div>
         <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/kids"><img src="/assets/giftideas/category/kids.jpg" alt="Kids"/><div class="tilelabel">Kids</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/home"><img src="/assets/giftideas/category/home.jpg" alt="Home"/><div class="tilelabel">Home</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/forher"><img src="/assets/giftideas/category/forHer.jpg" alt="For Her" class="load" /><div class="tilelabel">For Her</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/forhim"><img src="/assets/giftideas/category/forHim.jpg" alt="For Him" class="load" /><div class="tilelabel">For Him</div></a></div>
         </div>
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/cute"><img src="/assets/giftideas/category/cute.jpg" alt="Cute"/><div class="tilelabel">Cute</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/baby"><img src="/assets/giftideas/category/Baby.jpg" alt="Baby"/><div class="tilelabel">Baby</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/cool"><img src="/assets/giftideas/category/cool.jpg" alt="Cool" class="load" /><div class="tilelabel">Cool</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/office"><img src="/assets/giftideas/category/office.jpg" alt="Office" class="load" /><div class="tilelabel">Office</div></a></div>
         </div>
         <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/forher"><img src="/assets/giftideas/category/forHer.jpg" alt="For Her"/><div class="tilelabel">For Her</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/forhim"><img src="/assets/giftideas/category/forHim.jpg" alt="For Him"/><div class="tilelabel">For Him</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/farewell"><img src="/assets/giftideas/category/Farewell.jpg" alt="Farewell" class="load" /><div class="tilelabel">Farewell</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/sympathy"><img src="/assets/giftideas/category/sympathy.jpg" alt="Sympathy" class="load" /><div class="tilelabel">Sympathy</div></a></div>
         </div>
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/cool"><img src="/assets/giftideas/category/cool.jpg" alt="Cool"/><div class="tilelabel">Cool</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/office"><img src="/assets/giftideas/category/office.jpg" alt="Office"/><div class="tilelabel">Office</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/beauty"><img src="/assets/giftideas/category/beauty.jpg" alt="Beauty" class="load" /><div class="tilelabel">Beauty</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/wine"><img src="/assets/giftideas/category/wine.jpg" alt="Wine" class="load" /><div class="tilelabel">Wine</div></a></div>
         </div>
         <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/farewell"><img src="/assets/giftideas/category/Farewell.jpg" alt="Farewell"/><div class="tilelabel">Farewell</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/sympathy"><img src="/assets/giftideas/category/sympathy.jpg" alt="Sympathy"/><div class="tilelabel">Sympathy</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/butterlondon"><img src="/assets/giftideas/category/butterLONDON.jpg" alt="butter LONDON" class="load" /><div class="tilelabel">butter LONDON</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/petlovers"><img src="/assets/giftideas/category/pet-lovers.jpg" alt="Pet Lovers" class="load" /><div class="tilelabel">Pet Lovers</div></a></div>
         </div>
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/beauty"><img src="/assets/giftideas/category/beauty.jpg" alt="Beauty"/><div class="tilelabel">Beauty</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/wine"><img src="/assets/giftideas/category/wine.jpg" alt="Wine"/><div class="tilelabel">Wine</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/wedding"><img src="/assets/giftideas/category/Wedding.jpg" alt="Wedding" class="load" /><div class="tilelabel">Wedding</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/graduation"><img src="/assets/giftideas/category/graduation.jpg" alt="Graduation" class="load" /><div class="tilelabel">Graduation</div></a></div>
         </div>
         <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/butterlondon"><img src="/assets/giftideas/category/butterLONDON.jpg" alt="butter LONDON"/><div class="tilelabel">butter LONDON</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/petlovers"><img src="/assets/giftideas/category/pet-lovers.jpg" alt="Pet Lovers"/><div class="tilelabel">Pet Lovers</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/red"><img src="/assets/giftideas/category/red.jpg" alt="Wear Red" class="load" /><div class="tilelabel">Wear Red</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/pisces"><img src="/assets/giftideas/category/pisces.jpg" alt="Pisces" class="load"  class="load" /><div class="tilelabel">Pisces</div></a></div>
         </div>
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/wedding"><img src="/assets/giftideas/category/Wedding.jpg" alt="Wedding"/><div class="tilelabel">Wedding</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/graduation"><img src="/assets/giftideas/category/graduation.jpg" alt="Graduation"/><div class="tilelabel">Graduation</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/patriots"><img src="/assets/giftideas/category/Patriots.jpg" alt="Patriots" class="load" /><div class="tilelabel">Patriots</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/seahawks"><img src="/assets/giftideas/category/Seahawks.jpg" alt="Seahawks" class="load" /><div class="tilelabel">Seahawks</div></a></div>
         </div>
         <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/red"><img src="/assets/giftideas/category/red.jpg" alt="Wear Red"/><div class="tilelabel">Wear Red</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/pisces"><img src="/assets/giftideas/category/pisces.jpg" alt="Pisces"/><div class="tilelabel">Pisces</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/employee"><img src="/assets/giftideas/category/employee.jpg" alt="Employee Appreciation" class="load" /><div class="tilelabel">Employee Appreciation</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/boss"><img src="/assets/giftideas/category/Boss.jpg" alt="Boss" class="load" /><div class="tilelabel">Boss</div></a></div>
         </div>
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/patriots"><img src="/assets/giftideas/category/Patriots.jpg" alt="Patriots"/><div class="tilelabel">Patriots</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/seahawks"><img src="/assets/giftideas/category/Seahawks.jpg" alt="Seahawks"/><div class="tilelabel">Seahawks</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/teacher"><img src="/assets/giftideas/category/teacher.jpg" alt="Teacher" class="load" /><div class="tilelabel">Teacher</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/electronics"><img src="/assets/giftideas/category/electronics.jpg" alt="Electronics" class="load" /><div class="tilelabel">Electronics</div></a></div>
         </div>
         <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/employee"><img src="/assets/giftideas/category/employee.jpg" alt="Employee Appreciation"/><div class="tilelabel">Employee Appreciation</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/boss"><img src="/assets/giftideas/category/Boss.jpg" alt="Boss"/><div class="tilelabel">Boss</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/outdoors"><img src="/assets/giftideas/category/outdoors.jpg" alt="Outdoors" class="load" /><div class="tilelabel">Outdoors</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/green"><img src="/assets/giftideas/category/green.jpg" alt="Green and Organic" class="load" /><div class="tilelabel">Green and Organic</div></a></div>
         </div>
         <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/teacher"><img src="/assets/giftideas/category/teacher.jpg" alt="Teacher"/><div class="tilelabel">Teacher</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/electronics"><img src="/assets/giftideas/category/electronics.jpg" alt="Electronics"/><div class="tilelabel">Electronics</div></a></div>
-        </div>
-        <div class="group right">
-             <div class="tile"><a target="_top" href="/giftideas/outdoors"><img src="/assets/giftideas/category/outdoors.jpg" alt="Outdoors"/><div class="tilelabel">Outdoors</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/green"><img src="/assets/giftideas/category/green.jpg" alt="Green and Organic"/><div class="tilelabel">Green and Organic</div></a></div>
-        </div>
-        <div class="group left">
-             <div class="tile"><a target="_top" href="/giftideas/military"><img src="/assets/giftideas/category/Military.jpg" alt="Military"/><div class="tilelabel">Military</div></a></div>
-             <div class="tile"><a target="_top" href="/giftideas/giftcard"><img src="/assets/giftideas/category/giftcard.jpg" alt="Gift Cards"/><div class="tilelabel">Gift Cards</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/military"><img src="/assets/giftideas/category/Military.jpg" alt="Military" class="load" /><div class="tilelabel">Military</div></a></div>
+             <div class="tile"><a target="_top" href="/giftideas/giftcard"><img src="/assets/giftideas/category/giftcard.jpg" alt="Gift Cards" class="load" /><div class="tilelabel">Gift Cards</div></a></div>
         </div>
         <div class="clear"></div>
     </div>

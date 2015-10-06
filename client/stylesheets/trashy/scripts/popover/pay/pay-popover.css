@@ -9,7 +9,7 @@ iframe[name='google_conversion_frame'] {
 .pay-popover h1 {
   margin-bottom: 0.2em; }
 .pay-popover div.powered {
-  font: 12px / 2 Gotham, sans-serif;
+  font: 16px / 2 Gotham, sans-serif;
   margin-bottom: 1em; }
   .pay-popover div.powered img {
     height: 1.5em;
@@ -140,7 +140,7 @@ iframe[name='google_conversion_frame'] {
       vertical-align: top; }
     .pay-popover form div.card-entry span.tooltip-icon {
       position: relative;
-      font: 12px / 2 Gotham, sans-serif;
+      font: 16px / 2 Gotham, sans-serif;
       font-weight: 700;
       color: black;
       margin-top: 0; }
@@ -271,7 +271,7 @@ iframe[name='google_conversion_frame'] {
   .pay-popover form span.error {
     margin: 1em;
     padding: 0.5em;
-    font: 12px / 2 Gotham, sans-serif;
+    font: 16px / 2 Gotham, sans-serif;
     display: block; }
   .pay-popover form button.pay {
     margin-top: 0.4em; }

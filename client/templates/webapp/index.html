@@ -35,8 +35,8 @@
 	 # ###############################################################}
   	<link rel="stylesheet" href="/plugins/pace/themes/red/pace-theme-minimal.css">
 	<link rel="stylesheet" href="/ui/ui.min.css">
-	<link rel="stylesheet" href="/stylesheets/ui/custom.css">
 	<link rel="stylesheet" href="/stylesheets/compiled.css">
+	<link rel="stylesheet" href="/stylesheets/ui/custom.css">
 	<script>paceOptions = {elements: false,document: true, restartOnRequestAfter: false}</script>
 	<script src="/plugins/pace/pace.min.js"></script>
 	<script src="/scripts/webapp/vendor.js"></script>
@@ -104,20 +104,21 @@
 <body ng-cloak>
     <gs-menu></gs-menu>
     <gs-toast></gs-toast>
-
+	<div class="pusher" data-ng-class="{grey: greybg}" >
     {% if not hide_header %}
 	{% include 'header/header.html' %}
 	{% endif %}
-
+		
     {% if hide_body %}
 	<div id="angular-view" ng-view gs-view style="display:none"></div>
 	{% else %}
-	<div id="angular-view" ng-view gs-view class="ui main container"></div>
+	<div id="angular-view" ng-controller="ViewController as view" ng-view gs-view class="ui main container fade" data-ng-class="{full: fullContainer}" ng-animate=" 'fade' "></div>
 	{% endif %}
 
     {% if not hide_footer %}
 	{% include 'footer/semantic-footer.html' %}
 	{% endif %}
+	</div>
 
     <gs-popover></gs-popover>
 	<script src="/ui/ui.min.js"></script>

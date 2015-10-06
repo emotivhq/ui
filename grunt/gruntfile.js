@@ -204,7 +204,8 @@ module.exports = function(grunt) {
                     '../client/bower_components/imagesloaded/imagesloaded.pkgd.min.js',
 //					'../client/bower_components/masonry/dist/masonry.pkgd.min.js',
 //					'../client/bower_components/sequencejs/scripts/sequence.min.js',
-//					'../client/scripts/vendor/sequence-theme.modern-slide-in.min.js'
+//					'../client/scripts/vendor/sequence-theme.modern-slide-in.min.js',
+					'../client/bower_components/lodash/dist/lodash.min.js'
 					 ],
                 dest: '../client/scripts/webapp/vendor.js'
             },
@@ -229,11 +230,13 @@ module.exports = function(grunt) {
                     '../client/bower_components/angulartics/dist/angulartics-gtm.min.js',
                     '../client/bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
                     '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
+                    '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
 //					'../client/bower_components/angular-chosen-localytics/chosen.js',
 //					'../client/bower_components/angular-flexslider/angular-flexslider.js',
 //					'../client/bower_components/angular-aria/angular-aria.min.js',
-//					'../client/bower_components/angular-animate/angular-animate.min.js',
-//					'../client/bower_components/angular-material/angular-material.min.js'
+					'../client/bower_components/angular-animate/angular-animate.min.js',
+//					'../client/bower_components/angular-material/angular-material.min.js',
+					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js'
 				],
                 dest: '../client/scripts/webapp/angular.js'
             },			
@@ -323,10 +326,41 @@ module.exports = function(grunt) {
                     '../client/scripts/button/campaign-giftstart-it.directive.js',
                     '../client/scripts/header/giftstart-it-header.directive.js',
                     '../client/scripts/header/subscribe-header.directive.js',
-                    '../client/scripts/header/subscribe-header.directive.js'				
+                    '../client/scripts/header/subscribe-header.directive.js',
+					'../client/scripts/directives/**/*.js', 
+					'../client/scripts/decorators/**/*.js', 
+					'../client/scripts/filters/**/*.js',
+					'../client/scripts/directives/**/*.js',
+					'../client/scripts/services/**/*.js',
+					'../client/scripts/controllers/**/*.js'
+					
 				],
                 dest: '../client/scripts/webapp/app.js'
             },
+            controllers: {
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapStyle: 'link'
+                },
+                src: ['../client/scripts/controllers/**/*.js'],
+				dest: '../client/scripts/webapp/controllers.js'
+			},
+            components: {
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapStyle: 'link'
+                },
+                src: ['../client/scripts/directives/**/*.js', '../client/scripts/decorators/**/*.js', '../client/scripts/filters/**/*.js'],
+				dest: '../client/scripts/webapp/components.js'
+			},
+            services: {
+                options: {
+                    sourceMap: createSourceMaps,
+                    sourceMapStyle: 'link'
+                },
+                src: ['../client/scripts/services/**/*.js'],
+				dest: '../client/scripts/webapp/services.js'
+			},
 			core: {
                 options: {
                     sourceMap: createSourceMaps,
@@ -345,7 +379,7 @@ module.exports = function(grunt) {
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css'],
+                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css'],
                 dest: '../client/stylesheets/compiled.css'
             },
             sassyvendor: {
@@ -568,7 +602,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('scripts', ['build-scripts']);		// soup to nuts clean, build, release scripts
 	grunt.registerTask('js', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
     // Individual js tasks
-	grunt.registerTask('build-scripts', ['clean-app', 'clean-scripts', 'ngtemplates', 'concat:scripts', 'concat:vendor', 'concat:angular', 'concat:app', 'concat:core']);		// clean & build dev js
+	grunt.registerTask('build-scripts', ['clean-app', 'clean-scripts', 'ngtemplates', 'concat:scripts', 'concat:vendor', 'concat:angular', 'concat:app', 'concat:controllers', 'concat:components', 'concat:services', 'concat:core']);		// clean & build dev js
     grunt.registerTask('rel-scripts', ['uglify']); 		// clean & release built base app js
 	grunt.registerTask('clean-app', ['clean:webapp']); 					// clean only build js
 	grunt.registerTask('clean-scripts', ['clean:out']); 					// clean only release js

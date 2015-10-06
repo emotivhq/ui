@@ -18,7 +18,7 @@ $(document)
       });
 
       // lazy load images
-      $('.image').visibility({
+      $('.load').visibility({
         type: 'image',
         transition: 'vertical flip in',
         duration: 500
@@ -33,5 +33,16 @@ $(document)
       $('.ui.sidebar')
         .sidebar('attach events', '.toc.item')
       ;
+	
+	  // close message container
+	  $('.message .close')
+  		.on('click', function() {
+    		$(this)
+      			.closest('.message')
+      			.transition('fade')
+    		;
+  		})
+	  ;
+
     })
   ;

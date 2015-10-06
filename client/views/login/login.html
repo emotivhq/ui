@@ -1,5 +1,5 @@
-<div class="userlogin" ng-controller="LoginOrCreateController">
-    <div class="userlogin__emaillogin login-block" ng-show="showCreate">
+<div class="userlogin ui equal grid stackable centered center aligned" ng-controller="LoginOrCreateController" class="ui grid stackable">
+    <div class="userlogin__emaillogin login-block ui six wide column vertical small bottom" ng-show="showCreate">
         <ng-include src="'/views/login/login-form.html'"></ng-include>
         <div class="userlogin__createacc switchtxt" ng-hide="showSocials">
             <span>Don't have an account? </span>
@@ -9,8 +9,8 @@
     <div class="vertical-line-block">
         <div class="vertical-line" ng-show="showSocials"/>
     </div>
-    <div class="userlogin__sociallogin login-block" ng-show="showSocials">
-        <h4>Or {{showCreate?"create account":"login"}} with social media:</h4>
+    <div class="userlogin__sociallogin login-block ui six wide column center aligned" ng-show="showSocials">
+        <h3 class="ui computer tablet">Or social media:</h3>
         <div class="social">
             <a class="social__link linky" ng-click="doLoginFacebook()"><img class="social__icons" src="/assets/login/facebook.png"></a><br/>
             <a class="social__link linky" ng-click="doLoginTwitter()"><img class="social__icons" src="/assets/login/twitter.png"></a><br/>

@@ -1378,6 +1378,93 @@ $.extend($.fn, {
  */
 
 (function(){function e(){}function t(e,t){for(var n=e.length;n--;)if(e[n].listener===t)return n;return-1}function n(e){return function(){return this[e].apply(this,arguments)}}var i=e.prototype,r=this,o=r.EventEmitter;i.getListeners=function(e){var t,n,i=this._getEvents();if("object"==typeof e){t={};for(n in i)i.hasOwnProperty(n)&&e.test(n)&&(t[n]=i[n])}else t=i[e]||(i[e]=[]);return t},i.flattenListeners=function(e){var t,n=[];for(t=0;e.length>t;t+=1)n.push(e[t].listener);return n},i.getListenersAsObject=function(e){var t,n=this.getListeners(e);return n instanceof Array&&(t={},t[e]=n),t||n},i.addListener=function(e,n){var i,r=this.getListenersAsObject(e),o="object"==typeof n;for(i in r)r.hasOwnProperty(i)&&-1===t(r[i],n)&&r[i].push(o?n:{listener:n,once:!1});return this},i.on=n("addListener"),i.addOnceListener=function(e,t){return this.addListener(e,{listener:t,once:!0})},i.once=n("addOnceListener"),i.defineEvent=function(e){return this.getListeners(e),this},i.defineEvents=function(e){for(var t=0;e.length>t;t+=1)this.defineEvent(e[t]);return this},i.removeListener=function(e,n){var i,r,o=this.getListenersAsObject(e);for(r in o)o.hasOwnProperty(r)&&(i=t(o[r],n),-1!==i&&o[r].splice(i,1));return this},i.off=n("removeListener"),i.addListeners=function(e,t){return this.manipulateListeners(!1,e,t)},i.removeListeners=function(e,t){return this.manipulateListeners(!0,e,t)},i.manipulateListeners=function(e,t,n){var i,r,o=e?this.removeListener:this.addListener,s=e?this.removeListeners:this.addListeners;if("object"!=typeof t||t instanceof RegExp)for(i=n.length;i--;)o.call(this,t,n[i]);else for(i in t)t.hasOwnProperty(i)&&(r=t[i])&&("function"==typeof r?o.call(this,i,r):s.call(this,i,r));return this},i.removeEvent=function(e){var t,n=typeof e,i=this._getEvents();if("string"===n)delete i[e];else if("object"===n)for(t in i)i.hasOwnProperty(t)&&e.test(t)&&delete i[t];else delete this._events;return this},i.removeAllListeners=n("removeEvent"),i.emitEvent=function(e,t){var n,i,r,o,s=this.getListenersAsObject(e);for(r in s)if(s.hasOwnProperty(r))for(i=s[r].length;i--;)n=s[r][i],n.once===!0&&this.removeListener(e,n.listener),o=n.listener.apply(this,t||[]),o===this._getOnceReturnValue()&&this.removeListener(e,n.listener);return this},i.trigger=n("emitEvent"),i.emit=function(e){var t=Array.prototype.slice.call(arguments,1);return this.emitEvent(e,t)},i.setOnceReturnValue=function(e){return this._onceReturnValue=e,this},i._getOnceReturnValue=function(){return this.hasOwnProperty("_onceReturnValue")?this._onceReturnValue:!0},i._getEvents=function(){return this._events||(this._events={})},e.noConflict=function(){return r.EventEmitter=o,e},"function"==typeof define&&define.amd?define("eventEmitter/EventEmitter",[],function(){return e}):"object"==typeof module&&module.exports?module.exports=e:this.EventEmitter=e}).call(this),function(e){function t(t){var n=e.event;return n.target=n.target||n.srcElement||t,n}var n=document.documentElement,i=function(){};n.addEventListener?i=function(e,t,n){e.addEventListener(t,n,!1)}:n.attachEvent&&(i=function(e,n,i){e[n+i]=i.handleEvent?function(){var n=t(e);i.handleEvent.call(i,n)}:function(){var n=t(e);i.call(e,n)},e.attachEvent("on"+n,e[n+i])});var r=function(){};n.removeEventListener?r=function(e,t,n){e.removeEventListener(t,n,!1)}:n.detachEvent&&(r=function(e,t,n){e.detachEvent("on"+t,e[t+n]);try{delete e[t+n]}catch(i){e[t+n]=void 0}});var o={bind:i,unbind:r};"function"==typeof define&&define.amd?define("eventie/eventie",o):e.eventie=o}(this),function(e,t){"function"==typeof define&&define.amd?define(["eventEmitter/EventEmitter","eventie/eventie"],function(n,i){return t(e,n,i)}):"object"==typeof exports?module.exports=t(e,require("wolfy87-eventemitter"),require("eventie")):e.imagesLoaded=t(e,e.EventEmitter,e.eventie)}(window,function(e,t,n){function i(e,t){for(var n in t)e[n]=t[n];return e}function r(e){return"[object Array]"===d.call(e)}function o(e){var t=[];if(r(e))t=e;else if("number"==typeof e.length)for(var n=0,i=e.length;i>n;n++)t.push(e[n]);else t.push(e);return t}function s(e,t,n){if(!(this instanceof s))return new s(e,t);"string"==typeof e&&(e=document.querySelectorAll(e)),this.elements=o(e),this.options=i({},this.options),"function"==typeof t?n=t:i(this.options,t),n&&this.on("always",n),this.getImages(),a&&(this.jqDeferred=new a.Deferred);var r=this;setTimeout(function(){r.check()})}function f(e){this.img=e}function c(e){this.src=e,v[e]=this}var a=e.jQuery,u=e.console,h=u!==void 0,d=Object.prototype.toString;s.prototype=new t,s.prototype.options={},s.prototype.getImages=function(){this.images=[];for(var e=0,t=this.elements.length;t>e;e++){var n=this.elements[e];"IMG"===n.nodeName&&this.addImage(n);var i=n.nodeType;if(i&&(1===i||9===i||11===i))for(var r=n.querySelectorAll("img"),o=0,s=r.length;s>o;o++){var f=r[o];this.addImage(f)}}},s.prototype.addImage=function(e){var t=new f(e);this.images.push(t)},s.prototype.check=function(){function e(e,r){return t.options.debug&&h&&u.log("confirm",e,r),t.progress(e),n++,n===i&&t.complete(),!0}var t=this,n=0,i=this.images.length;if(this.hasAnyBroken=!1,!i)return this.complete(),void 0;for(var r=0;i>r;r++){var o=this.images[r];o.on("confirm",e),o.check()}},s.prototype.progress=function(e){this.hasAnyBroken=this.hasAnyBroken||!e.isLoaded;var t=this;setTimeout(function(){t.emit("progress",t,e),t.jqDeferred&&t.jqDeferred.notify&&t.jqDeferred.notify(t,e)})},s.prototype.complete=function(){var e=this.hasAnyBroken?"fail":"done";this.isComplete=!0;var t=this;setTimeout(function(){if(t.emit(e,t),t.emit("always",t),t.jqDeferred){var n=t.hasAnyBroken?"reject":"resolve";t.jqDeferred[n](t)}})},a&&(a.fn.imagesLoaded=function(e,t){var n=new s(this,e,t);return n.jqDeferred.promise(a(this))}),f.prototype=new t,f.prototype.check=function(){var e=v[this.img.src]||new c(this.img.src);if(e.isConfirmed)return this.confirm(e.isLoaded,"cached was confirmed"),void 0;if(this.img.complete&&void 0!==this.img.naturalWidth)return this.confirm(0!==this.img.naturalWidth,"naturalWidth"),void 0;var t=this;e.on("confirm",function(e,n){return t.confirm(e.isLoaded,n),!0}),e.check()},f.prototype.confirm=function(e,t){this.isLoaded=e,this.emit("confirm",this,t)};var v={};return c.prototype=new t,c.prototype.check=function(){if(!this.isChecked){var e=new Image;n.bind(e,"load",this),n.bind(e,"error",this),e.src=this.src,this.isChecked=!0}},c.prototype.handleEvent=function(e){var t="on"+e.type;this[t]&&this[t](e)},c.prototype.onload=function(e){this.confirm(!0,"onload"),this.unbindProxyEvents(e)},c.prototype.onerror=function(e){this.confirm(!1,"onerror"),this.unbindProxyEvents(e)},c.prototype.confirm=function(e,t){this.isConfirmed=!0,this.isLoaded=e,this.emit("confirm",this,t)},c.prototype.unbindProxyEvents=function(e){n.unbind(e.target,"load",this),n.unbind(e.target,"error",this)},s});
+/**
+ * @license
+ * Lo-Dash 2.4.2 (Custom Build) lodash.com/license | Underscore.js 1.5.2 underscorejs.org/LICENSE
+ * Build: `lodash modern -o ./dist/lodash.js`
+ */
+;(function(){function n(n,r,t){for(var e=(t||0)-1,u=n?n.length:0;++e<u;)if(n[e]===r)return e;return-1}function r(r,t){var e=typeof t;if(r=r.cache,"boolean"==e||null==t)return r[t]?0:-1;"number"!=e&&"string"!=e&&(e="object");var u="number"==e?t:m+t;return r=(r=r[e])&&r[u],"object"==e?r&&n(r,t)>-1?0:-1:r?0:-1}function t(n){var r=this.cache,t=typeof n;if("boolean"==t||null==n)r[n]=!0;else{"number"!=t&&"string"!=t&&(t="object");var e="number"==t?n:m+n,u=r[t]||(r[t]={});"object"==t?(u[e]||(u[e]=[])).push(n):u[e]=!0;
+
+}}function e(n){return n.charCodeAt(0)}function u(n,r){for(var t=n.criteria,e=r.criteria,u=-1,o=t.length;++u<o;){var a=t[u],i=e[u];if(a!==i){if(a>i||"undefined"==typeof a)return 1;if(a<i||"undefined"==typeof i)return-1}}return n.index-r.index}function o(n){var r=-1,e=n.length,u=n[0],o=n[e/2|0],a=n[e-1];if(u&&"object"==typeof u&&o&&"object"==typeof o&&a&&"object"==typeof a)return!1;var i=f();i["false"]=i["null"]=i["true"]=i.undefined=!1;var l=f();for(l.array=n,l.cache=i,l.push=t;++r<e;)l.push(n[r]);
+
+return l}function a(n){return"\\"+G[n]}function i(){return h.pop()||[]}function f(){return g.pop()||{array:null,cache:null,criteria:null,"false":!1,index:0,"null":!1,number:null,object:null,push:null,string:null,"true":!1,undefined:!1,value:null}}function l(n){n.length=0,h.length<_&&h.push(n)}function c(n){var r=n.cache;r&&c(r),n.array=n.cache=n.criteria=n.object=n.number=n.string=n.value=null,g.length<_&&g.push(n)}function p(n,r,t){r||(r=0),"undefined"==typeof t&&(t=n?n.length:0);for(var e=-1,u=t-r||0,o=Array(u<0?0:u);++e<u;)o[e]=n[r+e];
+
+return o}function s(t){function h(n){return n&&"object"==typeof n&&!Yt(n)&&Tt.call(n,"__wrapped__")?n:new g(n)}function g(n,r){this.__chain__=!!r,this.__wrapped__=n}function _(n){function r(){if(e){var n=p(e);$t.apply(n,arguments)}if(this instanceof r){var o=J(t.prototype),a=t.apply(o,n||arguments);return Sn(a)?a:o}return t.apply(u,n||arguments)}var t=n[0],e=n[2],u=n[4];return Xt(r,n),r}function G(n,r,t,e,u){if(t){var o=t(n);if("undefined"!=typeof o)return o}var a=Sn(n);if(!a)return n;var f=Nt.call(n);
+
+if(!K[f])return n;var c=Jt[f];switch(f){case F:case B:return new c(+n);case q:case P:return new c(n);case L:return o=c(n.source,C.exec(n)),o.lastIndex=n.lastIndex,o}var s=Yt(n);if(r){var v=!e;e||(e=i()),u||(u=i());for(var h=e.length;h--;)if(e[h]==n)return u[h];o=s?c(n.length):{}}else o=s?p(n):oe({},n);return s&&(Tt.call(n,"index")&&(o.index=n.index),Tt.call(n,"input")&&(o.input=n.input)),r?(e.push(n),u.push(o),(s?Xn:fe)(n,function(n,a){o[a]=G(n,r,t,e,u)}),v&&(l(e),l(u)),o):o}function J(n,r){return Sn(n)?zt(n):{};
+
+}function Q(n,r,t){if("function"!=typeof n)return Yr;if("undefined"==typeof r||!("prototype"in n))return n;var e=n.__bindData__;if("undefined"==typeof e&&(Qt.funcNames&&(e=!n.name),e=e||!Qt.funcDecomp,!e)){var u=At.call(n);Qt.funcNames||(e=!O.test(u)),e||(e=I.test(u),Xt(n,e))}if(e===!1||e!==!0&&1&e[1])return n;switch(t){case 1:return function(t){return n.call(r,t)};case 2:return function(t,e){return n.call(r,t,e)};case 3:return function(t,e,u){return n.call(r,t,e,u)};case 4:return function(t,e,u,o){
+return n.call(r,t,e,u,o)}}return $r(n,r)}function X(n){function r(){var n=f?a:this;if(u){var h=p(u);$t.apply(h,arguments)}if((o||c)&&(h||(h=p(arguments)),o&&$t.apply(h,o),c&&h.length<i))return e|=16,X([t,s?e:-4&e,h,null,a,i]);if(h||(h=arguments),l&&(t=n[v]),this instanceof r){n=J(t.prototype);var g=t.apply(n,h);return Sn(g)?g:n}return t.apply(n,h)}var t=n[0],e=n[1],u=n[2],o=n[3],a=n[4],i=n[5],f=1&e,l=2&e,c=4&e,s=8&e,v=t;return Xt(r,n),r}function Y(t,e){var u=-1,a=ln(),i=t?t.length:0,f=i>=b&&a===n,l=[];
+
+if(f){var p=o(e);p?(a=r,e=p):f=!1}for(;++u<i;){var s=t[u];a(e,s)<0&&l.push(s)}return f&&c(e),l}function nn(n,r,t,e){for(var u=(e||0)-1,o=n?n.length:0,a=[];++u<o;){var i=n[u];if(i&&"object"==typeof i&&"number"==typeof i.length&&(Yt(i)||vn(i))){r||(i=nn(i,r,t));var f=-1,l=i.length,c=a.length;for(a.length+=l;++f<l;)a[c++]=i[f]}else t||a.push(i)}return a}function rn(n,r,t,e,u,o){if(t){var a=t(n,r);if("undefined"!=typeof a)return!!a}if(n===r)return 0!==n||1/n==1/r;var f=typeof n,c=typeof r;if(n===n&&(!n||!V[f])&&(!r||!V[c]))return!1;
+
+if(null==n||null==r)return n===r;var p=Nt.call(n),s=Nt.call(r);if(p==T&&(p=z),s==T&&(s=z),p!=s)return!1;switch(p){case F:case B:return+n==+r;case q:return n!=+n?r!=+r:0==n?1/n==1/r:n==+r;case L:case P:return n==jt(r)}var h=p==$;if(!h){var g=Tt.call(n,"__wrapped__"),y=Tt.call(r,"__wrapped__");if(g||y)return rn(g?n.__wrapped__:n,y?r.__wrapped__:r,t,e,u,o);if(p!=z)return!1;var m=n.constructor,b=r.constructor;if(m!=b&&!(In(m)&&m instanceof m&&In(b)&&b instanceof b)&&"constructor"in n&&"constructor"in r)return!1;
+
+}var _=!u;u||(u=i()),o||(o=i());for(var d=u.length;d--;)if(u[d]==n)return o[d]==r;var w=0;if(a=!0,u.push(n),o.push(r),h){if(d=n.length,w=r.length,a=w==d,a||e)for(;w--;){var j=d,k=r[w];if(e)for(;j--&&!(a=rn(n[j],k,t,e,u,o)););else if(!(a=rn(n[w],k,t,e,u,o)))break}}else ie(r,function(r,i,f){return Tt.call(f,i)?(w++,a=Tt.call(n,i)&&rn(n[i],r,t,e,u,o)):v}),a&&!e&&ie(n,function(n,r,t){return Tt.call(t,r)?a=--w>-1:v});return u.pop(),o.pop(),_&&(l(u),l(o)),a}function tn(n,r,t,e,u){(Yt(r)?Xn:fe)(r,function(r,o){
+var a,i,f=r,l=n[o];if(r&&((i=Yt(r))||le(r))){for(var c=e.length;c--;)if(a=e[c]==r){l=u[c];break}if(!a){var p;t&&(f=t(l,r),(p="undefined"!=typeof f)&&(l=f)),p||(l=i?Yt(l)?l:[]:le(l)?l:{}),e.push(r),u.push(l),p||tn(l,r,t,e,u)}}else t&&(f=t(l,r),"undefined"==typeof f&&(f=r)),"undefined"!=typeof f&&(l=f);n[o]=l})}function en(n,r){return n+St(Ht()*(r-n+1))}function un(t,e,u){var a=-1,f=ln(),p=t?t.length:0,s=[],v=!e&&p>=b&&f===n,h=u||v?i():s;if(v){var g=o(h);f=r,h=g}for(;++a<p;){var y=t[a],m=u?u(y,a,t):y;
+
+(e?!a||h[h.length-1]!==m:f(h,m)<0)&&((u||v)&&h.push(m),s.push(y))}return v?(l(h.array),c(h)):u&&l(h),s}function on(n){return function(r,t,e){var u={};t=h.createCallback(t,e,3);var o=-1,a=r?r.length:0;if("number"==typeof a)for(;++o<a;){var i=r[o];n(u,i,t(i,o,r),r)}else fe(r,function(r,e,o){n(u,r,t(r,e,o),o)});return u}}function an(n,r,t,e,u,o){var a=1&r,i=2&r,f=4&r,l=16&r,c=32&r;if(!i&&!In(n))throw new kt;l&&!t.length&&(r&=-17,l=t=!1),c&&!e.length&&(r&=-33,c=e=!1);var s=n&&n.__bindData__;if(s&&s!==!0)return s=p(s),
+s[2]&&(s[2]=p(s[2])),s[3]&&(s[3]=p(s[3])),!a||1&s[1]||(s[4]=u),!a&&1&s[1]&&(r|=8),!f||4&s[1]||(s[5]=o),l&&$t.apply(s[2]||(s[2]=[]),t),c&&Wt.apply(s[3]||(s[3]=[]),e),s[1]|=r,an.apply(null,s);var v=1==r||17===r?_:X;return v([n,r,t,e,u,o])}function fn(n){return re[n]}function ln(){var r=(r=h.indexOf)===br?n:r;return r}function cn(n){return"function"==typeof n&&Rt.test(n)}function pn(n){var r,t;return n&&Nt.call(n)==z&&(r=n.constructor,!In(r)||r instanceof r)?(ie(n,function(n,r){t=r}),"undefined"==typeof t||Tt.call(n,t)):!1;
+
+}function sn(n){return te[n]}function vn(n){return n&&"object"==typeof n&&"number"==typeof n.length&&Nt.call(n)==T||!1}function hn(n,r,t,e){return"boolean"!=typeof r&&null!=r&&(e=t,t=r,r=!1),G(n,r,"function"==typeof t&&Q(t,e,1))}function gn(n,r,t){return G(n,!0,"function"==typeof r&&Q(r,t,1))}function yn(n,r){var t=J(n);return r?oe(t,r):t}function mn(n,r,t){var e;return r=h.createCallback(r,t,3),fe(n,function(n,t,u){return r(n,t,u)?(e=t,!1):v}),e}function bn(n,r,t){var e;return r=h.createCallback(r,t,3),
+dn(n,function(n,t,u){return r(n,t,u)?(e=t,!1):v}),e}function _n(n,r,t){var e=[];ie(n,function(n,r){e.push(r,n)});var u=e.length;for(r=Q(r,t,3);u--&&r(e[u--],e[u],n)!==!1;);return n}function dn(n,r,t){var e=ne(n),u=e.length;for(r=Q(r,t,3);u--;){var o=e[u];if(r(n[o],o,n)===!1)break}return n}function wn(n){var r=[];return ie(n,function(n,t){In(n)&&r.push(t)}),r.sort()}function jn(n,r){return n?Tt.call(n,r):!1}function kn(n){for(var r=-1,t=ne(n),e=t.length,u={};++r<e;){var o=t[r];u[n[o]]=o}return u}function xn(n){
+return n===!0||n===!1||n&&"object"==typeof n&&Nt.call(n)==F||!1}function Cn(n){return n&&"object"==typeof n&&Nt.call(n)==B||!1}function On(n){return n&&1===n.nodeType||!1}function Nn(n){var r=!0;if(!n)return r;var t=Nt.call(n),e=n.length;return t==$||t==P||t==T||t==z&&"number"==typeof e&&In(n.splice)?!e:(fe(n,function(){return r=!1}),r)}function Rn(n,r,t,e){return rn(n,r,"function"==typeof t&&Q(t,e,2))}function En(n){return Pt(n)&&!Kt(parseFloat(n))}function In(n){return"function"==typeof n}function Sn(n){
+return!(!n||!V[typeof n])}function An(n){return Tn(n)&&n!=+n}function Dn(n){return null===n}function Tn(n){return"number"==typeof n||n&&"object"==typeof n&&Nt.call(n)==q||!1}function $n(n){return n&&"object"==typeof n&&Nt.call(n)==L||!1}function Fn(n){return"string"==typeof n||n&&"object"==typeof n&&Nt.call(n)==P||!1}function Bn(n){return"undefined"==typeof n}function Wn(n,r,t){var e={};return r=h.createCallback(r,t,3),fe(n,function(n,t,u){e[t]=r(n,t,u)}),e}function qn(n){var r=arguments,t=2;if(!Sn(n))return n;
+
+if("number"!=typeof r[2]&&(t=r.length),t>3&&"function"==typeof r[t-2])var e=Q(r[--t-1],r[t--],2);else t>2&&"function"==typeof r[t-1]&&(e=r[--t]);for(var u=p(arguments,1,t),o=-1,a=i(),f=i();++o<t;)tn(n,u[o],e,a,f);return l(a),l(f),n}function zn(n,r,t){var e={};if("function"!=typeof r){var u=[];ie(n,function(n,r){u.push(r)}),u=Y(u,nn(arguments,!0,!1,1));for(var o=-1,a=u.length;++o<a;){var i=u[o];e[i]=n[i]}}else r=h.createCallback(r,t,3),ie(n,function(n,t,u){r(n,t,u)||(e[t]=n)});return e}function Ln(n){
+for(var r=-1,t=ne(n),e=t.length,u=ht(e);++r<e;){var o=t[r];u[r]=[o,n[o]]}return u}function Pn(n,r,t){var e={};if("function"!=typeof r)for(var u=-1,o=nn(arguments,!0,!1,1),a=Sn(n)?o.length:0;++u<a;){var i=o[u];i in n&&(e[i]=n[i])}else r=h.createCallback(r,t,3),ie(n,function(n,t,u){r(n,t,u)&&(e[t]=n)});return e}function Kn(n,r,t,e){var u=Yt(n);if(null==t)if(u)t=[];else{var o=n&&n.constructor,a=o&&o.prototype;t=J(a)}return r&&(r=h.createCallback(r,e,4),(u?Xn:fe)(n,function(n,e,u){return r(t,n,e,u)})),
+t}function Un(n){for(var r=-1,t=ne(n),e=t.length,u=ht(e);++r<e;)u[r]=n[t[r]];return u}function Mn(n){for(var r=arguments,t=-1,e=nn(r,!0,!1,1),u=r[2]&&r[2][r[1]]===n?1:e.length,o=ht(u);++t<u;)o[t]=n[e[t]];return o}function Vn(n,r,t){var e=-1,u=ln(),o=n?n.length:0,a=!1;return t=(t<0?Mt(0,o+t):t)||0,Yt(n)?a=u(n,r,t)>-1:"number"==typeof o?a=(Fn(n)?n.indexOf(r,t):u(n,r,t))>-1:fe(n,function(n){return++e<t?v:!(a=n===r)}),a}function Gn(n,r,t){var e=!0;r=h.createCallback(r,t,3);var u=-1,o=n?n.length:0;if("number"==typeof o)for(;++u<o&&(e=!!r(n[u],u,n)););else fe(n,function(n,t,u){
+return e=!!r(n,t,u)});return e}function Hn(n,r,t){var e=[];r=h.createCallback(r,t,3);var u=-1,o=n?n.length:0;if("number"==typeof o)for(;++u<o;){var a=n[u];r(a,u,n)&&e.push(a)}else fe(n,function(n,t,u){r(n,t,u)&&e.push(n)});return e}function Jn(n,r,t){r=h.createCallback(r,t,3);var e=-1,u=n?n.length:0;if("number"!=typeof u){var o;return fe(n,function(n,t,e){return r(n,t,e)?(o=n,!1):v}),o}for(;++e<u;){var a=n[e];if(r(a,e,n))return a}}function Qn(n,r,t){var e;return r=h.createCallback(r,t,3),Yn(n,function(n,t,u){
+return r(n,t,u)?(e=n,!1):v}),e}function Xn(n,r,t){var e=-1,u=n?n.length:0;if(r=r&&"undefined"==typeof t?r:Q(r,t,3),"number"==typeof u)for(;++e<u&&r(n[e],e,n)!==!1;);else fe(n,r);return n}function Yn(n,r,t){var e=n?n.length:0;if(r=r&&"undefined"==typeof t?r:Q(r,t,3),"number"==typeof e)for(;e--&&r(n[e],e,n)!==!1;);else{var u=ne(n);e=u.length,fe(n,function(n,t,o){return t=u?u[--e]:--e,r(o[t],t,o)})}return n}function Zn(n,r){var t=p(arguments,2),e=-1,u="function"==typeof r,o=n?n.length:0,a=ht("number"==typeof o?o:0);
+
+return Xn(n,function(n){a[++e]=(u?r:n[r]).apply(n,t)}),a}function nr(n,r,t){var e=-1,u=n?n.length:0;if(r=h.createCallback(r,t,3),"number"==typeof u)for(var o=ht(u);++e<u;)o[e]=r(n[e],e,n);else o=[],fe(n,function(n,t,u){o[++e]=r(n,t,u)});return o}function rr(n,r,t){var u=-(1/0),o=u;if("function"!=typeof r&&t&&t[r]===n&&(r=null),null==r&&Yt(n))for(var a=-1,i=n.length;++a<i;){var f=n[a];f>o&&(o=f)}else r=null==r&&Fn(n)?e:h.createCallback(r,t,3),Xn(n,function(n,t,e){var a=r(n,t,e);a>u&&(u=a,o=n)});return o;
+
+}function tr(n,r,t){var u=1/0,o=u;if("function"!=typeof r&&t&&t[r]===n&&(r=null),null==r&&Yt(n))for(var a=-1,i=n.length;++a<i;){var f=n[a];f<o&&(o=f)}else r=null==r&&Fn(n)?e:h.createCallback(r,t,3),Xn(n,function(n,t,e){var a=r(n,t,e);a<u&&(u=a,o=n)});return o}function er(n,r,t,e){if(!n)return t;var u=arguments.length<3;r=h.createCallback(r,e,4);var o=-1,a=n.length;if("number"==typeof a)for(u&&(t=n[++o]);++o<a;)t=r(t,n[o],o,n);else fe(n,function(n,e,o){t=u?(u=!1,n):r(t,n,e,o)});return t}function ur(n,r,t,e){
+var u=arguments.length<3;return r=h.createCallback(r,e,4),Yn(n,function(n,e,o){t=u?(u=!1,n):r(t,n,e,o)}),t}function or(n,r,t){return r=h.createCallback(r,t,3),Hn(n,function(n,t,e){return!r(n,t,e)})}function ar(n,r,t){if(n&&"number"!=typeof n.length&&(n=Un(n)),null==r||t)return n?n[en(0,n.length-1)]:v;var e=ir(n);return e.length=Vt(Mt(0,r),e.length),e}function ir(n){var r=-1,t=n?n.length:0,e=ht("number"==typeof t?t:0);return Xn(n,function(n){var t=en(0,++r);e[r]=e[t],e[t]=n}),e}function fr(n){var r=n?n.length:0;
+
+return"number"==typeof r?r:ne(n).length}function lr(n,r,t){var e;r=h.createCallback(r,t,3);var u=-1,o=n?n.length:0;if("number"==typeof o)for(;++u<o&&!(e=r(n[u],u,n)););else fe(n,function(n,t,u){return!(e=r(n,t,u))});return!!e}function cr(n,r,t){var e=-1,o=Yt(r),a=n?n.length:0,p=ht("number"==typeof a?a:0);for(o||(r=h.createCallback(r,t,3)),Xn(n,function(n,t,u){var a=p[++e]=f();o?a.criteria=nr(r,function(r){return n[r]}):(a.criteria=i())[0]=r(n,t,u),a.index=e,a.value=n}),a=p.length,p.sort(u);a--;){
+var s=p[a];p[a]=s.value,o||l(s.criteria),c(s)}return p}function pr(n){return n&&"number"==typeof n.length?p(n):Un(n)}function sr(n){for(var r=-1,t=n?n.length:0,e=[];++r<t;){var u=n[r];u&&e.push(u)}return e}function vr(n){return Y(n,nn(arguments,!0,!0,1))}function hr(n,r,t){var e=-1,u=n?n.length:0;for(r=h.createCallback(r,t,3);++e<u;)if(r(n[e],e,n))return e;return-1}function gr(n,r,t){var e=n?n.length:0;for(r=h.createCallback(r,t,3);e--;)if(r(n[e],e,n))return e;return-1}function yr(n,r,t){var e=0,u=n?n.length:0;
+
+if("number"!=typeof r&&null!=r){var o=-1;for(r=h.createCallback(r,t,3);++o<u&&r(n[o],o,n);)e++}else if(e=r,null==e||t)return n?n[0]:v;return p(n,0,Vt(Mt(0,e),u))}function mr(n,r,t,e){return"boolean"!=typeof r&&null!=r&&(e=t,t="function"!=typeof r&&e&&e[r]===n?null:r,r=!1),null!=t&&(n=nr(n,t,e)),nn(n,r)}function br(r,t,e){if("number"==typeof e){var u=r?r.length:0;e=e<0?Mt(0,u+e):e||0}else if(e){var o=Nr(r,t);return r[o]===t?o:-1}return n(r,t,e)}function _r(n,r,t){var e=0,u=n?n.length:0;if("number"!=typeof r&&null!=r){
+var o=u;for(r=h.createCallback(r,t,3);o--&&r(n[o],o,n);)e++}else e=null==r||t?1:r||e;return p(n,0,Vt(Mt(0,u-e),u))}function dr(){for(var t=[],e=-1,u=arguments.length,a=i(),f=ln(),p=f===n,s=i();++e<u;){var v=arguments[e];(Yt(v)||vn(v))&&(t.push(v),a.push(p&&v.length>=b&&o(e?t[e]:s)))}var h=t[0],g=-1,y=h?h.length:0,m=[];n:for(;++g<y;){var _=a[0];if(v=h[g],(_?r(_,v):f(s,v))<0){for(e=u,(_||s).push(v);--e;)if(_=a[e],(_?r(_,v):f(t[e],v))<0)continue n;m.push(v)}}for(;u--;)_=a[u],_&&c(_);return l(a),l(s),
+m}function wr(n,r,t){var e=0,u=n?n.length:0;if("number"!=typeof r&&null!=r){var o=u;for(r=h.createCallback(r,t,3);o--&&r(n[o],o,n);)e++}else if(e=r,null==e||t)return n?n[u-1]:v;return p(n,Mt(0,u-e))}function jr(n,r,t){var e=n?n.length:0;for("number"==typeof t&&(e=(t<0?Mt(0,e+t):Vt(t,e-1))+1);e--;)if(n[e]===r)return e;return-1}function kr(n){for(var r=arguments,t=0,e=r.length,u=n?n.length:0;++t<e;)for(var o=-1,a=r[t];++o<u;)n[o]===a&&(Bt.call(n,o--,1),u--);return n}function xr(n,r,t){n=+n||0,t="number"==typeof t?t:+t||1,
+null==r&&(r=n,n=0);for(var e=-1,u=Mt(0,Et((r-n)/(t||1))),o=ht(u);++e<u;)o[e]=n,n+=t;return o}function Cr(n,r,t){var e=-1,u=n?n.length:0,o=[];for(r=h.createCallback(r,t,3);++e<u;){var a=n[e];r(a,e,n)&&(o.push(a),Bt.call(n,e--,1),u--)}return o}function Or(n,r,t){if("number"!=typeof r&&null!=r){var e=0,u=-1,o=n?n.length:0;for(r=h.createCallback(r,t,3);++u<o&&r(n[u],u,n);)e++}else e=null==r||t?1:Mt(0,r);return p(n,e)}function Nr(n,r,t,e){var u=0,o=n?n.length:u;for(t=t?h.createCallback(t,e,1):Yr,r=t(r);u<o;){
+var a=u+o>>>1;t(n[a])<r?u=a+1:o=a}return u}function Rr(){return un(nn(arguments,!0,!0))}function Er(n,r,t,e){return"boolean"!=typeof r&&null!=r&&(e=t,t="function"!=typeof r&&e&&e[r]===n?null:r,r=!1),null!=t&&(t=h.createCallback(t,e,3)),un(n,r,t)}function Ir(n){return Y(n,p(arguments,1))}function Sr(){for(var n=-1,r=arguments.length;++n<r;){var t=arguments[n];if(Yt(t)||vn(t))var e=e?un(Y(e,t).concat(Y(t,e))):t}return e||[]}function Ar(){for(var n=arguments.length>1?arguments:arguments[0],r=-1,t=n?rr(ve(n,"length")):0,e=ht(t<0?0:t);++r<t;)e[r]=ve(n,r);
+
+return e}function Dr(n,r){var t=-1,e=n?n.length:0,u={};for(r||!e||Yt(n[0])||(r=[]);++t<e;){var o=n[t];r?u[o]=r[t]:o&&(u[o[0]]=o[1])}return u}function Tr(n,r){if(!In(r))throw new kt;return function(){return--n<1?r.apply(this,arguments):v}}function $r(n,r){return arguments.length>2?an(n,17,p(arguments,2),null,r):an(n,1,null,null,r)}function Fr(n){for(var r=arguments.length>1?nn(arguments,!0,!1,1):wn(n),t=-1,e=r.length;++t<e;){var u=r[t];n[u]=an(n[u],1,null,null,n)}return n}function Br(n,r){return arguments.length>2?an(r,19,p(arguments,2),null,n):an(r,3,null,null,n);
+
+}function Wr(){for(var n=arguments,r=n.length;r--;)if(!In(n[r]))throw new kt;return function(){for(var r=arguments,t=n.length;t--;)r=[n[t].apply(this,r)];return r[0]}}function qr(n,r){return r="number"==typeof r?r:+r||n.length,an(n,4,null,null,null,r)}function zr(n,r,t){var e,u,o,a,i,f,l,c=0,p=!1,s=!0;if(!In(n))throw new kt;if(r=Mt(0,r)||0,t===!0){var h=!0;s=!1}else Sn(t)&&(h=t.leading,p="maxWait"in t&&(Mt(r,t.maxWait)||0),s="trailing"in t?t.trailing:s);var g=function(){var t=r-(ge()-a);if(t>0)f=Ft(g,t);
+else{u&&It(u);var p=l;u=f=l=v,p&&(c=ge(),o=n.apply(i,e),f||u||(e=i=null))}},y=function(){f&&It(f),u=f=l=v,(s||p!==r)&&(c=ge(),o=n.apply(i,e),f||u||(e=i=null))};return function(){if(e=arguments,a=ge(),i=this,l=s&&(f||!h),p===!1)var t=h&&!f;else{u||h||(c=a);var v=p-(a-c),m=v<=0;m?(u&&(u=It(u)),c=a,o=n.apply(i,e)):u||(u=Ft(y,v))}return m&&f?f=It(f):f||r===p||(f=Ft(g,r)),t&&(m=!0,o=n.apply(i,e)),!m||f||u||(e=i=null),o}}function Lr(n){if(!In(n))throw new kt;var r=p(arguments,1);return Ft(function(){n.apply(v,r);
+
+},1)}function Pr(n,r){if(!In(n))throw new kt;var t=p(arguments,2);return Ft(function(){n.apply(v,t)},r)}function Kr(n,r){if(!In(n))throw new kt;var t=function(){var e=t.cache,u=r?r.apply(this,arguments):m+arguments[0];return Tt.call(e,u)?e[u]:e[u]=n.apply(this,arguments)};return t.cache={},t}function Ur(n){var r,t;if(!In(n))throw new kt;return function(){return r?t:(r=!0,t=n.apply(this,arguments),n=null,t)}}function Mr(n){return an(n,16,p(arguments,1))}function Vr(n){return an(n,32,null,p(arguments,1));
+
+}function Gr(n,r,t){var e=!0,u=!0;if(!In(n))throw new kt;return t===!1?e=!1:Sn(t)&&(e="leading"in t?t.leading:e,u="trailing"in t?t.trailing:u),U.leading=e,U.maxWait=r,U.trailing=u,zr(n,r,U)}function Hr(n,r){return an(r,16,[n])}function Jr(n){return function(){return n}}function Qr(n,r,t){var e=typeof n;if(null==n||"function"==e)return Q(n,r,t);if("object"!=e)return tt(n);var u=ne(n),o=u[0],a=n[o];return 1!=u.length||a!==a||Sn(a)?function(r){for(var t=u.length,e=!1;t--&&(e=rn(r[u[t]],n[u[t]],null,!0)););
+return e}:function(n){var r=n[o];return a===r&&(0!==a||1/a==1/r)}}function Xr(n){return null==n?"":jt(n).replace(ue,fn)}function Yr(n){return n}function Zr(n,r,t){var e=!0,u=r&&wn(r);r&&(t||u.length)||(null==t&&(t=r),o=g,r=n,n=h,u=wn(r)),t===!1?e=!1:Sn(t)&&"chain"in t&&(e=t.chain);var o=n,a=In(o);Xn(u,function(t){var u=n[t]=r[t];a&&(o.prototype[t]=function(){var r=this.__chain__,t=this.__wrapped__,a=[t];$t.apply(a,arguments);var i=u.apply(n,a);if(e||r){if(t===i&&Sn(i))return this;i=new o(i),i.__chain__=r;
+
+}return i})})}function nt(){return t._=Ot,this}function rt(){}function tt(n){return function(r){return r[n]}}function et(n,r,t){var e=null==n,u=null==r;if(null==t&&("boolean"==typeof n&&u?(t=n,n=1):u||"boolean"!=typeof r||(t=r,u=!0)),e&&u&&(r=1),n=+n||0,u?(r=n,n=0):r=+r||0,t||n%1||r%1){var o=Ht();return Vt(n+o*(r-n+parseFloat("1e-"+((o+"").length-1))),r)}return en(n,r)}function ut(n,r){if(n){var t=n[r];return In(t)?n[r]():t}}function ot(n,r,t){var e=h.templateSettings;n=jt(n||""),t=ae({},t,e);var u,o=ae({},t.imports,e.imports),i=ne(o),f=Un(o),l=0,c=t.interpolate||E,p="__p += '",s=wt((t.escape||E).source+"|"+c.source+"|"+(c===N?x:E).source+"|"+(t.evaluate||E).source+"|$","g");
+
+n.replace(s,function(r,t,e,o,i,f){return e||(e=o),p+=n.slice(l,f).replace(S,a),t&&(p+="' +\n__e("+t+") +\n'"),i&&(u=!0,p+="';\n"+i+";\n__p += '"),e&&(p+="' +\n((__t = ("+e+")) == null ? '' : __t) +\n'"),l=f+r.length,r}),p+="';\n";var g=t.variable,y=g;y||(g="obj",p="with ("+g+") {\n"+p+"\n}\n"),p=(u?p.replace(w,""):p).replace(j,"$1").replace(k,"$1;"),p="function("+g+") {\n"+(y?"":g+" || ("+g+" = {});\n")+"var __t, __p = '', __e = _.escape"+(u?", __j = Array.prototype.join;\nfunction print() { __p += __j.call(arguments, '') }\n":";\n")+p+"return __p\n}";
+
+var m="\n/*\n//# sourceURL="+(t.sourceURL||"/lodash/template/source["+D++ +"]")+"\n*/";try{var b=mt(i,"return "+p+m).apply(v,f)}catch(_){throw _.source=p,_}return r?b(r):(b.source=p,b)}function at(n,r,t){n=(n=+n)>-1?n:0;var e=-1,u=ht(n);for(r=Q(r,t,1);++e<n;)u[e]=r(e);return u}function it(n){return null==n?"":jt(n).replace(ee,sn)}function ft(n){var r=++y;return jt(null==n?"":n)+r}function lt(n){return n=new g(n),n.__chain__=!0,n}function ct(n,r){return r(n),n}function pt(){return this.__chain__=!0,
+this}function st(){return jt(this.__wrapped__)}function vt(){return this.__wrapped__}t=t?Z.defaults(H.Object(),t,Z.pick(H,A)):H;var ht=t.Array,gt=t.Boolean,yt=t.Date,mt=t.Function,bt=t.Math,_t=t.Number,dt=t.Object,wt=t.RegExp,jt=t.String,kt=t.TypeError,xt=[],Ct=dt.prototype,Ot=t._,Nt=Ct.toString,Rt=wt("^"+jt(Nt).replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/toString| for [^\]]+/g,".*?")+"$"),Et=bt.ceil,It=t.clearTimeout,St=bt.floor,At=mt.prototype.toString,Dt=cn(Dt=dt.getPrototypeOf)&&Dt,Tt=Ct.hasOwnProperty,$t=xt.push,Ft=t.setTimeout,Bt=xt.splice,Wt=xt.unshift,qt=function(){
+try{var n={},r=cn(r=dt.defineProperty)&&r,t=r(n,n,n)&&r}catch(e){}return t}(),zt=cn(zt=dt.create)&&zt,Lt=cn(Lt=ht.isArray)&&Lt,Pt=t.isFinite,Kt=t.isNaN,Ut=cn(Ut=dt.keys)&&Ut,Mt=bt.max,Vt=bt.min,Gt=t.parseInt,Ht=bt.random,Jt={};Jt[$]=ht,Jt[F]=gt,Jt[B]=yt,Jt[W]=mt,Jt[z]=dt,Jt[q]=_t,Jt[L]=wt,Jt[P]=jt,g.prototype=h.prototype;var Qt=h.support={};Qt.funcDecomp=!cn(t.WinRTError)&&I.test(s),Qt.funcNames="string"==typeof mt.name,h.templateSettings={escape:/<%-([\s\S]+?)%>/g,evaluate:/<%([\s\S]+?)%>/g,interpolate:N,
+variable:"",imports:{_:h}},zt||(J=function(){function n(){}return function(r){if(Sn(r)){n.prototype=r;var e=new n;n.prototype=null}return e||t.Object()}}());var Xt=qt?function(n,r){M.value=r,qt(n,"__bindData__",M),M.value=null}:rt,Yt=Lt||function(n){return n&&"object"==typeof n&&"number"==typeof n.length&&Nt.call(n)==$||!1},Zt=function(n){var r,t=n,e=[];if(!t)return e;if(!V[typeof n])return e;for(r in t)Tt.call(t,r)&&e.push(r);return e},ne=Ut?function(n){return Sn(n)?Ut(n):[]}:Zt,re={"&":"&amp;",
+"<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"},te=kn(re),ee=wt("("+ne(te).join("|")+")","g"),ue=wt("["+ne(re).join("")+"]","g"),oe=function(n,r,t){var e,u=n,o=u;if(!u)return o;var a=arguments,i=0,f="number"==typeof t?2:a.length;if(f>3&&"function"==typeof a[f-2])var l=Q(a[--f-1],a[f--],2);else f>2&&"function"==typeof a[f-1]&&(l=a[--f]);for(;++i<f;)if(u=a[i],u&&V[typeof u])for(var c=-1,p=V[typeof u]&&ne(u),s=p?p.length:0;++c<s;)e=p[c],o[e]=l?l(o[e],u[e]):u[e];return o},ae=function(n,r,t){var e,u=n,o=u;
+
+if(!u)return o;for(var a=arguments,i=0,f="number"==typeof t?2:a.length;++i<f;)if(u=a[i],u&&V[typeof u])for(var l=-1,c=V[typeof u]&&ne(u),p=c?c.length:0;++l<p;)e=c[l],"undefined"==typeof o[e]&&(o[e]=u[e]);return o},ie=function(n,r,t){var e,u=n,o=u;if(!u)return o;if(!V[typeof u])return o;r=r&&"undefined"==typeof t?r:Q(r,t,3);for(e in u)if(r(u[e],e,n)===!1)return o;return o},fe=function(n,r,t){var e,u=n,o=u;if(!u)return o;if(!V[typeof u])return o;r=r&&"undefined"==typeof t?r:Q(r,t,3);for(var a=-1,i=V[typeof u]&&ne(u),f=i?i.length:0;++a<f;)if(e=i[a],
+r(u[e],e,n)===!1)return o;return o},le=Dt?function(n){if(!n||Nt.call(n)!=z)return!1;var r=n.valueOf,t=cn(r)&&(t=Dt(r))&&Dt(t);return t?n==t||Dt(n)==t:pn(n)}:pn,ce=on(function(n,r,t){Tt.call(n,t)?n[t]++:n[t]=1}),pe=on(function(n,r,t){(Tt.call(n,t)?n[t]:n[t]=[]).push(r)}),se=on(function(n,r,t){n[t]=r}),ve=nr,he=Hn,ge=cn(ge=yt.now)&&ge||function(){return(new yt).getTime()},ye=8==Gt(d+"08")?Gt:function(n,r){return Gt(Fn(n)?n.replace(R,""):n,r||0)};return h.after=Tr,h.assign=oe,h.at=Mn,h.bind=$r,h.bindAll=Fr,
+h.bindKey=Br,h.chain=lt,h.compact=sr,h.compose=Wr,h.constant=Jr,h.countBy=ce,h.create=yn,h.createCallback=Qr,h.curry=qr,h.debounce=zr,h.defaults=ae,h.defer=Lr,h.delay=Pr,h.difference=vr,h.filter=Hn,h.flatten=mr,h.forEach=Xn,h.forEachRight=Yn,h.forIn=ie,h.forInRight=_n,h.forOwn=fe,h.forOwnRight=dn,h.functions=wn,h.groupBy=pe,h.indexBy=se,h.initial=_r,h.intersection=dr,h.invert=kn,h.invoke=Zn,h.keys=ne,h.map=nr,h.mapValues=Wn,h.max=rr,h.memoize=Kr,h.merge=qn,h.min=tr,h.omit=zn,h.once=Ur,h.pairs=Ln,
+h.partial=Mr,h.partialRight=Vr,h.pick=Pn,h.pluck=ve,h.property=tt,h.pull=kr,h.range=xr,h.reject=or,h.remove=Cr,h.rest=Or,h.shuffle=ir,h.sortBy=cr,h.tap=ct,h.throttle=Gr,h.times=at,h.toArray=pr,h.transform=Kn,h.union=Rr,h.uniq=Er,h.values=Un,h.where=he,h.without=Ir,h.wrap=Hr,h.xor=Sr,h.zip=Ar,h.zipObject=Dr,h.collect=nr,h.drop=Or,h.each=Xn,h.eachRight=Yn,h.extend=oe,h.methods=wn,h.object=Dr,h.select=Hn,h.tail=Or,h.unique=Er,h.unzip=Ar,Zr(h),h.clone=hn,h.cloneDeep=gn,h.contains=Vn,h.escape=Xr,h.every=Gn,
+h.find=Jn,h.findIndex=hr,h.findKey=mn,h.findLast=Qn,h.findLastIndex=gr,h.findLastKey=bn,h.has=jn,h.identity=Yr,h.indexOf=br,h.isArguments=vn,h.isArray=Yt,h.isBoolean=xn,h.isDate=Cn,h.isElement=On,h.isEmpty=Nn,h.isEqual=Rn,h.isFinite=En,h.isFunction=In,h.isNaN=An,h.isNull=Dn,h.isNumber=Tn,h.isObject=Sn,h.isPlainObject=le,h.isRegExp=$n,h.isString=Fn,h.isUndefined=Bn,h.lastIndexOf=jr,h.mixin=Zr,h.noConflict=nt,h.noop=rt,h.now=ge,h.parseInt=ye,h.random=et,h.reduce=er,h.reduceRight=ur,h.result=ut,h.runInContext=s,
+h.size=fr,h.some=lr,h.sortedIndex=Nr,h.template=ot,h.unescape=it,h.uniqueId=ft,h.all=Gn,h.any=lr,h.detect=Jn,h.findWhere=Jn,h.foldl=er,h.foldr=ur,h.include=Vn,h.inject=er,Zr(function(){var n={};return fe(h,function(r,t){h.prototype[t]||(n[t]=r)}),n}(),!1),h.first=yr,h.last=wr,h.sample=ar,h.take=yr,h.head=yr,fe(h,function(n,r){var t="sample"!==r;h.prototype[r]||(h.prototype[r]=function(r,e){var u=this.__chain__,o=n(this.__wrapped__,r,e);return u||null!=r&&(!e||t&&"function"==typeof r)?new g(o,u):o;
+
+})}),h.VERSION="2.4.2",h.prototype.chain=pt,h.prototype.toString=st,h.prototype.value=vt,h.prototype.valueOf=vt,Xn(["join","pop","shift"],function(n){var r=xt[n];h.prototype[n]=function(){var n=this.__chain__,t=r.apply(this.__wrapped__,arguments);return n?new g(t,n):t}}),Xn(["push","reverse","sort","unshift"],function(n){var r=xt[n];h.prototype[n]=function(){return r.apply(this.__wrapped__,arguments),this}}),Xn(["concat","slice","splice"],function(n){var r=xt[n];h.prototype[n]=function(){return new g(r.apply(this.__wrapped__,arguments),this.__chain__);
+
+}}),h}var v,h=[],g=[],y=0,m=+new Date+"",b=75,_=40,d=" 	\f\xa0\ufeff\n\r\u2028\u2029\u1680\u180e\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000",w=/\b__p \+= '';/g,j=/\b(__p \+=) '' \+/g,k=/(__e\(.*?\)|\b__t\)) \+\n'';/g,x=/\$\{([^\\}]*(?:\\.[^\\}]*)*)\}/g,C=/\w*$/,O=/^\s*function[ \n\r\t]+\w/,N=/<%=([\s\S]+?)%>/g,R=RegExp("^["+d+"]*0+(?=.$)"),E=/($^)/,I=/\bthis\b/,S=/['\n\r\t\u2028\u2029\\]/g,A=["Array","Boolean","Date","Function","Math","Number","Object","RegExp","String","_","attachEvent","clearTimeout","isFinite","isNaN","parseInt","setTimeout"],D=0,T="[object Arguments]",$="[object Array]",F="[object Boolean]",B="[object Date]",W="[object Function]",q="[object Number]",z="[object Object]",L="[object RegExp]",P="[object String]",K={};
+
+K[W]=!1,K[T]=K[$]=K[F]=K[B]=K[q]=K[z]=K[L]=K[P]=!0;var U={leading:!1,maxWait:0,trailing:!1},M={configurable:!1,enumerable:!1,value:null,writable:!1},V={"boolean":!1,"function":!0,object:!0,number:!1,string:!1,undefined:!1},G={"\\":"\\","'":"'","\n":"n","\r":"r","	":"t","\u2028":"u2028","\u2029":"u2029"},H=V[typeof window]&&window||this,J=V[typeof exports]&&exports&&!exports.nodeType&&exports,Q=V[typeof module]&&module&&!module.nodeType&&module,X=Q&&Q.exports===J&&J,Y=V[typeof global]&&global;!Y||Y.global!==Y&&Y.window!==Y||(H=Y);
+
+var Z=s();"function"==typeof define&&"object"==typeof define.amd&&define.amd?(H._=Z,define(function(){return Z})):J&&Q?X?(Q.exports=Z)._=Z:J._=Z:H._=Z}).call(this);
 /*
  AngularJS v1.3.0
  (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -2149,6 +2236,46 @@ angular.module('ui.date', [])
 //# sourceMappingURL=../dist/angulartics-google-analytics.min.js.map
 !function(window,angular,undefined){"use strict";angular.module("angulartics.segment",["angulartics"]).config(["$analyticsProvider",function($analyticsProvider){$analyticsProvider.registerPageTrack(function(path,properties){try{analytics.page(path,properties)}catch(e){if(!(e instanceof ReferenceError))throw e}}),$analyticsProvider.registerEventTrack(function(event,properties,options,callback){try{analytics.track(event,properties,options,callback)}catch(e){if(!(e instanceof ReferenceError))throw e}}),$analyticsProvider.registerSetUserProperties(function(userId,traits,options,callback){try{analytics.identify(userId,traits,options,callback)}catch(e){if(!(e instanceof ReferenceError))throw e}}),$analyticsProvider.registerSetUserPropertiesOnce(function(userId,traits,options,callback){try{analytics.identify(userId,traits,options,callback)}catch(e){if(!(e instanceof ReferenceError))throw e}}),$analyticsProvider.registerSetAlias(function(userId,previousId,options,callback){try{analytics.alias(userId,previousId,options,callback)}catch(e){if(!(e instanceof ReferenceError))throw e}})}])}(window,window.angular);
 //# sourceMappingURL=../dist/angulartics-segment.min.js.map
+/*
+ AngularJS v1.3.0
+ (c) 2010-2014 Google, Inc. http://angularjs.org
+ License: MIT
+*/
+(function(M,f,S){'use strict';f.module("ngAnimate",["ng"]).directive("ngAnimateChildren",function(){return function(T,B,k){k=k.ngAnimateChildren;f.isString(k)&&0===k.length?B.data("$$ngAnimateChildren",!0):T.$watch(k,function(f){B.data("$$ngAnimateChildren",!!f)})}}).factory("$$animateReflow",["$$rAF","$document",function(f,B){return function(k){return f(function(){k()})}}]).config(["$provide","$animateProvider",function(T,B){function k(f){for(var g=0;g<f.length;g++){var k=f[g];if(1==k.nodeType)return k}}
+function N(f,g){return k(f)==k(g)}var s=f.noop,g=f.forEach,ba=B.$$selectors,$=f.isArray,ca=f.isString,da=f.isObject,t={running:!0};T.decorator("$animate",["$delegate","$$q","$injector","$sniffer","$rootElement","$$asyncCallback","$rootScope","$document","$templateRequest",function(O,M,I,U,x,C,P,S,V){function A(a,c){var b=a.data("$$ngAnimateState")||{};c&&(b.running=!0,b.structural=!0,a.data("$$ngAnimateState",b));return b.disabled||b.running&&b.structural}function z(a){var c,b=M.defer();b.promise.$$cancelFn=
+function(){c&&c()};P.$$postDigest(function(){c=a(function(){b.resolve()})});return b.promise}function J(a){if(da(a))return a.tempClasses&&ca(a.tempClasses)&&(a.tempClasses=a.tempClasses.split(/\s+/)),a}function W(a,c,b){b=b||{};var e={};g(b,function(a,d){g(d.split(" "),function(d){e[d]=a})});var m=Object.create(null);g((a.attr("class")||"").split(/\s+/),function(a){m[a]=!0});var f=[],k=[];g(c.classes,function(a,d){var b=m[d],c=e[d]||{};!1===a?(b||"addClass"==c.event)&&k.push(d):!0===a&&(b&&"removeClass"!=
+c.event||f.push(d))});return 0<f.length+k.length&&[f.join(" "),k.join(" ")]}function Q(a){if(a){var c=[],b={};a=a.substr(1).split(".");(U.transitions||U.animations)&&c.push(I.get(ba[""]));for(var e=0;e<a.length;e++){var f=a[e],k=ba[f];k&&!b[f]&&(c.push(I.get(k)),b[f]=!0)}return c}}function R(a,c,b,e){function m(a,d){var b=a[d],c=a["before"+d.charAt(0).toUpperCase()+d.substr(1)];if(b||c)return"leave"==d&&(c=b,b=null),l.push({event:d,fn:b}),H.push({event:d,fn:c}),!0}function k(c,h,G){var w=[];g(c,function(a){a.fn&&
+w.push(a)});var f=0;g(w,function(c,n){var u=function(){a:{if(h){(h[n]||s)();if(++f<w.length)break a;h=null}G()}};switch(c.event){case "setClass":h.push(c.fn(a,F,d,u,e));break;case "animate":h.push(c.fn(a,b,e.from,e.to,u));break;case "addClass":h.push(c.fn(a,F||b,u,e));break;case "removeClass":h.push(c.fn(a,d||b,u,e));break;default:h.push(c.fn(a,u,e))}});h&&0===h.length&&G()}var p=a[0];if(p){e&&(e.to=e.to||{},e.from=e.from||{});var F,d;$(b)&&(F=b[0],d=b[1],F?d?b=F+" "+d:(b=F,c="addClass"):(b=d,c="removeClass"));
+var h="setClass"==c,G=h||"addClass"==c||"removeClass"==c||"animate"==c,w=a.attr("class")+" "+b;if(X(w)){var u=s,n=[],H=[],q=s,r=[],l=[],w=(" "+w).replace(/\s+/g,".");g(Q(w),function(a){!m(a,c)&&h&&(m(a,"addClass"),m(a,"removeClass"))});return{node:p,event:c,className:b,isClassBased:G,isSetClassOperation:h,applyStyles:function(){e&&a.css(f.extend(e.from||{},e.to||{}))},before:function(a){u=a;k(H,n,function(){u=s;a()})},after:function(a){q=a;k(l,r,function(){q=s;a()})},cancel:function(){n&&(g(n,function(a){(a||
+s)(!0)}),u(!0));r&&(g(r,function(a){(a||s)(!0)}),q(!0))}}}}}function y(a,c,b,e,m,k,p,F){function d(d){var h="$animate:"+d;H&&H[h]&&0<H[h].length&&C(function(){b.triggerHandler(h,{event:a,className:c})})}function h(){d("before")}function G(){d("after")}function w(){w.hasBeenRun||(w.hasBeenRun=!0,k())}function u(){if(!u.hasBeenRun){n&&n.applyStyles();u.hasBeenRun=!0;p&&p.tempClasses&&g(p.tempClasses,function(a){b.removeClass(a)});var h=b.data("$$ngAnimateState");h&&(n&&n.isClassBased?l(b,c):(C(function(){var d=
+b.data("$$ngAnimateState")||{};v==d.index&&l(b,c,a)}),b.data("$$ngAnimateState",h)));d("close");F()}}var n=R(b,a,c,p);if(!n)return w(),h(),G(),u(),s;a=n.event;c=n.className;var H=f.element._data(n.node),H=H&&H.events;e||(e=m?m.parent():b.parent());if(Y(b,e))return w(),h(),G(),u(),s;e=b.data("$$ngAnimateState")||{};var q=e.active||{},r=e.totalActive||0,t=e.last;m=!1;if(0<r){r=[];if(n.isClassBased)"setClass"==t.event?(r.push(t),l(b,c)):q[c]&&(aa=q[c],aa.event==a?m=!0:(r.push(aa),l(b,c)));else if("leave"==
+a&&q["ng-leave"])m=!0;else{for(var aa in q)r.push(q[aa]);e={};l(b,!0)}0<r.length&&g(r,function(a){a.cancel()})}!n.isClassBased||n.isSetClassOperation||"animate"==a||m||(m="addClass"==a==b.hasClass(c));if(m)return w(),h(),G(),d("close"),F(),s;q=e.active||{};r=e.totalActive||0;if("leave"==a)b.one("$destroy",function(a){a=f.element(this);var d=a.data("$$ngAnimateState");d&&(d=d.active["ng-leave"])&&(d.cancel(),l(a,"ng-leave"))});b.addClass("ng-animate");p&&p.tempClasses&&g(p.tempClasses,function(a){b.addClass(a)});
+var v=Z++;r++;q[c]=n;b.data("$$ngAnimateState",{last:n,active:q,index:v,totalActive:r});h();n.before(function(d){var h=b.data("$$ngAnimateState");d=d||!h||!h.active[c]||n.isClassBased&&h.active[c].event!=a;w();!0===d?u():(G(),n.after(u))});return n.cancel}function K(a){if(a=k(a))a=f.isFunction(a.getElementsByClassName)?a.getElementsByClassName("ng-animate"):a.querySelectorAll(".ng-animate"),g(a,function(a){a=f.element(a);(a=a.data("$$ngAnimateState"))&&a.active&&g(a.active,function(a){a.cancel()})})}
+function l(a,c){if(N(a,x))t.disabled||(t.running=!1,t.structural=!1);else if(c){var b=a.data("$$ngAnimateState")||{},e=!0===c;!e&&b.active&&b.active[c]&&(b.totalActive--,delete b.active[c]);if(e||!b.totalActive)a.removeClass("ng-animate"),a.removeData("$$ngAnimateState")}}function Y(a,c){if(t.disabled)return!0;if(N(a,x))return t.running;var b,e,k;do{if(0===c.length)break;var g=N(c,x),p=g?t:c.data("$$ngAnimateState")||{};if(p.disabled)return!0;g&&(k=!0);!1!==b&&(g=c.data("$$ngAnimateChildren"),f.isDefined(g)&&
+(b=g));e=e||p.running||p.last&&!p.last.isClassBased}while(c=c.parent());return!k||!b&&e}x.data("$$ngAnimateState",t);var L=P.$watch(function(){return V.totalPendingRequests},function(a,c){0===a&&(L(),P.$$postDigest(function(){P.$$postDigest(function(){t.running=!1})}))}),Z=0,E=B.classNameFilter(),X=E?function(a){return E.test(a)}:function(){return!0};return{animate:function(a,c,b,e,g){e=e||"ng-inline-animate";g=J(g)||{};g.from=b?c:null;g.to=b?b:c;return z(function(b){return y("animate",e,f.element(k(a)),
+null,null,s,g,b)})},enter:function(a,c,b,e){e=J(e);a=f.element(a);c=c&&f.element(c);b=b&&f.element(b);A(a,!0);O.enter(a,c,b);return z(function(g){return y("enter","ng-enter",f.element(k(a)),c,b,s,e,g)})},leave:function(a,c){c=J(c);a=f.element(a);K(a);A(a,!0);return z(function(b){return y("leave","ng-leave",f.element(k(a)),null,null,function(){O.leave(a)},c,b)})},move:function(a,c,b,e){e=J(e);a=f.element(a);c=c&&f.element(c);b=b&&f.element(b);K(a);A(a,!0);O.move(a,c,b);return z(function(g){return y("move",
+"ng-move",f.element(k(a)),c,b,s,e,g)})},addClass:function(a,c,b){return this.setClass(a,c,[],b)},removeClass:function(a,c,b){return this.setClass(a,[],c,b)},setClass:function(a,c,b,e){e=J(e);a=f.element(a);a=f.element(k(a));if(A(a))return O.$$setClassImmediately(a,c,b,e);var m,l=a.data("$$animateClasses"),p=!!l;l||(l={classes:{}});m=l.classes;c=$(c)?c:c.split(" ");g(c,function(a){a&&a.length&&(m[a]=!0)});b=$(b)?b:b.split(" ");g(b,function(a){a&&a.length&&(m[a]=!1)});if(p)return e&&l.options&&(l.options=
+f.extend(l.options||{},e)),l.promise;a.data("$$animateClasses",l={classes:m,options:e});return l.promise=z(function(b){var d=a.parent(),h=k(a),c=h.parentNode;if(!c||c.$$NG_REMOVED||h.$$NG_REMOVED)b();else{h=a.data("$$animateClasses");a.removeData("$$animateClasses");var c=a.data("$$ngAnimateState")||{},e=W(a,h,c.active);return e?y("setClass",e,a,d,null,function(){e[0]&&O.$$addClassImmediately(a,e[0]);e[1]&&O.$$removeClassImmediately(a,e[1])},h.options,b):b()}})},cancel:function(a){a.$$cancelFn()},
+enabled:function(a,c){switch(arguments.length){case 2:if(a)l(c);else{var b=c.data("$$ngAnimateState")||{};b.disabled=!0;c.data("$$ngAnimateState",b)}break;case 1:t.disabled=!a;break;default:a=!t.disabled}return!!a}}}]);B.register("",["$window","$sniffer","$timeout","$$animateReflow",function(t,B,I,U){function x(){e||(e=U(function(){b=[];e=null;a={}}))}function C(c,d){e&&e();b.push(d);e=U(function(){g(b,function(a){a()});b=[];e=null;a={}})}function P(a,d){var h=k(a);a=f.element(h);p.push(a);h=Date.now()+
+d;h<=N||(I.cancel(m),N=h,m=I(function(){T(p);p=[]},d,!1))}function T(a){g(a,function(a){(a=a.data("$$ngAnimateCSS3Data"))&&g(a.closeAnimationFns,function(a){a()})})}function V(b,d){var h=d?a[d]:null;if(!h){var c=0,e=0,f=0,k=0;g(b,function(a){if(1==a.nodeType){a=t.getComputedStyle(a)||{};c=Math.max(A(a[L+"Duration"]),c);e=Math.max(A(a[L+"Delay"]),e);k=Math.max(A(a[E+"Delay"]),k);var d=A(a[E+"Duration"]);0<d&&(d*=parseInt(a[E+"IterationCount"],10)||1);f=Math.max(d,f)}});h={total:0,transitionDelay:e,
+transitionDuration:c,animationDelay:k,animationDuration:f};d&&(a[d]=h)}return h}function A(a){var d=0;a=ca(a)?a.split(/\s*,\s*/):[];g(a,function(a){d=Math.max(parseFloat(a)||0,d)});return d}function z(b,d,h,e){b=0<=["ng-enter","ng-leave","ng-move"].indexOf(h);var f,g=d.parent(),n=g.data("$$ngAnimateKey");n||(g.data("$$ngAnimateKey",++c),n=c);f=n+"-"+k(d).getAttribute("class");var g=f+" "+h,n=a[g]?++a[g].total:0,l={};if(0<n){var q=h+"-stagger",l=f+" "+q;(f=!a[l])&&d.addClass(q);l=V(d,l);f&&d.removeClass(q)}d.addClass(h);
+var q=d.data("$$ngAnimateCSS3Data")||{},r=V(d,g);f=r.transitionDuration;r=r.animationDuration;if(b&&0===f&&0===r)return d.removeClass(h),!1;h=e||b&&0<f;b=0<r&&0<l.animationDelay&&0===l.animationDuration;d.data("$$ngAnimateCSS3Data",{stagger:l,cacheKey:g,running:q.running||0,itemIndex:n,blockTransition:h,closeAnimationFns:q.closeAnimationFns||[]});g=k(d);h&&(W(g,!0),e&&d.css(e));b&&(g.style[E+"PlayState"]="paused");return!0}function J(a,d,b,c,e){function f(){d.off(C,l);d.removeClass(q);d.removeClass(r);
+z&&I.cancel(z);K(d,b);var a=k(d),c;for(c in p)a.style.removeProperty(p[c])}function l(a){a.stopPropagation();var d=a.originalEvent||a;a=d.$manualTimeStamp||d.timeStamp||Date.now();d=parseFloat(d.elapsedTime.toFixed(3));Math.max(a-B,0)>=A&&d>=x&&c()}var m=k(d);a=d.data("$$ngAnimateCSS3Data");if(-1!=m.getAttribute("class").indexOf(b)&&a){var q="",r="";g(b.split(" "),function(a,d){var b=(0<d?" ":"")+a;q+=b+"-active";r+=b+"-pending"});var p=[],t=a.itemIndex,v=a.stagger,s=0;if(0<t){s=0;0<v.transitionDelay&&
+0===v.transitionDuration&&(s=v.transitionDelay*t);var y=0;0<v.animationDelay&&0===v.animationDuration&&(y=v.animationDelay*t,p.push(Y+"animation-play-state"));s=Math.round(100*Math.max(s,y))/100}s||(d.addClass(q),a.blockTransition&&W(m,!1));var D=V(d,a.cacheKey+" "+q),x=Math.max(D.transitionDuration,D.animationDuration);if(0===x)d.removeClass(q),K(d,b),c();else{!s&&e&&(D.transitionDuration||(d.css("transition",D.animationDuration+"s linear all"),p.push("transition")),d.css(e));var t=Math.max(D.transitionDelay,
+D.animationDelay),A=1E3*t;0<p.length&&(v=m.getAttribute("style")||"",";"!==v.charAt(v.length-1)&&(v+=";"),m.setAttribute("style",v+" "));var B=Date.now(),C=X+" "+Z,t=1E3*(s+1.5*(t+x)),z;0<s&&(d.addClass(r),z=I(function(){z=null;0<D.transitionDuration&&W(m,!1);0<D.animationDuration&&(m.style[E+"PlayState"]="");d.addClass(q);d.removeClass(r);e&&(0===D.transitionDuration&&d.css("transition",D.animationDuration+"s linear all"),d.css(e),p.push("transition"))},1E3*s,!1));d.on(C,l);a.closeAnimationFns.push(function(){f();
+c()});a.running++;P(d,t);return f}}else c()}function W(a,d){a.style[L+"Property"]=d?"none":""}function Q(a,d,b,c){if(z(a,d,b,c))return function(a){a&&K(d,b)}}function R(a,d,b,c,e){if(d.data("$$ngAnimateCSS3Data"))return J(a,d,b,c,e);K(d,b);c()}function y(a,d,b,c,e){var f=Q(a,d,b,e.from);if(f){var g=f;C(d,function(){g=R(a,d,b,c,e.to)});return function(a){(g||s)(a)}}x();c()}function K(a,d){a.removeClass(d);var b=a.data("$$ngAnimateCSS3Data");b&&(b.running&&b.running--,b.running&&0!==b.running||a.removeData("$$ngAnimateCSS3Data"))}
+function l(a,d){var b="";a=$(a)?a:a.split(/\s+/);g(a,function(a,c){a&&0<a.length&&(b+=(0<c?" ":"")+a+d)});return b}var Y="",L,Z,E,X;M.ontransitionend===S&&M.onwebkittransitionend!==S?(Y="-webkit-",L="WebkitTransition",Z="webkitTransitionEnd transitionend"):(L="transition",Z="transitionend");M.onanimationend===S&&M.onwebkitanimationend!==S?(Y="-webkit-",E="WebkitAnimation",X="webkitAnimationEnd animationend"):(E="animation",X="animationend");var a={},c=0,b=[],e,m=null,N=0,p=[];return{animate:function(a,
+d,b,c,e,f){f=f||{};f.from=b;f.to=c;return y("animate",a,d,e,f)},enter:function(a,b,c){c=c||{};return y("enter",a,"ng-enter",b,c)},leave:function(a,b,c){c=c||{};return y("leave",a,"ng-leave",b,c)},move:function(a,b,c){c=c||{};return y("move",a,"ng-move",b,c)},beforeSetClass:function(a,b,c,e,f){f=f||{};b=l(c,"-remove")+" "+l(b,"-add");if(f=Q("setClass",a,b,f.from))return C(a,e),f;x();e()},beforeAddClass:function(a,b,c,e){e=e||{};if(b=Q("addClass",a,l(b,"-add"),e.from))return C(a,c),b;x();c()},beforeRemoveClass:function(a,
+b,c,e){e=e||{};if(b=Q("removeClass",a,l(b,"-remove"),e.from))return C(a,c),b;x();c()},setClass:function(a,b,c,e,f){f=f||{};c=l(c,"-remove");b=l(b,"-add");return R("setClass",a,c+" "+b,e,f.to)},addClass:function(a,b,c,e){e=e||{};return R("addClass",a,l(b,"-add"),c,e.to)},removeClass:function(a,b,c,e){e=e||{};return R("removeClass",a,l(b,"-remove"),c,e.to)}}}])}])})(window,window.angular);
+//# sourceMappingURL=angular-animate.min.js.map
+
+/**
+ * Easy to use Wizard library for AngularJS
+ * @version v0.5.5 - 2015-09-21 * @link https://github.com/mgonto/angular-wizard
+ * @author Martin Gontovnikas <martin@gon.to>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+function wizardButtonDirective(a){angular.module("mgo-angular-wizard").directive(a,function(){return{restrict:"A",replace:!1,require:"^wizard",link:function(b,c,d,e){c.on("click",function(c){c.preventDefault(),b.$apply(function(){b.$eval(d[a]),e[a.replace("wz","").toLowerCase()]()})})}}})}angular.module("templates-angularwizard",["step.html","wizard.html"]),angular.module("step.html",[]).run(["$templateCache",function(a){a.put("step.html",'<section ng-show="selected" ng-class="{current: selected, done: completed}" class="step" ng-transclude>\n</section>')}]),angular.module("wizard.html",[]).run(["$templateCache",function(a){a.put("wizard.html",'<div>\n    <div class="steps" ng-transclude></div>\n    <ul class="steps-indicator steps-{{getEnabledSteps().length}}" ng-if="!hideIndicators">\n      <li ng-class="{default: !step.completed && !step.selected, current: step.selected && !step.completed, done: step.completed && !step.selected, editing: step.selected && step.completed}" ng-repeat="step in getEnabledSteps()">\n        <a ng-click="goTo(step)">{{step.title || step.wzTitle}}</a>\n      </li>\n    </ul>\n</div>\n')}]),angular.module("mgo-angular-wizard",["templates-angularwizard"]),angular.module("mgo-angular-wizard").directive("wzStep",function(){return{restrict:"EA",replace:!0,transclude:!0,scope:{wzTitle:"@",title:"@",canenter:"=",canexit:"=",disabled:"@?wzDisabled"},require:"^wizard",templateUrl:function(a,b){return b.template||"step.html"},link:function(a,b,c,d){a.title=a.title||a.wzTitle,d.addStep(a)}}}),angular.module("mgo-angular-wizard").directive("wizard",function(){return{restrict:"EA",replace:!0,transclude:!0,scope:{currentStep:"=",onFinish:"&",hideIndicators:"=",editMode:"=",name:"@"},templateUrl:function(a,b){return b.template||"wizard.html"},controller:["$scope","$element","$log","WizardHandler","$q",function(a,b,c,d,e){function f(b){var c,d;return void 0===b.canenter?!0:"boolean"==typeof b.canenter?b.canenter:(d=b.canenter(a.context),angular.isFunction(d.then)?(c=e.defer(),d.then(function(a){c.resolve(a)}),c.promise):b.canenter(a.context)===!0)}function g(b,c){var d,f;return"undefined"==typeof b.canexit||a.getStepNumber(c)<a.currentStepNumber()?!0:"boolean"==typeof b.canexit?b.canexit:(f=b.canexit(a.context),angular.isFunction(f.then)?(d=e.defer(),f.then(function(a){d.resolve(a)}),d.promise):b.canexit(a.context)===!0)}function h(){_.each(a.getEnabledSteps(),function(a){a.selected=!1}),a.selectedStep=null}var i=!0;d.addWizard(a.name||d.defaultName,this),a.$on("$destroy",function(){d.removeWizard(a.name||d.defaultName)}),a.steps=[],a.context={},a.$watch("currentStep",function(b){if(b){var c=a.selectedStep.title||a.selectedStep.wzTitle;a.selectedStep&&c!==a.currentStep&&a.goTo(_.findWhere(a.getEnabledSteps(),{title:a.currentStep}))}}),a.$watch("[editMode, steps.length]",function(){var b=a.editMode;_.isUndefined(b)||_.isNull(b)||b&&_.each(a.getEnabledSteps(),function(a){a.completed=!0})},!0),this.addStep=function(b){a.steps.push(b),1===a.getEnabledSteps().length&&a.goTo(a.getEnabledSteps()[0])},this.context=a.context,a.getStepNumber=function(b){return _.indexOf(a.getEnabledSteps(),b)+1},a.goTo=function(b){if(i)h(),a.selectedStep=b,_.isUndefined(a.currentStep)||(a.currentStep=b.title||b.wzTitle),b.selected=!0,a.$emit("wizard:stepChanged",{step:b,index:_.indexOf(a.getEnabledSteps(),b)}),i=!1;else{var c;a.currentStepNumber()>0?c=a.currentStepNumber()-1:0===a.currentStepNumber()&&(c=0),e.all([g(a.getEnabledSteps()[c],b),f(b)]).then(function(c){c[0]&&c[1]&&(h(),a.selectedStep=b,_.isUndefined(a.currentStep)||(a.currentStep=b.title||b.wzTitle),b.selected=!0,a.$emit("wizard:stepChanged",{step:b,index:_.indexOf(a.getEnabledSteps(),b)}))})}},a.currentStepNumber=function(){return _.indexOf(a.getEnabledSteps(),a.selectedStep)+1},a.getEnabledSteps=function(){return _.filter(a.steps,function(a){return"true"!==a.disabled})},this.currentStepTitle=function(){return a.selectedStep.title},this.currentStepNumber=function(){return a.currentStepNumber()},this.next=function(b){var c=a.getEnabledSteps(),d=_.indexOf(c,a.selectedStep);if(angular.isFunction(b)){if(!b())return;d===c.length-1?this.finish():a.goTo(c[d+1])}b||(a.selectedStep.completed=!0),d===c.length-1?this.finish():a.goTo(c[d+1])},this.goTo=function(b){var c,d=a.getEnabledSteps();c=_.isNumber(b)?d[b]:_.findWhere(d,{title:b}),a.goTo(c)},this.finish=function(){a.onFinish&&a.onFinish()},this.previous=function(){var b=_.indexOf(a.getEnabledSteps(),a.selectedStep);if(0===b)throw new Error("Can't go back. It's already in step 0");a.goTo(a.getEnabledSteps()[b-1])},this.cancel=function(){var b=_.indexOf(a.getEnabledSteps(),a.selectedStep);if(0===b)throw new Error("Can't go back. It's already in step 0");a.goTo(a.getEnabledSteps()[0])}}]}}),wizardButtonDirective("wzNext"),wizardButtonDirective("wzPrevious"),wizardButtonDirective("wzFinish"),wizardButtonDirective("wzCancel"),angular.module("mgo-angular-wizard").factory("WizardHandler",function(){var a={},b={};return a.defaultName="defaultWizard",a.addWizard=function(a,c){b[a]=c},a.removeWizard=function(a){delete b[a]},a.wizard=function(c){var d=c;return c||(d=a.defaultName),b[d]},a});
 /**
  * Copyright (C) GiftStarter, inc. - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
@@ -2690,7 +2817,7 @@ function ngABConfig($httpProvider) {
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics']);
+        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 'mgo-angular-wizard']);
 
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
@@ -2953,6 +3080,7 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
 //        }).error(function(){
             $scope.content = '';
             $scope.error = true;
+			$scope.bg = 'white';
 //        });
     }
 
@@ -3180,7 +3308,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/join/join-form.html',
-    "<div class=\"userlogin__form\">\n" +
+    "<div class=\"userlogin__form hidden\">\n" +
     "    <h4>Create account with email address:</h4>\n" +
     "    <form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action\">\n" +
     "        <input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required /><br/>\n" +
@@ -3193,41 +3321,150 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  \t\tCreate Account\n" +
     "\t\t</button>\n" +
     "    </form>\n" +
-    "</div>\n"
+    "</div>\n" +
+    "<wizard on-finish=\"finishedWizard()\"> \n" +
+    "<form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action ui form\">\n" +
+    "    <wz-step title=\"\" canexit=\"\">\n" +
+    "        <h2 class=\"vertical small bottom\">Create a new account</h2>\n" +
+    "        <p>Sign up with your e-mail address.</p>\n" +
+    "\t\t<div class=\"field ui left icon input\" style=\"width:100%\">\n" +
+    "\t\t\t<i class=\"mail icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required style=\"width:100%\" />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical medium top bottom grid\">\n" +
+    "\t\t<div class=\"column six\">\n" +
+    "\t\t<div class=\"inline field\">\n" +
+    "\t\t\t<div class=\"ui checkbox checked column wide four\">\n" +
+    "  \t\t\t\t<input type=\"checkbox\" name=\"public\" checked=\"\">\n" +
+    "  \t\t\t\t<label>It's ok to send me (very occasional) <br />email about the Giftstarter service.</label>\n" +
+    "\t\t\t</div>\n" +
+    "   \t\t</div>\n" +
+    "\t\t<button class=\"ui right labeled icon button submit\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\tNext\n" +
+    "\t\t</button>\n" +
+    "\t\t</div>\n" +
+    "\t\t</div>\n" +
+    "    </wz-step>\n" +
+    "    <wz-step title=\"\" canexit=\"\">\n" +
+    "        <h2 class=\"vertical small bottom\">Set Up Your Account</h2>\n" +
+    "        <p>GiftsStarter is all abut you. How do you want people to recognize you?</p>\n" +
+    "\t\t<div class=\"ui middle aligned center grid\">\t\t\t\n" +
+    "\t\t<div class=\"column centered\">\t\t\t\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"terminal icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"Your First Name\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"terminal icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__surname\" type=\"text\" name=\"surname\" ng-model=\"$parent.surname\" placeholder=\"Your Last Name\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t</div></div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical large top bottom grid\">\n" +
+    "\t\t\t<button class=\"ui right labeled icon button\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\t\tNext\n" +
+    "\t\t\t</button>\n" +
+    "\t\t</div>\n" +
+    "    </wz-step>\n" +
+    "    <wz-step title=\"\" canexit=\"\">\n" +
+    "        <h2 class=\"vertical small bottom\">That' It! Let's Go...</h2>\n" +
+    "        <p>Enter a strong password to finish your account stup. Or, take a minute to watch this funny video about how GiftStarter worked for a group of friends. Then get started.</p>\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"protect icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__password\" type=\"password\" name=\"password\" ng-hide=\"$parent.showPassword\" ng-model=\"$parent.password\" placeholder=\"Strong Password\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical large top bottom grid\">\n" +
+    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button primary red\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\">\n" +
+    "\t\t\t<i class=\"add user icon\"></i>\n" +
+    "  \t\t\tCreate Account\n" +
+    "\t\t</button>\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"userlogin__message ui small message\" ng-show=\"$parent.message\">\n" +
+    "  \t\t\t<i class=\"close icon\"></i>\n" +
+    "  \t\t\t<div class=\"content\">{{$parent.message}}</div>\n" +
+    "\t\t</div>\n" +
+    "    </wz-step>\n" +
+    "</form>\n" +
+    "</wizard>\n"
   );
 
 
   $templateCache.put('/views/join/join.html',
-    "<div class=\"userlogin\" ng-controller=\"LoginOrCreateController\">\n" +
-    "    <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
-    "        <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
-    "            <span>Already have an account? </span>\n" +
-    "            <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "<div class=\"ui grid stackable join container\" ng-controller=\"LoginOrCreateController\">\n" +
+    "    <div class=\"eight wide column\">\n" +
+    "            <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "                <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
+    "                <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "                    <span>Already have an account? </span>\n" +
+    "                    <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"eight wide column\">\n" +
+    "\n" +
+    "        <div class=\"masthead segment bg-gradient\">\n" +
+    "            <div class=\"ui container\">\n" +
+    "                <div class=\"introduction\">\n" +
+    "\n" +
+    "                   <iframe class=\"tablet computer\" width=\"531\" height=\"305\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"ui icon message vertical medium\">\n" +
+    "    \t\t\t\t\t<i class=\"facebook icon blue\"></i>\n" +
+    "    \t\t\t\t\t<div class=\"content column two\">\n" +
+    "        \t\t\t\t\t<div class=\"header\">\n" +
+    "            \t\t\t\t\tRather use social media?\n" +
+    "        \t\t\t\t\t</div>\n" +
+    "        \t\t\t\t\t<p>It only takes a few clicks to sign up.</p>\n" +
+    "    \t\t\t\t\t</div>\n" +
+    "    \t\t\t\t\t<div class=\"column three\">\n" +
+    "        \t\t\t\t\t<a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
+    "    \t\t\t\t\t</div>\n" +
+    "\t\t\t\t\t</div>\n" +
+    "\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"vertical-line-block\">\n" +
-    "        <div class=\"vertical-line\" ng-show=\"showSocials\"/>\n" +
-    "    </div>\n" +
-    "    <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "        <h4>Or {{showCreate?\"create account\":\"login\"}} with social media:</h4>\n" +
-    "        <div class=\"social\">\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\"><img class=\"social__icons\" src=\"/assets/login/facebook.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\"><img class=\"social__icons\" src=\"/assets/login/twitter.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\"><img class=\"social__icons\" src=\"/assets/login/linkedin.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\"><img class=\"social__icons\" src=\"/assets/login/google.png\"></a>\n" +
+    "\n" +
+    "    <div class=\"ui social basic modal middle aligned center aligned\">\n" +
+    "        <i class=\"close icon\"></i>\n" +
+    "        <div class=\"ui middle center aligned header\">\n" +
+    "            Create Your Account\n" +
     "        </div>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showCreate\">\n" +
-    "            <span>Don't have an account? </span>\n" +
-    "           <span><a ng-click=\"showCreate=true; resetForm();\" class=\"userlogin__createacclink linky\">Create</a></span>\n" +
+    "        <div class=\"middle center aligned grid\">\n" +
+    "\t\t\t<div class=\"image content container\">\n" +
+    "            <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "                <div class=\"social\">\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
+    "                    </a>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
+    "\t\t</div>\n" +
     "    </div>\n" +
+    "\t\n" +
     "</div>\n" +
-    "<script>\n" +
-    "    function handlePopupClosed() {\n" +
-    "        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
-    "    }\n" +
-    "</script>"
+    "\n" +
+    "    <script>\n" +
+    "        function handlePopupClosed() {\n" +
+    "            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
+    "        }\n" +
+    "    </script>"
   );
 
 
@@ -3248,12 +3485,17 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/login/login-form.html',
-    "<div class=\"userlogin__form\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
-    "    <h4>Login with your email address:</h4>\n" +
-    "    <form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action\">\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <div class=\"userlogin__passwordwrap\"><input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter your password\" required></div>\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=true\">Forgot password</a>\n" +
+    "<div class=\"userlogin__form ui stacked segment\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
+    "    <h3 class=\"vertical small bottom\">Login with your email address:</h3>\n" +
+    "    <form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action login ui form\">\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"user icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"hide icon\"></i>\n" +
+    "\t\t\t<input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required />\n" +
+    "\t\t</div>\n" +
     "        <div class=\"userlogin__wrapper\">\n" +
     "            <!--<input class=\"userlogin__remember\" type=\"checkbox\" name=\"remember\" id=\"remember\">-->\n" +
     "        </div>\n" +
@@ -3262,20 +3504,28 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  \t\t<i class=\"right arrow icon\"></i>\n" +
     "  \t\tLogin\n" +
     "\t\t</button>\n" +
+    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=true\">Did you forgot your password?</a>\n" +
     "    </form>\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"userlogin__form\" ng-show=\"$parent.showForgot\">\n" +
-    "    <form ng-submit=\"$parent.doForgotPassword()\">\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Cancel</a>\n" +
+    "<div class=\"userlogin__form ui stacked segment\" ng-show=\"$parent.showForgot\">\n" +
+    "    <h3>Password Reminder</h3>\n" +
+    "\t<form ng-submit=\"$parent.doForgotPassword()\" class=\"ui form\">\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"user icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required />\n" +
+    "\t\t</div>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn\" ng-disabled=\"$parent.working\">Get Password</button>\n" +
-    "    </form>\n" +
+    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
+    "  \t\t<i class=\"forward mail icon\"></i>\n" +
+    "  \t\tGet Password\n" +
+    "\t\t</button>    \n" +
+    "\t</form>\n" +
+    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Nevermind, I remember it now...</a>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"userlogin__form\" ng-show=\"$parent.showReset\">\n" +
-    "    <h4>Reset Your Password:</h4>\n" +
+    "    <h3>Reset Your Password:</h3>\n" +
     "    <form ng-submit=\"$parent.doResetPassword()\">\n" +
     "        <input class=\"userlogin__email\" type=\"hidden\" name=\"resetcode\" ng-model=\"$parent.resetCode\" placeholder=\"Enter the reset code\" required />\n" +
     "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
@@ -3290,8 +3540,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/login/login.html',
-    "<div class=\"userlogin\" ng-controller=\"LoginOrCreateController\">\n" +
-    "    <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "<div class=\"userlogin ui equal grid stackable centered center aligned\" ng-controller=\"LoginOrCreateController\" class=\"ui grid stackable\">\n" +
+    "    <div class=\"userlogin__emaillogin login-block ui six wide column vertical small bottom\" ng-show=\"showCreate\">\n" +
     "        <ng-include src=\"'/views/login/login-form.html'\"></ng-include>\n" +
     "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
     "            <span>Don't have an account? </span>\n" +
@@ -3301,8 +3551,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div class=\"vertical-line-block\">\n" +
     "        <div class=\"vertical-line\" ng-show=\"showSocials\"/>\n" +
     "    </div>\n" +
-    "    <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "        <h4>Or {{showCreate?\"create account\":\"login\"}} with social media:</h4>\n" +
+    "    <div class=\"userlogin__sociallogin login-block ui six wide column center aligned\" ng-show=\"showSocials\">\n" +
+    "        <h3 class=\"ui computer tablet\">Or social media:</h3>\n" +
     "        <div class=\"social\">\n" +
     "            <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\"><img class=\"social__icons\" src=\"/assets/login/facebook.png\"></a><br/>\n" +
     "            <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\"><img class=\"social__icons\" src=\"/assets/login/twitter.png\"></a><br/>\n" +
@@ -3325,163 +3575,116 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/views/yourvillage/yourvillage.html',
     "<style>\n" +
-    "    footer .footblock .logo {\n" +
-    "        margin-left: auto;\n" +
-    "        margin: 30px auto 0;\n" +
+    "    .ui.fixed.menu+.ui.grid.providence {\n" +
+    "        padding-top: 0;\n" +
     "    }\n" +
-    "    @media screen and (max-width: 1030px) {\n" +
-    "        footer .footblock .footcol.joinus {\n" +
-    "            margin: 0 6%;\n" +
-    "            width: auto;\n" +
-    "        }\n" +
-    "        footer .footblock.left {\n" +
-    "            margin-bottom: 0;\n" +
-    "        }\n" +
+    "    .ui.header .sub.header {\n" +
+    "        line-height: 1.4em;\n" +
+    "        padding-top: .8rem;\n" +
+    "        font-size: 1.2rem;\n" +
     "    }\n" +
-    "    .main.yourvillage {\n" +
-    "        padding-top: 47px;\n" +
+    "    .ui.card>.content>.header:not(.ui) {\n" +
+    "        font-size: .8em;\n" +
     "    }\n" +
-    "    .hello-bar {\n" +
-    "        padding: 10px;\n" +
-    "        width: 100%;\n" +
-    "        text-transform: uppercase;\n" +
-    "        border-bottom: 1px solid #e2e2e2;\n" +
-    "        z-index: 10;\n" +
-    "    }\n" +
-    "    .hello-bar a {\n" +
-    "        color:#E44028;\n" +
-    "    }\n" +
-    "    .product-tab .container {\n" +
-    "        padding-left: 15px;\n" +
-    "        padding-right: 15px;\n" +
-    "    }\n" +
-    "    .h1, .h2, .h3, .h4, .h5 {\n" +
-    "        text-transform: none;\n" +
-    "    }\n" +
-    "    .newsletter {\n" +
-    "        padding-top: 55px;\n" +
-    "        padding-bottom: 55px;\n" +
-    "    }\n" +
-    "    .newsletter p {\n" +
-    "        margin-bottom: 20px;\n" +
-    "    }\n" +
-    "    .newsletter-form .form-group {\n" +
-    "        width: 85%;\n" +
-    "    }\n" +
-    "    .newsletter-form .form-control {\n" +
-    "        font-size: 16px;\n" +
-    "        padding: 25px;\n" +
-    "        margin: 0;\n" +
-    "    }\n" +
-    "    .newsletter-form a {\n" +
-    "        text-decoration: underline;\n" +
-    "        color: white;\n" +
-    "    }\n" +
-    "    .newsletter-form a {\n" +
-    "        color: #fff;\n" +
-    "    }\n" +
-    "    .newsletter-form .btn a {\n" +
-    "        text-decoration: none;\n" +
-    "    }\n" +
-    "    .newsletter-form h3 {\n" +
-    "        margin-bottom: 0;\n" +
-    "    }\n" +
-    "    .newsletter-form .btn {\n" +
-    "        width: auto;\n" +
-    "    }\n" +
-    "    .thumb-item-img a:hover {\n" +
-    "        color: #333;\n" +
-    "    }\n" +
-    "    @media screen and (max-width: 360px) {\n" +
-    "        [class*=\"col-xs\"] {\n" +
-    "            float: left;\n" +
-    "        }\n" +
-    "        .col-xs-6 {\n" +
-    "            width: 50% !important;\n" +
-    "        }\n" +
+    "    .divider.hidden {\n" +
+    "        display: inherit;\n" +
     "    }\n" +
     "</style>\n" +
-    "<div class=\"ui grey one item menu top fixed\">\n" +
-    "    <div class=\"active item\">\n" +
-    "        Questions? Call Us: <span class=\"contactNumber\"></span>\n" +
+    "<a class=\"ui teal inverted one item menu top fixed\" href=\"tel:+1-206-486-4849\">\n" +
+    "    <div class=\"item\">\n" +
+    "        Questions? Give us a call today!\n" +
     "    </div>\n" +
-    "</div>\n" +
+    "</a>\n" +
     "\n" +
     "<div class=\"ui grid stackable providence container\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
     "        <div class=\"ui center aligned huge header\">Create a GiftStarter Campaign and Easily:</div>\n" +
-    "        <div class=\"ui big list\">\n" +
-    "            <div class=\"item\">\n" +
-    "                <i class=\"check square icon red\"></i>\n" +
-    "                <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
-    "            </div>\n" +
-    "            <div class=\"item\">\n" +
-    "                <i class=\"check square icon red\"></i>\n" +
-    "                <div class=\"content\">Get support from family &amp; friends.</div>\n" +
-    "            </div>\n" +
-    "            <div class=\"item\">\n" +
-    "                <i class=\"check square icon red\"></i>\n" +
-    "                <div class=\"content\">Save time and money when it matters most.</div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"ui grid stackable container\">\n" +
-    "    <div class=\"sixteen wide column\">\n" +
-    "        <h1 class=\"ui center aligned header\">\n" +
-    "                Get The Help You Need\n" +
-    "                <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
-    "            </h1>\n" +
-    "        <div class=\"ui two column grid\">\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid brown card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
-    "                            <img src=\"images/products/abcdoula.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">ABC Doula</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "        <div class=\"ui text container\">\n" +
+    "            <div class=\"ui large list\">\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
     "                </div>\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid olive card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
-    "                            <img src=\"images/products/lishfood.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/lishfood\">Lish</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Get support from family &amp; friends.</div>\n" +
     "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid yellow card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
-    "                            <img src=\"images/products/farmtofit.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">Farm To Fit</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid teal card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
-    "                            <img src=\"images/products/fullbellyfare.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Save time and money when it matters most.</div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
-    "<div class=\"ui grid stackable container\">\n" +
+    "<div class=\"ui section divider\"></div>\n" +
+    "<div class=\"ui text container\">\n" +
+    "    <h1 class=\"ui center aligned header\">\n" +
+    "        Get the help you need.\n" +
+    "        <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
+    "    </h1>\n" +
+    "    <div class=\"ui two column grid\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid brown card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                        <img src=\"images/products/abcdoula.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                            ABC Doula\n" +
+    "                            <i class=\"arrow right brown icon\"></i>\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid olive card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                        <img src=\"images/products/lishfood.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                                Lish \n" +
+    "                                <i class=\"arrow right olive icon\"></i>\n" +
+    "                            </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid yellow card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                        <img src=\"images/products/farmtofit.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                                Farm To Fit \n" +
+    "                                <i class=\"arrow right yellow icon\"></i>\n" +
+    "                            </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid grey card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                        <img src=\"images/products/fullbellyfare.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                                Full Belly Fare \n" +
+    "                                <i class=\"arrow right grey icon\"></i>\n" +
+    "                            </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"ui hidden divider\"></div>\n" +
+    "<div class=\"ui grid stackable container tablet only mobile only\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <div class=\"ui attached segment\">\n" +
     "            <div class=\"ui header huge centered\">\n" +
@@ -3496,7 +3699,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                <i class=\"mail icon\"></i>\n" +
     "                Email\n" +
     "            </a>\n" +
-    "            <a class=\"ui positive button\" href=\"tel:+1-206-486-4849\">\n" +
+    "            <a class=\"ui teal button\" href=\"tel:+1-206-486-4849\">\n" +
     "                <i class=\"phone icon\"></i>\n" +
     "                Call\n" +
     "            </a>\n" +
@@ -3505,42 +3708,37 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "</div>\n" +
     "\n" +
     "<script>\n" +
-    "    $(function () {\n" +
-    "        var $elContactNumber = $('.contactNumber'),\n" +
-    "            contactNumber = '+1-206-486-4849',\n" +
-    "            contactNumberDisplay = '(206) 486-4849',\n" +
-    "            $body = $('body');\n" +
-    "        $body.attr({\n" +
-    "            style: \"max-width: none;\"\n" +
-    "        });\n" +
-    "        if(isMobile()) {\n" +
-    "            if(isIOS()) {\n" +
-    "                fixIOSAffix();\n" +
-    "            }\n" +
-    "            $elContactNumber.html('<a href=\"tel:' + contactNumber + '\">' + contactNumberDisplay + '</a>');\n" +
-    "        } else {\n" +
-    "            $elContactNumber.html(contactNumberDisplay)\n" +
-    "        }\n" +
-    "\n" +
-    "        function isIOS() {\n" +
-    "            return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);\n" +
-    "        }\n" +
-    "\n" +
-    "        function isMobile() {\n" +
-    "            return /(iPad|iPhone|iPod|Android|BlackBerry|BB\\d+|CriOS)/g.test(navigator.userAgent);\n" +
-    "        }\n" +
-    "\n" +
-    "        function fixIOSAffix() {\n" +
-    "            var affix = $('[data-spy=\"affix\"]'),\n" +
-    "                input = $('input');\n" +
-    "            input.on('focus', function () {\n" +
-    "                affix.fadeOut();\n" +
-    "            });\n" +
-    "            input.on('blur', function () {\n" +
-    "                affix.fadeIn();\n" +
-    "            });\n" +
-    "        }\n" +
-    "    });\n" +
+    "    //TODO: 5 Oct 2015 Tyler Goelz (@yaboi)\n" +
+    "    //Uncomment when form is implemented to fix iOS\n" +
+    "    //number pad / affix error.\n" +
+    "    //\n" +
+    "    //NOTE: Test this with Semantic, because this fix\n" +
+    "    //was put in place for Bootstrap 3 affix which is\n" +
+    "    //no longer being used.\n" +
+    "    //\n" +
+    "    //     $(function () {\n" +
+    "    //         if(isMobile()) {\n" +
+    "    //             if(isIOS()) {\n" +
+    "    //                 fixIOSAffix();\n" +
+    "    //             }\n" +
+    "    //         }\n" +
+    "    //         function isIOS() {\n" +
+    "    //             return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);\n" +
+    "    //         }\n" +
+    "    //         function isMobile() {\n" +
+    "    //             return /(iPad|iPhone|iPod|Android|BlackBerry|BB\\d+|CriOS)/g.test(navigator.userAgent);\n" +
+    "    //         }\n" +
+    "    //         function fixIOSAffix() {\n" +
+    "    //             var affix = $('[data-spy=\"affix\"]'),\n" +
+    "    //                 input = $('input');\n" +
+    "    //             input.on('focus', function () {\n" +
+    "    //                 affix.fadeOut();\n" +
+    "    //             });\n" +
+    "    //             input.on('blur', function () {\n" +
+    "    //                 affix.fadeIn();\n" +
+    "    //             });\n" +
+    "    //         }\n" +
+    "    //     });\n" +
     "</script>"
   );
 
@@ -3624,73 +3822,136 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"clear\"></div>\n" +
     "        <div class=\"grid\">\n" +
     "            <div ng-repeat=\"group in groups\" class=\"group\" ng-class-odd=\"'left'\" ng-class-even=\"'right'\">\n" +
-    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='tile' title=\"{{product.productNameStripped}}\"><a href=\"{{categoryPath}}/{{product.productSlug}}\"><img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" /><div class=\"tilelabel\"><span ng-bind-html=\"product.productNameShort\"></span><br/><span class=\"price\">${{product.productPrice}}</span></div></a></div>\n" +
+    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='tile' title=\"{{product.productNameStripped}}\">\n" +
+    "\t\t\t\t\t<a href=\"{{categoryPath}}/{{product.productSlug}}\">\n" +
+    "\t\t\t\t\t\t<img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" class=\"load\" />\n" +
+    "\t\t\t\t\t\t<div class=\"tilelabel\"><span ng-bind-html=\"product.productNameShort\"></span><br/><span class=\"price\">${{product.productPrice}}</span></div>\n" +
+    "\t\t\t\t\t</a>\n" +
+    "\t\t\t\t</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
     "    <h1>Top Categories for Group Gifting</h1>\n" +
-    "    <div class=\"grid categories\">\n" +
+    "<div class=\"categories ui four stackable link cards\">\n" +
+    "\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/music\">\n" +
+    "            <img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/music\">Music</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                Looking for the perfect gift for someone who has everything or loves the gift of music?\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/music\">\n" +
+    "                <i class=\"add icon\"></i> Music\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/luma\">\n" +
+    "            <img src=\"/assets/giftideas/category/luma-diamonds.jpg\" alt=\"Luma Diamonds\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/luma\">Luma Diamonds</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/luma\">\n" +
+    "                <i class=\"add icon\"></i> Luma\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/kids\">\n" +
+    "            <img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/kids\">Kids</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/kids\">\n" +
+    "                <i class=\"add icon\"></i> Kids\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/home\">\n" +
+    "            <img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/home\">Home</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/home\">\n" +
+    "                <i class=\"add icon\"></i> Home\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/music\"><img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\"/><div class=\"tilelabel\">Music</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/luma\"><img src=\"/assets/giftideas/category/luma.png\" alt=\"Luma Diamonds\"/><div class=\"tilelabel\">Luma Diamonds</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cute\"><img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" /><div class=\"tilelabel\">Cute</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/baby\"><img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" /><div class=\"tilelabel\">Baby</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/kids\"><img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\"/><div class=\"tilelabel\">Kids</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/home\"><img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\"/><div class=\"tilelabel\">Home</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forher\"><img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" /><div class=\"tilelabel\">For Her</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forhim\"><img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\" class=\"load\" /><div class=\"tilelabel\">For Him</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cute\"><img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\"/><div class=\"tilelabel\">Cute</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/baby\"><img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\"/><div class=\"tilelabel\">Baby</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cool\"><img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" /><div class=\"tilelabel\">Cool</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/office\"><img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\" class=\"load\" /><div class=\"tilelabel\">Office</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forher\"><img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\"/><div class=\"tilelabel\">For Her</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forhim\"><img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\"/><div class=\"tilelabel\">For Him</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/farewell\"><img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\" class=\"load\" /><div class=\"tilelabel\">Farewell</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/sympathy\"><img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\" class=\"load\" /><div class=\"tilelabel\">Sympathy</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cool\"><img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\"/><div class=\"tilelabel\">Cool</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/office\"><img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\"/><div class=\"tilelabel\">Office</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/beauty\"><img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\" class=\"load\" /><div class=\"tilelabel\">Beauty</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wine\"><img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\" class=\"load\" /><div class=\"tilelabel\">Wine</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/farewell\"><img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\"/><div class=\"tilelabel\">Farewell</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/sympathy\"><img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\"/><div class=\"tilelabel\">Sympathy</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/butterlondon\"><img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"butter LONDON\" class=\"load\" /><div class=\"tilelabel\">butter LONDON</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/petlovers\"><img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\" class=\"load\" /><div class=\"tilelabel\">Pet Lovers</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/beauty\"><img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\"/><div class=\"tilelabel\">Beauty</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wine\"><img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\"/><div class=\"tilelabel\">Wine</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wedding\"><img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\" class=\"load\" /><div class=\"tilelabel\">Wedding</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/graduation\"><img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\" class=\"load\" /><div class=\"tilelabel\">Graduation</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/butterlondon\"><img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"butter LONDON\"/><div class=\"tilelabel\">butter LONDON</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/petlovers\"><img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\"/><div class=\"tilelabel\">Pet Lovers</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/red\"><img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\" class=\"load\" /><div class=\"tilelabel\">Wear Red</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/pisces\"><img src=\"/assets/giftideas/category/pisces.jpg\" alt=\"Pisces\" class=\"load\"  class=\"load\" /><div class=\"tilelabel\">Pisces</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wedding\"><img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\"/><div class=\"tilelabel\">Wedding</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/graduation\"><img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\"/><div class=\"tilelabel\">Graduation</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/patriots\"><img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\" class=\"load\" /><div class=\"tilelabel\">Patriots</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/seahawks\"><img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\" class=\"load\" /><div class=\"tilelabel\">Seahawks</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/red\"><img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\"/><div class=\"tilelabel\">Wear Red</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/pisces\"><img src=\"/assets/giftideas/category/pisces.jpg\" alt=\"Pisces\"/><div class=\"tilelabel\">Pisces</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/employee\"><img src=\"/assets/giftideas/category/employee.jpg\" alt=\"Employee Appreciation\" class=\"load\" /><div class=\"tilelabel\">Employee Appreciation</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/boss\"><img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\" class=\"load\" /><div class=\"tilelabel\">Boss</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/patriots\"><img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\"/><div class=\"tilelabel\">Patriots</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/seahawks\"><img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\"/><div class=\"tilelabel\">Seahawks</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/teacher\"><img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\" class=\"load\" /><div class=\"tilelabel\">Teacher</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/electronics\"><img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\" class=\"load\" /><div class=\"tilelabel\">Electronics</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/employee\"><img src=\"/assets/giftideas/category/employee.jpg\" alt=\"Employee Appreciation\"/><div class=\"tilelabel\">Employee Appreciation</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/boss\"><img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\"/><div class=\"tilelabel\">Boss</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/outdoors\"><img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" /><div class=\"tilelabel\">Outdoors</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/green\"><img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green and Organic\" class=\"load\" /><div class=\"tilelabel\">Green and Organic</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/teacher\"><img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\"/><div class=\"tilelabel\">Teacher</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/electronics\"><img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\"/><div class=\"tilelabel\">Electronics</div></a></div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/outdoors\"><img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\"/><div class=\"tilelabel\">Outdoors</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/green\"><img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green and Organic\"/><div class=\"tilelabel\">Green and Organic</div></a></div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/military\"><img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\"/><div class=\"tilelabel\">Military</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/giftcard\"><img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\"/><div class=\"tilelabel\">Gift Cards</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/military\"><img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" /><div class=\"tilelabel\">Military</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/giftcard\"><img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\" class=\"load\" /><div class=\"tilelabel\">Gift Cards</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
@@ -4749,18 +5010,18 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <gs-product-search></gs-product-search>\n" +
     "    </div-->\n" +
     "    <!--ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include-->\n" +
-    "    <ng-include src=\"'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'\" class=\"hidden\"></ng-include>\n" +
     "    <ng-include src=\"'/scripts/home/whatisgiftstarter/how-it-works.ng.html'\"></ng-include>\n" +
     "\t<!--ng-include src=\"'/scripts/staffpicks/staffpicks.ng.html'\"></ng-include-->\n" +
     "    <!--ng-include src=\"'/scripts/giftsgivenbar/giftsgivenbar.ng.html'\"></ng-include-->\n" +
-    "    <div class=\"userlogin\" id=\"loginpanel\">\n" +
+    "    <div class=\"userlogin hidden\" id=\"loginpanel\">\n" +
     "        <div class=\"userlogin__logo\"></div>\n" +
     "        <h2 class=\"userlogin__title\">\n" +
     "            Join the giving movement\n" +
     "        </h2>\n" +
     "    </div>\n" +
-    "    <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
-    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/login/login-or-create.html'\" class=\"hidden\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\" class=\"hidden\"></ng-include>\n" +
     "</div>\n"
   );
 
@@ -5988,7 +6249,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <ng-include src=\"'/scripts/giftideas/giftideas.ng.html'\"></ng-include>\n" +
     "\n" +
-    "    <div class=\"clear\">\n" +
+    "    <div class=\"clear hidden\" ng-hide>\n" +
     "        <p>&nbsp;</p>\n" +
     "        <h4 class=\"centered\">Looking for something else?</h4>\n" +
     "        <gs-product-search></gs-product-search>\n" +
@@ -7556,6 +7817,12 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.basePath = pathParts[1];
     var category = pathParts.length > 2 ? pathParts[2] : false;
     var product = pathParts.length > 3 ? pathParts[3] : false;
+	// lazy load images
+     jQuery('.load').visibility({
+        type: 'image',
+        transition: 'vertical flip in',
+        duration: 500
+      });
 
     // hack for mailing list error where we linked to the wrong category
     if(category && !product && (category === 'lunarnewyear' || category === 'farewell' || category === 'pisces') && $location.search()['utm_campaign'] === '18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015') {
@@ -8401,6 +8668,10 @@ function gsPrintUrl($location, $http) {
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
         this.mobile = device.mobile() || device.tablet();
+		function isSlim() {
+        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+    	}
+		this.makeSlim = isSlim();
 
         this.subliminalOffset = -3.0;
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
@@ -8421,7 +8692,8 @@ function gsPrintUrl($location, $http) {
 
         $scope.isHeaderOnly = self.thisRoute == '/header';
         $scope.isProvidence = self.thisRoute == '/yourvillage';
-        
+		$scope.slimHeader = isSlim();
+
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
@@ -8690,10 +8962,16 @@ function gsPrintUrl($location, $http) {
         '$anchorScroll',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
+		function isSlim() {
+        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+    	}
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
         $anchorScroll();
+		this.makeSlim = isSlim();
+		$rootScope.slimHeader = isSlim();
+		$rootScope.greybg = false;
       });
     })
 
@@ -10105,7 +10383,8 @@ GiftStarterApp.service('LinkedInService', [
     var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService,
                                             FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
 
-        $scope.working = false;
+        $scope.greybg = true;
+		$scope.working = false;
         if (typeof($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }
@@ -10137,11 +10416,43 @@ GiftStarterApp.service('LinkedInService', [
         };
         $scope.resetForm();
 
-        if(UserService.loggedIn) {
+        /* semantic ui triggers */
+		if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
         }
+		jQuery('.button.social').click(function(){
+  			jQuery('.ui.social.modal').modal('show');
+	  	});
+		jQuery('.create_action.ui.form').form({
+		    fields: {
+		        email: {
+		            identifier: 'email',
+		            rules: [{
+		                type: 'email',
+		                prompt: 'Please enter a valid e-mail'
+		            }]
+		        },
+		        name: 'empty',
+		        surname: 'empty',
+		        password: ['minLength[6]', 'empty']
+		    }
+		});
+		jQuery('.userlogin__form')
+  			// if a direction if specified it will be obeyed
+  		.transition('fade up in')
+		;
 
-        function doSocialLogin(successFunction, maxRetries) {
+		$scope.emailValidation = function(context){
+			return context.firstName === $scope.email;
+		}
+		$scope.nameValidation = function(context){
+			return context.firstName === $scope.name;
+			return context.lastName === $scope.surname;
+		}
+		$scope.passwordValidation = function(context){
+			return context.password === $scope.password;
+		}		
+		function doSocialLogin(successFunction, maxRetries) {
             maxRetries = typeof maxRetries !== 'undefined' ? maxRetries : 3;
             if(AppStateService.get('staged_giftstart')) {
                 console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
@@ -14443,3 +14754,47 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
         templateUrl: '/scripts/header/subscribe-header.ng.html'
     }
 }
+
+/**
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
+
+(function (app) {
+
+	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
+
+		function isFull() {
+			return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+		}
+	
+		$scope.fullContainer = isFull();
+
+	};
+
+    app.controller('ViewController', [
+        '$scope',
+        '$location',
+        'Analytics',
+        '$rootScope',
+        '$interval',
+        '$timeout',
+        '$window',
+        '$http',
+        '$anchorScroll',
+        ViewController])
+    .run(function($rootScope, $location, $anchorScroll, $routeParams) {
+      function isFull() {
+			return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+		}
+		//when the route is changed scroll to the proper element.
+      $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+        //$location.hash($routeParams.scrollTo);
+        //$anchorScroll();
+		$rootScope.fullContainer = isFull();
+		jQuery('#angular-view').transition('fade in');
+      });
+    })
+
+}(angular.module('GiftStarterApp')));

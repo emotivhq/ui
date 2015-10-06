@@ -539,7 +539,7 @@ function ngABConfig($httpProvider) {
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics']);
+        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 'mgo-angular-wizard']);
 
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
@@ -802,6 +802,7 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
 //        }).error(function(){
             $scope.content = '';
             $scope.error = true;
+			$scope.bg = 'white';
 //        });
     }
 
@@ -1029,7 +1030,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/join/join-form.html',
-    "<div class=\"userlogin__form\">\n" +
+    "<div class=\"userlogin__form hidden\">\n" +
     "    <h4>Create account with email address:</h4>\n" +
     "    <form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action\">\n" +
     "        <input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required /><br/>\n" +
@@ -1042,41 +1043,150 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  \t\tCreate Account\n" +
     "\t\t</button>\n" +
     "    </form>\n" +
-    "</div>\n"
+    "</div>\n" +
+    "<wizard on-finish=\"finishedWizard()\"> \n" +
+    "<form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action ui form\">\n" +
+    "    <wz-step title=\"\" canexit=\"\">\n" +
+    "        <h2 class=\"vertical small bottom\">Create a new account</h2>\n" +
+    "        <p>Sign up with your e-mail address.</p>\n" +
+    "\t\t<div class=\"field ui left icon input\" style=\"width:100%\">\n" +
+    "\t\t\t<i class=\"mail icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required style=\"width:100%\" />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical medium top bottom grid\">\n" +
+    "\t\t<div class=\"column six\">\n" +
+    "\t\t<div class=\"inline field\">\n" +
+    "\t\t\t<div class=\"ui checkbox checked column wide four\">\n" +
+    "  \t\t\t\t<input type=\"checkbox\" name=\"public\" checked=\"\">\n" +
+    "  \t\t\t\t<label>It's ok to send me (very occasional) <br />email about the Giftstarter service.</label>\n" +
+    "\t\t\t</div>\n" +
+    "   \t\t</div>\n" +
+    "\t\t<button class=\"ui right labeled icon button submit\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\tNext\n" +
+    "\t\t</button>\n" +
+    "\t\t</div>\n" +
+    "\t\t</div>\n" +
+    "    </wz-step>\n" +
+    "    <wz-step title=\"\" canexit=\"\">\n" +
+    "        <h2 class=\"vertical small bottom\">Set Up Your Account</h2>\n" +
+    "        <p>GiftsStarter is all abut you. How do you want people to recognize you?</p>\n" +
+    "\t\t<div class=\"ui middle aligned center grid\">\t\t\t\n" +
+    "\t\t<div class=\"column centered\">\t\t\t\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"terminal icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"Your First Name\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"terminal icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__surname\" type=\"text\" name=\"surname\" ng-model=\"$parent.surname\" placeholder=\"Your Last Name\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t</div></div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical large top bottom grid\">\n" +
+    "\t\t\t<button class=\"ui right labeled icon button\" type=\"submit\" wz-next value=\"Continue\">\n" +
+    "  \t\t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\t\tNext\n" +
+    "\t\t\t</button>\n" +
+    "\t\t</div>\n" +
+    "    </wz-step>\n" +
+    "    <wz-step title=\"\" canexit=\"\">\n" +
+    "        <h2 class=\"vertical small bottom\">That' It! Let's Go...</h2>\n" +
+    "        <p>Enter a strong password to finish your account stup. Or, take a minute to watch this funny video about how GiftStarter worked for a group of friends. Then get started.</p>\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"protect icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__password\" type=\"password\" name=\"password\" ng-hide=\"$parent.showPassword\" ng-model=\"$parent.password\" placeholder=\"Strong Password\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"ui middle aligned center aligned vertical large top bottom grid\">\n" +
+    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button primary red\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\">\n" +
+    "\t\t\t<i class=\"add user icon\"></i>\n" +
+    "  \t\t\tCreate Account\n" +
+    "\t\t</button>\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"userlogin__message ui small message\" ng-show=\"$parent.message\">\n" +
+    "  \t\t\t<i class=\"close icon\"></i>\n" +
+    "  \t\t\t<div class=\"content\">{{$parent.message}}</div>\n" +
+    "\t\t</div>\n" +
+    "    </wz-step>\n" +
+    "</form>\n" +
+    "</wizard>\n"
   );
 
 
   $templateCache.put('/views/join/join.html',
-    "<div class=\"userlogin\" ng-controller=\"LoginOrCreateController\">\n" +
-    "    <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
-    "        <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
-    "            <span>Already have an account? </span>\n" +
-    "            <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "<div class=\"ui grid stackable join container\" ng-controller=\"LoginOrCreateController\">\n" +
+    "    <div class=\"eight wide column\">\n" +
+    "            <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "                <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
+    "                <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "                    <span>Already have an account? </span>\n" +
+    "                    <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"eight wide column\">\n" +
+    "\n" +
+    "        <div class=\"masthead segment bg-gradient\">\n" +
+    "            <div class=\"ui container\">\n" +
+    "                <div class=\"introduction\">\n" +
+    "\n" +
+    "                   <iframe class=\"tablet computer\" width=\"531\" height=\"305\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "\n" +
+    "\t\t\t\t\t<div class=\"ui icon message vertical medium\">\n" +
+    "    \t\t\t\t\t<i class=\"facebook icon blue\"></i>\n" +
+    "    \t\t\t\t\t<div class=\"content column two\">\n" +
+    "        \t\t\t\t\t<div class=\"header\">\n" +
+    "            \t\t\t\t\tRather use social media?\n" +
+    "        \t\t\t\t\t</div>\n" +
+    "        \t\t\t\t\t<p>It only takes a few clicks to sign up.</p>\n" +
+    "    \t\t\t\t\t</div>\n" +
+    "    \t\t\t\t\t<div class=\"column three\">\n" +
+    "        \t\t\t\t\t<a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
+    "    \t\t\t\t\t</div>\n" +
+    "\t\t\t\t\t</div>\n" +
+    "\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"vertical-line-block\">\n" +
-    "        <div class=\"vertical-line\" ng-show=\"showSocials\"/>\n" +
-    "    </div>\n" +
-    "    <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "        <h4>Or {{showCreate?\"create account\":\"login\"}} with social media:</h4>\n" +
-    "        <div class=\"social\">\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\"><img class=\"social__icons\" src=\"/assets/login/facebook.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\"><img class=\"social__icons\" src=\"/assets/login/twitter.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\"><img class=\"social__icons\" src=\"/assets/login/linkedin.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\"><img class=\"social__icons\" src=\"/assets/login/google.png\"></a>\n" +
+    "\n" +
+    "    <div class=\"ui social basic modal middle aligned center aligned\">\n" +
+    "        <i class=\"close icon\"></i>\n" +
+    "        <div class=\"ui middle center aligned header\">\n" +
+    "            Create Your Account\n" +
     "        </div>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showCreate\">\n" +
-    "            <span>Don't have an account? </span>\n" +
-    "           <span><a ng-click=\"showCreate=true; resetForm();\" class=\"userlogin__createacclink linky\">Create</a></span>\n" +
+    "        <div class=\"middle center aligned grid\">\n" +
+    "\t\t\t<div class=\"image content container\">\n" +
+    "            <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "                <div class=\"social\">\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
+    "                    </a>\n" +
+    "                    <br/>\n" +
+    "                    <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
+    "                        <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
+    "                    </a>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
+    "\t\t</div>\n" +
     "    </div>\n" +
+    "\t\n" +
     "</div>\n" +
-    "<script>\n" +
-    "    function handlePopupClosed() {\n" +
-    "        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
-    "    }\n" +
-    "</script>"
+    "\n" +
+    "    <script>\n" +
+    "        function handlePopupClosed() {\n" +
+    "            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
+    "        }\n" +
+    "    </script>"
   );
 
 
@@ -1097,12 +1207,17 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/login/login-form.html',
-    "<div class=\"userlogin__form\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
-    "    <h4>Login with your email address:</h4>\n" +
-    "    <form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action\">\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <div class=\"userlogin__passwordwrap\"><input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter your password\" required></div>\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=true\">Forgot password</a>\n" +
+    "<div class=\"userlogin__form ui stacked segment\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
+    "    <h3 class=\"vertical small bottom\">Login with your email address:</h3>\n" +
+    "    <form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action login ui form\">\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"user icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required />\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"hide icon\"></i>\n" +
+    "\t\t\t<input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required />\n" +
+    "\t\t</div>\n" +
     "        <div class=\"userlogin__wrapper\">\n" +
     "            <!--<input class=\"userlogin__remember\" type=\"checkbox\" name=\"remember\" id=\"remember\">-->\n" +
     "        </div>\n" +
@@ -1111,20 +1226,28 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  \t\t<i class=\"right arrow icon\"></i>\n" +
     "  \t\tLogin\n" +
     "\t\t</button>\n" +
+    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=true\">Did you forgot your password?</a>\n" +
     "    </form>\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"userlogin__form\" ng-show=\"$parent.showForgot\">\n" +
-    "    <form ng-submit=\"$parent.doForgotPassword()\">\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Cancel</a>\n" +
+    "<div class=\"userlogin__form ui stacked segment\" ng-show=\"$parent.showForgot\">\n" +
+    "    <h3>Password Reminder</h3>\n" +
+    "\t<form ng-submit=\"$parent.doForgotPassword()\" class=\"ui form\">\n" +
+    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t\t<i class=\"user icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required />\n" +
+    "\t\t</div>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn\" ng-disabled=\"$parent.working\">Get Password</button>\n" +
-    "    </form>\n" +
+    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
+    "  \t\t<i class=\"forward mail icon\"></i>\n" +
+    "  \t\tGet Password\n" +
+    "\t\t</button>    \n" +
+    "\t</form>\n" +
+    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Nevermind, I remember it now...</a>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"userlogin__form\" ng-show=\"$parent.showReset\">\n" +
-    "    <h4>Reset Your Password:</h4>\n" +
+    "    <h3>Reset Your Password:</h3>\n" +
     "    <form ng-submit=\"$parent.doResetPassword()\">\n" +
     "        <input class=\"userlogin__email\" type=\"hidden\" name=\"resetcode\" ng-model=\"$parent.resetCode\" placeholder=\"Enter the reset code\" required />\n" +
     "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
@@ -1139,8 +1262,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/login/login.html',
-    "<div class=\"userlogin\" ng-controller=\"LoginOrCreateController\">\n" +
-    "    <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "<div class=\"userlogin ui equal grid stackable centered center aligned\" ng-controller=\"LoginOrCreateController\" class=\"ui grid stackable\">\n" +
+    "    <div class=\"userlogin__emaillogin login-block ui six wide column vertical small bottom\" ng-show=\"showCreate\">\n" +
     "        <ng-include src=\"'/views/login/login-form.html'\"></ng-include>\n" +
     "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
     "            <span>Don't have an account? </span>\n" +
@@ -1150,8 +1273,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div class=\"vertical-line-block\">\n" +
     "        <div class=\"vertical-line\" ng-show=\"showSocials\"/>\n" +
     "    </div>\n" +
-    "    <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "        <h4>Or {{showCreate?\"create account\":\"login\"}} with social media:</h4>\n" +
+    "    <div class=\"userlogin__sociallogin login-block ui six wide column center aligned\" ng-show=\"showSocials\">\n" +
+    "        <h3 class=\"ui computer tablet\">Or social media:</h3>\n" +
     "        <div class=\"social\">\n" +
     "            <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\"><img class=\"social__icons\" src=\"/assets/login/facebook.png\"></a><br/>\n" +
     "            <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\"><img class=\"social__icons\" src=\"/assets/login/twitter.png\"></a><br/>\n" +
@@ -1174,163 +1297,116 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/views/yourvillage/yourvillage.html',
     "<style>\n" +
-    "    footer .footblock .logo {\n" +
-    "        margin-left: auto;\n" +
-    "        margin: 30px auto 0;\n" +
+    "    .ui.fixed.menu+.ui.grid.providence {\n" +
+    "        padding-top: 0;\n" +
     "    }\n" +
-    "    @media screen and (max-width: 1030px) {\n" +
-    "        footer .footblock .footcol.joinus {\n" +
-    "            margin: 0 6%;\n" +
-    "            width: auto;\n" +
-    "        }\n" +
-    "        footer .footblock.left {\n" +
-    "            margin-bottom: 0;\n" +
-    "        }\n" +
+    "    .ui.header .sub.header {\n" +
+    "        line-height: 1.4em;\n" +
+    "        padding-top: .8rem;\n" +
+    "        font-size: 1.2rem;\n" +
     "    }\n" +
-    "    .main.yourvillage {\n" +
-    "        padding-top: 47px;\n" +
+    "    .ui.card>.content>.header:not(.ui) {\n" +
+    "        font-size: .8em;\n" +
     "    }\n" +
-    "    .hello-bar {\n" +
-    "        padding: 10px;\n" +
-    "        width: 100%;\n" +
-    "        text-transform: uppercase;\n" +
-    "        border-bottom: 1px solid #e2e2e2;\n" +
-    "        z-index: 10;\n" +
-    "    }\n" +
-    "    .hello-bar a {\n" +
-    "        color:#E44028;\n" +
-    "    }\n" +
-    "    .product-tab .container {\n" +
-    "        padding-left: 15px;\n" +
-    "        padding-right: 15px;\n" +
-    "    }\n" +
-    "    .h1, .h2, .h3, .h4, .h5 {\n" +
-    "        text-transform: none;\n" +
-    "    }\n" +
-    "    .newsletter {\n" +
-    "        padding-top: 55px;\n" +
-    "        padding-bottom: 55px;\n" +
-    "    }\n" +
-    "    .newsletter p {\n" +
-    "        margin-bottom: 20px;\n" +
-    "    }\n" +
-    "    .newsletter-form .form-group {\n" +
-    "        width: 85%;\n" +
-    "    }\n" +
-    "    .newsletter-form .form-control {\n" +
-    "        font-size: 16px;\n" +
-    "        padding: 25px;\n" +
-    "        margin: 0;\n" +
-    "    }\n" +
-    "    .newsletter-form a {\n" +
-    "        text-decoration: underline;\n" +
-    "        color: white;\n" +
-    "    }\n" +
-    "    .newsletter-form a {\n" +
-    "        color: #fff;\n" +
-    "    }\n" +
-    "    .newsletter-form .btn a {\n" +
-    "        text-decoration: none;\n" +
-    "    }\n" +
-    "    .newsletter-form h3 {\n" +
-    "        margin-bottom: 0;\n" +
-    "    }\n" +
-    "    .newsletter-form .btn {\n" +
-    "        width: auto;\n" +
-    "    }\n" +
-    "    .thumb-item-img a:hover {\n" +
-    "        color: #333;\n" +
-    "    }\n" +
-    "    @media screen and (max-width: 360px) {\n" +
-    "        [class*=\"col-xs\"] {\n" +
-    "            float: left;\n" +
-    "        }\n" +
-    "        .col-xs-6 {\n" +
-    "            width: 50% !important;\n" +
-    "        }\n" +
+    "    .divider.hidden {\n" +
+    "        display: inherit;\n" +
     "    }\n" +
     "</style>\n" +
-    "<div class=\"ui grey one item menu top fixed\">\n" +
-    "    <div class=\"active item\">\n" +
-    "        Questions? Call Us: <span class=\"contactNumber\"></span>\n" +
+    "<a class=\"ui teal inverted one item menu top fixed\" href=\"tel:+1-206-486-4849\">\n" +
+    "    <div class=\"item\">\n" +
+    "        Questions? Give us a call today!\n" +
     "    </div>\n" +
-    "</div>\n" +
+    "</a>\n" +
     "\n" +
     "<div class=\"ui grid stackable providence container\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
     "        <div class=\"ui center aligned huge header\">Create a GiftStarter Campaign and Easily:</div>\n" +
-    "        <div class=\"ui big list\">\n" +
-    "            <div class=\"item\">\n" +
-    "                <i class=\"check square icon red\"></i>\n" +
-    "                <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
-    "            </div>\n" +
-    "            <div class=\"item\">\n" +
-    "                <i class=\"check square icon red\"></i>\n" +
-    "                <div class=\"content\">Get support from family &amp; friends.</div>\n" +
-    "            </div>\n" +
-    "            <div class=\"item\">\n" +
-    "                <i class=\"check square icon red\"></i>\n" +
-    "                <div class=\"content\">Save time and money when it matters most.</div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "</div>\n" +
-    "<div class=\"ui grid stackable container\">\n" +
-    "    <div class=\"sixteen wide column\">\n" +
-    "        <h1 class=\"ui center aligned header\">\n" +
-    "                Get The Help You Need\n" +
-    "                <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
-    "            </h1>\n" +
-    "        <div class=\"ui two column grid\">\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid brown card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
-    "                            <img src=\"images/products/abcdoula.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">ABC Doula</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "        <div class=\"ui text container\">\n" +
+    "            <div class=\"ui large list\">\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
     "                </div>\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid olive card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
-    "                            <img src=\"images/products/lishfood.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/lishfood\">Lish</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Get support from family &amp; friends.</div>\n" +
     "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"row\">\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid yellow card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
-    "                            <img src=\"images/products/farmtofit.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">Farm To Fit</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <div class=\"column\">\n" +
-    "                    <div class=\"ui fluid teal card\">\n" +
-    "                        <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
-    "                            <img src=\"images/products/fullbellyfare.png\">\n" +
-    "                        </a>\n" +
-    "                        <div class=\"content\">\n" +
-    "                            <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Save time and money when it matters most.</div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
-    "<div class=\"ui grid stackable container\">\n" +
+    "<div class=\"ui section divider\"></div>\n" +
+    "<div class=\"ui text container\">\n" +
+    "    <h1 class=\"ui center aligned header\">\n" +
+    "        Get the help you need.\n" +
+    "        <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
+    "    </h1>\n" +
+    "    <div class=\"ui two column grid\">\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid brown card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                        <img src=\"images/products/abcdoula.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                            ABC Doula\n" +
+    "                            <i class=\"arrow right brown icon\"></i>\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid olive card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                        <img src=\"images/products/lishfood.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                                Lish \n" +
+    "                                <i class=\"arrow right olive icon\"></i>\n" +
+    "                            </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid yellow card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                        <img src=\"images/products/farmtofit.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                                Farm To Fit \n" +
+    "                                <i class=\"arrow right yellow icon\"></i>\n" +
+    "                            </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"column\">\n" +
+    "                <div class=\"ui fluid grey card\">\n" +
+    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                        <img src=\"images/products/fullbellyfare.png\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                                Full Belly Fare \n" +
+    "                                <i class=\"arrow right grey icon\"></i>\n" +
+    "                            </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"ui hidden divider\"></div>\n" +
+    "<div class=\"ui grid stackable container tablet only mobile only\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <div class=\"ui attached segment\">\n" +
     "            <div class=\"ui header huge centered\">\n" +
@@ -1345,7 +1421,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                <i class=\"mail icon\"></i>\n" +
     "                Email\n" +
     "            </a>\n" +
-    "            <a class=\"ui positive button\" href=\"tel:+1-206-486-4849\">\n" +
+    "            <a class=\"ui teal button\" href=\"tel:+1-206-486-4849\">\n" +
     "                <i class=\"phone icon\"></i>\n" +
     "                Call\n" +
     "            </a>\n" +
@@ -1354,42 +1430,37 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "</div>\n" +
     "\n" +
     "<script>\n" +
-    "    $(function () {\n" +
-    "        var $elContactNumber = $('.contactNumber'),\n" +
-    "            contactNumber = '+1-206-486-4849',\n" +
-    "            contactNumberDisplay = '(206) 486-4849',\n" +
-    "            $body = $('body');\n" +
-    "        $body.attr({\n" +
-    "            style: \"max-width: none;\"\n" +
-    "        });\n" +
-    "        if(isMobile()) {\n" +
-    "            if(isIOS()) {\n" +
-    "                fixIOSAffix();\n" +
-    "            }\n" +
-    "            $elContactNumber.html('<a href=\"tel:' + contactNumber + '\">' + contactNumberDisplay + '</a>');\n" +
-    "        } else {\n" +
-    "            $elContactNumber.html(contactNumberDisplay)\n" +
-    "        }\n" +
-    "\n" +
-    "        function isIOS() {\n" +
-    "            return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);\n" +
-    "        }\n" +
-    "\n" +
-    "        function isMobile() {\n" +
-    "            return /(iPad|iPhone|iPod|Android|BlackBerry|BB\\d+|CriOS)/g.test(navigator.userAgent);\n" +
-    "        }\n" +
-    "\n" +
-    "        function fixIOSAffix() {\n" +
-    "            var affix = $('[data-spy=\"affix\"]'),\n" +
-    "                input = $('input');\n" +
-    "            input.on('focus', function () {\n" +
-    "                affix.fadeOut();\n" +
-    "            });\n" +
-    "            input.on('blur', function () {\n" +
-    "                affix.fadeIn();\n" +
-    "            });\n" +
-    "        }\n" +
-    "    });\n" +
+    "    //TODO: 5 Oct 2015 Tyler Goelz (@yaboi)\n" +
+    "    //Uncomment when form is implemented to fix iOS\n" +
+    "    //number pad / affix error.\n" +
+    "    //\n" +
+    "    //NOTE: Test this with Semantic, because this fix\n" +
+    "    //was put in place for Bootstrap 3 affix which is\n" +
+    "    //no longer being used.\n" +
+    "    //\n" +
+    "    //     $(function () {\n" +
+    "    //         if(isMobile()) {\n" +
+    "    //             if(isIOS()) {\n" +
+    "    //                 fixIOSAffix();\n" +
+    "    //             }\n" +
+    "    //         }\n" +
+    "    //         function isIOS() {\n" +
+    "    //             return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);\n" +
+    "    //         }\n" +
+    "    //         function isMobile() {\n" +
+    "    //             return /(iPad|iPhone|iPod|Android|BlackBerry|BB\\d+|CriOS)/g.test(navigator.userAgent);\n" +
+    "    //         }\n" +
+    "    //         function fixIOSAffix() {\n" +
+    "    //             var affix = $('[data-spy=\"affix\"]'),\n" +
+    "    //                 input = $('input');\n" +
+    "    //             input.on('focus', function () {\n" +
+    "    //                 affix.fadeOut();\n" +
+    "    //             });\n" +
+    "    //             input.on('blur', function () {\n" +
+    "    //                 affix.fadeIn();\n" +
+    "    //             });\n" +
+    "    //         }\n" +
+    "    //     });\n" +
     "</script>"
   );
 
@@ -1473,73 +1544,136 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"clear\"></div>\n" +
     "        <div class=\"grid\">\n" +
     "            <div ng-repeat=\"group in groups\" class=\"group\" ng-class-odd=\"'left'\" ng-class-even=\"'right'\">\n" +
-    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='tile' title=\"{{product.productNameStripped}}\"><a href=\"{{categoryPath}}/{{product.productSlug}}\"><img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" /><div class=\"tilelabel\"><span ng-bind-html=\"product.productNameShort\"></span><br/><span class=\"price\">${{product.productPrice}}</span></div></a></div>\n" +
+    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='tile' title=\"{{product.productNameStripped}}\">\n" +
+    "\t\t\t\t\t<a href=\"{{categoryPath}}/{{product.productSlug}}\">\n" +
+    "\t\t\t\t\t\t<img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" class=\"load\" />\n" +
+    "\t\t\t\t\t\t<div class=\"tilelabel\"><span ng-bind-html=\"product.productNameShort\"></span><br/><span class=\"price\">${{product.productPrice}}</span></div>\n" +
+    "\t\t\t\t\t</a>\n" +
+    "\t\t\t\t</div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
     "    <h1>Top Categories for Group Gifting</h1>\n" +
-    "    <div class=\"grid categories\">\n" +
+    "<div class=\"categories ui four stackable link cards\">\n" +
+    "\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/music\">\n" +
+    "            <img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/music\">Music</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                Looking for the perfect gift for someone who has everything or loves the gift of music?\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/music\">\n" +
+    "                <i class=\"add icon\"></i> Music\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/luma\">\n" +
+    "            <img src=\"/assets/giftideas/category/luma-diamonds.jpg\" alt=\"Luma Diamonds\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/luma\">Luma Diamonds</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/luma\">\n" +
+    "                <i class=\"add icon\"></i> Luma\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/kids\">\n" +
+    "            <img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/kids\">Kids</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/kids\">\n" +
+    "                <i class=\"add icon\"></i> Kids\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/home\">\n" +
+    "            <img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content hidden\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/home\">Home</a>\n" +
+    "            <div class=\"content\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/home\">\n" +
+    "                <i class=\"add icon\"></i> Home\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/music\"><img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\"/><div class=\"tilelabel\">Music</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/luma\"><img src=\"/assets/giftideas/category/luma.png\" alt=\"Luma Diamonds\"/><div class=\"tilelabel\">Luma Diamonds</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cute\"><img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" /><div class=\"tilelabel\">Cute</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/baby\"><img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" /><div class=\"tilelabel\">Baby</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/kids\"><img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\"/><div class=\"tilelabel\">Kids</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/home\"><img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\"/><div class=\"tilelabel\">Home</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forher\"><img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" /><div class=\"tilelabel\">For Her</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forhim\"><img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\" class=\"load\" /><div class=\"tilelabel\">For Him</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cute\"><img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\"/><div class=\"tilelabel\">Cute</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/baby\"><img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\"/><div class=\"tilelabel\">Baby</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cool\"><img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" /><div class=\"tilelabel\">Cool</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/office\"><img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\" class=\"load\" /><div class=\"tilelabel\">Office</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forher\"><img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\"/><div class=\"tilelabel\">For Her</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forhim\"><img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\"/><div class=\"tilelabel\">For Him</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/farewell\"><img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\" class=\"load\" /><div class=\"tilelabel\">Farewell</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/sympathy\"><img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\" class=\"load\" /><div class=\"tilelabel\">Sympathy</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cool\"><img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\"/><div class=\"tilelabel\">Cool</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/office\"><img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\"/><div class=\"tilelabel\">Office</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/beauty\"><img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\" class=\"load\" /><div class=\"tilelabel\">Beauty</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wine\"><img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\" class=\"load\" /><div class=\"tilelabel\">Wine</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/farewell\"><img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\"/><div class=\"tilelabel\">Farewell</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/sympathy\"><img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\"/><div class=\"tilelabel\">Sympathy</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/butterlondon\"><img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"butter LONDON\" class=\"load\" /><div class=\"tilelabel\">butter LONDON</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/petlovers\"><img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\" class=\"load\" /><div class=\"tilelabel\">Pet Lovers</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/beauty\"><img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\"/><div class=\"tilelabel\">Beauty</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wine\"><img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\"/><div class=\"tilelabel\">Wine</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wedding\"><img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\" class=\"load\" /><div class=\"tilelabel\">Wedding</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/graduation\"><img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\" class=\"load\" /><div class=\"tilelabel\">Graduation</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/butterlondon\"><img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"butter LONDON\"/><div class=\"tilelabel\">butter LONDON</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/petlovers\"><img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\"/><div class=\"tilelabel\">Pet Lovers</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/red\"><img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\" class=\"load\" /><div class=\"tilelabel\">Wear Red</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/pisces\"><img src=\"/assets/giftideas/category/pisces.jpg\" alt=\"Pisces\" class=\"load\"  class=\"load\" /><div class=\"tilelabel\">Pisces</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/wedding\"><img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\"/><div class=\"tilelabel\">Wedding</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/graduation\"><img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\"/><div class=\"tilelabel\">Graduation</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/patriots\"><img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\" class=\"load\" /><div class=\"tilelabel\">Patriots</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/seahawks\"><img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\" class=\"load\" /><div class=\"tilelabel\">Seahawks</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/red\"><img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\"/><div class=\"tilelabel\">Wear Red</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/pisces\"><img src=\"/assets/giftideas/category/pisces.jpg\" alt=\"Pisces\"/><div class=\"tilelabel\">Pisces</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/employee\"><img src=\"/assets/giftideas/category/employee.jpg\" alt=\"Employee Appreciation\" class=\"load\" /><div class=\"tilelabel\">Employee Appreciation</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/boss\"><img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\" class=\"load\" /><div class=\"tilelabel\">Boss</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/patriots\"><img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\"/><div class=\"tilelabel\">Patriots</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/seahawks\"><img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\"/><div class=\"tilelabel\">Seahawks</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/teacher\"><img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\" class=\"load\" /><div class=\"tilelabel\">Teacher</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/electronics\"><img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\" class=\"load\" /><div class=\"tilelabel\">Electronics</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/employee\"><img src=\"/assets/giftideas/category/employee.jpg\" alt=\"Employee Appreciation\"/><div class=\"tilelabel\">Employee Appreciation</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/boss\"><img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\"/><div class=\"tilelabel\">Boss</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/outdoors\"><img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" /><div class=\"tilelabel\">Outdoors</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/green\"><img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green and Organic\" class=\"load\" /><div class=\"tilelabel\">Green and Organic</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/teacher\"><img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\"/><div class=\"tilelabel\">Teacher</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/electronics\"><img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\"/><div class=\"tilelabel\">Electronics</div></a></div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/outdoors\"><img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\"/><div class=\"tilelabel\">Outdoors</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/green\"><img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green and Organic\"/><div class=\"tilelabel\">Green and Organic</div></a></div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/military\"><img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\"/><div class=\"tilelabel\">Military</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/giftcard\"><img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\"/><div class=\"tilelabel\">Gift Cards</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/military\"><img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" /><div class=\"tilelabel\">Military</div></a></div>\n" +
+    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/giftcard\"><img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\" class=\"load\" /><div class=\"tilelabel\">Gift Cards</div></a></div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
@@ -2598,18 +2732,18 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <gs-product-search></gs-product-search>\n" +
     "    </div-->\n" +
     "    <!--ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include-->\n" +
-    "    <ng-include src=\"'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'\" class=\"hidden\"></ng-include>\n" +
     "    <ng-include src=\"'/scripts/home/whatisgiftstarter/how-it-works.ng.html'\"></ng-include>\n" +
     "\t<!--ng-include src=\"'/scripts/staffpicks/staffpicks.ng.html'\"></ng-include-->\n" +
     "    <!--ng-include src=\"'/scripts/giftsgivenbar/giftsgivenbar.ng.html'\"></ng-include-->\n" +
-    "    <div class=\"userlogin\" id=\"loginpanel\">\n" +
+    "    <div class=\"userlogin hidden\" id=\"loginpanel\">\n" +
     "        <div class=\"userlogin__logo\"></div>\n" +
     "        <h2 class=\"userlogin__title\">\n" +
     "            Join the giving movement\n" +
     "        </h2>\n" +
     "    </div>\n" +
-    "    <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
-    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/login/login-or-create.html'\" class=\"hidden\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\" class=\"hidden\"></ng-include>\n" +
     "</div>\n"
   );
 
@@ -3837,7 +3971,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <ng-include src=\"'/scripts/giftideas/giftideas.ng.html'\"></ng-include>\n" +
     "\n" +
-    "    <div class=\"clear\">\n" +
+    "    <div class=\"clear hidden\" ng-hide>\n" +
     "        <p>&nbsp;</p>\n" +
     "        <h4 class=\"centered\">Looking for something else?</h4>\n" +
     "        <gs-product-search></gs-product-search>\n" +
@@ -5405,6 +5539,12 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.basePath = pathParts[1];
     var category = pathParts.length > 2 ? pathParts[2] : false;
     var product = pathParts.length > 3 ? pathParts[3] : false;
+	// lazy load images
+     jQuery('.load').visibility({
+        type: 'image',
+        transition: 'vertical flip in',
+        duration: 500
+      });
 
     // hack for mailing list error where we linked to the wrong category
     if(category && !product && (category === 'lunarnewyear' || category === 'farewell' || category === 'pisces') && $location.search()['utm_campaign'] === '18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015') {
@@ -6250,6 +6390,10 @@ function gsPrintUrl($location, $http) {
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
         this.mobile = device.mobile() || device.tablet();
+		function isSlim() {
+        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+    	}
+		this.makeSlim = isSlim();
 
         this.subliminalOffset = -3.0;
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
@@ -6270,7 +6414,8 @@ function gsPrintUrl($location, $http) {
 
         $scope.isHeaderOnly = self.thisRoute == '/header';
         $scope.isProvidence = self.thisRoute == '/yourvillage';
-        
+		$scope.slimHeader = isSlim();
+
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
@@ -6539,10 +6684,16 @@ function gsPrintUrl($location, $http) {
         '$anchorScroll',
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
+		function isSlim() {
+        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+    	}
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
         $anchorScroll();
+		this.makeSlim = isSlim();
+		$rootScope.slimHeader = isSlim();
+		$rootScope.greybg = false;
       });
     })
 
@@ -7954,7 +8105,8 @@ GiftStarterApp.service('LinkedInService', [
     var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService,
                                             FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
 
-        $scope.working = false;
+        $scope.greybg = true;
+		$scope.working = false;
         if (typeof($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }
@@ -7986,11 +8138,43 @@ GiftStarterApp.service('LinkedInService', [
         };
         $scope.resetForm();
 
-        if(UserService.loggedIn) {
+        /* semantic ui triggers */
+		if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
         }
+		jQuery('.button.social').click(function(){
+  			jQuery('.ui.social.modal').modal('show');
+	  	});
+		jQuery('.create_action.ui.form').form({
+		    fields: {
+		        email: {
+		            identifier: 'email',
+		            rules: [{
+		                type: 'email',
+		                prompt: 'Please enter a valid e-mail'
+		            }]
+		        },
+		        name: 'empty',
+		        surname: 'empty',
+		        password: ['minLength[6]', 'empty']
+		    }
+		});
+		jQuery('.userlogin__form')
+  			// if a direction if specified it will be obeyed
+  		.transition('fade up in')
+		;
 
-        function doSocialLogin(successFunction, maxRetries) {
+		$scope.emailValidation = function(context){
+			return context.firstName === $scope.email;
+		}
+		$scope.nameValidation = function(context){
+			return context.firstName === $scope.name;
+			return context.lastName === $scope.surname;
+		}
+		$scope.passwordValidation = function(context){
+			return context.password === $scope.password;
+		}		
+		function doSocialLogin(successFunction, maxRetries) {
             maxRetries = typeof maxRetries !== 'undefined' ? maxRetries : 3;
             if(AppStateService.get('staged_giftstart')) {
                 console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
@@ -12292,3 +12476,47 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
         templateUrl: '/scripts/header/subscribe-header.ng.html'
     }
 }
+
+/**
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
+
+(function (app) {
+
+	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
+
+		function isFull() {
+			return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+		}
+	
+		$scope.fullContainer = isFull();
+
+	};
+
+    app.controller('ViewController', [
+        '$scope',
+        '$location',
+        'Analytics',
+        '$rootScope',
+        '$interval',
+        '$timeout',
+        '$window',
+        '$http',
+        '$anchorScroll',
+        ViewController])
+    .run(function($rootScope, $location, $anchorScroll, $routeParams) {
+      function isFull() {
+			return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+		}
+		//when the route is changed scroll to the proper element.
+      $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
+        //$location.hash($routeParams.scrollTo);
+        //$anchorScroll();
+		$rootScope.fullContainer = isFull();
+		jQuery('#angular-view').transition('fade in');
+      });
+    })
+
+}(angular.module('GiftStarterApp')));

@@ -1,7 +1,6 @@
 {% raw %}
 <!-- Begin Header -->
-
-<header id="header" class="header-light" ng-controller="HeaderController as header" ng-hide="isProvidence">
+<header id="header" class="header-light" ng-controller="HeaderController as header" data-ng-class="{slim: slimHeader}" ng-hide="isProvidence">
 
     {% endraw %} {% include 'header/semantic-nav.html' %} {% raw %}
 
