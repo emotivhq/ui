@@ -15,6 +15,8 @@
         	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
     	}
 		this.makeSlim = isSlim();
+		this.slimHeader = isSlim();
+		$scope.slimHeader = isSlim();
 
         this.subliminalOffset = -3.0;
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
@@ -36,7 +38,7 @@
         $scope.isHeaderOnly = self.thisRoute == '/header';
         $scope.isProvidence = self.thisRoute == '/yourvillage';
 		$scope.slimHeader = isSlim();
-
+        
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
@@ -308,6 +310,9 @@
 		function isSlim() {
         	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
     	}
+		this.makeSlim = isSlim();
+		$rootScope.slimHeader = isSlim();
+		$rootScope.greybg = false;
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);

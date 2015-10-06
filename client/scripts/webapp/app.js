@@ -1305,11 +1305,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        padding-top: .8rem;\n" +
     "        font-size: 1.2rem;\n" +
     "    }\n" +
-    "    .ui.card>.content>.header:not(.ui) {\n" +
-    "        font-size: .8em;\n" +
-    "    }\n" +
-    "    .divider.hidden {\n" +
-    "        display: inherit;\n" +
+    "    .hidden.divider {\n" +
+    "        display: block;\n" +
     "    }\n" +
     "</style>\n" +
     "<a class=\"ui teal inverted one item menu top fixed\" href=\"tel:+1-206-486-4849\">\n" +
@@ -1317,7 +1314,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        Questions? Give us a call today!\n" +
     "    </div>\n" +
     "</a>\n" +
-    "\n" +
     "<div class=\"ui grid stackable providence container\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
@@ -1346,66 +1342,81 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        Get the help you need.\n" +
     "        <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
     "    </h1>\n" +
-    "    <div class=\"ui two column grid\">\n" +
-    "        <div class=\"row\">\n" +
-    "            <div class=\"column\">\n" +
-    "                <div class=\"ui fluid brown card\">\n" +
-    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
-    "                        <img src=\"images/products/abcdoula.png\">\n" +
-    "                    </a>\n" +
-    "                    <div class=\"content\">\n" +
-    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
-    "                            ABC Doula\n" +
-    "                            <i class=\"arrow right brown icon\"></i>\n" +
-    "                        </a>\n" +
+    "\n" +
+    "    <div class=\"ui stackable two column grid\">\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                    <img src=\"images/products/abcdoula.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">ABC Doula</a>\n" +
+    "                    <div class=\"meta\">Portland, OR &amp; Seattle, WA</div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        <strong>A</strong>fter <strong>B</strong>aby <strong>C</strong>omes Doula Service is a  team of postpartum doulas in Portland, OR offering in-home postpartum care to families with newborns.\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"column\">\n" +
-    "                <div class=\"ui fluid olive card\">\n" +
-    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
-    "                        <img src=\"images/products/lishfood.png\">\n" +
-    "                    </a>\n" +
-    "                    <div class=\"content\">\n" +
-    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
-    "                                Lish \n" +
-    "                                <i class=\"arrow right olive icon\"></i>\n" +
-    "                            </a>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
+    "                <a class=\"ui bottom attached button brown\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                    <span>Find your Doula <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"row\">\n" +
-    "            <div class=\"column\">\n" +
-    "                <div class=\"ui fluid yellow card\">\n" +
-    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
-    "                        <img src=\"images/products/farmtofit.png\">\n" +
-    "                    </a>\n" +
-    "                    <div class=\"content\">\n" +
-    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
-    "                                Farm To Fit \n" +
-    "                                <i class=\"arrow right yellow icon\"></i>\n" +
-    "                            </a>\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                    <img src=\"images/products/lishfood.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/lishfood\">Lish Food</a>\n" +
+    "                    <div class=\"meta\">Seattle, WA Only</div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        Lish gives you convenient access to delicious, wholesome meals prepared fresh by top local chefs, including alums from The French Laundry and Canlis.\n" +
     "                    </div>\n" +
     "                </div>\n" +
+    "                <a class=\"ui bottom attached button olive\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
     "            </div>\n" +
-    "            <div class=\"column\">\n" +
-    "                <div class=\"ui fluid grey card\">\n" +
-    "                    <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
-    "                        <img src=\"images/products/fullbellyfare.png\">\n" +
-    "                    </a>\n" +
-    "                    <div class=\"content\">\n" +
-    "                        <a class=\"header center aligned\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
-    "                                Full Belly Fare \n" +
-    "                                <i class=\"arrow right grey icon\"></i>\n" +
-    "                            </a>\n" +
+    "        </div>\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                    <img src=\"images/products/farmtofit.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">Farm To Fit</a>\n" +
+    "                    <div class=\"meta\">\n" +
+    "                        Portland, OR Only\n" +
+    "                    </div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        Farm to Fit is a local meal delivery service with calorie specific meal plans. We also offer Gluten Free &amp; Diabetic Friendly options.\n" +
     "                    </div>\n" +
     "                </div>\n" +
+    "                <a class=\"ui bottom attached button orange\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                    <img src=\"images/products/fullbellyfare.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
+    "                    <div class=\"meta\">Portland, OR Only</div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        Portland's healthy meal delivery service! Vegetarian? Paleo? Vegan? Dairy free? Soy free? Your gourmet food delivery service is here!\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <a class=\"ui bottom attached button grey\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n" +
-    "<div class=\"ui hidden divider\"></div>\n" +
+    "<div class=\"ui hidden section divider\"></div>\n" +
     "<div class=\"ui grid stackable container tablet only mobile only\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <div class=\"ui attached segment\">\n" +
@@ -1417,11 +1428,11 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"ui two bottom attached buttons\">\n" +
-    "            <a class=\"ui grey button\" href=\"mailto:giftconcierge@giftstarter.com\">\n" +
+    "            <a class=\"ui grey basic button\" href=\"mailto:giftconcierge@giftstarter.com\">\n" +
     "                <i class=\"mail icon\"></i>\n" +
     "                Email\n" +
     "            </a>\n" +
-    "            <a class=\"ui teal button\" href=\"tel:+1-206-486-4849\">\n" +
+    "            <a class=\"ui positive button\" href=\"tel:+1-206-486-4849\">\n" +
     "                <i class=\"phone icon\"></i>\n" +
     "                Call\n" +
     "            </a>\n" +
@@ -1509,45 +1520,65 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div ng-show=\"product\" class=\"singleproduct\">\n" +
     "        <div class=\"head\">\n" +
     "            <div class=\"hero\">\n" +
-    "                <img src=\"/assets/giftideas/category{{product.productImage}}\" alt=\"{{product.imageAltText}}\">\n" +
+    "                <div class=\"ui one cards\">\n" +
+    "\t\t\t\t\t<a class=\"red card\">\n" +
+    "\t\t\t\t\t\t<div class=\"image\">\n" +
+    "\t\t\t\t\t\t\t<img src=\"/assets/giftideas/category{{product.productImage}}\" alt=\"{{product.imageAltText}}\">\n" +
+    "\t\t\t\t\t\t</div>\n" +
+    "\t\t\t\t\t</a>\n" +
+    "\t\t\t\t</div>\n" +
     "            </div>\n" +
     "            <div class=\"titles\">\n" +
-    "                <div class=\"scrollbox\">\n" +
-    "                    <h2 class=\"textleft\"><span ng-bind-html=\"product.productName\"></span></h2>\n" +
-    "                    <h3 class=\"textleft\">${{product.productPrice}}</h3>\n" +
-    "                    <p class=\"textleft\"><span ng-bind-html=\"product.productDescription\"></span></p>\n" +
+    "\t\t\t\t<button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui huge button icon primary top attached\" ng-show=\"product.hasPrice\">\n" +
+    "\t\t\t\t\t\t<i class=\"gift icon\"></i>\n" +
+    "\t\t\t\t\t\tGift It\n" +
+    "\t\t\t\t</button>\n" +
+    "                <div class=\"scrollbox ui segment card attached\">\n" +
+    "                    <div class=\"content\">\n" +
+    "\t\t\t\t\t\t<div class=\"header\"><span ng-bind-html=\"product.productName\"></span></div>\n" +
+    "                    \t<div class=\"meta\">${{product.productPrice}}</div>\n" +
+    "                    \t<div class=\"description\"><span ng-bind-html=\"product.productDescription\"></span></div>\n" +
+    "\t\t\t\t\t</div>\n" +
     "                </div>\n" +
-    "                <div class=\"gsbuttons\">\n" +
-    "                    <button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary gsbutton\" ng-show=\"product.hasPrice\">GIFTSTART IT!</button>\n" +
-    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary gsbutton\" ng-show=\"!product.hasPrice\">CONTACT THE GIFT CONCIERGE</button>\n" +
+    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">CONTACT THE GIFT CONCIERGE</button>\n" +
     "                    <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
-    "                        <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"primary gsbutton\" ng-show=\"product.hasPrice\">Save for Later <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\"></button>\n" +
+    "                        <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon small button bottom attached\" ng-show=\"product.hasPrice\">\n" +
+    "\t\t\t\t\t\t\t<i class=\"bookmark icon\"></i>\n" +
+    "\t\t\t\t\t\t\tSave for Later <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
+    "\t\t\t\t\t\t</button>\n" +
     "                        <div class=\"product-message\" ng-bind-html=\"productMessage\"></div>\n" +
     "                    </div>\n" +
-    "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
     "    <div ng-show=\"category\" class=\"products\">\n" +
-    "        <div class=\"head\" ng-show=\"!product\">\n" +
-    "            <div class=\"hero\">\n" +
-    "                <img src=\"/assets/giftideas/category/{{category.categorySlug}}.jpg\" alt=\"{{category.categorySlug}}\">\n" +
-    "            </div>\n" +
-    "            <div class=\"titles\">\n" +
-    "                <h1><span ng-bind-html=\"category.categoryName\"></span></h1>\n" +
-    "                <h4>Our Favorite Gifts & Most Popular GiftStarts</h4>\n" +
-    "                <div><span ng-bind-html=\"category.categoryBlurb\"></span></div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"clear\"></div>\n" +
+    "\t\t<div class=\"ui stackable four column grid\">\n" +
+    "\t\t<div class=\"eight wide column\">\n" +
+    "\t\t<h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
+    "  \t\t\t<img class=\"ui circular image\" src=\"/assets/giftideas/category/{{category.categorySlug}}.jpg\" alt=\"{{category.categorySlug}}\" style=\"    display: block; margin: 0 auto .5rem;width: 57%;\">\n" +
+    "\t\t</h2>\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"eight wide column\"  ng-show=\"!product\">\n" +
+    "\t\t<div class=\"ui piled segment padded center aligned secondary\">\n" +
+    "\t\t<h2 class=\"center aligned header\">\n" +
+    "  \t\t\t{{category.categoryName}}\n" +
+    "\t\t</h2>\n" +
+    "\t\t\t<span ng-bind-html=\"category.categoryBlurb\"></span>\n" +
+    "\t\t</div>\n" +
+    "\t\t</div>\n" +
+    "\t\t</div>\n" +
+    "\t\t<div class=\"clear\"></div>\n" +
     "        <div class=\"grid\">\n" +
-    "            <div ng-repeat=\"group in groups\" class=\"group\" ng-class-odd=\"'left'\" ng-class-even=\"'right'\">\n" +
-    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='tile' title=\"{{product.productNameStripped}}\">\n" +
-    "\t\t\t\t\t<a href=\"{{categoryPath}}/{{product.productSlug}}\">\n" +
+    "            <div ng-repeat=\"group in groups\" class=\"group ui two stackable cards\" ng-class-odd=\"'left'\" ng-class-even=\"'right'\">\n" +
+    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='ui link card tile' title=\"{{product.productNameStripped}}\">\n" +
+    "\t\t\t\t\t<a href=\"{{categoryPath}}/{{product.productSlug}}\" class=\"image\">\n" +
     "\t\t\t\t\t\t<img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" class=\"load\" />\n" +
-    "\t\t\t\t\t\t<div class=\"tilelabel\"><span ng-bind-html=\"product.productNameShort\"></span><br/><span class=\"price\">${{product.productPrice}}</span></div>\n" +
+    "\t\t\t\t\t\t<div class=\"content\">\n" +
+    "\t\t\t\t\t\t\t<a class=\"header\" ng-bind-html=\"product.productNameShort\"></a>\n" +
+    "\t\t\t\t\t\t\t<div class=\"meta\">${{product.productPrice}}</div>\n" +
+    "\t\t\t\t\t\t</div>\n" +
     "\t\t\t\t\t</a>\n" +
     "\t\t\t\t</div>\n" +
     "            </div>\n" +
@@ -1555,22 +1586,22 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <h1>Top Categories for Group Gifting</h1>\n" +
+    "<h1 class=\"vertical medium top bottom\">Top Categories</h1>\n" +
     "<div class=\"categories ui four stackable link cards\">\n" +
     "\n" +
     "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/music\">\n" +
     "            <img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\" class=\"load\" />\n" +
     "        </a>\n" +
-    "        <div class=\"content hidden\">\n" +
+    "        <div class=\"content\">\n" +
     "            <a class=\"header\" href=\"/giftideas/music\">Music</a>\n" +
-    "            <div class=\"content\">\n" +
+    "            <div class=\"description\">\n" +
     "                Looking for the perfect gift for someone who has everything or loves the gift of music?\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"extra content\">\n" +
     "            <a class=\"center\" href=\"/giftideas/music\">\n" +
-    "                <i class=\"add icon\"></i> Music\n" +
+    "                <i class=\"unhide icon\"></i> View Music\n" +
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -1578,15 +1609,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <a class=\"image\" href=\"/giftideas/luma\">\n" +
     "            <img src=\"/assets/giftideas/category/luma-diamonds.jpg\" alt=\"Luma Diamonds\" class=\"load\" />\n" +
     "        </a>\n" +
-    "        <div class=\"content hidden\">\n" +
+    "        <div class=\"content\">\n" +
     "            <a class=\"header\" href=\"/giftideas/luma\">Luma Diamonds</a>\n" +
-    "            <div class=\"content\">\n" +
-    "                ...\n" +
+    "            <div class=\"description\">\n" +
+    "                With such a variety of beautiful pieces, there is sure to be one perfect for the deserving individual in your life. \n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"extra content\">\n" +
     "            <a class=\"center\" href=\"/giftideas/luma\">\n" +
-    "                <i class=\"add icon\"></i> Luma\n" +
+    "                <i class=\"unhide icon\"></i> View Luma\n" +
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -1594,15 +1625,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <a class=\"image\" href=\"/giftideas/kids\">\n" +
     "            <img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\" class=\"load\" />\n" +
     "        </a>\n" +
-    "        <div class=\"content hidden\">\n" +
+    "        <div class=\"content\">\n" +
     "            <a class=\"header\" href=\"/giftideas/kids\">Kids</a>\n" +
-    "            <div class=\"content\">\n" +
-    "                ...\n" +
+    "            <div class=\"description\">\n" +
+    "                We've picked out some of the very best kid gifts that are sure to delight a little one in your life.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"extra content\">\n" +
     "            <a class=\"center\" href=\"/giftideas/kids\">\n" +
-    "                <i class=\"add icon\"></i> Kids\n" +
+    "                <i class=\"unhide icon\"></i> View Kids\n" +
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
@@ -1610,27 +1641,84 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <a class=\"image\" href=\"/giftideas/home\">\n" +
     "            <img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\" class=\"load\" />\n" +
     "        </a>\n" +
-    "        <div class=\"content hidden\">\n" +
+    "        <div class=\"content\">\n" +
     "            <a class=\"header\" href=\"/giftideas/home\">Home</a>\n" +
     "            <div class=\"content\">\n" +
-    "                ...\n" +
+    "                These gift ideas will help to make any house feel more like a home!\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"extra content\">\n" +
     "            <a class=\"center\" href=\"/giftideas/home\">\n" +
-    "                <i class=\"add icon\"></i> Home\n" +
+    "                <i class=\"unhide icon\"></i> View Home\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\t<div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/cute\">\n" +
+    "            <img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/cute\">Cute</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                Know someone who absolutely loves cute things? This is the place for that kind of stuff.\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/cute\">\n" +
+    "                <i class=\"view icon\"></i> View Cute\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\t<div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/baby\">\n" +
+    "            <img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/baby\">Baby</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                Hand picked and curated by moms all over for the best experience for both baby & mom. \n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/baby\">\n" +
+    "                <i class=\"view icon\"></i> View Baby\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\t<div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/forher\">\n" +
+    "            <img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/forher\">For Her</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                Sisters. Grandmas. Moms. Aunts. Cousins. Friends. Colleagues. We have our own tastes, and here are some favorites.\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/forher\">\n" +
+    "                <i class=\"unhide icon\"></i> View For Her\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\t<div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/forhim\">\n" +
+    "            <img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/forhim\">For Him</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                The best damm handcrafted gift list for guys.\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/forhim\">\n" +
+    "                <i class=\"unhide icon\"></i> View Him\n" +
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "        <div class=\"group left\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cute\"><img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" /><div class=\"tilelabel\">Cute</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/baby\"><img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" /><div class=\"tilelabel\">Baby</div></a></div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forher\"><img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" /><div class=\"tilelabel\">For Her</div></a></div>\n" +
-    "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/forhim\"><img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\" class=\"load\" /><div class=\"tilelabel\">For Him</div></a></div>\n" +
-    "        </div>\n" +
+    "\t\n" +
     "        <div class=\"group left\">\n" +
     "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/cool\"><img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" /><div class=\"tilelabel\">Cool</div></a></div>\n" +
     "             <div class=\"tile\"><a target=\"_top\" href=\"/giftideas/office\"><img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\" class=\"load\" /><div class=\"tilelabel\">Office</div></a></div>\n" +
@@ -1769,15 +1857,23 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/giftstart/create/giftstart-create.html',
-    "\n" +
     "<div class=\"create wrapper shipping\" id=\"giftstart-contact-wrapper\" ng-controller=\"GiftStartCreateController\">\n" +
     "\n" +
     "    <ng-include ng-show=\"fromReferral\" src=\"'/scripts/giftstart/brand-pillow/brand-pillow-video.html'\"></ng-include>\n" +
     "\n" +
     "    <div ng-hide=\"showLoginBox\">\n" +
-    "        <div ng-show=\"isCreateStepTiles()\"><h2 class=\"state-title\">How many pitch-in pieces do you want?</h2><div class=\"state-subtitle\">Create Your Gifting Event: step 2 of 4</div></div>\n" +
-    "        <div ng-show=\"isCreateStepStory()\"><h2 class=\"state-title\">Your Gifting Event</h2><div class=\"state-subtitle\">Create Your Gifting Event: step 3 of 4</div></div>\n" +
-    "        <div ng-show=\"isCreateStepShipping()\"><h2 class=\"state-title\">Shipping Details</h2><div class=\"state-subtitle\">Create Your Gifting Event: step 4 of 4</div></div>\n" +
+    "        <div ng-show=\"isCreateStepTiles()\">\n" +
+    "            <h2 class=\"state-title\">How many pitch-in pieces do you want?</h2>\n" +
+    "            <div class=\"state-subtitle\">Create Your Gifting Event: step 2 of 4</div>\n" +
+    "        </div>\n" +
+    "        <div ng-show=\"isCreateStepStory()\">\n" +
+    "            <h2 class=\"state-title\">Your Gifting Event</h2>\n" +
+    "            <div class=\"state-subtitle\">Create Your Gifting Event: step 3 of 4</div>\n" +
+    "        </div>\n" +
+    "        <div ng-show=\"isCreateStepShipping()\">\n" +
+    "            <h2 class=\"state-title\">Shipping Details</h2>\n" +
+    "            <div class=\"state-subtitle\">Create Your Gifting Event: step 4 of 4</div>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"block image\">\n" +
@@ -1788,32 +1884,37 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <div class=\"block details\" ng-class=\"{submitting:isSubmittingData}\" id=\"giftstart-create-controls\">\n" +
     "\n" +
-    "        <form name=\"campaignForm\" ng-hide=\"showLoginBox\" novalidate>\n" +
+    "        <form name=\"campaignForm\" ng-hide=\"showLoginBox\" novalidate class=\"ui form\">\n" +
     "\n" +
     "            <div ng-show=\"isCreateStepTiles()\" id=\"num-part-selection\">\n" +
-    "                <div class=\"desc\"><strong>Things to consider:</strong><br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?<br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>\n" +
-    "                <div class=\"more-parts\">Add Pieces<br/><img class=\"linky\" ng-click=\"moreParts($event)\" src=\"/assets/circle_red_plus.png\"></div>\n" +
-    "                <div class=\"fewer-parts-mobile\">Remove Pieces<br/><img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\"></div>\n" +
+    "                <div class=\"desc\"><strong>Things to consider:</strong>\n" +
+    "                    <br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?\n" +
+    "                    <br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>\n" +
+    "                <div class=\"more-parts\">Add Pieces\n" +
+    "                    <br/>\n" +
+    "                    <img class=\"linky\" ng-click=\"moreParts($event)\" src=\"/assets/circle_red_plus.png\">\n" +
+    "                </div>\n" +
+    "                <div class=\"fewer-parts-mobile\">Remove Pieces\n" +
+    "                    <br/>\n" +
+    "                    <img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\">\n" +
+    "                </div>\n" +
     "                <span class=\"parts-control\"><span class=\"numtiles\"> {{x*y}} Pieces</span>\n" +
-    "                <span class=\"money\" ng-hide=\"fetchingTaxRate\"> ${{ totalPrice/100/x/y | number : 2 }} <img class=\"loading\"  src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/> each* <span class=\"tax-note\">(+tax)</span></span></span>\n" +
-    "                <div class=\"fewer-parts\"><img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\"><br/>Remove Pieces</div>\n" +
+    "                <span class=\"money\" ng-hide=\"fetchingTaxRate\"> ${{ totalPrice/100/x/y | number : 2 }} <img class=\"loading\"  src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/> each* <span class=\"tax-note\">(+tax)</span></span>\n" +
+    "                </span>\n" +
+    "                <div class=\"fewer-parts\">\n" +
+    "                    <img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\">\n" +
+    "                    <br/>Remove Pieces</div>\n" +
     "                <!-- button class=\"help float-right\" ng-click=\"help()\">Help</button -->\n" +
     "                <span class=\"disclaimer\">* Shipping is included.</span>\n" +
     "            </div>\n" +
     "\n" +
     "            <div ng-show=\"isCreateStepStory()\">\n" +
     "                <h2>1. What's the gifting event?</h2>\n" +
-    "                <input type=\"text\"\n" +
-    "                       id=\"campaign-title\"\n" +
-    "                       name=\"title\"\n" +
-    "                       placeholder=\"What's the occasion?\"\n" +
-    "                       maxlength=\"140\"\n" +
-    "                       ng-model=\"title\"\n" +
-    "                       ng-focus=\"hideValidationError.title = true\"\n" +
-    "                       ng-blur=\"hideValidationError.title = false\"\n" +
-    "                       onkeypress=\"return event.keyCode==13?false:true\"\n" +
-    "                       required=\"\"/>\n" +
-    "                <label for=\"campaign-title\">140 character maximum.</label>\n" +
+    "                <div class=\"field ui left icon input\" style=\"width:100%\">\n" +
+    "                    <i class=\"gift icon\"></i>\n" +
+    "                    <input type=\"text\" id=\"campaign-title\" name=\"title\" placeholder=\"What's the occasion?\" maxlength=\"140\" ng-model=\"title\" ng-focus=\"hideValidationError.title = true\" ng-blur=\"hideValidationError.title = false\" onkeypress=\"return event.keyCode==13?false:true\" required=\"\" />\n" +
+    "                </div>\n" +
+    "\n" +
     "                <div ng-show=\"(campaignForm.$submitted || campaignForm.title.$touched || validationTrigger.createButtonClicked) && !hideValidationError.title\" class=\"errorWrapper\">\n" +
     "                    <div ng-show=\"campaignForm.title.$error.required\">\n" +
     "                        <div class=\"arrowUp\"></div>\n" +
@@ -1823,15 +1924,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    </div>\n" +
     "                </div>\n" +
     "                <h2>2. Describe your gifting event.</h2>\n" +
-    "                <textarea id=\"campaign-description\"\n" +
-    "                          name=\"description\"\n" +
-    "                          placeholder=\"Who's the gift for? What's your relationship? Why this gift?\"\n" +
-    "                          maxlength=\"500\"\n" +
-    "                          ng-focus=\"hideValidationError.description = true\"\n" +
-    "                          ng-blur=\"hideValidationError.description = false\"\n" +
-    "                          ng-model=\"description\"\n" +
-    "                          ng-blur=\"onDescriptionBlur()\"\n" +
-    "                          required=\"\"></textarea>\n" +
+    "                <textarea id=\"campaign-description\" name=\"description\" placeholder=\"Who's the gift for? What's your relationship? Why this gift?\" maxlength=\"500\" ng-focus=\"hideValidationError.description = true\" ng-blur=\"hideValidationError.description = false\" ng-model=\"description\" ng-blur=\"onDescriptionBlur()\" required=\"\"></textarea>\n" +
     "                <label for=\"campaign-description\">500 character maximum (3-5 sentences)</label>\n" +
     "                <div ng-show=\"(campaignForm.$submitted || campaignForm.description.$touched || validationTrigger.createButtonClicked) && !hideValidationError.description\" class=\"errorWrapper\">\n" +
     "                    <div ng-show=\"campaignForm.description.$error.required\">\n" +
@@ -1842,7 +1935,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    </div>\n" +
     "                </div>\n" +
     "                <div id=\"not-long-enough\" ng-hide=\"descriptionLongEnough\">\n" +
-    "                    <p>Woah there! Looks like your GiftStart description is a bit short.  We know, brevity is the soul of wit - but how about we add to the story to get people more involved?  Here are a few questions for inspiration:</p>\n" +
+    "                    <p>Woah there! Looks like your GiftStart description is a bit short. We know, brevity is the soul of wit - but how about we add to the story to get people more involved? Here are a few questions for inspiration:</p>\n" +
     "                    <ul>\n" +
     "                        <li>Why does the recipient deserve this gift?</li>\n" +
     "                        <li>Is there a story behind the gift or why the recipient might need/want it?</li>\n" +
@@ -1851,15 +1944,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "                <div class=\"email\">\n" +
     "                    <h2>3. Your Email Address</h2>\n" +
-    "                    <input type=\"email\"\n" +
-    "                           id=\"contact-email\"\n" +
-    "                           placeholder=\"username@mail.com\"\n" +
-    "                           name=\"gcEmail\"\n" +
-    "                           ng-model=\"gcEmail\"\n" +
-    "                           ng-focus=\"hideValidationError.gcEmail = true\"\n" +
-    "                           ng-blur=\"hideValidationError.gcEmail = false\"\n" +
-    "                           onkeypress=\"return event.keyCode==13?false:true\"\n" +
-    "                           required=\"\">\n" +
+    "                    <input type=\"email\" id=\"contact-email\" placeholder=\"username@mail.com\" name=\"gcEmail\" ng-model=\"gcEmail\" ng-focus=\"hideValidationError.gcEmail = true\" ng-blur=\"hideValidationError.gcEmail = false\" onkeypress=\"return event.keyCode==13?false:true\" required=\"\">\n" +
     "                    <div ng-show=\"(campaignForm.$submitted || campaignForm.gcEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.gcEmail\" class=\"errorWrapper\">\n" +
     "                        <div ng-show=\"campaignForm.gcEmail.$error.required\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
@@ -1881,7 +1966,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                <h2>1. Who is the Gift for?</h2>\n" +
     "                <!-- label>All prices include taxes, shipping, and handling, based on destination.</label -->\n" +
     "                <div class=\"shipping-details\">\n" +
-    "                    <span class=\"name\">\n" +
+    "                    <div class=\"ui left icon input\">\n" +
+    "                        <span class=\"name\">\n" +
     "                        <input type=\"text\"\n" +
     "                               placeholder=\"First and Last Name\"\n" +
     "                               ng-model=\"shippingName\"\n" +
@@ -1899,7 +1985,10 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </span>\n" +
-    "                    <span class=\"email\">\n" +
+    "                        <i class=\"user icon\"></i>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"ui left icon input\">\n" +
+    "                        <span class=\"email\">\n" +
     "                        <input type=\"email\"\n" +
     "                               ng-model=\"shippingEmail\"\n" +
     "                               name=\"shippingEmail\"\n" +
@@ -1924,6 +2013,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </span>\n" +
+    "                        <i class=\"mail icon\"></i>\n" +
+    "                    </div>\n" +
+    "\n" +
     "                    <h2>2. Where should the Gift be shipped?</h2>\n" +
     "                    <span class=\"state\">\n" +
     "                        <select class=\"state\"\n" +
@@ -2023,16 +2115,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                <div class=\"campaign-length\">\n" +
     "                    <h2>3. When do you need the gift to be delivered?</h2>\n" +
     "                    <label>Currently we only allow delivery dates less than 34 days away.</label>\n" +
-    "                    <h4>Delivery Date <a class=\"button\" ng-click=\"changeDeliveryDate()\">CHANGE</a></h4>\n" +
-    "                    <input ui-date\n" +
-    "                           type=\"text\"\n" +
-    "                           class=\"endDate\"\n" +
-    "                           ng-model=\"deliveryDate\"\n" +
-    "                           name=\"deliveryDate\"\n" +
-    "                           placeholder=\"mm/dd/yyyy\"\n" +
-    "                           ng-focus=\"hideValidationError.deliveryDate = true\"\n" +
-    "                           ng-blur=\"hideValidationError.deliveryDate = false; deliveryDateChanged()\"\n" +
-    "                           required=\"\">\n" +
+    "                    <h4>Delivery Date</h4>\n" +
+    "                    <input ui-date type=\"text\" class=\"endDate\" ng-model=\"deliveryDate\" name=\"deliveryDate\" placeholder=\"mm/dd/yyyy\" ng-focus=\"hideValidationError.deliveryDate = true\" ng-blur=\"hideValidationError.deliveryDate = false; deliveryDateChanged()\" required=\"\">\n" +
     "                    <div ng-show=\"(campaignForm.$submitted || campaignForm.deliveryDate.$touched || validationTrigger.createButtonClicked) && !hideValidationError.deliveryDate\" class=\"errorWrapper\">\n" +
     "                        <div ng-show=\"campaignForm.deliveryDate.$error.required\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
@@ -2048,43 +2132,44 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        </div>\n" +
     "                    </div>\n" +
     "                    <h4 ng-hide=\"dueDateEmpty()\">Campaign End Date <!--a class=\"button\" ng-click=\"changeDueDate = !changeDueDate\">CHANGE</a--></h4>\n" +
-    "                    <p class=\"endDate-text\" ng-hide=\"dueDateEmpty()\">Your campaign will end on </p><h2 class=\"endDate-date\" ng-hide=\"dueDateEmpty()\">{{campaignEndDate.toDateString()}}</h2><p class=\"endDate-text\" ng-hide=\"dueDateEmpty()\">.</p>\n" +
+    "                    <p class=\"endDate-text\" ng-hide=\"dueDateEmpty()\">Your campaign will end on</p>\n" +
+    "                    <h2 class=\"endDate-date\" ng-hide=\"dueDateEmpty()\">{{campaignEndDate.toDateString()}}</h2>\n" +
+    "                    <p class=\"endDate-text\" ng-hide=\"dueDateEmpty()\">.</p>\n" +
     "                    <p id=\"endDate-comment\" ng-hide=\"dueDateEmpty()\">Your campaign needs to end at least 5 days before your delivery date.</p>\n" +
     "                    <div ng-show=\"changeDueDate\" class=\"endRange\" ng-class=\"{opaque: dueDateEmpty()}\" ui-date></div>\n" +
     "                </div>\n" +
-    "                <div class=\"coupon-code\">\n" +
+    "\n" +
+    "\t\t\t\t\n" +
+    "\t\t\t\t<div class=\"coupon-code\">\n" +
     "                    <h2>5. Do you have a promo code?</h2>\n" +
-    "                    <input type=\"text\"\n" +
-    "                           id=\"coupon\"\n" +
-    "                           name=\"coupon\"\n" +
-    "                           placeholder=\"Enter your code\"\n" +
-    "                           maxlength=\"20\"\n" +
-    "                           ng-model=\"coupon\"\n" +
-    "                           ng-focus=\"hideValidationError.code = true\"\n" +
-    "                           ng-blur=\"hideValidationError.code = false;\"\n" +
-    "                           onkeypress=\"return event.keyCode==13?false:true\"\n" +
-    "                           ng-change=\"priceChanged()\"/>\n" +
+    "                    <input type=\"text\" id=\"coupon\" name=\"coupon\" placeholder=\"Enter your code\" maxlength=\"20\" ng-model=\"coupon\" ng-focus=\"hideValidationError.code = true\" ng-blur=\"hideValidationError.code = false;\" onkeypress=\"return event.keyCode==13?false:true\" ng-change=\"priceChanged()\" />\n" +
     "                </div>\n" +
     "                <div class=\"price-block\">\n" +
-    "                    <h2>Price</h2>\n" +
+    "                    <h2>Price\n" +
+    "\t\t\t\t\t\t<a class=\"ui price tooltip\" for=\"tooltip-checkbox\" data-content=\"The price of the gift at the time of creation will be used to determine the gift base price.\">\n" +
+    "\t\t\t\t\t\t\t<i class=\"info circle icon\"></i>\n" +
+    "                        </a>\n" +
+    "\t\t\t\t\t</h2>\n" +
     "                    <label>\n" +
     "                        Base price of the gift.\n" +
-    "                        <input type=\"checkbox\" id=\"tooltip-checkbox\"/>\n" +
-    "                        <label for=\"tooltip-checkbox\">\n" +
-    "                            <span class=\"tooltip-icon\">\n" +
-    "                                ?\n" +
-    "                                <span class=\"tooltip\">\n" +
-    "                                    The price of the gift at the time of creation will be used to determine the gift \"base price.\"\n" +
-    "                                </span>\n" +
-    "                            </span>\n" +
-    "                        </label>\n" +
+    "                        <input type=\"checkbox\" id=\"tooltip-checkbox\" />\n" +
     "                    </label>\n" +
-    "                    <div class=\"money\" id=\"price\">${{inputPrice}}</div>\n" +
+    "\n" +
+    "                    <div class=\"ui statistic\">\n" +
+    "                        <div class=\"value\">\n" +
+    "                            <i class=\"ui dollar icon grey\"></i> {{inputPrice}}\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "                <div class=\"total-price-block\">\n" +
     "                    <h2>Total Price</h2>\n" +
-    "                    <label>Including all fees and taxes. Shipping is free!</label>\n" +
-    "                    <div class=\"money\" ng-hide=\"fetchingTaxRate || !shippingDetailsSubmitted\">${{ totalPrice/100 | number : 2 }}</div><div class=\"money\" ng-hide=\"shippingDetailsSubmitted\">...</div><img class=\"loading\" src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/>\n" +
+    "                    <label>Includes fees & taxes.</label>\n" +
+    "                    <div class=\"ui statistic\">\n" +
+    "                        <div class=\"value\" ng-hide=\"fetchingTaxRate || !shippingDetailsSubmitted\">\n" +
+    "                            <i class=\"ui dollar icon green\"></i> {{ totalPrice/100 | number : 2 }}\n" +
+    "                        </div>\n" +
+    "                    <img class=\"loading\" src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\" />\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "\n" +
@@ -2092,16 +2177,45 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <div ng-show=\"showLoginBox\" class=\"login-box\">\n" +
     "            <h2>Log in or create an account:</h2>\n" +
-    "            <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
+    "            <ng-include src=\"'/views/login/create.html'\"></ng-include>\n" +
     "        </div>\n" +
     "\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"progress-nav\" ng-hide=\"showLoginBox\">\n" +
-    "        <div class=\"back-indicator\" ng-class=\"{'invisible': isCreateStepTiles()}\"><img id=\"giftstart-create-prev\" class=\"linky prev\" ng-click=\"prevStep()\" src=\"/assets/circle_black_lt.png\"><br/>PREVIOUS<br/>STEP</div>\n" +
-    "        <div class=\"step-indicator\"><img src=\"/assets/circle_green_check.png\" alt=\"Find a gift\"/><br/>FIND<br/>A GIFT</div><img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" /><div class=\"step-indicator\"><img ng-hide=\"isCreateStepStory()||isCreateStepShipping()\" src=\"/assets/circle_black.png\" alt=\"Adjust the tiles\"/><img ng-show=\"isCreateStepStory()||isCreateStepShipping()\" src=\"/assets/circle_green_check.png\" class=\"linky\" ng-click=\"goToStep(1)\" alt=\"Adjust the pieces\" /><br/>Adjust<br/>the pieces</div><img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" /><div class=\"step-indicator\"><img ng-hide=\"isCreateStepShipping()\" src=\"/assets/circle_black.png\" alt=\"Tell the story\"/><img ng-show=\"isCreateStepShipping()\" src=\"/assets/circle_green_check.png\" class=\"linky\" ng-click=\"goToStep(2)\" alt=\"Tell the story\" /><br/>Tell the<br/>story</div><img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" alt=\"Shipping datails\"/><div class=\"step-indicator\"><img src=\"/assets/circle_black.png\" /><br/>Shipping<br/>details</div>\n" +
-    "        <button id=\"giftstart-create-next\" class=\"next primary\" ng-hide=\"isCreateStepShipping()\" ng-click=\"nextStep()\">NEXT STEP</button>\n" +
-    "        <button id=\"giftstart-create-submit\" class=\"next primary create-campaign\" ng-show=\"isCreateStepShipping()\" ng-click=\"next()\">NEXT STEP</button><img ng-show=\"isSubmittingData\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
+    "        <div class=\"back-indicator\" ng-class=\"{'invisible': isCreateStepTiles()}\">\n" +
+    "            <img id=\"giftstart-create-prev\" class=\"linky prev\" ng-click=\"prevStep()\" src=\"/assets/circle_black_lt.png\">\n" +
+    "            <br/>PREVIOUS\n" +
+    "            <br/>STEP</div>\n" +
+    "        <div class=\"step-indicator\">\n" +
+    "            <img src=\"/assets/circle_green_check.png\" alt=\"Find a gift\" />\n" +
+    "            <br/>FIND\n" +
+    "            <br/>A GIFT</div>\n" +
+    "        <img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" />\n" +
+    "        <div class=\"step-indicator\">\n" +
+    "            <img ng-hide=\"isCreateStepStory()||isCreateStepShipping()\" src=\"/assets/circle_black.png\" alt=\"Adjust the tiles\" />\n" +
+    "            <img ng-show=\"isCreateStepStory()||isCreateStepShipping()\" src=\"/assets/circle_green_check.png\" class=\"linky\" ng-click=\"goToStep(1)\" alt=\"Adjust the pieces\" />\n" +
+    "            <br/>Adjust\n" +
+    "            <br/>the pieces</div>\n" +
+    "        <img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" />\n" +
+    "        <div class=\"step-indicator\">\n" +
+    "            <img ng-hide=\"isCreateStepShipping()\" src=\"/assets/circle_black.png\" alt=\"Tell the story\" />\n" +
+    "            <img ng-show=\"isCreateStepShipping()\" src=\"/assets/circle_green_check.png\" class=\"linky\" ng-click=\"goToStep(2)\" alt=\"Tell the story\" />\n" +
+    "            <br/>Tell the\n" +
+    "            <br/>story</div>\n" +
+    "        <img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" alt=\"Shipping datails\" />\n" +
+    "        <div class=\"step-indicator\">\n" +
+    "            <img src=\"/assets/circle_black.png\" />\n" +
+    "            <br/>Shipping\n" +
+    "            <br/>details</div>\n" +
+    "        <button id=\"giftstart-create-next\" class=\"ui right labeled icon button large next\" ng-hide=\"isCreateStepShipping()\" ng-click=\"nextStep()\">\n" +
+    "            <i class=\"arrow right icon\"></i>\n" +
+    "            Continue\n" +
+    "        </button>\n" +
+    "        <button id=\"giftstart-create-submit\" class=\"ui right labeled icon button large next secondary create-campaign\" ng-show=\"isCreateStepShipping()\" ng-click=\"next()\">\n" +
+    "            <i class=\"arrow right icon\"></i>\n" +
+    "            Continue\n" +
+    "        </button>\n" +
     "    </div>\n" +
     "\n" +
     "</div>\n"
@@ -2285,7 +2399,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/giftstart/overlay/overlay.html',
-    "<div class=\"overlay\" style=\"background-image: url({{giftstart.product_img_url}})\">\n" +
+    "<div class=\"tile-overlay\" style=\"background-image: url({{giftstart.product_img_url}})\">\n" +
     "</div>"
   );
 
@@ -6394,6 +6508,8 @@ function gsPrintUrl($location, $http) {
         	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
     	}
 		this.makeSlim = isSlim();
+		this.slimHeader = isSlim();
+		$scope.slimHeader = isSlim();
 
         this.subliminalOffset = -3.0;
         this.subliminalStyle = {'background-position-y': this.subliminalOffset + 'px'};
@@ -6415,7 +6531,7 @@ function gsPrintUrl($location, $http) {
         $scope.isHeaderOnly = self.thisRoute == '/header';
         $scope.isProvidence = self.thisRoute == '/yourvillage';
 		$scope.slimHeader = isSlim();
-
+        
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
@@ -6687,6 +6803,9 @@ function gsPrintUrl($location, $http) {
 		function isSlim() {
         	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
     	}
+		this.makeSlim = isSlim();
+		$rootScope.slimHeader = isSlim();
+		$rootScope.greybg = false;
       //when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         $location.hash($routeParams.scrollTo);
@@ -9532,6 +9651,9 @@ function gsThanks() {
 
         var campaignLength = 10;
 
+		jQuery('.price.tooltip')
+  			.popup()
+		;
         $scope.inputPrice = ProductService.product.price / 100;
         $scope.totalPrice = 0;
         $scope.deliveryDate = null;
@@ -9848,7 +9970,7 @@ function gsThanks() {
             if($scope.runValidation()) {
                 $scope.goToStep($scope.createStep + 1);
             }
-            jQuery('#giftstart-create-next').blur();
+            $('#giftstart-create-next').blur();
         };
 
         $scope.next = function() {
@@ -10607,7 +10729,7 @@ GiftStarterApp.directive('gsOverlay', gsOverlay);
 
 function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
-        var overlayElement = angular.element('gs-overlay div.overlay');
+        var overlayElement = angular.element('gs-overlay div.tile-overlay');
 
         function drawGrid() {
             // Add artificial delay so the DOM elements have time to settle.

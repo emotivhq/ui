@@ -217,7 +217,6 @@ div.giftstart.wrapper {
     div.giftstart.wrapper .login-box h2, div.giftstart.wrapper .pay-box h2, div.giftstart.wrapper .sign-box h2, div.giftstart.wrapper .share-box h2 {
       margin-top: 1rem;
       margin-bottom: 10px;
-      color: #e27f24;
       font-size: 1.2em; }
     div.giftstart.wrapper .login-box input, div.giftstart.wrapper .login-box button, div.giftstart.wrapper .pay-box input, div.giftstart.wrapper .pay-box button, div.giftstart.wrapper .sign-box input, div.giftstart.wrapper .sign-box button, div.giftstart.wrapper .share-box input, div.giftstart.wrapper .share-box button {
       width: 100%;

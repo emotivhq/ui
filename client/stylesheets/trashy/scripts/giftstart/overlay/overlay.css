@@ -19,7 +19,7 @@ gs-overlay {
       width: 80%;
       margin-left: 10%;
       margin-bottom: 0; } }
-  gs-overlay .overlay {
+  gs-overlay .tile-overlay {
     width: 100%;
     position: absolute;
     height: 100%;

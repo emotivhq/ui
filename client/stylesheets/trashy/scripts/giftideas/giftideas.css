@@ -28,18 +28,15 @@ iframe[name='google_conversion_frame'] {
     margin-left: auto !important;
     margin-right: auto !important;
     padding-bottom: 25px; }
-    #giftideas .products .saveforlater, #giftideas .singleproduct .saveforlater {
+    #giftideas .products .saveforlater .product-message, #giftideas .singleproduct .saveforlater .product-message {
+      text-align: center;
+      color: #666;
+      font-size: 13px;
       padding-top: 5px; }
-      #giftideas .products .saveforlater .product-message, #giftideas .singleproduct .saveforlater .product-message {
-        text-align: center;
-        color: #666;
-        font-size: 13px;
-        padding-top: 5px; }
-        #giftideas .products .saveforlater .product-message a, #giftideas .singleproduct .saveforlater .product-message a {
-          color: #DD494E;
-          font-size: 13px; }
+      #giftideas .products .saveforlater .product-message a, #giftideas .singleproduct .saveforlater .product-message a {
+        color: #DD494E;
+        font-size: 13px; }
     #giftideas .products .grid .tile, #giftideas .singleproduct .grid .tile {
-      border: 1px solid #BBB;
       margin: 5px 5px; }
     #giftideas .products .textleft, #giftideas .singleproduct .textleft {
       margin: 0;
@@ -48,14 +45,11 @@ iframe[name='google_conversion_frame'] {
       width: 80%;
       margin: 0 auto; }
       #giftideas .products .head .button, #giftideas .singleproduct .head .button {
-        width: 100%;
-        margin-left: 10px; }
+        width: 100%; }
     #giftideas .products .hero, #giftideas .singleproduct .hero {
       float: left;
       width: 35%;
       text-align: left; }
-      #giftideas .products .hero img, #giftideas .singleproduct .hero img {
-        width: 90%; }
     #giftideas .products .titles, #giftideas .singleproduct .titles {
       float: right;
       width: 65%;
@@ -86,20 +80,9 @@ iframe[name='google_conversion_frame'] {
   #giftideas .grid .group.left .tile.last {
     float: none !important; }
   #giftideas .grid .tile {
-    display: inline-block;
-    width: 45%;
-    float: left;
-    margin: 0 0;
-    padding: 0px 10px;
-    text-align: center; }
+    width: 45%; }
     #giftideas .grid .tile a {
       color: #555555; }
-    #giftideas .grid .tile img {
-      margin: 0 auto 4px auto;
-      display: block;
-      clear: both;
-      height: auto;
-      width: 90% !important; }
     #giftideas .grid .tile .tilelabel {
       height: 50px;
       font-weight: 700;

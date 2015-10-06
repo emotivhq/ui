@@ -105,8 +105,6 @@ iframe[name='google_conversion_frame'] {
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)";
         filter: alpha(opacity=70);
         zoom: 1; }
-  .static-pages h2 {
-    padding: 15px 0 30px 0; }
 
 #giftstart-contact-wrapper {
   clear: both;
@@ -225,7 +223,6 @@ iframe[name='google_conversion_frame'] {
     #giftstart-contact-wrapper div.block.details h2 {
       margin-top: 1rem;
       margin-bottom: 10px;
-      color: #e27f24;
       font-size: 1.2em; }
     #giftstart-contact-wrapper div.block.details form input[type="text"], #giftstart-contact-wrapper div.block.details form input[type="email"], #giftstart-contact-wrapper div.block.details form input[type="password"], #giftstart-contact-wrapper div.block.details form textarea, #giftstart-contact-wrapper div.block.details form select {
       padding: 0.9em;
@@ -414,8 +411,6 @@ iframe[name='google_conversion_frame'] {
       #giftstart-contact-wrapper #num-part-selection {
         margin-top: 25px;
         margin-right: 15%; } }
-  #giftstart-contact-wrapper #price {
-    width: 8em; }
   #giftstart-contact-wrapper #selected-image {
     max-width: 100%; }
   #giftstart-contact-wrapper img.loading {
