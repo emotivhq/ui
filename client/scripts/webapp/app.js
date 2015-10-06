@@ -1357,7 +1357,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    \t<div class=\"description\"><span ng-bind-html=\"product.productDescription\"></span></div>\n" +
     "\t\t\t\t\t</div>\n" +
     "                </div>\n" +
-    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">CONTACT THE GIFT CONCIERGE</button>\n" +
+    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">Contact The Gift Concierge</button>\n" +
     "                    <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
     "                        <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon small button bottom attached\" ng-show=\"product.hasPrice\">\n" +
     "\t\t\t\t\t\t\t<i class=\"bookmark icon\"></i>\n" +
@@ -1736,7 +1736,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <div ng-show=\"campaignForm.title.$error.required\">\n" +
     "                        <div class=\"arrowUp\"></div>\n" +
     "                        <div class=\"errorMessage\">\n" +
-    "                            Don't forget to name the gifting event!\n" +
+    "                            Don't forget to name the gifting event.\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -1747,12 +1747,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <div ng-show=\"campaignForm.description.$error.required\">\n" +
     "                        <div class=\"arrowUp\"></div>\n" +
     "                        <div class=\"errorMessage\">\n" +
-    "                            Don't forget to describe it!\n" +
+    "                            Don't forget to describe the event.\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <div id=\"not-long-enough\" ng-hide=\"descriptionLongEnough\">\n" +
-    "                    <p>Woah there! Looks like your GiftStart description is a bit short. We know, brevity is the soul of wit - but how about we add to the story to get people more involved? Here are a few questions for inspiration:</p>\n" +
+    "                    <p>Woah there. Looks like your GiftStart description is a bit short. \n" +
+    "\t\t\t\t\t\tWe know, brevity is the soul of wit - but how about we add to the story to get people more involved? \n" +
+    "\t\t\t\t\t\tHere are a few questions for inspiration:\n" +
+    "\t\t\t\t\t</p>\n" +
     "                    <ul>\n" +
     "                        <li>Why does the recipient deserve this gift?</li>\n" +
     "                        <li>Is there a story behind the gift or why the recipient might need/want it?</li>\n" +
@@ -1766,13 +1769,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        <div ng-show=\"campaignForm.gcEmail.$error.required\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Don't forget your email address!\n" +
+    "                                Don't forget your email address.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div ng-show=\"campaignForm.gcEmail.$error.email\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Your email address is invalid!\n" +
+    "                                That email address doesn't look right.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -1797,7 +1800,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            <div ng-show=\"campaignForm.shippingName.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget recipient's name!\n" +
+    "                                    Don't forget their name.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1814,18 +1817,18 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                               ng-blur=\"hideValidationError.shippingEmail = false\"\n" +
     "                               onkeypress=\"return event.keyCode!=13\"\n" +
     "                               required=\"\" />\n" +
-    "                        <label>* Email will only be sent after the gift is received</label>\n" +
+    "                        <label>* An email will only be sent after the gift is received</label>\n" +
     "                        <div ng-show=\"(campaignForm.$submitted || campaignForm.shippingEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingEmail\" class=\"errorWrapper\">\n" +
     "                            <div ng-show=\"campaignForm.shippingEmail.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget recipient's email address!\n" +
+    "                                    Don't forget their email address.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                            <div ng-show=\"campaignForm.shippingEmail.$error.email\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Recipient's email address is invalid!\n" +
+    "                                    That email address is not quite right.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1901,7 +1904,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            <div ng-show=\"campaignForm.shippingState.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget to add the state!\n" +
+    "                                    Don't forget to add the state.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1923,7 +1926,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            <div ng-show=\"campaignForm.shippingZip.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget to add the zip!\n" +
+    "                                    Don't forget to add the zip.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1938,13 +1941,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        <div ng-show=\"campaignForm.deliveryDate.$error.required\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Please select a date!\n" +
+    "                                Please select a date.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div ng-show=\"!dateChosenValid()\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Please select a date!\n" +
+    "                                Please select a date.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -1955,7 +1958,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <p id=\"endDate-comment\" ng-hide=\"dueDateEmpty()\">Your campaign needs to end at least 5 days before your delivery date.</p>\n" +
     "                    <div ng-show=\"changeDueDate\" class=\"endRange\" ng-class=\"{opaque: dueDateEmpty()}\" ui-date></div>\n" +
     "                </div>\n" +
-    "                <div class=\"coupon-code\">\n" +
+    "\n" +
+    "\t\t\t\t\n" +
+    "\t\t\t\t<div class=\"coupon-code\">\n" +
     "                    <h2>5. Do you have a promo code?</h2>\n" +
     "                    <input type=\"text\" id=\"coupon\" name=\"coupon\" placeholder=\"Enter your code\" maxlength=\"20\" ng-model=\"coupon\" ng-focus=\"hideValidationError.code = true\" ng-blur=\"hideValidationError.code = false;\" onkeypress=\"return event.keyCode==13?false:true\" ng-change=\"priceChanged()\" />\n" +
     "                </div>\n" +
@@ -1972,7 +1977,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "                    <div class=\"ui statistic\">\n" +
     "                        <div class=\"value\">\n" +
-    "                            <i class=\"ui dollar icon green\"></i> {{inputPrice}}\n" +
+    "                            <i class=\"ui dollar icon grey\"></i> {{inputPrice}}\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -1992,7 +1997,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <div ng-show=\"showLoginBox\" class=\"login-box\">\n" +
     "            <h2>Log in or create an account:</h2>\n" +
-    "            <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
+    "            <ng-include src=\"'/views/login/create.html'\"></ng-include>\n" +
     "        </div>\n" +
     "\n" +
     "    </div>\n" +
@@ -8079,6 +8084,7 @@ GiftStarterApp.service('LinkedInService', [
   		.transition('fade up in')
 		;
 
+		// Wizard work
 		$scope.emailValidation = function(context){
 			return context.firstName === $scope.email;
 		}
