@@ -68,8 +68,15 @@
 .ui.menu {
     margin-top:0
 }
-.right.menu .item:not(.toc), .right.menu .item, .search.menu .item, .right.menu .menu {
+.ui.secondary.menu .item, .ui.secondary.menu .menu {
     display: none;
+}
+.ui.secondary.menu .toc.item, .ui.menu:not(.vertical) .right.item .item, .ui.secondary.menu .header.item {
+    display: block;
+}
+.ui.secondary.menu .header.item {
+    padding-right: 0;
+    margin-right: 0;
 }
 /* end top menus */
 
@@ -106,11 +113,11 @@
 
 /* media queries */
  @media only screen and (min-width: 723px) {
-    .right.menu .item:not(.toc), .right.menu .item, .search.menu .item, .right.menu .menu {
-        display: block;
-    }
-    .right.menu .item.toc {
+    .ui.secondary.menu:not(.vertical) .toc.item {
         display: none;
+    }
+    .ui.menu:not(.vertical) .item, .secondary.menu .menu {
+        display: block;
     }
 }
 /* join masthead */
