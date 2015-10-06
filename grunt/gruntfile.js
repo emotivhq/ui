@@ -587,11 +587,16 @@ module.exports = function(grunt) {
 	/* 
 	 *** OLD sass tasks, I call it trashy *** 
 	*/
+	grunt.registerTask('styles', ['build-trashy', 'rel-trashy', 'cssmin']);	// soup to nuts clean, build, release trashy sass
 	grunt.registerTask('trashy', ['build-trashy', 'rel-trashy', 'cssmin']);	// soup to nuts clean, build, release trashy sass
     // Individual trashy tasks
+	grunt.registerTask('build-styles', ['clean-trashy', 'sass:trashy']);	// clean & build dev trashy sass
 	grunt.registerTask('build-trashy', ['clean-trashy', 'sass:trashy']);	// clean & build dev trashy sass
+    grunt.registerTask('rel-styles', ['clean-trashycss', 'concat:trashy']); // clean & release built compiled trashy sass
     grunt.registerTask('rel-trashy', ['clean-trashycss', 'concat:trashy']); // clean & release built compiled trashy sass
+	grunt.registerTask('clean-ctyles', ['clean:trashy']); 					// clean only compiled trashy sass
 	grunt.registerTask('clean-trashy', ['clean:trashy']); 					// clean only compiled trashy sass
+	grunt.registerTask('clean-stylescss', ['clean:trashycss']); 			// clean only released trashy sass
 	grunt.registerTask('clean-trashycss', ['clean:trashycss']); 			// clean only released trashy sass
 
 	/* 

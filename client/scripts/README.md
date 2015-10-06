@@ -25,10 +25,13 @@ Here they are straight from `./grunt/gruntfile.js`.
 	/* 
 	 *** Javascript tasks ***
 	*/
-	grunt.registerTask('scripts', ['build-scripts', 'rel-scripts']);
+	grunt.registerTask('scripts', ['build-scripts']);		// soup to nuts clean, build, release scripts
+	grunt.registerTask('js', ['build-scripts', 'rel-scripts']);		// soup to nuts clean, build, release scripts
     // Individual js tasks
-	grunt.registerTask('build-scripts', ['clean-app', 'clean-trash', 'concat:trash', 'concat:vendor', 'concat:angular', 'concat:app']);
-    grunt.registerTask('rel-scripts', ['uglify']);
-	grunt.registerTask('clean-app', ['clean:webapp']);
-	grunt.registerTask('clean-trash', ['clean:out']);
+	grunt.registerTask('build-scripts', ['clean-app', 'clean-scripts', 'ngtemplates', 'concat:scripts', 'concat:vendor', 'concat:angular', 'concat:app', 'concat:controllers', 'concat:components', 'concat:services', 'concat:core']);		// clean & build dev js
+    grunt.registerTask('rel-scripts', ['uglify']); 		// clean & release built base app js
+	grunt.registerTask('clean-app', ['clean:webapp']); 					// clean only build js
+	grunt.registerTask('clean-scripts', ['clean:out']); 					// clean only release js
+	grunt.registerTask('comp-clean', ['clean:compiled']); 					// clean only compiled app js
+	
 	```
