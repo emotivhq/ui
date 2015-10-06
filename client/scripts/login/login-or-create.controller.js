@@ -68,6 +68,7 @@
   		.transition('fade up in')
 		;
 
+		// Wizard work
 		$scope.emailValidation = function(context){
 			return context.firstName === $scope.email;
 		}
