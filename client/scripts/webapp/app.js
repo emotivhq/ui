@@ -1249,9 +1249,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            width: 50% !important;\n" +
     "        }\n" +
     "    }\n" +
-    "    .ui.fixed.menu+.ui.grid {\n" +
-    "        margin-top: 5rem;\n" +
-    "    }\n" +
     "</style>\n" +
     "<div class=\"ui grey one item menu top fixed\">\n" +
     "    <div class=\"active item\">\n" +
