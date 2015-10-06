@@ -8,7 +8,7 @@ GiftStarterApp.directive('gsOverlay', gsOverlay);
 
 function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
-        var overlayElement = angular.element('gs-overlay div.overlay');
+        var overlayElement = angular.element('gs-overlay div.tile-overlay');
 
         function drawGrid() {
             // Add artificial delay so the DOM elements have time to settle.

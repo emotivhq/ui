@@ -23,6 +23,9 @@
 
         var campaignLength = 10;
 
+		jQuery('.price.tooltip')
+  			.popup()
+		;
         $scope.inputPrice = ProductService.product.price / 100;
         $scope.totalPrice = 0;
         $scope.deliveryDate = null;
@@ -339,7 +342,7 @@
             if($scope.runValidation()) {
                 $scope.goToStep($scope.createStep + 1);
             }
-            jQuery('#giftstart-create-next').blur();
+            $('#giftstart-create-next').blur();
         };
 
         $scope.next = function() {

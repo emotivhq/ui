@@ -37,12 +37,6 @@ iframe[name='google_conversion_frame'] {
   .userlogin__form {
     text-align: center;
     clear: both; }
-    .userlogin__form input {
-      border: 1px solid #cdcdcd;
-      padding: .8em;
-      box-shadow: none; }
-      .userlogin__form input:-moz-placeholder {
-        box-shadow: none !important; }
   .userlogin__email, .userlogin__passwordwrap, .userlogin__name, .userlogin__surname, .userlogin__reentermail, .userlogin__reenterpassword {
     display: inline-block;
     border: 1px solid #cdcdcd;
@@ -85,9 +79,7 @@ iframe[name='google_conversion_frame'] {
       display: none; } }
   .userlogin__remember, .userlogin__rememberlabel, .userlogin__forgot {
     margin-top: 15px;
-    position: relative;
-    float: left;
-    display: block; }
+    position: relative; }
   .userlogin__remember {
     left: 25%;
     -ms-transform: scale(1.5);
@@ -101,7 +93,6 @@ iframe[name='google_conversion_frame'] {
       .userlogin__remember {
         left: 0; } }
   .userlogin__rememberlabel, .userlogin__createacclink {
-    text-transform: uppercase;
     color: #333; }
   .userlogin__rememberlabel {
     left: 26%; }
