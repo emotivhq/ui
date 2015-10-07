@@ -731,6 +731,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/views/login/login.html', reloadOnSearch: false})
         .when('/join',
         {templateUrl: '/views/join/join.html', reloadOnSearch: false})
+        .when('/signup',
+        {templateUrl: '/scripts/login/login-or-create.html', reloadOnSearch: false})
         .when('/is',
         {templateUrl: '/views/is/is.html', reloadOnSearch: false})
         .when('/users/:uid',
@@ -1115,13 +1117,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/views/join/join.html',
     "<div class=\"ui grid stackable join container\" ng-controller=\"LoginOrCreateController\">\n" +
     "    <div class=\"eight wide column\">\n" +
-    "            <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
-    "                <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
-    "                <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
-    "                    <span>Already have an account? </span>\n" +
-    "                    <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
-    "                </div>\n" +
+    "        <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "            <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
+    "            <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "                <span>Already have an account? </span>\n" +
+    "                <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
     "            </div>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"eight wide column\">\n" +
     "\n" +
@@ -1129,20 +1131,20 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <div class=\"ui container\">\n" +
     "                <div class=\"introduction\">\n" +
     "\n" +
-    "                   <iframe class=\"tablet computer\" width=\"531\" height=\"305\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "                    <iframe class=\"tablet computer\" width=\"531\" height=\"305\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
     "\n" +
-    "\t\t\t\t\t<div class=\"ui icon message vertical medium\">\n" +
-    "    \t\t\t\t\t<i class=\"facebook icon blue\"></i>\n" +
-    "    \t\t\t\t\t<div class=\"content column two\">\n" +
-    "        \t\t\t\t\t<div class=\"header\">\n" +
-    "            \t\t\t\t\tRather use social media?\n" +
-    "        \t\t\t\t\t</div>\n" +
-    "        \t\t\t\t\t<p>It only takes a few clicks to sign up.</p>\n" +
-    "    \t\t\t\t\t</div>\n" +
-    "    \t\t\t\t\t<div class=\"column three\">\n" +
-    "        \t\t\t\t\t<a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
-    "    \t\t\t\t\t</div>\n" +
-    "\t\t\t\t\t</div>\n" +
+    "                    <div class=\"ui icon message vertical medium\">\n" +
+    "                        <i class=\"facebook icon blue\"></i>\n" +
+    "                        <div class=\"content column two\">\n" +
+    "                            <div class=\"header\">\n" +
+    "                                Rather use social media?\n" +
+    "                            </div>\n" +
+    "                            <p>It only takes a few clicks to sign up.</p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"column three\">\n" +
+    "                            <a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -1156,37 +1158,37 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            Create Your Account\n" +
     "        </div>\n" +
     "        <div class=\"middle center aligned grid\">\n" +
-    "\t\t\t<div class=\"image content container\">\n" +
-    "            <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "                <div class=\"social\">\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
-    "                    </a>\n" +
-    "                    <br/>\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
-    "                    </a>\n" +
-    "                    <br/>\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
-    "                    </a>\n" +
-    "                    <br/>\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
-    "                    </a>\n" +
+    "            <div class=\"image content container\">\n" +
+    "                <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "                    <div class=\"social\">\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "\t\t</div>\n" +
     "    </div>\n" +
-    "\t\n" +
+    "\n" +
     "</div>\n" +
     "\n" +
-    "    <script>\n" +
-    "        function handlePopupClosed() {\n" +
-    "            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
-    "        }\n" +
-    "    </script>"
+    "<script>\n" +
+    "    function handlePopupClosed() {\n" +
+    "        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
+    "    }\n" +
+    "</script>"
   );
 
 
