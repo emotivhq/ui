@@ -93,4 +93,10 @@ $(document).ready(function () {
     $('.ui.search').search({
         source: content
     });
+    Pace.once('done', function () {
+        $('.icon.notification').transition({
+            animation: 'tada',
+            duration: '2s'
+        });
+    })
 });

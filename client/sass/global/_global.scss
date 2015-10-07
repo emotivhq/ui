@@ -52,3 +52,9 @@ p, ul, ol {
 address {
 	line-height: 1.7;
 }
+.ng-hide {
+  display: block!important;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}

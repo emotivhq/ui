@@ -1,6 +1,6 @@
-{#
-<!-- Main Menu -->#}
-<!-- <div class="ui secondary main top fixed menu" ng-hide="header.loggedIn || fullContainer">
+{% raw %}
+<!-- Main Menu -->
+<div class="ui secondary main top fixed menu" ng-hide="header.loggedIn || fullContainer">
     <div class="ui container">
         <div class="header item">
             <a class="headerLogoWrapper" href="/">
@@ -19,25 +19,24 @@
             <a class="ui button secondary" href="/join">Join</a>
         </div>
     </div>
-</div> -->
+</div>
 
-{#
-<!-- Main Menu - Mobile -->#}
-<div class="ui left vertical menu sidebar inverted">
-    <a class="active item" href="/">Home</a>
+<!-- Main Menu - Mobile -->
+<div class="ui left vertical menu wide sidebar inverted" ng-hide="header.loggedIn">
+    <a class="item" href="/">Home</a>
     <a class="item" href="/is">Learn More</a>
     <a class="item" href="/giftideas">Discover</a>
     <a class="item" href="/login">Login</a>
     <a class="item" href="/join">Signup</a>
 </div>
 
-{#
-<!-- User Menu -->#}
-<div class="ui secondary main top fixed menu" {# ng-show="header.loggedIn || header.portaling" #} ng-hide="header.loggedIn || fullContainer">
+<!-- User Menu -->
+<div class="ui secondary main top fixed menu" ng-show="header.loggedIn || header.portaling">
     <div class="ui container">
         <div class="header item">
             <a class="headerLogoWrapper" href="/">
                 <img id="logo" class="logo" src="/assets/logo-mobile.png" />
+                <img id="logo-mobile" class="logo" src="/assets/logo-mobile.png" />
             </a>
         </div>
         <a class="toc item">
@@ -55,25 +54,25 @@
                 <a class="item" href="/faq">FAQs</a>
             </div>
         </div>
-        <div class="item ui category search">
+        <div class="ui item category search">
             <div class="ui transparent left icon input">
-                <input class="prompt" type="text" placeholder="Search Gifts Ideas">
+                <input class="prompt" type="text" placeholder="Search Gifts Ideas" onkeypress="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
                 <i class="search icon"></i>
             </div>
             <div class="results"></div>
         </div>
-        <div class="right menu">
+        <div class="right item menu">
             <div class="ui dropdown item" tabindex="0">
-                <span><i class="alarm teal icon"></i></span>
-                <img class="ui avatar image" src="http://semantic-ui.com/images/avatar/large/steve.jpg">
+                <span><i class="alarm teal icon notification"></i></span>
+                <img class="ui avatar image" ng-src="{{header.userImageUrl || '/assets/noUserImage.png' }}">
                 <span><i class="dropdown icon"></i></span>
                 <div class="ui vertical menu transition hidden" tabindex="-1">
-                    <a class="item" href="#">Activity <span class="ui teal empty circular label"></span></a>
-                    <a class="item" href="#">Campaigns</a>
-                    <a class="item" href="#">Saved Gifts</a>
+                    <a class="item" ng-href="{{header.userProfileUrl}}">Activity <span class="ui teal empty circular label"></span></a>
+                    <a class="item" ng-href="{{header.userProfileUrl}}#mycampaigns">Campaigns</a>
+                    <a class="item" ng-href="{{header.userProfileUrl}}#savedgiftideas">Saved Gifts</a>
                     <div class="ui divider"></div>
-                    <a class="item" href="#">Profile</a>
-                    <a class="item" href="#">Settings</a>
+                    <a class="item" ng-href="{{header.userProfileUrl}}">Profile</a>
+                    <a class="item" ng-href="{{header.userProfileUrl}}">Settings</a>
                     <a class="item logout_action" ng-click="header.logout(); actions.menuItemClicked(); header.closeMobileMenu()">Log Out</a>
                 </div>
             </div>
@@ -81,20 +80,24 @@
     </div>
 </div>
 
-
-
-{#
-<!-- User Menu - Mobile -->#}
-<div class="ui vertical inverted sidebar menu">
-    <a class="active item" href="/">Home</a>
-    <a class="item" href="/search">Search</a>
-    <a class="item" href="/giftideas">Discover</a>
-    <a class="item">My Profile</a>
-    <a class="item">Logout</a>
+<!-- User Menu - Mobile -->
+<div class="ui left vertical menu wide sidebar inverted" ng-show="header.loggedIn">
+    <div class="ui item">
+        <div class="ui action input">
+            <input id="searchValMobile" type="text" placeholder="Search Gifts Ideas">
+            <button class="ui teal button" onclick="top.location='/search/'+jQuery('#searchValMobile').val()">Search</button>
+        </div>
+    </div>
+    <a class="item" href="/">Home</a>
+    <a class="item" href="/giftideas">Gift Ideas</a>
+    <a class="item" href="/giftideas">Browse Gifts</a>
+    <a class="item" href="/concierge">Gift Concierge</a>
+    <a class="item" href="/giftideas">Gift Ideas</a>
+    <a class="item" href="/howitworks">How It Works</a>
+    <a class="item" href="/faq">FAQs</a>
 </div>
 
-{#
-<!-- Slim Menu -->#}
+<!-- Slim Menu -->
 <div class="ui secondary main menu top fixed" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
     <div class="ui container">
         <div class="header item">
@@ -112,3 +115,4 @@
         </div>
     </div>
 </div>
+{% endraw %}

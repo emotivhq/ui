@@ -36,7 +36,9 @@
         this.portaling = $location.path().indexOf('/portal') === 0;
 
         $scope.isHeaderOnly = self.thisRoute == '/header';
-
+        $scope.isProvidence = self.thisRoute == '/yourvillage';
+		$scope.slimHeader = isSlim();
+        
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
