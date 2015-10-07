@@ -26,6 +26,9 @@ $(document).ready(function () {
     });
     // create mobile menu sidebar and attach to menu open
     $('.ui.sidebar').sidebar('attach events', '.toc.item');
+    $('.ui.sidebar a.item').on('click', function() {
+        $('.ui.sidebar').sidebar('hide');
+    });
     // close message container
     $('.message .close').on('click', function () {
         $(this).closest('.message').transition('fade');
