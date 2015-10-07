@@ -713,6 +713,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
     $routeProvider
         .when('/',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        .when('/yourvillage',
+        {templateUrl: '/views/yourvillage/yourvillage.html', reloadOnSearch: false})
         .when('/test',
         {templateUrl: '/views/home/home.html', reloadOnSearch: false})
         .when('/create',
@@ -1293,6 +1295,187 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   );
 
 
+  $templateCache.put('/views/yourvillage/yourvillage.html',
+    "<style>\n" +
+    "    .ui.fixed.menu+.ui.grid.providence {\n" +
+    "        padding-top: 0;\n" +
+    "    }\n" +
+    "    .ui.header .sub.header {\n" +
+    "        line-height: 1.4em;\n" +
+    "        padding-top: .8rem;\n" +
+    "        font-size: 1.2rem;\n" +
+    "    }\n" +
+    "    .hidden.divider {\n" +
+    "        display: block;\n" +
+    "    }\n" +
+    "</style>\n" +
+    "<a class=\"ui teal inverted one item menu top fixed\" href=\"tel:+1-206-486-4849\">\n" +
+    "    <div class=\"item\">\n" +
+    "        Questions? Give us a call today!\n" +
+    "    </div>\n" +
+    "</a>\n" +
+    "<div class=\"ui grid stackable providence container\">\n" +
+    "    <div class=\"sixteen wide column\">\n" +
+    "        <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
+    "        <div class=\"ui center aligned huge header\">Create a GiftStarter Campaign and Easily:</div>\n" +
+    "        <div class=\"ui text container\">\n" +
+    "            <div class=\"ui large list\">\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Break any product or service into affordable pieces.</div>\n" +
+    "                </div>\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Get support from family &amp; friends.</div>\n" +
+    "                </div>\n" +
+    "                <div class=\"item\">\n" +
+    "                    <i class=\"corner green checkmark icon\"></i>\n" +
+    "                    <div class=\"content\">Save time and money when it matters most.</div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"ui section divider\"></div>\n" +
+    "<div class=\"ui text container\">\n" +
+    "    <h1 class=\"ui center aligned header\">\n" +
+    "        Get the help you need.\n" +
+    "        <div class=\"sub header\">Not quite sure what will make your life easier? We have teamed up with Providence &amp; YourVillage to provide a few suggestions based on what other mothers have found useful.</div>\n" +
+    "    </h1>\n" +
+    "\n" +
+    "    <div class=\"ui stackable two column grid\">\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                    <img src=\"images/products/abcdoula.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">ABC Doula</a>\n" +
+    "                    <div class=\"meta\">Portland, OR &amp; Seattle, WA</div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        <strong>A</strong>fter <strong>B</strong>aby <strong>C</strong>omes Doula Service is a  team of postpartum doulas in Portland, OR offering in-home postpartum care to families with newborns.\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <a class=\"ui bottom attached button brown\" href=\"https://www.giftstarter.com/giftideas/abcdoula\">\n" +
+    "                    <span>Find your Doula <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                    <img src=\"images/products/lishfood.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/lishfood\">Lish Food</a>\n" +
+    "                    <div class=\"meta\">Seattle, WA Only</div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        Lish gives you convenient access to delicious, wholesome meals prepared fresh by top local chefs, including alums from The French Laundry and Canlis.\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <a class=\"ui bottom attached button olive\" href=\"https://www.giftstarter.com/giftideas/lishfood\">\n" +
+    "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                    <img src=\"images/products/farmtofit.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">Farm To Fit</a>\n" +
+    "                    <div class=\"meta\">\n" +
+    "                        Portland, OR Only\n" +
+    "                    </div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        Farm to Fit is a local meal delivery service with calorie specific meal plans. We also offer Gluten Free &amp; Diabetic Friendly options.\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <a class=\"ui bottom attached button orange\" href=\"https://www.giftstarter.com/giftideas/farmtofit\">\n" +
+    "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"column\">\n" +
+    "            <div class=\"ui fluid link card\">\n" +
+    "                <a class=\"image\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                    <img src=\"images/products/fullbellyfare.png\">\n" +
+    "                </a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    <a class=\"header\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">Full Belly Fare</a>\n" +
+    "                    <div class=\"meta\">Portland, OR Only</div>\n" +
+    "                    <div class=\"description\">\n" +
+    "                        Portland's healthy meal delivery service! Vegetarian? Paleo? Vegan? Dairy free? Soy free? Your gourmet food delivery service is here!\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <a class=\"ui bottom attached button grey\" href=\"https://www.giftstarter.com/giftideas/fullbellyfare\">\n" +
+    "                    <span>Place your order <i class=\"arrow right icon\"></i></span>\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "<div class=\"ui hidden section divider\"></div>\n" +
+    "<div class=\"ui grid stackable container tablet only mobile only\">\n" +
+    "    <div class=\"sixteen wide column\">\n" +
+    "        <div class=\"ui attached segment\">\n" +
+    "            <div class=\"ui header huge centered\">\n" +
+    "                We're here to help.\n" +
+    "                <div class=\"sub header\">\n" +
+    "                    Our \"Mommy Happiness\" specialists are here to help. Give us a call or send us an email.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"ui two bottom attached buttons\">\n" +
+    "            <a class=\"ui grey basic button\" href=\"mailto:giftconcierge@giftstarter.com\">\n" +
+    "                <i class=\"mail icon\"></i>\n" +
+    "                Email\n" +
+    "            </a>\n" +
+    "            <a class=\"ui positive button\" href=\"tel:+1-206-486-4849\">\n" +
+    "                <i class=\"phone icon\"></i>\n" +
+    "                Call\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n" +
+    "\n" +
+    "<script>\n" +
+    "    //TODO: 5 Oct 2015 Tyler Goelz (@yaboi)\n" +
+    "    //Uncomment when form is implemented to fix iOS\n" +
+    "    //number pad / affix error.\n" +
+    "    //\n" +
+    "    //NOTE: Test this with Semantic, because this fix\n" +
+    "    //was put in place for Bootstrap 3 affix which is\n" +
+    "    //no longer being used.\n" +
+    "    //\n" +
+    "    //     $(function () {\n" +
+    "    //         if(isMobile()) {\n" +
+    "    //             if(isIOS()) {\n" +
+    "    //                 fixIOSAffix();\n" +
+    "    //             }\n" +
+    "    //         }\n" +
+    "    //         function isIOS() {\n" +
+    "    //             return /(iPad|iPhone|iPod)/g.test(navigator.userAgent);\n" +
+    "    //         }\n" +
+    "    //         function isMobile() {\n" +
+    "    //             return /(iPad|iPhone|iPod|Android|BlackBerry|BB\\d+|CriOS)/g.test(navigator.userAgent);\n" +
+    "    //         }\n" +
+    "    //         function fixIOSAffix() {\n" +
+    "    //             var affix = $('[data-spy=\"affix\"]'),\n" +
+    "    //                 input = $('input');\n" +
+    "    //             input.on('focus', function () {\n" +
+    "    //                 affix.fadeOut();\n" +
+    "    //             });\n" +
+    "    //             input.on('blur', function () {\n" +
+    "    //                 affix.fadeIn();\n" +
+    "    //             });\n" +
+    "    //         }\n" +
+    "    //     });\n" +
+    "</script>"
+  );
+
+
   $templateCache.put('/scripts/brandbar/brandbar.ng.html',
     "<div id=\"brandbar\">\n" +
     "    <div class=\"brandbox\"><a href=\"/search/sturtevants\"><img src=\"/assets/brandbar/sturtevants.png\"></a></div>\n" +
@@ -1357,7 +1540,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    \t<div class=\"description\"><span ng-bind-html=\"product.productDescription\"></span></div>\n" +
     "\t\t\t\t\t</div>\n" +
     "                </div>\n" +
-    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">CONTACT THE GIFT CONCIERGE</button>\n" +
+    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">Contact The Gift Concierge</button>\n" +
     "                    <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
     "                        <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon small button bottom attached\" ng-show=\"product.hasPrice\">\n" +
     "\t\t\t\t\t\t\t<i class=\"bookmark icon\"></i>\n" +
@@ -1736,7 +1919,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <div ng-show=\"campaignForm.title.$error.required\">\n" +
     "                        <div class=\"arrowUp\"></div>\n" +
     "                        <div class=\"errorMessage\">\n" +
-    "                            Don't forget to name the gifting event!\n" +
+    "                            Don't forget to name the gifting event.\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -1747,12 +1930,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <div ng-show=\"campaignForm.description.$error.required\">\n" +
     "                        <div class=\"arrowUp\"></div>\n" +
     "                        <div class=\"errorMessage\">\n" +
-    "                            Don't forget to describe it!\n" +
+    "                            Don't forget to describe the event.\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <div id=\"not-long-enough\" ng-hide=\"descriptionLongEnough\">\n" +
-    "                    <p>Woah there! Looks like your GiftStart description is a bit short. We know, brevity is the soul of wit - but how about we add to the story to get people more involved? Here are a few questions for inspiration:</p>\n" +
+    "                    <p>Woah there. Looks like your GiftStart description is a bit short. \n" +
+    "\t\t\t\t\t\tWe know, brevity is the soul of wit - but how about we add to the story to get people more involved? \n" +
+    "\t\t\t\t\t\tHere are a few questions for inspiration:\n" +
+    "\t\t\t\t\t</p>\n" +
     "                    <ul>\n" +
     "                        <li>Why does the recipient deserve this gift?</li>\n" +
     "                        <li>Is there a story behind the gift or why the recipient might need/want it?</li>\n" +
@@ -1766,13 +1952,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        <div ng-show=\"campaignForm.gcEmail.$error.required\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Don't forget your email address!\n" +
+    "                                Don't forget your email address.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div ng-show=\"campaignForm.gcEmail.$error.email\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Your email address is invalid!\n" +
+    "                                That email address doesn't look right.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -1797,7 +1983,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            <div ng-show=\"campaignForm.shippingName.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget recipient's name!\n" +
+    "                                    Don't forget their name.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1814,18 +2000,18 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                               ng-blur=\"hideValidationError.shippingEmail = false\"\n" +
     "                               onkeypress=\"return event.keyCode!=13\"\n" +
     "                               required=\"\" />\n" +
-    "                        <label>* Email will only be sent after the gift is received</label>\n" +
+    "                        <label>* An email will only be sent after the gift is received</label>\n" +
     "                        <div ng-show=\"(campaignForm.$submitted || campaignForm.shippingEmail.$touched || validationTrigger.createButtonClicked) && !hideValidationError.shippingEmail\" class=\"errorWrapper\">\n" +
     "                            <div ng-show=\"campaignForm.shippingEmail.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget recipient's email address!\n" +
+    "                                    Don't forget their email address.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                            <div ng-show=\"campaignForm.shippingEmail.$error.email\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Recipient's email address is invalid!\n" +
+    "                                    That email address is not quite right.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1901,7 +2087,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            <div ng-show=\"campaignForm.shippingState.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget to add the state!\n" +
+    "                                    Don't forget to add the state.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1923,7 +2109,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            <div ng-show=\"campaignForm.shippingZip.$error.required\">\n" +
     "                                <div class=\"arrowUp\"></div>\n" +
     "                                <div class=\"errorMessage\">\n" +
-    "                                    Don't forget to add the zip!\n" +
+    "                                    Don't forget to add the zip.\n" +
     "                                </div>\n" +
     "                            </div>\n" +
     "                        </div>\n" +
@@ -1938,13 +2124,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        <div ng-show=\"campaignForm.deliveryDate.$error.required\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Please select a date!\n" +
+    "                                Please select a date.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                        <div ng-show=\"!dateChosenValid()\">\n" +
     "                            <div class=\"arrowUp\"></div>\n" +
     "                            <div class=\"errorMessage\">\n" +
-    "                                Please select a date!\n" +
+    "                                Please select a date.\n" +
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
@@ -1955,7 +2141,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <p id=\"endDate-comment\" ng-hide=\"dueDateEmpty()\">Your campaign needs to end at least 5 days before your delivery date.</p>\n" +
     "                    <div ng-show=\"changeDueDate\" class=\"endRange\" ng-class=\"{opaque: dueDateEmpty()}\" ui-date></div>\n" +
     "                </div>\n" +
-    "                <div class=\"coupon-code\">\n" +
+    "\n" +
+    "\t\t\t\t\n" +
+    "\t\t\t\t<div class=\"coupon-code\">\n" +
     "                    <h2>5. Do you have a promo code?</h2>\n" +
     "                    <input type=\"text\" id=\"coupon\" name=\"coupon\" placeholder=\"Enter your code\" maxlength=\"20\" ng-model=\"coupon\" ng-focus=\"hideValidationError.code = true\" ng-blur=\"hideValidationError.code = false;\" onkeypress=\"return event.keyCode==13?false:true\" ng-change=\"priceChanged()\" />\n" +
     "                </div>\n" +
@@ -1972,7 +2160,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "                    <div class=\"ui statistic\">\n" +
     "                        <div class=\"value\">\n" +
-    "                            <i class=\"ui dollar icon green\"></i> {{inputPrice}}\n" +
+    "                            <i class=\"ui dollar icon grey\"></i> {{inputPrice}}\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -1992,7 +2180,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <div ng-show=\"showLoginBox\" class=\"login-box\">\n" +
     "            <h2>Log in or create an account:</h2>\n" +
-    "            <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
+    "            <ng-include src=\"'/views/login/create.html'\"></ng-include>\n" +
     "        </div>\n" +
     "\n" +
     "    </div>\n" +
@@ -6344,7 +6532,9 @@ function gsPrintUrl($location, $http) {
         this.portaling = $location.path().indexOf('/portal') === 0;
 
         $scope.isHeaderOnly = self.thisRoute == '/header';
-
+        $scope.isProvidence = self.thisRoute == '/yourvillage';
+		$scope.slimHeader = isSlim();
+        
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
@@ -6631,6 +6821,23 @@ function gsPrintUrl($location, $http) {
 
 }(angular.module('GiftStarterApp')));
 
+/**
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
+(function (app) {
+    var SearchController = function ($scope, $location) {
+        var self = this;        
+        this.thisRoute = $location.path().toString();
+        $scope.isProvidence = self.thisRoute == '/yourvillage';
+    };
+    app.controller('SearchController', [
+        '$scope',
+        '$location',
+        SearchController
+        ]);
+}(angular.module('GiftStarterApp')));
 /**
  * Copyright (C) GiftStarter, inc. - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
@@ -8079,6 +8286,7 @@ GiftStarterApp.service('LinkedInService', [
   		.transition('fade up in')
 		;
 
+		// Wizard work
 		$scope.emailValidation = function(context){
 			return context.firstName === $scope.email;
 		}
