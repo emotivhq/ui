@@ -127,7 +127,6 @@ module.exports = function(grunt) {
                     '../client/scripts/giftstart/thanks/thanked-campaigns.directive.js',
                     '../client/scripts/giftstart/print/print.directive.js',
                     '../client/scripts/header/header.controller.js',
-                    '../client/scripts/controllers/search.controller.js',
                     '../client/scripts/utilities/toast.service.js',
                     '../client/scripts/utilities/toast.directive.js',
                     '../client/scripts/utilities/analytics.service.js',
@@ -275,7 +274,6 @@ module.exports = function(grunt) {
                     '../client/scripts/giftstart/thanks/thanked-campaigns.directive.js',
                     '../client/scripts/giftstart/print/print.directive.js',
                     '../client/scripts/header/header.controller.js',
-                    '../client/scripts/controllers/search.controller.js',
                     '../client/scripts/utilities/toast.service.js',
                     '../client/scripts/utilities/toast.directive.js',
                     '../client/scripts/utilities/analytics.service.js',
@@ -535,11 +533,11 @@ module.exports = function(grunt) {
 		},
 		bump: {
             options: {
-                files: ['package.json', '../client/bower.json', '../app.yaml'],
+                files: ['package.json', '../client/bower.json'],
                 updateConfigs: [],
                 commit: true,
                 commitMessage: 'Build & release v%VERSION%',
-                commitFiles: ['package.json', '../client/bower.json', '../app.yaml'],
+                commitFiles: ['package.json', '../client/bower.json'],
                 createTag: true,
                 tagName: 'v%VERSION%',
                 tagMessage: 'Version %VERSION%',
@@ -566,11 +564,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-copy-to');
 
     // Build tasks.
-    grunt.registerTask('default', ['remove', 'ngtemplates', 'sass', 'sassy', 'concat']);	// the default task build the old app
+	grunt.registerTask('default', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify', 'ui']); // Build the app ready to test
+	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify', 'ui']); // Build the app ready to test
 	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat']);
 	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint', 'jslint']); // Build with jshint, catch errors with jslint, fix, code better
 	grunt.registerTask('test', ['karma']);
-	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify', 'ui']); // Build the app ready to test
 	
 	/** Include UI **/
 	// Build in the UI
