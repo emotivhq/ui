@@ -51,16 +51,11 @@
     left: 0;
     transition: left 0.5s ease;
 }
-.main.menu.fixed {
+.ui.main.menu {
     background-color: #FFFFFF;
     border: 0px solid #DDD;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 10 !important;
-}
-.slim .main.menu {
-    background-color: transparent;
-    border:none;
-    box-shadow: none;
 }
 .overlay.fixed .menu {
     left: 800px;
@@ -68,13 +63,13 @@
 .ui.menu {
     margin-top:0
 }
-.ui.secondary.menu .item, .ui.secondary.menu .menu {
+.slim .ui.main.menu .toc.item, .ui.main.menu .item, .ui.main.menu .menu, .ui.menu .right.item .item.help {
     display: none;
 }
-.ui.secondary.menu .toc.item, .ui.menu:not(.vertical) .right.item .item, .ui.secondary.menu .header.item {
+.ui.main.menu .toc.item, .ui.menu .right.item .item, .ui.main.menu .header.item {
     display: block;
 }
-.ui.secondary.menu .header.item {
+.ui.main.menu .header.item {
     padding-right: 0;
     margin-right: 0;
 }
@@ -113,10 +108,10 @@
 
 /* media queries */
  @media only screen and (min-width: 723px) {
-    .ui.secondary.menu:not(.vertical) .toc.item {
+    .ui.main.menu .toc.item {
         display: none;
     }
-    .ui.menu:not(.vertical) .item, .secondary.menu .menu {
+    .ui.main.menu .item, .main.menu .menu, .ui.menu .right.item .item.help {
         display: block;
     }
 }

@@ -1,6 +1,6 @@
 {#
 <!-- Main Menu -->#}
-<div class="ui secondary fixed main menu" ng-hide="header.loggedIn || fullContainer">
+<div class="ui secondary main top fixed menu" ng-hide="header.loggedIn || fullContainer">
     <div class="ui container">
         <div class="header item">
             <a class="headerLogoWrapper" href="/">
@@ -33,7 +33,7 @@
 
 {#
 <!-- User Menu -->#}
-<div class="ui borderless main menu" ng-show="header.loggedIn || header.portaling">
+<div class="ui secondary main menu" ng-show="header.loggedIn || header.portaling">
     <div class="ui container">
         <div class="header item">
             <a class="headerLogoWrapper" href="#">
@@ -102,7 +102,7 @@
 
 {#
 <!-- Slim Menu -->#}
-<div class="ui secondary main menu" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
+<div class="ui secondary main menu top fixed" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
     <div class="ui container">
         <div class="header item">
             <a class="headerLogoWrapper" href="/">
@@ -110,14 +110,12 @@
                 <img id="logo-mobile" src="/assets/logo-mobile.png" />
             </a>
         </div>
-        <div class="right menu">
-            <a class="toc item"><i class="sidebar icon"></i></a>
-            <div class="item">
-                Already have an account?
+        <a class="toc item"><i class="sidebar icon"></i></a>
+        <div class="right item">
+            <div class="item help">
+                <p>Already have an account?</p>
             </div>
-            <div class="item">
-                <a href="/login" class="ui button secondary basic grey">Login</a>
-            </div>
+            <a class="ui button secondary basic grey" href="/login">Login</a>
         </div>
     </div>
 </div>
