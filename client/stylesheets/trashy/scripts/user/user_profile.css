@@ -229,7 +229,6 @@ iframe[name='google_conversion_frame'] {
     .userprofile .userprofileform__labelmail, .userprofile .userprofileform__labelphone, .userprofile .userprofileform__labelshipping {
       margin: 1rem 0 0;
       font-size: 0.9rem;
-      text-transform: uppercase;
       display: inline-block;
       text-align: left; }
     .userprofile .userprofileform__labelmail, .userprofile .userprofileform__labelphone {
@@ -316,7 +315,6 @@ iframe[name='google_conversion_frame'] {
   padding-bottom: 1rem; }
   .calendar__calendartext {
     text-align: center;
-    text-transform: uppercase;
     color: #fff;
     font-size: 0.9rem;
     font-family: Gotham, sans-serif;
@@ -329,7 +327,6 @@ iframe[name='google_conversion_frame'] {
     width: 4.6rem;
     margin: 0 auto;
     font-family: Gotham, sans-serif;
-    text-transform: uppercase;
     text-align: center;
     border: 1px solid #ccc; }
   .calendar__month {
@@ -370,7 +367,6 @@ iframe[name='google_conversion_frame'] {
     font-size: 0.9rem;
     font-family: Gotham, sans-serif;
     color: #333;
-    text-transform: uppercase;
     position: absolute;
     right: -11%;
     top: 1rem; }

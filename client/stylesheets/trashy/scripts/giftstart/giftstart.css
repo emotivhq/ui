@@ -600,7 +600,6 @@ div.giftstart.wrapper {
     margin: 20px auto 0;
     border-color: #aeaeae; }
     div.giftstart.wrapper .btn__link {
-      text-transform: uppercase;
       text-align: center;
       color: #aeaeae; }
     div.giftstart.wrapper .btn--pdf {
@@ -609,7 +608,6 @@ div.giftstart.wrapper {
       text-align: center;
       padding: 1rem; }
       div.giftstart.wrapper .btn--pdf .btn__link {
-        text-transform: uppercase;
         color: #fff; }
   div.giftstart.wrapper .fullwidth--last {
     padding-bottom: 1.5rem; }
