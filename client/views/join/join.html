@@ -1,12 +1,12 @@
 <div class="ui grid stackable join container" ng-controller="LoginOrCreateController">
     <div class="eight wide column">
-            <div class="userlogin__emaillogin login-block" ng-show="showCreate">
-                <ng-include src="'/views/join/join-form.html'"></ng-include>
-                <div class="userlogin__createacc switchtxt" ng-hide="showSocials">
-                    <span>Already have an account? </span>
-                    <span><a ng-href="/login" class="userlogin__createacclink linky">Login</a></span>
-                </div>
+        <div class="userlogin__emaillogin login-block" ng-show="showCreate">
+            <ng-include src="'/views/join/join-form.html'"></ng-include>
+            <div class="userlogin__createacc switchtxt" ng-hide="showSocials">
+                <span>Already have an account? </span>
+                <span><a ng-href="/login" class="userlogin__createacclink linky">Login</a></span>
             </div>
+        </div>
     </div>
     <div class="eight wide column">
 
@@ -14,20 +14,20 @@
             <div class="ui container">
                 <div class="introduction">
 
-                   <iframe class="tablet computer" width="531" height="305" src="https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+                    <iframe class="tablet computer" width="531" height="305" src="https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
 
-					<div class="ui icon message vertical medium">
-    					<i class="facebook icon blue"></i>
-    					<div class="content column two">
-        					<div class="header">
-            					Rather use social media?
-        					</div>
-        					<p>It only takes a few clicks to sign up.</p>
-    					</div>
-    					<div class="column three">
-        					<a href="#" class="ui blue basic button social">Start Here</a>
-    					</div>
-					</div>
+                    <div class="ui icon message vertical medium">
+                        <i class="facebook icon blue"></i>
+                        <div class="content column two">
+                            <div class="header">
+                                Rather use social media?
+                            </div>
+                            <p>It only takes a few clicks to sign up.</p>
+                        </div>
+                        <div class="column three">
+                            <a href="#" class="ui blue basic button social">Start Here</a>
+                        </div>
+                    </div>
 
                 </div>
             </div>
@@ -41,34 +41,34 @@
             Create Your Account
         </div>
         <div class="middle center aligned grid">
-			<div class="image content container">
-            <div class="userlogin__sociallogin login-block" ng-show="showSocials">
-                <div class="social">
-                    <a class="social__link linky" ng-click="doLoginFacebook()">
-                        <img class="social__icons" src="/assets/login/facebook.png">
-                    </a>
-                    <br/>
-                    <a class="social__link linky" ng-click="doLoginTwitter()">
-                        <img class="social__icons" src="/assets/login/twitter.png">
-                    </a>
-                    <br/>
-                    <a class="social__link linky" ng-click="doLoginLinkedin()">
-                        <img class="social__icons" src="/assets/login/linkedin.png">
-                    </a>
-                    <br/>
-                    <a class="social__link linky" ng-click="doLoginGoogleplus()">
-                        <img class="social__icons" src="/assets/login/google.png">
-                    </a>
+            <div class="image content container">
+                <div class="userlogin__sociallogin login-block" ng-show="showSocials">
+                    <div class="social">
+                        <a class="social__link linky" ng-click="doLoginFacebook()">
+                            <img class="social__icons" src="/assets/login/facebook.png">
+                        </a>
+                        <br/>
+                        <a class="social__link linky" ng-click="doLoginTwitter()">
+                            <img class="social__icons" src="/assets/login/twitter.png">
+                        </a>
+                        <br/>
+                        <a class="social__link linky" ng-click="doLoginLinkedin()">
+                            <img class="social__icons" src="/assets/login/linkedin.png">
+                        </a>
+                        <br/>
+                        <a class="social__link linky" ng-click="doLoginGoogleplus()">
+                            <img class="social__icons" src="/assets/login/google.png">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-		</div>
     </div>
-	
+
 </div>
 
-    <script>
-        function handlePopupClosed() {
-            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();
-        }
-    </script>
+<script>
+    function handlePopupClosed() {
+        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();
+    }
+</script>

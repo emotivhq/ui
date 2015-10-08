@@ -731,6 +731,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/views/login/login.html', reloadOnSearch: false})
         .when('/join',
         {templateUrl: '/views/join/join.html', reloadOnSearch: false})
+        .when('/signup',
+        {templateUrl: '/scripts/login/login-or-create.html', reloadOnSearch: false})
         .when('/is',
         {templateUrl: '/views/is/is.html', reloadOnSearch: false})
         .when('/users/:uid',
@@ -1044,7 +1046,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\t\t</button>\n" +
     "    </form>\n" +
     "</div>\n" +
-    "<wizard on-finish=\"finishedWizard()\"> \n" +
+    "<wizard on-finish=\"\"> \n" +
     "<form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action ui form\">\n" +
     "    <wz-step title=\"\" canexit=\"\">\n" +
     "        <h2 class=\"vertical small bottom\">Create a new account</h2>\n" +
@@ -1097,7 +1099,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\t\t\t<input class=\"userlogin__password\" type=\"password\" name=\"password\" ng-hide=\"$parent.showPassword\" ng-model=\"$parent.password\" placeholder=\"Strong Password\" required />\n" +
     "\t\t</div>\n" +
     "\t\t<div class=\"ui middle aligned center aligned vertical large top bottom grid\">\n" +
-    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button primary red\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" wz-next value=\"Create Account\">\n" +
+    "\t\t<button class=\"userlogin__loginbtn create_action ui right labeled icon button primary red\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\" value=\"Create Account\">\n" +
     "\t\t\t<i class=\"add user icon\"></i>\n" +
     "  \t\t\tCreate Account\n" +
     "\t\t</button>\n" +
@@ -1115,13 +1117,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/views/join/join.html',
     "<div class=\"ui grid stackable join container\" ng-controller=\"LoginOrCreateController\">\n" +
     "    <div class=\"eight wide column\">\n" +
-    "            <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
-    "                <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
-    "                <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
-    "                    <span>Already have an account? </span>\n" +
-    "                    <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
-    "                </div>\n" +
+    "        <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
+    "            <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
+    "            <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "                <span>Already have an account? </span>\n" +
+    "                <span><a ng-href=\"/login\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
     "            </div>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"eight wide column\">\n" +
     "\n" +
@@ -1129,20 +1131,20 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <div class=\"ui container\">\n" +
     "                <div class=\"introduction\">\n" +
     "\n" +
-    "                   <iframe class=\"tablet computer\" width=\"531\" height=\"305\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "                    <iframe class=\"tablet computer\" width=\"531\" height=\"305\" src=\"https://www.youtube-nocookie.com/embed/sNP59QXUlFQ?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
     "\n" +
-    "\t\t\t\t\t<div class=\"ui icon message vertical medium\">\n" +
-    "    \t\t\t\t\t<i class=\"facebook icon blue\"></i>\n" +
-    "    \t\t\t\t\t<div class=\"content column two\">\n" +
-    "        \t\t\t\t\t<div class=\"header\">\n" +
-    "            \t\t\t\t\tRather use social media?\n" +
-    "        \t\t\t\t\t</div>\n" +
-    "        \t\t\t\t\t<p>It only takes a few clicks to sign up.</p>\n" +
-    "    \t\t\t\t\t</div>\n" +
-    "    \t\t\t\t\t<div class=\"column three\">\n" +
-    "        \t\t\t\t\t<a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
-    "    \t\t\t\t\t</div>\n" +
-    "\t\t\t\t\t</div>\n" +
+    "                    <div class=\"ui icon message vertical medium\">\n" +
+    "                        <i class=\"facebook icon blue\"></i>\n" +
+    "                        <div class=\"content column two\">\n" +
+    "                            <div class=\"header\">\n" +
+    "                                Rather use social media?\n" +
+    "                            </div>\n" +
+    "                            <p>It only takes a few clicks to sign up.</p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"column three\">\n" +
+    "                            <a href=\"#\" class=\"ui blue basic button social\">Start Here</a>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "\n" +
     "                </div>\n" +
     "            </div>\n" +
@@ -1156,37 +1158,37 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            Create Your Account\n" +
     "        </div>\n" +
     "        <div class=\"middle center aligned grid\">\n" +
-    "\t\t\t<div class=\"image content container\">\n" +
-    "            <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "                <div class=\"social\">\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
-    "                    </a>\n" +
-    "                    <br/>\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
-    "                    </a>\n" +
-    "                    <br/>\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
-    "                    </a>\n" +
-    "                    <br/>\n" +
-    "                    <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
-    "                        <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
-    "                    </a>\n" +
+    "            <div class=\"image content container\">\n" +
+    "                <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "                    <div class=\"social\">\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "\t\t</div>\n" +
     "    </div>\n" +
-    "\t\n" +
+    "\n" +
     "</div>\n" +
     "\n" +
-    "    <script>\n" +
-    "        function handlePopupClosed() {\n" +
-    "            angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
-    "        }\n" +
-    "    </script>"
+    "<script>\n" +
+    "    function handlePopupClosed() {\n" +
+    "        angular.element(document.getElementById('shareControllerWrapper')).scope().refreshPermissionsStatus();\n" +
+    "    }\n" +
+    "</script>"
   );
 
 
@@ -1210,11 +1212,11 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"userlogin__form ui stacked segment\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
     "    <h3 class=\"vertical small bottom\">Login with your email address:</h3>\n" +
     "    <form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action login ui form\">\n" +
-    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t<div class=\"field ui left icon input long\">\n" +
     "\t\t\t<i class=\"user icon\"></i>\n" +
     "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required />\n" +
     "\t\t</div>\n" +
-    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t<div class=\"field ui left icon input long\">\n" +
     "\t\t\t<i class=\"hide icon\"></i>\n" +
     "\t\t\t<input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required />\n" +
     "\t\t</div>\n" +
@@ -1222,7 +1224,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <!--<input class=\"userlogin__remember\" type=\"checkbox\" name=\"remember\" id=\"remember\">-->\n" +
     "        </div>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
+    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button fluid\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
     "  \t\t<i class=\"right arrow icon\"></i>\n" +
     "  \t\tLogin\n" +
     "\t\t</button>\n" +
@@ -1233,12 +1235,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"userlogin__form ui stacked segment\" ng-show=\"$parent.showForgot\">\n" +
     "    <h3>Password Reminder</h3>\n" +
     "\t<form ng-submit=\"$parent.doForgotPassword()\" class=\"ui form\">\n" +
-    "\t\t<div class=\"field ui left icon input\">\n" +
+    "\t\t<div class=\"field ui left icon input long\">\n" +
     "\t\t\t<i class=\"user icon\"></i>\n" +
     "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"you@yourdomain.com\" required />\n" +
     "\t\t</div>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
+    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button fluid\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
     "  \t\t<i class=\"forward mail icon\"></i>\n" +
     "  \t\tGet Password\n" +
     "\t\t</button>    \n" +
@@ -1246,23 +1248,32 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Nevermind, I remember it now...</a>\n" +
     "</div>\n" +
     "\n" +
-    "<div class=\"userlogin__form\" ng-show=\"$parent.showReset\">\n" +
+    "<div class=\"userlogin__form ui stacked segment\" ng-show=\"$parent.showReset\">\n" +
     "    <h3>Reset Your Password:</h3>\n" +
-    "    <form ng-submit=\"$parent.doResetPassword()\">\n" +
+    "    <form ng-submit=\"$parent.doResetPassword()\" class=\"ui form\">\n" +
     "        <input class=\"userlogin__email\" type=\"hidden\" name=\"resetcode\" ng-model=\"$parent.resetCode\" placeholder=\"Enter the reset code\" required />\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <div class=\"userlogin__passwordwrap\"><input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter a New Password\" required /><input ng-show=\"$parent.showPassword\" class=\"userlogin__password\" type=\"text\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><div class=\"userlogin__eye\" ng-click=\"$parent.showPassword=!$parent.showPassword\"></div></div>\n" +
-    "        <!--<input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.reenterpassword\" placeholder=\"Re-enter the Password\" required>-->\n" +
+    "\t\t<div class=\"field ui left icon input long\">\n" +
+    "\t\t\t<i class=\"user icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
+    "\t\t</div>        \n" +
+    "\t\t<div class=\"field ui left icon input long\">\n" +
+    "\t\t\t<i class=\"hide icon\"></i>\n" +
+    "\t\t\t<input class=\"userlogin__password\" type=\"password\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter a New Password\" required />\n" +
+    "\t\t</div>        \n" +
+    "\t\t<!--<input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.reenterpassword\" placeholder=\"Re-enter the Password\" required>-->\n" +
     "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showReset=false\">Cancel</a>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn red\" ng-disabled=\"$parent.working\">Change Password</button>\n" +
+    "\t\t<button class=\"userlogin__loginbtn ui right labeled icon button fluid\" ng-class=\"$parent.working ? 'loading' : 'secondary'\" ng-disabled=\"$parent.working\">\n" +
+    "  \t\t<i class=\"lock icon\"></i>\n" +
+    "  \t\tChange Password\n" +
+    "\t\t</button>    \n" +
     "    </form>\n" +
     "</div>"
   );
 
 
   $templateCache.put('/views/login/login.html',
-    "<div class=\"userlogin ui equal grid stackable centered center aligned\" ng-controller=\"LoginOrCreateController\" class=\"ui grid stackable\">\n" +
+    "<div class=\"userlogin ui equal grid stackable centered center aligned main pad\" ng-controller=\"LoginOrCreateController\" class=\"ui grid stackable\">\n" +
     "    <div class=\"userlogin__emaillogin login-block ui six wide column vertical small bottom\" ng-show=\"showCreate\">\n" +
     "        <ng-include src=\"'/views/login/login-form.html'\"></ng-include>\n" +
     "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
@@ -1589,8 +1600,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <h1 class=\"vertical medium top bottom\">Top Categories</h1>\n" +
-    "    <div class=\"categories ui four stackable link cards\">\n" +
+    "    <h1 class=\"vertical medium top bottom\">What’s popular</h1>\n" +
+    "    <div class=\"categories ui three stackable link cards\">\n" +
     "\n" +
     "        <div class=\"card\">\n" +
     "            <a class=\"image\" href=\"/giftideas/music\">\n" +
@@ -1656,9 +1667,21 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"card\">\n" +
-    "            <a class=\"image\" href=\"/giftideas/cute\">\n" +
-    "                <img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" />\n" +
+    "\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/cute\">\n" +
+    "            <img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/cute\">Cute</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                Know someone who absolutely loves cute things? This is the place for that kind of stuff.\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/cute\">\n" +
+    "                <i class=\"unhide icon\"></i> View Cute\n" +
     "            </a>\n" +
     "            <div class=\"content\">\n" +
     "                <a class=\"header\" href=\"/giftideas/cute\">Cute</a>\n" +
@@ -1672,9 +1695,20 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"card\">\n" +
-    "            <a class=\"image\" href=\"/giftideas/baby\">\n" +
-    "                <img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" />\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/baby\">\n" +
+    "            <img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/baby\">Baby</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                Hand picked and curated by moms all over for the best experience for both baby & mom.\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/baby\">\n" +
+    "                <i class=\"unhide icon\"></i> View Baby\n" +
     "            </a>\n" +
     "            <div class=\"content\">\n" +
     "                <a class=\"header\" href=\"/giftideas/baby\">Baby</a>\n" +
@@ -1721,163 +1755,362 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "\n" +
-    "        <div class=\"group left\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/cool\">\n" +
-    "                    <img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Cool</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/office\">\n" +
-    "                    <img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Office</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/farewell\">\n" +
-    "                    <img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Farewell</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/sympathy\">\n" +
-    "                    <img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Sympathy</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/beauty\">\n" +
-    "                    <img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Beauty</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/wine\">\n" +
-    "                    <img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Wine</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/butterlondon\">\n" +
-    "                    <img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"butter LONDON\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">butter LONDON</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/petlovers\">\n" +
-    "                    <img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Pet Lovers</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/wedding\">\n" +
-    "                    <img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Wedding</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/graduation\">\n" +
-    "                    <img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Graduation</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/red\">\n" +
-    "                    <img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Wear Red</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/pisces\">\n" +
-    "                    <img src=\"/assets/giftideas/category/pisces.jpg\" alt=\"Pisces\" class=\"load\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Pisces</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/patriots\">\n" +
-    "                    <img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Patriots</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/seahawks\">\n" +
-    "                    <img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Seahawks</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/employee\">\n" +
-    "                    <img src=\"/assets/giftideas/category/employee.jpg\" alt=\"Employee Appreciation\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Employee Appreciation</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/boss\">\n" +
-    "                    <img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Boss</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/teacher\">\n" +
-    "                    <img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Teacher</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/electronics\">\n" +
-    "                    <img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Electronics</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group right\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/outdoors\">\n" +
-    "                    <img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Outdoors</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/green\">\n" +
-    "                    <img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green and Organic\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Green and Organic</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"group left\">\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/military\">\n" +
-    "                    <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Military</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "            <div class=\"tile\">\n" +
-    "                <a target=\"_top\" href=\"/giftideas/giftcard\">\n" +
-    "                    <img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\" class=\"load\" />\n" +
-    "                    <div class=\"tilelabel\">Gift Cards</div>\n" +
-    "                </a>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/cool\">\n" +
+    "            <img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/cool\">Cool</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/cool\">\n" +
+    "                <i class=\"unhide icon\"></i> View Cool\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/office\">\n" +
+    "            <img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/office\">Office</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/office\">\n" +
+    "                <i class=\"unhide icon\"></i> View Office\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/farewell\">\n" +
+    "            <img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/farewell\">Farewell</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/farewell\">\n" +
+    "                <i class=\"unhide icon\"></i> View Farewell\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/sympathy\">\n" +
+    "            <img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/sympathy\">Sympathy</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/sympathy\">\n" +
+    "                <i class=\"unhide icon\"></i> View Sympathy\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/beauty\">\n" +
+    "            <img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/beauty\">Beauty</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/beauty\">\n" +
+    "                <i class=\"unhide icon\"></i> View Beauty\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/wine\">\n" +
+    "            <img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/wine\">Wine</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/wine\">\n" +
+    "                <i class=\"unhide icon\"></i> View Wine\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/butterlondon\">\n" +
+    "            <img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"Butter LONDON\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/butterlondon\">Butter LONDON</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/butterlondon\">\n" +
+    "                <i class=\"unhide icon\"></i> View Butter LONDON\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/petlovers\">\n" +
+    "            <img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/petlovers\">Pet Lovers</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/petlovers\">\n" +
+    "                <i class=\"unhide icon\"></i> View Pet Lovers\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/wedding\">\n" +
+    "            <img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/wedding\">Wedding</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/wedding\">\n" +
+    "                <i class=\"unhide icon\"></i> View Wedding\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/graduation\">\n" +
+    "            <img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/graduation\">Graduation</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/graduation\">\n" +
+    "                <i class=\"unhide icon\"></i> View Graduation\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/red\">\n" +
+    "            <img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/red\">Wear Red</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/red\">\n" +
+    "                <i class=\"unhide icon\"></i> View Wear Red\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/patriots\">\n" +
+    "            <img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/patriots\">Patriots</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/patriots\">\n" +
+    "                <i class=\"unhide icon\"></i> View Patriots\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/seahawks\">\n" +
+    "            <img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/seahawks\">Seahawks</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/seahawks\">\n" +
+    "                <i class=\"unhide icon\"></i> View Seahawks\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/employee\">\n" +
+    "            <img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Employee\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/employee\">Employee</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/employee\">\n" +
+    "                <i class=\"unhide icon\"></i> View Employee\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/boss\">\n" +
+    "            <img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/boss\">Boss</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/boss\">\n" +
+    "                <i class=\"unhide icon\"></i> View Boss\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/teacher\">\n" +
+    "            <img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/teacher\">Teacher</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/teacher\">\n" +
+    "                <i class=\"unhide icon\"></i> View Teacher\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/electronics\">\n" +
+    "            <img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/electronics\">Electronics</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/electronics\">\n" +
+    "                <i class=\"unhide icon\"></i> View Electronics\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/outdoors\">\n" +
+    "            <img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/outdoors\">Outdoors</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/outdoors\">\n" +
+    "                <i class=\"unhide icon\"></i> View Outdoors\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/green\">\n" +
+    "            <img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/green\">Green</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/green\">\n" +
+    "                <i class=\"unhide icon\"></i> View Green\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/military\">\n" +
+    "            <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/military\">Military</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/military\">\n" +
+    "                <i class=\"unhide icon\"></i> View Military\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/military\">\n" +
+    "            <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/military\">Military</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/military\">\n" +
+    "                <i class=\"unhide icon\"></i> View Military\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"card\">\n" +
+    "        <a class=\"image\" href=\"/giftideas/giftcard\">\n" +
+    "            <img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\" class=\"load\" />\n" +
+    "        </a>\n" +
+    "        <div class=\"content\">\n" +
+    "            <a class=\"header\" href=\"/giftideas/giftcard\">Gift Cards</a>\n" +
+    "            <div class=\"description\">\n" +
+    "                ...\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"extra content bottom button attached\">\n" +
+    "            <a class=\"center\" href=\"/giftideas/giftcard\">\n" +
+    "                <i class=\"unhide icon\"></i> View Gift Cards\n" +
+    "            </a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"clear\"></div>\n" +
+    "</div>\n" +
     "\n" +
     "</div>"
   );
@@ -6617,11 +6850,22 @@ function gsPrintUrl($location, $http) {
 
     var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
         var self = this;
+		jQuery('.discover')
+  .popup({
+    inline   : true,
+    hoverable: true,
+    position : 'bottom left',
+    delay: {
+      show: 300,
+      hide: 800
+    }
+  })
+;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
         this.mobile = device.mobile() || device.tablet();
 		function isSlim() {
-        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+        	return($location.path() === '/join') ? true : false;
     	}
 		this.makeSlim = isSlim();
 		this.slimHeader = isSlim();
@@ -6917,7 +7161,7 @@ function gsPrintUrl($location, $http) {
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
 		function isSlim() {
-        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+        	return($location.path() === '/join') ? true : false;
     	}
 		this.makeSlim = isSlim();
 		$rootScope.slimHeader = isSlim();
@@ -12586,10 +12830,13 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
 	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
 
 		function isFull() {
-			return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+			return($location.path() === '/join') ? true : false;
 		}
-	
+		function padHeader() {
+			return($location.path() === '/login') ? true : false;
+		}
 		$scope.fullContainer = isFull();
+		$scope.paddedContainer = padHeader();
 
 	};
 
@@ -12606,13 +12853,20 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
         ViewController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       function isFull() {
-			return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+			return($location.path() === '/join') ? true : false;
+		}
+		function padHeader() {
+			return($location.path() === '/login') ? true : false;
 		}
 		//when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         //$location.hash($routeParams.scrollTo);
         //$anchorScroll();
 		$rootScope.fullContainer = isFull();
+		$rootScope.paddedContainer = padHeader();
+		//alert($rootScope.fullContainer = " - " + $rootScope.paddedContainer);
+		
+		// semantic transition on view change
 		jQuery('#angular-view').transition('fade in');
       });
     })

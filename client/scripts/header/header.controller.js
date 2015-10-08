@@ -8,11 +8,22 @@
 
     var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
         var self = this;
+		jQuery('.discover')
+  .popup({
+    inline   : true,
+    hoverable: true,
+    position : 'bottom left',
+    delay: {
+      show: 300,
+      hide: 800
+    }
+  })
+;
         this.thisRoute = $location.path().toString();
         this.loggedIn = UserService.loggedIn;
         this.mobile = device.mobile() || device.tablet();
 		function isSlim() {
-        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+        	return($location.path() === '/join') ? true : false;
     	}
 		this.makeSlim = isSlim();
 		this.slimHeader = isSlim();
@@ -308,7 +319,7 @@
         HeaderController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
 		function isSlim() {
-        	return($location.path() === '/join') || ($location.path() === '/test') ? true : false;
+        	return($location.path() === '/join') ? true : false;
     	}
 		this.makeSlim = isSlim();
 		$rootScope.slimHeader = isSlim();
