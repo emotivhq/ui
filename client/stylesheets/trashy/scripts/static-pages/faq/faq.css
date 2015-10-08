@@ -116,10 +116,10 @@ iframe[name='google_conversion_frame'] {
 div.faq {
   text-align: left; }
   div.faq .headerwrap {
-    background: url("/assets/faq/FAQHero.jpg") no-repeat center top; }
+    background: url("/assets/faq/FAQHero.jpg") no-repeat center top;
+    background-size: cover; }
     div.faq .headerwrap a {
-      color: #ffffff;
-      text-decoration: underline; }
+      color: #ffffff; }
   div.faq .main {
     padding: 7px 75px; }
     @media only screen and (min-width: 1025px) {
