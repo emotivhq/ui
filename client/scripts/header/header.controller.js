@@ -116,7 +116,7 @@
         // for sizing using ng-class
 
         function isSlimMenu() {
-            return($location.path() === '/join') ? true : false;
+            return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
         }
 
         function isMainMenu() {
