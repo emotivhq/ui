@@ -3072,7 +3072,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/reset/:resetCode',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/search/:searchTerm',
-        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/search/',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas',
@@ -3651,6 +3651,24 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   );
 
 
+  $templateCache.put('/views/search/search.html',
+    "<div class=\"giftideas wrapper ui container main full\" ng-controller=\"GiftideasController\" style=\"margin-bottom: 0 !important;margin-top: 4em !important;\">\n" +
+    "    <div class=\"headerwrap\" name=\"home\" title=\"GiftStarter Team\" ng-show=\"!category\" style=\"margin-bottom: 0;padding-bottom: 40px;}\">\n" +
+    "        <h1>Find The Perfect Gift</h1>\n" +
+    "        <h4>It's that easy. What's on your mind?</h4>\n" +
+    "    \t<gs-product-search></gs-product-search>\n" +
+    "\t</div>\n" +
+    "\n" +
+    "    <ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include>\n" +
+    "\n" +
+    "    <div ng-show=\"category || product\" id=\"disclaimer\">\n" +
+    "        If the item you GiftStart has color, size or other options, please contact the Gift Concierge to ensure you get the item that best meets your specifications or if you have any other questions regarding your product selection.\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('/views/yourvillage/yourvillage.html',
     "<style>\n" +
     "    .ui.fixed.menu+.ui.grid.providence {\n" +
@@ -3670,7 +3688,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        Questions? Give us a call today!\n" +
     "    </div>\n" +
     "</a>\n" +
-    "<div class=\"ui grid stackable providence container\">\n" +
+    "<div class=\"ui grid stackable providence container main full\">\n" +
     "    <div class=\"sixteen wide column\">\n" +
     "        <img class=\"ui fluid centered medium image\" src=\"/assets/webLogo.png\">\n" +
     "        <div class=\"ui center aligned huge header\">Create a GiftStarter Campaign and Easily:</div>\n" +
@@ -3885,7 +3903,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"titles\">\n" +
-    "                <button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui huge button icon primary top attached\" ng-show=\"product.hasPrice\">\n" +
+    "                <button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui large button icon primary\" ng-show=\"product.hasPrice\">\n" +
     "                    <i class=\"gift icon\"></i>\n" +
     "                    Gift It\n" +
     "                </button>\n" +
@@ -3900,7 +3918,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "                <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">Contact The Gift Concierge</button>\n" +
     "                <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
-    "                    <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon small button bottom attached\" ng-show=\"product.hasPrice\">\n" +
+    "                    <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon large\" ng-show=\"product.hasPrice\">\n" +
     "                        <i class=\"bookmark icon\"></i>\n" +
     "                        Save for Later\n" +
     "                        <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
@@ -4557,15 +4575,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div ng-hide=\"showLoginBox\">\n" +
     "        <div ng-show=\"isCreateStepTiles()\">\n" +
     "            <h2 class=\"state-title\">How many pitch-in pieces do you want?</h2>\n" +
-    "            <div class=\"state-subtitle\">Create Your Gifting Event: step 2 of 4</div>\n" +
+    "            <div class=\"state-subtitle\">Create Your Gifting Event: Step 2 of 4</div>\n" +
     "        </div>\n" +
     "        <div ng-show=\"isCreateStepStory()\">\n" +
     "            <h2 class=\"state-title\">Your Gifting Event</h2>\n" +
-    "            <div class=\"state-subtitle\">Create Your Gifting Event: step 3 of 4</div>\n" +
+    "            <div class=\"state-subtitle\">Create Your Gifting Event: Step 3 of 4</div>\n" +
     "        </div>\n" +
     "        <div ng-show=\"isCreateStepShipping()\">\n" +
     "            <h2 class=\"state-title\">Shipping Details</h2>\n" +
-    "            <div class=\"state-subtitle\">Create Your Gifting Event: step 4 of 4</div>\n" +
+    "            <div class=\"state-subtitle\">Create Your Gifting Event: Step 4 of 4</div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
@@ -4681,7 +4699,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </span>\n" +
-    "                        <i class=\"user icon\"></i>\n" +
     "                    </div>\n" +
     "                    <div class=\"ui left icon input\">\n" +
     "                        <span class=\"email\">\n" +
@@ -4709,7 +4726,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </span>\n" +
-    "                        <i class=\"mail icon\"></i>\n" +
     "                    </div>\n" +
     "\n" +
     "                    <h2>2. Where should the Gift be shipped?</h2>\n" +
@@ -6312,8 +6328,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <section id=\"search-products-section\" class=\"products\" ng-class=\"{hidden: products.length == 0}\">\n" +
-    "        <div class=\"product-container\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
+    "    <section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
+    "        <div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
     "            <div class=\"product\">\n" +
     "                <div class=\"image-container\">\n" +
     "                    <span class=\"vert-align-helper\"></span>\n" +
@@ -6321,19 +6337,30 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </div>\n" +
     "                <div class=\"product-details\">\n" +
     "                    <h4 class=\"title\" ng-click=\"goToProduct($index, $event);\">{{product.title}}</h4>\n" +
-    "                    <p class=\"description\" ng-bind-html=\"product.description\"></p>\n" +
-    "                    <p class=\"price block\">${{product.price / 100 | number : 2}}</p>\n" +
+    "                    <p class=\"description ui raised segments\" ng-bind-html=\"product.description\"></p>\n" +
+    "\t\t\t\t\t<div class=\"price block ui statistic\">\n" +
+    "                        <div class=\"value\">\n" +
+    "                            <i class=\"ui dollar icon grey small\"></i> {{product.price / 100 | number : 2}}\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
     "                    <div class=\"buttons\">\n" +
-    "                        <button class=\"giftstart primary\" ng-click=\"startCampaignFrom($index);$event.stopPropagation();\">GiftStart it</button>\n" +
-    "                        <button class=\"giftstart green\" ng-click=\"saveForLater($index);$event.stopPropagation();\">Save for Later <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\"></button>\n" +
+    "\t\t\t\t<button ng-click=\"startCampaignFrom($index);$event.stopPropagation();\" target=\"_self\" class=\"giftstart primary ui huge fluid button icon primary\">\n" +
+    "                    <i class=\"gift icon\"></i>\n" +
+    "                    GiftStart It\n" +
+    "                </button>\n" +
+    "\t\t\t\t\t\t<button ng-click=\"saveForLater($index);$event.stopPropagation();\" class=\"giftstart ui icon medium fluid button vertical top small\">\n" +
+    "                        \t<i class=\"bookmark icon\"></i>\n" +
+    "                        \tSave for Later\n" +
+    "                        \t<img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
+    "                    \t</button>\n" +
     "                        <div class=\"product-message\" ng-show=\"product.selected\" ng-bind-html=\"productMessage\"></div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <button class=\"cancel\" ng-click=\"hideProductDetails();$event.stopPropagation();\">X</button>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"page-buttons\" ng-show=\"products.length > 10\" >\n" +
-    "            <a class=\"button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
+    "        <div class=\"page-buttons ui container vertical medium top bottom\" ng-show=\"products.length > 10\" >\n" +
+    "            <a class=\"ui button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"ui button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
     "        </div>\n" +
     "    </section>\n" +
     "    <!--p class=\"need-help-concierge\">Can't find the gift you want? Simply contact our <a href=\"/concierge\" ng-click=\"giftConciergeClicked()\">Gift Concierge</a> and we'll find it for you. Or visit our <a href=\"/giftideas\">Gift Ideas</a> page for more ideas.</p-->\n" +
@@ -12593,7 +12620,7 @@ function gsThanks() {
                         clearCreateData();
                         resetValidationErrors();
                     }).error(function (data) {
-                        alert("A severe error occurred; please try again? If it keeps happening, please contact the Gift Concierge with the following information: " + data);
+                        alert("A pretty bad error happened; can you please try again? If it keeps happening, please contact the Gift Concierge with the following information: " + data);
                         $scope.isSubmittingData = false;
                     });
                 } else {
@@ -15187,7 +15214,7 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
 	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
 
 		function fullContainer() {
-			return($location.path() === '/join') ? true : false;
+			return($location.path() === '/join' || $location.path() === '/create') ? true : false;
 		}
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;
@@ -15211,7 +15238,7 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
         ViewController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       function fullContainer() {
-			return($location.path() === '/join') ? true : false;
+			return($location.path() === '/join' || $location.path() === '/create') ? true : false;
 		}
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;

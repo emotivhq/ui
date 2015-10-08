@@ -35,13 +35,8 @@ div.wrapper.giftideas {
     margin: 25px auto; }
   div.wrapper.giftideas .clear {
     clear: both; }
-  div.wrapper.giftideas #product-search-anchor {
-    max-width: 800px;
-    width: 60%; }
-    div.wrapper.giftideas #product-search-anchor a {
-      color: black; }
-    div.wrapper.giftideas #product-search-anchor #categories-container {
-      width: 100%; }
+  div.wrapper.giftideas #product-search-anchor #categories-container {
+    width: 100%; }
   div.wrapper.giftideas #disclaimer {
     font-size: 10px;
     max-width: 550px;

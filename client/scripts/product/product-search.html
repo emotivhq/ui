@@ -89,8 +89,8 @@
         </div>
     </div>
 
-    <section id="search-products-section" class="products" ng-class="{hidden: products.length == 0}">
-        <div class="product-container" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
+    <section id="search-products-section" class="products ui main cards stackable two link" ng-class="{hidden: products.length == 0, segment: products.length > 0}" style="margin-top: 3em;">
+        <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
             <div class="product">
                 <div class="image-container">
                     <span class="vert-align-helper"></span>
@@ -98,19 +98,30 @@
                 </div>
                 <div class="product-details">
                     <h4 class="title" ng-click="goToProduct($index, $event);">{{product.title}}</h4>
-                    <p class="description" ng-bind-html="product.description"></p>
-                    <p class="price block">${{product.price / 100 | number : 2}}</p>
+                    <p class="description ui raised segments" ng-bind-html="product.description"></p>
+					<div class="price block ui statistic">
+                        <div class="value">
+                            <i class="ui dollar icon grey small"></i> {{product.price / 100 | number : 2}}
+                        </div>
+                    </div>
                     <div class="buttons">
-                        <button class="giftstart primary" ng-click="startCampaignFrom($index);$event.stopPropagation();">GiftStart it</button>
-                        <button class="giftstart green" ng-click="saveForLater($index);$event.stopPropagation();">Save for Later <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
+				<button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart primary ui huge fluid button icon primary">
+                    <i class="gift icon"></i>
+                    GiftStart It
+                </button>
+						<button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui icon medium fluid button vertical top small">
+                        	<i class="bookmark icon"></i>
+                        	Save for Later
+                        	<img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+                    	</button>
                         <div class="product-message" ng-show="product.selected" ng-bind-html="productMessage"></div>
                     </div>
                 </div>
                 <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
             </div>
         </div>
-        <div class="page-buttons" ng-show="products.length > 10" >
-            <a class="button linky" ng-click="decrementPage()">Previous</a><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><a class="button linky" ng-click="incrementPage()">Next</a>
+        <div class="page-buttons ui container vertical medium top bottom" ng-show="products.length > 10" >
+            <a class="ui button linky" ng-click="decrementPage()">Previous</a><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><a class="ui button linky" ng-click="incrementPage()">Next</a>
         </div>
     </section>
     <!--p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p-->

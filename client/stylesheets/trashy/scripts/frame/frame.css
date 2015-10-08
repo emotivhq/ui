@@ -137,13 +137,13 @@ button.white-border.disabled {
 
 button.cancel {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 11px;
+  right: -5px;
   background: transparent;
   color: #bbb;
   border: solid 0 black;
   font-family: Gotham, sans-serif;
-  font-size: 1.5em; }
+  font-size: 2em; }
 
 button.cancel:hover {
   color: #e44028; }

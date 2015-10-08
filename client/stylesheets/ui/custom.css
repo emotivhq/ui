@@ -157,7 +157,7 @@ div.rn-carousel-indicator span.active {color: #E44028;}
 }
 /* statistics */
  .ui.statistic>.value, .ui.statistics .statistic>.value {
-    font-size: 2.5rem;
+    font-size: 1.7rem;
 }
 /* angular wizard */
  .steps-indicator {

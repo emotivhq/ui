@@ -26,7 +26,7 @@
 	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
 
 		function fullContainer() {
-			return($location.path() === '/join') ? true : false;
+			return($location.path() === '/join' || $location.path() === '/create') ? true : false;
 		}
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;
@@ -50,7 +50,7 @@
         ViewController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
       function fullContainer() {
-			return($location.path() === '/join') ? true : false;
+			return($location.path() === '/join' || $location.path() === '/create') ? true : false;
 		}
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;

@@ -336,7 +336,7 @@
                         clearCreateData();
                         resetValidationErrors();
                     }).error(function (data) {
-                        alert("A severe error occurred; please try again? If it keeps happening, please contact the Gift Concierge with the following information: " + data);
+                        alert("A pretty bad error happened; can you please try again? If it keeps happening, please contact the Gift Concierge with the following information: " + data);
                         $scope.isSubmittingData = false;
                     });
                 } else {

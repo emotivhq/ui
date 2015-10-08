@@ -65,7 +65,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/reset/:resetCode',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/search/:searchTerm',
-        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/search/',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas',
