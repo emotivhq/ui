@@ -11,38 +11,55 @@ div.wrapper.giftideas {
   color: #555;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
+  color: #222; }
+  @media only screen and (max-width: 667px) {
+    div.wrapper.giftideas {
+      margin-left: 0px !important;
+      margin-top: 1em !important; } }
+  @media only screen and (max-width: 375px) and (orientation: portrait) {
+    div.wrapper.giftideas {
+      margin-left: 0px !important;
+      margin-top: 1em !important; } }
+
+.giftideas {
   /* Links */
   /* ==========================================================================
    * MEDIA QUERIES
    * ========================================================================== */
   /*ipad portrait */ }
-  div.wrapper.giftideas input, div.wrapper.giftideas select, div.wrapper.giftideas textarea {
-    color: #222; }
-  div.wrapper.giftideas .scrollbox {
+  @media only screen and (max-width: 667px) {
+    .giftideas .headerwrap {
+      margin: 1em auto 0 !important;
+      height: 350px !important; } }
+  @media only screen and (max-width: 375px) and (orientation: portrait) {
+    .giftideas .headerwrap {
+      margin: 1em auto 0 !important;
+      height: 350px !important; } }
+  .giftideas .scrollbox {
     overflow-y: auto;
     -webkit-line-clamp: 9;
     -webkit-box-orient: vertical;
     max-height: 19.8em;
     min-height: 19.8em; }
-  div.wrapper.giftideas .gsbuttons {
+  .giftideas .gsbuttons {
     padding-top: 10px; }
-    div.wrapper.giftideas .gsbuttons .loader {
+    .giftideas .gsbuttons .loader {
       height: 14px;
       width: 14px; }
-  div.wrapper.giftideas .centered {
+  .giftideas .centered {
     text-align: center; }
-  div.wrapper.giftideas .grid {
+  .giftideas .grid {
     margin: 25px auto; }
-  div.wrapper.giftideas .clear {
+  .giftideas .clear {
     clear: both; }
-  div.wrapper.giftideas #product-search-anchor #categories-container {
+  .giftideas #product-search-anchor #categories-container {
     width: 100%; }
-  div.wrapper.giftideas #disclaimer {
+  .giftideas #disclaimer {
     font-size: 10px;
     max-width: 550px;
     margin: 25px auto 0 auto;
     text-align: center !important; }
-  div.wrapper.giftideas a {
+  .giftideas a {
     color: #df484c;
     word-wrap: break-word;
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -50,24 +67,24 @@ div.wrapper.giftideas {
     -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
     -o-transition: color 0.1s ease-in, background 0.1s ease-in;
     transition: color 0.1s ease-in, background 0.1s ease-in; }
-    div.wrapper.giftideas a:hover, div.wrapper.giftideas a:focus {
+    .giftideas a:hover, .giftideas a:focus {
       color: #df484b;
       text-decoration: none;
       outline: 0; }
-    div.wrapper.giftideas a:before, div.wrapper.giftideas a:after {
+    .giftideas a:before, .giftideas a:after {
       -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
       -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
       -ms-transition: color 0.1s ease-in, background 0.1s ease-in;
       -o-transition: color 0.1s ease-in, background 0.1s ease-in;
       transition: color 0.1s ease-in, background 0.1s ease-in; }
   @media screen and (max-width: 1050px), screen and (max-device-width: 1050px) {
-    div.wrapper.giftideas body .header {
+    .giftideas body .header {
       background-attachment: scroll; } }
   @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
-    div.wrapper.giftideas .header {
+    .giftideas .header {
       background-attachment: scroll; } }
   @media screen and (max-width: 37.5em) {
-    div.wrapper.giftideas .scrollbox {
+    .giftideas .scrollbox {
       overflow-y: auto;
       -webkit-line-clamp: unset;
       -webkit-box-orient: unset;

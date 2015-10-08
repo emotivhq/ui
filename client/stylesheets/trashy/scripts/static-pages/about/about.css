@@ -20,6 +20,12 @@ iframe[name='google_conversion_frame'] {
     text-align: center;
     width: 100%;
     background-size: cover; }
+    @media only screen and (max-width: 667px) {
+      .static-pages .headerwrap {
+        margin: 1em auto 0 !important; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .static-pages .headerwrap {
+        margin: 1em auto 0 !important; } }
     .static-pages .headerwrap h1 {
       color: white;
       -webkit-font-smoothing: antialiased; }
@@ -96,7 +102,8 @@ iframe[name='google_conversion_frame'] {
         zoom: 1; }
 
 div.about .headerwrap {
-  background: url("/assets/about/img/about-bg.jpg") no-repeat center top; }
+  background: url("/assets/about/img/about-bg.jpg") no-repeat center top;
+  background-size: cover; }
 div.about .main {
   text-align: left; }
 div.about h2 {

@@ -882,12 +882,14 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/views/is/is.html',
     "<div class=\"howitworks static-pages\" ng-controller=\"HowItWorksController\">\n" +
     "  <div class=\"headerwrap\">\n" +
+    "  <div class=\"ui container\">\n" +
     "    <h1>Crowdfunding for Gifts</h1>\n" +
-    "    <h4>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</h4>\n" +
+    "    <h4>Gift and pay for <em>any</em> product or service <em>to</em> anyone <em>with</em> anyone.</h4>\n" +
     "    <a class=\"ui right labeled icon button purple huge\" href=\"/join\">\n" +
     "\t\tGet Started\n" +
     "\t\t<i class=\"add user icon\"></i>\n" +
     "\t  </a>\n" +
+    "   </div>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main ui middle aligned stackable grid container\">\n" +
@@ -1054,9 +1056,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"clear sub\">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered. <br /><br />Give a remarkable gift today.</p>\n" +
     "      </div>\n" +
     "      \n" +
-    "\t<div class=\"row ui container main full middle aligned center aligned grid\">\n" +
+    "\t  <div class=\"row ui middle aligned center aligned grid vertical top medium\">\n" +
     "        <div class=\"center aligned column\">\n" +
-    "          <a href=\"/giftideas\" class=\"ui huge button\" id=\"gifting-button\">Find Your Gift Idea</a>\n" +
+    "          <a href=\"/giftideas\" class=\"ui huge button fuild icon labeled\" id=\"gifting-button\">\n" +
+    "\t\t\t  <i class=\"gift icon left\"></i> \n" +
+    "\t\t\t  Discover Gift Ideas\n" +
+    "\t\t\t</a>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -1345,7 +1350,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/search/search.html',
-    "<div class=\"giftideas wrapper ui container main full\" ng-controller=\"GiftideasController\" style=\"margin-bottom: 0 !important;margin-top: 4em !important;\">\n" +
+    "<div class=\"giftideas wrapper ui container main full\" ng-controller=\"GiftideasController\">\n" +
     "    <div class=\"headerwrap\" name=\"home\" title=\"GiftStarter Team\" ng-show=\"!category\" style=\"margin-bottom: 0;padding-bottom: 40px;}\">\n" +
     "        <h1>Find The Perfect Gift</h1>\n" +
     "        <h4>It's that easy. What's on your mind?</h4>\n" +
@@ -3906,7 +3911,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<!--<div class=\"product-link wrapper\" ng-controller=\"ProductLinkController\">-->\n" +
     "<div id=\"product-search-anchor\" class=\"product-link ui container middle aligned center aligned\">\n" +
     "    <div class=\"search wrapper ui form huge\">\n" +
-    "        <div class=\"inputs ui inline field button huge\">\n" +
+    "        <div class=\"inputs ui inline field segment\">\n" +
     "            <input id=\"product-search-input\" class=\"text-input\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\"/>\n" +
     "\t\t\t<button id=\"product-search-button\" class=\"submit searchbtn ui button primary icon large\" ng-click=\"submit()\">\n" +
     "\t\t\t\t<i class=\"search icon\"></i>\n" +
@@ -4135,14 +4140,16 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/static-pages/about/about.html',
-    "<div class=\"about body static-pages\" ng-controller=\"AboutController\">\n" +
+    "<div class=\"about body static-pages wrapper ui container main full\" ng-controller=\"AboutController\">\n" +
     "  <div class=\"headerwrap\">\n" +
-    "    <h1>WHAT IS GIFTSTARTER?</h1>\n" +
-    "    <p>Our mission is to reinvent gifting by putting our hearts back into the giving experience. Give amazing gifts you're proud of, and your friends and loved ones are delighted to get. From a group or from yourself, we'll make it happen. It's that easy.</p>\n" +
+    "\t  <div class=\"ui container\">\n" +
+    "    <h1>What is GiftStarter?</h1>\n" +
+    "    <h4>Our mission is to reinvent gifting by putting our hearts back into the giving experience. Give amazing gifts you're proud of, and your friends and loved ones are delighted to get. From a group or from yourself, we'll make it happen. It's that easy.</h4>\n" +
+    "\t  </div>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main threeup\">\n" +
-    "    <h2>The Team</h2>\n" +
+    "    <h2 class=\"vertical bottom medium\">The Team</h2>\n" +
     "    <div class=\"member-item\">\n" +
     "      <img src=\"assets/about/img/arry.png\" alt=\"\" />\n" +
     "      <h3><b>Arry Yu</b></h3>\n" +
@@ -4150,43 +4157,61 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "\n" +
     "    <div class=\"member-item\">\n" +
-    "      <img src=\"assets/about/img/christie.png\" alt=\"\" />\n" +
-    "      <h3><b>Christie Gettler</b></h3>\n" +
-    "      <h4>Design/Cofounder</h4>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"member-item\">\n" +
-    "      <img src=\"assets/about/img/sharon.png\" alt=\"\" />\n" +
-    "      <h3><b>Sharon Kuo</b></h3>\n" +
-    "      <h4>Web Engineering</h4>\n" +
-    "    </div>\n" +
-    "\n" +
-    "    <div class=\"member-item\">\n" +
     "      <img src=\"assets/about/img/joel.png\" alt=\"\" />\n" +
     "      <h3><b>Joel Serino</b></h3>\n" +
-    "      <h4>Product Growth</h4>\n" +
+    "      <h4>Product</h4>\n" +
     "    </div>\n" +
     "\n" +
     "    <div class=\"member-item\">\n" +
     "      <img src=\"assets/about/img/tyler.png\" alt=\"\" />\n" +
     "      <h3><b>Tyler Goelz</b></h3>\n" +
-    "      <h4>UX Engineer</h4>\n" +
+    "      <h4>UX Engineering</h4>\n" +
     "    </div>\n" +
-    "  </div>\n" +
+    "\n" +
+    "\t<div class=\"member-item\">\n" +
+    "      <img src=\"/assets/noUserImage.png\" class=\"\" />\n" +
+    "      <h3><b>Valentine Gunko</b></h3>\n" +
+    "      <h4>Platform Engineering</h4>\n" +
+    "    </div>\n" +
+    "\n" +
+    "\t<div class=\"member-item\">\n" +
+    "      <img src=\"/assets/noUserImage.png\" class=\"\" />\n" +
+    "      <h3><b>Melissa Glidden</b></h3>\n" +
+    "      <h4>Community</h4>\n" +
+    "    </div>\n" +
+    "\n" +
+    "    <div class=\"member-item\">\n" +
+    "      <img src=\"assets/about/img/christie.png\" alt=\"\" />\n" +
+    "      <h3><b>Christie Gettler</b></h3>\n" +
+    "      <h4>Cofounder</h4>\n" +
+    "    </div>\t\n" +
+    "</div>\n" +
+    "\n" +
     "\n" +
     "  <div class=\"mission\">\n" +
-    "    <hr />\n" +
-    "    <h2>Our Mission</h2>\n" +
-    "    <p class=\"font\">To enable people to make meaningful connections with others using the power of gifts.<br />\n" +
-    "      <b>Want to send a gift to someone?</b><br /><a href=\"/giftideas\">You can with GiftStarter</a><br />\n" +
-    "      <b>Want to send a group gift to someone?</b><br /><a href=\"/giftideas\">You can with GiftStarter</a><br />\n" +
-    "      <b>Want to save up piece by piece for a gift?</b><br /><a href=\"/giftideas\">You can with GiftStarter</a><br />\n" +
-    "    Your time is valuable. Don't waste another second -- use GiftStarter for all of your gifting needs.</p>\n" +
-    "  </div>\n" +
+    "    <h2 class=\"ui segment vertical top bottom medium\">Our Mission</h2>\n" +
+    "\t  <div class=\"font ui class container vertical top medium segment middle aligned center grid centered\">\n" +
+    "\t\t  <div class=\"items divided\">\n" +
+    "\t\t\t  \n" +
+    "\t\t  \n" +
+    "    <p class=\"item\">\n" +
+    "\t\tTo enable people to make meaningful connections with others using the power of gifts.</p>\n" +
+    "      <ul class=\"item items\">\n" +
+    "\t  \t<li class=\"item\">Want to send a gift to someone?</li>\n" +
+    "      \t<li class=\"item\">Want to send a group gift to someone?</li>\n" +
+    "      \t<li class=\"item\">Want to save up piece by piece for a gift?</li>\n" +
+    "\t  </ul>\n" +
+    "\t\t\n" +
+    "\t<p class=\"item\">Your time is valuable. Use GiftStarter for all of your gifting and payment option needs.</p>\n" +
     "\n" +
+    "\t  \t\t<a href=\"/giftideas\" class=\"ui button fuild icon labeled\" id=\"gifting-button\">\n" +
+    "\t\t\t  <i class=\"gift icon left\"></i> \n" +
+    "\t\t\t  You can with GiftStarter\n" +
+    "\t\t</a>  \n" +
+    "\t  </div>\n" +
+    "</div>\n" +
     "  <div class=\"milestones\">\n" +
-    "    <hr />\n" +
-    "    <h2>Our Milestones</h2>\n" +
+    "    <h2 class=\"ui segment vertical top bottom medium\">Our Milestones</h2>\n" +
     "    <table>\n" +
     "      <tr>\n" +
     "        <td><b>March 2014</b></td>\n" +
@@ -4220,8 +4245,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  </div>\n" +
     "\n" +
     "  <div class=\"advisors threeup\">\n" +
-    "    <hr />\n" +
-    "    <h2>Our Advisors</h2>\n" +
+    "    <h2 class=\"ui segment vertical top bottom medium\">Our Advisors</h2>\n" +
     "\n" +
     "    <div class=\"member-item\">\n" +
     "      <img src=\"assets/about/img/barbary-brunner.png\" alt=\"\" />\n" +
@@ -4256,8 +4280,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  </div>\n" +
     "\n" +
     "  <div class=\"investors\">\n" +
-    "    <hr />\n" +
-    "    <h2>Our Investors</h2>\n" +
+    "    <h2 class=\"ui segment vertical top bottom medium\">Our Investors</h2>\n" +
     "    <div class=\"member-item\">\n" +
     "      <img src=\"assets/about/img/9mile-labs.png\" alt=\"\" />\n" +
     "      <h3><b>9Mile Labs</b></h3>\n" +
@@ -4308,18 +4331,30 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  </div>\n" +
     "\n" +
     "  <div id=\"contactus\" class=\"Contact\">\n" +
-    "    <hr />\n" +
-    "    <h2>Contact Us</h2>\n" +
-    "    <p class=\"font\">\n" +
-    "      <b>For Help:</b> email our Gift Concierge at <a href=\"mailto:giftconcierge@giftstarter.com\">giftconcierge@giftstarter.com</a><br /><b>For Press and Partners:</b> email <a href=\"mailto:partner@giftstarter.com\">partner@giftstarter.com</a><br/><br/>\n" +
+    "    <h2 class=\"ui segment vertical top bottom medium\">Contact Us</h2>\n" +
+    "    <div class=\"font ui class container vertical top medium segment middle aligned center grid centered \">\n" +
+    "      <p>\n" +
+    "\t\t  <a href=\"/giftconcierge\" class=\"ui button fuild icon labeled\" id=\"gifting-button\">\n" +
+    "\t\t\t  <i class=\"life ring icon right\"></i> \n" +
+    "\t\t\t  FOr Help: Email The Gift Concierge\n" +
+    "\t\t\t</a>\n" +
+    "\t\t<br/>\n" +
+    "\t  <b>For Press and Partners:</b> Email <a href=\"mailto:partner@giftstarter.com\">partner@giftstarter.com</a><br/><br/>\n" +
     "      Also, feel free to call us at 206-486-4849!<br/><br/>\n" +
-    "      GIFTSTARTER (also known as Emotiv Labs, Inc.)<br/>\n" +
+    "      Giftstarter (by Emotiv Labs, Inc.)<br/>\n" +
     "      3727 S. Alaska Street<br/>\n" +
     "      Suite #18284<br/>\n" +
-    "      Seattle, WA 98118\n" +
-    "    </p>\n" +
-    "    <a href=\"/giftideas\" alt=\"\" class=\"button\">START GIFTING</a>\n" +
+    "      Seattle, WA 98118</p>\n" +
+    "    </div>\n" +
     "  </div>\n" +
+    "\t  <div class=\"row ui middle aligned center aligned grid vertical top medium\">\n" +
+    "        <div class=\"center aligned column\">\n" +
+    "          <a href=\"/giftideas\" class=\"ui huge button fuild icon labeled secondary\" id=\"gifting-button\">\n" +
+    "\t\t\t  <i class=\"gift icon left\"></i> \n" +
+    "\t\t\t  Discover Gift Ideas\n" +
+    "\t\t\t</a>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
     "\n" +
     "</div>\n"
   );
@@ -4472,7 +4507,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/scripts/static-pages/giftideas/giftideas.html',
     "<div class=\"giftideas wrapper static-pages\" ng-controller=\"GiftideasController\">\n" +
-    "    <div class=\"headerwrap\" name=\"home\" title=\"GiftStarter Team\" ng-show=\"!category\">\n" +
+    "    <div class=\"headerwrap\" name=\"home\" title=\"Gift Ideas\" ng-show=\"!category\">\n" +
     "        <h1>Find The Perfect Gift</h1>\n" +
     "        <h4>It's that easy. What's on your mind?</h4>\n" +
     "    \t<gs-product-search></gs-product-search>\n" +

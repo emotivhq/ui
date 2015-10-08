@@ -20,6 +20,12 @@ iframe[name='google_conversion_frame'] {
     text-align: center;
     width: 100%;
     background-size: cover; }
+    @media only screen and (max-width: 667px) {
+      .static-pages .headerwrap {
+        margin: 1em auto 0 !important; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .static-pages .headerwrap {
+        margin: 1em auto 0 !important; } }
     .static-pages .headerwrap h1 {
       color: white;
       -webkit-font-smoothing: antialiased; }
@@ -111,13 +117,33 @@ iframe[name='google_conversion_frame'] {
   color: #333; }
   .howitworks .headerwrap {
     background: url("/assets/howitworks/how-it-works-hero.jpg") no-repeat center top; }
+    @media only screen and (max-width: 667px) {
+      .howitworks .headerwrap {
+        margin: 1em auto 0 !important; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .howitworks .headerwrap {
+        margin: 1em auto 0 !important; } }
   .howitworks .main {
     overflow: hidden; }
+    @media only screen and (max-width: 667px) {
+      .howitworks .main {
+        margin: 0em auto !important; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .howitworks .main {
+        margin: 0em auto !important; } }
   .howitworks .menu {
     border-spacing: 20px 0;
     display: block;
     margin: 0 auto;
     text-align: center; }
+    @media only screen and (max-width: 667px) {
+      .howitworks .menu {
+        padding-left: 0;
+        padding-right: 0; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .howitworks .menu {
+        padding-left: 0;
+        padding-right: 0; } }
     .howitworks .menu .menu-item {
       border-spacing: 0;
       display: inline-block;

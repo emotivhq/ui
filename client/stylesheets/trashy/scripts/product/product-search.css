@@ -28,9 +28,7 @@ gs-product-search div.product-link {
       -webkit-font-smoothing: antialiased; }
       @media screen and (max-width: 1030px) {
         gs-product-search div.product-link div.inputs input {
-          margin: 10px 10px 0 10px;
-          width: 90%;
-          max-width: 500px; } }
+          margin: inherit !important; } }
     gs-product-search div.product-link div.inputs button {
       margin: 10px 10px 10px 0; }
       @media screen and (max-width: 1030px) {

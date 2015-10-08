@@ -586,14 +586,14 @@ module.exports = function(grunt) {
     // Build tasks.
 	grunt.registerTask('default', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify', 'ui']); // Build the app ready to test
 	grunt.registerTask('build', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'cssmin', 'uglify', 'ui']); // Build the app ready to test
-	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat']);
+	grunt.registerTask('dev', ['remove', 'ngtemplates', 'trashy', 'sassy', 'concat', 'ui']);
 	grunt.registerTask('debug', ['remove', 'ngtemplates', 'trashy', 'sassy', 'jshint', 'jslint']); // Build with jshint, catch errors with jslint, fix, code better
 	grunt.registerTask('test', ['karma']);
 	
 	/** Include UI **/
 	// Build in the UI
-	grunt.registerTask('ui', ['clean:ui', 'copyto:ui', 'copy', 'customui', 'clean:semantic']);
-	grunt.registerTask('customui', ['clean:customui', 'sass:ui', 'concat:ui']);
+	grunt.registerTask('ui', ['clean:ui', 'copyto:ui', 'copy', 'customui', 'clean:semantic', 'cssmin']);
+	grunt.registerTask('customui', ['clean:customui', 'sass:ui', 'concat:ui', 'cssmin']);
 
 	/* 
 	 *** SASS tasks, I call it sassy *** 
