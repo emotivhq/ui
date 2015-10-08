@@ -29,7 +29,7 @@
 			return($location.path() === '/join') ? true : false;
 		}
 		function padHeader() {
-			return($location.path() === '/login') ? false : true;
+			return($location.path() === '/login') ? true : false;
 		}
 		$scope.fullContainer = isFull();
 		$scope.paddedContainer = padHeader();

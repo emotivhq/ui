@@ -3157,34 +3157,34 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  <div class=\"headerwrap\">\n" +
     "    <h1>Crowdfunding for Gifts</h1>\n" +
     "    <p>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</p>\n" +
-    "    <a class=\"button red\" target=\"_blank\" href=\"/concierge\">ASK A QUESTION</a>\n" +
+    "    <a class=\"button red\" target=\"_blank\" href=\"/concierge\">Ask A Question</a>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main\">\n" +
     "    <div class=\"menu\">\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'welcome'\" ng-class=\"{selected: sectionShown == 'welcome'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          WELCOME\n" +
+    "          Welcome\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'group-gifting'\" ng-class=\"{selected: sectionShown == 'group-gifting'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          GROUP GIFTING\n" +
+    "          Group Gifting\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'concierge'\" ng-class=\"{selected: sectionShown == 'concierge'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          GIFT CONCIERGE\n" +
+    "          Gift Concierge\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'search'\" ng-class=\"{selected: sectionShown == 'search'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          FIND A GIFT\n" +
+    "          Find A Gift\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'glossary'\" ng-class=\"{selected: sectionShown == 'glossary'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          GLOSSARY\n" +
+    "          Glossary\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -3239,14 +3239,14 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"sub\">GiftStarter has the tools to help you find those gifts you’re proud to give, and they’re happy to get.</p>\n" +
     "        <div class=\"search-item\">\n" +
     "          <div class=\"desc\">\n" +
-    "            <p>SEARCH</p>\n" +
+    "            <p>Search</p>\n" +
     "            <p>Use our search bar located at the top of the page and on the home page to search for products by name or brand. We source our gifts from reliable stores such as:</p>\n" +
     "          </div>\n" +
     "          <img src=\"/assets/howitworks/how-it-works-findagift-1.png\" />\n" +
     "        </div>\n" +
     "        <div class=\"search-item\">\n" +
     "          <div class=\"desc\">\n" +
-    "            <p>GIFT CONCIERGE</p>\n" +
+    "            <p>Gift Concierge</p>\n" +
     "            <p>Our Gift Concierge is like you personal shopping assistant who will help you find the perfect gift for the occassion - even if it’s not on our site!</p>\n" +
     "          </div>\n" +
     "          <div id=\"search-item-concierge\">\n" +
@@ -3255,7 +3255,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "        <div class=\"search-item\">\n" +
     "          <div class=\"desc\">\n" +
-    "            <p>GIFT IDEAS</p>\n" +
+    "            <p>Gift Ideas</p>\n" +
     "            <p>More of a browser when you shop? Our carefully curated gift ideas are a great place to see what new and exciting products there are to gift.</p>\n" +
     "          </div>\n" +
     "          <img src=\"/assets/howitworks/how-it-works-findagift-2.png\" />\n" +
@@ -3267,22 +3267,22 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"sub\">We'll get back to you same day if possible -- definitely within 24 hours.</p>\n" +
     "        <div class=\"concierge-table\">\n" +
     "          <div class=\"concierge-item\">\n" +
-    "            <p>EMAIL<br/><br/>\n" +
+    "            <p>Email<br/><br/>\n" +
     "              Send us an email at any time. The more information you include about your need, the more we can help!<br/><br/><br/>\n" +
     "              <a href=\"mailto:giftconcierge@giftstarter.com\">giftconcierge@giftstarter.com</a>\n" +
     "            </p>\n" +
     "          </div>\n" +
     "          <div class=\"concierge-item\">\n" +
-    "            <p>LIVE CHAT<br/><br/>\n" +
+    "            <p>Live Chat<br/><br/>\n" +
     "              You can access our live chat program in the bottom right corner of your browser.<br/><br/>\n" +
     "              <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">Don't see it?</a><br/><br/>\n" +
     "              *Live chat available during business hours (PST)\n" +
     "            </p>\n" +
     "          </div>\n" +
     "          <div class=\"concierge-item\">\n" +
-    "            <p>ONLINE FORM<br/><br/>\n" +
+    "            <p>Online Form<br/><br/>\n" +
     "              Fill out the quick form about your gifting need and we'll get on it ASAP!<br/><br/><br/>\n" +
-    "              <a href=\"/concierge\" class=\"button\">ONLINE FORM</a>\n" +
+    "              <a href=\"/concierge\" class=\"button\">Online Form</a>\n" +
     "            </p>\n" +
     "          </div>\n" +
     "        </div>\n" +
@@ -3294,29 +3294,29 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"sub\">Our patent-pending technology divides the price of the gift into perfect pieces, giving family and friends the ability to purchases as many or as few pieces as they wish! Any product available online can be gifted with GiftStarter, and we’re here to help every step of the way. From collecting the money to shipping the gift - and even creating a special card with your personal messages - we’ve got you covered!<br/></p>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-1.png\" />\n" +
-    "          <p class=\"center\"><strong>1</strong><br/>FIND A GIFT</p><p>Search from over 3 million products on our site. You can also discover our favorite gifts on our Gift Ideas page or contact our Gift Concierge for custom gifts.</p>\n" +
+    "          <p class=\"center\"><strong>1</strong><br/>Find A Gift</p><p>Search from over 3 million products on our site. You can also discover our favorite gifts on our Gift Ideas page or contact our Gift Concierge for custom gifts.</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-2.png\" />\n" +
-    "          <p class=\"center\"><strong>2</strong><br/>SELECT A GIFT</p><p>From the search results or Gift Ideas page, you can click on product images to view product information and details, and the “GiftStart it” button. Click this button to start your group gift!</p>\n" +
+    "          <p class=\"center\"><strong>2</strong><br/>Select A Gift</p><p>From the search results or Gift Ideas page, you can click on product images to view product information and details, and the “GiftStart it” button. Click this button to start your group gift!</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-3.png\" />\n" +
-    "          <p class=\"center\"><strong>3</strong><br/>ADJUST THE PIECES</p><p>Click the “+” to add pieces, thus lowering the price of each piece. Click the “-” button to remove pieces, and increase the price of each piece. Consider the size of the group you’ll invite; some people will buy 1 piece, some may buy more.</p>\n" +
+    "          <p class=\"center\"><strong>3</strong><br/>Adjust The Price</p><p>Click the “+” to add pieces, thus lowering the price of each piece. Click the “-” button to remove pieces, and increase the price of each piece. Consider the size of the group you’ll invite; some people will buy 1 piece, some may buy more.</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-4.png\" />\n" +
-    "          <p class=\"center\"><strong>4</strong><br/>YOUR GIFTING EVENT</p><p>Describe the reason for this gift. What’s the event? Who is it for? Why is this a good gift for this person and/or event?</p>\n" +
+    "          <p class=\"center\"><strong>4</strong><br/>Your Gifting Event</p><p>Describe the reason for this gift. What’s the event? Who is it for? Why is this a good gift for this person and/or event?</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-5.png\" />\n" +
-    "          <p class=\"center\"><strong>5</strong><br/>THE GIFT</p><p>Tell us where this gift needs to go and when you want it there and we’ll make it happen! <br />*Note standard shipping is always free with GiftStarter</p>\n" +
+    "          <p class=\"center\"><strong>5</strong><br/>The Gift</p><p>Tell us where this gift needs to go and when you want it there and we’ll make it happen! <br />*Note standard shipping is always free with GiftStarter</p>\n" +
     "        </div>\n" +
     "        <p class=\"clear sub\">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered. <br /><br />Give a remarkable gift today.</p>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"clear\">\n" +
-    "      <a href=\"/giftideas\" alt=\"\" class=\"button\" id=\"gifting-button\">START GIFTING</a>\n" +
+    "      <a href=\"/giftideas\" alt=\"\" class=\"button\" id=\"gifting-button\">Start Gifting</a>\n" +
     "    </div>\n" +
     "\n" +
     "    <hr />\n" +
@@ -3571,7 +3571,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/login/login.html',
-    "<div class=\"userlogin ui equal grid stackable centered center aligned\" ng-controller=\"LoginOrCreateController\" class=\"ui grid stackable\">\n" +
+    "<div class=\"userlogin ui equal grid stackable centered center aligned main pad\" ng-controller=\"LoginOrCreateController\" class=\"ui grid stackable\">\n" +
     "    <div class=\"userlogin__emaillogin login-block ui six wide column vertical small bottom\" ng-show=\"showCreate\">\n" +
     "        <ng-include src=\"'/views/login/login-form.html'\"></ng-include>\n" +
     "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
@@ -3830,139 +3830,144 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"head\">\n" +
     "            <div class=\"hero\">\n" +
     "                <div class=\"ui one cards\">\n" +
-    "\t\t\t\t\t<a class=\"red card\">\n" +
-    "\t\t\t\t\t\t<div class=\"image\">\n" +
-    "\t\t\t\t\t\t\t<img src=\"/assets/giftideas/category{{product.productImage}}\" alt=\"{{product.imageAltText}}\">\n" +
-    "\t\t\t\t\t\t</div>\n" +
-    "\t\t\t\t\t</a>\n" +
-    "\t\t\t\t</div>\n" +
+    "                    <a class=\"red card\">\n" +
+    "                        <div class=\"image\">\n" +
+    "                            <img src=\"/assets/giftideas/category{{product.productImage}}\" alt=\"{{product.imageAltText}}\">\n" +
+    "                        </div>\n" +
+    "                    </a>\n" +
+    "                </div>\n" +
     "            </div>\n" +
     "            <div class=\"titles\">\n" +
-    "\t\t\t\t<button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui huge button icon primary top attached\" ng-show=\"product.hasPrice\">\n" +
-    "\t\t\t\t\t\t<i class=\"gift icon\"></i>\n" +
-    "\t\t\t\t\t\tGift It\n" +
-    "\t\t\t\t</button>\n" +
+    "                <button ng-click=\"goToLink(product.giftStartLink)\" target=\"_self\" class=\"primary ui huge button icon primary top attached\" ng-show=\"product.hasPrice\">\n" +
+    "                    <i class=\"gift icon\"></i>\n" +
+    "                    Gift It\n" +
+    "                </button>\n" +
     "                <div class=\"scrollbox ui segment card attached\">\n" +
     "                    <div class=\"content\">\n" +
-    "\t\t\t\t\t\t<div class=\"header\"><span ng-bind-html=\"product.productName\"></span></div>\n" +
-    "                    \t<div class=\"meta\">${{product.productPrice}}</div>\n" +
-    "                    \t<div class=\"description\"><span ng-bind-html=\"product.productDescription\"></span></div>\n" +
-    "\t\t\t\t\t</div>\n" +
-    "                </div>\n" +
-    "                    <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">Contact The Gift Concierge</button>\n" +
-    "                    <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
-    "                        <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon small button bottom attached\" ng-show=\"product.hasPrice\">\n" +
-    "\t\t\t\t\t\t\t<i class=\"bookmark icon\"></i>\n" +
-    "\t\t\t\t\t\t\tSave for Later <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
-    "\t\t\t\t\t\t</button>\n" +
-    "                        <div class=\"product-message\" ng-bind-html=\"productMessage\"></div>\n" +
+    "                        <div class=\"header\"><span ng-bind-html=\"product.productName\"></span>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"meta\">${{product.productPrice}}</div>\n" +
+    "                        <div class=\"description\"><span ng-bind-html=\"product.productDescription\"></span>\n" +
+    "                        </div>\n" +
     "                    </div>\n" +
+    "                </div>\n" +
+    "                <button onclick=\"olark('api.box.expand')\" class=\"primary ui button\" ng-show=\"!product.hasPrice\">Contact The Gift Concierge</button>\n" +
+    "                <div ng-show=\"product.hasPrice\" class=\"saveforlater\">\n" +
+    "                    <button ng-click=\"saveGiftIdeaForLater(product);\" class=\"ui icon small button bottom attached\" ng-show=\"product.hasPrice\">\n" +
+    "                        <i class=\"bookmark icon\"></i>\n" +
+    "                        Save for Later\n" +
+    "                        <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
+    "                    </button>\n" +
+    "                    <div class=\"product-message\" ng-bind-html=\"productMessage\"></div>\n" +
+    "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
     "    <div ng-show=\"category\" class=\"products\">\n" +
-    "\t\t<div class=\"ui stackable four column grid\">\n" +
-    "\t\t<div class=\"eight wide column\">\n" +
-    "\t\t<h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
+    "        <div class=\"ui stackable four column grid\">\n" +
+    "            <div class=\"eight wide column\">\n" +
+    "                <h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
     "  \t\t\t<img class=\"ui circular image\" src=\"/assets/giftideas/category/{{category.categorySlug}}.jpg\" alt=\"{{category.categorySlug}}\" style=\"    display: block; margin: 0 auto .5rem;width: 57%;\">\n" +
     "\t\t</h2>\n" +
-    "\t\t</div>\n" +
-    "\t\t<div class=\"eight wide column\"  ng-show=\"!product\">\n" +
-    "\t\t<div class=\"ui piled segment padded center aligned secondary\">\n" +
-    "\t\t<h2 class=\"center aligned header\">\n" +
+    "            </div>\n" +
+    "            <div class=\"eight wide column\" ng-show=\"!product\">\n" +
+    "                <div class=\"ui piled segment padded center aligned secondary\">\n" +
+    "                    <h2 class=\"center aligned header\">\n" +
     "  \t\t\t{{category.categoryName}}\n" +
     "\t\t</h2>\n" +
-    "\t\t\t<span ng-bind-html=\"category.categoryBlurb\"></span>\n" +
-    "\t\t</div>\n" +
-    "\t\t</div>\n" +
-    "\t\t</div>\n" +
-    "\t\t<div class=\"clear\"></div>\n" +
+    "                    <span ng-bind-html=\"category.categoryBlurb\"></span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"clear\"></div>\n" +
     "        <div class=\"grid\">\n" +
     "            <div ng-repeat=\"group in groups\" class=\"group ui two stackable cards\" ng-class-odd=\"'left'\" ng-class-even=\"'right'\">\n" +
     "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='ui link card tile' title=\"{{product.productNameStripped}}\">\n" +
-    "\t\t\t\t\t<a href=\"{{categoryPath}}/{{product.productSlug}}\" class=\"image\">\n" +
-    "\t\t\t\t\t\t<img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" class=\"load\" />\n" +
-    "\t\t\t\t\t\t<div class=\"content\">\n" +
-    "\t\t\t\t\t\t\t<a class=\"header\" ng-bind-html=\"product.productNameShort\"></a>\n" +
-    "\t\t\t\t\t\t\t<div class=\"meta\">${{product.productPrice}}</div>\n" +
-    "\t\t\t\t\t\t</div>\n" +
-    "\t\t\t\t\t</a>\n" +
-    "\t\t\t\t</div>\n" +
+    "                    <a href=\"{{categoryPath}}/{{product.productSlug}}\" class=\"image\">\n" +
+    "                        <img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" class=\"load\" />\n" +
+    "                        <div class=\"content\">\n" +
+    "                            <a class=\"header\" ng-bind-html=\"product.productNameShort\"></a>\n" +
+    "                            <div class=\"meta\">${{product.productPrice}}</div>\n" +
+    "                        </div>\n" +
+    "                    </a>\n" +
+    "                </div>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
-    "<h1 class=\"vertical medium top bottom\">What’s popular</h1>\n" +
-    "<div class=\"categories ui three stackable link cards\">\n" +
+    "    <h1 class=\"vertical medium top bottom\">What’s popular</h1>\n" +
+    "    <div class=\"categories ui three stackable link cards\">\n" +
     "\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/music\">\n" +
-    "            <img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/music\">Music</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                Looking for the perfect gift for someone who has everything or loves the gift of music?\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"extra content\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/music\">\n" +
-    "                <i class=\"unhide icon\"></i> View Music\n" +
+    "        <div class=\"card\">\n" +
+    "            <a class=\"image\" href=\"/giftideas/music\">\n" +
+    "                <img src=\"/assets/giftideas/category/music.jpg\" alt=\"Music\" class=\"load\" />\n" +
     "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/luma\">\n" +
-    "            <img src=\"/assets/giftideas/category/luma-diamonds.jpg\" alt=\"Luma Diamonds\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/luma\">Luma Diamonds</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                With such a variety of beautiful pieces, there is sure to be one perfect for the deserving individual in your life. \n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"extra content\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/luma\">\n" +
-    "                <i class=\"unhide icon\"></i> View Luma\n" +
-    "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/kids\">\n" +
-    "            <img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/kids\">Kids</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                We've picked out some of the very best kid gifts that are sure to delight a little one in your life.\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"extra content\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/kids\">\n" +
-    "                <i class=\"unhide icon\"></i> View Kids\n" +
-    "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/home\">\n" +
-    "            <img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/home\">Home</a>\n" +
     "            <div class=\"content\">\n" +
-    "                These gift ideas will help to make any house feel more like a home!\n" +
+    "                <a class=\"header\" href=\"/giftideas/music\">Music</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    Looking for the perfect gift for someone who has everything or loves the gift of music?\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/music\">\n" +
+    "                    <i class=\"unhide icon\"></i> View Music\n" +
+    "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"extra content\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/home\">\n" +
-    "                <i class=\"unhide icon\"></i> View Home\n" +
+    "        <div class=\"card\">\n" +
+    "            <a class=\"image\" href=\"/giftideas/luma\">\n" +
+    "                <img src=\"/assets/giftideas/category/luma-diamonds.jpg\" alt=\"Luma Diamonds\" class=\"load\" />\n" +
     "            </a>\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/luma\">Luma Diamonds</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    With such a variety of beautiful pieces, there is sure to be one perfect for the deserving individual in your life.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/luma\">\n" +
+    "                    <i class=\"unhide icon\"></i> View Luma\n" +
+    "                </a>\n" +
+    "            </div>\n" +
     "        </div>\n" +
+    "        <div class=\"card\">\n" +
+    "            <a class=\"image\" href=\"/giftideas/kids\">\n" +
+    "                <img src=\"/assets/giftideas/category/kids.jpg\" alt=\"Kids\" class=\"load\" />\n" +
+    "            </a>\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/kids\">Kids</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    We've picked out some of the very best kid gifts that are sure to delight a little one in your life.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/kids\">\n" +
+    "                    <i class=\"unhide icon\"></i> View Kids\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"card\">\n" +
+    "            <a class=\"image\" href=\"/giftideas/home\">\n" +
+    "                <img src=\"/assets/giftideas/category/home.jpg\" alt=\"Home\" class=\"load\" />\n" +
+    "            </a>\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/home\">Home</a>\n" +
+    "                <div class=\"content\">\n" +
+    "                    These gift ideas will help to make any house feel more like a home!\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/home\">\n" +
+    "                    <i class=\"unhide icon\"></i> View Home\n" +
+    "                </a>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/cute\">\n" +
     "            <img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -3976,57 +3981,80 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <a class=\"center\" href=\"/giftideas/cute\">\n" +
     "                <i class=\"unhide icon\"></i> View Cute\n" +
     "            </a>\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/cute\">Cute</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    Know someone who absolutely loves cute things? This is the place for that kind of stuff.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content bottom button attached\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/cute\">\n" +
+    "                    <i class=\"view icon\"></i> View Cute\n" +
+    "                </a>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/baby\">\n" +
     "            <img src=\"/assets/giftideas/category/Baby.jpg\" alt=\"Baby\" class=\"load\" />\n" +
     "        </a>\n" +
     "        <div class=\"content\">\n" +
     "            <a class=\"header\" href=\"/giftideas/baby\">Baby</a>\n" +
     "            <div class=\"description\">\n" +
-    "                Hand picked and curated by moms all over for the best experience for both baby & mom. \n" +
+    "                Hand picked and curated by moms all over for the best experience for both baby & mom.\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"extra content bottom button attached\">\n" +
     "            <a class=\"center\" href=\"/giftideas/baby\">\n" +
     "                <i class=\"unhide icon\"></i> View Baby\n" +
     "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\t<div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/forher\">\n" +
-    "            <img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/forher\">For Her</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                Sisters. Grandmas. Moms. Aunts. Cousins. Friends. Colleagues. We have our own tastes, and here are some favorites.\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/baby\">Baby</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    Hand picked and curated by moms all over for the best experience for both baby & mom.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content bottom button attached\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/baby\">\n" +
+    "                    <i class=\"view icon\"></i> View Baby\n" +
+    "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"extra content bottom button attached\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/forher\">\n" +
-    "                <i class=\"unhide icon\"></i> View For Her\n" +
+    "        <div class=\"card\">\n" +
+    "            <a class=\"image\" href=\"/giftideas/forher\">\n" +
+    "                <img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" />\n" +
     "            </a>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "\t<div class=\"card\">\n" +
-    "        <a class=\"image\" href=\"/giftideas/forhim\">\n" +
-    "            <img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\" class=\"load\" />\n" +
-    "        </a>\n" +
-    "        <div class=\"content\">\n" +
-    "            <a class=\"header\" href=\"/giftideas/forhim\">For Him</a>\n" +
-    "            <div class=\"description\">\n" +
-    "                The best damm handcrafted gift list for guys.\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/forher\">For Her</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    Sisters. Grandmas. Moms. Aunts. Cousins. Friends. Colleagues. We have our own tastes, and here are some favorites.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content bottom button attached\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/forher\">\n" +
+    "                    <i class=\"unhide icon\"></i> View For Her\n" +
+    "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"extra content bottom button attached\">\n" +
-    "            <a class=\"center\" href=\"/giftideas/forhim\">\n" +
-    "                <i class=\"unhide icon\"></i> View Him\n" +
+    "        <div class=\"card\">\n" +
+    "            <a class=\"image\" href=\"/giftideas/forhim\">\n" +
+    "                <img src=\"/assets/giftideas/category/forHim.jpg\" alt=\"For Him\" class=\"load\" />\n" +
     "            </a>\n" +
+    "            <div class=\"content\">\n" +
+    "                <a class=\"header\" href=\"/giftideas/forhim\">For Him</a>\n" +
+    "                <div class=\"description\">\n" +
+    "                    The best damm handcrafted gift list for guys.\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"extra content bottom button attached\">\n" +
+    "                <a class=\"center\" href=\"/giftideas/forhim\">\n" +
+    "                    <i class=\"unhide icon\"></i> View Him\n" +
+    "                </a>\n" +
+    "            </div>\n" +
     "        </div>\n" +
+    "\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/cool\">\n" +
     "            <img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4042,7 +4070,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/office\">\n" +
     "            <img src=\"/assets/giftideas/category/office.jpg\" alt=\"Office\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4058,7 +4086,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/farewell\">\n" +
     "            <img src=\"/assets/giftideas/category/Farewell.jpg\" alt=\"Farewell\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4074,7 +4102,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/sympathy\">\n" +
     "            <img src=\"/assets/giftideas/category/sympathy.jpg\" alt=\"Sympathy\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4090,7 +4118,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/beauty\">\n" +
     "            <img src=\"/assets/giftideas/category/beauty.jpg\" alt=\"Beauty\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4106,7 +4134,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/wine\">\n" +
     "            <img src=\"/assets/giftideas/category/wine.jpg\" alt=\"Wine\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4122,7 +4150,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/butterlondon\">\n" +
     "            <img src=\"/assets/giftideas/category/butterLONDON.jpg\" alt=\"Butter LONDON\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4138,7 +4166,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/petlovers\">\n" +
     "            <img src=\"/assets/giftideas/category/pet-lovers.jpg\" alt=\"Pet Lovers\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4154,7 +4182,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/wedding\">\n" +
     "            <img src=\"/assets/giftideas/category/Wedding.jpg\" alt=\"Wedding\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4170,7 +4198,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/graduation\">\n" +
     "            <img src=\"/assets/giftideas/category/graduation.jpg\" alt=\"Graduation\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4186,7 +4214,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/red\">\n" +
     "            <img src=\"/assets/giftideas/category/red.jpg\" alt=\"Wear Red\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4202,7 +4230,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/patriots\">\n" +
     "            <img src=\"/assets/giftideas/category/Patriots.jpg\" alt=\"Patriots\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4218,7 +4246,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/seahawks\">\n" +
     "            <img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Seahawks\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4234,7 +4262,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/employee\">\n" +
     "            <img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Employee\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4250,7 +4278,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/boss\">\n" +
     "            <img src=\"/assets/giftideas/category/Boss.jpg\" alt=\"Boss\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4266,7 +4294,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/teacher\">\n" +
     "            <img src=\"/assets/giftideas/category/teacher.jpg\" alt=\"Teacher\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4282,7 +4310,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/electronics\">\n" +
     "            <img src=\"/assets/giftideas/category/electronics.jpg\" alt=\"Electronics\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4298,7 +4326,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/outdoors\">\n" +
     "            <img src=\"/assets/giftideas/category/outdoors.jpg\" alt=\"Outdoors\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4314,7 +4342,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/green\">\n" +
     "            <img src=\"/assets/giftideas/category/green.jpg\" alt=\"Green\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4330,7 +4358,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/military\">\n" +
     "            <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4346,7 +4374,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/military\">\n" +
     "            <img src=\"/assets/giftideas/category/Military.jpg\" alt=\"Military\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4362,7 +4390,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </a>\n" +
     "        </div>\n" +
     "    </div>\n" +
-    "\t<div class=\"card\">\n" +
+    "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/giftcard\">\n" +
     "            <img src=\"/assets/giftideas/category/giftcard.jpg\" alt=\"Gift Cards\" class=\"load\" />\n" +
     "        </a>\n" +
@@ -4380,7 +4408,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "\n" +
     "    <div class=\"clear\"></div>\n" +
-    "    </div>\n" +
+    "</div>\n" +
     "\n" +
     "</div>"
   );
@@ -4400,7 +4428,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"static-pages\">\n" +
     "  <div id=\"new-pillow\" class=\"headerwrap\">\n" +
     "\n" +
-    "    <h1>GIVE AN AMAZING GIFT</h1>\n" +
+    "    <h1>Give An Amazing Gift</h1>\n" +
     "    <img src=\"/assets/welcome.png\" class=\"welcome\"><h1 id=\"welcome-gters\">{{referredFrom}}</h1>\n" +
     "    <p>Give amazing gifts you're proud to give, and they're happy to get. From a group or from yourself, we'll help make it happen.</p>\n" +
     "\n" +
@@ -5500,7 +5528,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <h2>How it works</h2>\n" +
     "    <img src=\"/assets/whatisgiftstarter/howitworks1.png\" />\n" +
     "    <img src=\"/assets/whatisgiftstarter/howitworks2.png\" />\n" +
-    "    <p><span class=\"title\">IF YOU CAN BUY IT ONLINE, YOU CAN GIFT IT WITH GIFTSTARTER.</span> <span id=\"howitworks-paragraph\">When you set up your gift\n" +
+    "    <p><span class=\"title\">If you can buy it online, you can gift it with GiftStarter.</span> <span id=\"howitworks-paragraph\">When you set up your gift\n" +
     "    campaign, you can <strong>choose how many pieces</strong> will be in your grid. We <strong>break up the price of\n" +
     "    the product into pieces</strong>, so the more pieces you have, the cheaper each piece is! Once your gift\n" +
     "    campaign is set up, you <strong>invite your friends to buy pieces</strong> -- and your part is finished! Each\n" +
@@ -6622,16 +6650,16 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/scripts/static-pages/concierge/concierge.html',
     "<div class=\"concierge static-pages\" ng-controller=\"ConciergeController\">\n" +
     "  <div class=\"headerwrap\">\n" +
-    "    <h1>GIFT CONCIERGE IS STANDING BY</h1>\n" +
+    "    <h1>Gift Concierge Is Standing By</h1>\n" +
     "    <p>Need help coming up with ideas, finding a specific gift, or setting up your gift? Send any gift request and we can help.</p>\n" +
-    "    <a class=\"button red\" target=\"_blank\" href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">CONTACT NOW</a>\n" +
+    "    <a class=\"button red\" target=\"_blank\" href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">Contact Now</a>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main\">\n" +
     "    <h2>Give an Amazing Gift</h2>\n" +
     "    <div class=\"concierge-item intro\">\n" +
     "      <p>Give them a gift you're proud to give - and they're happy to get. By bringing people together with GiftStarter, you can give the gift they won't be able to stop talking about.<br /></p><blockquote>\"The best thing about the Gift Concierge is that someone will go out of their way to help you find the perfect gift and to craft the perfect experience. It is like recruiting a super hero that will make the impossible possible.\" - Thibault L.</blockquote><p>The Gift Concierge is here to help you make it happen. See all the ways the Gift Concierge can assist you.</p>\n" +
-    "      <a class=\"button\" href=\"/howitworks\">HOW IT WORKS</a>\n" +
+    "      <a class=\"button\" href=\"/howitworks\">How It Works</a>\n" +
     "    </div>\n" +
     "    <div class=\"concierge-item form\">\n" +
     "      <p>Fill out the form below and we'll get back to you the same day (if possible) or within 24 hours guaranteed.</p>\n" +
@@ -6642,7 +6670,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "          <input type=\"text\" name=\"url\" ng-model=\"url\" placeholder=\"URL to the gift you're thinking of\" /><br/>\n" +
     "          <input type=\"email\" name=\"email\" ng-model=\"email\" placeholder=\"Your email address (required)\" /><br/>\n" +
     "          <input type=\"text\" name=\"comments\" ng-model=\"comments\" placeholder=\"Additional comments\" /><br/>\n" +
-    "          <button type=\"submit\" class=\"button red\">SUBMIT</button>\n" +
+    "          <button type=\"submit\" class=\"button red\">Submit</button>\n" +
     "        </form>\n" +
     "      </div>\n" +
     "      <p>{{msg}}</p>\n" +
@@ -6698,7 +6726,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"giftideas wrapper static-pages\" ng-controller=\"GiftideasController\">\n" +
     "    <!-- ==== HEADERWRAP ==== -->\n" +
     "    <div class=\"headerwrap\" name=\"home\" title=\"GiftStarter Team\" ng-show=\"!category\">\n" +
-    "        <h1>FIND THE PERFECT GIFT</h1>\n" +
+    "        <h1>Find The Perfect Gift</h1>\n" +
     "        <p>It's that easy.  Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it... including a handmade card.</p>\n" +
     "    </div><!-- /headerwrap -->\n" +
     "\n" +
@@ -6721,36 +6749,36 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/scripts/static-pages/howitworks/howitworks.html',
     "<div class=\"howitworks static-pages\" ng-controller=\"HowItWorksController\">\n" +
     "  <div class=\"headerwrap\">\n" +
-    "    <h1>HOW IT WORKS</h1>\n" +
-    "    <p>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</p>\n" +
-    "    <a class=\"button red\" target=\"_blank\" href=\"/concierge\">ASK A QUESTION</a>\n" +
+    "    <h1>How It Works</h1>\n" +
+    "    <p>GiftStarter is the place to give and get meaningful gifts.<br />Gift and pay for ANY product or service TO anyone WITH anyone.</p>\n" +
+    "    <a class=\"button red\" target=\"_blank\" href=\"/concierge\">Ask A Question</a>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main\">\n" +
     "    <div class=\"menu\">\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'welcome'\" ng-class=\"{selected: sectionShown == 'welcome'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          WELCOME\n" +
+    "          Welcome\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'group-gifting'\" ng-class=\"{selected: sectionShown == 'group-gifting'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          GROUP GIFTING\n" +
+    "          Group Gifting\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'concierge'\" ng-class=\"{selected: sectionShown == 'concierge'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          GIFT CONCIERGE\n" +
+    "          Gift Concierge\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'search'\" ng-class=\"{selected: sectionShown == 'search'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          FIND A GIFT\n" +
+    "          Find A Gift\n" +
     "        </div>\n" +
     "      </div>\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'glossary'\" ng-class=\"{selected: sectionShown == 'glossary'}\">\n" +
     "        <div class=\"menu-item\">\n" +
-    "          GLOSSARY\n" +
+    "          Glossary\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -6805,14 +6833,14 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"sub\">GiftStarter has the tools to help you find those gifts you’re proud to give, and they’re happy to get.</p>\n" +
     "        <div class=\"search-item\">\n" +
     "          <div class=\"desc\">\n" +
-    "            <p>SEARCH</p>\n" +
+    "            <p>Search</p>\n" +
     "            <p>Use our search bar located at the top of the page and on the home page to search for products by name or brand. We source our gifts from reliable stores such as:</p>\n" +
     "          </div>\n" +
     "          <img src=\"/assets/howitworks/how-it-works-findagift-1.png\" />\n" +
     "        </div>\n" +
     "        <div class=\"search-item\">\n" +
     "          <div class=\"desc\">\n" +
-    "            <p>GIFT CONCIERGE</p>\n" +
+    "            <p>Gift Concierge</p>\n" +
     "            <p>Our Gift Concierge is like you personal shopping assistant who will help you find the perfect gift for the occassion - even if it’s not on our site!</p>\n" +
     "          </div>\n" +
     "          <div id=\"search-item-concierge\">\n" +
@@ -6821,7 +6849,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "        <div class=\"search-item\">\n" +
     "          <div class=\"desc\">\n" +
-    "            <p>GIFT IDEAS</p>\n" +
+    "            <p>Gift Ideas</p>\n" +
     "            <p>More of a browser when you shop? Our carefully curated gift ideas are a great place to see what new and exciting products there are to gift.</p>\n" +
     "          </div>\n" +
     "          <img src=\"/assets/howitworks/how-it-works-findagift-2.png\" />\n" +
@@ -6833,22 +6861,22 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"sub\">We'll get back to you same day if possible -- definitely within 24 hours.</p>\n" +
     "        <div class=\"concierge-table\">\n" +
     "          <div class=\"concierge-item\">\n" +
-    "            <p>EMAIL<br/><br/>\n" +
+    "            <p>Email<br/><br/>\n" +
     "              Send us an email at any time. The more information you include about your need, the more we can help!<br/><br/><br/>\n" +
     "              <a href=\"mailto:giftconcierge@giftstarter.com\">giftconcierge@giftstarter.com</a>\n" +
     "            </p>\n" +
     "          </div>\n" +
     "          <div class=\"concierge-item\">\n" +
-    "            <p>LIVE CHAT<br/><br/>\n" +
+    "            <p>Live Chat<br/><br/>\n" +
     "              You can access our live chat program in the bottom right corner of your browser.<br/><br/>\n" +
     "              <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">Don't see it?</a><br/><br/>\n" +
     "              *Live chat available during business hours (PST)\n" +
     "            </p>\n" +
     "          </div>\n" +
     "          <div class=\"concierge-item\">\n" +
-    "            <p>ONLINE FORM<br/><br/>\n" +
+    "            <p>Online Form<br/><br/>\n" +
     "              Fill out the quick form about your gifting need and we'll get on it ASAP!<br/><br/><br/>\n" +
-    "              <a href=\"/concierge\" class=\"button\">ONLINE FORM</a>\n" +
+    "              <a href=\"/concierge\" class=\"button\">Online Form</a>\n" +
     "            </p>\n" +
     "          </div>\n" +
     "        </div>\n" +
@@ -6860,29 +6888,29 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <p class=\"sub\">Our patent-pending technology divides the price of the gift into perfect pieces, giving family and friends the ability to purchases as many or as few pieces as they wish! Any product available online can be gifted with GiftStarter, and we’re here to help every step of the way. From collecting the money to shipping the gift - and even creating a special card with your personal messages - we’ve got you covered!<br/></p>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-1.png\" />\n" +
-    "          <p class=\"center\"><strong>1</strong><br/>FIND A GIFT</p><p>Search from over 3 million products on our site. You can also discover our favorite gifts on our Gift Ideas page or contact our Gift Concierge for custom gifts.</p>\n" +
+    "          <p class=\"center\"><strong>1</strong><br/>Find A Gift</p><p>Search from over 3 million products on our site. You can also discover our favorite gifts on our Gift Ideas page or contact our Gift Concierge for custom gifts.</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-2.png\" />\n" +
-    "          <p class=\"center\"><strong>2</strong><br/>SELECT A GIFT</p><p>From the search results or Gift Ideas page, you can click on product images to view product information and details, and the “GiftStart it” button. Click this button to start your group gift!</p>\n" +
+    "          <p class=\"center\"><strong>2</strong><br/>Select A Gift</p><p>From the search results or Gift Ideas page, you can click on product images to view product information and details, and the “GiftStart it” button. Click this button to start your group gift!</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-3.png\" />\n" +
-    "          <p class=\"center\"><strong>3</strong><br/>ADJUST THE PIECES</p><p>Click the “+” to add pieces, thus lowering the price of each piece. Click the “-” button to remove pieces, and increase the price of each piece. Consider the size of the group you’ll invite; some people will buy 1 piece, some may buy more.</p>\n" +
+    "          <p class=\"center\"><strong>3</strong><br/>Adjust The Pieces</p><p>Click the “+” to add pieces, thus lowering the price of each piece. Click the “-” button to remove pieces, and increase the price of each piece. Consider the size of the group you’ll invite; some people will buy 1 piece, some may buy more.</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-4.png\" />\n" +
-    "          <p class=\"center\"><strong>4</strong><br/>YOUR GIFTING EVENT</p><p>Describe the reason for this gift. What’s the event? Who is it for? Why is this a good gift for this person and/or event?</p>\n" +
+    "          <p class=\"center\"><strong>4</strong><br/>Your Gifting Event</p><p>Describe the reason for this gift. What’s the event? Who is it for? Why is this a good gift for this person and/or event?</p>\n" +
     "        </div>\n" +
     "        <div class=\"group-item\">\n" +
     "          <img src=\"/assets/howitworks/how-it-works-groupgift-5.png\" />\n" +
-    "          <p class=\"center\"><strong>5</strong><br/>THE GIFT</p><p>Tell us where this gift needs to go and when you want it there and we’ll make it happen! <br />*Note standard shipping is always free with GiftStarter</p>\n" +
+    "          <p class=\"center\"><strong>5</strong><br/>The Gift</p><p>Tell us where this gift needs to go and when you want it there and we’ll make it happen! <br />*Note standard shipping is always free with GiftStarter</p>\n" +
     "        </div>\n" +
     "        <p class=\"clear sub\">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered. <br /><br />Give a remarkable gift today.</p>\n" +
     "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"clear\">\n" +
-    "      <a href=\"/giftideas\" alt=\"\" class=\"button\" id=\"gifting-button\">START GIFTING</a>\n" +
+    "      <a href=\"/giftideas\" alt=\"\" class=\"button\" id=\"gifting-button\">Start Gifting</a>\n" +
     "    </div>\n" +
     "\n" +
     "    <hr />\n" +
@@ -11592,26 +11620,18 @@ function GiftStartService($http,  $location,  UserService,  $rootScope,
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
-
 GiftStarterApp.controller('GiftStartController', [
-            '$scope','$rootScope','GiftStartService','$location','$interval', '$timeout',
-            'FacebookService','TwitterService','GooglePlusService','Analytics',
-            'ProductService', 'UserService', 'AppStateService', '$window', '$document', '$http', 'PopoverService','LocalStorage',
+            '$scope', '$rootScope', 'GiftStartService', '$location', '$interval', '$timeout',
+            'FacebookService', 'TwitterService', 'GooglePlusService', 'Analytics',
+            'ProductService', 'UserService', 'AppStateService', '$window', '$document', '$http', 'PopoverService', 'LocalStorage',
     GiftStartController]);
 
-function GiftStartController($scope, $rootScope, GiftStartService,  $location,  $interval, $timeout,
-         FacebookService,  TwitterService,  GooglePlusService,  Analytics,
-         ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
-
+function GiftStartController($scope, $rootScope, GiftStartService, $location, $interval, $timeout, FacebookService, TwitterService, GooglePlusService, Analytics, ProductService, UserService, AppStateService, $window, $document, $http, PopoverService, LocalStorage) {
     //alert('TBD: functionality and left-hand side (see Screen Shot 2015-05-29 at 11.14.12 PM')
-
     Analytics.track('campaign', 'controller created');
-
     $scope.giftStart = GiftStartService.giftStart;
     $scope.pitchIns = [];
-
     $scope.secondsLeft = 0;
-
     $scope.newTitle = $scope.giftStart.title;
     $scope.newDescription = $scope.giftStart.description;
     $scope.editingTitle = false;
@@ -11619,7 +11639,6 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
     $scope.pitchInsInitialized = false;
     $scope.pitchinButtonHoverMessage = 'Click on some grid pieces first!';
-
     $scope.isMobile = device.mobile();
     $scope.newUser = !UserService.hasPitchedIn;
     $scope.loggedIn = UserService.loggedIn;
@@ -11627,130 +11646,117 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     $scope.picEdit = false;
     $scope.picUploading = false;
     var currentComment;
-
     $scope.userId = UserService.uid;
-    $scope.commentEditing = [];     //keeping as array for one day when we can upload multiple images
+    $scope.commentEditing = []; //keeping as array for one day when we can upload multiple images
     var imageData, commentName, commentImg, commentTxt;
-
     $scope.productMessage = '';
-
     $scope.isSavingForLater = false;
-
     $scope.showLoginBox = false;
     $scope.showPayBox = false;
     $scope.showSignBox = false;
     $scope.showShareBox = false;
-
     $scope.showShare = UserService.loggedIn && $location.hash() == "share-panel";
-
 
     function imageUpdated(data) {
         imageData = data;
     }
-
-    $scope.showSharePanel = function(show) {
-            $scope.showShareBox = false;
-            $scope.showShare = show;
+    $scope.showSharePanel = function (show) {
+        $scope.showShareBox = false;
+        $scope.showShare = show;
     };
-
-    $scope.editingComment = function(comment, editing) {
-        if (editing) {                      //edit mode on
+    $scope.editingComment = function (comment, editing) {
+        if(editing) { //edit mode on
             $scope.commentEditing.push(comment);
             commentName = comment.name;
             commentTxt = comment.note;
             commentImg = comment.img;
             currentComment = comment;
-        } else if (!editing) {              //saving edit
+        } else if(!editing) { //saving edit
             $scope.picEdit = false;
             $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
             GiftStartService.updateComment(comment);
             currentComment = null;
         }
     };
-
-    $scope.cancelEditComment = function(comment) {
+    $scope.cancelEditComment = function (comment) {
         $scope.commentEditing.splice($scope.commentEditing.indexOf(comment), 1);
         comment.name = commentName;
         comment.note = commentTxt;
         comment.img = commentImg;
         $scope.picEdit = false;
     };
-
-    $scope.isEditing = function(comment) {
+    $scope.isEditing = function (comment) {
         return $scope.commentEditing.indexOf(comment) != -1;
     };
-
-    $scope.picSubmit = function() {
+    $scope.picSubmit = function () {
         $scope.picUploading = true;
-        if (imageData) {
+        if(imageData) {
             currentComment.img = imageData;
-            GiftStartService.updateCommentImage(currentComment, imageData)
-                .success(function(response) {
-                    console&&console.log&&console.log("pitchin image changed");
-                    Analytics.track('campaign', 'pitchin image update succeeded');
-                    currentComment.img = response;
-                    $rootScope.$broadcast('pitchin-image-changed', response);
-                    $scope.picUploading = false;
-                    imageData = null;
-                    var data = {payment: currentComment, action: 'pitch-in-img-update',
-                    uid: currentComment.uid, imgurl: currentComment.img};
-                    $http({method: 'POST', url: '/pay', data: data});
-                })
-                .error(function() {
-                    Analytics.track('campaign', 'pitchin image update failed');
-                    $scope.picUploading = false;
-                    imageData = null;
+            GiftStartService.updateCommentImage(currentComment, imageData).success(function (response) {
+                console && console.log && console.log("pitchin image changed");
+                Analytics.track('campaign', 'pitchin image update succeeded');
+                currentComment.img = response;
+                $rootScope.$broadcast('pitchin-image-changed', response);
+                $scope.picUploading = false;
+                imageData = null;
+                var data = {
+                    payment: currentComment,
+                    action: 'pitch-in-img-update',
+                    uid: currentComment.uid,
+                    imgurl: currentComment.img
+                };
+                $http({
+                    method: 'POST',
+                    url: '/pay',
+                    data: data
                 });
+            }).error(function () {
+                Analytics.track('campaign', 'pitchin image update failed');
+                $scope.picUploading = false;
+                imageData = null;
+            });
         }
         $scope.picEdit = false;
     };
-
-    $scope.setPicEdit = function(edit) {
+    $scope.setPicEdit = function (edit) {
         $scope.picEdit = edit;
     };
-
-    $scope.getTileCost = function() {
+    $scope.getTileCost = function () {
         return Math.floor($scope.giftStart.total_price / ($scope.giftStart.rows * $scope.giftStart.columns));
     };
-
-    $rootScope.$on('paybox-hidden', function() {
+    $rootScope.$on('paybox-hidden', function () {
         $scope.showPayBox = false;
         $scope.showSignBox = true;
     });
-
-    $rootScope.$on('paybox-hidden-cancel', function() {
+    $rootScope.$on('paybox-hidden-cancel', function () {
         $scope.showPayBox = false;
     });
-
-    $rootScope.$on('signbox-hidden', function() {
+    $rootScope.$on('signbox-hidden', function () {
         $scope.showSignBox = false;
         $scope.showShare = false;
         $scope.showShareBox = true;
     });
-
     $scope.shareBox = function (show) {
         $scope.showShareBox = show;
     };
-
-    if ($scope.giftStart.gc_name) {
+    if($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;
     } else {
         $scope.newGcName = UserService.name;
     }
-
     // Remove old giftstart scheme if present (it messes up login)
-    if ($location.search()['gs-id']) {
+    if($location.search()['gs-id']) {
         $location.search('gs-id', null);
     }
-
     $scope.mailSubject = encodeURIComponent("Join us on a gift together");
-    $scope.mailBody= function() {
+    $scope.mailBody = function () {
         $location.search('re', btoa(JSON.stringify({
             type: 'consumer',
             uid: UserService.uid,
             channel: 'email',
             uuid: 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             })
         })));
@@ -11758,85 +11764,75 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         $location.search('re', null);
         return url;
     };
-
     // Check if we should fetch a giftstart
     if($location.path().length > 11) {
-        if (GiftStartService.giftStart.gsid == undefined) {
+        if(GiftStartService.giftStart.gsid == undefined) {
             var url_title = $location.path().split('/')[2];
             GiftStartService.fetchGiftStart(url_title);
         }
     }
-
-    $scope.fundingBarProgress = function() {
-        return (GiftStartService.giftStart.funded /
-            GiftStartService.giftStart.total_price * 100).toString() + '%';
+    $scope.fundingBarProgress = function () {
+        return(GiftStartService.giftStart.funded / GiftStartService.giftStart.total_price * 100).toString() + '%';
     };
-
-    $scope.pitchinBarProgress = function() {
-        return ((GiftStartService.giftStart.funded +
-            GiftStartService.giftStart.totalSelection) /
-            GiftStartService.giftStart.total_price * 100).toString() + '%';
+    $scope.pitchinBarProgress = function () {
+        return((GiftStartService.giftStart.funded + GiftStartService.giftStart.totalSelection) / GiftStartService.giftStart.total_price * 100).toString() + '%';
     };
-
-    $document.bind('keyup keydown', function(event) {
+    $document.bind('keyup keydown', function (event) {
         if(event.ctrlKey && event.keyCode === 80) {
             window.open('/pdfify?page=' + $location.path().slice(1) + '/print');
             event.preventDefault();
             return false;
         }
     });
-
-    $scope.$on('pitch-ins-initialized', function() {
+    $scope.$on('pitch-ins-initialized', function () {
         $scope.pitchInsInitialized = true;
     });
-
-    $scope.$on('note-saved', function() {
+    $scope.$on('note-saved', function () {
         $scope.pitchIns.shift();
         $scope.pitchIns.unshift(GiftStartService.newPitchIn);
     });
-
-    $scope.$on('pitch-ins-updated', function() {
-    $http({
-        method: 'POST',
-        url: '/pay',
-        data: {action: 'get-pitch-ins', gsid: $scope.giftStart.gsid}
-    })
-        .success( function (pitchIns) {
+    $scope.$on('pitch-ins-updated', function () {
+        $http({
+            method: 'POST',
+            url: '/pay',
+            data: {
+                action: 'get-pitch-ins',
+                gsid: $scope.giftStart.gsid
+            }
+        }).success(function (pitchIns) {
             var currentPids = [];
-            angular.forEach($scope.pitchIns, function(pitchIn) {
+            angular.forEach($scope.pitchIns, function (pitchIn) {
                 currentPids.unshift(pitchIn.parts.join('_'));
             });
-            angular.forEach(pitchIns, function(pitchIn) {
-                if(currentPids.indexOf(pitchIn.parts.join('_'))<0) {
-                  $scope.pitchIns.unshift(pitchIn);
+            angular.forEach(pitchIns, function (pitchIn) {
+                if(currentPids.indexOf(pitchIn.parts.join('_')) < 0) {
+                    $scope.pitchIns.unshift(pitchIn);
                 }
             });
             //if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
             //    $scope.pitchIns.unshift(pitchIn);
             //}
-        //});
-        //    angular.forEach(pitchIns, function(pitchIn) {
-        //    if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
-        //        this.unshift(pitchIn);
-        //    }
-        //}, $scope.pitchIns);
+            //});
+            //    angular.forEach(pitchIns, function(pitchIn) {
+            //    if ($scope.pitchIns.length < pitchIns.length && pitchIn.gsid === $scope.giftStart.gsid) {
+            //        this.unshift(pitchIn);
+            //    }
+            //}, $scope.pitchIns);
+        }).error(function () {
+            console && console.log && console.log("Failed to contact part sync.")
         })
-        .error(function() {console && console.log && console.log("Failed to contact part sync.")})
     });
-
-    $scope.$on('selection-changed', function() {
-        if (GiftStartService.giftStart.totalSelection > 0) {
+    $scope.$on('selection-changed', function () {
+        if(GiftStartService.giftStart.totalSelection > 0) {
             $scope.pitchinButtonHoverMessage = '';
         } else {
             $scope.pitchinButtonHoverMessage = 'Click on some parts first!';
         }
     });
-
     var syncPitchInsTimerIsFast = true;
-
-    var syncPitchInsTimer = $interval(function(){
+    var syncPitchInsTimer = $interval(function () {
         GiftStartService.syncPitchIns("GiftStartService");
-        if (syncPitchInsTimerIsFast && ($scope.secondsLeft <= 0 || $scope.campaignComplete())) {
+        if(syncPitchInsTimerIsFast && ($scope.secondsLeft <= 0 || $scope.campaignComplete())) {
             $interval.cancel(syncPitchInsTimer);
             syncPitchInsTimerIsFast = false;
             syncPitchInsTimer = $interval(function () {
@@ -11844,19 +11840,18 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             }, 60000, false);
         }
     }, 1000, false);
-
     // Synchronize parts on mouse activity
-    $scope.mouseActivityCallback = function(source) {
+    $scope.mouseActivityCallback = function (source) {
         GiftStartService.syncPitchIns(source);
     };
-    $scope.pitchInHoverCallback = function() {
-        GiftStartService.syncPitchIns('pitch-in-hover')};
-
-    $scope.pitchIn = function() {
+    $scope.pitchInHoverCallback = function () {
+        GiftStartService.syncPitchIns('pitch-in-hover')
+    };
+    $scope.pitchIn = function () {
         // Ensure they have selected more than $0 of the gift to pitch in
-        if (GiftStartService.giftStart.totalSelection > 0) {
+        if(GiftStartService.giftStart.totalSelection > 0) {
             Analytics.track('pitchin', 'pitchin button clicked');
-            if (UserService.loggedIn) {
+            if(UserService.loggedIn) {
                 AppStateService.set('contributeLogin', false);
                 //PopoverService.setPopover('pay');
                 $scope.showPayBox = true;
@@ -11868,31 +11863,28 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
                 $rootScope.$broadcast('loginbox-show-login');
                 $scope.showLoginBox = true;
             }
-        } else {console && console.log && console.log("Nothing selected!")}
+        } else {
+            console && console.log && console.log("Nothing selected!")
+        }
     };
 
     function restartPitchin() {
-        if (AppStateService.get('contributeLogin')) {
+        if(AppStateService.get('contributeLogin')) {
             AppStateService.remove('contributeLogin');
             $scope.pitchIn();
         }
     }
-
-    $scope.campaignComplete = function() {
-        return (GiftStartService.giftStart.funded /
-            GiftStartService.giftStart.total_price > 0.9975);
+    $scope.campaignComplete = function () {
+        return(GiftStartService.giftStart.funded / GiftStartService.giftStart.total_price > 0.9975);
     };
-
-    $scope.updateSecondsLeft = function() {
-        if (($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
+    $scope.updateSecondsLeft = function () {
+        if(($scope.secondsLeft < 0) || ($scope.campaignComplete())) {
             $scope.countdown = "Campaign Complete";
             GiftStartService.disableParts();
         } else {
             $scope.secondsLeft -= 1;
-
             var days = Math.floor($scope.secondsLeft / 86400).toFixed(0);
             var hours = Math.floor(($scope.secondsLeft / 3600) % 24).toFixed(0);
-
             $scope.countdown = days + " days, " + hours + " hours";
         }
     };
@@ -11900,27 +11892,19 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
     function startSecondsLeftTimer() {
         $scope.secondsLeftTimer = $interval($scope.updateSecondsLeft, 1000);
     }
+
     function stopSecondsLeftTime() {
         $scope.secondsLeftTimer.cancel();
         $scope.secondsLeftTimer = null;
     }
-
-    $scope.saveProdForLater = function() {
+    $scope.saveProdForLater = function () {
         $scope.isSavingForLater = true;
-        var saver = ProductService.saveForLater(
-            'GiftStartService',
-            GiftStartService.giftStart.product_url,
-            GiftStartService.giftStart.price,
-            GiftStartService.giftStart.product_title,
-            '',
-            GiftStartService.giftStart.product_img_url
-        );
+        var saver = ProductService.saveForLater('GiftStartService', GiftStartService.giftStart.product_url, GiftStartService.giftStart.price, GiftStartService.giftStart.product_title, '', GiftStartService.giftStart.product_img_url);
         if(saver) {
             saver.success(function (response) {
-                $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>."
+                $scope.productMessage = "The gift has been saved to your <a href='/users/" + UserService.uid + "'>profile</a>."
                 $scope.isSavingForLater = false;
-            })
-            .error(function (response) {
+            }).error(function (response) {
                 $scope.productMessage = "An error occurred while saving the product: " + response['error'];
                 $scope.isSavingForLater = false;
             });
@@ -11928,154 +11912,132 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
             $scope.isSavingForLater = false;
         }
     };
-
     var colorMap = [];
-
-    $scope.randomColor = function(index) {
-        if (colorMap[index] == null) {
+    $scope.randomColor = function (index) {
+        if(colorMap[index] == null) {
             var colors = ["red", "green", "orange", "teal"];
             colorMap[index] = colors[Math.floor(Math.random() * colors.length)];
         }
         return colorMap[index];
     };
-
-    $scope.campaignUrl = function() {
+    $scope.campaignUrl = function () {
         if($location.path().length > 11) {
-            return "http://giftstart.it/g/" + $location.path().slice(11);//$location.absUrl().split(/[#\?]/)[0];
+            return "http://giftstart.it/g/" + $location.path().slice(11); //$location.absUrl().split(/[#\?]/)[0];
         } else {
             return "";
         }
     };
-
-    $scope.giftstartThisUrl = function() {
+    $scope.giftstartThisUrl = function () {
         return '/create?' + urlSerialize({
-                product_url: GiftStartService.giftStart.product_url,
-                title: GiftStartService.giftStart.product_title,
-                price: GiftStartService.giftStart.price,
-                img_url: GiftStartService.giftStart.product_img_url,
-                source: 'GiftStarter'
-            });
+            product_url: GiftStartService.giftStart.product_url,
+            title: GiftStartService.giftStart.product_title,
+            price: GiftStartService.giftStart.price,
+            img_url: GiftStartService.giftStart.product_img_url,
+            source: 'GiftStarter'
+        });
     };
-
-    var urlSerialize = function(obj) {
+    var urlSerialize = function (obj) {
         var str = [];
         for(var p in obj)
-            if (obj.hasOwnProperty(p)) {
-                str.push(encodeURIComponent(p) + "=" +
-                encodeURIComponent(obj[p]));
+            if(obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             }
         return str.join("&");
     };
-
-
-    $scope.emailShare = function() {
+    $scope.emailShare = function () {
         Analytics.track('campaign', 'email share from campaign');
-        if (device.desktop()) {
+        if(device.desktop()) {
             PopoverService.setPopover('email-share');
         } else {
-            $window.location.href = "mailto:?subject=" + $scope.mailSubject +
-                "&body=" + $scope.mailBody();
+            $window.location.href = "mailto:?subject=" + $scope.mailSubject + "&body=" + $scope.mailBody();
         }
     };
-
-    $scope.facebookMsg = function() {
+    $scope.facebookMsg = function () {
         Analytics.track('campaign', 'facebook share from campaign');
         FacebookService.inviteFriends(UserService.uid);
     };
-    $scope.facebookShare = function() {
+    $scope.facebookShare = function () {
         Analytics.track('campaign', 'facebook share from campaign');
         //FacebookService.inviteFriends(UserService.uid, 'share');
-        FB.ui(
-         {
-          method: 'share',
-          href: $location.absUrl()
-        }, function(response){});
+        FB.ui({
+            method: 'share',
+            href: $location.absUrl()
+        }, function (response) {});
         FB.Canvas.setAutoGrow();
     };
-    $scope.twitterShare = function() {
+    $scope.twitterShare = function () {
         Analytics.track('campaign', 'twitter share from campaign');
         TwitterService.share(UserService.uid);
     };
-    $scope.googlePlusShare = function() {
+    $scope.googlePlusShare = function () {
         Analytics.track('campaign', 'googleplus share from campaign');
         GooglePlusService.share(UserService.uid);
     };
-
-    $scope.productLinkClicked = function(){
+    $scope.productLinkClicked = function () {
         Analytics.track('campaign', 'product link clicked');
     };
-
-    $scope.goToUserPage = function(uid) {
+    $scope.goToUserPage = function (uid) {
         Analytics.track('client', 'go to user page from comments');
         GiftStartService.goToUserPage(uid);
     };
-
-    $scope.toPDFPage = function() {
+    $scope.toPDFPage = function () {
         window.open('/pdfify?page=' + $location.path().slice(1) + '/print');
     };
-
-    $scope.$on('login-success', function() {
+    $scope.$on('login-success', function () {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
         $scope.newUser = !UserService.hasPitchedIn;
         $scope.showLoginBox = false;
         restartPitchin();
     });
-    $scope.$on('logout-success', function() {
+    $scope.$on('logout-success', function () {
         $scope.campaignEditable = UserService.uid === $scope.giftStart.gift_champion_uid;
     });
-
     $scope.showOverlay = GiftStartService.showOverlay;
     $scope.hideOverlay = GiftStartService.hideOverlay;
-
     var imageInput = angular.element(document.getElementById('campaign-image-input'));
-    $scope.updateImage = function() {
-        var maxImageSize = 2*1024*1024; // 2 MB
+    $scope.updateImage = function () {
+        var maxImageSize = 2 * 1024 * 1024; // 2 MB
         var acceptableFileTypes = ['image/jpeg', 'image/png'];
-        if (imageInput[0].files[0]) {
-            if (imageInput[0].files[0].size > maxImageSize) {
+        if(imageInput[0].files[0]) {
+            if(imageInput[0].files[0].size > maxImageSize) {
                 alert("Oops!  Images must be smaller than 2 MB.");
-            } else if (acceptableFileTypes.indexOf(imageInput[0].files[0].type) == -1) {
+            } else if(acceptableFileTypes.indexOf(imageInput[0].files[0].type) == -1) {
                 alert("Oops!  Only jpeg and png images are allowed!  You chose a " + imageInput[0].files[0].type + ".");
             } else {
                 var reader = new FileReader();
                 reader.onload = function (event) {
                     var img_data = event.target.result;
-                    $scope.newImage = {data: img_data,
-                        filename: imageInput[0].files[0].name};
+                    $scope.newImage = {
+                        data: img_data,
+                        filename: imageInput[0].files[0].name
+                    };
                 };
                 reader.readAsDataURL(imageInput[0].files[0]);
             }
         }
     };
-
-    $scope.updateCampaign = function() {
-        GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription,
-            $scope.newImage, $scope.newGcName);
+    $scope.updateCampaign = function () {
+        GiftStartService.updateCampaign($scope.newTitle, $scope.newDescription, $scope.newImage, $scope.newGcName);
         $scope.editMode = false;
     };
-
-    if (GiftStartService.giftStart.gsid != undefined) {
+    if(GiftStartService.giftStart.gsid != undefined) {
         // Start timer update ticker
-        $scope.secondsLeft = GiftStartService.giftStart.deadline -
-            (new Date()).getTime()/1000;
+        $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime() / 1000;
         startSecondsLeftTimer();
     }
-
     // Update this giftstart when the service updates it
-    $scope.$on('giftstart-loaded', function() {
+    $scope.$on('giftstart-loaded', function () {
         $scope.giftStart = GiftStartService.giftStart;
-        $scope.secondsLeft = GiftStartService.giftStart.deadline -
-            (new Date()).getTime()/1000;
+        $scope.secondsLeft = GiftStartService.giftStart.deadline - (new Date()).getTime() / 1000;
         startSecondsLeftTimer();
     });
-    $scope.$on('giftstart-updated', function() {
+    $scope.$on('giftstart-updated', function () {
         $scope.giftStart = GiftStartService.giftStart;
         startSecondsLeftTimer();
     });
 
     function loginChanged() {
-        $scope.campaignEditable =
-            UserService.uid == $scope.giftStart.gift_champion_uid;
+        $scope.campaignEditable = UserService.uid == $scope.giftStart.gift_champion_uid;
     }
 
     function loggedIn() {
@@ -12089,22 +12051,16 @@ function GiftStartController($scope, $rootScope, GiftStartService,  $location,  
         $scope.showShareBox = false;
         loginChanged();
     }
-
     $scope.$on('login-success', loggedIn);
     $scope.$on('logout-success', loggedOut);
-
     $scope.$on('giftstart-loaded', restartPitchin);
-
     imageInput.bind('change', $scope.updateImage);
-
-    $scope.$on("$destroy", function() {
-        if (syncPitchInsTimer) {
+    $scope.$on("$destroy", function () {
+        if(syncPitchInsTimer) {
             $interval.cancel(syncPitchInsTimer);
         }
     });
-
 }
-
 /**
  * Copyright (C) GiftStarter, inc. - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
@@ -12245,69 +12201,46 @@ function gsThanks() {
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
-
 (function (app) {
     'use strict';
-
-    var controller = function ($scope,
-                               $rootScope,
-                               GiftStartService,
-                               $location,
-                               ProductService,
-                               UserService,
-                               PopoverService,
-                               $http,
-                               $timeout,
-                               Analytics,
-                               AppStateService) {
-
+    var controller = function ($scope, $rootScope, GiftStartService, $location, ProductService, UserService, PopoverService, $http, $timeout, Analytics, AppStateService) {
         var shippingRate = 0; //0.045;
-
         var campaignLength = 10;
-
-		jQuery('.price.tooltip')
-  			.popup()
-		;
+        jQuery('.price.tooltip').popup();
         $scope.inputPrice = ProductService.product.price / 100;
         $scope.totalPrice = 0;
         $scope.deliveryDate = null;
         $scope.campaignEndDate = null;
         $scope.getCampaignLength = function (date) {
-            if (angular.isDate(date)) {
-                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000)-5; //5 days for shipping etc
+            if(angular.isDate(date)) {
+                campaignLength = Math.round((date.getTime() - new Date().getTime()) / 86400000) - 5; //5 days for shipping etc
             }
             return campaignLength;
         };
         $scope.salesTaxRate = 0.098;
         $scope.serviceFeeRate = 0.08;
         $scope.fetchingTaxRate = false;
-
         $scope.xySets = [[1, 2], [1, 3], [2, 2], [1, 5], [2, 3], [2, 4],
             [3, 3], [2, 5], [3, 4], [3, 5], [4, 4], [3, 6], [4, 5], [4, 6],
             [5, 5], [5, 6], [6, 6], [6, 7], [7, 7]];
 
         function calculateInitialNumParts() {
             $scope.selectedXYSet = 0;
-            for (var guess = 0; guess < $scope.xySets.length; guess++) {
-                var calcPrice = $scope.inputPrice / $scope.xySets[guess][0] /
-                    $scope.xySets[guess][1];
-                if (calcPrice < 20.5) {
+            for(var guess = 0; guess < $scope.xySets.length; guess++) {
+                var calcPrice = $scope.inputPrice / $scope.xySets[guess][0] / $scope.xySets[guess][1];
+                if(calcPrice < 20.5) {
                     return guess;
                 }
             }
             return $scope.xySets.length - 1;
         }
-
         $scope.showLoginBox = false;
-
         $scope.createStep = 1;
-
         $scope.shippingName = '';
         $scope.shippingEmail = '';
         $scope.shippingZip = '';
         $scope.shippingState = '';
         $scope.shippingDetailsSubmitted = false;
-
         $scope.product = ProductService.product;
         $scope.imgIndex = 0;
         $scope.selectedImg = ProductService.product.imgs[$scope.imgIndex];
@@ -12315,7 +12248,7 @@ function gsThanks() {
         $scope.description = '';
         $scope.gcEmail = '';
         if(UserService.loggedIn) {
-            UserService.getUser(UserService.uid, function(data) {
+            UserService.getUser(UserService.uid, function (data) {
                 $scope.gcEmail = data[Object.keys(data)[0]].email;
             });
         }
@@ -12324,55 +12257,48 @@ function gsThanks() {
         $scope.pitchInsInitialized = false;
         $scope.giftStart = GiftStartService.giftStart;
         $scope.descriptionLongEnough = true;
-
         this.referral = {};
         $scope.showIntroCopy = false;
         $scope.fromReferral = false;
-
         $scope.dateChosenValid = dateChosenValid;
         $scope.changeDueDate = false;
-
         $scope.shippingChanged = function () {
-            if ($scope.shippingZip&&$scope.shippingZip.length == 5) {
+            if($scope.shippingZip && $scope.shippingZip.length == 5) {
                 Analytics.track('campaign', 'shipping updated');
                 $scope.fetchingTaxRate = true;
                 $scope.shippingDetailsSubmitted = true;
-
                 $http({
-                    method: 'POST', url: '/product',
+                    method: 'POST',
+                    url: '/product',
                     data: {
                         action: 'get-tax-and-shipping',
-                        shipping_address: 'street', shipping_city: 'city',
+                        shipping_address: 'street',
+                        shipping_city: 'city',
                         title: ProductService.product.title,
                         shipping_state: $scope.shippingState,
                         shipping_zip: $scope.shippingZip
                     }
-                })
-                .success(function (result) {
+                }).success(function (result) {
                     Analytics.track('product', 'tax and shipping fetch success');
                     $scope.salesTaxRate = result.tax;
                     $scope.fetchingTaxRate = false;
                     $scope.priceChanged();
-                })
-                .error(function (reason) {
+                }).error(function (reason) {
                     $scope.fetchingTaxRate = false;
                     Analytics.track('product', 'tax and shipping fetch failed');
                 });
             }
         };
-
         $scope.nextImage = function () {
             $scope.imgIndex = ($scope.imgIndex + 1) % $scope.product.imgs.length;
             $scope.selectedImg = $scope.product.imgs[$scope.imgIndex];
             $scope.updateGiftStartImage();
         };
-
         $scope.previousImage = function () {
             $scope.imgIndex = ($scope.imgIndex + $scope.product.imgs.length - 1) % $scope.product.imgs.length;
             $scope.selectedImg = $scope.product.imgs[$scope.imgIndex];
             $scope.updateGiftStartImage();
         };
-
         $scope.updateGiftStartImage = function () {
             Analytics.track('campaign', 'selected image changed');
             GiftStartService.giftStart.product_img_url = $scope.selectedImg;
@@ -12387,51 +12313,44 @@ function gsThanks() {
             $scope.fetchingTaxRate = false;
             $scope.updateOverlay();
         }
-
         $scope.priceChanged = function () {
             $scope.fetchingTaxRate = true;
             $http({
-                method: 'POST', url: '/product',
+                method: 'POST',
+                url: '/product',
                 data: {
                     action: 'get-service-fee',
                     coupon: $scope.coupon
                 }
-            })
-            .success(function (result) {
+            }).success(function (result) {
                 Analytics.track('product', 'service fee fetch success');
                 $scope.serviceFeeRate = result.fee;
                 completePriceChange();
-            })
-            .error(function (reason) {
+            }).error(function (reason) {
                 Analytics.track('product', 'service fee fetch failure');
                 completePriceChange();
             });
         };
-
         $scope.moreParts = function (event) {
             Analytics.track('campaign', 'number of parts changed');
-            if ($scope.selectedXYSet < $scope.xySets.length - 1) {
+            if($scope.selectedXYSet < $scope.xySets.length - 1) {
                 $scope.selectedXYSet += 1;
                 $scope.x = $scope.xySets[$scope.selectedXYSet][0];
                 $scope.y = $scope.xySets[$scope.selectedXYSet][1];
                 $scope.updateOverlay();
             }
-
             event.preventDefault();
         };
-
         $scope.fewerParts = function (event) {
             Analytics.track('campaign', 'number of parts changed');
-            if ($scope.selectedXYSet > 0) {
+            if($scope.selectedXYSet > 0) {
                 $scope.selectedXYSet -= 1;
                 $scope.x = $scope.xySets[$scope.selectedXYSet][0];
                 $scope.y = $scope.xySets[$scope.selectedXYSet][1];
                 $scope.updateOverlay();
             }
-
             event.preventDefault();
         };
-
         $scope.updateOverlay = function () {
             GiftStartService.giftStart.columns = $scope.x;
             GiftStartService.giftStart.rows = $scope.y;
@@ -12440,10 +12359,10 @@ function gsThanks() {
             $scope.giftStart = GiftStartService.giftStart;
             $scope.$broadcast('overlay-updated');
         };
-
         $scope.makeUUID = function () {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                var r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
                 return v.toString(16);
             });
         };
@@ -12488,34 +12407,28 @@ function gsThanks() {
         }
 
         function dateChosenValid() {
-            return !($scope.getCampaignLength($scope.deliveryDate) >= 29 ||
-            $scope.getCampaignLength($scope.deliveryDate) < 1);
+            return !($scope.getCampaignLength($scope.deliveryDate) >= 29 || $scope.getCampaignLength($scope.deliveryDate) < 1);
         }
-
-        $scope.dueDateEmpty = function() {
+        $scope.dueDateEmpty = function () {
             if($('.endDate')[0].value) {
                 return false;
             } else {
                 return true;
             }
         };
-
-        $scope.changeDeliveryDate = function() {
+        $scope.changeDeliveryDate = function () {
             $(".endDate").datepicker("show");
         };
-
-        $scope.deliveryDateChanged = function(dateText) {
+        $scope.deliveryDateChanged = function (dateText) {
             $scope.campaignEndDate = new Date($scope.deliveryDate);
             $scope.campaignEndDate.setDate($scope.campaignEndDate.getDate() - 6);
             $(".endRange").datepicker("option", "maxDate", $scope.campaignEndDate);
             $(".endRange").datepicker("setDate", $scope.campaignEndDate);
         };
-
-        var endDateChanged = function(dateText) {
+        var endDateChanged = function (dateText) {
             $scope.campaignEndDate = new Date(dateText);
             $(".endRange").datepicker("setDate", $scope.campaignEndDate);
         };
-
         $scope.validationCreateStep = {
             title: 2,
             description: 2,
@@ -12542,55 +12455,55 @@ function gsThanks() {
             };
         }
         resetValidationErrors();
-
         $scope.isSubmittingData = false;
-
         $scope.validationTrigger = {
             createButtonClicked: false
         };
-
-        $scope.runValidation = function() {
+        $scope.runValidation = function () {
             var keys = Object.keys($scope.hideValidationError);
             var hasErrors = false;
             keys.forEach(function (key) {
-                if ($scope.validationCreateStep[key] == $scope.createStep) {
+                if($scope.validationCreateStep[key] == $scope.createStep) {
                     $scope.hideValidationError[key] = false;
                 }
                 switch($scope.createStep) {
-                    case 2: hasErrors = $scope.campaignForm.title.$error.required||$scope.campaignForm.description.$error.required||$scope.campaignForm.gcEmail.$error.required; break;
-                    case 3: hasErrors = $scope.campaignForm.shippingState.$error.required||$scope.campaignForm.shippingZip.$error.required||$scope.campaignForm.shippingName.$error.required||$scope.campaignForm.shippingEmail.$error.required||$scope.campaignForm.deliveryDate.$error.required; break;
+                case 2:
+                    hasErrors = $scope.campaignForm.title.$error.required || $scope.campaignForm.description.$error.required || $scope.campaignForm.gcEmail.$error.required;
+                    break;
+                case 3:
+                    hasErrors = $scope.campaignForm.shippingState.$error.required || $scope.campaignForm.shippingZip.$error.required || $scope.campaignForm.shippingName.$error.required || $scope.campaignForm.shippingEmail.$error.required || $scope.campaignForm.deliveryDate.$error.required;
+                    break;
                 }
             });
             $scope.validationTrigger.createButtonClicked = true;
             return !hasErrors;
         };
-
-        $scope.isCreateStepTiles = function() {return $scope.createStep==1;};
-
-        $scope.isCreateStepStory = function() {return $scope.createStep==2;};
-
-        $scope.isCreateStepShipping = function() {return $scope.createStep==3;};
-
-        $scope.goToStep = function(i) {
-            $scope.createStep=Math.max(Math.min(i,3),1);
-            $('html,body').animate({scrollTop: $('#giftstart-create-controls').offset().top-100}, 500);
+        $scope.isCreateStepTiles = function () {
+            return $scope.createStep == 1;
         };
-
-        $scope.prevStep = function() {
-            $scope.goToStep($scope.createStep-1);
+        $scope.isCreateStepStory = function () {
+            return $scope.createStep == 2;
         };
-
-        $scope.nextStep = function() {
+        $scope.isCreateStepShipping = function () {
+            return $scope.createStep == 3;
+        };
+        $scope.goToStep = function (i) {
+            $scope.createStep = Math.max(Math.min(i, 3), 1);
+            $('html,body').animate({
+                scrollTop: $('#giftstart-create-controls').offset().top - 100
+            }, 500);
+        };
+        $scope.prevStep = function () {
+            $scope.goToStep($scope.createStep - 1);
+        };
+        $scope.nextStep = function () {
             if($scope.runValidation()) {
                 $scope.goToStep($scope.createStep + 1);
             }
             $('#giftstart-create-next').blur();
         };
-
-        $scope.next = function() {
-
+        $scope.next = function () {
             $scope.runValidation();
-
             GiftStartService.title = $scope.title;
             GiftStartService.description = $scope.description;
             GiftStartService.coupon = $scope.coupon;
@@ -12600,7 +12513,7 @@ function gsThanks() {
             GiftStartService.productImgUrl = $scope.selectedImg;
             GiftStartService.rows = $scope.y;
             GiftStartService.columns = $scope.x;
-            GiftStartService.productPrice = $scope.inputPrice*100;
+            GiftStartService.productPrice = $scope.inputPrice * 100;
             GiftStartService.shippingName = $scope.shippingName;
             GiftStartService.shippingEmail = $scope.shippingEmail;
             GiftStartService.shippingZip = $scope.shippingZip;
@@ -12613,28 +12526,24 @@ function gsThanks() {
             GiftStartService.specialNotes = $scope.specialNotes;
             GiftStartService.gcEmail = $scope.gcEmail;
             GiftStartService.gcName = UserService.name;
-
-            if ($scope.campaignForm.$valid && ($scope.inputPrice != 0) && dateChosenValid()) {
-                if (UserService.loggedIn) {
-                    Analytics.track('campaign', 'campaign submitted', '',
-                        $scope.totalPrice);
+            if($scope.campaignForm.$valid && ($scope.inputPrice != 0) && dateChosenValid()) {
+                if(UserService.loggedIn) {
+                    Analytics.track('campaign', 'campaign submitted', '', $scope.totalPrice);
                     $scope.isSubmittingData = true;
-                    GiftStartService.createGiftStart()
-                        .success(function(data) {
-                            clearCreateData();
-                            resetValidationErrors();
-                        })
-                        .error(function(data) {
-                            alert("A severe error occurred; please try again? If it keeps happening, please contact the Gift Concierge with the following information: "+data);
-                            $scope.isSubmittingData = false;
-                        });
+                    GiftStartService.createGiftStart().success(function (data) {
+                        clearCreateData();
+                        resetValidationErrors();
+                    }).error(function (data) {
+                        alert("A severe error occurred; please try again? If it keeps happening, please contact the Gift Concierge with the following information: " + data);
+                        $scope.isSubmittingData = false;
+                    });
                 } else {
                     var uuid = $scope.makeUUID();
                     //stash staged giftstart for later use by login-popover.controller
                     AppStateService.set('staging_uuid', uuid);
-                    console&&console.log&&console.log("staging: "+stagedGiftStart(uuid)['staging_uuid']);
+                    console && console.log && console.log("staging: " + stagedGiftStart(uuid)['staging_uuid']);
                     AppStateService.set('staged_giftstart', stagedGiftStart(uuid));
-                    console&&console.log&&console.log("staged: "+AppStateService.get('staged_giftstart')['staging_uuid']);
+                    console && console.log && console.log("staged: " + AppStateService.get('staged_giftstart')['staging_uuid']);
                     //PopoverService.giftstartCreateLogin = true;
                     //PopoverService.setPopover('login');
                     $rootScope.$broadcast('loginbox-show-login');
@@ -12642,20 +12551,18 @@ function gsThanks() {
                 }
             }
         };
-
-        $scope.onDescriptionBlur = function() {
+        $scope.onDescriptionBlur = function () {
             var longEnough = $scope.description.length > 400;
-            if (!longEnough && $scope.descriptionLongEnough) {
+            if(!longEnough && $scope.descriptionLongEnough) {
                 Analytics.track('campaign', 'description too short displayed');
-            } else if (longEnough && !$scope.descriptionLongEnough) {
+            } else if(longEnough && !$scope.descriptionLongEnough) {
                 Analytics.track('campaign', 'description too short hidden');
             }
             $scope.descriptionLongEnough = longEnough;
         };
-
         // So that users that were browsing another giftstart don't experience
         // the "no overlay initially" bug
-        if (!GiftStartService.title) {
+        if(!GiftStartService.title) {
             GiftStartService.giftStart.gsid = 0;
             GiftStartService.giftStart = GiftStartService.buildGiftStart();
         } else {
@@ -12667,19 +12574,12 @@ function gsThanks() {
             $scope.specialNotes = GiftStartService.specialNotes;
             $scope.giftStart = GiftStartService.giftStart;
         }
-
         $scope.selectedXYSet = calculateInitialNumParts();
-
         extractReferral();
         extractPromo();
 
-
         function extractReferral() {
-            if ($location.search().product_url &&
-                $location.search().title &&
-                $location.search().price &&
-                $location.search().img_url &&
-                $location.search().source) {
+            if($location.search().product_url && $location.search().title && $location.search().price && $location.search().img_url && $location.search().source) {
                 restoreFromReferral({
                     product_url: $location.search().product_url,
                     productTitle: $location.search().title,
@@ -12696,7 +12596,7 @@ function gsThanks() {
         }
 
         function extractPromo() {
-            if ($location.search().promo == 'dress-for-success') {
+            if($location.search().promo == 'dress-for-success') {
                 $scope.title = 'Gift a Start Collection';
                 $scope.description = 'Give the gift of confidence this holiday season with this curated assortment of beautiful basics. butter LONDON is proud to partner with Dress for Success to gift a new start to women in need. Dress for Success is a not-for-profit organization dedicated to helping women get back on their feet and back into the workforce. For these women giving something as simple as a lipstick can make an impact. Help deliver a new start this holiday season by starting a GiftStart for our Gift A Start Collection.';
                 $scope.shippingZip = '98118';
@@ -12728,7 +12628,6 @@ function gsThanks() {
             $scope.campaignLength = session.campaignLength;
             $scope.specialNotes = session.specialNotes;
             $scope.gcEmail = session.gcEmail;
-
             $scope.$on('login-success', $scope.next);
         }
 
@@ -12738,62 +12637,52 @@ function gsThanks() {
             ProductService.product.title = referral.productTitle;
             ProductService.product.imgs = [referral.productImgUrl];
             $scope.selectedImg = referral.productImgUrl;
-            $scope.inputPrice = parseInt(referral.price)/100;
+            $scope.inputPrice = parseInt(referral.price) / 100;
             $scope.showIntroCopy = true;
             $scope.fromReferral = true;
             $scope.referredFrom = getReferrerName(referral.source);
-
             $scope.ghostruck = /ghostruck/.test(referral.source.toLowerCase());
-
             // special for ghostruck: auto zip and state
-            if (/ghostruck/.test(referral.source.toLowerCase())) {
+            if(/ghostruck/.test(referral.source.toLowerCase())) {
                 $scope.shippingState = 'WA';
                 $scope.shippingZip = '98118';
                 $scope.shippingChanged();
             }
-
             Analytics.track('client', 'referred from', referral.source);
         }
 
         function getReferrerName(source) {
-            if (/ghostruck/.test(source.toLowerCase())) {
+            if(/ghostruck/.test(source.toLowerCase())) {
                 return 'Ghostruckers!';
             } else {
                 return '';
             }
         }
-
-        $timeout(function() {
+        $timeout(function () {
             $scope.pitchInsInitialized = true;
         }, 2500);
-
-        if (this.referral) {
+        if(this.referral) {
             $scope.selectedXYSet = calculateInitialNumParts();
         }
         $scope.x = $scope.xySets[$scope.selectedXYSet][0];
         $scope.y = $scope.xySets[$scope.selectedXYSet][1];
         $scope.updateGiftStartImage();
         $scope.priceChanged();
-
         $(".endDate").datepicker({
             minDate: "+7d",
             maxDate: "+34d",
             onSelect: $scope.deliveryDateChanged
         });
-
         $(".endRange").datepicker({
             minDate: "+7d",
             maxDate: "+34d",
             onSelect: endDateChanged
         });
-
-        $rootScope.$on('login-success', function(){
+        $rootScope.$on('login-success', function () {
             $scope.showLoginBox = false;
             $scope.next();
         });
-
     };
-
     app.controller('GiftStartCreateController', [
         '$scope',
         '$rootScope',
@@ -12807,9 +12696,7 @@ function gsThanks() {
         'Analytics',
         'AppStateService',
         controller]);
-
 }(angular.module('GiftStarterApp')));
-
 /**
  * Copyright (C) GiftStarter, inc. - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly prohibited.
@@ -15244,7 +15131,7 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
 			return($location.path() === '/join') ? true : false;
 		}
 		function padHeader() {
-			return($location.path() === '/login') ? false : true;
+			return($location.path() === '/login') ? true : false;
 		}
 		$scope.fullContainer = isFull();
 		$scope.paddedContainer = padHeader();
