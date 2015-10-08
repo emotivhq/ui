@@ -73,6 +73,15 @@ module.exports = function(grunt) {
                     dest: '../client/stylesheets/app-main',
                     ext: '.css'
                 }]
+            },
+            ui: {
+                files: [{
+                    expand: true,
+                    cwd: '../client/stylesheets/ui',
+                    src: ['*.{scss,sass}'],
+                    dest: '../client/stylesheets/ui',
+                    ext: '.css'
+                }]
             }
         },
         concat: {
@@ -405,6 +414,10 @@ module.exports = function(grunt) {
                 },
                 src: ['../client/stylesheets/app-main/**/*.css'],
                 dest: '../client/stylesheets/app-main.css'
+            },
+            ui: {
+                src: ['../client/stylesheets/ui/**/*.css'],
+                dest: '../client/stylesheets/ui.css'
             }
         },
 		// Make sure code styles are up to par and there are no obvious mistakes
@@ -478,6 +491,10 @@ module.exports = function(grunt) {
 			ui: {
 				dot: true,
 				src: ['../client/interface/**/*', '../client/ui/**/*', '../client/_ui']
+			},
+			customui: {
+				dot: true,
+				src: ['../client/stylesheets/ui.css', '../client/stylesheets/ui.min.css']
 			}
 		},
         uglify: {
@@ -511,7 +528,7 @@ module.exports = function(grunt) {
     			files: [{
       				expand: true,
 					cwd: '../client/stylesheets',
-      				src: ['app-main.css', 'compiled.css', 'vendor.css', '!*.min.css'],
+      				src: ['ui.css', 'app-main.css', 'compiled.css', 'vendor.css', '!*.min.css'],
       				dest: '../client/stylesheets',
       				ext: '.min.css'
     			}]
@@ -575,8 +592,9 @@ module.exports = function(grunt) {
 	
 	/** Include UI **/
 	// Build in the UI
-	grunt.registerTask('ui', ['clean:ui', 'copyto:ui', 'copy', 'clean:semantic']);
-	
+	grunt.registerTask('ui', ['clean:ui', 'copyto:ui', 'copy', 'customui', 'clean:semantic']);
+	grunt.registerTask('customui', ['clean:customui', 'sass:ui', 'concat:ui']);
+
 	/* 
 	 *** SASS tasks, I call it sassy *** 
 	*/

@@ -933,7 +933,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "          <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
     "        </div>\n" +
     "        <div class=\"nine wide right floated column\">\n" +
-    "          <iframe width=\"560\" height=\"315\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "          <iframe width=\"100%\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -1056,17 +1056,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "      \n" +
     "\t<div class=\"row ui container main full middle aligned center aligned grid\">\n" +
     "        <div class=\"center aligned column\">\n" +
-    "          <a href=\"/giftideas\" class=\"ui huge button\" id=\"gifting-button\">Discover Gift Ideas</a>\n" +
+    "          <a href=\"/giftideas\" class=\"ui huge button\" id=\"gifting-button\">Find Your Gift Idea</a>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
-    "    <div class=\"clear\">\n" +
-    "      \n" +
-    "    </div>\n" +
     "\n" +
-    "    <hr />\n" +
-    "\n" +
-    "    <h2>Inspiring Examples</h2>\n" +
+    "    <h2>Recent Campaigns</h2>\n" +
     "    <ng-include src=\"'/scripts/inspirationalexamples/inspirationalexamples.ng.html'\"></ng-include>\n" +
     "  </div>\n" +
     "\n" +

@@ -326,12 +326,12 @@ div.giftstart.wrapper {
       width: 100%;
       padding-top: 0.1em;
       padding-bottom: 0.1em;
-      font: 300 2.667em Roboto, sans-serif; }
+      font: 300 Roboto, sans-serif; }
     div.giftstart.wrapper div.block.col2 input.gc-name {
       width: 100%;
       padding-top: 0.1em;
       padding-bottom: 0.1em;
-      font: 300 1.25em Roboto, sans-serif; }
+      font: 300 Roboto, sans-serif; }
     div.giftstart.wrapper div.block.col2 textarea.description {
       width: 100%;
       height: 15em; }

@@ -62,7 +62,7 @@ gs-product-search section.products {
     gs-product-search section.products div.page-buttons span.page-number {
       display: inline-block;
       padding: 0.25em;
-      font: 300 1.25em Roboto, sans-serif;
+      font: 300 Roboto, sans-serif;
       font-weight: 300;
       cursor: pointer; }
       @media screen and (min-width: 1030px) {

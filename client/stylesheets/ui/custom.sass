@@ -1,0 +1,197 @@
+// globals
+
+html, body
+  font-size: 16px
+
+.vertical
+  &.small.bottom
+    margin-bottom: 1em
+  &.medium.bottom
+    margin-bottom: 2em
+  &.large.bottom
+    margin-bottom: 3em
+  &.small.top
+    margin-top: 1em
+  &.medium.top
+    margin-top: 2em
+  &.large.top
+    margin-top: 3em
+
+.ui.checkbox
+  .box, label
+    cursor: pointer
+
+// bgs
+
+body.pushable > .pusher.grey
+  background: #90A4AE
+
+// header
+
+header.slim
+  height: 60px !important
+
+// top menu
+
+.main.menu
+  margin-top: 0
+  border-radius: 0
+  border: none
+  box-shadow: none
+  transition: box-shadow 0.5s ease, padding 0.5s ease
+  .item img.logo
+    margin-right: 1.5em
+
+.overlay
+  float: left
+  margin: 0em 3em 1em 0em
+  .menu
+    position: relative
+    left: 0
+    transition: left 0.5s ease
+
+.ui.main.menu
+  background-color: #FFFFFF
+  border: 0px solid #DDD
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
+  z-index: 10 !important
+
+.overlay.fixed .menu
+  left: 800px
+
+.ui.menu
+  margin-top: 0
+
+.slim .ui.main.menu .toc.item
+  display: none
+
+.ui
+  &.main.menu
+    .item, .menu
+      display: none
+  &.menu .right.item .item.help
+    display: none
+  &.main.menu .toc.item, &.menu .right.item .item
+    display: block
+  &.main.menu .header.item
+    display: block
+    padding-right: 0
+    margin-right: 0
+  &.menu .item > .input input
+    border-radius: .28571429rem
+  &.main.menu.transparent
+    box-shadow: none
+    background: transparent
+
+// end top menus
+
+.right.menu .toc.item
+  display: none
+
+.ui.secondary.menu .topmenu
+  .link.item:hover, a.item:hover
+    background: inherit
+
+// end top menus
+
+// main containers
+
+.main
+  &.container
+    margin-top: 3.95em
+    margin-bottom: 3em
+  &.full
+    margin-top: 3em !important
+    margin-bottom: 2em !important
+    width: 100% !important
+  &.pad
+    margin-top: 7em !important
+
+.fade
+  opacity: 1
+  &.ng-enter, &.ng-leave
+    -webkit-transition: all 1s ease
+    transition: all 1s ease
+  &.ng-enter
+    opacity: 0
+  &.ng-enter-active, &.ng-leave
+    opacity: 1
+  &.ng-leave-active
+    opacity: 0
+
+// mobile menus
+
+// forms
+
+.long
+  width: 100%
+
+// media queries
+@media only screen and (min-width: 723px)
+  .ui.main.menu
+    .toc.item
+      display: none
+    .item
+      display: block
+  .main.menu .menu, .ui.menu .right.item .item.help
+    display: block
+
+// carousel
+
+div.rn-carousel-indicator span.active
+  color: #E44028
+
+// avatar
+
+.ui.avatar
+  &.image
+    margin-left: .25em
+    visibility: visible !important
+    img, svg
+      margin-left: .25em
+      visibility: visible !important
+  &.images
+    .image, img, svg
+      margin-left: .25em
+      visibility: visible !important
+
+// join masthead
+
+.joiny .masthead
+  background-color: #000000
+
+.join .masthead
+  &.bg-gradient:after
+    background-image: url("/images/bg/colorful-gradient.jpg")
+  -ms-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+  -moz-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+  -webkit-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+  transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+  &:after
+    -ms-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+    -moz-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+    -webkit-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+    transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
+
+// statistics
+
+.ui
+  &.statistic > .value, &.statistics .statistic > .value
+    font-size: 1.7rem
+
+// angular wizard
+
+.steps-indicator
+  position: absolute
+  padding: 0
+
+.join .ui.input
+  display: -webkit-inline-box
+  display: -webkit-inline-flex
+  display: -ms-inline-flex
+  display: flex
+
+// footer
+
+.footer .logo
+  width: 55px

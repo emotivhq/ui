@@ -162,36 +162,36 @@ span.circle {
 
 h1 {
   color: #000;
-  font: 500 4.167em Roboto, sans-serif;
+  font: 500 Roboto, sans-serif;
   margin: 10px auto; }
   h1.accent {
     color: #e44028; }
   h1.white {
     color: #fff; }
   h1 a {
-    font: 500 4.167em Roboto, sans-serif;
+    font: 500 Roboto, sans-serif;
     font-size: 1em;
     text-decoration: none; }
 
 h2 {
-  font: 300 2.667em Roboto, sans-serif; }
+  font: 300 Roboto, sans-serif; }
   h2.black {
     color: #000; }
 
 h3 {
-  font: 300 1.667em Roboto, sans-serif; }
+  font: 300 Roboto, sans-serif; }
   h3.black {
     color: #000; }
 
 h4 {
-  font: 300 1.25em Roboto, sans-serif; }
+  font: 300 Roboto, sans-serif; }
   h4.accent {
     color: #e44028; }
 
 /*  ANGULAR VIEW  */
 @media screen and (max-width: 1030px) {
   #angular-view {
-    margin: 4em auto; } }
+    margin: 1em auto; } }
 
 iframe[src^="https://apis.google.com"] {
   display: none; }
