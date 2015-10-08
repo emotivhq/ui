@@ -12,7 +12,7 @@
 		</button>
     </form>
 </div>
-<wizard on-finish="finishedWizard()"> 
+<wizard on-finish=""> 
 <form ng-submit="$parent.doCreateEmail()" class="create_action ui form">
     <wz-step title="" canexit="">
         <h2 class="vertical small bottom">Create a new account</h2>
@@ -65,7 +65,7 @@
 			<input class="userlogin__password" type="password" name="password" ng-hide="$parent.showPassword" ng-model="$parent.password" placeholder="Strong Password" required />
 		</div>
 		<div class="ui middle aligned center aligned vertical large top bottom grid">
-		<button class="userlogin__loginbtn create_action ui right labeled icon button primary red" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working" wz-next value="Create Account">
+		<button class="userlogin__loginbtn create_action ui right labeled icon button primary red" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working" value="Create Account">
 			<i class="add user icon"></i>
   			Create Account
 		</button>

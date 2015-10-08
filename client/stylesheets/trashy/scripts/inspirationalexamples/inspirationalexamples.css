@@ -7,8 +7,7 @@ iframe[name='google_conversion_frame'] {
   float: left; }
 
 .inspirationalexamples {
-  overflow: hidden;
-  width: 100%; }
+  overflow: hidden; }
   .inspirationalexamples .product-item {
     background-color: #363636;
     color: white;

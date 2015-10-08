@@ -253,3 +253,8 @@ skip_files:
 - client/test/*
 - client/bower_components/*
 - client/scripts/^(?!out)
+- client/sass/*
+- client/_app/*
+- client/marvel/*
+- _ui/*
+- node_modules/*

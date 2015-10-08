@@ -57,22 +57,26 @@ header.slim {height: 60px !important;}
     left: 800px;
   }
 .ui.menu {
-	margin-top:0
+	margin:0
 }
 .right.menu .toc.item {
       display: none;
     }
+.ui.secondary.menu .topmenu .link.item:hover, .ui.secondary.menu .topmenu a.item:hover {background: inherit;}
 /* end top menus */
 
 /* main containers */
 .main.container {
-    margin-top: 7em;
+    margin-top: 3.95em;
     margin-bottom: 3em;
 }
 .main.full {
-    margin-top: 3em;
-    margin-bottom: 2em;
-	width: 100%;
+    margin-top: 3em !important;
+    margin-bottom: 2em !important;
+	width: 100% !important;
+}
+.main.pad {
+    margin-top: 7em !important;
 }
 .fade {
     opacity: 1;
@@ -95,6 +99,10 @@ header.slim {height: 60px !important;}
     opacity: 0;
 }
 /* mobile menus */
+
+
+/* forms */
+.long {width: 100%;}
 
 /* media queries */
 @media only screen and (max-width: 700px) {

@@ -12,12 +12,12 @@
      <i class="sidebar icon"></i>
   </a>
   <a href="/" class="item">
-    Home
+    Home 
   </a>
   <a href="/is" class="item">
-    Product
+    Platform
   </a>
-  <a href="/giftideas" class="item">
+  <a href="/giftideas" class="discover item">
     Discover
   </a>
   <a href="/login" class="item">Login</a>
@@ -25,10 +25,14 @@
 	<a href="/join" class="ui button secondary">Join</a>
   </div>
   </div>
-</div>
+	
+{# <!-- Category Jump Mega Menu --> #}
+{#% include 'header/categories-nav.html' %#}
+
+	</div>
 </div>
 
-{# <!-- Slim Menu --> #}
+{# <!-- Slim Menu (/join, etc) --> #}
 <div class="ui secondary main menu" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
 <div class="ui container">
   <div class="header item">  	
@@ -126,3 +130,4 @@
   <a class="item">My Profile</a>
   <a class="item">Logout</a>
 </div>
+
