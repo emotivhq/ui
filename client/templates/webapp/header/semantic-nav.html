@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% raw %}
 <!-- Main Menu -->
 <div class="ui secondary main top fixed menu" ng-hide="header.loggedIn || fullContainer">
@@ -28,6 +29,63 @@
     <a class="item" href="/giftideas">Discover</a>
     <a class="item" href="/login">Login</a>
     <a class="item" href="/join">Signup</a>
+=======
+{# <!-- Main Menu --> #}
+<div class="ui secondary fixed main menu" ng-hide="header.loggedIn || fullContainer">
+<div class="ui container">
+  <div class="header item">  	
+	  <a class="headerLogoWrapper" href="/">
+		<img id="logo" src="/assets/webLogo.png" />
+        <img id="logo-mobile" src="/assets/logo-mobile.png" />
+	  </a>	
+	</div>
+  <div class="right menu">
+  <a class="toc item">
+     <i class="sidebar icon"></i>
+  </a>
+  <a href="/" class="item">
+    Home 
+  </a>
+  <a href="/is" class="item">
+    Platform
+  </a>
+  <a href="/giftideas" class="discover item">
+    Discover
+  </a>
+  <a href="/login" class="item">Login</a>
+  <div class="item">
+	<a href="/join" class="ui button secondary">Join</a>
+  </div>
+  </div>
+	
+{# <!-- Category Jump Mega Menu --> #}
+{#% include 'header/categories-nav.html' %#}
+
+	</div>
+</div>
+
+{# <!-- Slim Menu (/join, etc) --> #}
+<div class="ui secondary main menu" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
+<div class="ui container">
+  <div class="header item">  	
+	  <a class="headerLogoWrapper" href="/">
+		<img id="logo" src="/assets/webLogo.png" />
+        <img id="logo-mobile" src="/assets/logo-mobile.png" />
+	  </a>	
+	</div>
+  <div class="right menu">
+  <a class="toc item">
+     <i class="sidebar icon"></i>
+  </a>
+	  <div class="item">
+		  Already have an account?
+	  </div>
+  <div class="item">
+	<a href="/login" class="ui button secondary basic grey">Login</a>
+  </div>
+  </div>
+</div>
+>>>>>>> 1.2.x
 </div>
 
 <!-- User Menu -->
@@ -97,6 +155,7 @@
     <a class="item" href="/faq">FAQs</a>
 </div>
 
+<<<<<<< HEAD
 <!-- Slim Menu -->
 <div class="ui secondary main menu top fixed" ng-show="fullContainer" ng-hide="header.loggedIn || header.portaling">
     <div class="ui container">
@@ -116,3 +175,14 @@
     </div>
 </div>
 {% endraw %}
+=======
+{# <!-- Mobile User Menu --> #}
+<div class="ui vertical inverted sidebar menu">
+  <a class="active item">Home</a>
+  <a class="item">Search</a>
+  <a class="item">Discover</a>
+  <a class="item">My Profile</a>
+  <a class="item">Logout</a>
+</div>
+
+>>>>>>> 1.2.x
