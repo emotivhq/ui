@@ -113,16 +113,6 @@ header.slim {
 div.rn-carousel-indicator span.active {
   color: #E44028; }
 
-.ui.avatar.image {
-  margin-left: .25em;
-  visibility: visible !important; }
-  .ui.avatar.image img, .ui.avatar.image svg {
-    margin-left: .25em;
-    visibility: visible !important; }
-.ui.avatar.images .image, .ui.avatar.images img, .ui.avatar.images svg {
-  margin-left: .25em;
-  visibility: visible !important; }
-
 .joiny .masthead {
   background-color: #000000; }
 

@@ -1,0 +1,33 @@
+{% raw %}
+<!-- Main Menu -->
+<div class="ui secondary main menu top fixed" ng-hide="!mainMenu">
+    <div class="ui container">
+        <div class="header item">
+            <a class="headerLogoWrapper" href="/">
+                <img id="logo" class="logo" src="/assets/webLogo.png" />
+                <img id="logo-mobile" class="logo" src="/assets/logo-mobile.png" />
+            </a>
+        </div>
+        <a class="toc item">
+            <i class="sidebar icon"></i>
+        </a>
+        <a class="item" href="/">Home</a>
+        <a class="item" href="/is">How It Works</a>
+        <a class="item" href="/giftideas">Discover</a>
+        <div class="right item">
+            <a class="item" href="/login">Login</a>
+            <a class="ui button secondary" href="/join">Join</a>
+        </div>
+    </div>
+</div>
+
+<!-- Main Menu - Mobile -->
+<div class="ui left vertical menu wide sidebar inverted" ng-hide="!mainMenu">
+    <a class="item" href="/">Home</a>
+    <a class="item" href="/is">Learn More</a>
+    <a class="item" href="/giftideas">Discover</a>
+    <a class="item" href="/login">Login</a>
+    <a class="item" href="/join">Signup</a>
+</div>
+
+{% endraw %}
