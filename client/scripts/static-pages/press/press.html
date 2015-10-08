@@ -1,23 +1,33 @@
 <div class="static-pages presspage" ng-controller="PressController">
   <div class="headerwrap">
-    <h1>IN THE NEWS</h1>
-    <p>We've been fortunate enough to be featured by some of the most prestigious media outlets in the world. <span class="wrap-on-desktop">See what all of the buzz is about.</span></p>
-    <a class="button red" target="_blank" href="/blog">READ MORE</a>
-  </div>
+	  <div class="ui container">
+    <h1>In The News</h1>
+    <h4>We've been fortunate enough to be featured by some great media outlets across the globe. </h4>
+		  <a href="/join" class="ui right labeled icon button huge" >
+		Experience It For Yourself
+		<i class="gift icon left"></i>
+	  </a>
+	  </div>
+	</div>
 
-  <div class="main">
-    <h2>Who's talking about GiftStarter?</h2>
-    <div class="press-item" ng-repeat="item in items">
-      <a href="{{item.link}}" target="_blank">
-      <img src="assets/press/{{item.img}}" />
-      </a>
-      <p ng-bind-html="item.quote"></p>
+  <div class="main container ui piled segment">
+    <h3 class="ui header vertical top medium center aligned">
+		To get a feel for how we're bringing the gift economy online, check out some of these articles.
+	  </h3>
+<div class="ui items link container column stackable three ">
+  <a href="{{item.link}}" target="_blank" class="press-item item column" ng-repeat="item in items">
+    <div class="ui large image">
+      <img src="assets/press/{{item.img}}" style="max-height: 35px;" />
     </div>
+    <div class="content">
+      <div class="header"></div>
+      <div class="description">
+        <em ng-bind-html="item.quote"></em>
+      </div>
+    </div>
+  </a>
+	  </div>
+
   </div>
 
-  <div class="bottom">
-    <hr />
-    <h2>Try it yourself!</h2>
-    <a class="button" href="/giftideas">START GIFTING</a>
-  </div>
 </div>
