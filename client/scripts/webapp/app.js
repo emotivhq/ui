@@ -539,7 +539,7 @@ function ngABConfig($httpProvider) {
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 'mgo-angular-wizard']);
+        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 'mgo-angular-wizard', 'angular-carousel']);
 
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
@@ -712,7 +712,7 @@ GiftStarterApp.config(['ezfbProvider', '$httpProvider', facebookConfig]);
 function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
     $routeProvider
         .when('/',
-        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        {templateUrl: '/views/is/is.html', reloadOnSearch: false})
         .when('/yourvillage',
         {templateUrl: '/views/yourvillage/yourvillage.html', reloadOnSearch: false})
         .when('/test',
@@ -850,7 +850,28 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   'use strict';
 
   $templateCache.put('/views/home/home.html',
-    "We will be moving all views out of scripts and into views. In due time."
+    "<div class=\"landing-page\" ng-controller=\"HomeController\">\n" +
+    "\t<div class=\"headerwrap\">\n" +
+    "        <h1>Welcome to GiftStarter!</h1>\n" +
+    "        <p>We are putting the emotion back into gifting. With GiftStarter you can give gifts you're proud to give, and\n" +
+    "            they're happy to get. Make your lists. Find your community. Give better gifts.</p>\n" +
+    "        <a name=\"productsearch\"></a>\n" +
+    "        <gs-product-search></gs-product-search>\n" +
+    "    </div>\n" +
+    "    <ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'\" class=\"hidden\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/home/whatisgiftstarter/how-it-works.ng.html'\"></ng-include>\n" +
+    "\t<ng-include src=\"'/scripts/staffpicks/staffpicks.ng.html'\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/giftsgivenbar/giftsgivenbar.ng.html'\"></ng-include>\n" +
+    "    <div class=\"userlogin hidden\" id=\"loginpanel\">\n" +
+    "        <div class=\"userlogin__logo\"></div>\n" +
+    "        <h2 class=\"userlogin__title\">\n" +
+    "            Join the giving movement\n" +
+    "        </h2>\n" +
+    "    </div>\n" +
+    "    <ng-include src=\"'/scripts/login/login-or-create.html'\" class=\"hidden\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\" class=\"hidden\"></ng-include>\n" +
+    "</div>\n"
   );
 
 
@@ -858,11 +879,14 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"howitworks static-pages\" ng-controller=\"HowItWorksController\">\n" +
     "  <div class=\"headerwrap\">\n" +
     "    <h1>Crowdfunding for Gifts</h1>\n" +
-    "    <p>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</p>\n" +
-    "    <a class=\"button red\" target=\"_blank\" href=\"/concierge\">Ask A Question</a>\n" +
+    "    <h4>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</h4>\n" +
+    "    <a class=\"ui right labeled icon button purple huge\" href=\"/join\">\n" +
+    "\t\tGet Started\n" +
+    "\t\t<i class=\"add user icon\"></i>\n" +
+    "\t  </a>\n" +
     "  </div>\n" +
     "\n" +
-    "  <div class=\"main\">\n" +
+    "  <div class=\"main ui middle aligned stackable grid container\">\n" +
     "    <div class=\"menu\">\n" +
     "      <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'welcome'\" ng-class=\"{selected: sectionShown == 'welcome'}\">\n" +
     "        <div class=\"menu-item\">\n" +
@@ -893,14 +917,23 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <div id=\"selector-bar\"></div>\n" +
     "\n" +
-    "    <div class=\"content\">\n" +
+    "    <div class=\"content ui container main full\">\n" +
     "      <div id=\"welcome\" ng-show=\"sectionShown == 'welcome'\">\n" +
-    "        <h2>Welcome to GiftStarter!</h2>\n" +
-    "        <h4>Start amazing gifts here -- ones you are proud to give, and they're happy to get.</h4>\n" +
-    "        <p class=\"sub\">\n" +
-    "          GiftStarter is the best way to bring family and friends together to give an amazing gift. You start it -- and we help you with the rest. When you use GiftStarter, you don't have to collect the money or chase people down for cash.<br />It only takes a couple minutes to launch a campaign for your gift.\n" +
-    "          <br />Start an amazing gift today! Once it is complete, we handle ensuring the card with everyone's messages and the gift is shipped!\n" +
-    "        </p>\n" +
+    "<div class=\"ui vertical stripe segment\">\n" +
+    "    <div class=\"ui middle aligned stackable grid container\">\n" +
+    "      <div class=\"row\">\n" +
+    "        <div class=\"seven wide column\">\n" +
+    "          <h3 class=\"ui header\">Give amazing gifts.</h3>\n" +
+    "          <p>GiftStarter is the best way to bring family and friends together to give an amazing gift. When it's complete - receive a handmade card with everyone's message and the gift. </p>\n" +
+    "          <h3 class=\"ui header\">Launch a campaign.</h3>\n" +
+    "          <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
+    "        </div>\n" +
+    "        <div class=\"nine wide right floated column\">\n" +
+    "          <iframe width=\"560\" height=\"315\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
     "      </div>\n" +
     "      <div id=\"glossary\" ng-show=\"sectionShown == 'glossary'\">\n" +
     "        <h2>Giftstarter Glossary</h2>\n" +
@@ -1016,9 +1049,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "        <p class=\"clear sub\">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered. <br /><br />Give a remarkable gift today.</p>\n" +
     "      </div>\n" +
+    "      \n" +
+    "\t<div class=\"row ui container main full middle aligned center aligned grid\">\n" +
+    "        <div class=\"center aligned column\">\n" +
+    "          <a href=\"/giftideas\" class=\"ui huge button\" id=\"gifting-button\">Discover Gift Ideas</a>\n" +
+    "        </div>\n" +
+    "      </div>\n" +
     "    </div>\n" +
     "    <div class=\"clear\">\n" +
-    "      <a href=\"/giftideas\" alt=\"\" class=\"button\" id=\"gifting-button\">Start Gifting</a>\n" +
+    "      \n" +
     "    </div>\n" +
     "\n" +
     "    <hr />\n" +
@@ -1115,7 +1154,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/join/join.html',
-    "<div class=\"ui grid stackable join container\" ng-controller=\"LoginOrCreateController\">\n" +
+    "<div class=\"ui grid stackable join container main full\" ng-controller=\"LoginOrCreateController\">\n" +
     "    <div class=\"eight wide column\">\n" +
     "        <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
     "            <ng-include src=\"'/views/join/join-form.html'\"></ng-include>\n" +
@@ -1526,9 +1565,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/giftideas/giftideas.ng.html',
-    "<div id=\"giftideas\">\n" +
+    "<div id=\"giftideas\" class=\"ui container\">\n" +
     "\n" +
-    "    <div ng-show=\"product\" class=\"singleproduct\">\n" +
+    "    <div ng-show=\"product\" class=\"singleproduct main pad\">\n" +
     "        <div class=\"head\">\n" +
     "            <div class=\"hero\">\n" +
     "                <div class=\"ui one cards\">\n" +
@@ -1567,12 +1606,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div ng-show=\"category\" class=\"products\">\n" +
+    "    <div ng-show=\"category\" class=\"products main pad\">\n" +
     "        <div class=\"ui stackable four column grid\">\n" +
     "            <div class=\"eight wide column\">\n" +
-    "                <h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
-    "  \t\t\t<img class=\"ui circular image\" src=\"/assets/giftideas/category/{{category.categorySlug}}.jpg\" alt=\"{{category.categorySlug}}\" style=\"    display: block; margin: 0 auto .5rem;width: 57%;\">\n" +
-    "\t\t</h2>\n" +
+    "            \t<h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
+    "  \t\t\t\t\t<img class=\"ui circular image\" src=\"/assets/giftideas/category/{{category.categorySlug}}.jpg\" alt=\"{{category.categorySlug}}\" style=\"    display: block; margin: 0 auto .5rem;width: 57%;\">\n" +
+    "\t\t\t\t</h2>\n" +
     "            </div>\n" +
     "            <div class=\"eight wide column\" ng-show=\"!product\">\n" +
     "                <div class=\"ui piled segment padded center aligned secondary\">\n" +
@@ -1584,9 +1623,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </div>\n" +
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
-    "        <div class=\"grid\">\n" +
-    "            <div ng-repeat=\"group in groups\" class=\"group ui two stackable cards\" ng-class-odd=\"'left'\" ng-class-even=\"'right'\">\n" +
-    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='ui link card tile' title=\"{{product.productNameStripped}}\">\n" +
+    "        <h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
+    "\t\t\tSimilar Ideas\n" +
+    "\t\t</h2>\n" +
+    "        <ul class=\"grid ui segment\" rn-carousel rn-carousel-index=\"carouselIndex\" style=\"min-height: 430px; padding-top: 16px; background: #f9f9f9;\">\n" +
+    "            <li ng-repeat=\"group in groups\" class=\"ui stackable cards\" >\n" +
+    "                <div ng-repeat=\"product in group\" ng-class=\"{'last':product==lastProduct&&group.length==1}\" class='ui link card tile column wide eight' title=\"{{product.productNameStripped}}\" style=\"display: inline-block;\">\n" +
     "                    <a href=\"{{categoryPath}}/{{product.productSlug}}\" class=\"image\">\n" +
     "                        <img src=\"/assets/giftideas/category{{product.productThumb}}\" alt=\"{{product.imageAltText}}\" class=\"load\" />\n" +
     "                        <div class=\"content\">\n" +
@@ -1595,11 +1637,13 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        </div>\n" +
     "                    </a>\n" +
     "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "\t\t<div rn-carousel-indicators ng-if=\"groups.length > 1\" slides=\"groups\" rn-carousel-index=\"carouselIndex\" style=\"font-size: 2em;\"></div>\n" +
+    "\t\t<div rn-carousel-controls ng-if=\"groups.length > 1\" slides=\"groups\" rn-carousel-index=\"carouselIndex\"></div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "    </div>\n" +
-    "\n" +
+    "\t\n" +
     "    <h1 class=\"vertical medium top bottom\">What’s popular</h1>\n" +
     "    <div class=\"categories ui three stackable link cards\">\n" +
     "\n" +
@@ -1667,8 +1711,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "\n" +
-    "    </div>\n" +
     "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/cute\">\n" +
     "            <img src=\"/assets/giftideas/category/cute.jpg\" alt=\"Cute\" class=\"load\" />\n" +
@@ -1722,6 +1764,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
+    "    </div>\n" +
     "        <div class=\"card\">\n" +
     "            <a class=\"image\" href=\"/giftideas/forher\">\n" +
     "                <img src=\"/assets/giftideas/category/forHer.jpg\" alt=\"For Her\" class=\"load\" />\n" +
@@ -1754,8 +1797,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                </a>\n" +
     "            </div>\n" +
     "        </div>\n" +
-    "\n" +
-    "    </div>\n" +
     "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/cool\">\n" +
     "            <img src=\"/assets/giftideas/category/cool.jpg\" alt=\"Cool\" class=\"load\" />\n" +
@@ -2109,10 +2150,10 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"clear\"></div>\n" +
-    "</div>\n" +
+    "    </div>\n" +
     "\n" +
-    "</div>"
+    "    <div class=\"clear\"></div>\n" +
+    "</div>\n"
   );
 
 
@@ -3875,14 +3916,17 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/scripts/product/product-search.html',
     "<!--<div class=\"product-link wrapper\" ng-controller=\"ProductLinkController\">-->\n" +
-    "<div id=\"product-search-anchor\" class=\"product-link\">\n" +
-    "    <div class=\"search wrapper\">\n" +
-    "        <div class=\"inputs\">\n" +
-    "            <input id=\"product-search-input\" class=\"text-input\" type=\"text\" name=\"product-link\" placeholder=\"SEARCH HERE FOR THE PERFECT GIFT...\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\"/><button id=\"product-search-button\" class=\"submit searchbtn\" ng-click=\"submit()\">SEARCH</button>\n" +
+    "<div id=\"product-search-anchor\" class=\"product-link ui container middle aligned center aligned\">\n" +
+    "    <div class=\"search wrapper ui form huge\">\n" +
+    "        <div class=\"inputs ui inline field button huge\">\n" +
+    "            <input id=\"product-search-input\" class=\"text-input\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\"/>\n" +
+    "\t\t\t<button id=\"product-search-button\" class=\"submit searchbtn ui button primary icon large\" ng-click=\"submit()\">\n" +
+    "\t\t\t\t<i class=\"search icon\"></i>\n" +
+    "\t\t\t</button>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div id=\"categories-container hidden\">\n" +
+    "    <div id=\"categories-container\" class=\"ui hidden\">\n" +
     "      <div class=\"categories\">\n" +
     "        <p><strong>BRANDS:</strong></p>\n" +
     "        <ul>\n" +
@@ -4352,9 +4396,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/scripts/static-pages/concierge/concierge.html',
     "<div class=\"concierge static-pages\" ng-controller=\"ConciergeController\">\n" +
     "  <div class=\"headerwrap\">\n" +
-    "    <h1>Gift Concierge Is Standing By</h1>\n" +
-    "    <p>Need help coming up with ideas, finding a specific gift, or setting up your gift? Send any gift request and we can help.</p>\n" +
-    "    <a class=\"button red\" target=\"_blank\" href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">Contact Now</a>\n" +
+    "    <h1>The Gift Concierge Is Standing By</h1>\n" +
+    "    <h4>Need help coming up with ideas, finding a specific gift, or setting up your gift? Send any gift request and we can help.</h4>\n" +
+    "    <a class=\"ui right labeled icon button orange huge\"  href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">\n" +
+    "\t\tContact Now\n" +
+    "\t\t<i class=\"comment icon\"></i>\n" +
+    "\t  </a>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main\">\n" +
@@ -4426,11 +4473,11 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/scripts/static-pages/giftideas/giftideas.html',
     "<div class=\"giftideas wrapper static-pages\" ng-controller=\"GiftideasController\">\n" +
-    "    <!-- ==== HEADERWRAP ==== -->\n" +
     "    <div class=\"headerwrap\" name=\"home\" title=\"GiftStarter Team\" ng-show=\"!category\">\n" +
     "        <h1>Find The Perfect Gift</h1>\n" +
-    "        <p>It's that easy.  Weddings, baby showers, birthdays, any occasion - simply find the perfect gift, share it with friends & family so they can pitch in, and we'll take care of shipping it... including a handmade card.</p>\n" +
-    "    </div><!-- /headerwrap -->\n" +
+    "        <h4>It's that easy. What's on your mind?</h4>\n" +
+    "    \t<gs-product-search></gs-product-search>\n" +
+    "\t</div>\n" +
     "\n" +
     "    <ng-include src=\"'/scripts/giftideas/giftideas.ng.html'\"></ng-include>\n" +
     "\n" +
@@ -4452,8 +4499,11 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"howitworks static-pages\" ng-controller=\"HowItWorksController\">\n" +
     "  <div class=\"headerwrap\">\n" +
     "    <h1>How It Works</h1>\n" +
-    "    <p>GiftStarter is the place to give and get meaningful gifts.<br />Gift and pay for ANY product or service TO anyone WITH anyone.</p>\n" +
-    "    <a class=\"button red\" target=\"_blank\" href=\"/concierge\">Ask A Question</a>\n" +
+    "    <h4>GiftStarter is the place to give and get meaningful gifts.<br />Gift and pay for ANY product or service TO anyone WITH anyone.</h4>\n" +
+    "    <a class=\"ui right labeled icon button purple huge\"  href=\"/concierge\">\n" +
+    "\t\tAsk a Question\n" +
+    "\t\t<i class=\"right arrow icon\"></i>\n" +
+    "\t  </a>\n" +
     "  </div>\n" +
     "\n" +
     "  <div class=\"main\">\n" +
@@ -4495,6 +4545,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "          GiftStarter is the best way to bring family and friends together to give an amazing gift. You start it -- and we help you with the rest. When you use GiftStarter, you don't have to collect the money or chase people down for cash.<br />It only takes a couple minutes to launch a campaign for your gift.\n" +
     "          <br />Start an amazing gift today! Once it is complete, we handle ensuring the card with everyone's messages and the gift is shipped!\n" +
     "        </p>\n" +
+    "\t\t  \n" +
     "      </div>\n" +
     "      <div id=\"glossary\" ng-show=\"sectionShown == 'glossary'\">\n" +
     "        <h2>Giftstarter Glossary</h2>\n" +
@@ -12829,14 +12880,15 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
 
 	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
 
-		function isFull() {
+		function fullContainer() {
 			return($location.path() === '/join') ? true : false;
 		}
-		function padHeader() {
+		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
-		$scope.fullContainer = isFull();
-		$scope.paddedContainer = padHeader();
+		$scope.fullContainer = fullContainer();
+		$scope.paddedContainer = padContainer();
+		//alert($scope.fullContainer = " - " + $scope.paddedContainer);
 
 	};
 
@@ -12852,19 +12904,19 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
         '$anchorScroll',
         ViewController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
-      function isFull() {
+      function fullContainer() {
 			return($location.path() === '/join') ? true : false;
 		}
-		function padHeader() {
+		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
 		//when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         //$location.hash($routeParams.scrollTo);
         //$anchorScroll();
-		$rootScope.fullContainer = isFull();
-		$rootScope.paddedContainer = padHeader();
-		//alert($rootScope.fullContainer = " - " + $rootScope.paddedContainer);
+		$rootScope.fullContainer = fullContainer();
+		$rootScope.paddedContainer = padContainer();
+		//alert($rootScope.fullContainer = " r-r " + $rootScope.paddedContainer);
 		
 		// semantic transition on view change
 		jQuery('#angular-view').transition('fade in');

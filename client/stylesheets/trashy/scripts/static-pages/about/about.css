@@ -9,17 +9,17 @@ iframe[name='google_conversion_frame'] {
 
 .static-pages {
   clear: both;
-  padding-bottom: 50px;
-  text-align: center; }
+  padding-bottom: 50px; }
   .static-pages a {
     color: #e44028; }
   .static-pages .headerwrap {
     color: white;
-    margin: 0 auto 50px auto;
+    margin: 66px auto 50px auto;
     height: 300px;
     padding-top: 30px;
     text-align: center;
-    width: 100%; }
+    width: 100%;
+    background-size: cover; }
     .static-pages .headerwrap h1 {
       color: white;
       -webkit-font-smoothing: antialiased; }
@@ -64,15 +64,6 @@ iframe[name='google_conversion_frame'] {
         .static-pages .headerwrap p {
           width: 80%; } }
   .static-pages a.button {
-    background-color: white;
-    border: #e44028 2px solid;
-    border-radius: 25px;
-    clear: left;
-    color: #e44028;
-    display: inline-block;
-    font: 1.25em Gotham, sans-serif;
-    padding: 14px 53px 10px 53px;
-    text-decoration: none;
     -webkit-font-smoothing: antialiased;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
@@ -83,7 +74,6 @@ iframe[name='google_conversion_frame'] {
     -o-transition: all 0.2s;
     transition: all 0.2s; }
     .static-pages a.button:hover {
-      background-color: #ea7063;
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)";
       filter: alpha(opacity=70);
       zoom: 1; }

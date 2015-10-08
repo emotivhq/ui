@@ -1,11 +1,14 @@
 <div class="howitworks static-pages" ng-controller="HowItWorksController">
   <div class="headerwrap">
     <h1>Crowdfunding for Gifts</h1>
-    <p>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</p>
-    <a class="button red" target="_blank" href="/concierge">Ask A Question</a>
+    <h4>Let us tell you a bit more about how it works.<br />GiftStarter is the place to give and get meaningful gifts. Gift and pay for ANY product or service TO anyone WITH anyone.</h4>
+    <a class="ui right labeled icon button purple huge" href="/join">
+		Get Started
+		<i class="add user icon"></i>
+	  </a>
   </div>
 
-  <div class="main">
+  <div class="main ui middle aligned stackable grid container">
     <div class="menu">
       <div class="menu-wrapper" ng-click="sectionShown = 'welcome'" ng-class="{selected: sectionShown == 'welcome'}">
         <div class="menu-item">
@@ -36,14 +39,23 @@
 
     <div id="selector-bar"></div>
 
-    <div class="content">
+    <div class="content ui container main full">
       <div id="welcome" ng-show="sectionShown == 'welcome'">
-        <h2>Welcome to GiftStarter!</h2>
-        <h4>Start amazing gifts here -- ones you are proud to give, and they're happy to get.</h4>
-        <p class="sub">
-          GiftStarter is the best way to bring family and friends together to give an amazing gift. You start it -- and we help you with the rest. When you use GiftStarter, you don't have to collect the money or chase people down for cash.<br />It only takes a couple minutes to launch a campaign for your gift.
-          <br />Start an amazing gift today! Once it is complete, we handle ensuring the card with everyone's messages and the gift is shipped!
-        </p>
+<div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      <div class="row">
+        <div class="seven wide column">
+          <h3 class="ui header">Give amazing gifts.</h3>
+          <p>GiftStarter is the best way to bring family and friends together to give an amazing gift. When it's complete - receive a handmade card with everyone's message and the gift. </p>
+          <h3 class="ui header">Launch a campaign.</h3>
+          <p>Share & promote your campaign with friends. We take care of collecting the money.</p>
+        </div>
+        <div class="nine wide right floated column">
+          <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
       </div>
       <div id="glossary" ng-show="sectionShown == 'glossary'">
         <h2>Giftstarter Glossary</h2>
@@ -159,9 +171,15 @@
         </div>
         <p class="clear sub">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered. <br /><br />Give a remarkable gift today.</p>
       </div>
+      
+	<div class="row ui container main full middle aligned center aligned grid">
+        <div class="center aligned column">
+          <a href="/giftideas" class="ui huge button" id="gifting-button">Discover Gift Ideas</a>
+        </div>
+      </div>
     </div>
     <div class="clear">
-      <a href="/giftideas" alt="" class="button" id="gifting-button">Start Gifting</a>
+      
     </div>
 
     <hr />

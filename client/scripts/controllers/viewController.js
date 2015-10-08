@@ -8,14 +8,15 @@
 
 	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
 
-		function isFull() {
+		function fullContainer() {
 			return($location.path() === '/join') ? true : false;
 		}
-		function padHeader() {
+		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
-		$scope.fullContainer = isFull();
-		$scope.paddedContainer = padHeader();
+		$scope.fullContainer = fullContainer();
+		$scope.paddedContainer = padContainer();
+		//alert($scope.fullContainer = " - " + $scope.paddedContainer);
 
 	};
 
@@ -31,19 +32,19 @@
         '$anchorScroll',
         ViewController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
-      function isFull() {
+      function fullContainer() {
 			return($location.path() === '/join') ? true : false;
 		}
-		function padHeader() {
+		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
 		//when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         //$location.hash($routeParams.scrollTo);
         //$anchorScroll();
-		$rootScope.fullContainer = isFull();
-		$rootScope.paddedContainer = padHeader();
-		//alert($rootScope.fullContainer = " - " + $rootScope.paddedContainer);
+		$rootScope.fullContainer = fullContainer();
+		$rootScope.paddedContainer = padContainer();
+		//alert($rootScope.fullContainer = " r-r " + $rootScope.paddedContainer);
 		
 		// semantic transition on view change
 		jQuery('#angular-view').transition('fade in');

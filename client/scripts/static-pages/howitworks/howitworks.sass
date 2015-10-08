@@ -38,21 +38,15 @@
         margin: 10px
 
   .content
-    font: 1em "Roboto", sans-serif
-    margin: 0 auto
     padding: 55px
-    text-align: center
     h2
       padding: 20px
     h3, h4
-      margin: 20px auto
-      width: 60%
       @include apply-at-size("tablet")
         width: 90%
       @include apply-at-size("phone")
         width: 90%
     h4
-      text-align: left
     .sub
       padding-bottom: 30px
       margin: 0 auto
@@ -139,13 +133,13 @@
 
   .selected
     @include apply-at-size("desktop")
-      border-bottom: 8px solid $gs-lightteal
-    background-color: $gs-lightteal !important
+      border-bottom: 8px solid $gs-gray
+    background-color: $gs-gray !important
     color: white
 
   #selector-bar
     height: 6px
-    background-color: $gs-lightteal
+    background-color: $gs-gray
     padding: 0
     margin: 0 auto
     width: 91.3%

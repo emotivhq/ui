@@ -34,8 +34,6 @@ iframe[name='google_conversion_frame'] {
       #giftideas .products .saveforlater .product-message a, #giftideas .singleproduct .saveforlater .product-message a {
         color: #DD494E;
         font-size: 13px; }
-    #giftideas .products .grid .tile, #giftideas .singleproduct .grid .tile {
-      margin: 5px 5px; }
     #giftideas .products .textleft, #giftideas .singleproduct .textleft {
       margin: 0;
       text-align: left; }
@@ -77,19 +75,17 @@ iframe[name='google_conversion_frame'] {
     float: right; }
   #giftideas .grid .group.left .tile.last {
     float: none !important; }
-  #giftideas .grid .tile {
-    width: 45%; }
-    #giftideas .grid .tile a {
-      color: #555555; }
-    #giftideas .grid .tile .tilelabel {
-      height: 50px;
-      font-weight: 700;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 98%; }
-      #giftideas .grid .tile .tilelabel .price {
-        font-weight: 300; }
+  #giftideas .grid .tile a {
+    color: #555555; }
+  #giftideas .grid .tile .tilelabel {
+    height: 50px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 98%; }
+    #giftideas .grid .tile .tilelabel .price {
+      font-weight: 300; }
   #giftideas .gsbutton {
     display: inline-block;
     height: 30px;

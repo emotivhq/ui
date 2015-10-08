@@ -28,14 +28,6 @@ gs-product-search div.product-link {
       gs-product-search div.product-link div.inputs #product-search-input {
         font-size: 11px; } }
     gs-product-search div.product-link div.inputs input {
-      background: #eee;
-      border: 0;
-      color: #333;
-      height: 34px;
-      -webkit-input-placeholder: #333;
-      padding: 0.18em 0.6em;
-      margin: 10px 0 10px 10px;
-      width: 25em;
       -webkit-font-smoothing: antialiased; }
       @media screen and (max-width: 1030px) {
         gs-product-search div.product-link div.inputs input {

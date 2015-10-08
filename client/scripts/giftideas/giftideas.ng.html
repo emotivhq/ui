@@ -1,6 +1,6 @@
-<div id="giftideas">
+<div id="giftideas" class="ui container">
 
-    <div ng-show="product" class="singleproduct">
+    <div ng-show="product" class="singleproduct main pad">
         <div class="head">
             <div class="hero">
                 <div class="ui one cards">
@@ -39,12 +39,12 @@
         <div class="clear"></div>
     </div>
 
-    <div ng-show="category" class="products">
+    <div ng-show="category" class="products main pad">
         <div class="ui stackable four column grid">
             <div class="eight wide column">
-                <h2 class="ui center aligned header" ng-show="!product">
-  			<img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
-		</h2>
+            	<h2 class="ui center aligned header" ng-show="!product">
+  					<img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
+				</h2>
             </div>
             <div class="eight wide column" ng-show="!product">
                 <div class="ui piled segment padded center aligned secondary">
@@ -56,9 +56,12 @@
             </div>
         </div>
         <div class="clear"></div>
-        <div class="grid">
-            <div ng-repeat="group in groups" class="group ui two stackable cards" ng-class-odd="'left'" ng-class-even="'right'">
-                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='ui link card tile' title="{{product.productNameStripped}}">
+        <h2 class="ui center aligned header" ng-show="!product">
+			Similar Ideas
+		</h2>
+        <ul class="grid ui segment" rn-carousel rn-carousel-index="carouselIndex" style="min-height: 430px; padding-top: 16px; background: #f9f9f9;">
+            <li ng-repeat="group in groups" class="ui stackable cards" >
+                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='ui link card tile column wide eight' title="{{product.productNameStripped}}" style="display: inline-block;">
                     <a href="{{categoryPath}}/{{product.productSlug}}" class="image">
                         <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
                         <div class="content">
@@ -67,11 +70,13 @@
                         </div>
                     </a>
                 </div>
-            </div>
-        </div>
+            </li>
+        </ul>
+		<div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
+		<div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
         <div class="clear"></div>
     </div>
-
+	
     <h1 class="vertical medium top bottom">What’s popular</h1>
     <div class="categories ui three stackable link cards">
 
@@ -139,8 +144,6 @@
                 </a>
             </div>
         </div>
-
-    </div>
     <div class="card">
         <a class="image" href="/giftideas/cute">
             <img src="/assets/giftideas/category/cute.jpg" alt="Cute" class="load" />
@@ -194,6 +197,7 @@
                 </a>
             </div>
         </div>
+    </div>
         <div class="card">
             <a class="image" href="/giftideas/forher">
                 <img src="/assets/giftideas/category/forHer.jpg" alt="For Her" class="load" />
@@ -226,8 +230,6 @@
                 </a>
             </div>
         </div>
-
-    </div>
     <div class="card">
         <a class="image" href="/giftideas/cool">
             <img src="/assets/giftideas/category/cool.jpg" alt="Cool" class="load" />
@@ -581,7 +583,7 @@
         </div>
     </div>
 
-    <div class="clear"></div>
-</div>
+    </div>
 
+    <div class="clear"></div>
 </div>

@@ -98,7 +98,9 @@ module.exports = function(grunt) {
                     '../client/bower_components/angular-resource/angular-resource.min.js',
                     '../client/bower_components/devicejs/lib/device.min.js',
                     '../client/bower_components/angular-ui-date/src/date.js',
-                    '../client/scripts/utilities/ng-ab/ng-ab.module.js',
+ 					'../client/bower_components/angular-carousel/dist/angular-carousel.min.js',
+					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js',
+                   '../client/scripts/utilities/ng-ab/ng-ab.module.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.service.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.factory.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.config.js',
@@ -235,7 +237,8 @@ module.exports = function(grunt) {
 //					'../client/bower_components/angular-aria/angular-aria.min.js',
 					'../client/bower_components/angular-animate/angular-animate.min.js',
 //					'../client/bower_components/angular-material/angular-material.min.js',
-					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js'
+					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js',
+					'../client/bower_components/angular-carousel/dist/angular-carousel.min.js'
 				],
                 dest: '../client/scripts/webapp/angular.js'
             },			
@@ -377,7 +380,7 @@ module.exports = function(grunt) {
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css'],
+                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css', '../client/bower_components/angular-carousel/dist/angular-carousel.min.css'],
                 dest: '../client/stylesheets/compiled.css'
             },
             sassyvendor: {

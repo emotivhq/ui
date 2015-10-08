@@ -9,17 +9,17 @@ iframe[name='google_conversion_frame'] {
 
 .static-pages {
   clear: both;
-  padding-bottom: 50px;
-  text-align: center; }
+  padding-bottom: 50px; }
   .static-pages a {
     color: #e44028; }
   .static-pages .headerwrap {
     color: white;
-    margin: 0 auto 50px auto;
+    margin: 66px auto 50px auto;
     height: 300px;
     padding-top: 30px;
     text-align: center;
-    width: 100%; }
+    width: 100%;
+    background-size: cover; }
     .static-pages .headerwrap h1 {
       color: white;
       -webkit-font-smoothing: antialiased; }
@@ -64,15 +64,6 @@ iframe[name='google_conversion_frame'] {
         .static-pages .headerwrap p {
           width: 80%; } }
   .static-pages a.button {
-    background-color: white;
-    border: #e44028 2px solid;
-    border-radius: 25px;
-    clear: left;
-    color: #e44028;
-    display: inline-block;
-    font: 1.25em Gotham, sans-serif;
-    padding: 14px 53px 10px 53px;
-    text-decoration: none;
     -webkit-font-smoothing: antialiased;
     -webkit-transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
@@ -83,7 +74,6 @@ iframe[name='google_conversion_frame'] {
     -o-transition: all 0.2s;
     transition: all 0.2s; }
     .static-pages a.button:hover {
-      background-color: #ea7063;
       -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=” $value * 100 “)";
       filter: alpha(opacity=70);
       zoom: 1; }
@@ -156,29 +146,21 @@ iframe[name='google_conversion_frame'] {
         .howitworks .menu .menu-wrapper {
           margin: 10px; } }
   .howitworks .content {
-    font: 1em "Roboto", sans-serif;
-    margin: 0 auto;
-    padding: 55px;
-    text-align: center; }
+    padding: 55px; }
     .howitworks .content h2 {
       padding: 20px; }
-    .howitworks .content h3, .howitworks .content h4 {
-      margin: 20px auto;
-      width: 60%; }
-      @media only screen and (min-width: 668px) and (max-width: 1024px) {
-        .howitworks .content h3, .howitworks .content h4 {
-          width: 90%; } }
-      @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
-        .howitworks .content h3, .howitworks .content h4 {
-          width: 90%; } }
-      @media only screen and (max-width: 667px) {
-        .howitworks .content h3, .howitworks .content h4 {
-          width: 90%; } }
-      @media only screen and (max-width: 375px) and (orientation: portrait) {
-        .howitworks .content h3, .howitworks .content h4 {
-          width: 90%; } }
-    .howitworks .content h4 {
-      text-align: left; }
+    @media only screen and (min-width: 668px) and (max-width: 1024px) {
+      .howitworks .content h3, .howitworks .content h4 {
+        width: 90%; } }
+    @media only screen and (min-width: 376px) and (max-width: 768px) and (orientation: portrait) {
+      .howitworks .content h3, .howitworks .content h4 {
+        width: 90%; } }
+    @media only screen and (max-width: 667px) {
+      .howitworks .content h3, .howitworks .content h4 {
+        width: 90%; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .howitworks .content h3, .howitworks .content h4 {
+        width: 90%; } }
     .howitworks .content .sub {
       padding-bottom: 30px;
       margin: 0 auto;
@@ -286,14 +268,14 @@ iframe[name='google_conversion_frame'] {
   .howitworks #gifting-button {
     margin-bottom: 20px; }
   .howitworks .selected {
-    background-color: #238471 !important;
+    background-color: #616161 !important;
     color: white; }
     @media only screen and (min-width: 1025px) {
       .howitworks .selected {
-        border-bottom: 8px solid #238471; } }
+        border-bottom: 8px solid #616161; } }
   .howitworks #selector-bar {
     height: 6px;
-    background-color: #238471;
+    background-color: #616161;
     padding: 0;
     margin: 0 auto;
     width: 91.3%; }
