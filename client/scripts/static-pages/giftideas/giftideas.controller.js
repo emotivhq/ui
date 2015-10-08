@@ -31,24 +31,29 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
 
     $scope.saveGiftIdeaForLater = function(product) {
         $scope.isSavingForLater = true;
-        var saver = ProductService.saveForLater('GiftIdeas',
-            product.giftStartLink,
-            parseInt(product.productPrice * 100),
-            product.productName,
-            product.productDescription,
-            product.productImage.indexOf('http') === 0 ? product.productImage : ('/assets/giftideas/category' + product.productImage)
-        );
-        if(saver) {
-            saver.success(function () {
-                $scope.productMessage = 'The gift has been saved to your <a href=\'/users/\' + UserService.uid + \'\'>profile</a>.';
+        if(UserService.loggedIn) {
+            var saver = ProductService.saveForLater(
+                "GiftIdeas",
+                product.giftStartLink,
+                parseInt(product.productPrice*100),
+                product.productName,
+                product.productDescription,
+                product.productImage.indexOf('http')==0?product.productImage:('/assets/giftideas/category'+product.productImage)
+            );
+            if(saver) {
+                saver.success(function (response) {
+                    $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>.";
+                    $scope.isSavingForLater = false;
+                })
+                .error(function (response) {
+                    $scope.productMessage = "An error occurred while saving the product: " + response['error'];
+                    $scope.isSavingForLater = false;
+                });
+            } else {
                 $scope.isSavingForLater = false;
-            })
-            .error(function () {
-                $scope.productMessage = 'An error occurred while saving the product: ' + response['error'];
-                $scope.isSavingForLater = false;
-            });
+            }
         } else {
-            $scope.isSavingForLater = false;
+            $location.path('/login');
         }
     };
 
