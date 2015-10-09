@@ -11,7 +11,7 @@ GiftStarterApp.config(['ezfbProvider', '$httpProvider', facebookConfig]);
 function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
     $routeProvider
         .when('/',
-        {templateUrl: '/views/is/is.html', reloadOnSearch: false})
+        {templateUrl: '/views/home/home.html', reloadOnSearch: false})
         .when('/yourvillage',
         {templateUrl: '/views/yourvillage/yourvillage.html', reloadOnSearch: false})
         .when('/test',

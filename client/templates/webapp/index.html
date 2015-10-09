@@ -105,11 +105,15 @@
     <gs-toast></gs-toast>
     
     {% if not hide_header %}
-	    {% include 'header/header.html' %}
+        {% include 'sidebar/semantic-sidebar-main.html' %}
+        {% include 'sidebar/semantic-sidebar-user.html' %}
 	{% endif %}
     
 	<div class="pusher" data-ng-class="{grey: greybg}" >
-    
+        {% if not hide_header %}
+            {% include 'header/header.html' %}
+        {% endif %}
+        
         {% if hide_body %}
 	        <div id="angular-view" ng-view gs-view style="display:none"></div>
 	    {% else %}
