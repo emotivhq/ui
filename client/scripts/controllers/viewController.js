@@ -14,6 +14,10 @@
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
+		function redBG() {
+			return($location.path() === '/join') ? true : false;
+		}		
+		$scope.redBG = redBG();
 		$scope.fullContainer = fullContainer();
 		$scope.paddedContainer = padContainer();
 		//alert($scope.fullContainer = " - " + $scope.paddedContainer);
@@ -38,10 +42,14 @@
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
+		function redBG() {
+			return($location.path() === '/join') ? true : false;
+		}	
 		//when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         //$location.hash($routeParams.scrollTo);
         //$anchorScroll();
+		$rootScope.redBG = redBG();
 		$rootScope.fullContainer = fullContainer();
 		$rootScope.paddedContainer = padContainer();
 		//alert($rootScope.fullContainer = " r-r " + $rootScope.paddedContainer);

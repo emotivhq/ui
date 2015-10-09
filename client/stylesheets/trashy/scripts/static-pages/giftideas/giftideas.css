@@ -11,7 +11,8 @@ div.wrapper.giftideas {
   color: #555;
   -webkit-font-smoothing: antialiased;
   -webkit-overflow-scrolling: touch;
-  color: #222; }
+  color: #222;
+  margin-bottom: 0 !important; }
   @media only screen and (max-width: 667px) {
     div.wrapper.giftideas {
       margin-left: 0px !important;
@@ -27,14 +28,17 @@ div.wrapper.giftideas {
    * MEDIA QUERIES
    * ========================================================================== */
   /*ipad portrait */ }
-  @media only screen and (max-width: 667px) {
-    .giftideas .headerwrap {
-      margin: 1em auto 0 !important;
-      height: 350px !important; } }
-  @media only screen and (max-width: 375px) and (orientation: portrait) {
-    .giftideas .headerwrap {
-      margin: 1em auto 0 !important;
-      height: 350px !important; } }
+  .giftideas .headerwrap {
+    background: url("/assets/bg/7-compressor.jpg") no-repeat center top;
+    background-size: cover; }
+    @media only screen and (max-width: 667px) {
+      .giftideas .headerwrap {
+        margin: 1em auto 0 !important;
+        height: 350px !important; } }
+    @media only screen and (max-width: 375px) and (orientation: portrait) {
+      .giftideas .headerwrap {
+        margin: 1em auto 0 !important;
+        height: 350px !important; } }
   .giftideas .scrollbox {
     overflow-y: auto;
     -webkit-line-clamp: 9;

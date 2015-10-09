@@ -304,7 +304,7 @@ iframe[name='google_conversion_frame'] {
     background-color: #616161;
     padding: 0;
     margin: 0 auto;
-    width: 91.3%; }
+    width: 1000%; }
     @media only screen and (min-width: 668px) and (max-width: 1024px) {
       .howitworks #selector-bar {
         display: none; } }

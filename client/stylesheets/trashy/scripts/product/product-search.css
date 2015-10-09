@@ -222,7 +222,7 @@ gs-product-search section.products {
           text-decoration: underline; } }
     @media screen and (min-width: 1030px) {
       gs-product-search section.products div.product-container.selected {
-        height: 37em; } }
+        height: 32em; } }
     gs-product-search section.products div.product-container.selected div.product {
       cursor: default; }
       @media screen and (min-width: 1030px) {

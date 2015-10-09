@@ -162,7 +162,6 @@ span.circle {
 
 h1 {
   color: #000;
-  font: 500 2.5rem Roboto, sans-serif;
   margin: 10px auto; }
   h1.accent {
     color: #e44028; }
@@ -173,20 +172,14 @@ h1 {
     font-size: 1em;
     text-decoration: none; }
 
-h2 {
-  font: 300 1.4rem Roboto, sans-serif; }
-  h2.black {
-    color: #000; }
+h2.black {
+  color: #000; }
 
-h3 {
-  font: 300 1.4rem Roboto, sans-serif; }
-  h3.black {
-    color: #000; }
+h3.black {
+  color: #000; }
 
-h4 {
-  font: 300 1.2rem Roboto, sans-serif; }
-  h4.accent {
-    color: #e44028; }
+h4.accent {
+  color: #e44028; }
 
 /*  ANGULAR VIEW  */
 @media screen and (max-width: 1030px) {

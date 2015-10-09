@@ -3241,7 +3241,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "          <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
     "        </div>\n" +
     "        <div class=\"nine wide right floated column\">\n" +
-    "          <iframe width=\"100%\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "          <iframe width=\"100%\" height=\"320\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -3952,7 +3952,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "        <div class=\"clear\"></div>\n" +
     "        <h2 class=\"ui center aligned header\" ng-show=\"!product\">\n" +
-    "\t\t\tSimilar Ideas\n" +
+    "\t\t\t{{category.categoryName}} Gift Ideas\n" +
     "\t\t</h2>\n" +
     "        <ul class=\"grid ui segment\" rn-carousel rn-carousel-index=\"carouselIndex\" style=\"min-height: 430px; padding-top: 16px; background: #f9f9f9;\">\n" +
     "            <li ng-repeat=\"group in groups\" class=\"ui stackable cards\" >\n" +
@@ -6287,9 +6287,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "      </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"loading\" ng-show=\"loading\">\n" +
-    "        <img src=\"/assets/loading.gif\"/>\n" +
-    "    </div>\n" +
+    "\t<div class=\"ui active dimmer\"  ng-show=\"loading\">\n" +
+    "    <div class=\"ui loader\"></div>\n" +
+    "  </div>\n" +
     "\n" +
     "    <div class=\"failed\" ng-show=\"failed\">\n" +
     "        <img src=\"/assets/failed.png\"/>\n" +
@@ -6305,41 +6305,42 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
-    "        <div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
-    "            <div class=\"product\">\n" +
-    "                <div class=\"image-container\">\n" +
-    "                    <span class=\"vert-align-helper\"></span>\n" +
-    "                    <img ng-click=\"goToProduct($index);\" ng-src=\"{{product.imgUrl}}\" onerror=\"angular.element($(this)).scope().fixImage(this);\" index=\"{{$index}}\" />\n" +
-    "                </div>\n" +
-    "                <div class=\"product-details\">\n" +
-    "                    <h4 class=\"title\" ng-click=\"goToProduct($index, $event);\">{{product.title}}</h4>\n" +
-    "                    <p class=\"description ui raised segments\" ng-bind-html=\"product.description\"></p>\n" +
-    "\t\t\t\t\t<div class=\"price block ui statistic\">\n" +
-    "                        <div class=\"value\">\n" +
-    "                            <i class=\"ui dollar icon grey small\"></i> {{product.price / 100 | number : 2}}\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"buttons\">\n" +
-    "\t\t\t\t<button ng-click=\"startCampaignFrom($index);$event.stopPropagation();\" target=\"_self\" class=\"giftstart primary ui huge fluid button icon primary\">\n" +
-    "                    <i class=\"gift icon\"></i>\n" +
-    "                    GiftStart It\n" +
-    "                </button>\n" +
-    "\t\t\t\t\t\t<button ng-click=\"saveForLater($index);$event.stopPropagation();\" class=\"giftstart ui icon medium fluid button vertical top small\">\n" +
-    "                        \t<i class=\"bookmark icon\"></i>\n" +
-    "                        \tSave for Later\n" +
-    "                        \t<img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
-    "                    \t</button>\n" +
-    "                        <div class=\"product-message\" ng-show=\"product.selected\" ng-bind-html=\"productMessage\"></div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <button class=\"cancel\" ng-click=\"hideProductDetails();$event.stopPropagation();\">X</button>\n" +
+    "<section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
+    "    <div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
+    "        <div class=\"product\">\n" +
+    "            <div class=\"image-container\">\n" +
+    "                <span class=\"vert-align-helper\"></span>\n" +
+    "                <img ng-click=\"goToProduct($index);\" ng-src=\"{{product.imgUrl}}\" onerror=\"angular.element($(this)).scope().fixImage(this);\" index=\"{{$index}}\" />\n" +
     "            </div>\n" +
+    "            <div class=\"product-details\">\n" +
+    "                <h4 class=\"title\" ng-click=\"goToProduct($index, $event);\">{{product.title}}</h4>\n" +
+    "                <p class=\"description ui raised segments\" ng-bind-html=\"product.description\"></p>\n" +
+    "                <div class=\"ui buttons two\">\n" +
+    "                    <button ng-click=\"startCampaignFrom($index);$event.stopPropagation();\" target=\"_self\" class=\"giftstart primary ui huge button icon primary labeled\">\n" +
+    "                        <i class=\"gift left icon\"></i>\n" +
+    "                        GiftStart It\n" +
+    "                    </button>\n" +
+    "                    <div class=\"or\"></div>\n" +
+    "                    <button ng-click=\"saveForLater($index);$event.stopPropagation();\" class=\"giftstart ui icon huge button\">\n" +
+    "                        <i class=\"bookmark right icon\"></i>\n" +
+    "                        Save for Later\n" +
+    "                        <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
+    "                    </button>\n" +
+    "                </div>\n" +
+    "                <div class=\"product-message\" ng-show=\"product.selected\" ng-bind-html=\"productMessage\"></div>\n" +
+    "\t\t\t\t<div class=\"price block ui statistic middle aligned center aligned container\">\n" +
+    "                \t<div class=\"value\">\n" +
+    "                    \t<i class=\"ui dollar icon grey small\"></i> {{product.price / 100 | number : 2}}\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <button class=\"cancel\" ng-click=\"hideProductDetails();$event.stopPropagation();\">X</button>\n" +
     "        </div>\n" +
-    "        <div class=\"page-buttons ui container vertical medium top bottom\" ng-show=\"products.length > 10\" >\n" +
-    "            <a class=\"ui button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"ui button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
-    "        </div>\n" +
-    "    </section>\n" +
+    "    </div>\n" +
+    "    <div class=\"page-buttons ui container vertical medium top bottom\" ng-show=\"products.length > 10\">\n" +
+    "        <a class=\"ui button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"ui button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
+    "    </div>\n" +
+    "</section>\n" +
     "    <!--p class=\"need-help-concierge\">Can't find the gift you want? Simply contact our <a href=\"/concierge\" ng-click=\"giftConciergeClicked()\">Gift Concierge</a> and we'll find it for you. Or visit our <a href=\"/giftideas\">Gift Ideas</a> page for more ideas.</p-->\n" +
     "</div>"
   );
@@ -6653,14 +6654,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "      Seattle, WA 98118</p>\n" +
     "    </div>\n" +
     "  </div>\n" +
-    "\t  <div class=\"row ui middle aligned center aligned grid vertical top medium\">\n" +
-    "        <div class=\"center aligned column\">\n" +
-    "          <a href=\"/giftideas\" class=\"ui huge button fuild icon labeled secondary\" id=\"gifting-button\">\n" +
-    "\t\t\t  <i class=\"gift icon left\"></i> \n" +
-    "\t\t\t  Discover Gift Ideas\n" +
-    "\t\t\t</a>\n" +
-    "        </div>\n" +
-    "      </div>\n" +
+    "\n" +
     "\n" +
     "</div>\n"
   );
@@ -6824,7 +6818,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/static-pages/giftideas/giftideas.html',
-    "<div class=\"giftideas wrapper static-pages\" ng-controller=\"GiftideasController\">\n" +
+    "<div class=\"giftideas wrapper static-pages ui\" ng-controller=\"GiftideasController\">\n" +
     "    <div class=\"headerwrap\" name=\"home\" title=\"Gift Ideas\" ng-show=\"!category\">\n" +
     "        <h1>Find The Perfect Gift</h1>\n" +
     "        <h4>It's that easy. What's on your mind?</h4>\n" +
@@ -7039,64 +7033,77 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/scripts/static-pages/partners/partners.html',
     "<div class=\"partners static-pages\" ng-controller=\"PartnersController\">\n" +
-    "  <div class=\"headerwrap\">\n" +
-    "    <h1>PARTNER WITH US</h1>\n" +
-    "    <p>We love our brand partners. Let your customers be your advocates to their family and friends through gifting. Partner with us today, setup is fast and easy.</p>\n" +
-    "  </div>\n" +
+    "    <div class=\"headerwrap\">\n" +
+    "        <div class=\"ui container\">\n" +
     "\n" +
-    "  <div class=\"main\">\n" +
-    "    <div id=\"love\">\n" +
-    "    <h2>Why do Brands Love GiftStarter?</h2>\n" +
-    "    <p class=\"sub\">GiftStarter is the best group gifting service for brands. We enable seamless social commerce with our patent-pending technology. We ship a handmade card and the gift with every GiftStart. Using social, we connect family and friends to gift-pportunities. GiftStarters love our partner products and services. In fact, they are gifted 4:1 over others. Join us and give your customers a better way to gift, together.</p>\n" +
-    "      <div class=\"love-item\">\n" +
-    "        <img src=\"assets/partners/img/money-icon-2x.png\" alt=\"Increase Sales Opportunities\">\n" +
-    "        <br>\n" +
-    "        <h4>Increase Sales Opportunities</h4>\n" +
-    "        <p>Broaden the reach of your target audience and increase brand exposure with GiftStarter. Group gifts expand your reach and sell additional products and services to audiences who may not have previously been exposed to your brand. Additionally, our Gift Concierge service promotes our brand partners by providing users with group gift ideas, helping to gain new customers.</p>\n" +
-    "      </div>\n" +
-    "      <div class=\"love-item\">\n" +
-    "        <img src=\"assets/partners/img/truck-icon-2x.png\" alt=\"We Take Care of Delivery\">\n" +
-    "        <br>\n" +
-    "        <h4>We Take Care of Delivery</h4>\n" +
-    "        <p>No hassling with special shipment inputs. GiftStarter works directly with the initiators of GiftStarts to collect recipient shipping information and directly inputs this into your current e-commerce flow.</p>\n" +
-    "      </div>\n" +
-    "      <div class=\"love-item\">\n" +
-    "          <img src=\"assets/partners/img/no-fee-icon-2x.png\" alt=\"No Setup Fee\">\n" +
-    "          <br>\n" +
-    "          <h4>No Setup Fee (Early Partners Only)</h4>\n" +
-    "          <p>Using our seamless integration of the GiftStarter button, we work directly with partners to ensure end-to-end integration of the group gifting experience into your e-commerce platform. This complimentary service is provided through our technical and partner teams. Setup typically takes less then 20 minutes.</p>\n" +
-    "      </div>\n" +
-    "      <div class=\"love-item\">\n" +
-    "          <img src=\"assets/partners/img/thumb-2x.png\" alt=\"Our Users, Your Brand Ambassadors\">\n" +
-    "          <br>\n" +
-    "          <h4>Our Users, Your Brand Ambassadors</h4>\n" +
-    "          <p>Partnering with GiftStarter brings the added benefit of engaging directly with ambassadors of your brands, as group gifting allows users to easily promote your products and services through their circle of family and friends. GiftStarter delivers a higher level of perceived value  providing more reasons to purchase including social media integration and handcrafted cards.</p>\n" +
-    "      </div>\n" +
+    "            <h1>Partner With Us</h1>\n" +
+    "            <h3>\t\t\n" +
+    "\t\t\tWe enable seamless social commerce with our patent-pending technology. We ship a handmade card and the gift with every GiftStart. Using social, we connect family and friends to gift opportunities. GiftStarters love our partner products and services.\n" +
+    "\t\t</h3>\n" +
+    "    <a class=\"ui right labeled icon button yellow huge\"  href=\"mailto:partner@giftstarter.com\">\n" +
+    "\t\tMake a Partner Inquiry\n" +
+    "\t\t<i class=\"comment icon\"></i>\n" +
+    "\t  </a>\n" +
+    "        </div>\n" +
+    "\n" +
     "    </div>\n" +
-    "    <hr />\n" +
-    "    <h2>Featured Partners</h2>\n" +
-    "    <div>\n" +
-    "      <div class=\"partner-item\">\n" +
-    "        <img src=\"assets/partners/img/butter-logo-square.png\" alt=\"butterLondon - Partner\">\n" +
     "\n" +
-    "        <p>“With the growing importance of social influence\n" +
-    "        and mobile shopping to our customers, we needed to explore a solution that allows our Bezzie Mates to shop and give socially this holiday season. GiftStarter was the perfect partner to celebrate this customer experience and support group giftting across social and digital platforms.”</p>\n" +
-    "        <h4><b>Leslie Freitag</b></h4>\n" +
-    "        <h5>President & CEO</h5>\n" +
-    "      </div>\n" +
-    "      <div class=\"partner-item\">\n" +
-    "        <img src=\"assets/partners/img/bh-logo.png\" alt=\"B&H Photo - Partner\">\n" +
+    "    <div class=\"main\">\n" +
+    "        <div id=\"love\" class=\"ui container\">\n" +
+    "            <h2 class=\"text aligned centered center ui\">Brands Love GiftStarter</h2>\n" +
     "\n" +
-    "        <p>“I just love Giftstarter! I think it creates an easy platform for us to present large order items as gifts for photographers, providing a great benefit to B&H customers you can't find anywhere else!”</p>\n" +
-    "        <h4><b>Menashe Wodinksy</b></h4>\n" +
-    "        <h5>Online Marketing Strategist</h5>\n" +
-    "      </div>\n" +
+    "            <div class=\"ui stackable items\">\n" +
+    "                <div class=\"ui item\">\n" +
+    "                    <a class=\"image\" href=\"#\">\n" +
+    "                        <img src=\"assets/partners/img/money-icon-2x.png\" alt=\"Increase Sales Opportunities\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <div class=\"header\">Increase Sales Opportunities</div>\n" +
+    "                        <div class=\"description\">\n" +
+    "                            <p>Broaden the reach of your target audience and increase brand exposure with GiftStarter. Group gifts expand your reach and sell additional products and services to audiences who may not have previously been exposed to your brand.</p>\n" +
+    "                            <p>Additionally, our Gift Concierge service promotes our brand partners by providing users with group gift ideas, helping to gain new customers.</p>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"ui item\">\n" +
+    "                    <a class=\"image\" href=\"#\">\n" +
+    "                        <img src=\"assets/partners/img/truck-icon-2x.png\" alt=\"We Take Care of Delivery\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <div class=\"header\">We Take Care of Delivery</div>\n" +
+    "                        <div class=\"description\">\n" +
+    "                            <p>No hassling with special shipment inputs. GiftStarter works directly with the initiators of GiftStarts to collect recipient shipping information and directly inputs this into your current e-commerce flow.</p>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"ui item\">\n" +
+    "                    <a class=\"image\" href=\"#\">\n" +
+    "                        <img src=\"assets/partners/img/no-fee-icon-2x.png\" alt=\"No Setup Fee\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <div class=\"header\">No Setup Fee</div>\n" +
+    "                        <div class=\"description\">\n" +
+    "                            <p>Using our seamless integration of the GiftStarter button, we work directly with partners to ensure end-to-end integration of the group gifting experience into your e-commerce platform.</p>\n" +
+    "                            <p>This complimentary service is provided through our technical and partner teams. Setup typically takes less then 20 minutes.</p>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"ui item\">\n" +
+    "                    <a class=\"image\" href=\"#\">\n" +
+    "                        <img src=\"assets/partners/img/thumb-2x.png\" alt=\"Our Users, Your Brand Ambassadors\">\n" +
+    "                    </a>\n" +
+    "                    <div class=\"content\">\n" +
+    "                        <div class=\"header\">Our Users, Your Brand Ambassadors</div>\n" +
+    "                        <div class=\"description\">\n" +
+    "                            <p>Partnering with GiftStarter brings the added benefit of engaging directly with ambassadors of your brands, as group gifting allows users to easily promote your products and services through their circle of family and friends.</p>\n" +
+    "                            <p>GiftStarter delivers a higher level of perceived value providing more reasons to purchase including social media integration and handcrafted cards.</p>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
+    "        </div>\n" +
     "    </div>\n" +
-    "    <hr />\n" +
-    "    <h2>Start Delighting Customers Now</h2>\n" +
-    "    <p>Expand your brand and better connect with audiences through group gifting.</p>\n" +
-    "    <a href=\"mailto:partner@giftstarter.com\" class=\"button\">PARTNER WITH US</a>\n" +
-    "  </div>\n" +
     "</div>"
   );
 
@@ -7114,6 +7121,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\t  </div>\n" +
     "\t</div>\n" +
     "\n" +
+    "<div class=\"ui container\">\n" +
     "  <div class=\"main container ui piled segment\">\n" +
     "    <h3 class=\"ui header vertical top medium center aligned\">\n" +
     "\t\tTo get a feel for how we're bringing the gift economy online, check out some of these articles.\n" +
@@ -7131,7 +7139,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "  </a>\n" +
     "\t  </div>\n" +
-    "\n" +
+    "</div>\t\n" +
     "  </div>\n" +
     "\n" +
     "</div>\n"
@@ -8429,24 +8437,29 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
 
     $scope.saveGiftIdeaForLater = function(product) {
         $scope.isSavingForLater = true;
-        var saver = ProductService.saveForLater('GiftIdeas',
-            product.giftStartLink,
-            parseInt(product.productPrice * 100),
-            product.productName,
-            product.productDescription,
-            product.productImage.indexOf('http') === 0 ? product.productImage : ('/assets/giftideas/category' + product.productImage)
-        );
-        if(saver) {
-            saver.success(function () {
-                $scope.productMessage = 'The gift has been saved to your <a href=\'/users/\' + UserService.uid + \'\'>profile</a>.';
+        if(UserService.loggedIn) {
+            var saver = ProductService.saveForLater(
+                "GiftIdeas",
+                product.giftStartLink,
+                parseInt(product.productPrice*100),
+                product.productName,
+                product.productDescription,
+                product.productImage.indexOf('http')==0?product.productImage:('/assets/giftideas/category'+product.productImage)
+            );
+            if(saver) {
+                saver.success(function (response) {
+                    $scope.productMessage = "The gift has been saved to your <a href='/users/"+UserService.uid+"'>profile</a>.";
+                    $scope.isSavingForLater = false;
+                })
+                .error(function (response) {
+                    $scope.productMessage = "An error occurred while saving the product: " + response['error'];
+                    $scope.isSavingForLater = false;
+                });
+            } else {
                 $scope.isSavingForLater = false;
-            })
-            .error(function () {
-                $scope.productMessage = 'An error occurred while saving the product: ' + response['error'];
-                $scope.isSavingForLater = false;
-            });
+            }
         } else {
-            $scope.isSavingForLater = false;
+            $location.path('/login');
         }
     };
 
@@ -15234,6 +15247,10 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
+		function redBG() {
+			return($location.path() === '/join') ? true : false;
+		}		
+		$scope.redBG = redBG();
 		$scope.fullContainer = fullContainer();
 		$scope.paddedContainer = padContainer();
 		//alert($scope.fullContainer = " - " + $scope.paddedContainer);
@@ -15258,10 +15275,14 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
 		function padContainer() {
 			return($location.path() === '/login') ? true : false;
 		}
+		function redBG() {
+			return($location.path() === '/join') ? true : false;
+		}	
 		//when the route is changed scroll to the proper element.
       $rootScope.$on('$routeChangeSuccess', function(newRoute, oldRoute) {
         //$location.hash($routeParams.scrollTo);
         //$anchorScroll();
+		$rootScope.redBG = redBG();
 		$rootScope.fullContainer = fullContainer();
 		$rootScope.paddedContainer = padContainer();
 		//alert($rootScope.fullContainer = " r-r " + $rootScope.paddedContainer);
