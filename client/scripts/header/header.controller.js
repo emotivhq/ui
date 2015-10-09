@@ -118,6 +118,10 @@
         function isSlimMenu() {
             return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
         }
+		
+        function isCreateMenu() {
+            return(!UserService.loggedIn && $location.path() === '/create') ? true : false;
+        }
 
         function isMainMenu() {
             return(!UserService.loggedIn && !isSlimMenu()) ? true : false;

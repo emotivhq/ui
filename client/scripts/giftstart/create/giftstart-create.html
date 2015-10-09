@@ -33,12 +33,15 @@
                     <br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>
                 <div class="more-parts">Add Pieces
                     <br/>
-                    <img class="linky" ng-click="moreParts($event)" src="/assets/circle_red_plus.png">
+					<button ng-click="moreParts($event)" class="circular ui icon button large">
+  						<i class="icon plus large"></i>
+					</button>
                 </div>
                 <div class="fewer-parts-mobile">Remove Pieces
                     <br/>
-                    <img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png">
-                </div>
+					<button ng-click="fewerParts($event)" class="circular ui icon button large">
+  						<i class="icon plus large"></i>
+					</button>                </div>
                 <span class="parts-control"><span class="numtiles"> {{x*y}} Pieces</span>
                 <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span>
                 </span>

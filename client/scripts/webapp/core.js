@@ -3240,8 +3240,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "          <h3 class=\"ui header\">Launch a campaign.</h3>\n" +
     "          <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
     "        </div>\n" +
-    "        <div class=\"nine wide right floated column\">\n" +
-    "          <iframe width=\"100%\" height=\"320\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "        <div class=\"nine wide right floated column youtube\">\n" +
+    "\t\t\t<div class=\"ui embed\" data-source=\"youtube\" data-id=\"AKk6Po6csM0\"></div>\n" +
     "        </div>\n" +
     "      </div>\n" +
     "    </div>\n" +
@@ -4580,12 +4580,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>\n" +
     "                <div class=\"more-parts\">Add Pieces\n" +
     "                    <br/>\n" +
-    "                    <img class=\"linky\" ng-click=\"moreParts($event)\" src=\"/assets/circle_red_plus.png\">\n" +
+    "\t\t\t\t\t<button ng-click=\"moreParts($event)\" class=\"circular ui icon button large\">\n" +
+    "  \t\t\t\t\t\t<i class=\"icon plus large\"></i>\n" +
+    "\t\t\t\t\t</button>\n" +
     "                </div>\n" +
     "                <div class=\"fewer-parts-mobile\">Remove Pieces\n" +
     "                    <br/>\n" +
-    "                    <img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\">\n" +
-    "                </div>\n" +
+    "\t\t\t\t\t<button ng-click=\"fewerParts($event)\" class=\"circular ui icon button large\">\n" +
+    "  \t\t\t\t\t\t<i class=\"icon plus large\"></i>\n" +
+    "\t\t\t\t\t</button>                </div>\n" +
     "                <span class=\"parts-control\"><span class=\"numtiles\"> {{x*y}} Pieces</span>\n" +
     "                <span class=\"money\" ng-hide=\"fetchingTaxRate\"> ${{ totalPrice/100/x/y | number : 2 }} <img class=\"loading\"  src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/> each* <span class=\"tax-note\">(+tax)</span></span>\n" +
     "                </span>\n" +
@@ -6226,10 +6229,10 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "\t<div class=\"ui search\" ng-show=\"searchMenu\">\n" +
     "            <div class=\"ui transparent left icon input\">\n" +
-    "                <input id=\"product-search-input\" class=\"prompt\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\">\n" +
-    "                <a id=\"product-search-button\" ng-click=\"submit()\">\n" +
+    "                <a href=\"#\" id=\"product-search-button\" ng-click=\"submit()\">\n" +
     "\t\t\t\t\t<i class=\"search icon\"></i>\n" +
     "\t\t\t\t</a>\n" +
+    "                <input id=\"product-search-input\" class=\"prompt\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\">\n" +
     "            </div>\n" +
     "            <div class=\"results\"></div>\n" +
     "        </div>\n" +
@@ -6300,31 +6303,36 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    \t<div class=\"ui loader\"></div>\n" +
     " \t</div>\n" +
     "\n" +
-    "    <div class=\"failed\" ng-show=\"failed\">\n" +
+    "    <div class=\"failed\" ng-show=\"failed && !searchMenu\">\n" +
     "        <img src=\"/assets/failed.png\"/>\n" +
     "        <div>\n" +
     "            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href=\"mailto:giftconcierge@giftstarter.com\" ng-click=\"giftConciergeClicked()\">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"failed\" ng-show=\"results_empty\">\n" +
+    "    <div class=\"failed\" ng-show=\"results_empty && !searchMenu\">\n" +
     "        <img src=\"/assets/failed.png\"/>\n" +
     "        <div>\n" +
     "            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href=\"mailto:giftconcierge@giftstarter.com\" ng-click=\"giftConciergeClicked()\">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "<section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\" ng-hide=\"searchMenu\">\n" +
-    "    <div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
-    "        <div class=\"product\">\n" +
+    "<section id=\"search-products-section\" class=\"products ui container\" ng-class=\"{hidden: products.length == 0 || searchMenu, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
+    "<div  class=\"ui cards stackable four link\" >\n" +
+    "\t<div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
+    "        <div class=\"product content\">\n" +
     "            <div class=\"image-container\">\n" +
     "                <span class=\"vert-align-helper\"></span>\n" +
     "                <img ng-click=\"goToProduct($index);\" ng-src=\"{{product.imgUrl}}\" onerror=\"angular.element($(this)).scope().fixImage(this);\" index=\"{{$index}}\" />\n" +
     "            </div>\n" +
     "            <div class=\"product-details\">\n" +
-    "                <h4 class=\"title\" ng-click=\"goToProduct($index, $event);\">{{product.title}}</h4>\n" +
+    "\t\t\t\t<h2 class=\"ui header\">\n" +
+    "  \t\t\t\t<div class=\"content\">\n" +
+    "   \t\t\t\t {{product.title}}\n" +
+    " \t\t\t\t </div>\n" +
+    "\t\t\t\t</h2>\n" +
     "                <p class=\"description ui raised segments\" ng-bind-html=\"product.description\"></p>\n" +
-    "                <div class=\"ui buttons two\">\n" +
+    "                <div class=\"ui buttons two\" style=\"margin-top: 2rem\">\n" +
     "                    <button ng-click=\"startCampaignFrom($index);$event.stopPropagation();\" target=\"_self\" class=\"giftstart primary ui huge button icon primary labeled\">\n" +
     "                        <i class=\"gift left icon\"></i>\n" +
     "                        GiftStart It\n" +
@@ -6337,18 +6345,19 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    </button>\n" +
     "                </div>\n" +
     "                <div class=\"product-message\" ng-show=\"product.selected\" ng-bind-html=\"productMessage\"></div>\n" +
-    "\t\t\t\t<div class=\"price block ui statistic middle aligned center aligned container\">\n" +
-    "                \t<div class=\"value\">\n" +
-    "                    \t<i class=\"ui dollar icon grey small\"></i> {{product.price / 100 | number : 2}}\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
     "            </div>\n" +
     "            <button class=\"cancel\" ng-click=\"hideProductDetails();$event.stopPropagation();\">X</button>\n" +
     "        </div>\n" +
+    "\t\t<div class=\"extra content\">\n" +
+    "    \t\t<span class=\"right floated\">\n" +
+    "      \t\t\t<i class=\"dollar green icon\"></i>{{product.price / 100 | number : 2}}\n" +
+    "    \t\t</span>\n" +
+    "  \t\t</div>\n" +
     "    </div>\n" +
     "    <div class=\"page-buttons ui container vertical medium top bottom\" ng-show=\"products.length > 10\">\n" +
     "        <a class=\"ui button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"ui button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
     "    </div>\n" +
+    "</div>\n" +
     "</section>\n" +
     "    <!--p class=\"need-help-concierge\">Can't find the gift you want? Simply contact our <a href=\"/concierge\" ng-click=\"giftConciergeClicked()\">Gift Concierge</a> and we'll find it for you. Or visit our <a href=\"/giftideas\">Gift Ideas</a> page for more ideas.</p-->\n" +
     "</div>"
@@ -6496,11 +6505,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "      <h4>Community</h4>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"member-item\">\n" +
-    "      <img src=\"assets/about/img/christie.png\" alt=\"\" />\n" +
-    "      <h3><b>Christie Gettler</b></h3>\n" +
-    "      <h4>Cofounder</h4>\n" +
-    "    </div>\t\n" +
     "</div>\n" +
     "\n" +
     "\n" +
@@ -8612,6 +8616,16 @@ function ConciergeController($scope, $http) {
     var HowItWorksController = function ($scope, $location) {
         $scope.location = $location;
         $scope.sectionShown = "welcome";
+		/* semantic ui embed */
+		jQuery('.youtube .ui.embed').embed({
+			parameters: {
+        		autohide       : false,
+        		autoplay       : false,
+        		modestbranding : 1
+      			}
+		});
+		
+		
     }
 
     app.controller('HowItWorksController', [
@@ -9394,6 +9408,10 @@ function gsPrintUrl($location, $http) {
 
         function isSlimMenu() {
             return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
+        }
+		
+        function isCreateMenu() {
+            return(!UserService.loggedIn && $location.path() === '/create') ? true : false;
         }
 
         function isMainMenu() {

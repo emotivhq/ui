@@ -9,6 +9,16 @@
     var HowItWorksController = function ($scope, $location) {
         $scope.location = $location;
         $scope.sectionShown = "welcome";
+		/* semantic ui embed */
+		jQuery('.youtube .ui.embed').embed({
+			parameters: {
+        		autohide       : false,
+        		autoplay       : false,
+        		modestbranding : 1
+      			}
+		});
+		
+		
     }
 
     app.controller('HowItWorksController', [
