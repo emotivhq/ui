@@ -1,0 +1,16 @@
+{% raw %}
+<!-- User Menu - Mobile -->
+<div class="ui left vertical menu wide sidebar inverted" ng-hide="!userMenu">
+    <div class="ui item">
+        <div class="ui action input">
+            <input id="searchValMobile" type="text" placeholder="Search Gifts Ideas">
+            <button class="ui teal button" onclick="top.location='/search/'+jQuery('#searchValMobile').val()">Search</button>
+        </div>
+    </div>
+    <a class="item" href="/">Home</a>
+    <a class="item" href="/is">How It Works</a>
+    <a class="item" href="/discover">Discover</a>
+    <a class="item" href="/concierge">Gift Concierge</a>
+    <a class="item" href="/faq">FAQs</a>
+</div>
+{% endraw %}

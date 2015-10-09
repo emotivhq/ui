@@ -103,45 +103,46 @@
 <body ng-cloak>
     <gs-menu></gs-menu>
     <gs-toast></gs-toast>
-	<div class="pusher" data-ng-class="{grey: greybg}" >
+    
     {% if not hide_header %}
-	{% include 'header/header.html' %}
+	    {% include 'header/header.html' %}
 	{% endif %}
-		
-    {% if hide_body %}
-	<div id="angular-view" ng-view gs-view style="display:none"></div>
-	{% else %}
-	<div id="angular-view" ng-controller="ViewController as view" ng-view gs-view class="ui main fade" data-ng-class="{full: fullContainer, pad: paddedContainer, red: redBG}" ng-animate=" 'fade' "></div>
-	{% endif %}
-	
-
-    {% if not hide_footer %}
-	{% include 'footer/semantic-footer.html' %}
-	{% endif %}
+    
+	<div class="pusher" data-ng-class="{grey: greybg}" >
+    
+        {% if hide_body %}
+	        <div id="angular-view" ng-view gs-view style="display:none"></div>
+	    {% else %}
+	        <div id="angular-view" ng-controller="ViewController as view" ng-view gs-view class="ui main fade" data-ng-class="{full: fullContainer, pad: paddedContainer, red: redBG}" ng-animate=" 'fade' "></div>
+	    {% endif %}
+	    
+        {% if not hide_footer %}
+	        {% include 'footer/semantic-footer.html' %}
+	    {% endif %}
 	</div>
 
     <gs-popover></gs-popover>
 	<script src="/ui/ui.min.js"></script>
 	<script src="/scripts/ui/ui.js"></script>
 	{% if hide_body %}
-    <script type='text/javascript'>
-        $(document).ready(function() {
-            $('a').attr("target","_top");
-            $('#login_button').attr("onclick","window.top.location.href='/#login';return false;");
-            $('#logout_button').attr("onclick","window.top.location.href='/#logout';return false;");
-            $('#header-menu-button img').attr("onclick","window.top.location.href='/#menu';return false;");
-            $('.popover-container').attr("style","display:none");
-        });
-    </script>
+        <script type='text/javascript'>
+            $(document).ready(function() {
+                $('a').attr("target","_top");
+                $('#login_button').attr("onclick","window.top.location.href='/#login';return false;");
+                $('#logout_button').attr("onclick","window.top.location.href='/#logout';return false;");
+                $('#header-menu-button img').attr("onclick","window.top.location.href='/#menu';return false;");
+                $('.popover-container').attr("style","display:none");
+            });
+        </script>
     {% else %}
-    <script type='text/javascript'>
-        $(document).ready(function() {
-            if(window.location.hash=="#login"){$('#login_button').click()}
-            else if(window.location.hash=="#logout"){$('#logout_button').click()}
-            else if(window.location.hash=="#menu"){$('#header-menu-button img').click()}
-            window.viewportUnitsBuggyfill.init();
-        });
-    </script>
+        <script type='text/javascript'>
+            $(document).ready(function() {
+                if(window.location.hash=="#login"){$('#login_button').click()}
+                else if(window.location.hash=="#logout"){$('#logout_button').click()}
+                else if(window.location.hash=="#menu"){$('#header-menu-button img').click()}
+                window.viewportUnitsBuggyfill.init();
+            });
+        </script>
     {% endif %}
     <a href="https://plus.google.com/116424249306917038363" rel="publisher"></a>
 </body>
