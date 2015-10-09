@@ -3077,8 +3077,8 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/discover',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
-        .when('/discover/:term*',
-        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        .when('/discover/:searchTerm',
+        {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/giftideas',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas/:term*',
@@ -4355,7 +4355,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "    <div class=\"card\">\n" +
     "        <a class=\"image\" href=\"/giftideas/employee\">\n" +
-    "            <img src=\"/assets/giftideas/category/Seahawks.jpg\" alt=\"Employee\" class=\"load\" />\n" +
+    "            <img src=\"/assets/giftideas/category/employee.jpg\" alt=\"Employee\" class=\"load\" />\n" +
     "        </a>\n" +
     "        <div class=\"content\">\n" +
     "            <a class=\"header\" href=\"/giftideas/employee\">Employee</a>\n" +
@@ -6215,8 +6215,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
   $templateCache.put('/scripts/product/product-search.html',
     "<!--<div class=\"product-link wrapper\" ng-controller=\"ProductLinkController\">-->\n" +
-    "<div id=\"product-search-anchor\" class=\"product-link ui container middle aligned center aligned\">\n" +
-    "    <div class=\"search wrapper ui form huge\">\n" +
+    "<div id=\"product-search-anchor\" class=\"product-link ui middle aligned center aligned\">\n" +
+    "    <div class=\"search wrapper ui form huge container\" ng-hide=\"searchMenu\">\n" +
     "        <div class=\"inputs ui inline field segment\">\n" +
     "            <input id=\"product-search-input\" class=\"text-input\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\"/>\n" +
     "\t\t\t<button id=\"product-search-button\" class=\"submit searchbtn ui button primary icon large\" ng-click=\"submit()\">\n" +
@@ -6224,6 +6224,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\t\t\t</button>\n" +
     "        </div>\n" +
     "    </div>\n" +
+    "\t<div class=\"ui search\" ng-show=\"searchMenu\">\n" +
+    "            <div class=\"ui transparent left icon input\">\n" +
+    "                <input id=\"product-search-input\" class=\"prompt\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\">\n" +
+    "                <a id=\"product-search-button\" ng-click=\"submit()\">\n" +
+    "\t\t\t\t\t<i class=\"search icon\"></i>\n" +
+    "\t\t\t\t</a>\n" +
+    "            </div>\n" +
+    "            <div class=\"results\"></div>\n" +
+    "        </div>\n" +
     "\n" +
     "    <div id=\"categories-container\" class=\"ui hidden\">\n" +
     "      <div class=\"categories\">\n" +
@@ -6287,9 +6296,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "      </div>\n" +
     "    </div>\n" +
     "\n" +
-    "\t<div class=\"ui active dimmer\"  ng-show=\"loading\">\n" +
-    "    <div class=\"ui loader\"></div>\n" +
-    "  </div>\n" +
+    "\t<div class=\"ui active dimmer\"  ng-show=\"loading\" style=\"position: fixed;\">\n" +
+    "    \t<div class=\"ui loader\"></div>\n" +
+    " \t</div>\n" +
     "\n" +
     "    <div class=\"failed\" ng-show=\"failed\">\n" +
     "        <img src=\"/assets/failed.png\"/>\n" +
@@ -6305,7 +6314,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "<section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
+    "<section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\" ng-hide=\"searchMenu\">\n" +
     "    <div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
     "        <div class=\"product\">\n" +
     "            <div class=\"image-container\">\n" +
@@ -13081,7 +13090,7 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
     };
 
     this.searchProducts = function(search) {
-        if(window.history) {window.history.replaceState({},'GiftStarter Search: '+search,'/search/'+encodeURIComponent(search));}
+        if(window.history) {window.history.replaceState({},'GiftStarter Search: '+search,'/discover/'+encodeURIComponent(search));}
         Analytics.track('product', 'search submitted');
         $http({method: 'GET',
             url: '/products/' + encodeURIComponent(search) + '.json'})
@@ -13107,7 +13116,7 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
 
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
-function gsProductSearch(ProductService, $location, Analytics, UserService, $window,
+function gsProductSearch(UserService, ProductService, $location, Analytics, UserService, $window,
                          $timeout, $rootScope) {
     function link(scope, element) {
         scope.loading = false;
@@ -13118,6 +13127,9 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         scope.selectedProduct = -1;
         scope.productMessage = '';
         scope.isSavingForLater = false;
+		scope.loggedIn = UserService.loggedIn;
+		this.loggedIn = UserService.loggedIn;
+
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
             'gift concierge email clicked')};
@@ -13198,7 +13210,7 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         });
 
         scope.selectedPage = 1;
-        scope.pageSize = 10;
+        scope.pageSize = 8;
         scope.numPages = 0;
         scope.pageNumbers = [];
 
@@ -13330,7 +13342,10 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
     return {
         restrict: 'E',
         link: link,
-        templateUrl: '/scripts/product/product-search.html'
+        templateUrl: '/scripts/product/product-search.html',
+		scope: {
+        	searchMenu: '=menu'
+      	}
     }
 }
 

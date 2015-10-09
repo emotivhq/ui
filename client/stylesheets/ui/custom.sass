@@ -4,6 +4,8 @@ html, body
   font-size: 16px
 h1, h2, h3, h4, h5
   font-weight: 500
+.hidden
+  display:none !important;
 
 .vertical
   &.small.bottom
@@ -56,7 +58,7 @@ header.slim
   background-color: #FFFFFF !important
   border: 0px solid #DDD
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
-  z-index: 10 !important
+  z-index: 1000 !important
 
 .overlay.fixed .menu
   left: 800px
@@ -121,6 +123,11 @@ header.slim
     opacity: 1
   &.ng-leave-active
     opacity: 0
+
+.ui.dimmer
+  z-index: 5
+.ui.active.dimmer
+  opacity: .7
 
 // mobile menus
 

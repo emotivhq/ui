@@ -6,7 +6,7 @@
 
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
-function gsProductSearch(ProductService, $location, Analytics, UserService, $window,
+function gsProductSearch(UserService, ProductService, $location, Analytics, UserService, $window,
                          $timeout, $rootScope) {
     function link(scope, element) {
         scope.loading = false;
@@ -17,6 +17,9 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         scope.selectedProduct = -1;
         scope.productMessage = '';
         scope.isSavingForLater = false;
+		scope.loggedIn = UserService.loggedIn;
+		this.loggedIn = UserService.loggedIn;
+
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
             'gift concierge email clicked')};
@@ -97,7 +100,7 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         });
 
         scope.selectedPage = 1;
-        scope.pageSize = 10;
+        scope.pageSize = 8;
         scope.numPages = 0;
         scope.pageNumbers = [];
 
@@ -229,6 +232,9 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
     return {
         restrict: 'E',
         link: link,
-        templateUrl: '/scripts/product/product-search.html'
+        templateUrl: '/scripts/product/product-search.html',
+		scope: {
+        	searchMenu: '=menu'
+      	}
     }
 }

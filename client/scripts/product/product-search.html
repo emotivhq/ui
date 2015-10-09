@@ -1,6 +1,6 @@
 <!--<div class="product-link wrapper" ng-controller="ProductLinkController">-->
-<div id="product-search-anchor" class="product-link ui container middle aligned center aligned">
-    <div class="search wrapper ui form huge">
+<div id="product-search-anchor" class="product-link ui middle aligned center aligned">
+    <div class="search wrapper ui form huge container" ng-hide="searchMenu">
         <div class="inputs ui inline field segment">
             <input id="product-search-input" class="text-input" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>
 			<button id="product-search-button" class="submit searchbtn ui button primary icon large" ng-click="submit()">
@@ -8,6 +8,15 @@
 			</button>
         </div>
     </div>
+	<div class="ui search" ng-show="searchMenu">
+            <div class="ui transparent left icon input">
+                <input id="product-search-input" class="prompt" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null">
+                <a id="product-search-button" ng-click="submit()">
+					<i class="search icon"></i>
+				</a>
+            </div>
+            <div class="results"></div>
+        </div>
 
     <div id="categories-container" class="ui hidden">
       <div class="categories">
@@ -71,7 +80,7 @@
       </div>
     </div>
 
-	<div class="ui active dimmer"  ng-show="loading">
+	<div class="ui active dimmer"  ng-show="loading" style="position: fixed;">
     	<div class="ui loader"></div>
  	</div>
 
@@ -89,7 +98,7 @@
         </div>
     </div>
 
-<section id="search-products-section" class="products ui main cards stackable two link" ng-class="{hidden: products.length == 0, segment: products.length > 0}" style="margin-top: 3em;">
+<section id="search-products-section" class="products ui main cards stackable two link" ng-class="{hidden: products.length == 0, segment: products.length > 0}" style="margin-top: 3em;" ng-hide="searchMenu">
     <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
         <div class="product">
             <div class="image-container">
