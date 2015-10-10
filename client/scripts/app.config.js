@@ -69,7 +69,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/search/',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/discover',
-        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        {templateUrl: '/views/discover/discover.html', reloadOnSearch: false})
         .when('/discover/:searchTerm',
         {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/giftideas',

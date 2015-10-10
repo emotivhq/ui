@@ -1,8 +1,0 @@
-@font-face {
-  font-family: Gotham;
-  src: url('/assets/fonts/Gotham-Book.woff') format("woff"), url('/assets/fonts/Gotham-Book.ttf') format("truetype"); }
-
-@font-face {
-  font-family: Gotham;
-  font-style: italic;
-  src: url('/assets/fonts/Gotham-BookItalic.woff') format("woff"), url('/assets/fonts/Gotham-BookItalic.ttf') format("truetype"); }

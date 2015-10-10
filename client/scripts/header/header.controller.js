@@ -132,14 +132,16 @@
         }
 
         function isMainMenu() {
-            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu()) ? true : false;
+            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu() && !isCreateMenu()) ? true : false;
         }
+
 
         function updateMenuType() {
             $scope.slimMenu = isSlimMenu();
             $scope.mainMenu = isMainMenu();
             $scope.userMenu = isUserMenu();
             $scope.homeMenu = isHomeMenu();
+            $scope.createMenu = isCreateMenu();
         }
         updateMenuType();
 

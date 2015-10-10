@@ -19,6 +19,8 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         scope.isSavingForLater = false;
 		scope.loggedIn = UserService.loggedIn;
 		this.loggedIn = UserService.loggedIn;
+		scope.searchMenu = false;
+		scope.searchResults = false;
 
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
@@ -234,7 +236,8 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         link: link,
         templateUrl: '/scripts/product/product-search.html',
 		scope: {
-        	searchMenu: '=menu'
+        	searchMenu: '=menu',
+        	searchResults: '=results'
       	}
     }
 }

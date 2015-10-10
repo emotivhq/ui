@@ -1,6 +1,6 @@
 <!--<div class="product-link wrapper" ng-controller="ProductLinkController">-->
 <div id="product-search-anchor" class="product-link ui middle aligned center aligned">
-    <div class="search wrapper ui form huge container" ng-hide="searchMenu">
+    <div class="search wrapper ui form huge container" ng-hide="searchMenu || searchResults">
         <div class="inputs ui inline field segment">
             <input id="product-search-input" class="text-input" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>
 			<button id="product-search-button" class="submit searchbtn ui button primary icon large" ng-click="submit()">
@@ -98,8 +98,9 @@
         </div>
     </div>
 
-<section id="search-products-section" class="products ui container" ng-class="{hidden: products.length == 0 || searchMenu, segment: products.length > 0}" style="margin-top: 3em;">
-<div  class="ui cards stackable four link" >
+<section id="search-products-section" class="products ui" ng-class="{hidden: products.length == 0, grid: products.length > 0}" style="margin-top: 3em;" ng-show="searchResults">
+	<div class="ui container">
+		<div class="ui cards stackable four link" >
 	<div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
         <div class="product content">
             <div class="image-container">
@@ -135,10 +136,20 @@
     		</span>
   		</div>
     </div>
-    <div class="page-buttons ui container vertical medium top bottom" ng-show="products.length > 10">
-        <a class="ui button linky" ng-click="decrementPage()">Previous</a><span class="page-number" ng-class="{selected: pageNumber == selectedPage}" ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)">{{pageNumber}}</span><a class="ui button linky" ng-click="incrementPage()">Next</a>
+    <div class="page-buttons ui vertical medium top bottom middle aligned center aligned grid" ng-show="products.length > 10">
+    <div class="ui pagination menu stackable">
+        <a ng-click="decrementPage()" class="icon item">
+          <i class="left chevron icon"></i>
+        </a>
+        <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item">{{pageNumber}}</a>
+        <a ng-click="incrementPage()" class="icon item">
+          <i class="right chevron icon"></i>
+        </a>
     </div>
+    </div>
+
 </div>
+	</div>
 </section>
     <!--p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p-->
 </div>

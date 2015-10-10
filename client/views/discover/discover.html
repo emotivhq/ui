@@ -1,11 +1,13 @@
-<div class="giftideas wrapper ui container main full" ng-controller="GiftideasController as search">
-    <div class="headerwrap" name="home" title="Discover" style="margin-bottom: 0;padding-bottom: 40px;}">
+<div class="giftideas wrapper static-pages ui" ng-controller="GiftideasController as discover">
+    <div class="headerwrap" name="home" title="Discover" ng-show="!category">
         <h1>Find The Perfect Gift</h1>
         <h4>It's that easy. What's on your mind?</h4>
     	<gs-product-search></gs-product-search>
 	</div>
+	
+    <gs-product-search results="true"></gs-product-search>
+	<ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
 
-	<gs-product-search results="true"></gs-product-search>
 
     <div ng-show="category || product" id="disclaimer" class="hidden">
         If the item you GiftStart has color, size or other options, please contact the Gift Concierge to ensure you get the item that best meets your specifications or if you have any other questions regarding your product selection.
