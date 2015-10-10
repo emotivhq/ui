@@ -6,6 +6,7 @@
  * To change this template use Tools | Templates.
  */
 $(document).ready(function () {
+    // overlay
     $('.overlay').visibility({
         type: 'fixed',
         offset: 80
@@ -22,7 +23,7 @@ $(document).ready(function () {
     });
     // create mobile menu sidebar and attach to menu open
     $('.ui.sidebar').sidebar('attach events', '.toc.item');
-    $('.ui.sidebar a.item').on('click', function() {
+    $('.ui.sidebar a.item').on('click', function () {
         $('.ui.sidebar').sidebar('hide');
     });
     // close message container

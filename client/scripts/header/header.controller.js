@@ -119,18 +119,27 @@
             return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
         }
 
-        function isMainMenu() {
-            return(!UserService.loggedIn && !isSlimMenu()) ? true : false;
-        }
-
         function isUserMenu() {
             return(UserService.loggedIn) ? true : false;
+        }
+
+        function isHomeMenu() {
+            return(!UserService.loggedIn && $location.path() === '/') ? true : false;
+        }
+
+        function isCreateMenu() {
+            return(!UserService.loggedIn && $location.path() === '/create') ? true : false;
+        }
+
+        function isMainMenu() {
+            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu()) ? true : false;
         }
 
         function updateMenuType() {
             $scope.slimMenu = isSlimMenu();
             $scope.mainMenu = isMainMenu();
             $scope.userMenu = isUserMenu();
+            $scope.homeMenu = isHomeMenu();
         }
         updateMenuType();
 

@@ -182,10 +182,6 @@ h4.accent {
   color: #e44028; }
 
 /*  ANGULAR VIEW  */
-@media screen and (max-width: 1030px) {
-  #angular-view {
-    margin: 1em auto; } }
-
 iframe[src^="https://apis.google.com"] {
   display: none; }
 

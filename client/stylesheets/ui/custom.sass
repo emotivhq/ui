@@ -36,15 +36,46 @@ header.slim
   height: 60px !important
 
 // top menu
-
-.main.menu
-  margin-top: 0
-  border-radius: 0
-  border: none
-  box-shadow: none
-  transition: box-shadow 0.5s ease, padding 0.5s ease
-  .item img.logo
-    margin-right: 1.5em
+.ui
+  &.main.menu
+    margin-top: 0
+    border-radius: 0
+    border: none
+    box-shadow: none
+    transition: box-shadow 0.5s ease, padding 0.5s ease
+    background-color: #FFFFFF
+    border: 0px solid #DDD
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
+    z-index: 1000 !important
+    &.inverted
+      background: transparent
+      border: none
+      box-shadow: none
+      position: absolute
+      left: 0
+      right: 0
+      -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .4));
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .4));
+      .item img.logo, .item .ui.inverted.button
+        opacity: .7;
+    .item, .menu
+      display: none
+    .item img.logo
+      margin-right: 1.5em
+  &.menu .right.item .item.help
+    display: none
+  &.main.menu .toc.item, &.menu .right.item .item
+    display: block
+  &.main.menu .header.item
+    display: block
+    padding-right: 0
+    margin-right: 0
+    padding-top: 2px
+  &.menu .item > .input input
+    border-radius: .28571429rem
+  &.main.menu.transparent
+    box-shadow: none
+    background: transparent
 
 .overlay
   float: left
@@ -54,38 +85,8 @@ header.slim
     left: 0
     transition: left 0.5s ease
 
-.ui.main.menu
-  background-color: #FFFFFF !important
-  border: 0px solid #DDD
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
-  z-index: 1000 !important
-
 .overlay.fixed .menu
   left: 800px
-
-.ui.menu
-  margin-top: 0
-
-.slim .ui.main.menu .toc.item
-  display: none
-
-.ui
-  &.main.menu
-    .item, .menu
-      display: none
-  &.menu .right.item .item.help
-    display: none
-  &.main.menu .toc.item, &.menu .right.item .item
-    display: block
-  &.main.menu .header.item
-    display: block
-    padding-right: 0
-    margin-right: 0
-  &.menu .item > .input input
-    border-radius: .28571429rem
-  &.main.menu.transparent
-    box-shadow: none
-    background: transparent
 
 // end top menus
 
@@ -169,11 +170,52 @@ div.rn-carousel-indicator span.active
     -webkit-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
     transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
 
+// home masthead
+.ui.masthead.home
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
+    background-size: cover
+    background-position: center top
+    box-shadow: inset 0 0 4rem rgba(0,0,0,.35)
+    position: relative;
+    min-height: 350px
+    padding: 1em 0em 
+    -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
+    
+    h1, h2, p
+        text-shadow: 0 0 5px rgba(0,0,0,.25)
+    
+    h1.ui.header
+        margin-top: 3em
+        margin-bottom: 0em
+        font-size: 3em
+        
+    h2
+        font-size: 1.3em
+        margin-top: 20px
+        margin-bottom: 2rem
+        
+    a
+        color: #fff
+        text-decoration: underline
+        &:hover
+            opacity: .7
+        
+    .ui.input
+        margin-bottom: .75em
+            
+    .ui.black.message
+        background: rgba(0,0,0,.65)
+        
+@media only screen and (min-width: 700px)
+    .ui.masthead.home
+        min-height: 700px
+
 // statistics
 
 .ui
   &.statistic > .value, &.statistics .statistic > .value
-    font-size: 1.7rem
+    font-size: 1.2rem
 
 // angular wizard
 

@@ -3160,32 +3160,42 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   'use strict';
 
   $templateCache.put('/views/home/home.html',
-    "<div class=\"home static-pages\" ng-controller=\"HomeController as home\">\n" +
-    "    <div class=\"headerwrap\">\n" +
+    "<div class=\"ui inverted masthead center aligned vertical segment home\" ng-controller=\"HomeController as home\">\n" +
+    "    <div class=\"ui text container\">\n" +
+    "        <h1 class=\"ui inverted header\">Group Gifting Made Simple</h1>\n" +
+    "        <h2>The easiest way for you and your friends, colleagues, or family members to give a personalized gift to someone that matters.</h2>\n" +
+    "        <div class=\"ui message black\">\n" +
+    "            <div class=\"content\">\n" +
+    "                <p>GiftStarter is <strong>always</strong> free to use as many times as you would like.</p>\n" +
+    "                <div class=\"ui left icon action input fluid\">\n" +
+    "                    <i class=\"envelope icon\"></i>\n" +
+    "                    <input type=\"text\" placeholder=\"Email Address\">\n" +
+    "                    <button class=\"ui teal button\">Start Gifting</button>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <!--     <div class=\"headerwrap\">\n" +
     "        <h1>Welcome to GiftStarter!</h1>\n" +
     "        <p>We are putting the emotion back into gifting. With GiftStarter you can give gifts you're proud to give, and they're happy to get. Make your lists. Find your community. Give better gifts.</p>\n" +
     "        <a name=\"productsearch\"></a>\n" +
     "        <gs-product-search></gs-product-search>\n" +
-    "    </div>\n" +
-    "    <!-- <ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include> -->\n" +
+    "    </div> -->\n" +
+    "    <!-- <ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include> \n" +
     "    <ng-include src=\"'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'\" class=\"hidden\"></ng-include>\n" +
     "    <ng-include src=\"'/scripts/home/whatisgiftstarter/how-it-works.ng.html'\"></ng-include>\n" +
     "    <ng-include src=\"'/scripts/staffpicks/staffpicks.ng.html'\"></ng-include>\n" +
-    "    <ng-include src=\"'/scripts/giftsgivenbar/giftsgivenbar.ng.html'\"></ng-include>\n" +
-    "    <div class=\"userlogin hidden\" id=\"loginpanel\">\n" +
-    "        <div class=\"userlogin__logo\"></div>\n" +
-    "        <h2 class=\"userlogin__title\">\n" +
-    "            Join the giving movement\n" +
-    "        </h2>\n" +
-    "    </div>\n" +
-    "    <ng-include src=\"'/scripts/login/login-or-create.html'\" class=\"hidden\"></ng-include>\n" +
-    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\" class=\"hidden\"></ng-include>\n" +
+    "    <ng-include src=\"'/scripts/giftsgivenbar/giftsgivenbar.ng.html'\"></ng-include> \n" +
+    "    <ng-include src=\"'/scripts/login/login-or-create.html'\" class=\"hidden\"></ng-include> \n" +
+    "    <ng-include src=\"'/scripts/brandbar/brandbar.ng.html'\" class=\"hidden\"></ng-include> -->\n" +
+    "\n" +
     "</div>\n"
   );
 
 
   $templateCache.put('/views/is/is.html',
     "<div class=\"howitworks static-pages\" ng-controller=\"HowItWorksController\">\n" +
+    "\n" +
     "    <div class=\"headerwrap\">\n" +
     "        <div class=\"ui container\">\n" +
     "            <h1>Crowdfunding for Gifts</h1>\n" +
@@ -3197,210 +3207,266 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"main ui middle aligned stackable grid container\">\n" +
-    "        <div class=\"menu\">\n" +
-    "            <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'welcome'\" ng-class=\"{selected: sectionShown == 'welcome'}\">\n" +
-    "                <div class=\"menu-item\">\n" +
-    "                    Welcome\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'group-gifting'\" ng-class=\"{selected: sectionShown == 'group-gifting'}\">\n" +
-    "                <div class=\"menu-item\">\n" +
-    "                    Group Gifting\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'concierge'\" ng-class=\"{selected: sectionShown == 'concierge'}\">\n" +
-    "                <div class=\"menu-item\">\n" +
-    "                    Gift Concierge\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'search'\" ng-class=\"{selected: sectionShown == 'search'}\">\n" +
-    "                <div class=\"menu-item\">\n" +
-    "                    Find A Gift\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"menu-wrapper\" ng-click=\"sectionShown = 'glossary'\" ng-class=\"{selected: sectionShown == 'glossary'}\">\n" +
-    "                <div class=\"menu-item\">\n" +
-    "                    Glossary\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
+    "    <div id=\"selector-bar\"></div>\n" +
     "\n" +
-    "        <div id=\"selector-bar\"></div>\n" +
+    "    <div class=\"content ui container main full\">\n" +
     "\n" +
-    "        <div class=\"content ui container main full\">\n" +
-    "            <div id=\"welcome\" ng-show=\"sectionShown == 'welcome'\">\n" +
-    "                <div class=\"ui vertical stripe segment\">\n" +
-    "                    <div class=\"ui middle aligned stackable grid container\">\n" +
-    "                        <div class=\"row\">\n" +
-    "                            <div class=\"seven wide column\">\n" +
-    "                                <h3 class=\"ui header\">Give amazing gifts.</h3>\n" +
-    "                                <p>GiftStarter is the best way to bring family and friends together to give an amazing gift. When it's complete - receive a handmade card with everyone's message and the gift.</p>\n" +
-    "                                <h3 class=\"ui header\">Launch a campaign.</h3>\n" +
-    "                                <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
-    "                            </div>\n" +
-    "                            <div class=\"nine wide right floated column\">\n" +
-    "                                <iframe width=\"100%\" height=\"320\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
-    "                            </div>\n" +
+    "        <div id=\"welcome\" ng-show=\"sectionShown == 'welcome'\">\n" +
+    "            <div class=\"ui vertical stripe segment\">\n" +
+    "                <div class=\"ui middle aligned stackable grid container\">\n" +
+    "                    <div class=\"row\">\n" +
+    "                        <div class=\"seven wide column\">\n" +
+    "                            <h3 class=\"ui header\">Give amazing gifts.</h3>\n" +
+    "                            <p>GiftStarter is the best way to bring family and friends together to give an amazing gift. When it's complete - receive a handmade card with everyone's message and the gift.</p>\n" +
+    "                            <h3 class=\"ui header\">Launch a campaign.</h3>\n" +
+    "                            <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"nine wide right floated column youtube\">\n" +
+    "                            <div class=\"ui embed\" data-source=\"youtube\" data-id=\"AKk6Po6csM0\"></div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </div>\n" +
-    "            <div id=\"glossary\" ng-show=\"sectionShown == 'glossary'\">\n" +
-    "                <h2>Giftstarter Glossary</h2>\n" +
-    "                <h4>GiftStarter is a new gifting movement bringing people committed to giving amazing gifts.</h4>\n" +
-    "                <p class=\"sub\">\n" +
-    "                    Here's a glossary of gifting words to help you in our gifting community:\n" +
-    "                </p>\n" +
-    "                <table>\n" +
-    "                    <tr>\n" +
-    "                        <td>GiftStarter - n.</td>\n" +
-    "                        <td>That's us! We are here to help you give amazing gifts you are proud to give, and they are happy to get.</td>\n" +
-    "                    </tr>\n" +
-    "                    <tr>\n" +
-    "                        <td>Gift Champion - n.</td>\n" +
-    "                        <td>This is a person (you!) that starts an amazing gift, and invites family and friends to pitch in.</td>\n" +
-    "                    </tr>\n" +
-    "                    <tr>\n" +
-    "                        <td>Contributor - n.</td>\n" +
-    "                        <td>The people invited in by the Gift Champion to pitch in on the amazing gift and sign the card.</td>\n" +
-    "                    </tr>\n" +
-    "                    <tr>\n" +
-    "                        <td>Recipient - n.</td>\n" +
-    "                        <td>The person(s) that receive the amazing gift!</td>\n" +
-    "                    </tr>\n" +
-    "                    <tr>\n" +
-    "                        <td>Gift Concierge - n.</td>\n" +
-    "                        <td>Our Gift Concierge is like your personal shopper who will help you find and give that amazing gift.</td>\n" +
-    "                    </tr>\n" +
-    "                    <tr>\n" +
-    "                        <td>Nudge - n, v.</td>\n" +
-    "                        <td>These are the gentle friendly reminders (nudges) we make in order to help ensure your gifting event is amazing.</td>\n" +
-    "                    </tr>\n" +
-    "                </table>\n" +
-    "            </div>\n" +
-    "            <div id=\"search\" ng-show=\"sectionShown == 'search'\">\n" +
-    "                <h2>Find an Amazing Gift</h2>\n" +
-    "                <h4>GiftStarter helps you give amazing gifts you are proud to give and they are happy to get.</h4>\n" +
-    "                <p class=\"sub\">GiftStarter has the tools to help you find those gifts you’re proud to give, and they’re happy to get.</p>\n" +
-    "                <div class=\"search-item\">\n" +
-    "                    <div class=\"desc\">\n" +
-    "                        <p>Search</p>\n" +
-    "                        <p>Use our search bar located at the top of the page and on the home page to search for products by name or brand. We source our gifts from reliable stores such as:</p>\n" +
-    "                    </div>\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-findagift-1.png\" />\n" +
-    "                </div>\n" +
-    "                <div class=\"search-item\">\n" +
-    "                    <div class=\"desc\">\n" +
-    "                        <p>Gift Concierge</p>\n" +
-    "                        <p>Our Gift Concierge is like you personal shopping assistant who will help you find the perfect gift for the occassion - even if it’s not on our site!</p>\n" +
-    "                    </div>\n" +
-    "                    <div id=\"search-item-concierge\">\n" +
-    "                        <p>You can <a href=\"mailto:giftconcierge@giftstarter.com\">email</a> (giftconcierge@giftstarter.com), contact via <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">chat</a>, or call 206.486.4849</p>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <div class=\"search-item\">\n" +
-    "                    <div class=\"desc\">\n" +
-    "                        <p>Gift Ideas</p>\n" +
-    "                        <p>More of a browser when you shop? Our carefully curated gift ideas are a great place to see what new and exciting products there are to gift.</p>\n" +
-    "                    </div>\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-findagift-2.png\" />\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div id=\"concierge\" ng-show=\"sectionShown == 'concierge'\">\n" +
-    "                <h2>Gift Concierge</h2>\n" +
-    "                <h4>Fast, fun, and no pressure personal shopper to help you find that perfect gift. Can't find it? We can help. Can't think of an idea? We can help.</h4>\n" +
-    "                <p class=\"sub\">We'll get back to you same day if possible -- definitely within 24 hours.</p>\n" +
-    "                <div class=\"concierge-table\">\n" +
-    "                    <div class=\"concierge-item\">\n" +
-    "                        <p>Email\n" +
-    "                            <br/>\n" +
-    "                            <br/>Send us an email at any time. The more information you include about your need, the more we can help!\n" +
-    "                            <br/>\n" +
-    "                            <br/>\n" +
-    "                            <br/>\n" +
-    "                            <a href=\"mailto:giftconcierge@giftstarter.com\">giftconcierge@giftstarter.com</a>\n" +
-    "                        </p>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"concierge-item\">\n" +
-    "                        <p>Live Chat\n" +
-    "                            <br/>\n" +
-    "                            <br/>You can access our live chat program in the bottom right corner of your browser.\n" +
-    "                            <br/>\n" +
-    "                            <br/>\n" +
-    "                            <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">Don't see it?</a>\n" +
-    "                            <br/>\n" +
-    "                            <br/>*Live chat available during business hours (PST)\n" +
-    "                        </p>\n" +
-    "                    </div>\n" +
-    "                    <div class=\"concierge-item\">\n" +
-    "                        <p>Online Form\n" +
-    "                            <br/>\n" +
-    "                            <br/>Fill out the quick form about your gifting need and we'll get on it ASAP!\n" +
-    "                            <br/>\n" +
-    "                            <br/>\n" +
-    "                            <br/>\n" +
-    "                            <a href=\"/concierge\" class=\"button\">Online Form</a>\n" +
-    "                        </p>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "                <p>Or you can just plain call us: 206-486-4849.</p>\n" +
-    "            </div>\n" +
-    "            <div id=\"group-gifting\" ng-show=\"sectionShown == 'group-gifting'\">\n" +
-    "                <h2>Group Gifting Starts Here</h2>\n" +
-    "                <h4>GiftStarter is a new gifting movement focused on bringing people together in a community that loves giving amazing gifts.<br/></h4>\n" +
-    "                <p class=\"sub\">Our patent-pending technology divides the price of the gift into perfect pieces, giving family and friends the ability to purchases as many or as few pieces as they wish! Any product available online can be gifted with GiftStarter, and we’re here to help every step of the way. From collecting the money to shipping the gift - and even creating a special card with your personal messages - we’ve got you covered!\n" +
-    "                    <br/>\n" +
-    "                </p>\n" +
-    "                <div class=\"group-item\">\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-groupgift-1.png\" />\n" +
-    "                    <p class=\"center\"><strong>1</strong>\n" +
-    "                        <br/>Find A Gift</p>\n" +
-    "                    <p>Search from over 3 million products on our site. You can also discover our favorite gifts on our Gift Ideas page or contact our Gift Concierge for custom gifts.</p>\n" +
-    "                </div>\n" +
-    "                <div class=\"group-item\">\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-groupgift-2.png\" />\n" +
-    "                    <p class=\"center\"><strong>2</strong>\n" +
-    "                        <br/>Select A Gift</p>\n" +
-    "                    <p>From the search results or Gift Ideas page, you can click on product images to view product information and details, and the “GiftStart it” button. Click this button to start your group gift!</p>\n" +
-    "                </div>\n" +
-    "                <div class=\"group-item\">\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-groupgift-3.png\" />\n" +
-    "                    <p class=\"center\"><strong>3</strong>\n" +
-    "                        <br/>Adjust The Price</p>\n" +
-    "                    <p>Click the “+” to add pieces, thus lowering the price of each piece. Click the “-” button to remove pieces, and increase the price of each piece. Consider the size of the group you’ll invite; some people will buy 1 piece, some may buy more.</p>\n" +
-    "                </div>\n" +
-    "                <div class=\"group-item\">\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-groupgift-4.png\" />\n" +
-    "                    <p class=\"center\"><strong>4</strong>\n" +
-    "                        <br/>Your Gifting Event</p>\n" +
-    "                    <p>Describe the reason for this gift. What’s the event? Who is it for? Why is this a good gift for this person and/or event?</p>\n" +
-    "                </div>\n" +
-    "                <div class=\"group-item\">\n" +
-    "                    <img src=\"/assets/howitworks/how-it-works-groupgift-5.png\" />\n" +
-    "                    <p class=\"center\"><strong>5</strong>\n" +
-    "                        <br/>The Gift</p>\n" +
-    "                    <p>Tell us where this gift needs to go and when you want it there and we’ll make it happen!\n" +
-    "                        <br />*Note standard shipping is always free with GiftStarter</p>\n" +
-    "                </div>\n" +
-    "                <p class=\"clear sub\">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered.\n" +
-    "                    <br />\n" +
-    "                    <br />Give a remarkable gift today.</p>\n" +
-    "            </div>\n" +
-    "\n" +
-    "            <div class=\"row ui middle aligned center aligned grid vertical top medium\">\n" +
-    "                <div class=\"center aligned column\">\n" +
-    "                    <a href=\"/giftideas\" class=\"ui huge button fuild icon labeled\" id=\"gifting-button\">\n" +
-    "                        <i class=\"gift icon left\"></i> Discover Gift Ideas\n" +
-    "                    </a>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <h2>Recent Campaigns</h2>\n" +
-    "        <ng-include src=\"'/scripts/inspirationalexamples/inspirationalexamples.ng.html'\"></ng-include>\n" +
-    "    </div>\n" +
+    "        <div id=\"glossary\" ng-show=\"sectionShown == 'glossary'\">\n" +
+    "            <h2>Giftstarter Glossary</h2>\n" +
+    "            <h4>GiftStarter is a new gifting movement bringing people committed to giving amazing gifts.</h4>\n" +
+    "            <p class=\"sub\">\n" +
+    "                Here's a glossary of gifting words to help you in our gifting community:\n" +
+    "            </p>\n" +
+    "            <table>\n" +
+    "                <tr>\n" +
+    "                    <td>GiftStarter - n.</td>\n" +
+    "                    <td>That's us! We are here to help you give amazing gifts you are proud to give, and they are happy to get.</td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td>Gift Champion - n.</td>\n" +
+    "                    <td>This is a person (you!) that starts an amazing gift, and invites family and friends to pitch in.</td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td>Contributor - n.</td>\n" +
+    "                    <td>The people invited in by the Gift Champion to pitch in on the amazing gift and sign the card.</td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td>Recipient - n.</td>\n" +
+    "                    <td>The person(s) that receive the amazing gift!</td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td>Gift Concierge - n.</td>\n" +
+    "                    <td>Our Gift Concierge is like your personal shopper who will help you find and give that amazing gift.</td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td>Nudge - n, v.</td>\n" +
+    "                    <td>These are the gentle friendly reminders (nudges) we make in order to help ensure your gifting event is amazing.</td>\n" +
+    "                </tr>\n" +
+    "            </table>\n" +
+    "        </div>\n" +
     "\n" +
+    "        <div id=\"search\" ng-show=\"sectionShown == 'search'\">\n" +
+    "            <h2>Find an Amazing Gift</h2>\n" +
+    "            <h4>GiftStarter helps you give amazing gifts you are proud to give and they are happy to get.</h4>\n" +
+    "            <p class=\"sub\">GiftStarter has the tools to help you find those gifts you’re proud to give, and they’re happy to get.</p>\n" +
+    "            <div class=\"search-item\">\n" +
+    "                <div class=\"desc\">\n" +
+    "                    <p>Search</p>\n" +
+    "                    <p>Use our search bar located at the top of the page and on the home page to search for products by name or brand. We source our gifts from reliable stores such as:</p>\n" +
+    "                </div>\n" +
+    "                <img src=\"/assets/howitworks/how-it-works-findagift-1.png\" />\n" +
+    "            </div>\n" +
+    "            <div class=\"search-item\">\n" +
+    "                <div class=\"desc\">\n" +
+    "                    <p>Gift Concierge</p>\n" +
+    "                    <p>Our Gift Concierge is like you personal shopping assistant who will help you find the perfect gift for the occassion - even if it’s not on our site!</p>\n" +
+    "                </div>\n" +
+    "                <div id=\"search-item-concierge\">\n" +
+    "                    <p>You can <a href=\"mailto:giftconcierge@giftstarter.com\">email</a> (giftconcierge@giftstarter.com), contact via <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">chat</a>, or call 206.486.4849</p>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"search-item\">\n" +
+    "                <div class=\"desc\">\n" +
+    "                    <p>Gift Ideas</p>\n" +
+    "                    <p>More of a browser when you shop? Our carefully curated gift ideas are a great place to see what new and exciting products there are to gift.</p>\n" +
+    "                </div>\n" +
+    "                <img src=\"/assets/howitworks/how-it-works-findagift-2.png\" />\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <div id=\"selector-bar\"></div>\n" +
+    "\n" +
+    "            <div class=\"content ui container main full\">\n" +
+    "                <div id=\"welcome\" ng-show=\"sectionShown == 'welcome'\">\n" +
+    "                    <div class=\"ui vertical stripe segment\">\n" +
+    "                        <div class=\"ui middle aligned stackable grid container\">\n" +
+    "                            <div class=\"row\">\n" +
+    "                                <div class=\"seven wide column\">\n" +
+    "                                    <h3 class=\"ui header\">Give amazing gifts.</h3>\n" +
+    "                                    <p>GiftStarter is the best way to bring family and friends together to give an amazing gift. When it's complete - receive a handmade card with everyone's message and the gift.</p>\n" +
+    "                                    <h3 class=\"ui header\">Launch a campaign.</h3>\n" +
+    "                                    <p>Share & promote your campaign with friends. We take care of collecting the money.</p>\n" +
+    "                                </div>\n" +
+    "                                <div class=\"nine wide right floated column\">\n" +
+    "                                    <iframe width=\"100%\" height=\"320\" src=\"https://www.youtube-nocookie.com/embed/AKk6Po6csM0?rel=0&amp;controls=0&amp;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>\n" +
+    "                                </div>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div id=\"glossary\" ng-show=\"sectionShown == 'glossary'\">\n" +
+    "                    <h2>Giftstarter Glossary</h2>\n" +
+    "                    <h4>GiftStarter is a new gifting movement bringing people committed to giving amazing gifts.</h4>\n" +
+    "                    <p class=\"sub\">\n" +
+    "                        Here's a glossary of gifting words to help you in our gifting community:\n" +
+    "                    </p>\n" +
+    "                    <table>\n" +
+    "                        <tr>\n" +
+    "                            <td>GiftStarter - n.</td>\n" +
+    "                            <td>That's us! We are here to help you give amazing gifts you are proud to give, and they are happy to get.</td>\n" +
+    "                        </tr>\n" +
+    "                        <tr>\n" +
+    "                            <td>Gift Champion - n.</td>\n" +
+    "                            <td>This is a person (you!) that starts an amazing gift, and invites family and friends to pitch in.</td>\n" +
+    "                        </tr>\n" +
+    "                        <tr>\n" +
+    "                            <td>Contributor - n.</td>\n" +
+    "                            <td>The people invited in by the Gift Champion to pitch in on the amazing gift and sign the card.</td>\n" +
+    "                        </tr>\n" +
+    "                        <tr>\n" +
+    "                            <td>Recipient - n.</td>\n" +
+    "                            <td>The person(s) that receive the amazing gift!</td>\n" +
+    "                        </tr>\n" +
+    "                        <tr>\n" +
+    "                            <td>Gift Concierge - n.</td>\n" +
+    "                            <td>Our Gift Concierge is like your personal shopper who will help you find and give that amazing gift.</td>\n" +
+    "                        </tr>\n" +
+    "                        <tr>\n" +
+    "                            <td>Nudge - n, v.</td>\n" +
+    "                            <td>These are the gentle friendly reminders (nudges) we make in order to help ensure your gifting event is amazing.</td>\n" +
+    "                        </tr>\n" +
+    "                    </table>\n" +
+    "                </div>\n" +
+    "                <div id=\"search\" ng-show=\"sectionShown == 'search'\">\n" +
+    "                    <h2>Find an Amazing Gift</h2>\n" +
+    "                    <h4>GiftStarter helps you give amazing gifts you are proud to give and they are happy to get.</h4>\n" +
+    "                    <p class=\"sub\">GiftStarter has the tools to help you find those gifts you’re proud to give, and they’re happy to get.</p>\n" +
+    "                    <div class=\"search-item\">\n" +
+    "                        <div class=\"desc\">\n" +
+    "                            <p>Search</p>\n" +
+    "                            <p>Use our search bar located at the top of the page and on the home page to search for products by name or brand. We source our gifts from reliable stores such as:</p>\n" +
+    "                        </div>\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-findagift-1.png\" />\n" +
+    "                    </div>\n" +
+    "                    <div class=\"search-item\">\n" +
+    "                        <div class=\"desc\">\n" +
+    "                            <p>Gift Concierge</p>\n" +
+    "                            <p>Our Gift Concierge is like you personal shopping assistant who will help you find the perfect gift for the occassion - even if it’s not on our site!</p>\n" +
+    "                        </div>\n" +
+    "                        <div id=\"search-item-concierge\">\n" +
+    "                            <p>You can <a href=\"mailto:giftconcierge@giftstarter.com\">email</a> (giftconcierge@giftstarter.com), contact via <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">chat</a>, or call 206.486.4849</p>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"search-item\">\n" +
+    "                        <div class=\"desc\">\n" +
+    "                            <p>Gift Ideas</p>\n" +
+    "                            <p>More of a browser when you shop? Our carefully curated gift ideas are a great place to see what new and exciting products there are to gift.</p>\n" +
+    "                        </div>\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-findagift-2.png\" />\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div id=\"concierge\" ng-show=\"sectionShown == 'concierge'\">\n" +
+    "                    <h2>Gift Concierge</h2>\n" +
+    "                    <h4>Fast, fun, and no pressure personal shopper to help you find that perfect gift. Can't find it? We can help. Can't think of an idea? We can help.</h4>\n" +
+    "                    <p class=\"sub\">We'll get back to you same day if possible -- definitely within 24 hours.</p>\n" +
+    "                    <div class=\"concierge-table\">\n" +
+    "                        <div class=\"concierge-item\">\n" +
+    "                            <p>Email\n" +
+    "                                <br/>\n" +
+    "                                <br/>Send us an email at any time. The more information you include about your need, the more we can help!\n" +
+    "                                <br/>\n" +
+    "                                <br/>\n" +
+    "                                <br/>\n" +
+    "                                <a href=\"mailto:giftconcierge@giftstarter.com\">giftconcierge@giftstarter.com</a>\n" +
+    "                            </p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"concierge-item\">\n" +
+    "                            <p>Live Chat\n" +
+    "                                <br/>\n" +
+    "                                <br/>You can access our live chat program in the bottom right corner of your browser.\n" +
+    "                                <br/>\n" +
+    "                                <br/>\n" +
+    "                                <a href=\"javascript:void(0);\" onclick=\"olark('api.box.expand')\">Don't see it?</a>\n" +
+    "                                <br/>\n" +
+    "                                <br/>*Live chat available during business hours (PST)\n" +
+    "                            </p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"concierge-item\">\n" +
+    "                            <p>Online Form\n" +
+    "                                <br/>\n" +
+    "                                <br/>Fill out the quick form about your gifting need and we'll get on it ASAP!\n" +
+    "                                <br/>\n" +
+    "                                <br/>\n" +
+    "                                <br/>\n" +
+    "                                <a href=\"/concierge\" class=\"button\">Online Form</a>\n" +
+    "                            </p>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                    <p>Or you can just plain call us: 206-486-4849.</p>\n" +
+    "                </div>\n" +
+    "                <div id=\"group-gifting\" ng-show=\"sectionShown == 'group-gifting'\">\n" +
+    "                    <h2>Group Gifting Starts Here</h2>\n" +
+    "                    <h4>GiftStarter is a new gifting movement focused on bringing people together in a community that loves giving amazing gifts.<br/></h4>\n" +
+    "                    <p class=\"sub\">Our patent-pending technology divides the price of the gift into perfect pieces, giving family and friends the ability to purchases as many or as few pieces as they wish! Any product available online can be gifted with GiftStarter, and we’re here to help every step of the way. From collecting the money to shipping the gift - and even creating a special card with your personal messages - we’ve got you covered!\n" +
+    "                        <br/>\n" +
+    "                    </p>\n" +
+    "                    <div class=\"group-item\">\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-groupgift-1.png\" />\n" +
+    "                        <p class=\"center\"><strong>1</strong>\n" +
+    "                            <br/>Find A Gift</p>\n" +
+    "                        <p>Search from over 3 million products on our site. You can also discover our favorite gifts on our Gift Ideas page or contact our Gift Concierge for custom gifts.</p>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"group-item\">\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-groupgift-2.png\" />\n" +
+    "                        <p class=\"center\"><strong>2</strong>\n" +
+    "                            <br/>Select A Gift</p>\n" +
+    "                        <p>From the search results or Gift Ideas page, you can click on product images to view product information and details, and the “GiftStart it” button. Click this button to start your group gift!</p>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"group-item\">\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-groupgift-3.png\" />\n" +
+    "                        <p class=\"center\"><strong>3</strong>\n" +
+    "                            <br/>Adjust The Price</p>\n" +
+    "                        <p>Click the “+” to add pieces, thus lowering the price of each piece. Click the “-” button to remove pieces, and increase the price of each piece. Consider the size of the group you’ll invite; some people will buy 1 piece, some may buy more.</p>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"group-item\">\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-groupgift-4.png\" />\n" +
+    "                        <p class=\"center\"><strong>4</strong>\n" +
+    "                            <br/>Your Gifting Event</p>\n" +
+    "                        <p>Describe the reason for this gift. What’s the event? Who is it for? Why is this a good gift for this person and/or event?</p>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"group-item\">\n" +
+    "                        <img src=\"/assets/howitworks/how-it-works-groupgift-5.png\" />\n" +
+    "                        <p class=\"center\"><strong>5</strong>\n" +
+    "                            <br/>The Gift</p>\n" +
+    "                        <p>Tell us where this gift needs to go and when you want it there and we’ll make it happen!\n" +
+    "                            <br />*Note standard shipping is always free with GiftStarter</p>\n" +
+    "                    </div>\n" +
+    "                    <p class=\"clear sub\">That’s all there is to it. Share and invite friends and family to purchase pieces and give a gift that shows how much you care. We’re here to help you at any time and to ensure the gift and personal card are delivered.\n" +
+    "                        <br />\n" +
+    "                        <br />Give a remarkable gift today.</p>\n" +
+    "                </div>\n" +
+    "\n" +
+    "                <div class=\"row ui middle aligned center aligned grid vertical top medium\">\n" +
+    "                    <div class=\"center aligned column\">\n" +
+    "                        <a href=\"/giftideas\" class=\"ui huge button fuild icon labeled\" id=\"gifting-button\">\n" +
+    "                            <i class=\"gift icon left\"></i> Discover Gift Ideas\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "\n" +
+    "            <h2>Recent Campaigns</h2>\n" +
+    "            <ng-include src=\"'/scripts/inspirationalexamples/inspirationalexamples.ng.html'\"></ng-include>\n" +
+    "        </div>\n" +
+    "\n" +
+    "    </div>\n" +
     "</div>"
   );
 
@@ -4605,12 +4671,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>\n" +
     "                <div class=\"more-parts\">Add Pieces\n" +
     "                    <br/>\n" +
-    "                    <img class=\"linky\" ng-click=\"moreParts($event)\" src=\"/assets/circle_red_plus.png\">\n" +
+    "\t\t\t\t\t<button ng-click=\"moreParts($event)\" class=\"circular ui icon button large\">\n" +
+    "  \t\t\t\t\t\t<i class=\"icon plus large\"></i>\n" +
+    "\t\t\t\t\t</button>\n" +
     "                </div>\n" +
     "                <div class=\"fewer-parts-mobile\">Remove Pieces\n" +
     "                    <br/>\n" +
-    "                    <img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\">\n" +
-    "                </div>\n" +
+    "\t\t\t\t\t<button ng-click=\"fewerParts($event)\" class=\"circular ui icon button large\">\n" +
+    "  \t\t\t\t\t\t<i class=\"icon plus large\"></i>\n" +
+    "\t\t\t\t\t</button>                </div>\n" +
     "                <span class=\"parts-control\"><span class=\"numtiles\"> {{x*y}} Pieces</span>\n" +
     "                <span class=\"money\" ng-hide=\"fetchingTaxRate\"> ${{ totalPrice/100/x/y | number : 2 }} <img class=\"loading\"  src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/> each* <span class=\"tax-note\">(+tax)</span></span>\n" +
     "                </span>\n" +
@@ -6251,10 +6320,10 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "\t<div class=\"ui search\" ng-show=\"searchMenu\">\n" +
     "            <div class=\"ui transparent left icon input\">\n" +
-    "                <input id=\"product-search-input\" class=\"prompt\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\">\n" +
-    "                <a id=\"product-search-button\" ng-click=\"submit()\">\n" +
+    "                <a href=\"#\" id=\"product-search-button\" ng-click=\"submit()\">\n" +
     "\t\t\t\t\t<i class=\"search icon\"></i>\n" +
     "\t\t\t\t</a>\n" +
+    "                <input id=\"product-search-input\" class=\"prompt\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\">\n" +
     "            </div>\n" +
     "            <div class=\"results\"></div>\n" +
     "        </div>\n" +
@@ -6325,31 +6394,36 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    \t<div class=\"ui loader\"></div>\n" +
     " \t</div>\n" +
     "\n" +
-    "    <div class=\"failed\" ng-show=\"failed\">\n" +
+    "    <div class=\"failed\" ng-show=\"failed && !searchMenu\">\n" +
     "        <img src=\"/assets/failed.png\"/>\n" +
     "        <div>\n" +
     "            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href=\"mailto:giftconcierge@giftstarter.com\" ng-click=\"giftConciergeClicked()\">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"failed\" ng-show=\"results_empty\">\n" +
+    "    <div class=\"failed\" ng-show=\"results_empty && !searchMenu\">\n" +
     "        <img src=\"/assets/failed.png\"/>\n" +
     "        <div>\n" +
     "            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href=\"mailto:giftconcierge@giftstarter.com\" ng-click=\"giftConciergeClicked()\">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "<section id=\"search-products-section\" class=\"products ui main cards stackable two link\" ng-class=\"{hidden: products.length == 0, segment: products.length > 0}\" style=\"margin-top: 3em;\" ng-hide=\"searchMenu\">\n" +
-    "    <div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
-    "        <div class=\"product\">\n" +
+    "<section id=\"search-products-section\" class=\"products ui container\" ng-class=\"{hidden: products.length == 0 || searchMenu, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
+    "<div  class=\"ui cards stackable four link\" >\n" +
+    "\t<div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
+    "        <div class=\"product content\">\n" +
     "            <div class=\"image-container\">\n" +
     "                <span class=\"vert-align-helper\"></span>\n" +
     "                <img ng-click=\"goToProduct($index);\" ng-src=\"{{product.imgUrl}}\" onerror=\"angular.element($(this)).scope().fixImage(this);\" index=\"{{$index}}\" />\n" +
     "            </div>\n" +
     "            <div class=\"product-details\">\n" +
-    "                <h4 class=\"title\" ng-click=\"goToProduct($index, $event);\">{{product.title}}</h4>\n" +
+    "\t\t\t\t<h2 class=\"ui header\">\n" +
+    "  \t\t\t\t<div class=\"content\">\n" +
+    "   \t\t\t\t {{product.title}}\n" +
+    " \t\t\t\t </div>\n" +
+    "\t\t\t\t</h2>\n" +
     "                <p class=\"description ui raised segments\" ng-bind-html=\"product.description\"></p>\n" +
-    "                <div class=\"ui buttons two\">\n" +
+    "                <div class=\"ui buttons two\" style=\"margin-top: 2rem\">\n" +
     "                    <button ng-click=\"startCampaignFrom($index);$event.stopPropagation();\" target=\"_self\" class=\"giftstart primary ui huge button icon primary labeled\">\n" +
     "                        <i class=\"gift left icon\"></i>\n" +
     "                        GiftStart It\n" +
@@ -6362,18 +6436,19 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    </button>\n" +
     "                </div>\n" +
     "                <div class=\"product-message\" ng-show=\"product.selected\" ng-bind-html=\"productMessage\"></div>\n" +
-    "\t\t\t\t<div class=\"price block ui statistic middle aligned center aligned container\">\n" +
-    "                \t<div class=\"value\">\n" +
-    "                    \t<i class=\"ui dollar icon grey small\"></i> {{product.price / 100 | number : 2}}\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
     "            </div>\n" +
     "            <button class=\"cancel\" ng-click=\"hideProductDetails();$event.stopPropagation();\">X</button>\n" +
     "        </div>\n" +
+    "\t\t<div class=\"extra content\">\n" +
+    "    \t\t<span class=\"right floated\">\n" +
+    "      \t\t\t<i class=\"dollar green icon\"></i>{{product.price / 100 | number : 2}}\n" +
+    "    \t\t</span>\n" +
+    "  \t\t</div>\n" +
     "    </div>\n" +
     "    <div class=\"page-buttons ui container vertical medium top bottom\" ng-show=\"products.length > 10\">\n" +
     "        <a class=\"ui button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"ui button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
     "    </div>\n" +
+    "</div>\n" +
     "</section>\n" +
     "    <!--p class=\"need-help-concierge\">Can't find the gift you want? Simply contact our <a href=\"/concierge\" ng-click=\"giftConciergeClicked()\">Gift Concierge</a> and we'll find it for you. Or visit our <a href=\"/giftideas\">Gift Ideas</a> page for more ideas.</p-->\n" +
     "</div>"
@@ -6521,11 +6596,6 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "      <h4>Community</h4>\n" +
     "    </div>\n" +
     "\n" +
-    "    <div class=\"member-item\">\n" +
-    "      <img src=\"assets/about/img/christie.png\" alt=\"\" />\n" +
-    "      <h3><b>Christie Gettler</b></h3>\n" +
-    "      <h4>Cofounder</h4>\n" +
-    "    </div>\t\n" +
     "</div>\n" +
     "\n" +
     "\n" +
@@ -8637,6 +8707,16 @@ function ConciergeController($scope, $http) {
     var HowItWorksController = function ($scope, $location) {
         $scope.location = $location;
         $scope.sectionShown = "welcome";
+		/* semantic ui embed */
+		jQuery('.youtube .ui.embed').embed({
+			parameters: {
+        		autohide       : false,
+        		autoplay       : false,
+        		modestbranding : 1
+      			}
+		});
+		
+		
     }
 
     app.controller('HowItWorksController', [
@@ -9421,18 +9501,27 @@ function gsPrintUrl($location, $http) {
             return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
         }
 
-        function isMainMenu() {
-            return(!UserService.loggedIn && !isSlimMenu()) ? true : false;
-        }
-
         function isUserMenu() {
             return(UserService.loggedIn) ? true : false;
+        }
+
+        function isHomeMenu() {
+            return(!UserService.loggedIn && $location.path() === '/') ? true : false;
+        }
+
+        function isCreateMenu() {
+            return(!UserService.loggedIn && $location.path() === '/create') ? true : false;
+        }
+
+        function isMainMenu() {
+            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu()) ? true : false;
         }
 
         function updateMenuType() {
             $scope.slimMenu = isSlimMenu();
             $scope.mainMenu = isMainMenu();
             $scope.userMenu = isUserMenu();
+            $scope.homeMenu = isHomeMenu();
         }
         updateMenuType();
 
