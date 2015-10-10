@@ -109,12 +109,15 @@
                 });
             });
         };
+        
         $scope.doLoginGoogleplus = function() {
             doSocialLogin(GooglePlusService.login);
         };
+        
         $scope.doLoginLinkedin = function() {
             doSocialLogin(LinkedInService.login);
         };
+        
         $scope.doLoginEmail = function() {
             Analytics.track('user', 'login attempt with email');
             $scope.working = true;
@@ -127,6 +130,19 @@
                 });
         };
 
+        $scope.saveEmail = function(email) {
+            $scope.email = email;
+        }
+        
+        $scope.saveNameSurName = function(name, surname) {
+            $scope.name = name;
+            $scope.surname = surname;
+        }
+        
+        $scope.savePass = function(pass) {
+            $scope.password = pass;
+        }
+        
         $scope.doCreateEmail = function() {
             Analytics.track('user', 'create email login');
             //if ($scope.email.trim()!=$scope.reenteremail.trim()) {
