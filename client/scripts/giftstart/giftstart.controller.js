@@ -47,6 +47,11 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
         $scope.showShareBox = false;
         $scope.showShare = show;
     };
+	jQuery('.pitch-in').click(function() {
+		jQuery('.pitchin').modal('show');
+	});
+	
+	
     $scope.editingComment = function (comment, editing) {
         if(editing) { //edit mode on
             $scope.commentEditing.push(comment);

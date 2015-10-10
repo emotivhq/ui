@@ -4,6 +4,8 @@
 /client/client.iml
 /client/.sass-cache/*
 /client/scripts/out/*
+/client/scripts/webapp/*
+/client/stylesheets/trashy/*
 /setuptools/*
 /requests/*
 /lxml/*
@@ -16,6 +18,7 @@ stripe
 cloudstorage
 oauthlib
 *marvel*
+
 
 app.iml
 .idea
