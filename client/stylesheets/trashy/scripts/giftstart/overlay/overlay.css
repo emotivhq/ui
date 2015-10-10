@@ -7,11 +7,9 @@ iframe[name='google_conversion_frame'] {
   float: left; }
 
 gs-overlay {
-  display: inline-block;
+  display: block;
   width: 100%;
   height: 100%;
-  max-width: 500px;
-  max-height: 500px;
   position: relative;
   padding-top: 100%; }
   @media screen and (max-width: 1030px) {
@@ -45,7 +43,8 @@ gs-overlay {
     display: -ms-flexbox;
     display: flex;
     text-align: center;
-    background: rgba(35, 132, 113, 0.45);
+    background: rgba(0, 172, 193, 0.45);
+    border-radius: 2% 12% 2% 12%;
     color: white;
     transition: all 0.2s;
     cursor: pointer;

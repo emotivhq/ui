@@ -1,6 +1,6 @@
 {% raw %}
 <!-- Slim Menu -->
-<div class="ui secondary main menu top transparent" ng-hide="!slimMenu">
+<div class="ui secondary main menu top transparent" ng-show="slimMenu || createMenu">
     <div class="ui container">
         <div class="header item">
             <a class="headerLogoWrapper" href="/">
@@ -8,7 +8,7 @@
                 <img id="logo-mobile" class="logo" src="/assets/logo-mobile.png" />
             </a>
         </div>
-        <div class="right item">
+        <div class="right item" ng-hide="createMenu">
             <div class="item help">
                 <p>Already have an account?</p>
             </div>

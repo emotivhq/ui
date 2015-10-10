@@ -166,8 +166,6 @@ iframe[name='google_conversion_frame'] {
         width: 100% !important; }
     #giftstart-contact-wrapper div.login-box .userlogin {
       display: block; }
-      #giftstart-contact-wrapper div.login-box .userlogin__message {
-        padding-top: 5px; }
       #giftstart-contact-wrapper div.login-box .userlogin__loginbtn {
         margin: 5px auto 0 auto; }
       #giftstart-contact-wrapper div.login-box .userlogin__passwordwrap, #giftstart-contact-wrapper div.login-box .userlogin__email, #giftstart-contact-wrapper div.login-box .userlogin__surname {
@@ -178,8 +176,6 @@ iframe[name='google_conversion_frame'] {
         @media only screen and (max-width: 375px) and (orientation: portrait) {
           #giftstart-contact-wrapper div.login-box .userlogin__passwordwrap, #giftstart-contact-wrapper div.login-box .userlogin__email, #giftstart-contact-wrapper div.login-box .userlogin__surname {
             width: 100%; } }
-      #giftstart-contact-wrapper div.login-box .userlogin__password {
-        padding: 0.9em !important; }
       #giftstart-contact-wrapper div.login-box .userlogin__eye {
         position: relative;
         top: -85%;
@@ -328,9 +324,11 @@ iframe[name='google_conversion_frame'] {
     display: block;
     margin: 0 auto;
     text-align: center; }
-  @media screen and (max-width: 1030px) {
-    #giftstart-contact-wrapper .fewer-parts {
-      display: none; } }
+  #giftstart-contact-wrapper .fewer-parts {
+    float: right; }
+    @media screen and (max-width: 1030px) {
+      #giftstart-contact-wrapper .fewer-parts {
+        display: none; } }
   #giftstart-contact-wrapper .fewer-parts-mobile {
     display: none; }
     @media screen and (max-width: 1030px) {
@@ -338,10 +336,12 @@ iframe[name='google_conversion_frame'] {
         float: left;
         padding-left: 5%;
         display: block; } }
-  @media screen and (max-width: 1030px) {
-    #giftstart-contact-wrapper .more-parts {
-      float: right;
-      padding-right: 5%; } }
+  #giftstart-contact-wrapper .more-parts {
+    float: left; }
+    @media screen and (max-width: 1030px) {
+      #giftstart-contact-wrapper .more-parts {
+        float: right;
+        padding-right: 5%; } }
   @media screen and (max-width: 1030px) {
     #giftstart-contact-wrapper .cost {
       z-index: 99; } }
@@ -413,7 +413,7 @@ iframe[name='google_conversion_frame'] {
   #giftstart-contact-wrapper div.campaign-length .endDate-text {
     display: inline-block; }
   #giftstart-contact-wrapper div.campaign-length h2.endDate-date {
-    color: #238471;
+    color: #00ACC1;
     display: inline-block;
     margin: 0 0 0 5px; }
   #giftstart-contact-wrapper div.campaign-length h4 {
@@ -488,55 +488,35 @@ iframe[name='google_conversion_frame'] {
     #new-pillow .welcome {
       width: 100%; } }
 
-div.ui-datepicker table th {
-  font-weight: 300;
-  padding: 0 .3em; }
-div.ui-datepicker table td .ui-state-default {
-  -webkit-transition: all 0.2s;
-  -moz-transition: all 0.2s;
-  -ms-transition: all 0.2s;
-  -o-transition: all 0.2s;
-  transition: all 0.2s;
-  background: #ffffff;
-  font-size: 12px;
-  text-align: center; }
-  div.ui-datepicker table td .ui-state-default:hover {
-    border-color: #238471; }
-div.ui-datepicker table td .ui-state-active {
-  background: #238471;
-  color: white; }
-div.ui-datepicker table td .ui-state-disabled {
-  font-size: 12px; }
-div.ui-datepicker table td .ui-datepicker-current-day a {
-  background: #238471;
-  color: #ffffff; }
-div.ui-datepicker table td .ui-datepicker-today a {
-  border-color: #238471;
-  color: #238471;
-  font-weight: 700; }
-div.ui-datepicker-header {
-  color: white;
-  background: #238471;
-  border: 0; }
-div.ui-datepicker-prev::after {
-  content: "<";
-  color: #ffffff;
-  font-size: 1.5em;
-  padding: 0.2em;
-  cursor: pointer; }
-  div.ui-datepicker-prev::after span.ui-icon-circle-triangle-w {
-    cursor: pointer; }
-div.ui-datepicker-prev.ui-state-hover {
-  background: none;
-  border: none; }
-div.ui-datepicker-next::after {
-  content: ">";
-  color: #ffffff;
-  font-size: 1.5em;
-  padding: 0.2em;
-  cursor: pointer; }
-  div.ui-datepicker-next::after span.ui-icon-circle-triangle-w {
-    cursor: pointer; }
-div.ui-datepicker-next.ui-state-hover {
-  background: none;
-  border: none; }
+div.ui-datepicker {
+  font-size: 1.4rem; }
+  div.ui-datepicker table th {
+    font-weight: 300;
+    padding: 0 .3em; }
+  div.ui-datepicker table td .ui-state-default {
+    -webkit-transition: all 0.2s;
+    -moz-transition: all 0.2s;
+    -ms-transition: all 0.2s;
+    -o-transition: all 0.2s;
+    transition: all 0.2s;
+    background: #ffffff;
+    font-size: 12px;
+    text-align: center; }
+    div.ui-datepicker table td .ui-state-default:hover {
+      border-color: #616161; }
+  div.ui-datepicker table td .ui-state-active {
+    background: #616161;
+    color: white; }
+  div.ui-datepicker table td .ui-state-disabled {
+    font-size: 12px; }
+  div.ui-datepicker table td .ui-datepicker-current-day a {
+    background: #616161;
+    color: #ffffff; }
+  div.ui-datepicker table td .ui-datepicker-today a {
+    border-color: #616161;
+    color: #00ACC1;
+    font-weight: 700; }
+  div.ui-datepicker-header {
+    color: white;
+    background: #616161;
+    border: 0; }

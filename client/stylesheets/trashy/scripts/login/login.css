@@ -123,11 +123,8 @@ iframe[name='google_conversion_frame'] {
     .userlogin__forgot:hover {
       color: #333; }
   .userlogin__message {
-    padding-top: 15px;
-    color: #DE4A50;
     margin-left: auto;
-    margin-right: auto;
-    max-width: 90%; }
+    margin-right: auto; }
     @media only screen and (max-width: 667px) {
       .userlogin__message {
         max-width: 75%; } }
@@ -145,10 +142,6 @@ iframe[name='google_conversion_frame'] {
     position: relative;
     margin-top: 15px;
     text-align: center; }
-  .userlogin__createacclink {
-    text-decoration: underline; }
-    .userlogin__createacclink:hover {
-      color: #333; }
   .userlogin__sociallogin {
     position: relative;
     text-align: center; }

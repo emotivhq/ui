@@ -88,7 +88,7 @@ iframe[name='google_conversion_frame'] {
         position: relative;
         white-space: nowrap; }
         #header #menu li:hover, #header #menu li.hover {
-          background: #12584c; }
+          background: #00838F; }
           #header #menu li:hover a, #header #menu li.hover a {
             color: white; }
           #header #menu li:hover .submenu, #header #menu li.hover .submenu {
@@ -99,11 +99,11 @@ iframe[name='google_conversion_frame'] {
           height: 48px;
           padding: 20px; }
           #header #menu li a:hover, #header #menu li a .hover {
-            background: #12584c;
+            background: #00838F;
             color: white; }
         #header #menu li .submenu {
           background-color: #e2e2e2;
-          border-left: 8px solid #12584c;
+          border-left: 8px solid #00838F;
           color: #333;
           display: none;
           position: absolute;

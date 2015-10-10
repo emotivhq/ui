@@ -62,26 +62,26 @@ div.giftstart.wrapper {
     @media screen and (min-width: 1030px) {
       div.giftstart.wrapper .block {
         width: 39%; } }
-  div.giftstart.wrapper div.block.overlay {
+  div.giftstart.wrapper div.block.gs-overlay {
     position: relative;
     width: 32em;
     text-align: center;
     padding: 0;
     float: left;
     margin: 0 0 0.75em 0; }
-    div.giftstart.wrapper div.block.overlay.shrunk {
+    div.giftstart.wrapper div.block.gs-overlay.shrunk {
       zoom: 0.5;
       -moz-transform: scale(0.5); }
     @media screen and (max-width: 1030px) {
-      div.giftstart.wrapper div.block.overlay {
+      div.giftstart.wrapper div.block.gs-overlay {
         width: 100%;
         padding-top: 2em; } }
     @media screen and (min-width: 1030px) and (max-width: 1802.5px) {
-      div.giftstart.wrapper div.block.overlay {
+      div.giftstart.wrapper div.block.gs-overlay {
         width: 60%;
         max-width: 500px;
         margin-left: 5%; } }
-    div.giftstart.wrapper div.block.overlay div.image-upload {
+    div.giftstart.wrapper div.block.gs-overlay div.image-upload {
       margin-bottom: 0.5em; }
   div.giftstart.wrapper div.receipt-wrap {
     position: absolute;
@@ -270,7 +270,6 @@ div.giftstart.wrapper {
       text-align: left; }
   div.giftstart.wrapper div.block.col2 {
     float: right;
-    padding-top: 0px;
     margin-right: 4%; }
     @media screen and (max-width: 1029px) {
       div.giftstart.wrapper div.block.col2 {
@@ -426,7 +425,7 @@ div.giftstart.wrapper {
       display: inline-block;
       width: 49%; }
       div.giftstart.wrapper .block.prices .price h2 {
-        color: #de7f24;
+        color: #00838F;
         display: inline;
         margin-right: 7px; }
         @media only screen and (max-width: 667px) {
@@ -456,7 +455,7 @@ div.giftstart.wrapper {
         width: 39%;
         margin-left: 7.5%; } }
     div.giftstart.wrapper .block.completion .countdown {
-      color: #12584c;
+      color: #00838F;
       display: inline;
       margin-right: 7px; }
       @media only screen and (max-width: 667px) {
@@ -523,7 +522,7 @@ div.giftstart.wrapper {
       div.giftstart.wrapper .groupcard .contributors.orange {
         background-color: #de7f24; }
       div.giftstart.wrapper .groupcard .contributors.teal {
-        background-color: #238471; }
+        background-color: #00838F; }
       div.giftstart.wrapper .groupcard .contributors.green {
         background-color: #b2b812; }
       div.giftstart.wrapper .groupcard .contributors.red {
@@ -558,7 +557,7 @@ div.giftstart.wrapper {
         div.giftstart.wrapper .groupcard .contributors__titleblock.orange {
           background-color: #ff912b; }
         div.giftstart.wrapper .groupcard .contributors__titleblock.teal {
-          background-color: #12584c; }
+          background-color: #00838F; }
         div.giftstart.wrapper .groupcard .contributors__titleblock.green {
           background-color: #d8d82b; }
         div.giftstart.wrapper .groupcard .contributors__titleblock.red {

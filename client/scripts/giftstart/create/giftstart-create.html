@@ -31,23 +31,32 @@
                 <div class="desc"><strong>Things to consider:</strong>
                     <br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?
                     <br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>
-                <div class="more-parts">Add Pieces
-                    <br/>
+                <div class="more-parts">
+					Add Pieces<br/>
 					<button ng-click="moreParts($event)" class="circular ui icon button large">
   						<i class="icon plus large"></i>
 					</button>
                 </div>
-                <div class="fewer-parts-mobile">Remove Pieces
+                <div class="fewer-parts">
+					Remove <br/>Pieces<br/>
+					<button ng-click="fewerParts($event)" class="circular ui icon button large">
+  						<i class="icon minus large"></i>
+					</button>   
+                </div>
+
+				<div class="fewer-parts-mobile">
+					Remove <br/>Pieces
                     <br/>
 					<button ng-click="fewerParts($event)" class="circular ui icon button large">
-  						<i class="icon plus large"></i>
-					</button>                </div>
-                <span class="parts-control"><span class="numtiles"> {{x*y}} Pieces</span>
-                <span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} <img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span></span>
+  						<i class="icon minus large"></i>
+					</button>                
+				</div>
+                <span class="parts-control">
+					<span class="numtiles"> {{x*y}} Pieces</span>
+                	<span class="money" ng-hide="fetchingTaxRate"> ${{ totalPrice/100/x/y | number : 2 }} 
+						<img class="loading"  src="/assets/loading.gif" ng-show="fetchingTaxRate"/> each* <span class="tax-note">(+tax)</span>
+					</span>
                 </span>
-                <div class="fewer-parts">
-                    <img class="linky" ng-click="fewerParts($event)" src="/assets/circle_red_minus.png">
-                    <br/>Remove Pieces</div>
                 <!-- button class="help float-right" ng-click="help()">Help</button -->
                 <span class="disclaimer">* Shipping is included.</span>
             </div>
@@ -276,9 +285,9 @@
                             </div>
                         </div>
                     </div>
-                    <h4 ng-hide="dueDateEmpty()">Campaign End Date <!--a class="button" ng-click="changeDueDate = !changeDueDate">CHANGE</a--></h4>
+                    <h2 ng-hide="dueDateEmpty()">4. Campaign End Date <!--a class="button" ng-click="changeDueDate = !changeDueDate">Change</a--></h2>
                     <p class="endDate-text" ng-hide="dueDateEmpty()">Your campaign will end on</p>
-                    <h2 class="endDate-date" ng-hide="dueDateEmpty()">{{campaignEndDate.toDateString()}}</h2>
+					<a class="ui teal tag label endDate-date" ng-hide="dueDateEmpty()"><i class="calendar icon"></i> {{campaignEndDate.toDateString()}}</a>
                     <p class="endDate-text" ng-hide="dueDateEmpty()">.</p>
                     <p id="endDate-comment" ng-hide="dueDateEmpty()">Your campaign needs to end at least 5 days before your delivery date.</p>
                     <div ng-show="changeDueDate" class="endRange" ng-class="{opaque: dueDateEmpty()}" ui-date></div>
@@ -320,9 +329,8 @@
 
         </form>
 
-        <div ng-show="showLoginBox" class="login-box">
-            <h2>Log in or create an account:</h2>
-            <ng-include src="'/views/login/create.html'"></ng-include>
+        <div ng-show="showLoginBox" class="login-box grid aligned centered center">
+            <ng-include src="'/scripts/login/login-or-create.html'" ng-repeat="showCreate in [true]"></ng-include>
         </div>
 
     </div>
@@ -330,12 +338,12 @@
     <div class="progress-nav" ng-hide="showLoginBox">
         <div class="back-indicator" ng-class="{'invisible': isCreateStepTiles()}">
             <img id="giftstart-create-prev" class="linky prev" ng-click="prevStep()" src="/assets/circle_black_lt.png">
-            <br/>PREVIOUS
-            <br/>STEP</div>
+            <br/>Previous
+            <br/>Step</div>
         <div class="step-indicator">
             <img src="/assets/circle_green_check.png" alt="Find a gift" />
-            <br/>FIND
-            <br/>A GIFT</div>
+            <br/>Find
+            <br/>a Gift</div>
         <img class="step-indicator-divider" src="/assets/hbar_black.png" />
         <div class="step-indicator">
             <img ng-hide="isCreateStepStory()||isCreateStepShipping()" src="/assets/circle_black.png" alt="Adjust the tiles" />
@@ -349,7 +357,7 @@
             <br/>Tell the
             <br/>story</div>
         <img class="step-indicator-divider" src="/assets/hbar_black.png" alt="Shipping datails" />
-        <div class="step-indicator">
+        <div class="step-indicator back-indicator">
             <img src="/assets/circle_black.png" />
             <br/>Shipping
             <br/>details</div>

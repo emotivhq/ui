@@ -70,31 +70,31 @@ input:focus, button:focus, select:focus, textarea:focus {
     border-color: #e44028;
     color: white; }
     .old-button.primary-green, .old-button.red-green {
-      background: #238471; }
+      background: #00ACC1; }
       .old-button.primary-green:hover, .old-button.red-green:hover {
-        background: #238471;
-        border-color: #12584c;
+        background: #00ACC1;
+        border-color: #00838F;
         color: white; }
   .old-button.secondary, .old-button.white {
     background: white;
     border-color: #e44028;
     color: #e44028; }
     .old-button.secondary-green, .old-button.white-green {
-      border-color: #238471;
-      color: #238471; }
+      border-color: #00ACC1;
+      color: #00ACC1; }
       .old-button.secondary-green:hover, .old-button.white-green:hover {
-        background: #238471;
-        border-color: #238471;
+        background: #00ACC1;
+        border-color: #00ACC1;
         color: white; }
   .old-button.green {
-    border-color: #238471;
-    color: #238471; }
+    border-color: #00ACC1;
+    color: #00ACC1; }
     .old-button.green-fill {
       color: white;
-      background: #238471; }
+      background: #00ACC1; }
     .old-button.green:hover {
-      background: #238471;
-      border-color: #238471;
+      background: #00ACC1;
+      border-color: #00ACC1;
       color: white; }
 
 .old-button.share {

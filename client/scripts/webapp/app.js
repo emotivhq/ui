@@ -770,7 +770,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/search/',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/discover',
-        {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        {templateUrl: '/views/discover/discover.html', reloadOnSearch: false})
         .when('/discover/:searchTerm',
         {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/giftideas',
@@ -853,6 +853,26 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
 angular.module('GiftStarterApp').run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('/views/discover/discover.html',
+    "<div class=\"giftideas wrapper static-pages ui\" ng-controller=\"GiftideasController as discover\">\n" +
+    "    <div class=\"headerwrap\" name=\"home\" title=\"Discover\" ng-show=\"!category\">\n" +
+    "        <h1>Find The Perfect Gift</h1>\n" +
+    "        <h4>It's that easy. What's on your mind?</h4>\n" +
+    "    \t<gs-product-search></gs-product-search>\n" +
+    "\t</div>\n" +
+    "\t\n" +
+    "    <gs-product-search results=\"true\"></gs-product-search>\n" +
+    "\t<ng-include src=\"'/scripts/giftideas/giftideas.ng.html'\"></ng-include>\n" +
+    "\n" +
+    "\n" +
+    "    <div ng-show=\"category || product\" id=\"disclaimer\" class=\"hidden\">\n" +
+    "        If the item you GiftStart has color, size or other options, please contact the Gift Concierge to ensure you get the item that best meets your specifications or if you have any other questions regarding your product selection.\n" +
+    "    </div>\n" +
+    "\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('/views/home/home.html',
     "<div class=\"landing-page\" ng-controller=\"HomeController\">\n" +
     "\t<div class=\"headerwrap\">\n" +
@@ -885,7 +905,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "  <div class=\"ui container\">\n" +
     "    <h1>Crowdfunding for Gifts</h1>\n" +
     "    <h4>Gift and pay for <em>any</em> product or service <em>to</em> anyone <em>with</em> anyone.</h4>\n" +
-    "    <a class=\"ui right labeled icon button purple huge\" href=\"/join\">\n" +
+    "    <a class=\"ui right labeled icon button purple huge\" href=\"/join\" ng-hide=\"loggedIn\">\n" +
     "\t\tGet Started\n" +
     "\t\t<i class=\"add user icon\"></i>\n" +
     "\t  </a>\n" +
@@ -1350,16 +1370,16 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/views/search/search.html',
-    "<div class=\"giftideas wrapper ui container main full\" ng-controller=\"GiftideasController\">\n" +
-    "    <div class=\"headerwrap\" name=\"home\" title=\"GiftStarter Team\" ng-show=\"!category\" style=\"margin-bottom: 0;padding-bottom: 40px;}\">\n" +
+    "<div class=\"giftideas wrapper ui container main full\" ng-controller=\"GiftideasController as search\">\n" +
+    "    <div class=\"headerwrap\" name=\"home\" title=\"Discover\" style=\"margin-bottom: 0;padding-bottom: 40px;}\">\n" +
     "        <h1>Find The Perfect Gift</h1>\n" +
     "        <h4>It's that easy. What's on your mind?</h4>\n" +
     "    \t<gs-product-search></gs-product-search>\n" +
     "\t</div>\n" +
     "\n" +
-    "    <ng-include src=\"'/scripts/product/search-results.ng.html'\"></ng-include>\n" +
+    "\t<gs-product-search results=\"true\"></gs-product-search>\n" +
     "\n" +
-    "    <div ng-show=\"category || product\" id=\"disclaimer\">\n" +
+    "    <div ng-show=\"category || product\" id=\"disclaimer\" class=\"hidden\">\n" +
     "        If the item you GiftStart has color, size or other options, please contact the Gift Concierge to ensure you get the item that best meets your specifications or if you have any other questions regarding your product selection.\n" +
     "    </div>\n" +
     "\n" +
@@ -2272,23 +2292,32 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                <div class=\"desc\"><strong>Things to consider:</strong>\n" +
     "                    <br />How many people do you think will pitch-in on the gift? How much do you think each person will pitch-in?\n" +
     "                    <br />We recommend picking the smallest amount per piece because remember, a person can always buy more than one piece.</div>\n" +
-    "                <div class=\"more-parts\">Add Pieces\n" +
-    "                    <br/>\n" +
+    "                <div class=\"more-parts\">\n" +
+    "\t\t\t\t\tAdd Pieces<br/>\n" +
     "\t\t\t\t\t<button ng-click=\"moreParts($event)\" class=\"circular ui icon button large\">\n" +
     "  \t\t\t\t\t\t<i class=\"icon plus large\"></i>\n" +
     "\t\t\t\t\t</button>\n" +
     "                </div>\n" +
-    "                <div class=\"fewer-parts-mobile\">Remove Pieces\n" +
+    "                <div class=\"fewer-parts\">\n" +
+    "\t\t\t\t\tRemove <br/>Pieces<br/>\n" +
+    "\t\t\t\t\t<button ng-click=\"fewerParts($event)\" class=\"circular ui icon button large\">\n" +
+    "  \t\t\t\t\t\t<i class=\"icon minus large\"></i>\n" +
+    "\t\t\t\t\t</button>   \n" +
+    "                </div>\n" +
+    "\n" +
+    "\t\t\t\t<div class=\"fewer-parts-mobile\">\n" +
+    "\t\t\t\t\tRemove <br/>Pieces\n" +
     "                    <br/>\n" +
     "\t\t\t\t\t<button ng-click=\"fewerParts($event)\" class=\"circular ui icon button large\">\n" +
-    "  \t\t\t\t\t\t<i class=\"icon plus large\"></i>\n" +
-    "\t\t\t\t\t</button>                </div>\n" +
-    "                <span class=\"parts-control\"><span class=\"numtiles\"> {{x*y}} Pieces</span>\n" +
-    "                <span class=\"money\" ng-hide=\"fetchingTaxRate\"> ${{ totalPrice/100/x/y | number : 2 }} <img class=\"loading\"  src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/> each* <span class=\"tax-note\">(+tax)</span></span>\n" +
+    "  \t\t\t\t\t\t<i class=\"icon minus large\"></i>\n" +
+    "\t\t\t\t\t</button>                \n" +
+    "\t\t\t\t</div>\n" +
+    "                <span class=\"parts-control\">\n" +
+    "\t\t\t\t\t<span class=\"numtiles\"> {{x*y}} Pieces</span>\n" +
+    "                \t<span class=\"money\" ng-hide=\"fetchingTaxRate\"> ${{ totalPrice/100/x/y | number : 2 }} \n" +
+    "\t\t\t\t\t\t<img class=\"loading\"  src=\"/assets/loading.gif\" ng-show=\"fetchingTaxRate\"/> each* <span class=\"tax-note\">(+tax)</span>\n" +
+    "\t\t\t\t\t</span>\n" +
     "                </span>\n" +
-    "                <div class=\"fewer-parts\">\n" +
-    "                    <img class=\"linky\" ng-click=\"fewerParts($event)\" src=\"/assets/circle_red_minus.png\">\n" +
-    "                    <br/>Remove Pieces</div>\n" +
     "                <!-- button class=\"help float-right\" ng-click=\"help()\">Help</button -->\n" +
     "                <span class=\"disclaimer\">* Shipping is included.</span>\n" +
     "            </div>\n" +
@@ -2517,9 +2546,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                            </div>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
-    "                    <h4 ng-hide=\"dueDateEmpty()\">Campaign End Date <!--a class=\"button\" ng-click=\"changeDueDate = !changeDueDate\">CHANGE</a--></h4>\n" +
+    "                    <h2 ng-hide=\"dueDateEmpty()\">4. Campaign End Date <!--a class=\"button\" ng-click=\"changeDueDate = !changeDueDate\">Change</a--></h2>\n" +
     "                    <p class=\"endDate-text\" ng-hide=\"dueDateEmpty()\">Your campaign will end on</p>\n" +
-    "                    <h2 class=\"endDate-date\" ng-hide=\"dueDateEmpty()\">{{campaignEndDate.toDateString()}}</h2>\n" +
+    "\t\t\t\t\t<a class=\"ui teal tag label endDate-date\" ng-hide=\"dueDateEmpty()\"><i class=\"calendar icon\"></i> {{campaignEndDate.toDateString()}}</a>\n" +
     "                    <p class=\"endDate-text\" ng-hide=\"dueDateEmpty()\">.</p>\n" +
     "                    <p id=\"endDate-comment\" ng-hide=\"dueDateEmpty()\">Your campaign needs to end at least 5 days before your delivery date.</p>\n" +
     "                    <div ng-show=\"changeDueDate\" class=\"endRange\" ng-class=\"{opaque: dueDateEmpty()}\" ui-date></div>\n" +
@@ -2561,9 +2590,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        </form>\n" +
     "\n" +
-    "        <div ng-show=\"showLoginBox\" class=\"login-box\">\n" +
-    "            <h2>Log in or create an account:</h2>\n" +
-    "            <ng-include src=\"'/views/login/create.html'\"></ng-include>\n" +
+    "        <div ng-show=\"showLoginBox\" class=\"login-box grid aligned centered center\">\n" +
+    "            <ng-include src=\"'/scripts/login/login-or-create.html'\" ng-repeat=\"showCreate in [true]\"></ng-include>\n" +
     "        </div>\n" +
     "\n" +
     "    </div>\n" +
@@ -2571,12 +2599,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    <div class=\"progress-nav\" ng-hide=\"showLoginBox\">\n" +
     "        <div class=\"back-indicator\" ng-class=\"{'invisible': isCreateStepTiles()}\">\n" +
     "            <img id=\"giftstart-create-prev\" class=\"linky prev\" ng-click=\"prevStep()\" src=\"/assets/circle_black_lt.png\">\n" +
-    "            <br/>PREVIOUS\n" +
-    "            <br/>STEP</div>\n" +
+    "            <br/>Previous\n" +
+    "            <br/>Step</div>\n" +
     "        <div class=\"step-indicator\">\n" +
     "            <img src=\"/assets/circle_green_check.png\" alt=\"Find a gift\" />\n" +
-    "            <br/>FIND\n" +
-    "            <br/>A GIFT</div>\n" +
+    "            <br/>Find\n" +
+    "            <br/>a Gift</div>\n" +
     "        <img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" />\n" +
     "        <div class=\"step-indicator\">\n" +
     "            <img ng-hide=\"isCreateStepStory()||isCreateStepShipping()\" src=\"/assets/circle_black.png\" alt=\"Adjust the tiles\" />\n" +
@@ -2590,7 +2618,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            <br/>Tell the\n" +
     "            <br/>story</div>\n" +
     "        <img class=\"step-indicator-divider\" src=\"/assets/hbar_black.png\" alt=\"Shipping datails\" />\n" +
-    "        <div class=\"step-indicator\">\n" +
+    "        <div class=\"step-indicator back-indicator\">\n" +
     "            <img src=\"/assets/circle_black.png\" />\n" +
     "            <br/>Shipping\n" +
     "            <br/>details</div>\n" +
@@ -2616,7 +2644,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/giftstart/giftstart.html',
-    "<div class=\"giftstart wrapper\" ng-controller=\"GiftStartController\" >\n" +
+    "<div class=\"giftstart wrapper ui container main pad\" ng-controller=\"GiftStartController\" >\n" +
     "\n" +
     "    <div class=\"fullwidth block\">\n" +
     "        <div class=\"title\">\n" +
@@ -2628,25 +2656,40 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <div class=\"fullwidth block\">\n" +
     "\n" +
-    "        <div class=\"col2 block\" ng-hide=\"showLoginBox||showPayBox||showSignBox||showShareBox\">\n" +
-    "            <div class=\"prodtitle\">\n" +
-    "                <a ng-href=\"{{giftStart.product_url}}\" rel=\"nofollow\" class=\"title\" target=\"_blank\" ng-click=\"productLinkClicked();\" ng-mouseover=\"hideOverlay();\" ng-mouseleave=\"showOverlay();\" ng-show=\"giftStart.product_title\">{{giftStart.product_title}}</a>\n" +
-    "            </div>\n" +
+    "\t\t\n" +
+    "<div class=\"col2 ui card block\" ng-hide=\"showLoginBox||showPayBox||showSignBox||showShareBox\" style=\"padding: initial;\">\n" +
+    "    <div class=\"content\">\n" +
+    "        <div class=\"header\">\n" +
+    "            <a ng-href=\"{{giftStart.product_url}}\" rel=\"nofollow\" class=\"title\" target=\"_blank\" ng-click=\"productLinkClicked();\" ng-mouseover=\"hideOverlay();\" ng-mouseleave=\"showOverlay();\" ng-show=\"giftStart.product_title\">\n" +
+    "\t\t\t{{giftStart.product_title}}\n" +
+    "\t\t</a>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "    <div class=\"content\">\n" +
+    "        <div class=\"ui dscription\">\n" +
     "            <div class=\"description\">\n" +
     "                <span class=\"description edit\"><textarea class=\"description\" ng-model=\"newDescription\" ng-show=\"editMode\"></textarea></span>\n" +
     "                <span class=\"description makelinks\" ng-hide=\"editMode\" style=\"white-space: pre-line;\">{{giftStart.description}}</span>\n" +
     "            </div>\n" +
-    "            <div class=\"signature\">\n" +
-    "                <p class=\"name\" ng-show=\"!editMode\">\n" +
+    "\t\t\t<div class=\"meta\">\n" +
+    "\t\t\t\t<p class=\"name\" ng-show=\"!editMode\">\n" +
     "                    <span class=\"signature__title\" ng-show=\" giftStart.gc_name \"> {{ giftStart.gc_name }} </span>\n" +
     "                </p>\n" +
-    "                    <input class=\"gc-name\" ng-model=\"newGcName\" ng-show=\"editMode\"/>\n" +
-    "                <a class=\"edit button linky\" ng-show=\"campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()\" ng-click=\"editMode=true;\">EDIT</a>\n" +
-    "                <div class=\"save\"><button class=\"save\" ng-click=\"updateCampaign();\" ng-show=\"editMode\">Save</button><button class=\"save\" ng-click=\"editMode=false;\" ng-show=\"editMode\">X</button></div>\n" +
-    "                <p ng-show=\"giftStart.gc_name.length > 0 || editMode\" class=\"gift-champion\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion</p>\n" +
-    "            </div>\n" +
+    "\t\t\t\t<input class=\"gc-name\" ng-model=\"newGcName\" ng-show=\"editMode\"/>\n" +
+    "\t\t\t</div>\n" +
+    "\t\t\t\n" +
     "        </div>\n" +
-    "        <div class=\"overlay block\" Xng-class=\"{shrunk: showPayBox}\">\n" +
+    "    </div>\n" +
+    "    <a class=\"ui bottom attached button icon\" ng-show=\"campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()\" ng-click=\"editMode=true;\">\n" +
+    "\t\t<i class=\"edit icon\"></i> Edit\n" +
+    "\t</a>\n" +
+    "\t<a class=\"save ui bottom attached button icon\" ng-click=\"updateCampaign();\" ng-show=\"editMode\">\n" +
+    "\t\t<i class=\"save icon\"></i>Save\n" +
+    "\t</a>\t\n" +
+    "</div>\n" +
+    "\n" +
+    "\t\t\n" +
+    "        <div class=\"gs-overlay block\" Xng-class=\"{shrunk: showPayBox}\">\n" +
     "            <div class=\"image-upload\" ng-show=\"editMode\"><label>Upload New Image:  </label><input id=\"campaign-image-input\" type=\"file\" capture=\"camera\" accept=\"image/*\"/></div>\n" +
     "            <gs-overlay ng-class=\"{initialized: pitchInsInitialized}\" giftstart=\"giftStart\" ng-click=\"selectionUpdated();\"></gs-overlay>\n" +
     "            <div class=\"receipt-wrap\" ng-show=\"showPayBox\">\n" +
@@ -2654,12 +2697,12 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                    <div class=\"receipt-tiles\">\n" +
     "                        <div class=\"img-wrap\" style=\"background-image:url('{{giftStart.product_img_url}}')\"></div>\n" +
     "                        <div class=\"info-tiles\">\n" +
-    "                            <h2 class=\"num-tiles\">{{giftStart.nSelected}} PIECES</h2>\n" +
-    "                            <h4 class=\"cost-tiles\">AT ${{getTileCost() / 100 | number : 2}} EACH</h4>\n" +
+    "                            <h2 class=\"num-tiles\">{{giftStart.nSelected}} Pieces</h2>\n" +
+    "                            <h4 class=\"cost-tiles\">at  ${{getTileCost() / 100 | number : 2}} Each</h4>\n" +
     "                        </div>\n" +
     "                    </div>\n" +
     "                    <div class=\"receipt-total\">\n" +
-    "                        <h4 class=\"purchase-total\">PURCHASE TOTAL: <h2 class=\"total-price\">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>\n" +
+    "                        <h4 class=\"purchase-total\">Purchase Total: <h2 class=\"total-price\">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>\n" +
     "                        <p class=\"purchase-note\">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -2667,7 +2710,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "        <div class=\"login-box\" ng-show=\"showLoginBox\">\n" +
     "            <h2>Log in or create an account:</h2>\n" +
-    "            <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
+    "            <ng-include src=\"'/view/login/login.html'\"></ng-include>\n" +
     "        </div>\n" +
     "        <div class=\"pay-box\" ng-show=\"showPayBox\">\n" +
     "            <h2>Payment Information:</h2>\n" +
@@ -2682,29 +2725,55 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <div class=\"share-box\" ng-show=\"showShareBox\">\n" +
     "            <h2>Share with Friends:</h2>\n" +
     "            <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>\n" +
-    "            <a href=\"#share-panel\"><button class=\"pitch-in button green\" ng-click=\"showSharePanel(true)\" ng-hide=\"showShare\"><span>INVITE FRIENDS TO PITCH IN</span></button></a>\n" +
-    "            <a href=\"\" ng-click=\"shareBox(false)\">SKIP THIS STEP</a>\n" +
+    "\t\t\t\t<a class=\"pitch-in ui button icon\">\n" +
+    "\t\t\t\t\t<i class=\"friends icon\"></i> Invite friends to pitchin\n" +
+    "\t\t\t\t</a>\n" +
+    "            <a href=\"\" ng-click=\"shareBox(false)\">Skip this step</a>\n" +
     "        </div>\n" +
     "\n" +
     "        <!--ng-include src=\"'/scripts/share/invite-pitchin.html'\"></ng-include-->\n" +
     "\n" +
     "        <div class=\"col2 block\" ng-hide=\"showLoginBox||showPayBox||showSignBox||showShareBox\">\n" +
     "            <div class=\"pitch-instructions\" ng-show=\"secondsLeft > 0 && !campaignComplete()\">\n" +
-    "                <div class=\"ordinal_circle\"><span class=\"ordinal\">1</span></div><h4> CLICK ON THE PIECES YOU WANT TO PURCHASE</h4><br/>\n" +
-    "                <div class=\"ordinal_circle\"><span class=\"ordinal\">2</span></div><h4> PITCH IN!</h4>\n" +
+    "                <div class=\"ordinal_circle\">\n" +
+    "\t\t\t\t\t<span class=\"ordinal\">1</span>\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\t\t<h4>Click the pieces you want to buy</h4><br/>\n" +
+    "                <div class=\"ordinal_circle\">\n" +
+    "\t\t\t\t\t<span class=\"ordinal\">2</span>\n" +
+    "\t\t\t\t</div>\n" +
+    "\t\t\t\t<h4> Pitch In</h4>\n" +
     "            </div>\n" +
-    "            <button class=\"pitch-in button red\" ng-show=\"secondsLeft > 0 && !campaignComplete()\" ng-class=\"{disabled: giftStart.totalSelection == 0}\" ng-click=\"pitchIn()\" ng-mouseover=\"pitchInHoverCallback()\" title=\"{{pitchinButtonHoverMessage}}\">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>\n" +
+    "            <button class=\"ui pitch-in button huge primary icon\" ng-show=\"secondsLeft > 0 && !campaignComplete()\" ng-class=\"{disabled: giftStart.totalSelection == 0}\" ng-click=\"pitchIn()\" ng-mouseover=\"pitchInHoverCallback()\" title=\"{{pitchinButtonHoverMessage}}\">\n" +
+    "\t\t\t\t<i class=\"gift right icon\"></i> \n" +
+    "\t\t\t\tPitch In <span class=\"hidden\">${{giftStart.totalSelection / 100 | number : 2}}</span>\n" +
+    "\t\t\t</button>\n" +
     "\n" +
     "            <div class=\"giftstart-this\" ng-show=\"secondsLeft <= 0 || campaignComplete()\">\n" +
     "                Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>\n" +
-    "                <a class=\"giftstart-this-link\" target=\"_self\" href=\"{{giftstartThisUrl()}}\"><button class=\"pitch-in button primary\">GIFTSTART IT</button></a>\n" +
+    "                <a class=\"giftstart-this-link\" target=\"_self\" href=\"{{giftstartThisUrl()}}\"><button class=\"pitch-in button primary\">GiftStart It</button></a>\n" +
     "                <div class=\"saveforlater\">\n" +
-    "                    <button class=\"pitch-in button green\" ng-click=\"saveProdForLater();\">SAVE FOR LATER <img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\"></button>\n" +
+    "                    <button class=\"ui pitch-in button ico large\" ng-click=\"saveProdForLater();\">\n" +
+    "\t\t\t\t\t\t<i class=\"bookmark icon\"></i> \n" +
+    "\t\t\t\t\t\tSave For Later\n" +
+    "\t\t\t\t\t\t<img ng-show=\"isSavingForLater\" class=\"loader\" src=\"/assets/loading_transparent.gif\">\n" +
+    "\t\t\t\t\t</button>\n" +
     "                    <div class=\"product-message\" ng-bind-html=\"productMessage\"></div>\n" +
     "                </div>\n" +
     "            </div>\n" +
     "\n" +
-    "            <a href=\"#share-panel\"><button class=\"pitch-in button green\" ng-click=\"showSharePanel(true)\" ng-hide=\"showShare\"><span ng-hide=\"secondsLeft <= 0 || campaignComplete()\">INVITE FRIENDS TO PITCH IN</span><span ng-show=\"secondsLeft <= 0 || campaignComplete()\">SHARE THIS CAMPAIGN</span></button></a>\n" +
+    "            <a href=\"#share-panel\">\n" +
+    "\t\t\t\t<button class=\"ui pitch-in button blue large fluid icon\">\n" +
+    "\t\t\t\t\t<span ng-hide=\"secondsLeft <= 0 || campaignComplete()\">\n" +
+    "\t\t\t\t\t\t<i class=\"users right icon\"></i>\n" +
+    "\t\t\t\t\t\tInvite Friends\n" +
+    "\t\t\t\t\t</span>\n" +
+    "\t\t\t\t\t<span ng-show=\"secondsLeft <= 0 || campaignComplete()\">\n" +
+    "\t\t\t\t\t\t<i class=\"external right share icon\"></i>\n" +
+    "\t\t\t\t\t\tShare This Campaign\n" +
+    "\t\t\t\t\t</span>\n" +
+    "\t\t\t\t</button>\n" +
+    "\t\t\t</a>\n" +
     "            <!--div class=\"invite block\">\n" +
     "                <h3 class=\"black invite-friends\">Share This Campaign With Friends!</h3>\n" +
     "                <img class=\"share\" src=\"/assets/envelope.png\" ng-click=\"emailShare();\" />\n" +
@@ -2736,7 +2805,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    </div>\n" +
     "\n" +
     "    <div id=\"share-panel\">\n" +
-    "        <a id=\"closebtn\" href=\"\" ng-show=\"showShare\" ng-click=\"showSharePanel(false)\">CLOSE</a>\n" +
+    "        <a id=\"closebtn\" href=\"\" ng-show=\"showShare\" ng-click=\"showSharePanel(false)\">Close</a>\n" +
     "        <ng-include src=\"'/scripts/share/invite-pitchin.html'\" ng-show=\"showShare\"></ng-include>\n" +
     "    </div>\n" +
     "\n" +
@@ -2767,9 +2836,15 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                <p id=\"textcount\" ng-show=\"isEditing(pitchIn)\">{{230 - pitchIn.note.length}}</p>\n" +
     "            </div>\n" +
     "            <div class=\"contributors__edit\">\n" +
-    "                <a class=\"contributors__edit__button button\" ng-show=\"pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0\" ng-click=\"editingComment(pitchIn, true)\">EDIT</a>\n" +
-    "                <a class=\"contributors__edit__button button\" ng-show=\"isEditing(pitchIn)\" ng-click=\"cancelEditComment(pitchIn)\">CANCEL</a>\n" +
-    "                <button class=\"contributors__edit__button savebtn red\" ng-show=\"isEditing(pitchIn)\" ng-disabled=\"picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1\" ng-click=\"editingComment(pitchIn, false)\">SAVE</button>\n" +
+    "                <a class=\"contributors__edit__button button\" ng-show=\"pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0\" ng-click=\"editingComment(pitchIn, true)\">\n" +
+    "\t\t\t\t\tEdit\n" +
+    "\t\t\t\t</a>\n" +
+    "                <a class=\"contributors__edit__button button\" ng-show=\"isEditing(pitchIn)\" ng-click=\"cancelEditComment(pitchIn)\">\n" +
+    "\t\t\t\t\tCancel\n" +
+    "\t\t\t\t</a>\n" +
+    "                <button class=\"contributors__edit__button savebtn red\" ng-show=\"isEditing(pitchIn)\" ng-disabled=\"picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1\" ng-click=\"editingComment(pitchIn, false)\">\n" +
+    "\t\t\t\t\tSave\n" +
+    "\t\t\t\t</button>\n" +
     "            </div>\n" +
     "        </div>\n" +
     "        <div ng-repeat-end class=\"h--hide\"></div>\n" +
@@ -3354,17 +3429,45 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/login/create-account.html',
-    "<div class=\"userlogin__form\">\n" +
-    "    <h4>Create account with email address:</h4>\n" +
-    "    <form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action\">\n" +
-    "        <input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required /><br/>\n" +
-    "        <input class=\"userlogin__surname\" type=\"text\" name=\"surname\" ng-model=\"$parent.surname\" placeholder=\"Last Name\" required /><br/>\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Email Address\" required /><br/>\n" +
-    "        <div class=\"userlogin__passwordwrap\"><input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><input ng-show=\"$parent.showPassword\" class=\"userlogin__password\" type=\"text\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><div class=\"userlogin__eye\" ng-click=\"$parent.showPassword=!$parent.showPassword\"></div></div>\n" +
-    "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn red create_action\" ng-disabled=\"$parent.working\">Create account</button>\n" +
+    "<div class=\"userlogin__form ui middle aligned center aligned grid\">\n" +
+    "   <div class=\"column\">\n" +
+    "    <h2 class=\"ui teal image header\">\n" +
+    "      <div class=\"content\">\n" +
+    "        Create account with email address:\n" +
+    "      </div>\n" +
+    "    </h2> \n" +
+    "    <form ng-submit=\"$parent.doCreateEmail()\" class=\"create_action ui form\">\n" +
+    "        <div class=\"field\">\n" +
+    "          <div class=\"ui left icon input\">\n" +
+    "            <i class=\"user icon\"></i>\n" +
+    "\t\t\t  <input class=\"userlogin__name\" type=\"text\" name=\"name\" ng-model=\"$parent.name\" placeholder=\"First Name\" required />\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"field\">\n" +
+    "          <div class=\"ui left icon input\">\n" +
+    "            <i class=\"user icon\"></i>\n" +
+    "\t\t\t  <input class=\"userlogin__surname\" type=\"text\" name=\"surname\" ng-model=\"$parent.surname\" placeholder=\"Last Name\" required />\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"field\">\n" +
+    "          <div class=\"ui left icon input\">\n" +
+    "            <i class=\"mail icon\"></i>\n" +
+    "\t\t\t  <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Email Address\" required />\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "        <div class=\"field\">\n" +
+    "          <div class=\"ui left icon input\">\n" +
+    "            <i class=\"lock icon\"></i>\n" +
+    "\t\t\t  <input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required />\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "        <button class=\"userlogin__loginbtn ui fluid large teal submit button icon labeled\" ng-disabled=\"$parent.working\">\n" +
+    "\t\t\t<i class=\"add user right icon\"></i> Create account\n" +
+    "\t\t</button>\n" +
     "    </form>\n" +
-    "</div>\n"
+    "\t<div class=\"userlogin__message ui floating info\" ng-class=\"$parent.message ? 'message'\">{{$parent.message}}</div>\t   \n" +
+    "\t</div>\n" +
+    "</div>"
   );
 
 
@@ -3372,40 +3475,65 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "<div class=\"userlogin\" ng-controller=\"LoginOrCreateController\">\n" +
     "    <div class=\"userlogin__emaillogin login-block\" ng-hide=\"showCreate\">\n" +
     "        <ng-include src=\"'/scripts/login/login.html'\"></ng-include>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "        <div class=\"userlogin__createacc\">\n" +
     "            <span>Don't have an account? </span>\n" +
-    "           <span><a ng-click=\"showCreate=true; resetForm();\" class=\"userlogin__createacclink linky\">Create</a></span>\n" +
+    "\t\t\t<a ng-click=\"showCreate=true; resetForm();\" class=\"userlogin__createacclink ui label\">\n" +
+    "  \t\t\t\t<i class=\"add user icon\"></i>\n" +
+    "  \t\t\t\tJoin\n" +
+    "\t\t\t</a>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"userlogin__emaillogin login-block\" ng-show=\"showCreate\">\n" +
     "        <ng-include src=\"'/scripts/login/create-account.html'\"></ng-include>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showSocials\">\n" +
+    "        <div class=\"userlogin__createacc\">\n" +
     "            <span>Already have an account? </span>\n" +
-    "            <span><a ng-click=\"showCreate=false; resetForm();\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
-    "        </div>\n" +
+    " \t\t\t<a ng-click=\"showCreate=false; resetForm();\" class=\"userlogin__createacclink ui label\">\n" +
+    "  \t\t\t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\t\t\tLogin\n" +
+    "\t\t\t</a>\n" +
+    "       </div>\n" +
     "    </div>\n" +
-    "    <div class=\"vertical-line-block\">\n" +
-    "        <div class=\"vertical-line\" ng-show=\"showSocials\"/>\n" +
+    "    <div class=\"ui icon message vertical medium\">\n" +
+    "                        <i class=\"facebook icon blue\"></i>\n" +
+    "                        <div class=\"content column two\">\n" +
+    "                            <div class=\"header\">\n" +
+    "                                Rather use social media?\n" +
+    "                            </div>\n" +
+    "                            <p>It only takes a few clicks.</p>\n" +
+    "                        </div>\n" +
+    "                        <div class=\"column three\">\n" +
+    "                            <a href=\"#\" class=\"ui blue basic button social\">Login</a>\n" +
+    "                        </div>\n" +
     "    </div>\n" +
-    "    <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
-    "        <h4>Or {{showCreate?\"create account\":\"login\"}} with social media:</h4>\n" +
-    "        <div class=\"social\">\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\"><img class=\"social__icons\" src=\"/assets/login/facebook.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\"><img class=\"social__icons\" src=\"/assets/login/twitter.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\"><img class=\"social__icons\" src=\"/assets/login/linkedin.png\"></a><br/>\n" +
-    "            <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\"><img class=\"social__icons\" src=\"/assets/login/google.png\"></a>\n" +
+    "\n" +
+    "    <div class=\"ui social basic modal middle aligned center aligned\">\n" +
+    "        <i class=\"close icon\"></i>\n" +
+    "        <div class=\"ui middle center aligned header\">\n" +
+    "            Login or create account\n" +
     "        </div>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-show=\"showCreate\">\n" +
-    "            <span>Already have an account? </span>\n" +
-    "            <span><a ng-click=\"showCreate=false; resetForm();\" class=\"userlogin__createacclink linky\">Login</a></span>\n" +
+    "        <div class=\"middle center aligned grid\">\n" +
+    "            <div class=\"image content container\">\n" +
+    "                <div class=\"userlogin__sociallogin login-block\" ng-show=\"showSocials\">\n" +
+    "                    <div class=\"social\">\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginFacebook()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/facebook.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginTwitter()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/twitter.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginLinkedin()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/linkedin.png\">\n" +
+    "                        </a>\n" +
+    "                        <br/>\n" +
+    "                        <a class=\"social__link linky\" ng-click=\"doLoginGoogleplus()\">\n" +
+    "                            <img class=\"social__icons\" src=\"/assets/login/google.png\">\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
-    "        <div class=\"userlogin__createacc switchtxt\" ng-hide=\"showCreate\">\n" +
-    "            <span>Don't have an account? </span>\n" +
-    "           <span><a ng-click=\"showCreate=true; resetForm();\" class=\"userlogin__createacclink linky\">Create</a></span>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "    <div ng-hide=\"showSocials\">\n" +
-    "        <br/><br/>\n" +
     "    </div>\n" +
     "</div>\n" +
     "<script>\n" +
@@ -3417,26 +3545,50 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/login/login.html',
-    "<div class=\"userlogin__form\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
-    "    <h4>Login with an email address:</h4>\n" +
-    "    <form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action\">\n" +
-    "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <div class=\"userlogin__passwordwrap\"><input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter your password\" required></div>\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=true\">Forgot password</a>\n" +
-    "        <div class=\"userlogin__wrapper\">\n" +
-    "            <!--<input class=\"userlogin__remember\" type=\"checkbox\" name=\"remember\" id=\"remember\">-->\n" +
+    "<div class=\"userlogin__form ui middle aligned center aligned grid\" ng-hide=\"$parent.showForgot || $parent.showReset\">\n" +
+    "  <div class=\"column\">\n" +
+    "    <h2 class=\"ui image header\">\n" +
+    "      <div class=\"content\">\n" +
+    "       Login with your email address:\n" +
+    "      </div>\n" +
+    "    </h2>\n" +
+    "\t<form ng-submit=\"$parent.doLoginEmail()\" class=\"login_action ui form\">\n" +
+    "      <div class=\"ui stacked segment\">\n" +
+    "        <div class=\"field\">\n" +
+    "          <div class=\"ui left icon input\">\n" +
+    "            <i class=\"user icon\"></i>\n" +
+    "            <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
+    "          </div>\n" +
     "        </div>\n" +
-    "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn red login_action\" ng-disabled=\"$parent.working\">Log In</button>\n" +
+    "        <div class=\"field\">\n" +
+    "          <div class=\"ui left icon input\">\n" +
+    "            <i class=\"lock icon\"></i>\n" +
+    "            <input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter your password\" required>\n" +
+    "          </div>\n" +
+    "        </div>\n" +
+    "\t  <button class=\"userlogin__loginbtn ui right labeled icon button fluid submit\" ng-class=\"$parent.working ? 'loading'\" ng-disabled=\"$parent.working\">\n" +
+    "  \t\t<i class=\"right arrow icon\"></i>\n" +
+    "  \t\tLogin\n" +
+    "\t\t</button>\n" +
+    "    <div class=\"userlogin__forgot\">\n" +
+    "      <a href=\"#\" ng-click=\"$parent.showForgot=true\">Forget your password?</a>\n" +
+    "    </div>\n" +
+    "\t\t</div>\t\t\n" +
+    "\t<div class=\"userlogin__message ui floating info\" ng-class=\"$parent.message ? 'message'\">\n" +
+    "\t\t{{$parent.message}}\n" +
+    "\t</div>\n" +
+    "\n" +
     "    </form>\n" +
+    "\n" +
+    "  </div>\n" +
     "</div>\n" +
     "\n" +
     "<div class=\"userlogin__form\" ng-show=\"$parent.showForgot\">\n" +
-    "    <form ng-submit=\"$parent.doForgotPassword()\">\n" +
+    "    <form ng-submit=\"$parent.doForgotPassword()\" class=\"ui form\">\n" +
     "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Cancel</a>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn\" ng-disabled=\"$parent.working\">Get Password</button>\n" +
+    "        <button class=\"userlogin__loginbtn ui button fluid\" ng-disabled=\"$parent.working\">Get Password</button>\n" +
+    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showForgot=false\">Cancel</a>\n" +
     "    </form>\n" +
     "</div>\n" +
     "\n" +
@@ -3447,9 +3599,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        <input class=\"userlogin__email\" type=\"email\" name=\"email\" ng-model=\"$parent.email\" placeholder=\"Enter your email address\" required />\n" +
     "        <div class=\"userlogin__passwordwrap\"><input ng-hide=\"$parent.showPassword\" class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Enter a New Password\" required /><input ng-show=\"$parent.showPassword\" class=\"userlogin__password\" type=\"text\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.password\" placeholder=\"Password\" required /><div class=\"userlogin__eye\" ng-click=\"$parent.showPassword=!$parent.showPassword\"></div></div>\n" +
     "        <!--<input class=\"userlogin__password\" type=\"password\" autocomplete=\"off\" name=\"password\" ng-model=\"$parent.reenterpassword\" placeholder=\"Re-enter the Password\" required>-->\n" +
-    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showReset=false\">Cancel</a>\n" +
     "        <div class=\"userlogin__message\">{{$parent.message}}</div>\n" +
-    "        <button class=\"userlogin__loginbtn red\" ng-disabled=\"$parent.working\">Change Password</button>\n" +
+    "        <button class=\"userlogin__loginbtn ui button fluid\" ng-disabled=\"$parent.working\">Change Password</button>\n" +
+    "        <a class=\"userlogin__forgot linky\" ng-click=\"$parent.showReset=false\">Cancel</a>\n" +
     "    </form>\n" +
     "</div>"
   );
@@ -3627,7 +3779,10 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "        <span class=\"error\" ng-show=\"errorMessage.length > 0\">{{errorMessage}}</span>\n" +
     "\n" +
-    "        <button class=\"large pay primary\" ng-click=\"paypalSubmit()\" ng-class=\"{disabled: pitchingIn}\">Pay ${{currentCharge / 100 | number : 2}} <img ng-show=\"pitchingIn\" src=\"/assets/loading_transparent.gif\"></button>\n" +
+    "        <button class=\"ui large pay primary fluid\" ng-click=\"paypalSubmit()\" ng-class=\"{disabled: pitchingIn}\">\n" +
+    "\t\t\tPay Now<span class=\"ui hidden\">${{currentCharge / 100 | number : 2}} </span>\n" +
+    "\t\t\t<img ng-show=\"pitchingIn\" src=\"/assets/loading_transparent.gif\">\n" +
+    "\t\t</button>\n" +
     "    </form>\n" +
     "    <div class=\"cancel-button\"><a class=\"cancel-button button linky\" ng-click=\"hidePopover()\">Cancel</a></div>\n" +
     "\n" +
@@ -3913,7 +4068,7 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
   $templateCache.put('/scripts/product/product-search.html',
     "<!--<div class=\"product-link wrapper\" ng-controller=\"ProductLinkController\">-->\n" +
     "<div id=\"product-search-anchor\" class=\"product-link ui middle aligned center aligned\">\n" +
-    "    <div class=\"search wrapper ui form huge container\" ng-hide=\"searchMenu\">\n" +
+    "    <div class=\"search wrapper ui form huge container\" ng-hide=\"searchMenu || searchResults\">\n" +
     "        <div class=\"inputs ui inline field segment\">\n" +
     "            <input id=\"product-search-input\" class=\"text-input\" type=\"text\" name=\"product-link\" placeholder=\"Search Gifts Ideas\" ng-model=\"product_url\" ng-keyup=\"$event.keyCode == 13 ? submit() : null\"/>\n" +
     "\t\t\t<button id=\"product-search-button\" class=\"submit searchbtn ui button primary icon large\" ng-click=\"submit()\">\n" +
@@ -4011,8 +4166,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "        </div>\n" +
     "    </div>\n" +
     "\n" +
-    "<section id=\"search-products-section\" class=\"products ui container\" ng-class=\"{hidden: products.length == 0 || searchMenu, segment: products.length > 0}\" style=\"margin-top: 3em;\">\n" +
-    "<div  class=\"ui cards stackable four link\" >\n" +
+    "<section id=\"search-products-section\" class=\"products ui\" ng-class=\"{hidden: products.length == 0, grid: products.length > 0}\" style=\"margin-top: 3em;\" ng-show=\"searchResults\">\n" +
+    "\t<div class=\"ui container\">\n" +
+    "\t\t<div class=\"ui cards stackable four link\" >\n" +
     "\t<div class=\"product-container ui card\" ng-class=\"{selected: product.selected}\" ng-repeat=\"product in selectedProducts\" ng-hide=\"!product.imgUrl\" ng-click=\"showProductDetails({{$index}})\">\n" +
     "        <div class=\"product content\">\n" +
     "            <div class=\"image-container\">\n" +
@@ -4048,10 +4204,20 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "    \t\t</span>\n" +
     "  \t\t</div>\n" +
     "    </div>\n" +
-    "    <div class=\"page-buttons ui container vertical medium top bottom\" ng-show=\"products.length > 10\">\n" +
-    "        <a class=\"ui button linky\" ng-click=\"decrementPage()\">Previous</a><span class=\"page-number\" ng-class=\"{selected: pageNumber == selectedPage}\" ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\">{{pageNumber}}</span><a class=\"ui button linky\" ng-click=\"incrementPage()\">Next</a>\n" +
+    "    <div class=\"page-buttons ui vertical medium top bottom middle aligned center aligned grid\" ng-show=\"products.length > 10\">\n" +
+    "    <div class=\"ui pagination menu stackable\">\n" +
+    "        <a ng-click=\"decrementPage()\" class=\"icon item\">\n" +
+    "          <i class=\"left chevron icon\"></i>\n" +
+    "        </a>\n" +
+    "        <a ng-repeat=\"pageNumber in pageNumbers\" ng-click=\"selectPage(pageNumber)\" class=\"item\">{{pageNumber}}</a>\n" +
+    "        <a ng-click=\"incrementPage()\" class=\"icon item\">\n" +
+    "          <i class=\"right chevron icon\"></i>\n" +
+    "        </a>\n" +
     "    </div>\n" +
+    "    </div>\n" +
+    "\n" +
     "</div>\n" +
+    "\t</div>\n" +
     "</section>\n" +
     "    <!--p class=\"need-help-concierge\">Can't find the gift you want? Simply contact our <a href=\"/concierge\" ng-click=\"giftConciergeClicked()\">Gift Concierge</a> and we'll find it for you. Or visit our <a href=\"/giftideas\">Gift Ideas</a> page for more ideas.</p-->\n" +
     "</div>"
@@ -4059,8 +4225,9 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
 
 
   $templateCache.put('/scripts/share/invite-pitchin.html',
-    "<div id=\"shareControllerWrapper\" class=\"share pitchin\" ng-controller=\"ShareController\">\n" +
-    "    <div id=\"title\">\n" +
+    "<div id=\"shareControllerWrapper\" class=\"ui modal share pitchin\" ng-controller=\"ShareController\">\n" +
+    "\t<i class=\"close icon\"></i>\n" +
+    "   <div class=\"header\">\n" +
     "        <h1>Invite Friends to Pitch-in</h1>\n" +
     "        <!--p>Your GiftStarter campaign is successfully set up! Invite friends to help pitch-in\n" +
     "        and increase your chances of fully funding the gift!</p-->\n" +
@@ -4068,16 +4235,14 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "\n" +
     "    <ng-include src=\"'/scripts/login/login-or-create.html'\"></ng-include>\n" +
     "\n" +
-    "    <div ng-show=\"loggedIn()\" id=\"share-block\">\n" +
-    "        <div id=\"content\">\n" +
-    "            <div class=\"block message\">\n" +
-    "            <h4>YOUR MESSAGE</h4>\n" +
-    "            <textarea id=\"shareMessage\" ng-model=\"message\"></textarea>\n" +
+    "    <div ng-show=\"loggedIn()\" id=\"share-block\" class=\"content\">\n" +
+    "        <div id=\"content\" class=\"ui grid\">\n" +
+    "            <div class=\"column wide six block message\">\n" +
+    "            \t<h3>Your Message</h3>\n" +
+    "            \t<textarea id=\"shareMessage\" ng-model=\"message\"></textarea>\n" +
     "            </div>\n" +
-    "\n" +
-    "            <div class=\"share-where block\">\n" +
-    "                <div class=\"share-where-social\">\n" +
-    "                    <h4>SHARE ON SOCIAL MEDIA</h4>\n" +
+    "            <div class=\"column wide six share-where-social\">\n" +
+    "                    <h4>Share on Social Media</h4>\n" +
     "                    <p>Select which networks you would like to post on:</p>\n" +
     "                    <div id=\"social-icons-container\">\n" +
     "                        <a class=\"social__link linky\" ng-click=\"selectedSocials['facebook']=false\"><img class=\"social__icons\" src=\"/assets/share/facebook.png\" ng-show=\"selectedSocials['facebook']\"></a>\n" +
@@ -4090,8 +4255,8 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "                        <!--<img class=\"social__icons linky\" src=/assets/share/google-share-unselected.png ng-show=\"!selectedSocials['google']\" ng-click=\"selectSocial('google')\"/>-->\n" +
     "                    </div>\n" +
     "                </div>\n" +
-    "                <div class=\"share-where-email\">\n" +
-    "                    <h4>SEND AN EMAIL</h4>\n" +
+    "            <div class=\"column wide six share-where-email\">\n" +
+    "                    <h4>Send an Email</h4>\n" +
     "                    <p>Enter email addresses separated by a comma<!--, or import gmail contacts to select email addresses-->:</p>\n" +
     "                    <!--a href=\"\"><h4>IMPORT GMAIL CONTACTS</h4></a-->\n" +
     "                    <textarea ng-model=\"emailRecipients\" placeholder=\"Enter email addresses, separated by commas\"></textarea>\n" +
@@ -4099,23 +4264,35 @@ angular.module('GiftStarterApp').run(['$templateCache', function($templateCache)
     "            </div>\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"share-buttons\">\n" +
-    "            <p ng-show=\"shareSuccess\">YOUR SHARE SUCCESSFULLY POSTED!</p>\n" +
+    "        <div class=\"share-buttons ui middle aligned center aligned content\">\n" +
+    "            <p ng-show=\"shareSuccess\">That was a success!</p>\n" +
     "            <p class=\"twitter-note\" ng-show=\"selectedSocials['twitter'] && message.length>118\">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>\n" +
-    "            <button class=\"red\" ng-hide=\"shareSuccess\" ng-disabled=\"!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0\" ng-click=\"shareClick()\">SHARE</button>\n" +
-    "            <button ng-show=\"shareSuccess\" ng-click=\"shareReset()\">SHARE AGAIN</button>\n" +
-    "            <button ng-show=\"shareSuccess\" ng-click=\"$parent.showSharePanel(false); shareReset()\">FINISH</button>\n" +
+    "            <button class=\"ui button large icon fluid\" ng-hide=\"shareSuccess\" ng-disabled=\"!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0\" ng-click=\"shareClick()\">\n" +
+    "\t\t\t\t<i class=\"share external icon\"></i> \n" +
+    "\t\t\t\tShare\n" +
+    "\t\t\t</button>\n" +
+    "            <button  class=\"ui button large\" ng-show=\"shareSuccess\" ng-click=\"shareReset()\">\n" +
+    "\t\t\t\tShare again\n" +
+    "\t\t\t</button>\n" +
+    "\n" +
     "        </div>\n" +
     "\n" +
-    "        <div class=\"share-where-link\">\n" +
-    "            <h4>SHARE A LINK!</h4>\n" +
-    "            <p>Use this link to invite friends and family to GiftStarter through any means you'd like:</p>\n" +
+    "        <div class=\"share-buttons ui middle aligned center aligned content share-where-link form segment\">\n" +
+    "            <p style=\"text-align:center\">Use this link to invite friends and family to GiftStarter through any means you'd like:</p>\n" +
     "            <input value=\"{{campaignUrl()}}\" gs-copy-url readonly/>\n" +
     "        </div>\n" +
     "\n" +
     "        <!--a href=\"\"><h4>SKIP AND SHARE LATER</h4></a>\n" +
     "        <p>You can share your campaign at any time from your profile page or the campaign page!</p-->\n" +
+    "\t<div class=\"actions\">\n" +
+    "    <div class=\"ui deny button\">\n" +
+    "      Cancel\n" +
     "    </div>\n" +
+    "    <div class=\"ui blue right labeled icon button\" ng-show=\"shareSuccess\" ng-click=\"shareReset()\">\n" +
+    "      Finish Up\n" +
+    "      <i class=\"checkmark icon\"></i>\n" +
+    "    </div>\n" +
+    "  </div>\n" +
     "</div>"
   );
 
@@ -6307,8 +6484,10 @@ function ConciergeController($scope, $http) {
 
 (function (app) {
 
-    var HowItWorksController = function ($scope, $location) {
+    var HowItWorksController = function ($scope, $location, UserService) {
         $scope.location = $location;
+		$scope.loggedIn = UserService.loggedIn;
+		this.loggedIn = UserService.loggedIn;
         $scope.sectionShown = "welcome";
 		/* semantic ui embed */
 		jQuery('.youtube .ui.embed').embed({
@@ -6325,6 +6504,7 @@ function ConciergeController($scope, $http) {
     app.controller('HowItWorksController', [
         '$scope',
         '$location',
+		'UserService',
         HowItWorksController]);
 }(angular.module('GiftStarterApp')));
 /**
@@ -7109,7 +7289,7 @@ function gsPrintUrl($location, $http) {
         }
 
         function isMainMenu() {
-            return(!UserService.loggedIn && !isSlimMenu()) ? true : false;
+            return(!UserService.loggedIn && !isSlimMenu() && !isCreateMenu()) ? true : false;
         }
 
         function isUserMenu() {
@@ -7120,6 +7300,7 @@ function gsPrintUrl($location, $http) {
             $scope.slimMenu = isSlimMenu();
             $scope.mainMenu = isMainMenu();
             $scope.userMenu = isUserMenu();
+            $scope.createMenu = isCreateMenu();
         }
         updateMenuType();
 
@@ -9499,6 +9680,11 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
         $scope.showShareBox = false;
         $scope.showShare = show;
     };
+	jQuery('.pitch-in').click(function() {
+		jQuery('.pitchin').modal('show');
+	});
+	
+	
     $scope.editingComment = function (comment, editing) {
         if(editing) { //edit mode on
             $scope.commentEditing.push(comment);
@@ -10841,6 +11027,8 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         scope.isSavingForLater = false;
 		scope.loggedIn = UserService.loggedIn;
 		this.loggedIn = UserService.loggedIn;
+		scope.searchMenu = false;
+		scope.searchResults = false;
 
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
@@ -11056,7 +11244,8 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         link: link,
         templateUrl: '/scripts/product/product-search.html',
 		scope: {
-        	searchMenu: '=menu'
+        	searchMenu: '=menu',
+        	searchResults: '=results'
       	}
     }
 }
@@ -11085,8 +11274,8 @@ function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
                 var margin = (marginHeight > marginWidth) ? marginWidth : marginHeight;
                 var height = Math.floor(overlayHeight/GiftStartService.giftStart.rows - 2*margin);
                 var width = Math.floor(overlayWidth/GiftStartService.giftStart.columns - 2*margin - 1);
-                scope.$on('hide-overlay', function() {angular.element('gs-overlay div.overlay .part-cell').css('opacity', '0');});
-                scope.$on('show-overlay', function() {angular.element('gs-overlay div.overlay .part-cell').css('opacity', '1');});
+                scope.$on('hide-overlay', function() {angular.element('gs-overlay div.gs-overlay .part-cell').css('opacity', '0');});
+                scope.$on('show-overlay', function() {angular.element('gs-overlay div.gs-overlay .part-cell').css('opacity', '1');});
                 // Calculate max widths for bought part user images
                 var usrHeight  = overlayHeight/GiftStartService.giftStart.rows - 4*margin;
                 var usrWidth  = overlayWidth/GiftStartService.giftStart.columns - 4*margin;
@@ -12941,6 +13130,26 @@ function gsSubscribeHeader($location, Analytics, $timeout, UserService) {
     }
 }
 
+/**
+ * Copyright (C) GiftStarter, inc. - All Rights Reserved.
+ * Unauthorized copying of this file, via any medium is strictly prohibited.
+ * Proprietary and confidential.
+ */
+
+(function (app) {
+
+    var FooterController = function ($scope, $location, UserService) {
+        $scope.location = $location;
+		$scope.loggedIn = UserService.loggedIn;
+		this.loggedIn = UserService.loggedIn;		
+    }
+
+    app.controller('FooterController', [
+        '$scope',
+        '$location',
+		'UserService',
+        FooterController]);
+}(angular.module('GiftStarterApp')));
 /**
  * Copyright (C) GiftStarter, inc. - All Rights Reserved.
  * Unauthorized copying of this file, via any medium is strictly prohibited.

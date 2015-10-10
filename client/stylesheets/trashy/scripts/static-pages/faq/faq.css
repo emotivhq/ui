@@ -129,7 +129,7 @@ div.faq {
         -moz-column-count: 2;
         -webkit-margin-bottom-collapse: separate; } }
     div.faq .main h1 {
-      color: #12584c;
+      color: #00838F;
       font: 1.5em Gotham, sans-serif;
       padding-top: 1em;
       padding-bottom: 10px; }
@@ -137,7 +137,7 @@ div.faq {
       font-size: 16px;
       padding: 15px 0 5px 0; }
       div.faq .main h2:hover, div.faq .main h2.open {
-        color: #238471; }
+        color: #00ACC1; }
       div.faq .main h2 img {
         width: 12px;
         margin-right: 5px; }

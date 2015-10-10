@@ -22,10 +22,10 @@ div.funding-bar.wrapper {
     transition: all 0.2s; }
   div.funding-bar.wrapper div.bar {
     width: 0%;
-    background: #de7f24; }
+    background: #00838F; }
   div.funding-bar.wrapper div.pi-bar {
     width: 0%;
-    background: #ff912b; }
+    background: #00838F; }
   div.funding-bar.wrapper div.bar-bg {
     background: #e6e6e6; }
   div.funding-bar.wrapper div.mask {

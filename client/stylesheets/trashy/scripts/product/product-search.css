@@ -185,15 +185,15 @@ gs-product-search section.products {
           font-size: 1rem; }
         gs-product-search section.products div.product-container div.product div.product-details p {
           width: 100%; }
-        gs-product-search section.products div.product-container div.product div.product-details p.retailer {
+        gs-product-search section.products div.product-container div.product div.product-details .retailer {
           margin: 0; }
-        gs-product-search section.products div.product-container div.product div.product-details p.description {
+        gs-product-search section.products div.product-container div.product div.product-details .description {
           display: none;
           overflow-x: hidden;
           overflow-y: auto;
           -webkit-line-clamp: 10;
           -webkit-box-orient: vertical;
-          max-height: 15em;
+          max-height: 13em;
           padding: 10px;
           background-color: #f3f3f3; }
         gs-product-search section.products div.product-container div.product div.product-details .price {
@@ -201,6 +201,10 @@ gs-product-search section.products {
   gs-product-search section.products div.product-container.selected {
     cursor: default;
     width: 100% !important; }
+    gs-product-search section.products div.product-container.selected .header {
+      cursor: pointer;
+      font-size: 1.3rem !important;
+      padding: 0 0 1rem; }
     @media screen and (min-width: 1802.5px) {
       gs-product-search section.products div.product-container.selected div.product {
         width: 96%;
@@ -212,10 +216,7 @@ gs-product-search section.products {
         gs-product-search section.products div.product-container.selected div.product img {
           cursor: pointer; }
         gs-product-search section.products div.product-container.selected div.product span.product-link {
-          display: inline; }
-        gs-product-search section.products div.product-container.selected div.product div.product-details .header {
-          cursor: pointer;
-          font-size: 1.3rem; } }
+          display: inline; } }
     @media screen and (min-width: 1030px) {
       gs-product-search section.products div.product-container.selected {
         height: 29em; } }
@@ -224,7 +225,7 @@ gs-product-search section.products {
       @media screen and (min-width: 1030px) {
         gs-product-search section.products div.product-container.selected div.product {
           height: 27em; } }
-      gs-product-search section.products div.product-container.selected div.product div.product-details p.description {
+      gs-product-search section.products div.product-container.selected div.product div.product-details .description {
         display: -webkit-box; }
       gs-product-search section.products div.product-container.selected div.product button {
         display: inline-block; }

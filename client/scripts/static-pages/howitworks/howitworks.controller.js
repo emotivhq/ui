@@ -6,8 +6,10 @@
 
 (function (app) {
 
-    var HowItWorksController = function ($scope, $location) {
+    var HowItWorksController = function ($scope, $location, UserService) {
         $scope.location = $location;
+		$scope.loggedIn = UserService.loggedIn;
+		this.loggedIn = UserService.loggedIn;
         $scope.sectionShown = "welcome";
 		/* semantic ui embed */
 		jQuery('.youtube .ui.embed').embed({
@@ -24,5 +26,6 @@
     app.controller('HowItWorksController', [
         '$scope',
         '$location',
+		'UserService',
         HowItWorksController]);
 }(angular.module('GiftStarterApp')));
