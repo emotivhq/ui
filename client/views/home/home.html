@@ -1,30 +1,68 @@
 <div class="ui inverted masthead center aligned vertical segment home" ng-controller="HomeController as home">
     <div class="ui text container">
         <h1 class="ui inverted header">Group Gifting Made Simple</h1>
-        <h2>The easiest way for you and your friends, colleagues, or family members to give a personalized gift to someone that matters.</h2>
-        <div class="ui message black">
+        <h2>The easiest way for you and your friends, family members, or colleagues to give personalized gifts.</h2>
+        <h2 class="hidden">Give personalized gifts for any occasion with the help of friends, family, or colleagues.</h2>
+
+        <div class="ui message black start">
             <div class="content">
-                <p>GiftStarter is <strong>always</strong> free to use as many times as you would like.</p>
-                <div class="ui left icon action input fluid">
-                    <i class="envelope icon"></i>
-                    <input type="text" placeholder="Email Address">
-                    <button class="ui teal button">Start Gifting</button>
+                <p>Do you already have the perfect gift in mind?</p>
+                <div class="desktop">
+                    <a class="ui button grey inverted" data-cta-type="secondary">No, I'd like some help</a>
+                    <a class="ui button teal" data-cta-type="primary">Yep, let's get started</a> 
+                </div>
+                <div class="mobile">
+                    <a class="ui button teal fluid" data-cta-type="primary">Yep, let's get started</a>
+                    <a class="ui button grey fluid inverted" data-cta-type="secondary">No, I'd like some help</a>
                 </div>
             </div>
         </div>
-    </div>
-    <!--     <div class="headerwrap">
-        <h1>Welcome to GiftStarter!</h1>
-        <p>We are putting the emotion back into gifting. With GiftStarter you can give gifts you're proud to give, and they're happy to get. Make your lists. Find your community. Give better gifts.</p>
-        <a name="productsearch"></a>
-        <gs-product-search></gs-product-search>
-    </div> -->
-    <!-- <ng-include src="'/scripts/product/search-results.ng.html'"></ng-include> 
-    <ng-include src="'/scripts/home/whatisgiftstarter/why-giftstarter.ng.html'" class="hidden"></ng-include>
-    <ng-include src="'/scripts/home/whatisgiftstarter/how-it-works.ng.html'"></ng-include>
-    <ng-include src="'/scripts/staffpicks/staffpicks.ng.html'"></ng-include>
-    <ng-include src="'/scripts/giftsgivenbar/giftsgivenbar.ng.html'"></ng-include> 
-    <ng-include src="'/scripts/login/login-or-create.html'" class="hidden"></ng-include> 
-    <ng-include src="'/scripts/brandbar/brandbar.ng.html'" class="hidden"></ng-include> -->
+        <div class="ui message teal primary hidden">
+            <div class="content">
+                <p>Awesome! GiftStarter is <strong>always</strong> free to use as many times as you like.</p>
+                <p class="hidden">Awesome! GiftStarter is <strong>always</strong> free and easy to use.</p>
+                <form class="ui form">
+                    <div class="desktop">
+                        <div class="ui left icon action input fluid">
+                            <i class="envelope icon"></i>
+                            <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
+                            <button class="ui teal button" onclick="top.location='/join/'">Start Gifting</button>
+                        </div>
+                    </div>
+                    <div class="mobile table">
+                        <div class="ui left icon input fluid field mobile">
+                            <i class="envelope icon"></i>
+                            <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
+                        </div>
+                        <button class="ui teal fluid button" onclick="top.location='/join/'">Start Gifting</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
+        <div class="ui message secondary hidden">
+            <div class="content">
+                <p>Search <strong>4+ million</strong> products to find the perfect gift.</p>
+                <form class="ui form">
+                    <div class="desktop">
+                        <div class="ui left icon action input fluid">
+                            <i class="search icon"></i>
+                            <input id="search-query-desktop" type="text" placeholder="Search Gifts Ideas" onkeyup="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
+                            <button class="ui teal button" onclick="top.location='/search/'+jQuery('#search-query-desktop').val()">Search Gift Ideas</button>
+                        </div>
+                    </div>
+                    <div class="mobile table">
+                        <div class="ui left icon input fluid field mobile">
+                            <i class="search icon"></i>
+                            <input id="search-query-mobile" type="text" placeholder="Search Gifts Ideas" onkeyup="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
+                        </div>
+                        <button class="ui teal fluid button" onclick="top.location='/search/'+jQuery('#search-query-mobile').val()">Search Gift Ideas</button>
+                    </div>
+                    <p>
+                        <small>Looking for a more personal experience? Try contacting our <a href="/concierge">Gift Concierge</a> for individual attention.</small>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
