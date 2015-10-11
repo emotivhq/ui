@@ -25,16 +25,16 @@
                     <div class="desktop">
                         <div class="ui left icon action input fluid">
                             <i class="envelope icon"></i>
-                            <input type="text" placeholder="Email Address">
-                            <button class="ui teal button">Start Gifting</button>
+                            <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
+                            <button class="ui teal button" onclick="top.location='/join/'">Start Gifting</button>
                         </div>
                     </div>
                     <div class="mobile table">
                         <div class="ui left icon input fluid field mobile">
                             <i class="envelope icon"></i>
-                            <input type="text" placeholder="Email Address">
+                            <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
                         </div>
-                        <button class="ui teal fluid button">Start Gifting</button>
+                        <button class="ui teal fluid button" onclick="top.location='/join/'">Start Gifting</button>
                     </div>
                 </form>
             </div>
@@ -47,16 +47,16 @@
                     <div class="desktop">
                         <div class="ui left icon action input fluid">
                             <i class="search icon"></i>
-                            <input type="text" placeholder="Search Gifts">
-                            <button class="ui teal button">Search</button>
+                            <input id="search-query-desktop" type="text" placeholder="Search Gifts Ideas" onkeyup="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
+                            <button class="ui teal button" onclick="top.location='/search/'+jQuery('#search-query-desktop').val()">Search Gift Ideas</button>
                         </div>
                     </div>
                     <div class="mobile table">
                         <div class="ui left icon input fluid field mobile">
                             <i class="search icon"></i>
-                            <input type="text" placeholder="Search Gifts">
+                            <input id="search-query-mobile" type="text" placeholder="Search Gifts Ideas" onkeyup="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
                         </div>
-                        <button class="ui teal fluid button">Search</button>
+                        <button class="ui teal fluid button" onclick="top.location='/search/'+jQuery('#search-query-mobile').val()">Search Gift Ideas</button>
                     </div>
                     <p>
                         <small>Looking for a more personal experience? Try contacting our <a href="/concierge">Gift Concierge</a> for individual attention.</small>
@@ -64,6 +64,5 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
