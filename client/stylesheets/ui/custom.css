@@ -41,6 +41,7 @@ header.slim {
   z-index: 1000 !important; }
   .ui.main.menu.inverted {
     border: none;
+    box-shadow: none;
     position: absolute;
     left: 0;
     top: 0;
@@ -154,6 +155,8 @@ div.rn-carousel-indicator span.active {
   padding: 1em 0em;
   -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3)); }
+  .ui.masthead.home .desktop {
+    display: none; }
   .ui.masthead.home .ui.container {
     height: 67vh;
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.25); }
@@ -166,19 +169,29 @@ div.rn-carousel-indicator span.active {
       margin-top: 20px;
       margin-bottom: 2rem;
       display: none; }
-    .ui.masthead.home .ui.container .ui.black.message {
-      background: rgba(0, 0, 0, 0.65); }
-    .ui.masthead.home .ui.container .ui.input {
-      margin-bottom: .75em; }
+    .ui.masthead.home .ui.container .ui.message {
+      text-shadow: none; }
+      .ui.masthead.home .ui.container .ui.message.black {
+        background: rgba(0, 0, 0, 0.65); }
+      .ui.masthead.home .ui.container .ui.message.secondary {
+        background: rgba(248, 248, 249, 0.85); }
+      .ui.masthead.home .ui.container .ui.message .mobile .ui.button {
+        margin-bottom: 0.75em; }
+      .ui.masthead.home .ui.container .ui.message .ui.form {
+        padding-bottom: .5em; }
 
 @media only screen and (min-width: 700px) {
   .ui.masthead.home {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1), transparent), url(/assets/bg/gift-and-flowers@2x.jpg), url(/assets/bg/gift-and-flowers.jpg);
     min-height: 700px; }
-    .ui.masthead.home h2, .ui.masthead.home .ui.black.message {
+    .ui.masthead.home .desktop {
       display: block; }
-    .ui.masthead.home .ui.container.mobile-cta {
-      display: none; } }
+    .ui.masthead.home .mobile {
+      display: none; }
+    .ui.masthead.home .ui.container {
+      height: auto; }
+      .ui.masthead.home .ui.container h2 {
+        display: block; } }
 
 .ui.statistic > .value, .ui.statistics .statistic > .value {
   font-size: 1.2rem; }
