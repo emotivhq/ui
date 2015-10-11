@@ -1,9 +1,9 @@
 <!--<div class="product-link wrapper" ng-controller="ProductLinkController">-->
 <div id="product-search-anchor" class="product-link ui middle aligned center aligned">
-    <div class="search wrapper ui form huge container" ng-hide="searchMenu || searchResults">
-        <div class="inputs ui inline field segment">
-            <input id="product-search-input" class="text-input" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>
-			<button id="product-search-button" class="submit searchbtn ui button primary icon large" ng-click="submit()">
+    <div class="search wrapper ui form" ng-hide="searchMenu || searchResults" ng-class="container: !homeMenu">
+        <div class="ui action input large" ng-class="fluid: homeMenu">
+            <input id="product-search-input" class="text-input" type="text" name="product-link" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>
+			<button id="product-search-button" class="ui button icon teal huge" ng-click="submit()">
 				<i class="search icon"></i>
 			</button>
         </div>
@@ -11,9 +11,9 @@
 	<div class="ui search" ng-show="searchMenu">
             <div class="ui transparent left icon input">
                 <a href="#" id="product-search-button" ng-click="submit()">
-					<i class="search icon"></i>
+					<i class="teal search icon"></i>
 				</a>
-                <input id="product-search-input" class="prompt" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null">
+                <input id="product-search-input" class="prompt" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null" style="padding-left: 0.2em !important;">
             </div>
             <div class="results"></div>
         </div>
@@ -80,18 +80,11 @@
       </div>
     </div>
 
-	<div class="ui active dimmer"  ng-show="loading" style="position: fixed;">
+	<div class="ui active dimmer" ng-show="loading" style="position: fixed;">
     	<div class="ui loader"></div>
  	</div>
 
     <div class="failed" ng-show="failed && !searchMenu">
-        <img src="/assets/failed.png"/>
-        <div>
-            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href="mailto:giftconcierge@giftstarter.com" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>
-        </div>
-    </div>
-
-    <div class="failed" ng-show="results_empty && !searchMenu">
         <img src="/assets/failed.png"/>
         <div>
             <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href="mailto:giftconcierge@giftstarter.com" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>
@@ -105,23 +98,34 @@
         <div class="product content">
             <div class="image-container">
                 <span class="vert-align-helper"></span>
-                <img ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
+                <img class="ui image medium card" ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
             </div>
-            <div class="product-details">
+            <div class="product-details ui aligned middle grid">
 				<h2 class="ui header">
   				<div class="content">
-   				 {{product.title}}
+   				 {{product.title | limitTo: 52}}
  				 </div>
 				</h2>
-                <p class="description ui raised segments" ng-bind-html="product.description"></p>
-                <div class="ui buttons two" style="margin-top: 2rem">
-                    <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart primary ui huge button icon primary labeled">
-                        <i class="gift left icon"></i>
+                <p class="description ui raised segment" ng-bind-html="product.description"></p>
+                <div class="ui buttons vertical" style="margin-top: 2rem; width: 100%;">
+                    <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon">
+                        <i class="gift left icon" class="computer only ui"></i>
+                        GiftStart It
+                    </button>
+                    <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui icon button">
+                        <i class="bookmark right icon" class="computer only ui"></i>
+                        Save for Later
+                        <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+                    </button>
+                </div>
+                <div class="ui buttons two hidden" style="margin-top: 2rem">
+                    <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon labeled">
+                        <i class="gift left icon" class="computer only ui"></i>
                         GiftStart It
                     </button>
                     <div class="or"></div>
-                    <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui icon huge button">
-                        <i class="bookmark right icon"></i>
+                    <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui huge icon labeled button">
+                        <i class="bookmark right icon" class="computer only ui"></i>
                         Save for Later
                         <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
                     </button>
@@ -132,7 +136,7 @@
         </div>
 		<div class="extra content">
     		<span class="right floated">
-      			<i class="dollar green icon"></i>{{product.price / 100 | number : 2}}
+      			<i class="dollar teal icon"></i>{{product.price / 100 | number : 2}}
     		</span>
   		</div>
     </div>
@@ -151,5 +155,4 @@
 </div>
 	</div>
 </section>
-    <!--p class="need-help-concierge">Can't find the gift you want? Simply contact our <a href="/concierge" ng-click="giftConciergeClicked()">Gift Concierge</a> and we'll find it for you. Or visit our <a href="/giftideas">Gift Ideas</a> page for more ideas.</p-->
 </div>

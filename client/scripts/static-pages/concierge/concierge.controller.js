@@ -23,6 +23,8 @@ function ConciergeController($scope, $http) {
         var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
         return re.test($scope.email);
     }
+	// Semantic ui
+	jQuery('.menu .item').tab();
 
     $scope.sendMsg = function() {
         if (validateForm()) {

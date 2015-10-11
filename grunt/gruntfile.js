@@ -133,7 +133,7 @@ module.exports = function(grunt) {
                     '../client/scripts/static-pages/partners/partners.controller.js',
                     '../client/scripts/static-pages/press/press.controller.js',
                     '../client/scripts/static-pages/what-is-it/what-is-it.controller.js',
-                    '../client/scripts/home/home.js',
+                    '../client/scripts/home/home-controller.js',
                     '../client/scripts/giftsgivenbar/giftsgivenbar.controller.js',
                     '../client/scripts/giftstart/thanks/thanked-campaigns.directive.js',
                     '../client/scripts/giftstart/print/print.directive.js',
@@ -281,7 +281,7 @@ module.exports = function(grunt) {
                     '../client/scripts/static-pages/partners/partners.controller.js',
                     '../client/scripts/static-pages/press/press.controller.js',
                     '../client/scripts/static-pages/what-is-it/what-is-it.controller.js',
-                    '../client/scripts/home/home.js',
+                    '../client/scripts/home/home-controller.js',
                     '../client/scripts/giftsgivenbar/giftsgivenbar.controller.js',
                     '../client/scripts/giftstart/thanks/thanked-campaigns.directive.js',
                     '../client/scripts/giftstart/print/print.directive.js',
@@ -561,7 +561,7 @@ module.exports = function(grunt) {
                 createTag: true,
                 tagName: 'v%VERSION%',
                 tagMessage: 'Version %VERSION%',
-                push: false, // True if you want to auto deploy while doing $ grunt beep, etc
+                push: true, // True if you want to auto deploy while doing $ grunt beep, etc
                 pushTo: 'github',
                 gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
                 globalReplace: false

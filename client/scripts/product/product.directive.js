@@ -20,6 +20,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
 		scope.loggedIn = UserService.loggedIn;
 		this.loggedIn = UserService.loggedIn;
 		scope.searchMenu = false;
+		scope.homeMenu = false;
 		scope.searchResults = false;
 
 
@@ -237,6 +238,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         templateUrl: '/scripts/product/product-search.html',
 		scope: {
         	searchMenu: '=menu',
+        	homeMenu: '=home',
         	searchResults: '=results'
       	}
     }

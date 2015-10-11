@@ -16,7 +16,8 @@
       "Test SSH to Github": "ssh -vT git@github.com",
       "Turn on & cache with credential helper": "git config --global credential.helper 'cache --timeout=3600'",  
       "Github oAuth Token": "<enter your own token> (Get Help: http://bit.ly/1Ep65b8)",
-      "Node version": "node --version"
+      "Node version": "node --version",
+	 "Push to GAE": "echo $GAE_PASSWORD | appcfg.py update app.yaml --email=$GAE_EMAIL --passin"
  },
 
 // Preview button configuration

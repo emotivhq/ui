@@ -1,10 +1,18 @@
 {% raw %}
 <!-- Main Menu - Sidebar -->
-<div class="ui left vertical menu wide sidebar inverted" ng-controller="HeaderController as header" ng-hide="!mainMenu && !homeMenu">
-    <a class="item" href="/">Home</a>
-    <a class="item" href="/is">Learn More</a>
-    <a class="item" href="/discover">Discover</a>
-    <a class="item" href="/login">Login</a>
-    <a class="item" href="/join">Signup</a>
+<div class="ui left vertical menu wide sidebar" ng-controller="HeaderController as header" ng-hide="!mainMenu && !homeMenu">
+    <a class="item" href="/"><i class="home icon"></i> Home</a>
+    <a class="item" href="/is"><i class="sidebar icon"></i> How It Works</a>
+	<a href="/concierge" class="item"><i class="gift icon"></i> Gift Concierge</a>
+    <a class="item" href="/discover"><i class="search icon"></i> Discover</a>
+	<a href="/faq" class="item"><i class="question circle icon"></i>FAQ</a>
+	<div class="item"></div>
+	<a href="/about" class="item">About Us</a>
+            <a href="/blog" class="item">Blog</a>
+            <a href="/press" class="item">Press</a>
+	<div class="item"></div>
+	<div class="item"></div>
+    <a class="item" href="/login"><i class="sign in icon"></i>Login</a>
+    <a class="item active teal" href="/join"><i class="add user icon teal"></i>Join</a>
 </div>
 {% endraw %}

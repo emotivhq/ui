@@ -98,14 +98,15 @@
 				</div>
 				<h4> Pitch In</h4>
             </div>
-            <button class="ui pitch-in button huge primary icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
+            <button class="ui pitch-in button huge teal icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
 				<i class="gift right icon"></i> 
 				Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
 			</button>
 
             <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
-                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button primary">GiftStart It</button></a>
+                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}">
+					<button class="pitch-in ui button teal">GiftStart It</button></a>
                 <div class="saveforlater">
                     <button class="ui pitch-in button ico large" ng-click="saveProdForLater();">
 						<i class="bookmark icon"></i> 

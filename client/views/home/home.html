@@ -19,14 +19,14 @@
         </div>
         <div class="ui message teal primary hidden">
             <div class="content">
-                <p>Awesome! GiftStarter is <strong>always</strong> free to use as many times as you like.</p>
-                <p class="hidden">Awesome! GiftStarter is <strong>always</strong> free and easy to use.</p>
+                <p>Awesome! GiftStarter is <strong>better</strong> the more you use it.</p>
+                <p class="hidden">Awesome! GiftStarter is <strong>better</strong> the more you use it.</p>
                 <form class="ui form">
                     <div class="desktop">
                         <div class="ui left icon action input fluid">
                             <i class="envelope icon"></i>
                             <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
-                            <button class="ui teal button" onclick="top.location='/join/'">Start Gifting</button>
+                            <a class="ui teal button" href="/join" ng-class="loading: onClick()">Start Gifting</a>
                         </div>
                     </div>
                     <div class="mobile table">
@@ -34,7 +34,7 @@
                             <i class="envelope icon"></i>
                             <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
                         </div>
-                        <button class="ui teal fluid button" onclick="top.location='/join/'">Start Gifting</button>
+                        <a class="ui teal fluid button" href="/join" ng-class="loading: onClick()">Start Gifting</a>
                     </div>
                 </form>
             </div>
@@ -43,25 +43,10 @@
         <div class="ui message secondary hidden">
             <div class="content">
                 <p>Search <strong>4+ million</strong> products to find the perfect gift.</p>
-                <form class="ui form">
-                    <div class="desktop">
-                        <div class="ui left icon action input fluid">
-                            <i class="search icon"></i>
-                            <input id="search-query-desktop" type="text" placeholder="Search Gifts Ideas" onkeyup="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
-                            <button class="ui teal button" onclick="top.location='/search/'+jQuery('#search-query-desktop').val()">Search Gift Ideas</button>
-                        </div>
-                    </div>
-                    <div class="mobile table">
-                        <div class="ui left icon input fluid field mobile">
-                            <i class="search icon"></i>
-                            <input id="search-query-mobile" type="text" placeholder="Search Gifts Ideas" onkeyup="if(event.keyCode==13){top.location='/search/'+jQuery(this).val()}">
-                        </div>
-                        <button class="ui teal fluid button" onclick="top.location='/search/'+jQuery('#search-query-mobile').val()">Search Gift Ideas</button>
-                    </div>
+               <gs-product-search home="true" results="false"></gs-product-search>
                     <p>
-                        <small>Looking for a more personal experience? Try contacting our <a href="/concierge">Gift Concierge</a> for individual attention.</small>
+                        <small>Looking for a more personal experience? Get your own <a href="/concierge" class="ui tiny tag label icon"><i class="gift icon primary"></i> Gift Concierge</a></small>
                     </p>
-                </form>
             </div>
         </div>
     </div>

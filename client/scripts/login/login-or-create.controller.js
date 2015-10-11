@@ -43,6 +43,13 @@
         $scope.resetForm();
 
         /* semantic ui triggers */
+		jQuery('.youtube .ui.embed').embed({
+			parameters: {
+        		autohide       : false,
+        		autoplay       : false,
+        		modestbranding : 1
+      			}
+		});
 		if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
         }

@@ -13,41 +13,14 @@
 	<link rel="prefetch" href="/assets/fonts/Gotham-Book.woff" />
 	<link rel="prefetch" href="/assets/fonts/Gotham-BookItalic.woff" />
 	<link rel="prefetch" href="/assets/fonts/Roboto-Medium.woff" />
-    {# ###############################################################
-	 # IF app-main.min.css breaks due to sass/grunt issues, 
-	 # use these prebuilt versions in a pinch
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/bootstrap.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/layout.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/global.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/theme.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/ui.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/colors.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/custom.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/owl.css">
-  	<link rel="stylesheet" href="/stylesheets/app-main/sass/css/animate.css">
-	<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/paper/bootstrap.min.css" rel="stylesheet" integrity="sha256-hMIwZV8FylgKjXnmRI2YY0HLnozYr7Cuo1JvRtzmPWs= sha512-k+wW4K+gHODPy/0gaAMUNmCItIunOZ+PeLW7iZwkDZH/wMaTrSJTt7zK6TGy6p+rnDBghAxdvu1LX2Ohg0ypDw==" crossorigin="anonymous">
-  	<!--link rel="stylesheet" href="/stylesheets/app-main.min.css"-->
-	<link rel="stylesheet" href="/stylesheets/app/vendor.min.css">
-  	<link rel="stylesheet" href="/stylesheets/app/gs.min.css">
-  	<link rel="stylesheet" href="/stylesheets/app/style.css" id="layoutstyle">
-  	<link rel="stylesheet" href="/stylesheets/app/custom.css">
-	 # ###############################################################}
-  	<link rel="stylesheet" href="/plugins/pace/themes/red/pace-theme-minimal.css">
 	<link rel="stylesheet" href="/ui/ui.min.css">
 	<link rel="stylesheet" href="/stylesheets/compiled.css">
-	<link rel="stylesheet" href="/stylesheets/ui.min.css">
+	<link rel="stylesheet" href="/stylesheets/ui.css">
 	<script>paceOptions = {elements: false,document: true, restartOnRequestAfter: false}</script>
 	<script src="/plugins/pace/pace.min.js"></script>
 	<script src="/scripts/webapp/vendor.js"></script>
 	<script src="/scripts/webapp/angular.js"></script>
 	<script src="/scripts/webapp/app.js"></script>
-	{# ###############################################################
-	<script src="https://www.giftstarter.com/scripts/out/app.js"></script>
-	<script src="/scripts/out/app.js"></script>
-	<script src="/scripts/webapp/vendor.js"></script>
-	<script src="/scripts/webapp/angular.js"></script>
-	<script src="/scripts/webapp/app.js"></script>
-	# ###############################################################}
 	<script src="/scripts/utilities/browser-specific-css.js"></script>
 	<!-- browser detect -->
 	<script type="text/javascript">
@@ -84,6 +57,9 @@
         document.location.href = '/';
     }
 	</script>
+    {# ###############################################################
+	 # UNNCOMMENT THESE WHEN DONE DEVELOPING 
+	 # ###############################################################}
 	<!-- Segment Analytics -->
 	<script type="text/javascript">
 		var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};

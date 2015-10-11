@@ -6,30 +6,7 @@
  * To change this template use Tools | Templates.
  */
 $(document).ready(function () {
-    //home on boarding
-    var $startMessage = $('.ui.message.start'),
-        $primaryMessage = $('.ui.message.primary'),
-        $secondaryMessage = $('.ui.message.secondary'),
-        $startMessagePrimaryCTA = $startMessage.find('[data-cta-type=\'primary\']'),
-        $startMessageSecondaryCTA = $startMessage.find('[data-cta-type=\secondary\]');
-    $startMessagePrimaryCTA.on('click', function () {
-        console.log('$startMessagePrimaryCTA click');
-        $startMessage.transition({
-            animation: 'fade down',
-            onComplete: function () {
-                $primaryMessage.transition('browse');
-            }
-        });
-    });
-    $startMessageSecondaryCTA.on('click', function () {
-        console.log('$startMessageSecondaryCTA click');
-        $startMessage.transition({
-            animation: 'fade up',
-            onComplete: function () {
-                $secondaryMessage.transition('fade up');
-            }
-        });
-    });
+
     // overlay
     $('.overlay').visibility({
         type: 'fixed',
@@ -46,7 +23,7 @@ $(document).ready(function () {
         on: 'click'
     });
     // create mobile menu sidebar and attach to menu open
-    $('.ui.sidebar').sidebar('attach events', '.toc.item');
+    $('.ui.sidebar').sidebar('attach events', '.toc.item', 'overlay');
     $('.ui.sidebar a.item').on('click', function () {
         $('.ui.sidebar').sidebar('hide');
     });
