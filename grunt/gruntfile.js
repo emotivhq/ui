@@ -94,6 +94,7 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
+                    '../client/bower_components/pace/pace.min.js',
                     '../client/bower_components/jquery/dist/jquery.min.js',
                     '../client/bower_components/jquery-ui/jquery-ui.min.js',
                     '../client/bower_components/angular/angular.min.js',
@@ -198,6 +199,7 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
+                    '../client/bower_components/pace/pace.min.js',
                     '../client/bower_components/jquery/dist/jquery.min.js',
 					'../client/scripts/vendor/jquery.ui.js',
 					'../client/scripts/vendor/jquery.validation.js',
