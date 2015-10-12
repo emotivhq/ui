@@ -26,7 +26,7 @@
                         <div class="ui left icon action input fluid">
                             <i class="envelope icon"></i>
                             <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
-                            <a class="ui teal button" href="/join" ng-class="loading: onClick()">Start Gifting</a>
+                            <a class="ui teal button" href="/join">Start Gifting</a>
                         </div>
                     </div>
                     <div class="mobile table">
@@ -34,7 +34,7 @@
                             <i class="envelope icon"></i>
                             <input type="text" placeholder="Email Address" onkeyup="if(event.keyCode==13){top.location='/join/'}">
                         </div>
-                        <a class="ui teal fluid button" href="/join" ng-class="loading: onClick()">Start Gifting</a>
+                        <a class="ui teal fluid button" href="/join">Start Gifting</a>
                     </div>
                 </form>
             </div>
@@ -43,7 +43,7 @@
         <div class="ui message secondary hidden">
             <div class="content">
                 <p>Search <strong>4+ million</strong> products to find the perfect gift.</p>
-               <gs-product-search home="true" results="false"></gs-product-search>
+               <gs-product-search home="true" results="false" menu="false"></gs-product-search>
                     <p>
                         <small>Looking for a more personal experience? Get your own <a href="/concierge" class="ui tiny tag label icon"><i class="gift icon primary"></i> Gift Concierge</a></small>
                     </p>

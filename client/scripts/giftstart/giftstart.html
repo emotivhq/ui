@@ -62,9 +62,11 @@
                 </div>
             </div>
         </div>
-        <div class="login-box" ng-show="showLoginBox">
-            <h2>Log in or create an account:</h2>
-            <ng-include src="'/view/login/login.html'"></ng-include>
+        <div class="login-box ui aligned centered center grid" ng-show="showLoginBox">
+            <a class="label basic ui icon aligned center middle" ng-click="switchLoginBox(false)">
+				<i class="cancel icon"></i> Cancel - take me back
+			</a>
+            <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
         </div>
         <div class="pay-box" ng-show="showPayBox">
             <h2>Payment Information:</h2>
@@ -118,7 +120,7 @@
             </div>
 
             <a href="#share-panel">
-				<button class="ui pitch-in button blue large fluid icon">
+				<button class="ui invite-friends button blue large fluid icon">
 					<span ng-hide="secondsLeft <= 0 || campaignComplete()">
 						<i class="users right icon"></i>
 						Invite Friends

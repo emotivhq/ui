@@ -11,6 +11,7 @@
 
         $scope.greybg = true;
 		$scope.working = false;
+		$scope.showCreate = true;
         if (typeof($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }
@@ -70,10 +71,7 @@
 		        password: ['minLength[6]', 'empty']
 		    }
 		});
-		jQuery('.userlogin__form')
-  			// if a direction if specified it will be obeyed
-  		.transition('fade up in')
-		;
+		
 
 		// Wizard work
 		$scope.emailValidation = function(context){

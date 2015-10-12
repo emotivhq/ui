@@ -19,7 +19,7 @@
             <input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Enter your password" required>
           </div>
         </div>
-	  <button class="userlogin__loginbtn ui right labeled icon button fluid submit" ng-class="$parent.working ? 'loading'" ng-disabled="$parent.working">
+	  <button class="userlogin__loginbtn ui right labeled icon button fluid submit" ng-class="{'loading': $parent.working}" ng-disabled="$parent.working">
   		<i class="right arrow icon"></i>
   		Login
 		</button>
@@ -27,7 +27,7 @@
       <a href="#" ng-click="$parent.showForgot=true">Forget your password?</a>
     </div>
 		</div>		
-	<div class="userlogin__message ui floating info" ng-class="$parent.message ? 'message'">
+	<div class="userlogin__message ui floating info" ng-class="{'message': $parent.working}">
 		{{$parent.message}}
 	</div>
 

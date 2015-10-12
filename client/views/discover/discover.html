@@ -2,10 +2,10 @@
     <div class="headerwrap" name="home" title="Discover" ng-show="!category">
         <h1>Find The Perfect Gift</h1>
         <h4>It's that easy. What's on your mind?</h4>
-    	<gs-product-search></gs-product-search>
+    	<gs-product-search home="false" results="false" menu="false"></gs-product-search>
 	</div>
 	
-    <gs-product-search results="true"></gs-product-search>
+    <gs-product-search home="false" results="true" menu="false"></gs-product-search>
 	<ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
 
 

@@ -47,7 +47,7 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
         $scope.showShareBox = false;
         $scope.showShare = show;
     };
-	jQuery('.pitch-in').click(function() {
+	jQuery('.invite-friends').click(function() {
 		jQuery('.pitchin').modal('show');
 	});
 	
@@ -126,6 +126,9 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
     });
     $scope.shareBox = function (show) {
         $scope.showShareBox = show;
+    };
+    $scope.switchLoginBox = function (show) {
+        $scope.showLoginBox = show;
     };
     if($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;

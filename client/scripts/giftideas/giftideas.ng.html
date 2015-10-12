@@ -27,7 +27,7 @@
                 </div>
                 <button onclick="olark('api.box.expand')" class="teal ui button" ng-show="!product.hasPrice">Contact The Gift Concierge</button>
                 <div ng-show="product.hasPrice" class="saveforlater">
-                    <button ng-click="saveGiftIdeaForLater(product);" ng-class="loading: isSavingForLater" class="ui icon large button bottom attached" ng-show="product.hasPrice">
+                    <button ng-click="saveGiftIdeaForLater(product);" ng-class="{loading: isSavingForLater}" class="ui icon large button bottom attached" ng-show="product.hasPrice">
                         <i class="bookmark icon"></i>
                         Save for Later
                     </button>
