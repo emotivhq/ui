@@ -113,8 +113,8 @@
             $scope.notifications.splice($scope.notifications.indexOf(item), 1);
             self.closeNotifications();
         };
-        // for sizing using ng-class
 
+        // for top menu sizing using ng-class and hide/show
         function isSlimMenu() {
             return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
         }

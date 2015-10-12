@@ -48,7 +48,12 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
         $scope.showShare = show;
     };
 	jQuery('.invite-friends').click(function() {
-		jQuery('.pitchin').modal('show');
+		jQuery('.pitchin')				
+			.modal({
+    				inverted: true,
+					blurring: true
+  			})
+		.modal('show');
 	});
 	
 	

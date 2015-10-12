@@ -100,4 +100,16 @@ $(document).ready(function () {
             duration: '2s'
         });
     })
+	/* Semantic mdal initial globals
+		Even though these get fired off from the controller or directive, 
+		we're setting some globals after since bugginess was found in testing semantic ui's modal.
+	    Frankly it sucks, and will be replaced with something more native and less websity. Meantime, 
+		let's hack some style into it.
+    */
+	$('.modal')
+  		.modal({
+    		inverted: true,
+			blurring: true
+  		})
+	;
 });

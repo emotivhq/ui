@@ -125,10 +125,19 @@ header.slim
   &.ng-leave-active
     opacity: 0
 
+/* modal hacks */
 .ui.dimmer
   z-index: 5
 .ui.active.dimmer
-  opacity: .7
+  opacity: 1
+.ui.modal
+  .header
+    border-bottom: none
+.ui.inverted.dimmer
+  .ui.basic.modal
+    .close
+       color: #333
+
 
 // mobile menus
 

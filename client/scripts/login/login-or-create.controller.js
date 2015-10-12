@@ -54,8 +54,21 @@
 		if(UserService.loggedIn) {
             jQuery('.userlogin').css({display:"none"});
         }
-		jQuery('.button.social').click(function(){
-  			jQuery('.ui.social.modal').modal('show');
+		jQuery('.button.social.join').click(function(){
+			jQuery('.ui.social.join.modal')
+				.modal({
+    				inverted: true,
+					blurring: true
+  			})
+			.modal('show');
+	  	});
+		jQuery('.button.social.create').click(function(){
+			jQuery('.ui.social.create.modal')
+				.modal({
+    				inverted: true,
+					blurring: true
+  			})
+			.modal('show');
 	  	});
 		jQuery('.create_action.ui.form').form({
 		    fields: {
