@@ -9,7 +9,9 @@
     var FooterController = function ($scope, $location, UserService) {
         $scope.location = $location;
 		$scope.loggedIn = UserService.loggedIn;
-		this.loggedIn = UserService.loggedIn;		
+		this.loggedIn = UserService.loggedIn;	
+		this.userProfileUrl = '/users/' + UserService.uid;
+		$scope.userProfileUrl = '/users/' + UserService.uid;
     }
 
     app.controller('FooterController', [

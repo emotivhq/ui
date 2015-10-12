@@ -65,8 +65,7 @@
               @include apply-at-size("phone")
                 display: inline-block
                 width: 49%
-            #social-icons-container
-              text-align: center
+                
           &-email
             display: flex !important
             display: -webkit-flex !important
@@ -122,3 +121,13 @@
           width: 40%
           @include apply-at-size("phone")
             width: 90%
+            
+.share.modal
+  #social-icons-container
+    text-align: center
+    width: 65%
+    margin: 1rem 0
+    
+  #content + .share-buttons
+    margin-top: 1.5rem 0 0
+        

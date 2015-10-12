@@ -9,7 +9,9 @@
     var FooterController = function ($scope, $location, UserService) {
         $scope.location = $location;
 		$scope.loggedIn = UserService.loggedIn;
-		this.loggedIn = UserService.loggedIn;		
+		this.loggedIn = UserService.loggedIn;	
+		this.userProfileUrl = '/users/' + UserService.uid;
+		$scope.userProfileUrl = '/users/' + UserService.uid;
     }
 
     app.controller('FooterController', [
@@ -44,21 +46,10 @@
 (function (app) {
 
 	var ViewController = function ($scope, $location, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
-
-		function fullContainer() {
-			return($location.path() === '/join' || $location.path() === '/create') ? true : false;
-		}
-		function padContainer() {
-			return($location.path() === '/login') ? true : false;
-		}
 		function redBG() {
 			return($location.path() === '/join') ? true : false;
 		}		
 		$scope.redBG = redBG();
-		$scope.fullContainer = fullContainer();
-		$scope.paddedContainer = padContainer();
-		//alert($scope.fullContainer = " - " + $scope.paddedContainer);
-
 	};
 
     app.controller('ViewController', [
@@ -73,12 +64,6 @@
         '$anchorScroll',
         ViewController])
     .run(function($rootScope, $location, $anchorScroll, $routeParams) {
-      function fullContainer() {
-			return($location.path() === '/join' || $location.path() === '/create') ? true : false;
-		}
-		function padContainer() {
-			return($location.path() === '/login') ? true : false;
-		}
 		function redBG() {
 			return($location.path() === '/join') ? true : false;
 		}	
@@ -87,9 +72,6 @@
         //$location.hash($routeParams.scrollTo);
         //$anchorScroll();
 		$rootScope.redBG = redBG();
-		$rootScope.fullContainer = fullContainer();
-		$rootScope.paddedContainer = padContainer();
-		//alert($rootScope.fullContainer = " r-r " + $rootScope.paddedContainer);
 		
 		// semantic transition on view change
 		jQuery('#angular-view').transition('fade in');

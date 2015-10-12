@@ -1,4 +1,5 @@
-<footer ng-hide="fullContainer" ng-controller="FooterController">
+{% raw %}
+<footer ng-hide="fullContainer" ng-controller="FooterController as footer">
 	<div class="ui inverted vertical footer segment">
     <div class="ui container">
       <div class="ui column centered stackable inverted divided equal height stackable grid">
@@ -7,6 +8,7 @@
 			<p>Made with ♥ by Emotiv Labs</p>
 			<p class="item" style="padding-top:10px">
 				<a href="/join" class="ui inverted red basic button" ng-hide="loggedIn">Get Started</a>
+				<a data-ng-href="{{footer.userProfileUrl}}" class="ui inverted teal basic button" ng-show="loggedIn">Dashboard</a>
 			</p>
         </div>
         <div class="three wide column computer only">
@@ -52,3 +54,4 @@
     </div>
   </div>
 </footer>
+{% endraw %}

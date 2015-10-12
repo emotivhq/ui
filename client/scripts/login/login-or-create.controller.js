@@ -211,6 +211,7 @@
             }, 3000);
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
+            $location.path('/users/' + UserService.uid);
         });
         $rootScope.$on('loginbox-show-login', function() {
             $scope.resetForm();
