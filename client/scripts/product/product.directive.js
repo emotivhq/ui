@@ -50,6 +50,10 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             } else {
                 scope.submitSearch();
             }
+			//Close any semantic ui elements
+			jQuery('.ui.sidebar')
+  				.sidebar('hide')
+			;		
         };
 
         scope.submitSearch = function() {
@@ -190,7 +194,8 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
 
         scope.saveForLater = function(index) {
             scope.isSavingForLater = true;
-            var saver = ProductService.saveForLater(
+		  if(UserService.loggedIn) {
+				var saver = ProductService.saveForLater(
                 scope.selectedProducts[index].retailer,
                 scope.selectedProducts[index].url,
                 scope.selectedProducts[index].price,
@@ -210,6 +215,9 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             } else {
                 scope.isSavingForLater = false;
             }
+		  } else {
+             	$location.path('/login');
+          }
         };
 
         var performHeadSearch = function () {

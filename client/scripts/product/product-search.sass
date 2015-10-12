@@ -19,7 +19,14 @@ gs-product-search
     .search.wrapper
       margin: 0 auto
       text-align: center
-
+      @media screen and (max-width: $phone-tablet-boundary)
+        .input
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+        input 
+          width: 0 !important
     div.inputs
       background-color: rgba(255, 255, 255, 0.5)
       display: inline-block

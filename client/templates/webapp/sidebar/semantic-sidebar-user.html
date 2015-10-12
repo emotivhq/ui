@@ -1,16 +1,16 @@
 {% raw %}
 <!-- User Menu Sidebar -->
-<div class="ui left vertical menu wide sidebar inverted" ng-controller="HeaderController as header" ng-hide="!userMenu">
+<div class="ui left vertical menu wide sidebar" ng-controller="HeaderController as header" ng-hide="!userMenu">
     <div class="ui item">
-        <div class="ui action input">
-            <input id="searchValMobile" type="text" placeholder="Search Gifts Ideas">
-            <button class="ui teal button" onclick="top.location='/search/'+jQuery('#searchValMobile').val()">Search</button>
-        </div>
+        <gs-product-search home="true" results="false" menu="false"></gs-product-search>
     </div>
-    <a class="item" href="/">Home</a>
-    <a class="item" href="/is">How It Works</a>
-    <a class="item" href="/discover">Discover</a>
-    <a class="item" href="/concierge">Gift Concierge</a>
-    <a class="item" href="/faq">FAQs</a>
+	<a class="item" href="/is"><i class="share icon"></i> Start a Campaign</a>
+	<div class="item"></div>
+	<a class="item" href="/discover"><i class="search icon"></i> Discover Ideas</a>
+    <a href="/concierge" class="item"><i class="gift icon"></i> Gift Concierge</a>
+    <a href="/faq" class="item"><i class="question circle icon"></i>FAQs</a>
+	<a href="/blog" class="item"><i class="feed icon"></i> Blog</a>
+	<div class="item"></div>
+	<a href="https://www.facebook.com/giftstart" class="item ui blue" target="_blank"><i class="facebook blue icon"></i> Share with Friends</a>
 </div>
 {% endraw %}
