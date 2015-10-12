@@ -33,7 +33,6 @@
         this.creating = $location.path().indexOf('/create') === 0;
         this.portaling = $location.path().indexOf('/portal') === 0;
         $scope.isHeaderOnly = self.thisRoute == '/header';
-        $scope.isProvidence = self.thisRoute == '/yourvillage';
         $scope.search = false;
         $scope.menu = false;
         $scope.notifyOpen = false;
@@ -113,14 +112,22 @@
             $scope.notifications.splice($scope.notifications.indexOf(item), 1);
             self.closeNotifications();
         };
-
         // for top menu sizing using ng-class and hide/show
+
         function isSlimMenu() {
             return(!UserService.loggedIn && $location.path() === '/join') ? true : false;
         }
 
+        function isYourVillageMenu() {
+            return($location.path() === '/yourvillage') ? true : false;
+        }
+        
+        function isYourVillageSubPage() {
+            return ($scope.yourVillageMenu && $location.path() !== '/yourvillage') ? true : false;
+        }
+
         function isUserMenu() {
-            return(UserService.loggedIn) ? true : false;
+            return(UserService.loggedIn && !isYourVillageMenu()) ? true : false;
         }
 
         function isHomeMenu() {
@@ -132,16 +139,21 @@
         }
 
         function isMainMenu() {
-            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu() && !isCreateMenu()) ? true : false;
+            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu() && !isCreateMenu() && !isYourVillageMenu()) ? true : false;
         }
 
-
         function updateMenuType() {
-            $scope.slimMenu = isSlimMenu();
-            $scope.mainMenu = isMainMenu();
-            $scope.userMenu = isUserMenu();
-            $scope.homeMenu = isHomeMenu();
-            $scope.createMenu = isCreateMenu();
+            if(!$scope.yourVillageMenu) {
+                $scope.slimMenu = isSlimMenu();
+                $scope.mainMenu = isMainMenu();
+                $scope.userMenu = isUserMenu();
+                $scope.homeMenu = isHomeMenu();
+                $scope.createMenu = isCreateMenu();
+                $scope.yourVillageMenu = isYourVillageMenu()
+                $scope.yourVillageSubPage = isYourVillageSubPage();
+            } else {
+                $scope.yourVillageSubPage = isYourVillageSubPage();
+            }
         }
         updateMenuType();
 

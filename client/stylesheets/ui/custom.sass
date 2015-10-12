@@ -47,7 +47,7 @@ header.slim
     border: 0px solid #DDD
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
     z-index: 1000 !important
-    &.inverted
+    &.home
       border: none;
       box-shadow: none;
       position: absolute;
@@ -62,10 +62,10 @@ header.slim
       display: none
     .item img.logo
       margin-right: 1.5em
-  &.menu .right.item .item.help
-    display: none
-  &.main.menu .toc.item, &.menu .right.item .item
+  &.main.menu .toc.item, &.main.menu .right.item .item, &.main.menu .back.item
     display: block
+  &.main.menu .right.item .help.item
+    display: none
   &.main.menu .header.item
     display: block
     padding-right: 0
@@ -93,9 +93,14 @@ header.slim
 .right.menu .toc.item
   display: none
 
-.ui.secondary.menu .topmenu
-  .link.item:hover, a.item:hover
-    background: inherit
+.ui.secondary.menu
+    .topmenu
+        .link.item:hover, a.item:hover
+            background: inherit
+            
+    &.yourvillage 
+        .item
+            padding: .92857143em 1.14285714em
 
 // end top menus
 
@@ -267,6 +272,16 @@ div.rn-carousel-indicator span.active
   display: -webkit-inline-flex
   display: -ms-inline-flex
   display: flex
+
+//yourvillage
+
+.yourvillage
+    .ui.header .sub.header
+        line-height: 1.4em
+        padding-top: .8rem
+            
+    .hidden.divider 
+        display: block !important
 
 // footer
 
