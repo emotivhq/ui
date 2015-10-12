@@ -174,7 +174,7 @@
             $scope.working = true;
             emailLoginService.login('create',$scope.name+' '+$scope.surname,$scope.email,$scope.password,'').
                 then(function (okMsg) {
-                    emailLoginService.login('login','',$scope.email,$scope.password,'')
+                    emailLoginService.login('login','',$scope.email,$scope.password,'');
                 }, function (errMsg) {
                     $scope.working = false;
                     $scope.message=errMsg;
@@ -228,10 +228,7 @@
 
         $scope.$on('login-success', function() {
             $scope.resetForm();
-            $scope.message=UserService.name?("Welcome, "+UserService.name+"!"):"Welcome!";
-            $timeout(function(){$rootScope.$broadcast('header-close-login')},3000);
-            jQuery('.userlogin').fadeOut(3000);
-            $scope.working = false;
+            $location.path('/users/' + UserService.uid);
         });
 
         $rootScope.$on('loginbox-show-login', function(){
