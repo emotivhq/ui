@@ -1,6 +1,0 @@
-<div id="giftsgivenbar" ng-controller="GiftsGivenBarController">
-    <h2>Gifts given through GiftStarter</h2>
-    <span ng-repeat="campaign in campaigns">
-        <div ng-if="$index%6==0"></div><div ng-class-even="'hidephone'" class="giftbox"><a ng-href="{{campaign.url}}"><img ng-src="{{campaign.img}}" title="{{campaign.title}}"></a></div>
-    </span>
-</div>
