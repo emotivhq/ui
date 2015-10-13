@@ -135,8 +135,8 @@
         };
         
         $scope.loginUserSucces = function () {
-            $scope.doLoginEmail();
-            $location.path('/users/' + UserService.uid);
+            var fromJoin = true;
+            $scope.doCreateEmail(fromJoin);
         }
         
         $scope.saveEmail = function(email) {
@@ -149,7 +149,29 @@
         $scope.savePass = function(pass) {
             $scope.password = pass;
         }
-        $scope.doCreateEmail = function() {
+        
+        function redirectUserFronJoin () {
+            $location.path('/users/' + UserService.uid);
+        }
+        
+        function redirectUserFronJoinError (msgErr) {
+            console.log(msgErr + 'error, after loging the user from join page')
+        }
+
+        function loginUserEmailRedirect () {
+            emailLoginService.login('login', '', $scope.email, $scope.password, '').then(redirectUserFronJoin, redirectUserFronJoinError);
+        }
+        
+        function loginUserEmail () {
+            emailLoginService.login('login', '', $scope.email, $scope.password, '');   
+        }
+        
+        function loginUserEmailError(errMsg) {
+                $scope.working = false;
+                $scope.message = errMsg;
+        }
+        
+        $scope.doCreateEmail = function(isjoin) {
             Analytics.track('user', 'create email login');
             //if ($scope.email.trim()!=$scope.reenteremail.trim()) {
             //    $scope.message="Your email addresses do not match";
@@ -160,13 +182,12 @@
             //    return;
             //}
             $scope.working = true;
-            emailLoginService.login('create', $scope.name + ' ' + $scope.surname, $scope.email, $scope.password, '').
-            then(function(okMsg) {
-                emailLoginService.login('login', '', $scope.email, $scope.password, '')
-            }, function(errMsg) {
-                $scope.working = false;
-                $scope.message = errMsg;
-            });
+            if (isjoin) {
+                emailLoginService.login('create', $scope.name + ' ' + $scope.surname, $scope.email, $scope.password, '').then(loginUserEmailRedirect, loginUserEmailError);
+            } else {
+                emailLoginService.login('create', $scope.name + ' ' + $scope.surname, $scope.email, $scope.password, '').then(loginUserEmail, loginUserEmailError);
+            }
+            
         };
         $scope.doForgotPassword = function() {
             Analytics.track('user', 'forgot login password');
