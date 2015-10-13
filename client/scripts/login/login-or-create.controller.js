@@ -121,6 +121,7 @@
         $scope.doLoginLinkedin = function() {
             doSocialLogin(LinkedInService.login);
         };
+        
         $scope.doLoginEmail = function() {
             Analytics.track('user', 'login attempt with email');
             $scope.working = true;
@@ -132,6 +133,12 @@
                 $scope.message = errMsg;
             });
         };
+        
+        $scope.loginUserSucces = function () {
+            $scope.doLoginEmail();
+            $location.path('/users/' + UserService.uid);
+        }
+        
         $scope.saveEmail = function(email) {
             $scope.email = email;
         }
@@ -211,7 +218,6 @@
             }, 3000);
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
-            $location.path('/users/' + UserService.uid);
         });
         $rootScope.$on('loginbox-show-login', function() {
             $scope.resetForm();
