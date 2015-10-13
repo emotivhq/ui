@@ -70,7 +70,7 @@
         };
         $scope.pollNotifications = function () {
             checkNotifications();
-            $timeout($scope.pollNotifications, 3000);
+            $timeout($scope.pollNotifications, 66600);
         };
         $scope.pollNotifications();
         self.notificationsHoverIn = function () {
