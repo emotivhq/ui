@@ -162,9 +162,7 @@ def render_app_with_giftstart(request):
         }
         response = frame_template.render(render_values)
     else:
-        response = 'Error: 404<br>Resource not found!  Go to GiftStarter ' \
-                   'homepage via ' \
-                   '<a href="http://giftstarter.com">this link</a>.'
+        response = '<meta http-equiv="refresh" content="0;url=/404">'
 
     return response
 
