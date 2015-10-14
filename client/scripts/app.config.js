@@ -11,7 +11,11 @@ GiftStarterApp.config(['ezfbProvider', '$httpProvider', facebookConfig]);
 function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
     $routeProvider
         .when('/',
-        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        {templateUrl: '/views/home/home.html', reloadOnSearch: false})
+        .when('/yourvillage',
+        {templateUrl: '/views/yourvillage/yourvillage.html', reloadOnSearch: false})
+        .when('/test',
+        {templateUrl: '/views/home/home.html', reloadOnSearch: false})
         .when('/create',
         {templateUrl: '/scripts/giftstart/create/giftstart-create.html', reloadOnSearch: false})
         .when('/giftstart',
@@ -23,7 +27,13 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/giftstart/:title/print',
         {templateUrl: '/scripts/giftstart/print/print.html', reloadOnSearch: false})
         .when('/login',
+        {templateUrl: '/views/login/login.html', reloadOnSearch: false})
+        .when('/join',
+        {templateUrl: '/views/join/join.html', reloadOnSearch: false})
+        .when('/signup',
         {templateUrl: '/scripts/login/login-or-create.html', reloadOnSearch: false})
+        .when('/is',
+        {templateUrl: '/views/is/is.html', reloadOnSearch: false})
         .when('/users/:uid',
         {templateUrl: '/scripts/user/user_profile.html', reloadOnSearch: false})
         .when('/user/:uid',
@@ -55,9 +65,13 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .when('/reset/:resetCode',
         {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
         .when('/search/:searchTerm',
-        {templateUrl: '/scripts/home/home.html', reloadOnSearch: false})
+        {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/search/',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
+        .when('/discover',
+        {templateUrl: '/views/discover/discover.html', reloadOnSearch: false})
+        .when('/discover/:searchTerm',
+        {templateUrl: '/views/search/search.html', reloadOnSearch: false})
         .when('/giftideas',
         {templateUrl: '/scripts/static-pages/giftideas/giftideas.html', reloadOnSearch: false})
         .when('/giftideas/:term*',
@@ -70,6 +84,7 @@ function appConfig($routeProvider,  $locationProvider,  $httpProvider) {
         .otherwise({redirectTo: '/'});
 
     $locationProvider.hashPrefix('!').html5Mode({enabled: true});
+	$locationProvider.html5Mode(true);
 
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }
@@ -92,6 +107,7 @@ function contentRouteController($scope, $routeParams, $http, $sce, $window) {
 //        }).error(function(){
             $scope.content = '';
             $scope.error = true;
+			$scope.bg = 'white';
 //        });
     }
 

@@ -1,5 +1,5 @@
-application: gift-starter
-version: 51
+application: dev-www-gift-starter
+version: 1-2-26
 runtime: python27
 api_version: 1
 threadsafe: yes
@@ -96,11 +96,28 @@ handlers:
 - url: /scripts
   static_dir: client/scripts
   secure: always
+- url: /ui
+  static_dir: client/ui
+  secure: always
+- url: /views
+  static_dir: client/views
+  secure: always
 - url: /bower_components
+  static_dir: client/bower_components
+  secure: always
+- url: /plugins
   static_dir: client/bower_components
   secure: always
 - url: /assets
   static_dir: client/assets
+  application_readable: true
+  secure: always
+- url: /images
+  static_dir: client/images
+  application_readable: true
+  secure: always
+- url: /marvel
+  static_dir: client/temp-go/public
   application_readable: true
   secure: always
   # yuck: link creator was broken for a while, so had to create some aliases instead of editing a billion bitly links
@@ -223,6 +240,8 @@ libraries:
 
 env_variables:
   OAUTHLIB_INSECURE_TRANSPORT: 1
+  RUNTIME_ENV: 'development'
+  PRERENDER_TOKEN: 'rgoheOAM1S1n4zzDsub9'
 
 skip_files:
 - grunt/.*
@@ -235,3 +254,8 @@ skip_files:
 - client/test/*
 - client/bower_components/*
 - client/scripts/^(?!out)
+- client/sass/*
+- client/_app/*
+- client/marvel/*
+- _ui/*
+- node_modules/*

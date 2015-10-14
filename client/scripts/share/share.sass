@@ -2,9 +2,6 @@
 
 .share
   &.pitchin
-    border: solid $gs-lightteal 3px
-    margin: 0 4% 30px 4%
-    text-align: center
     #title
       background-color: $gs-lightteal
       padding: 20px
@@ -122,3 +119,12 @@
           width: 40%
           @include apply-at-size("phone")
             width: 90%
+            
+.share.modal
+  #social-icons-container
+    text-align: center
+    width: 50%
+    margin: 1rem 0
+    
+  #content + .share-buttons
+    margin: 1.5rem 0 0

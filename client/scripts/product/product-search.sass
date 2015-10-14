@@ -19,27 +19,24 @@ gs-product-search
     .search.wrapper
       margin: 0 auto
       text-align: center
-
+      @media screen and (max-width: $phone-tablet-boundary)
+        .input
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+        input 
+          width: 0 !important
     div.inputs
       background-color: rgba(255, 255, 255, 0.5)
       display: inline-block
+	
       @media screen and (max-width: $phone-tablet-boundary)
         #product-search-input
-          font-size: 11px
       input
-        background: #eee
-        border: 0
-        color: #333
-        height: 34px
-        -webkit-input-placeholder: #333
-        padding: 0.18em 0.6em
-        margin: 10px 0 10px 10px
-        width: 25em
         -webkit-font-smoothing: antialiased
         @media screen and (max-width: $phone-tablet-boundary)
-          margin: 10px 10px 0 10px
-          width: 90%
-          max-width: 500px
+          margin: inherit !important
       button
         margin: 10px 10px 10px 0
         @media screen and (max-width: $phone-tablet-boundary)
@@ -67,7 +64,6 @@ gs-product-search
     margin-top: 2em
     @media screen and (max-width: $phone-tablet-boundary)
       margin: 2em auto
-      max-width: 500px
     div.page-buttons
       text-align: center
       margin-top: 1em
@@ -93,8 +89,8 @@ gs-product-search
           -moz-box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5)
           box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.5)
           div.product-details
-            h4
-              color: $primary-color
+            .header
+              
     div.product-container:active
       @media screen and (min-width: $tablet-computer-boundary)
         div.product
@@ -104,8 +100,6 @@ gs-product-search
           -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4)
           box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4)
           div.product-details
-            h4
-              color: $primary-color
     div.product-container
       display: inline-block
       vertical-align: top
@@ -118,14 +112,13 @@ gs-product-search
         vertical-align: top
         margin: 0.5em
         padding: 1em
-        border: solid 1px #eee
         cursor: pointer
         //border-radius: 1em
         @media screen and (min-width: $phone-tablet-boundary)
           height: 14em
           +transition(all, 0.2s)
         @media screen and (min-width: $tablet-computer-boundary)
-          width: 29em
+          width: 31em
         span.product-link
           display: none
         .product-message
@@ -138,9 +131,13 @@ gs-product-search
             font-size: 13px
         button
           display: none
+        or
+          display: none
         div.buttons
           position: relative
           button
+            display: none
+          .or
             display: none
           .loader
             height: 14px
@@ -152,8 +149,8 @@ gs-product-search
           @media screen and (max-width: $phone-tablet-boundary)
             width: 100%
           span.vert-align-helper
-            height: 100%
-            display: inline-block
+            height: 12%;
+            display: block;
             vertical-align: middle
           img
             margin-right: 6%
@@ -164,7 +161,7 @@ gs-product-search
             @media screen and (min-width: $phone-tablet-boundary)
               width: auto
               max-width: 90%
-              max-height: 100%
+              max-height: 80%
         div.product-details
           display: inline-block
           vertical-align: top
@@ -174,7 +171,7 @@ gs-product-search
             left: 51%
             top: 5%
             width: 47%
-          h4
+          .header
             margin: 0
             margin-top: 0.5em
             display: -webkit-box
@@ -184,24 +181,28 @@ gs-product-search
             max-height: 6em
             +transition(all, 0.2s)
             font-weight: 300
+            font-size: 1rem
           p
             width: 100%
-          p.retailer
+          .retailer
             margin: 0
-          p.description
+          .description
             display: none
             overflow-x: hidden
             overflow-y: auto
             -webkit-line-clamp: 10
             -webkit-box-orient: vertical
-            max-height: 15em
-          p.price
-            font-size: 1em
-            margin-top: 0
-            margin-bottom: 2em
-            color: #666
+            max-height: 13em
+            padding: 10px;
+            background-color: #f3f3f3;
+          .price
+            font-size: 1rem
     div.product-container.selected
       cursor: default
+      .header
+        cursor: pointer
+        font-size: 1.3rem !important
+        padding: 0 0 1rem
       @media screen and (min-width: $tablet-computer-boundary)
         div.product
           width: 96%
@@ -214,28 +215,23 @@ gs-product-search
             cursor: pointer
           span.product-link
             display: inline
-          div.product-details
-            h4
-              cursor: pointer
-              color: $primary-color
-            h4:hover
-              text-decoration: underline
-      width: 100%
+      width: 100% !important
       @media screen and (min-width: $phone-tablet-boundary)
-        height: 30em
+        height: 32em /* @fedora - this is important for mobile product view - can't wait to change ho this is displayed - yuck */
       div.product
         cursor: default
         @media screen and (min-width: $phone-tablet-boundary)
-          height: 29em
+          height: 27em
         div.product-details
-          p.description
+          .description
             display: -webkit-box
         button
           display: inline-block
         div.buttons
           button
             display: inline-block
-            width: 170px
+          .or
+            display: inline-block
     div.product-container.selected:active
       @media screen and (min-width: $tablet-computer-boundary)
         div.product

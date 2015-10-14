@@ -27,9 +27,8 @@
   &__form
     text-align: center
     clear: both
-    input
-      border: 1px solid #cdcdcd
-      padding: .8em
+        
+       
 
   &__email,
   &__passwordwrap,
@@ -40,7 +39,6 @@
     display: inline-block
     border: 1px solid #cdcdcd
     width: 100%
-    height: 38px
     margin-top: 18px
     @include apply-at-size("phone")
       width: 70%
@@ -54,17 +52,6 @@
       padding: 0
 
   &__password
-    width: 76%
-    height: 100%
-    display: inline-block
-    border: 0 !important
-    outline: 0 !important
-    margin: 0 0 0 0.8em
-    padding: 0 !important
-    &:hover, &:active, &:focus
-      outline: none
-      border: none
-      box-shadow: none
 
   &__eye
     display: inline-block
@@ -86,8 +73,6 @@
   &__forgot
     margin-top: 15px
     position: relative
-    float: left
-    display: block
 
   &__remember
     left: 25%
@@ -99,9 +84,7 @@
       left: 0
 
   &__rememberlabel,
-  &__forgot,
   &__createacclink
-    text-transform: uppercase
     color: #333
 
   &__rememberlabel
@@ -128,11 +111,8 @@
       color: #333
 
   &__message
-    padding-top: 15px
-    color: #DE4A50
     margin-left: auto
     margin-right: auto
-    max-width: 90%
     @include apply-at-size("phone")
       max-width: 75%
 
@@ -149,10 +129,6 @@
     margin-top: 15px
     text-align: center
 
-  &__createacclink
-    text-decoration: underline
-    &:hover
-      color: #333
 
   &__sociallogin
     position: relative
@@ -161,8 +137,7 @@
   &__emaillogin
 
   .login-block
-    display: table-cell
-    width: 255px
+    display: initial
     @include apply-at-size("phone")
       display: block
       width: auto
@@ -176,7 +151,7 @@
     border-left: 1px solid #cdcdcd
     display: inline-block
     height: 100px
-    margin: 0 20px
+    margin: 100px 20px
     width: 0
     @include apply-at-size("phone")
       display: none

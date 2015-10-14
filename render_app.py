@@ -10,17 +10,21 @@ import analytics
 import abtest
 import urllib
 
-secrets = yaml.load(open('secret.yaml'))
-config = yaml.load(open('config.yaml'))
+if os.environ['RUNTIME_ENV'].startswith('production'):
+	secrets = yaml.load(open('secret.production.yaml'))
+	config = yaml.load(open('config.production.yaml'))
+else: 
+	secrets = yaml.load(open('secret.yaml'))
+	config = yaml.load(open('config.yaml'))
 
 DEPLOYED = not os.environ['SERVER_SOFTWARE'].startswith('Development') if \
     os.environ.get('SERVER_SOFTWARE') else False
 
 JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader("./client/templates/jinja2/"),
+    loader=jinja2.FileSystemLoader("./client/templates/webapp/"),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
-frame_template = JINJA_ENVIRONMENT.get_template('frame.html')
+frame_template = JINJA_ENVIRONMENT.get_template('index.html')
 
 
 def render_app(request):

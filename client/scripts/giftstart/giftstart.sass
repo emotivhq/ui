@@ -1,4 +1,5 @@
 
+
 @import "../base"
 @import "../frame/column"
 
@@ -69,7 +70,7 @@ div.giftstart.wrapper
     @media screen and (min-width: $phone-tablet-boundary)
       width: 39%
 
-  div.block.overlay
+  div.block.gs-overlay
     position: relative
     width: $column-width
     text-align: center
@@ -217,7 +218,6 @@ div.giftstart.wrapper
     h2
       margin-top: 1rem
       margin-bottom: 10px
-      color: #e27f24
       font-size: 1.2em
     input, button
       width: 100%
@@ -273,7 +273,6 @@ div.giftstart.wrapper
 
   div.block.col2
     float: right
-    padding-top: 0px
     margin-right: 4%
     @media screen and (max-width: $phone-tablet-boundary - 1)
       float: left
@@ -427,7 +426,7 @@ div.giftstart.wrapper
       display: inline-block
       width: 49%
       h2
-        color: $gs-darkorange
+        color: $gs-teal
         display: inline
         margin-right: 7px
         @include apply-at-size("phone")
@@ -497,7 +496,7 @@ div.giftstart.wrapper
       &.orange
         background-color: $gs-darkorange
       &.teal
-        background-color: $gs-lightteal
+        background-color: $gs-teal
       &.green
         background-color: $gs-lime
       &.red
@@ -583,7 +582,7 @@ div.giftstart.wrapper
     margin: 20px auto 0
     border-color: #aeaeae
     &__link
-      text-transform: uppercase
+      
       text-align: center
       color: #aeaeae
 
@@ -594,7 +593,7 @@ div.giftstart.wrapper
       padding: 1rem
 
       .btn__link
-        text-transform: uppercase
+        
         color: #fff
 
   .fullwidth--last

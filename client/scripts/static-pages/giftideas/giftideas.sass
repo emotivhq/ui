@@ -6,13 +6,25 @@ div.wrapper.giftideas
   -webkit-font-smoothing: antialiased
   -webkit-overflow-scrolling: touch
   input, select, textarea
-    color: #222
+  color: #222
+  margin-bottom: 0 !important
+  @include apply-at-size("phone")
+    margin-left: 0px !important
+    margin-top: 1em !important
+.giftideas
+  .headerwrap
+    background: url("/assets/bg/7-compressor.jpg") no-repeat center top
+    background-size: cover
+    @include apply-at-size("phone")
+      margin: 1em auto 0 !important
+      height: 350px !important
 
   .scrollbox
     overflow-y: auto
     -webkit-line-clamp: 9
     -webkit-box-orient: vertical
-    max-height: 22em
+    max-height: 19.8em
+    min-height: 19.8em
 
   .gsbuttons
     padding-top: 10px
@@ -30,10 +42,7 @@ div.wrapper.giftideas
     clear: both
 
   #product-search-anchor
-    max-width: 800px
-    width: 60%
     a
-      color: black
     #categories-container
       width: 100%
 

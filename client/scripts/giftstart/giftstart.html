@@ -1,4 +1,4 @@
-<div class="giftstart wrapper" ng-controller="GiftStartController" >
+<div class="giftstart wrapper ui container main pad" ng-controller="GiftStartController" >
 
     <div class="fullwidth block">
         <div class="title">
@@ -10,25 +10,40 @@
 
     <div class="fullwidth block">
 
-        <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
-            <div class="prodtitle">
-                <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">{{giftStart.product_title}}</a>
-            </div>
+		
+<div class="col2 ui card block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;">
+    <div class="content">
+        <div class="header">
+            <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">
+			{{giftStart.product_title}}
+		</a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="ui dscription">
             <div class="description">
                 <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
                 <span class="description makelinks" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
             </div>
-            <div class="signature">
-                <p class="name" ng-show="!editMode">
+			<div class="meta">
+				<p class="name" ng-show="!editMode">
                     <span class="signature__title" ng-show=" giftStart.gc_name "> {{ giftStart.gc_name }} </span>
                 </p>
-                    <input class="gc-name" ng-model="newGcName" ng-show="editMode"/>
-                <a class="edit button linky" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">EDIT</a>
-                <div class="save"><button class="save" ng-click="updateCampaign();" ng-show="editMode">Save</button><button class="save" ng-click="editMode=false;" ng-show="editMode">X</button></div>
-                <p ng-show="giftStart.gc_name.length > 0 || editMode" class="gift-champion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gift Champion</p>
-            </div>
+				<input class="gc-name" ng-model="newGcName" ng-show="editMode"/>
+			</div>
+			
         </div>
-        <div class="overlay block" Xng-class="{shrunk: showPayBox}">
+    </div>
+    <a class="ui bottom attached button icon" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">
+		<i class="edit icon"></i> Edit
+	</a>
+	<a class="save ui bottom attached button icon" ng-click="updateCampaign();" ng-show="editMode">
+		<i class="save icon"></i>Save
+	</a>	
+</div>
+
+		
+        <div class="gs-overlay block" Xng-class="{shrunk: showPayBox}">
             <div class="image-upload" ng-show="editMode"><label>Upload New Image:  </label><input id="campaign-image-input" type="file" capture="camera" accept="image/*"/></div>
             <gs-overlay ng-class="{initialized: pitchInsInitialized}" giftstart="giftStart" ng-click="selectionUpdated();"></gs-overlay>
             <div class="receipt-wrap" ng-show="showPayBox">
@@ -36,19 +51,21 @@
                     <div class="receipt-tiles">
                         <div class="img-wrap" style="background-image:url('{{giftStart.product_img_url}}')"></div>
                         <div class="info-tiles">
-                            <h2 class="num-tiles">{{giftStart.nSelected}} PIECES</h2>
-                            <h4 class="cost-tiles">AT ${{getTileCost() / 100 | number : 2}} EACH</h4>
+                            <h2 class="num-tiles">{{giftStart.nSelected}} Pieces</h2>
+                            <h4 class="cost-tiles">at  ${{getTileCost() / 100 | number : 2}} Each</h4>
                         </div>
                     </div>
                     <div class="receipt-total">
-                        <h4 class="purchase-total">PURCHASE TOTAL: <h2 class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>
+                        <h4 class="purchase-total">Purchase Total: <h2 class="total-price">${{giftStart.totalSelection / 100 | number : 2}}</h2></h4>
                         <p class="purchase-note">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="login-box" ng-show="showLoginBox">
-            <h2>Log in or create an account:</h2>
+        <div class="login-box ui aligned centered center grid" ng-show="showLoginBox">
+            <a class="label basic ui icon aligned center middle" ng-click="switchLoginBox(false)">
+				<i class="cancel icon"></i> Cancel - take me back
+			</a>
             <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
         </div>
         <div class="pay-box" ng-show="showPayBox">
@@ -64,29 +81,56 @@
         <div class="share-box" ng-show="showShareBox">
             <h2>Share with Friends:</h2>
             <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
-            <a href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span>INVITE FRIENDS TO PITCH IN</span></button></a>
-            <a href="" ng-click="shareBox(false)">SKIP THIS STEP</a>
+				<a class="pitch-in ui button icon">
+					<i class="friends icon"></i> Invite friends to pitchin
+				</a>
+            <a href="" ng-click="shareBox(false)">Skip this step</a>
         </div>
 
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ordinal_circle"><span class="ordinal">1</span></div><h4> CLICK ON THE PIECES YOU WANT TO PURCHASE</h4><br/>
-                <div class="ordinal_circle"><span class="ordinal">2</span></div><h4> PITCH IN!</h4>
+                <div class="ordinal_circle">
+					<span class="ordinal">1</span>
+				</div>
+				<h4>Click the pieces you want to buy</h4><br/>
+                <div class="ordinal_circle">
+					<span class="ordinal">2</span>
+				</div>
+				<h4> Pitch In</h4>
             </div>
-            <button class="pitch-in button red" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">PAY ${{giftStart.totalSelection / 100 | number : 2}} NOW</button>
+            <button class="ui pitch-in button huge teal icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
+				<i class="gift right icon"></i> 
+				Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
+			</button>
 
             <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
                 Would you like to give this gift to someone you know?  Click the button below to start your own campaign for this gift.<br/>
-                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}"><button class="pitch-in button primary">GIFTSTART IT</button></a>
+                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}">
+					<button class="pitch-in ui button teal">GiftStart It</button></a>
                 <div class="saveforlater">
-                    <button class="pitch-in button green" ng-click="saveProdForLater();">SAVE FOR LATER <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif"></button>
+                    <button class="ui pitch-in button ico large" ng-click="saveProdForLater();">
+						<i class="bookmark icon"></i> 
+						Save For Later
+						<img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+					</button>
                     <div class="product-message" ng-bind-html="productMessage"></div>
                 </div>
             </div>
 
-            <a href="#share-panel"><button class="pitch-in button green" ng-click="showSharePanel(true)" ng-hide="showShare"><span ng-hide="secondsLeft <= 0 || campaignComplete()">INVITE FRIENDS TO PITCH IN</span><span ng-show="secondsLeft <= 0 || campaignComplete()">SHARE THIS CAMPAIGN</span></button></a>
+            <a href="#share-panel">
+				<button class="ui invite-friends button blue large fluid icon">
+					<span ng-hide="secondsLeft <= 0 || campaignComplete()">
+						<i class="users right icon"></i>
+						Invite Friends
+					</span>
+					<span ng-show="secondsLeft <= 0 || campaignComplete()">
+						<i class="external right share icon"></i>
+						Share This Campaign
+					</span>
+				</button>
+			</a>
             <!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
@@ -118,7 +162,7 @@
     </div>
 
     <div id="share-panel">
-        <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">CLOSE</a>
+        <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">Close</a>
         <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
     </div>
 
@@ -149,9 +193,15 @@
                 <p id="textcount" ng-show="isEditing(pitchIn)">{{230 - pitchIn.note.length}}</p>
             </div>
             <div class="contributors__edit">
-                <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">EDIT</a>
-                <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">CANCEL</a>
-                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">SAVE</button>
+                <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
+					Edit
+				</a>
+                <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">
+					Cancel
+				</a>
+                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">
+					Save
+				</button>
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>

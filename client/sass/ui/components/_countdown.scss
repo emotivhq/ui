@@ -1,0 +1,26 @@
+/* countdown */
+.countdown {
+	background-color: $dark-bg;
+	border-top: 2px solid $color-primary;
+	color: #fff;
+	display: table;
+	height: 57px;
+	margin-bottom: 30px;
+	text-align: center;
+	width: 100%;
+	> div {
+		display: table-cell;
+		vertical-align: middle;
+		width: 25%;
+	}
+	span {
+		display: block;
+	}
+	.count {
+		font-weight: 600;
+	}
+	.title {
+		color: $color-light;
+		text-transform: lowercase;
+	}
+}

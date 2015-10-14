@@ -8,7 +8,7 @@ GiftStarterApp.directive('gsOverlay', gsOverlay);
 
 function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
     function link(scope, element, attrs) {
-        var overlayElement = angular.element('gs-overlay div.overlay');
+        var overlayElement = angular.element('gs-overlay div.tile-overlay');
 
         function drawGrid() {
             // Add artificial delay so the DOM elements have time to settle.
@@ -22,8 +22,8 @@ function gsOverlay($compile, $timeout, $window, GiftStartService, Analytics) {
                 var margin = (marginHeight > marginWidth) ? marginWidth : marginHeight;
                 var height = Math.floor(overlayHeight/GiftStartService.giftStart.rows - 2*margin);
                 var width = Math.floor(overlayWidth/GiftStartService.giftStart.columns - 2*margin - 1);
-                scope.$on('hide-overlay', function() {angular.element('gs-overlay div.overlay .part-cell').css('opacity', '0');});
-                scope.$on('show-overlay', function() {angular.element('gs-overlay div.overlay .part-cell').css('opacity', '1');});
+                scope.$on('hide-overlay', function() {angular.element('gs-overlay div.gs-overlay .part-cell').css('opacity', '0');});
+                scope.$on('show-overlay', function() {angular.element('gs-overlay div.gs-overlay .part-cell').css('opacity', '1');});
                 // Calculate max widths for bought part user images
                 var usrHeight  = overlayHeight/GiftStartService.giftStart.rows - 4*margin;
                 var usrWidth  = overlayWidth/GiftStartService.giftStart.columns - 4*margin;

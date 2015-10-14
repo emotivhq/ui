@@ -35,7 +35,7 @@ class BlogHandler(webapp2.RequestHandler):
         blog_tld="co"
         blog_path_notrail = "/blog"
         blog_path=blog_path_notrail+"/"
-        blog_subdomain_url = "http://"+blog_subdomain+".giftstarter."+blog_tld+"/"
+        blog_subdomain_url = "https://"+blog_subdomain+".giftstarter."+blog_tld+"/"
         blog_path_url = self.request.host_url+blog_path
         blog_path_url_noprotocol = re.sub("https?://","",blog_path_url)
         fetch_url = self.request.path.replace(blog_path_notrail,blog_subdomain_url,1)

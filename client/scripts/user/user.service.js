@@ -50,6 +50,8 @@ function UserService($http,  $rootScope,  $cookieStore,  $window, $timeout,
     this.registerLogin = function(uid, profileImageUrl, token,
                                   onMailingList, name, has_pitched_in) {
         Analytics.track('login', uid);
+        Analytics.userid(uid);
+        Analytics.identify(uid, {name: name});
         self.uid = uid;
         self.token = token;
         self.name = name;

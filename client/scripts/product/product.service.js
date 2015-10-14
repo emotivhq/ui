@@ -72,7 +72,7 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
     };
 
     this.searchProducts = function(search) {
-        if(window.history) {window.history.replaceState({},'GiftStarter Search: '+search,'/search/'+encodeURIComponent(search));}
+        if(window.history) {window.history.replaceState({},'GiftStarter Search: '+search,'/discover/'+encodeURIComponent(search));}
         Analytics.track('product', 'search submitted');
         $http({method: 'GET',
             url: '/products/' + encodeURIComponent(search) + '.json'})

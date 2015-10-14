@@ -1,0 +1,164 @@
+.body {
+	background-color: $light-bg;
+	overflow: hidden;
+}
+
+// featured-cat
+.featured-cat {
+	.container {
+		padding-bottom: 56px;
+	}
+}
+
+// latest
+.latest {
+	text-align: center;
+	.container {
+		padding: {
+			bottom: 43px;
+			left: 30px;
+			right: 30px;
+		}
+	}
+	h2 {
+		margin-bottom: 8px;
+	}
+	p {
+		margin-bottom: 10px;
+	}
+	.thumb-item {
+		text-align: left;
+	}
+}
+
+// highlight-slide
+.highlight-slide {
+	text-align: left;
+	.container {
+		padding: {
+			bottom: 23px;
+			top: 40px;
+		}
+		@include cont-after;
+		&:after {
+			background-color: rgba($color-darker,.8);
+			display: block;
+		}
+		> * {
+			position: relative;
+			z-index: 1;
+		}
+	}
+	h2, h3, h3 a {
+		color: #fff;
+	}
+	
+	h3 a:hover, h3 a:focus, .product-price ins {
+		color: $color-primary;
+	}
+	
+	.multi-slides-right {
+		.owl-controls {
+			.owl-buttons div {
+				border-color: $color-root-title;
+				color: $color-root-title;
+			}
+		}
+	}
+	@media (max-width: 360px) {
+		h2 {
+			font-size: $fontsize-18;
+		}
+		.multi-slides-right .owl-controls {
+			top: -94px;
+		}
+	}
+}
+
+// highlight-shop
+.highlight-shop {
+	> .container > .row-fluid > [class*="col-"] {
+		padding: {
+			left: 0;
+			right: 0;
+		}
+	}
+	@media (max-width: 568px) {
+		.col-xs-4 {
+			width: 41.6667%;
+		}
+		.col-xs-8 {
+			width: 58.3333%;
+		}
+	}
+	@media (max-width: 480px) {
+		.latest-highlight {
+			padding-bottom: 50px;
+		}
+		[class*="col-xs"] {
+			float: none;
+			width: 100%;
+		}
+	}
+}
+
+// latest-highlight
+.highlight-shop .latest-highlight {
+	padding: 42px 30px 0;
+}
+.latest-highlight {
+	h2 {
+		margin-bottom: 8px;
+	}
+	.multi-slides-right {
+		margin-top: 0;
+	}
+	.product-price {
+		margin-bottom: 0;
+	}
+	> p {
+		line-height: 1.4;
+		padding-right: 60px;
+	}
+	.main-content & {
+		margin-bottom: 50px;
+	}
+}
+
+
+/* grid-pro */
+.grid-pro, .banner, .product-tab {
+	.container {
+		padding: {
+			left: 30px;
+			right: 30px;
+		}
+	}
+}
+.grid-pro {
+	.container {
+		padding-top: 30px;
+	}
+	.cat-thumb-item {
+		margin-bottom: 30px;
+	}
+}
+
+// banner
+.banner {
+	.container {
+		padding-bottom: 35px;
+	}
+}
+
+// product-tab
+.product-tab {
+	.container {
+		padding-bottom: 20px;
+	}
+}
+
+// highlight-thumbs
+.highlight-thumbs .container {
+	padding: 34px 30px 30px;
+}

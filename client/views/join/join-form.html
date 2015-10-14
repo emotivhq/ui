@@ -1,0 +1,130 @@
+<div class="userlogin__form hidden">
+    <h4>Create account with email address:</h4>
+    <form ng-submit="$parent.doCreateEmail()" class="create_action">
+        <input class="userlogin__name" type="text" name="name" ng-model="$parent.name" placeholder="First Name" required /><br/>
+        <input class="userlogin__surname" type="text" name="surname" ng-model="$parent.surname" placeholder="Last Name" required /><br/>
+        <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Email Address" required /><br/>
+        <div class="userlogin__passwordwrap"><input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required />
+            <input ng-show="$parent.showPassword" class="userlogin__password" type="text" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required />
+            <div class="userlogin__eye" ng-click="$parent.showPassword=!$parent.showPassword"></div>
+        </div>
+        <div class="userlogin__message">{{$parent.message}}</div>
+		<button class="userlogin__loginbtn create_action ui right labeled icon button" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working">
+  		    <i class="right arrow icon"></i>
+  		    Create Account
+		</button>
+    </form>
+</div>
+<wizard> 
+<form ng-submit="loginUserSucces()" name="joinForm" class="create_action ui form">
+    <wz-step title="">
+        <h2 class="vertical small bottom">Create a new account</h2>
+        <p>Sign up with your e-mail address.</p>
+		<div class="field ui left icon input" ng-class="{ 'error': joinForm.email.$error.required && joinForm.email.$touched && joinForm.email.$error.pattern || joinForm.email.$error.pattern}">
+			<i class="mail icon"></i>
+			<input class="userlogin__email" readonly onfocus="this.removeAttribute('readonly');" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" type="email" name="email" ng-model="email" placeholder="you@yourdomain.com" required />
+		</div>
+        <div class="ui form error" >
+            <div class="ui error message" ng-show="joinForm.email.$error.required && joinForm.email.$touched" >
+                <div class="header">E-mail is required</div>
+                <p>Please, fill out e-mail address field.</p>
+            </div>
+            <div class="ui error message" ng-show="joinForm.email.$error.pattern && joinForm.email.$touched">
+                <div class="header">E-mail is invalid</div>
+                <p>Please, enter a valid e-mail address.</p>
+            </div>
+        </div>
+		<div class="ui middle aligned center aligned vertical medium top bottom grid">
+            <div class="column six">
+                <div class="inline field">
+                    <div class="ui checkbox checked column wide four">
+                        <input type="checkbox" name="public" checked="">
+                        <label>It's ok to send me (very occasional) <br />email about the Giftstarter service.</label>
+                    </div>
+                </div>
+                <button class="ui right labeled icon button submit" ng-click="saveEmail(email)" ng-disabled="joinForm.email.$error.required || joinForm.email.$error.pattern" wz-next value="Continue">
+                    <i class="right arrow icon"></i>
+                        Next
+                </button>
+            </div>
+         </div>
+    </wz-step>
+    <wz-step title="">
+        <h2 class="vertical small bottom">Set Up Your Account</h2>
+        <p>GiftsStarter is all about you. How do you want people to recognize you?</p>
+		<div class="ui middle aligned center grid">			
+		    <div class="column centered">			
+		        <div class="field ui left icon input">
+			        <i class="terminal icon"></i>
+			        <input class="userlogin__name" readonly onfocus="this.removeAttribute('readonly');" ng-pattern="/^[a-z ,.'-]+$/i" type="text" name="username" ng-model="name" placeholder="Your First Name" required />
+		        </div>
+                <div class="ui form error" >
+                    <div class="ui error message" ng-show="joinForm.username.$error.required && joinForm.username.$touched" >
+                        <div class="header">Name is required</div>
+                        <p>Please, fill out name field.</p>
+                    </div>
+                    <div class="ui error message" ng-show="joinForm.username.$error.pattern && joinForm.username.$touched">
+                        <div class="header">Name is invalid</div>
+                        <p>Please, enter a valid name.</p>
+                    </div>
+                    <br />
+                </div>
+                <div class="field ui left icon input">
+                    <i class="terminal icon"></i>
+                    <input class="userlogin__surname" readonly onfocus="this.removeAttribute('readonly');" ng-pattern="/^[a-z ,.'-]+$/i" type="text" name="surname" ng-model="surname" placeholder="Your Last Name" required />
+                </div>
+                <div class="ui form error" >
+                    <div class="ui error message" ng-show="joinForm.surname.$error.required && joinForm.surname.$touched" >
+                        <div class="header">Surname is required </div>
+                        <p>Please, fill out surname field.</p>
+                    </div>
+                    <div class="ui error message" ng-show="joinForm.surname.$error.pattern && joinForm.surname.$touched">
+                        <div class="header">Surname is invalid</div>
+                        <p>Please, enter a valid surname.</p>
+                    </div>
+                </div>
+		    </div>
+        </div>
+		<div class="ui middle aligned center aligned vertical large top bottom grid">
+			<button class="ui right labeled icon button" ng-click="saveNameSurName(name, surname)" ng-disabled="joinForm.name.$error.required || joinForm.surname.$error.required || joinForm.surname.$error.pattern" wz-next value="Continue">
+  				<i class="right arrow icon"></i>
+  				Next
+			</button>
+		</div>
+    </wz-step>
+    <wz-step title="" canexit="">
+        <h2 class="vertical small bottom">That' It! Let's Go...</h2>
+        <p>Enter a strong password to finish your account stup. Or, take a minute to watch this funny video about how GiftStarter worked for a group of friends. Then get started.</p>
+		<div class="field ui left icon input">
+			<i class="protect icon"></i>
+			<input class="userlogin__password" type="password" ng-pattern="/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/" name="password" ng-hide="showPassword" ng-model="password" placeholder="Strong Password" required />
+		</div>
+        <div class="ui form error" >
+            <div class="ui error message" ng-show="joinForm.password.$error.required && joinForm.password.$touched" >
+                <div class="header">Password is required</div>
+                <p>Please, fill out password field.</p>
+             </div>
+             <div class="ui error message" ng-show="joinForm.password.$error.pattern && joinForm.password.$touched">
+                 <div class="header">Password is invalid</div>
+                 <p>Please, enter a strong password. Strong password should have :</p>
+                 <ul>
+                     <li>at least one number</li>
+                     <li>one lowercase</li>
+                     <li>one uppercase letter</li>
+                     <li>at least six characters</li>
+                 </ul>
+             </div>
+        </div>
+		<div class="ui middle aligned center aligned vertical large top bottom grid">
+		    <button class="userlogin__loginbtn create_action ui right labeled icon button primary red" ng-click="savePass(password)" type="submit" ng-class="working ? 'loading' : 'secondary'" ng-disabled="working || joinForm.password.$error.required || joinForm.password.$error.pattern" value="Create Account">
+			    <i class="add user icon"></i>
+  			    Create Account
+		    </button>
+		</div>
+		<div class="userlogin__message ui small message" ng-show="message">
+  			<i class="close icon"></i>
+  			<div class="content">{{message}}</div>
+		</div>
+    </wz-step>
+</form>
+</wizard>

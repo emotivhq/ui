@@ -1,6 +1,9 @@
 # GiftStarter
 The main repo for GiftStarter, the most awesome group-gifting experience.
 
+### Platform Update:
+[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=platform-update)](https://codeship.com/projects/99954)
+
 ### Dev:
 [ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
 

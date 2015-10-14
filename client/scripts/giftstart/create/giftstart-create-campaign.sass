@@ -13,7 +13,7 @@
     margin-top: 20px
     font-size: 34px
   .state-subtitle
-    text-transform: uppercase
+    
     font-size: 12px
   div.gsintro
     //+border-radius(1em)
@@ -68,16 +68,12 @@
         width: 100% !important
     .userlogin
       display: block
-      &__message
-        padding-top: 5px
       &__loginbtn
         margin: 5px auto 0 auto
       &__passwordwrap, &__email, &__surname
         margin-top: 5px
         @include apply-at-size("phone")
           width: 100%
-      &__password
-        padding: 0.9em !important
       &__eye
         position: relative
         top: -85%
@@ -119,7 +115,6 @@
     h2
       margin-top: 1rem
       margin-bottom: 10px
-      color: #e27f24
       font-size: 1.2em
     form
       input[type="text"],input[type="email"],input[type="password"],textarea,select
@@ -151,19 +146,16 @@
         span.name
           display: block
           input
-            width: 23.75em
             margin-bottom: 1em
             @media screen and (max-width: $phone-tablet-boundary)
               width: 100%
         span.email
           display: block
           input
-            width: 23.75em
             @media screen and (max-width: $phone-tablet-boundary)
               width: 100%
       div.email
         input
-          width: 23.75em
           @media screen and (max-width: $phone-tablet-boundary)
             width: 100%
 
@@ -193,7 +185,7 @@
     display: inline-block
     font-size: 12px
     line-height: 12px
-    text-transform: uppercase
+    
     width: 60px
     white-space: nowrap
     text-align: center
@@ -239,12 +231,13 @@
     margin: 15px auto
     text-align: center
     vertical-align: bottom
-    text-transform: uppercase
+    
   .more-parts, .fewer-parts, .fewer-parts-mobile
     display: block
     margin: 0 auto
     text-align: center
   .fewer-parts
+    float: right
     @media screen and (max-width: $phone-tablet-boundary)
       display: none
   .fewer-parts-mobile
@@ -254,6 +247,7 @@
       padding-left: 5%
       display: block
   .more-parts
+    float: left
     @media screen and (max-width: $phone-tablet-boundary)
       float: right
       padding-right: 5%
@@ -312,21 +306,18 @@
       display: block
       margin: 25px 25%
       font-size: 10px
-      text-transform: uppercase
+      
       text-align: center
     @media screen and (min-width: $phone-tablet-boundary)
       margin-top: 25px
       margin-right: 15%
   #price
-    width: 8em
   #selected-image
     max-width: 100%
   img.loading
     height: 2em
 
   div.campaign-length
-    *
-      margin: 0
     h2
       margin-top: 2rem
     .endDate-text
@@ -414,6 +405,7 @@
       width: 100%
 
 div.ui-datepicker
+  font-size: 1.4rem
   table
     th
       font-weight: 300
@@ -426,48 +418,25 @@ div.ui-datepicker
           font-size: 12px
           text-align: center
           &:hover
-            border-color: $gs-lightteal
+            border-color: $gs-gray
         &-active
-          background: $gs-lightteal
+          background: $gs-gray
           color: white
         &-disabled
           font-size: 12px
       .ui-datepicker
         &-current-day
           a
-            background: $gs-lightteal
+            background: $gs-gray
             color: #ffffff
         &-today
           a
-            border-color: $gs-lightteal
+            border-color: $gs-gray
             color: $gs-lightteal
             font-weight: 700
 
   &-header
     color: white
-    background: $gs-lightteal
+    background: $gs-gray
     border: 0
-  &-prev
-    &::after
-      content: "<"
-      color: #ffffff
-      font-size: 1.5em
-      padding: 0.2em
-      cursor: pointer
-      span.ui-icon-circle-triangle-w
-        cursor: pointer
-    &.ui-state-hover
-      background: none
-      border: none
-  &-next::after
-    content: ">"
-    color: #ffffff
-    font-size: 1.5em
-    padding: 0.2em
-    cursor: pointer
-    span.ui-icon-circle-triangle-w
-      cursor: pointer
-  &-next.ui-state-hover
-    background: none
-    border: none
 

@@ -1,11 +1,13 @@
-<div class="about body static-pages" ng-controller="AboutController">
+<div class="about body static-pages wrapper ui container main full" ng-controller="AboutController">
   <div class="headerwrap">
-    <h1>WHAT IS GIFTSTARTER?</h1>
-    <p>Our mission is to reinvent gifting by putting our hearts back into the giving experience. Give amazing gifts you're proud of, and your friends and loved ones are delighted to get. From a group or from yourself, we'll make it happen. It's that easy.</p>
+	  <div class="ui container">
+    <h1>What is GiftStarter?</h1>
+    <h4>Our mission is to reinvent gifting by putting our hearts back into the giving experience. Give amazing gifts you're proud of, and your friends and loved ones are delighted to get. From a group or from yourself, we'll make it happen. It's that easy.</h4>
+	  </div>
   </div>
 
   <div class="main threeup">
-    <h2>The Team</h2>
+    <h2 class="vertical bottom medium">The Team</h2>
     <div class="member-item">
       <img src="assets/about/img/arry.png" alt="" />
       <h3><b>Arry Yu</b></h3>
@@ -13,43 +15,56 @@
     </div>
 
     <div class="member-item">
-      <img src="assets/about/img/christie.png" alt="" />
-      <h3><b>Christie Gettler</b></h3>
-      <h4>Design/Cofounder</h4>
-    </div>
-
-    <div class="member-item">
-      <img src="assets/about/img/sharon.png" alt="" />
-      <h3><b>Sharon Kuo</b></h3>
-      <h4>Web Engineering</h4>
-    </div>
-
-    <div class="member-item">
       <img src="assets/about/img/joel.png" alt="" />
       <h3><b>Joel Serino</b></h3>
-      <h4>Product Growth</h4>
+      <h4>Product</h4>
     </div>
 
     <div class="member-item">
       <img src="assets/about/img/tyler.png" alt="" />
       <h3><b>Tyler Goelz</b></h3>
-      <h4>UX Engineer</h4>
+      <h4>UX Engineering</h4>
     </div>
-  </div>
+
+	<div class="member-item">
+      <img src="/assets/noUserImage.png" class="" />
+      <h3><b>Valentine Gunko</b></h3>
+      <h4>Platform Engineering</h4>
+    </div>
+
+	<div class="member-item">
+      <img src="/assets/noUserImage.png" class="" />
+      <h3><b>Melissa Glidden</b></h3>
+      <h4>Community</h4>
+    </div>
+
+</div>
+
 
   <div class="mission">
-    <hr />
-    <h2>Our Mission</h2>
-    <p class="font">To enable people to make meaningful connections with others using the power of gifts.<br />
-      <b>Want to send a gift to someone?</b><br /><a href="/giftideas">You can with GiftStarter</a><br />
-      <b>Want to send a group gift to someone?</b><br /><a href="/giftideas">You can with GiftStarter</a><br />
-      <b>Want to save up piece by piece for a gift?</b><br /><a href="/giftideas">You can with GiftStarter</a><br />
-    Your time is valuable. Don't waste another second -- use GiftStarter for all of your gifting needs.</p>
-  </div>
+    <h2 class="ui segment vertical top bottom medium">Our Mission</h2>
+	  <div class="font ui class container vertical top medium  middle aligned center grid centered">
+		  <div class="ui items divided">
+			  
+		  
+    <p class="item">
+		To enable people to make meaningful connections with others using the power of gifts.</p>
+      <ul class="ui item items">
+	  	<li class="item" style="margin-top: 1em;">Want to send a gift to someone?</li>
+      	<li class="item">Want to send a group gift to someone?</li>
+      	<li class="item">Want to save up piece by piece for a gift?</li>
+	  </ul>
+		
+	<p class="item">Your time is valuable. Use GiftStarter for all of your gifting and payment option needs.</p>
 
+	  </div>
+	  <a href="/giftideas" class="ui button fuild icon labeled " id="gifting-button">
+			  <i class="gift icon left"></i> 
+			  You can with GiftStarter
+		</a>  
+	  </div>
   <div class="milestones">
-    <hr />
-    <h2>Our Milestones</h2>
+    <h2 class="ui segment vertical top bottom medium">Our Milestones</h2>
     <table>
       <tr>
         <td><b>March 2014</b></td>
@@ -83,8 +98,7 @@
   </div>
 
   <div class="advisors threeup">
-    <hr />
-    <h2>Our Advisors</h2>
+    <h2 class="ui segment vertical top bottom medium">Our Advisors</h2>
 
     <div class="member-item">
       <img src="assets/about/img/barbary-brunner.png" alt="" />
@@ -119,8 +133,7 @@
   </div>
 
   <div class="investors">
-    <hr />
-    <h2>Our Investors</h2>
+    <h2 class="ui segment vertical top bottom medium">Our Investors</h2>
     <div class="member-item">
       <img src="assets/about/img/9mile-labs.png" alt="" />
       <h3><b>9Mile Labs</b></h3>
@@ -171,17 +184,22 @@
   </div>
 
   <div id="contactus" class="Contact">
-    <hr />
-    <h2>Contact Us</h2>
-    <p class="font">
-      <b>For Help:</b> email our Gift Concierge at <a href="mailto:giftconcierge@giftstarter.com">giftconcierge@giftstarter.com</a><br /><b>For Press and Partners:</b> email <a href="mailto:partner@giftstarter.com">partner@giftstarter.com</a><br/><br/>
+    <h2 class="ui segment vertical top bottom medium">Contact Us</h2>
+    <div class="font ui class container vertical top medium segment middle aligned center grid centered ">
+      <p>
+		  <a href="/concierge" class="ui button fuild icon labeled vertical bottom medium" id="gifting-button">
+			  <i class="ui gift icon right"></i> 
+			  For Help: Email The Gift Concierge
+			</a>
+		<br/>
+	  <b>For Press and Partners:</b> Email <a href="mailto:partner@giftstarter.com">partner@giftstarter.com</a><br/><br/>
       Also, feel free to call us at 206-486-4849!<br/><br/>
-      GIFTSTARTER (also known as Emotiv Labs, Inc.)<br/>
+      Giftstarter (by Emotiv Labs, Inc.)<br/>
       3727 S. Alaska Street<br/>
       Suite #18284<br/>
-      Seattle, WA 98118
-    </p>
-    <a href="/giftideas" alt="" class="button">START GIFTING</a>
+      Seattle, WA 98118</p>
+    </div>
   </div>
+
 
 </div>

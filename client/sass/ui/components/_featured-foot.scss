@@ -1,0 +1,159 @@
+.featured-foot > div > .row {
+	position: relative;
+}
+
+.contact-info, .newsletter-form {
+	color: #fff;
+	text-align: center;
+}
+
+.equal-height {
+	height: 100%;
+	min-height: 290px;
+}
+
+.contact-info-wrap, .newsletter {
+	padding-bottom: 30px;
+    padding-top: 55px;
+	h2, address, p {
+		margin-bottom: 8px;
+	}
+	h2 {
+		color: #fff;
+	}
+}
+
+.contact-info-wrap {
+	@include cont-after;
+	&:after {
+		background-color: rgba($color-primary,.9);
+	}
+	.contact-info {
+		position: relative;
+		z-index: 1;
+	}
+}
+
+.newsletter-form {
+	.form-group, .btn {
+		margin-left: auto;
+		margin-right: auto;
+		width: 200px;
+	}
+	.form-control {
+		background-color: transparent;
+		border-color: transparent transparent rgba(white, .5);
+		color: #fff;
+		text-align: center;
+		
+		&::-moz-placeholder           { color: #fff; } // Firefox
+		&:-ms-input-placeholder       { color: #fff; } // Internet Explorer 10+
+		&::-webkit-input-placeholder  { color: #fff; } // Safari and Chrome
+		&:focus {
+			border-color: transparent transparent $color-primary;
+		}
+	}
+	.btn {
+		background-color: rgba($color-darker, .2);
+		border-color: transparent;
+	}
+}
+
+/* testimonial */
+.testimonial, .partners {
+	text-align: left;
+	@media (min-width: 641px) {
+		min-height: 426px;
+	}
+}
+
+.testimonial-wrap, .partners-wrap {
+	padding: {
+		left: 30px;
+		right: 30px;
+	}
+	.divider {
+		margin-bottom: 33px;
+		margin-top: 27px;
+	}
+	@media (min-width: 1024px) {
+		padding-top: 96px;
+	}
+	@media (max-width: 991px) {
+		padding-top: 36px;
+	}
+}
+
+.testimonial-wrap {
+	color: #fff;
+	h3 {
+		color: #fff;
+	}
+	blockquote {
+		border-left: none;
+		color: rgba(white, .8);
+		font-size: $fontsize-15;
+		padding: 0;
+	}
+}
+
+.testimonial-author {
+	padding-bottom: 30px;
+	.img-thumbnail-small {
+		float: left;
+		margin-right: 10px;
+	}
+	h4 {
+		color: #fff;
+		font-size: $fontsize-14;
+		margin-bottom: 5px;
+		text-transform: uppercase;
+	}
+	p {
+		color: rgba(white, .8);
+	}
+}
+
+/* list-partners */
+.partners {
+	border-top: 1px solid $color-root-title;
+}
+
+.list-partners {
+	@extend .list-unstyled;
+	margin-left: -5px;
+	li {
+		display: inline-block;
+	}
+}
+
+/* partners-2 */
+.partners-2 {
+	border-top: 1px solid $color-root-title;
+	margin-bottom: 50px;
+	padding-top: 42px;
+	.partners-wrap {
+		padding: 0;
+		h3 {
+			margin-bottom: 24px;
+		}
+	}
+	.list-partners {
+		margin-left: 0;
+		li {
+			border: 1px solid $color-root-title;
+			margin: 0 4px;
+		}
+	}
+}
+
+@media (max-width: 1199px) {
+	.partners-2 {
+		margin-bottom: 42px;
+		.list-partners {
+			li {
+				margin-bottom: 8px;
+			}
+		}
+	}
+}

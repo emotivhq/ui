@@ -4,12 +4,21 @@
 
   .headerwrap
     background: url("/assets/partners/img/partnersHero.jpg") no-repeat center
+    height: auto !important
+    padding-bottom: 1rem
 
   .main
     #love
       .sub
         margin: 0 auto
         width: 60%
+      .image
+        width: 60px
+        margin-right: 10px 
+        @include apply-at-size("phone")
+          width: 50% !important
+          margin: 0 auto !important
+          display: block
     .love-item
       display: inline-block
       margin-top: 10px

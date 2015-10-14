@@ -6,10 +6,10 @@
 
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
-function gsProductSearch(ProductService, $location, Analytics, UserService, $window,
+function gsProductSearch(UserService, ProductService, $location, Analytics, UserService, $window,
                          $timeout, $rootScope) {
     function link(scope, element) {
-        scope.loading = false;
+        scope.loading = true;
         scope.failed = false;
         scope.results_empty = false;
         scope.product_url = "";
@@ -17,6 +17,12 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         scope.selectedProduct = -1;
         scope.productMessage = '';
         scope.isSavingForLater = false;
+		scope.loggedIn = UserService.loggedIn;
+		this.loggedIn = UserService.loggedIn;
+		scope.searchMenu = false;
+		scope.homeMenu = false;
+		scope.searchResults = false;
+
 
         scope.giftConciergeClicked = function() {Analytics.track('client',
             'gift concierge email clicked')};
@@ -44,6 +50,10 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
             } else {
                 scope.submitSearch();
             }
+			//Close any semantic ui elements
+			jQuery('.ui.sidebar')
+  				.sidebar('hide')
+			;		
         };
 
         scope.submitSearch = function() {
@@ -97,7 +107,7 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
         });
 
         scope.selectedPage = 1;
-        scope.pageSize = 10;
+        scope.pageSize = 8;
         scope.numPages = 0;
         scope.pageNumbers = [];
 
@@ -184,7 +194,8 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
 
         scope.saveForLater = function(index) {
             scope.isSavingForLater = true;
-            var saver = ProductService.saveForLater(
+		  if(UserService.loggedIn) {
+				var saver = ProductService.saveForLater(
                 scope.selectedProducts[index].retailer,
                 scope.selectedProducts[index].url,
                 scope.selectedProducts[index].price,
@@ -204,6 +215,9 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
             } else {
                 scope.isSavingForLater = false;
             }
+		  } else {
+             	$location.path('/login');
+          }
         };
 
         var performHeadSearch = function () {
@@ -229,6 +243,11 @@ function gsProductSearch(ProductService, $location, Analytics, UserService, $win
     return {
         restrict: 'E',
         link: link,
-        templateUrl: '/scripts/product/product-search.html'
+        templateUrl: '/scripts/product/product-search.html',
+		scope: {
+        	searchMenu: '=menu',
+        	homeMenu: '=home',
+        	searchResults: '=results'
+      	}
     }
 }

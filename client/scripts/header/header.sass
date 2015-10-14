@@ -1,14 +1,10 @@
 @import "../base"
 
 #header
-  background-color: white
-  height: 50px
   @media screen and (max-width: $phone-tablet-boundary)
-    height: 70px
-  max-width: 1200px
-  width: 100%
-  vertical-align: middle
-  -webkit-font-smoothing: antialiased
+    width: 100%
+    vertical-align: middle
+    -webkit-font-smoothing: antialiased
 
   .nomobile
     @media screen and (max-width: $phone-tablet-boundary)
@@ -55,7 +51,7 @@
 
     img
       @include apply-at-size("desktop")
-        height: 40px
+        height: 35px
       @media screen and (max-width: $phone-tablet-boundary)
         height: 70px
 
@@ -202,43 +198,4 @@
     border-bottom: 2px solid $bg-color
     position: absolute
     width: 100%
-    max-width: 1200px
-    top: 70px
-    z-index: 999
-    @include apply-at-size("desktop")
-      top: 50px
-    #closebtn
-      margin-left: calc(99% - 30px)
-      width: 30px
-
-  .blackout-screen
-    height: 100%
-    width: 100%
-    position: fixed
-    top: 0
-    left: 0
-    z-index: 99
-
-  #mobile_notifications
-    @include apply-at-size("desktop")
-      display: none
-
-  #nav_notifications
-    @media screen and (max-width: $phone-tablet-boundary)
-      &.hideMobileNotifications
-        display: none
-
-    .submenu
-      border-left: 0 !important
-      border-right: 8px solid $primary-color
-      right: 0
-
-    img
-      height: 23px
-    #notification-list
-      .notificationsUnread
-        background-color: white
-      .notificationsRead
-        color: #bbb
-      #no-notifications-msg
-        margin: 0 10px
+//    max-width: 1200px

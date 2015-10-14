@@ -1,0 +1,57 @@
+{  
+   "categoryName":"Gift Ideas from Full Belly Fare (Portland Only)",
+   "categoryNameShort":"Full Belly Fare",
+   "categorySlug":"fullbellyfare",
+   "categoryBlurb":"Full Belly Fare, is the Portland personal chef with a twist, is a fully licensed, insured, and registered business, in compliance with all food handling, packaging, and labeling laws. Any of these packages make a great gift to give together - especially to new parents with a newborn baby.  All meals are prepared in a certified commercial commissary kitchen in Portland, Oregon. Give a gift together to give a month of meals to the new parents!",
+   "productList":[
+     
+     {
+         "productName":"BabyMoon: A Month of Meals",
+         "productNameShort":"BabyMoon: A Month of Meals",
+         "productSlug":"BabyMoon-A-Month-of-Meals",
+         "productPrice":"1000",
+         "productDescription":"<p><span style=&quot;font-weight: 400;&quot;>Full Belly Fare, your Portland personal chef with a twist, is a fully licensed, insured, and registered business, in compliance with all food handling, packaging, and labeling laws. All meals are prepared in a certified commercial commissary kitchen in Portland, Oregon. Give a gift together to give a month of meals to the new parents!</span></p>",
+         "productMetaDescription":"Delicious prepared meals delivered in Portland. Makes a great group gift to give together to new parents!",
+         "productImage":"/fullbellyfare/fullbellyfaremonth.jpg",
+         "productThumb":"/fullbellyfare/fullbellyfaremonth_thumb.jpg",
+         "imageAltText":"BabyMoon: A Month of Meals",
+         "giftStartLink":"http://bit.ly/1O71Sll"
+     },
+     {
+         "productName":"Family Nest: 1-2 Weeks of Meals",
+         "productNameShort":"Family Nest: 1-2 Weeks",
+         "productSlug":"Family-Nest-1-2-Weeks",
+         "productPrice":"500",
+         "productDescription":"<p><span style=&quot;font-weight: 400;&quot;>Full Belly Fare, your Portland personal chef with a twist, is a fully licensed, insured, and registered business, in compliance with all food handling, packaging, and labeling laws. All meals are prepared in a certified commercial commissary kitchen in Portland, Oregon. Give a gift together to give 1-2 weeks of meals to the new parents!</span></p>",
+         "productMetaDescription":"Delicious prepared meals delivered in Portland. Makes a great group gift to give together to new parents!",
+         "productImage":"/fullbellyfare/fullbellyfarew12eeks.jpg",
+         "productThumb":"/fullbellyfare/fullbellyfare12weeks_thumb.jpg",
+         "imageAltText":"Family Nest: 1-2 Weeks",
+         "giftStartLink":"http://bit.ly/1O72xn3"
+     },
+     {
+         "productName":"NurtureMe: 3-5 Meals Delivered",
+         "productNameShort":"NurtureMe: 3-5 Meals",
+         "productSlug":"NurtureMe-3-5-Meals",
+         "productPrice":"200",
+         "productDescription":"<p><span style=&quot;font-weight: 400;&quot;>Full Belly Fare, your Portland personal chef with a twist, is a fully licensed, insured, and registered business, in compliance with all food handling, packaging, and labeling laws. All meals are prepared in a certified commercial commissary kitchen in Portland, Oregon. Give a gift together to give 3-5&nbsp;meals to the new parents!</span></p>",
+         "productMetaDescription":"Delicious prepared meals delivered in Portland. Makes a great group gift to give together to new parents!",
+         "productImage":"/fullbellyfare/fullbellyfare35meals.jpg",
+         "productThumb":"/fullbellyfare/fullbellyfare35meals_thumb.jpg",
+         "imageAltText":"NurtureMe: 3-5 Meals",
+         "giftStartLink":"http://bit.ly/1VqPGeb"
+     },
+     {
+         "productName":"PamperMe: 1-2 Meals Delivered",
+         "productNameShort":"PamperMe: 1-2 Meals",
+         "productSlug":"PamperMe-1-2-Meals",
+         "productPrice":"75",
+         "productDescription":"<p><span style=&quot;font-weight: 400;&quot;>Full Belly Fare, your Portland personal chef with a twist, is a fully licensed, insured, and registered business, in compliance with all food handling, packaging, and labeling laws. All meals are prepared in a certified commercial commissary kitchen in Portland, Oregon. Give a gift together to give a 1-2 meals to the new parents!</span></p>",
+         "productMetaDescription":"Delicious prepared meals delivered in Portland. Makes a great group gift to give together to new parents!",
+         "productImage":"/fullbellyfare/fullbellyfarepamper.jpg",
+         "productThumb":"/fullbellyfare/fullbellyfarepamper_thumb.jpg",
+         "imageAltText":"PamperMe: 1-2 Meals",
+         "giftStartLink":"http://bit.ly/1VqPTya"
+     }
+  ]
+}
