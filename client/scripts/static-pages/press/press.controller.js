@@ -82,7 +82,7 @@ function PressController($scope,  $location,  $timeout) {
         ),
         new pressItem(
             "http://www.seattletimes.com/business/technology/tech-spotlight-giftstarter/",
-            "SeattleTimes-logo.svg",
+            "SeattleTimes-logo.png",
             "The gift of efficiency: It really creates that digital event of people coming together in a community"
         ),
         new pressItem(
