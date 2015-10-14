@@ -1,4 +1,4 @@
-application: dev-www-gift-starter
+application: www-dev-gift-starter
 version: 1-2-26
 runtime: python27
 api_version: 1
