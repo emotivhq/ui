@@ -10,12 +10,22 @@ import analytics
 import abtest
 import urllib
 
+secrets = yaml.load(open('secret.yaml'))
+config = yaml.load(open('config.yaml'))
+	
+"""
+   @fedora - This is a WIP Oct 15 to automate deployments to Nth # of environments
+             starting with dev & prod. If failing, comment out
+   ---
+"""
+
 if os.environ['RUNTIME_ENV'].startswith('production'):
 	secrets = yaml.load(open('secret.production.yaml'))
 	config = yaml.load(open('config.production.yaml'))
-else: 
-	secrets = yaml.load(open('secret.yaml'))
-	config = yaml.load(open('config.yaml'))
+elif os.environ['RUNTIME_ENV'].startswith('development'): 
+	secrets = yaml.load(open('secret.development.yaml'))
+	config = yaml.load(open('config.development.yaml'))
+
 
 DEPLOYED = not os.environ['SERVER_SOFTWARE'].startswith('Development') if \
     os.environ.get('SERVER_SOFTWARE') else False

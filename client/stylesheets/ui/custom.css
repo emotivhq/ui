@@ -116,9 +116,7 @@ header.slim {
   z-index: 5; }
 
 .ui.active.dimmer {
-  opacity: 1;
-  position: fixed;
-  margin-top: 78px; }
+  opacity: 1; }
 
 .ui.modal .header {
   border-bottom: none; }

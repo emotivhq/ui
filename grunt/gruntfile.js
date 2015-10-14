@@ -555,11 +555,11 @@ module.exports = function(grunt) {
 		},
 		bump: {
             options: {
-                files: ['package.json', '../client/bower.json'],
-                updateConfigs: [],
+                files: ['package.json', '../client/bower.json', '../app.yaml', 'app.production.yaml', 'app.development.yaml'],
+                updateConfigs: ['version', 'version', 'semver', 'semver', 'semver'],
                 commit: true,
                 commitMessage: 'Build & release v%VERSION%',
-                commitFiles: ['package.json', '../client/bower.json'],
+                commitFiles: ['package.json', '../client/bower.json', '../app.yaml', 'app.production.yaml', 'app.development.yaml'],
                 createTag: true,
                 tagName: 'v%VERSION%',
                 tagMessage: 'Version %VERSION%',

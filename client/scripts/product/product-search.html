@@ -19,7 +19,7 @@
         </div>
 
 
-	<div class="ui active dimmer" ng-show="loading">
+	<div class="ui active dimmer" ng-show="loading" style="position: fixed;margin-top: 78px;">
     	<div class="ui loader"></div>
  	</div>
 
@@ -37,12 +37,12 @@
         <div class="product content">
             <div class="image-container">
                 <span class="vert-align-helper"></span>
-                <img class="ui image medium card" ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
+                <img class="ui image medium" ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
             </div>
             <div class="product-details ui aligned middle grid">
 				<h2 class="ui header">
   				<div class="content">
-   				 {{product.title | limitTo: 52}}
+   				 {{product.title | limitTo: 50}}
  				 </div>
 				</h2>
                 <p class="description ui raised segment" ng-bind-html="product.description"></p>
