@@ -59,8 +59,8 @@
 			{{category.categoryName}} Gift Ideas
 		</h2>
         <ul class="grid ui segment" rn-carousel rn-carousel-index="carouselIndex" style="min-height: 430px; padding-top: 16px; background: #f9f9f9;">
-            <div ng-repeat="group in groups" class="ui stackable cards" >
-                <li ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='ui link card tile column wide eight' title="{{product.productNameStripped}}" style="display: inline-block;">
+            <li ng-repeat="group in groups" class="ui stackable cards" >
+                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='ui link card tile column wide eight' title="{{product.productNameStripped}}" style="display: inline-block;">
                     <a href="{{categoryPath}}/{{product.productSlug}}" class="image">
                         <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
                         <div class="content">
@@ -68,8 +68,8 @@
                             <div class="meta">${{product.productPrice}}</div>
                         </div>
                     </a>
-                </li>
-            </div>
+                </div>
+            </li>
         </ul>
 		<div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
 		<div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
