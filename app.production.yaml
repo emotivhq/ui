@@ -1,4 +1,4 @@
-application: dev-www-gift-starter
+application: gift-starter
 version: 1-2-26
 runtime: python27
 api_version: 1
@@ -240,7 +240,7 @@ libraries:
 
 env_variables:
   OAUTHLIB_INSECURE_TRANSPORT: 1
-  RUNTIME_ENV: 'development'
+  RUNTIME_ENV: 'production'
   PRERENDER_TOKEN: 'rgoheOAM1S1n4zzDsub9'
 
 skip_files:

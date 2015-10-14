@@ -9,7 +9,7 @@ GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 function gsProductSearch(UserService, ProductService, $location, Analytics, UserService, $window,
                          $timeout, $rootScope) {
     function link(scope, element) {
-        scope.loading = false;
+        scope.loading = true;
         scope.failed = false;
         scope.results_empty = false;
         scope.product_url = "";

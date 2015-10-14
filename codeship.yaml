@@ -1,0 +1,37 @@
+machine:
+  python:
+    version: 1-2-26
+  environment:
+    # Set to the App Engine project name
+    GCLOUD_PROJECT: "gift-starter"
+
+    # Create a service account in the credentials page of the App Engine
+    # project and save the given key pair json file as .gcloud-key-file.json
+    GCLOUD_KEY_FILE: ".gcloud-key-file.json"
+
+    # Set it to the version of the application that is running in production
+    GCLOUD_VERSION: "1-2-26"
+
+dependencies:
+  cache_directories:
+    - ~/google-cloud-sdk
+  pre:
+    - if [ ! -d ~/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash; fi:
+        environment:
+          CLOUDSDK_CORE_DISABLE_PROMPTS: 1
+    - ~/google-cloud-sdk/bin/gcloud --quiet components update app
+    - ~/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file $GCLOUD_KEY_FILE
+    - ~/google-cloud-sdk/bin/gcloud config set project $GCLOUD_PROJECT
+    - pip install flake8
+
+test:
+  override:
+    - flake8:
+        files:
+          - "**/*.py"
+
+deployment:
+  production:
+    branch: production
+    commands:
+      - ~/google-cloud-sdk/bin/gcloud --quiet preview app deploy app.yaml --version $GCLOUD_VERSION --promote

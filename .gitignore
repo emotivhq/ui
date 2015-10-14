@@ -1,12 +1,12 @@
 /client/_app/ 
 /client/_public/ 
 /client/stylesheets/*.css
-/client/bower_components/*
+/client/bower_components/
 /client/client.iml
-/client/.sass-cache/*
-/client/scripts/out/*
-/client/scripts/webapp/*
-/client/stylesheets/trashy/*
+/client/.sass-cache/
+/client/scripts/out/
+/client/scripts/webapp/
+/client/stylesheets/trashy/
 /setuptools/*
 /requests/*
 /lxml/*

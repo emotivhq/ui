@@ -5,7 +5,11 @@
  */
 (function(app) {
     var LoginOrCreateController = function($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService, FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
-        $scope.greybg = true;
+        var self = this;
+		var loggingin = $location.path().indexOf('/login') === 0;
+
+		$scope.showWelcome = false;
+		$scope.greybg = true;
         $scope.working = false;
         $scope.showCreate = true;
         if(typeof($scope.showCreate) == 'undefined') {
@@ -133,11 +137,7 @@
                 $scope.message = errMsg;
             });
         };
-        
-        $scope.loginUserSucces = function () {
-            $scope.doLoginEmail();
-            $location.path('/users/' + UserService.uid);
-        }
+
         
         $scope.saveEmail = function(email) {
             $scope.email = email;
@@ -218,6 +218,10 @@
             }, 3000);
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
+			// @fedora - if a user logs in from /login, then redircet the, to their profile
+			if(loggingin) {
+				$location.path('/users/' + UserService.uid);
+			}
         });
         $rootScope.$on('loginbox-show-login', function() {
             $scope.resetForm();
