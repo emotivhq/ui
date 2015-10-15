@@ -1,6 +1,36 @@
+<div class="ui social create basic modal middle aligned center aligned" ng-controller="LoginOrCreateController">
+    <i class="close icon"></i>
+    <div class="ui middle center aligned header">
+        <h2>Login or create an account</h2>
+    </div>
+    <div class="middle center aligned grid">
+        <div class="image content container">
+            <div class="userlogin__sociallogin login-block" ng-show="showSocials">
+                <div class="social">
+                    <a class="social__link linky" ng-click="doLoginFacebook()">
+                        <img class="social__icons" src="/assets/login/facebook.png">
+                    </a>
+                    <br/>
+                    <a class="social__link linky" ng-click="doLoginTwitter()">
+                        <img class="social__icons" src="/assets/login/twitter.png">
+                    </a>
+                    <br/>
+                    <a class="social__link linky" ng-click="doLoginLinkedin()">
+                        <img class="social__icons" src="/assets/login/linkedin.png">
+                    </a>
+                    <br/>
+                    <a class="social__link linky" ng-click="doLoginGoogleplus()">
+                        <img class="social__icons" src="/assets/login/google.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="shareControllerWrapper" class="ui modal share pitchin" ng-controller="ShareController">
-	<i class="close icon"></i>
-   <div class="header">
+    <i class="close icon"></i>
+    <div class="header">
         <h1>Invite Friends to Pitch-in</h1>
         <!--p>Your GiftStarter campaign is successfully set up! Invite friends to help pitch-in
         and increase your chances of fully funding the gift!</p-->
@@ -11,8 +41,8 @@
     <div ng-show="loggedIn()" id="share-block" class="content">
         <div id="content" class="ui grid">
             <div class="column wide six block message">
-            	<h3>Your Message</h3>
-            	<textarea id="shareMessage" ng-model="message"></textarea>
+                <h3>Your Message</h3>
+                <textarea id="shareMessage" ng-model="message"></textarea>
             </div>
             <div>
                 <div class="row">
@@ -20,18 +50,25 @@
                     <p>Select which networks you would like to post on:</p>
                 </div>
                 <div class="row" id="social-icons-container">
-                    <a class="social__link linky" ng-click="selectedSocials['facebook']=false"><img class="social__icons" src="/assets/share/facebook.png" ng-show="selectedSocials['facebook']"></a>
-                    <img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-hide="selectedSocials['facebook']" ng-click="selectSocial('facebook')"/>
-                    <a class="social__link linky" ng-click="selectedSocials['twitter']=false"><img class="social__icons" src="/assets/share/twitter.png" ng-show="selectedSocials['twitter']"></a>
-                    <img class="social__icons linky" src=/assets/share/twitter-share-unselected.png ng-hide="selectedSocials['twitter']" ng-click="selectSocial('twitter')"/>
-                    <a class="social__link linky" ng-click="selectedSocials['linkedin']=false"><img class="social__icons" src="/assets/share/linkedin.png" ng-show="selectedSocials['linkedin']"></a>
-                    <img class="social__icons linky" src=/assets/share/linkedin-share-unselected.png ng-hide="selectedSocials['linkedin']" ng-click="selectSocial('linkedin')"/>
+                    <a class="social__link linky" ng-click="selectedSocials['facebook']=false">
+                        <img class="social__icons" src="/assets/share/facebook.png" ng-show="selectedSocials['facebook']">
+                    </a>
+                    <img class="social__icons linky" src=/assets/share/facebook-share-unselected.png ng-hide="selectedSocials['facebook']" ng-click="selectSocial('facebook')" />
+                    <a class="social__link linky" ng-click="selectedSocials['twitter']=false">
+                        <img class="social__icons" src="/assets/share/twitter.png" ng-show="selectedSocials['twitter']">
+                    </a>
+                    <img class="social__icons linky" src=/assets/share/twitter-share-unselected.png ng-hide="selectedSocials['twitter']" ng-click="selectSocial('twitter')" />
+                    <a class="social__link linky" ng-click="selectedSocials['linkedin']=false">
+                        <img class="social__icons" src="/assets/share/linkedin.png" ng-show="selectedSocials['linkedin']">
+                    </a>
+                    <img class="social__icons linky" src=/assets/share/linkedin-share-unselected.png ng-hide="selectedSocials['linkedin']" ng-click="selectSocial('linkedin')" />
                     <!--<a class="social__link linky" ng-click="selectedSocials['google']=false"><img class="social__icons" src="/assets/share/google.png" ng-hide="!sharePermission['google'] || !selectedSocials['google']"></a>-->
                     <!--<img class="social__icons linky" src=/assets/share/google-share-unselected.png ng-show="!selectedSocials['google']" ng-click="selectSocial('google')"/>-->
                 </div>
                 <div class="row">
                     <h4>Send an Email</h4>
-                    <p>Enter email addresses separated by a comma<!--, or import gmail contacts to select email addresses-->:</p>
+                    <p>Enter email addresses separated by a comma
+                        <!--, or import gmail contacts to select email addresses-->:</p>
                     <!--a href=""><h4>IMPORT GMAIL CONTACTS</h4></a-->
                     <textarea ng-model="emailRecipients" placeholder="Enter email addresses, separated by commas"></textarea>
                 </div>
@@ -42,12 +79,11 @@
             <p ng-show="shareSuccess">That was a success!</p>
             <p class="twitter-note" ng-show="selectedSocials['twitter'] && message.length>118">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>
             <button class="ui button large icon fluid" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">
-				<i class="share external icon"></i> 
-				Share
-			</button>
-            <button  class="ui button large" ng-show="shareSuccess" ng-click="shareReset()">
-				Share again
-			</button>
+                <i class="share external icon"></i> Share
+            </button>
+            <button class="ui button large" ng-show="shareSuccess" ng-click="shareReset()">
+                Share again
+            </button>
 
         </div>
 
@@ -58,13 +94,13 @@
 
         <!--a href=""><h4>SKIP AND SHARE LATER</h4></a>
         <p>You can share your campaign at any time from your profile page or the campaign page!</p-->
-	<div class="actions">
-    <div class="ui deny button">
-      Cancel
+        <div class="actions">
+            <div class="ui deny button">
+                Cancel
+            </div>
+            <div class="ui blue right labeled icon button" ng-show="shareSuccess" ng-click="shareReset()">
+                Finish Up
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
     </div>
-    <div class="ui blue right labeled icon button" ng-show="shareSuccess" ng-click="shareReset()">
-      Finish Up
-      <i class="checkmark icon"></i>
-    </div>
-  </div>
-</div>
