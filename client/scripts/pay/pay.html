@@ -15,7 +15,10 @@
 
     <form class="ui form" xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" Xng-submit="pitchingIn = stripeForm.$valid;">
 
-        <input id="new-credit-card-cb" type="checkbox" ng-model="putNew" ng-change="deselectCards()"><label for="new-credit-card-cb"><span class="arrow" ng-class="{down: putNew && !cardsLoading}">&#x25BC;</span><span>Enter New Card</span></label>
+        <input id="new-credit-card-cb" type="checkbox" ng-model="putNew" ng-change="deselectCards()">
+		<label for="new-credit-card-cb" class="ui button basic teal">
+			<span class="arrow" ng-class="{down: putNew && !cardsLoading}">&#x25BC;</span><span>Enter New Card</span>
+		</label>
 
         <div class="card-entry" ng-class="{'put-new': putNew && !cardsLoading}">
             <div id="card-imgs">
@@ -47,9 +50,9 @@
 			<div class="email field">
                 <input type="email" id="card-email" ng-disabled="!putNew" ng-model="email" placeholder="Email Address*" ng-change="updateFormValidity()" name="email"/>
             </div>
-			<span class="email-note">
+			<div class="email-note">
                 * Receipt will be emailed
-            </span>
+            </div>
 			<span class="save-card ui checkbox slider field">
                 <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard"/><label for="save-credit-card"> Remember my card</label><input type="checkbox" id="tooltip-checkbox"/>
             </span>
@@ -65,7 +68,9 @@
         </div>
 
 
-        <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
+        <div class="ng-binding ui negative message field grid" ng-show="errorMessage.length > 0">
+			{{errorMessage}}
+		</div>
 
         <div class="field">
 			<button class="ui button large pay positive fluid" ng-click="paypalSubmit()" ng-class="{disabled: pitchingIn}">

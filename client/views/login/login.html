@@ -1,22 +1,29 @@
-<div class="userlogin ui equal grid stackable centered center aligned main pad" ng-controller="LoginOrCreateController" class="ui grid stackable">
+<div class="userlogin ui equal grid stackable centered center aligned main pad" ng-controller="LoginOrCreateController as login" class="ui grid stackable">
     <div class="userlogin__emaillogin login-block ui six wide column vertical small bottom" ng-show="showCreate">
         <ng-include src="'/views/login/login-form.html'"></ng-include>
-        <div class="userlogin__createacc switchtxt" ng-hide="showSocials">
-            <span>Don't have an account? </span>
-           <span><a ng-click="showCreate=true; resetForm();" class="userlogin__createacclink linky">Create</a></span>
-        </div>
     </div>
     <div class="userlogin__sociallogin login-block ui six wide column center aligned" ng-show="showSocials">
         <h3 class="ui computer tablet">Or social media:</h3>
         <div class="social">
-            <a class="social__link linky" ng-click="doLoginFacebook()"><img class="social__icons" src="/assets/login/facebook.png"></a><br/>
-            <a class="social__link linky" ng-click="doLoginTwitter()"><img class="social__icons" src="/assets/login/twitter.png"></a><br/>
-            <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/login/linkedin.png"></a><br/>
-            <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/login/google.png"></a>
+            <a class="social__link linky" ng-click="doLoginFacebook()">
+                <img class="social__icons" src="/assets/login/facebook.png">
+            </a>
+            <br/>
+            <a class="social__link linky" ng-click="doLoginTwitter()">
+                <img class="social__icons" src="/assets/login/twitter.png">
+            </a>
+            <br/>
+            <a class="social__link linky" ng-click="doLoginLinkedin()">
+                <img class="social__icons" src="/assets/login/linkedin.png">
+            </a>
+            <br/>
+            <a class="social__link linky" ng-click="doLoginGoogleplus()">
+                <img class="social__icons" src="/assets/login/google.png">
+            </a>
         </div>
-        <div class="userlogin__createacc switchtxt" ng-hide="showCreate">
+        <div class="userlogin__createacc" ng-hide="showCreate">
             <span>Don't have an account? </span>
-           <span><a ng-href="/join" class="userlogin__createacclink linky">Join</a></span>
+            <span><a ng-href="/join" class="userlogin__createacclink linky">Create One</a></span>
         </div>
     </div>
 </div>

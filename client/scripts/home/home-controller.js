@@ -20,9 +20,7 @@ GiftStarterApp.controller('HomeController', [
                 $location.path('/create');
             }
         }
-        if($routeParams.resetCode) {
-            $rootScope.$broadcast('password-reset-requested');
-        }
+        
         if($routeParams.searchTerm) {
             $timeout(function () {
                 $window.sessionStorage.setItem('searchTermFromUrl', $routeParams.searchTerm);
@@ -69,32 +67,29 @@ GiftStarterApp.controller('HomeController', [
         $scope.goToLink = function (destination) {
             $location.path("/" + destination);
         };
-		
-		
-		
-		// home on boarding
-    var $startMessage = jQuery('.ui.message.start'),
-        $primaryMessage = jQuery('.ui.message.primary'),
-        $secondaryMessage = jQuery('.ui.message.secondary'),
-        $startMessagePrimaryCTA = $startMessage.find('[data-cta-type=\'primary\']'),
-        $startMessageSecondaryCTA = $startMessage.find('[data-cta-type=\secondary\]');
-    $startMessagePrimaryCTA.on('click', function () {
-        console.log('$startMessagePrimaryCTA click');
-        $startMessage.transition({
-            animation: 'fade down',
-            onComplete: function () {
-                $primaryMessage.transition('browse');
-            }
+        // home on boarding
+        var $startMessage = jQuery('.ui.message.start'),
+            $primaryMessage = jQuery('.ui.message.primary'),
+            $secondaryMessage = jQuery('.ui.message.secondary'),
+            $startMessagePrimaryCTA = $startMessage.find('[data-cta-type=\'primary\']'),
+            $startMessageSecondaryCTA = $startMessage.find('[data-cta-type=\secondary\]');
+        $startMessagePrimaryCTA.on('click', function () {
+            console.log('$startMessagePrimaryCTA click');
+            $startMessage.transition({
+                animation: 'fade down',
+                onComplete: function () {
+                    $primaryMessage.transition('browse');
+                }
+            });
         });
-    });
-    $startMessageSecondaryCTA.on('click', function () {
-        console.log('$startMessageSecondaryCTA click');
-        $startMessage.transition({
-            animation: 'fade up',
-            onComplete: function () {
-                $secondaryMessage.transition('fade up');
-            }
+        $startMessageSecondaryCTA.on('click', function () {
+            console.log('$startMessageSecondaryCTA click');
+            $startMessage.transition({
+                animation: 'fade up',
+                onComplete: function () {
+                    $secondaryMessage.transition('fade up');
+                }
+            });
         });
-    });
     }
 ]);
