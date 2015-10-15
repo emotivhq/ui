@@ -44,16 +44,16 @@
                 <input type="text" id="card-zip" ng-disabled="!putNew" ng-model="addressZip" maxlength="5" placeholder="Billing ZIP" ng-change="updateFormValidity()" name="zip"/>
             </div>
 			<br/>
-			<div class="email ">
+			<div class="email field">
                 <input type="email" id="card-email" ng-disabled="!putNew" ng-model="email" placeholder="Email Address*" ng-change="updateFormValidity()" name="email"/>
             </div>
 			<span class="email-note">
                 * Receipt will be emailed
             </span>
-			<span class="save-card ">
+			<span class="save-card ui checkbox slider field">
                 <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard"/><label for="save-credit-card"> Remember my card</label><input type="checkbox" id="tooltip-checkbox"/>
             </span>
-			<span class="subscribe " ng-hide="userOnMailingList">
+			<span class="subscribe ui checkbox slider field" ng-hide="userOnMailingList">
                 <input type="checkbox" id="subscribe-checkbox" ng-model="emailSubscribe"/><label for="subscribe-checkbox"> Want to hear about new features?</label>
             </span>
         </div>
@@ -68,8 +68,8 @@
         <span class="error" ng-show="errorMessage.length > 0">{{errorMessage}}</span>
 
         <div class="field">
-			<button class="ui button large pay positive icon fluid" ng-click="paypalSubmit()" ng-class="{disabled: pitchingIn}">
-			<i class="dollar icon"></i> Pay Now<span class="ui hidden">${{currentCharge / 100 | number : 2}} </span>
+			<button class="ui button large pay positive fluid" ng-click="paypalSubmit()" ng-class="{disabled: pitchingIn}">
+			Pay Now<span class="ui hidden">${{currentCharge / 100 | number : 2}} </span>
 			<img ng-show="pitchingIn" src="/assets/loading_transparent.gif">
 		</button>
 		</div>
