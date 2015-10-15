@@ -1,60 +1,70 @@
-<div class="userlogin__form ui stacked segment" ng-hide="$parent.showForgot || $parent.showReset">
+<div class="userlogin__form ui stacked segment" ng-hide="showForgot || showReset">
     <h3 class="vertical small bottom">Login with your email address:</h3>
     <form ng-submit="$parent.doLoginEmail()" class="login_action login ui form">
-		<div class="field ui left icon input long">
-			<i class="user icon"></i>
-			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required />
-		</div>
-		<div class="field ui left icon input long">
-			<i class="hide icon"></i>
-			<input ng-hide="$parent.showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required />
-		</div>
+        <div class="field ui left icon input long">
+            <i class="user icon"></i>
+            <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required />
+        </div>
+        <div class="field ui left icon input long">
+            <i class="hide icon"></i>
+            <input ng-hide="showPassword" class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.password" placeholder="Password" required />
+        </div>
         <div class="userlogin__wrapper">
             <!--<input class="userlogin__remember" type="checkbox" name="remember" id="remember">-->
         </div>
         <div class="userlogin__message">{{$parent.message}}</div>
-		<button class="userlogin__loginbtn ui right labeled icon button fluid" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working">
-  		<i class="right arrow icon"></i>
-  		Login
-		</button>
-        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=true">Did you forgot your password?</a>
+        <button class="userlogin__loginbtn ui right labeled icon button fluid" ng-class="working ? 'loading' : 'secondary'" ng-disabled="working">
+            <i class="right arrow icon"></i>
+            Login
+        </button>
+        <a class="userlogin__forgot linky" ng-click="showForgot=true">Did you forgot your password?</a>
     </form>
 </div>
 
-<div class="userlogin__form ui stacked segment" ng-show="$parent.showForgot">
+<div class="userlogin__form ui stacked segment" ng-show="showForgot">
     <h3>Password Reminder</h3>
-	<form ng-submit="$parent.doForgotPassword()" class="ui form">
-		<div class="field ui left icon input long">
-			<i class="user icon"></i>
-			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required />
-		</div>
+    <form ng-submit="$parent.doForgotPassword()" class="ui form">
+        <div class="field ui left icon input long">
+            <i class="user icon"></i>
+            <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="you@yourdomain.com" required />
+        </div>
         <div class="userlogin__message">{{$parent.message}}</div>
-		<button class="userlogin__loginbtn ui right labeled icon button fluid" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working">
-  		<i class="forward mail icon"></i>
-  		Get Password
-		</button>    
-	</form>
-        <a class="userlogin__forgot linky" ng-click="$parent.showForgot=false">Nevermind, I remember it now...</a>
+        <button class="userlogin__loginbtn ui right labeled icon button fluid" ng-class="working ? 'loading' : 'secondary'" ng-disabled="working">
+            <i class="forward mail icon"></i>
+            Get Password
+        </button>
+    </form>
+    <a class="userlogin__forgot linky" ng-click="showForgot=false">Nevermind, I remember it now...</a>
 </div>
 
-<div class="userlogin__form ui stacked segment" ng-show="$parent.showReset">
+<div class="userlogin__form ui segment" ng-show="showReset" ng-class="showSocials ? 'stacked' : 'attached'">
     <h3>Reset Your Password:</h3>
     <form ng-submit="$parent.doResetPassword()" class="ui form">
         <input class="userlogin__email" type="hidden" name="resetcode" ng-model="$parent.resetCode" placeholder="Enter the reset code" required />
-		<div class="field ui left icon input long">
-			<i class="user icon"></i>
-			<input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
-		</div>        
-		<div class="field ui left icon input long">
-			<i class="hide icon"></i>
-			<input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter a New Password" required />
-		</div>        
-		<!--<input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="$parent.reenterpassword" placeholder="Re-enter the Password" required>-->
-        <a class="userlogin__forgot linky" ng-click="$parent.showReset=false">Cancel</a>
+        <div class="field ui left icon input long">
+            <i class="user icon"></i>
+            <input class="userlogin__email" type="email" name="email" ng-model="$parent.email" placeholder="Enter your email address" required />
+        </div>
+        <div class="field ui left icon input long">
+            <i class="hide icon"></i>
+            <input class="userlogin__password" type="password" name="password" ng-model="$parent.password" placeholder="Enter a New Password" required />
+        </div>
+        <!--<div class="field ui left icon input long">
+            <i class="hide icon"></i>
+            <input class="userlogin__password" type="password" autocomplete="off" name="password" ng-model="reenterpassword" placeholder="Re-enter the Password" required>
+        </div> -->
+        <button class="userlogin__loginbtn ui right labeled icon button fluid" ng-class="working ? 'loading' : 'secondary'" ng-disabled="working">
+            <i class="lock icon"></i>
+            Change Password
+        </button>
         <div class="userlogin__message">{{$parent.message}}</div>
-		<button class="userlogin__loginbtn ui right labeled icon button fluid" ng-class="$parent.working ? 'loading' : 'secondary'" ng-disabled="$parent.working">
-  		<i class="lock icon"></i>
-  		Change Password
-		</button>    
+        <a class="userlogin__forgot linky" ng-click="showReset=false; $parent.showSocials=true">Cancel</a>
     </form>
+</div>
+
+<div class="ui bottom attached segment stacked" ng-hide="showSocials">
+    <div class="userlogin__createacc">
+        <span>Don't have an account? </span>
+        <span><a ng-href="/join" class="userlogin__createacclink linky">Join</a></span>
+    </div>
 </div>

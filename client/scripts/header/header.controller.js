@@ -23,7 +23,7 @@
             'background-position-y': this.subliminalOffset + 'px'
         };
         this.logout = logout;
-        this.showReset = showReset;
+        //this.showReset = showReset;
         this.closeLogin = closeLogin;
         this.loginKeyPress = loginKeyPress;
         this.menuOpen = menuOpen;
@@ -200,12 +200,6 @@
             }, 200);
         };
 
-        function showReset() {
-            revealLogin();
-            $rootScope.$broadcast('loginbox-show-reset');
-            jQuery('.loginwrapper .userlogin__password').focus();
-        }
-
         function logout() {
             self.userImageUrl = '';
             Analytics.track('user', 'logout from header');
@@ -267,15 +261,6 @@
         });
         $rootScope.$on('header-close-login', function () {
             self.closeLogin();
-        });
-        $rootScope.$on('password-reset-requested', function () {
-            if(self.loggedIn) {
-                self.logout();
-                window.location.reload();
-            } else {
-                $location.path('/', false);
-            }
-            self.showReset();
         });
         $scope.scrollTo = function (id) {
             $location.hash(id);

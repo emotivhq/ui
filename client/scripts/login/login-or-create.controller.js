@@ -7,6 +7,7 @@
     var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService, FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
         var self = this;
         var loggingin = $location.path().indexOf('/login') === 0;
+        var resettingPassword = $location.path().indexOf('/reset') === 0;
         $scope.showWelcome = false;
         $scope.greybg = true;
         $scope.working = false;
@@ -224,7 +225,11 @@
         $scope.$on('logout-success', function () {
             jQuery('.userlogin').fadeIn(1500);
             $scope.resetForm();
-            $location.path('/'); // redirect to home
+            if(!resettingPassword) {
+                $location.path('/'); // redirect to home   
+            } else {
+                window.location.reload();
+            }
         });
         $scope.$on('hide-login-socials', function () {
             $scope.showSocials = false;
@@ -238,11 +243,13 @@
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
             // @fedora - if a user logs in from /login, then redircet the, to their profile
-            if(loggingin) {
+            // @yaboi - if a user is resetting their password (/reset on login view) redirect them to their profile
+            if(loggingin || resettingPassword) {
                 $location.path('/users/' + UserService.uid);
             }
         });
         $rootScope.$on('loginbox-show-login', function () {
+            console.log('loginbox-show-login');
             $scope.resetForm();
             $scope.showCreate = false;
             $scope.showReset = false;
@@ -253,9 +260,27 @@
         $rootScope.$on('loginbox-show-reset', function () {
             $scope.resetForm();
             $scope.resetCode = $routeParams.resetCode;
-            $scope.showCreate = false;
+            $scope.showCreate = true;
+            $scope.showSocials = false;
             $scope.showReset = true;
         });
+
+        function showReset() {
+            //revealLogin();
+            $rootScope.$broadcast('loginbox-show-reset');
+            jQuery('.loginwrapper .userlogin__email').focus();
+        }
+        $rootScope.$on('password-reset-requested', function () {
+            if(UserService.loggedIn) {
+                UserService.logout();
+            } else {
+                //$location.path('/', false);
+            }
+            showReset();
+        });
+        if($routeParams.resetCode) {
+            $rootScope.$broadcast('password-reset-requested');
+        }
     };
     app.controller('LoginOrCreateController', ['$scope', '$rootScope', '$location', '$routeParams', '$timeout', '$http', 'AppStateService', 'UserService', 'TwitterService', 'FacebookService', 'LinkedInService', 'GooglePlusService', 'emailLoginService', 'Analytics',
         LoginOrCreateController
