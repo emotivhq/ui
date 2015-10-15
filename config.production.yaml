@@ -1,4 +1,4 @@
-
+environment:              'production'
 team_notification_email:  'team@giftstarter.com'
 product_api_url:          'https://product-dev-gift-starter.appspot.com/static'
 
