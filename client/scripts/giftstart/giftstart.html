@@ -6,10 +6,10 @@
 				<i class="gift icon teal"></i> {{giftStart.title}}
 			</h2>
             <div class="ui huge left icon input fluid" ng-show="editMode">
-				<input class="title" ng-model="newTitle" style="text-align: center;"/>
-				<i class="quote left icon"></i>
- 			</div>
-			<span class="title edit"></span>
+                <input class="title" ng-model="newTitle" style="text-align: center;" />
+                <i class="quote left icon"></i>
+            </div>
+            <span class="title edit"></span>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
                             <span class="signature__title" ng-show=" giftStart.gc_name "> {{ giftStart.gc_name }} </span>
                         </p>
                         <input class="ui form input" ng-model="newGcName" ng-show="editMode" />
-						<i class="user icon" ng-show="editMode"></i>
+                        <i class="user icon" ng-show="editMode"></i>
                     </div>
 
                 </div>
@@ -67,9 +67,9 @@
                         <h4 class="purchase-total header">Purchase Total: </h4>
                         <p class="purchase-note meta">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>
                     </div>
-					<div class="extra content">
-     				 	<h2 class="total-price aligned center ui"><i class="dollar icon green"></i>{{giftStart.totalSelection / 100 | number : 2}}</h2>
-  					</div>
+                    <div class="extra content">
+                        <h2 class="total-price aligned center ui"><i class="dollar icon green"></i>{{giftStart.totalSelection / 100 | number : 2}}</h2>
+                    </div>
                 </div>
             </div>
         </div>
@@ -91,10 +91,11 @@
         <div class="share-box" ng-show="showShareBox">
             <h2>Share with Friends:</h2>
             <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
-            <a class="pitch-in ui button icon">
-                <i class="friends icon"></i> Invite friends to pitchin
-            </a>
-            <a href="" ng-click="shareBox(false)">Skip this step</a>
+            <button class="ui invite-friends button blue large fluid icon">
+                <i class="users right icon"></i>
+                Invite Friends
+            </button>
+            <a href="" class="linky" ng-click="shareBox(false)">Skip this step</a>
         </div>
 
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
@@ -102,45 +103,45 @@
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <div class="ui ">
-				<div class="ordinal_circle">
-                    <span class="ordinal">1</span>
+                    <div class="ordinal_circle">
+                        <span class="ordinal">1</span>
+                    </div>
+                    <h4>Click the pieces you want to buy</h4>
+                    <div class="ordinal_circle">
+                        <span class="ordinal">2</span>
+                    </div>
+                    <h4> Pitch In</h4>
                 </div>
-                <h4>Click the pieces you want to buy</h4>
-                <div class="ordinal_circle">
-                    <span class="ordinal">2</span>
-                </div>
-                <h4> Pitch In</h4>
-            </div>
-            <button class="ui pitch-in button huge teal icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
-                <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
-            </button>
+                <button class="ui pitch-in button huge icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
+                    <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
+                </button>
 
-            <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
-                Would you like to give this gift to someone you know? Click the button below to start your own campaign for this gift.
-                <br/>
-                <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}">
-                    <button class="pitch-in ui button teal">GiftStart It</button>
-                </a>
-                <div class="saveforlater">
-                    <button class="ui pitch-in button ico large" ng-click="saveProdForLater();">
-                        <i class="bookmark icon"></i> Save For Later
-                        <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
-                    </button>
-                    <div class="product-message" ng-bind-html="productMessage"></div>
+                <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
+                    Would you like to give this gift to someone you know? Click the button below to start your own campaign for this gift.
+                    <br/>
+                    <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}">
+                        <button class="pitch-in ui button teal">GiftStart It</button>
+                    </a>
+                    <div class="saveforlater">
+                        <button class="ui pitch-in button ico large" ng-click="saveProdForLater();">
+                            <i class="bookmark icon"></i> Save For Later
+                            <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+                        </button>
+                        <div class="product-message" ng-bind-html="productMessage"></div>
+                    </div>
                 </div>
-            </div>
 
-            <button class="ui invite-friends button blue large fluid icon">
-                <span ng-hide="secondsLeft <= 0 || campaignComplete()">
+                <button class="ui invite-friends button blue large fluid icon">
+                    <span ng-hide="secondsLeft <= 0 || campaignComplete()">
 						<i class="users right icon"></i>
 						Invite Friends
 					</span>
-                <span ng-show="secondsLeft <= 0 || campaignComplete()">
+                    <span ng-show="secondsLeft <= 0 || campaignComplete()">
 						<i class="external right share icon"></i>
 						Share This Campaign
 					</span>
-            </button>
-            <!--div class="invite block">
+                </button>
+                <!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
                 <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
@@ -149,85 +150,91 @@
                 Or share this link:
                 <input id="share-url" type="text" value="{{campaignUrl()}}" gs-copy-url readonly/>
             </div-->
-        </div>
-    </div>
-
-<div class="container ui vertical stripe quote segment" style="display: -webkit-inline-box;">
-    <div class="ui equal width stackable internally celled grid">
-	<div class="center aligned row ui grid stackable">
-        <div class="prices block column ui">
-            <gs-funding-bar></gs-funding-bar>
-            <div class="price funded column">
-                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
-                <h4>Gifted</h4>
-            </div>
-            <div class="price column ui">
-                <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
-                <h4>Remaining</h4>
             </div>
         </div>
-        <div class="price block column ui">
-            <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
-            <div>
-                <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
-                <h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4>
+
+
+        <div class="container ui vertical stripe quote segment" style="display: -webkit-inline-box;">
+            <div class="ui equal width stackable internally celled grid">
+                <div class="center aligned row ui grid stackable">
+                    <div class="prices block column ui">
+                        <gs-funding-bar></gs-funding-bar>
+                        <div class="price funded column">
+                            <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
+                            <h4>Gifted</h4>
+                        </div>
+                        <div class="price column ui">
+                            <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
+                            <h4>Remaining</h4>
+                        </div>
+                    </div>
+                    <div class="price block column ui">
+                        <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
+                        <div>
+                            <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
+                            <h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="share-panel">
+                    <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">Close</a>
+                    <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
+                </div>
+
+
+                <gs-thanks></gs-thanks>
+                <div class="ui container groupcard" ng-hide="pitchIns.length > 0">
+                    <div class="title title--groupcard">
+                        <h2 class="title__name">Group Card</h2>
+                        <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
+                    </div>
+                    <div class="ui three stackable cards">
+                        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide ui card">
+                            <div class="contributors {{randomColor($index)}}">
+                                <div class="block {{randomColor($index)}}"></div>
+                                <div class="contributors__figure">
+                                    <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
+                                        <img class="contributors__img" ng-src="{{pitchIn.img}}" />
+                                    </a>
+                                    <a class="userprofile__imageedit button" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</a>
+                                    <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
+                                    <a class="userprofile__imagesave button" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</a>
+                                </div>
+                                <div class="content ui form">
+                                    <h4 class="" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
+                                    <div class="ui field" ng-show="isEditing(pitchIn)">
+                                        <input type="text" ng-model="pitchIn.name" placeholder="Name" />
+                                    </div>
+                                    <p class="content" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
+                                    <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment" />
+                                </div>
+                                <div class="ui field" ng-show="isEditing(pitchIn)">
+                                    <p id="textcount">{{230 - pitchIn.note.length}}</p>
+                                </div>
+
+                                <a class="contributors__edit__button ui bottom attached button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
+                                    <i class="edit icon"></i>
+                                    Edit this card
+                                </a>
+                                <div class="extra content">
+                                    <div class="ui two buttons tiny" ng-show="isEditing(pitchIn)">
+                                        <div class="ui basic green button tiny" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">Save</div>
+                                        <div class="ui basic red button tiny" ng-click="cancelEditComment(pitchIn)">Dismiss</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui floating message container yellow" ng-hide="pitchIns.length > 0" style="    width: 50%;">No contributors yet - time for <em>you</em> to be the trend setter.</div>
+
+                </div>
+                <div ng-show="secondsLeft <= 0 || campaignComplete()" class="ui container grid aligned center centered vertical top large">
+                    <a href="#" ng-click="toPDFPage()" class="ui button icon labeled right">
+                        <i class="pdf icon red right"></i> View Card
+                    </a>
+                </div>
             </div>
-        </div>
-	</div>
-    </div>
-</div>
-
-    <div id="share-panel">
-        <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">Close</a>
-        <ng-include src="'/scripts/share/invite-pitchin.html'" ng-show="showShare"></ng-include>
-    </div>
-
-
-    <gs-thanks></gs-thanks>
-    <div class="ui container groupcard" ng-hide="pitchIns.length > 0">
-        <div class="title title--groupcard">
-            <h2 class="title__name">Group Card</h2>
-            <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
-        </div>
-		<div class="ui three stackable cards">
-        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide ui card">
-        <div class="contributors {{randomColor($index)}}">
-            <div class="block {{randomColor($index)}}"></div>
-            <div class="contributors__figure">
-                <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
-                    <img class="contributors__img" ng-src="{{pitchIn.img}}" />
-                </a>
-                <a class="userprofile__imageedit button" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</a>
-                <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
-                <a class="userprofile__imagesave button" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</a>
-            </div>
-            <div class="content ui form">
-                <h4 class="" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
-                <div class="ui field" ng-show="isEditing(pitchIn)"><input type="text" ng-model="pitchIn.name" placeholder="Name" /></div>
-                <p class="content" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
-                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment" /></div>
-                <div class="ui field" ng-show="isEditing(pitchIn)"><p id="textcount">{{230 - pitchIn.note.length}}</p>
-            </div>
-
-                <a class="contributors__edit__button ui bottom attached button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
-      				<i class="edit icon"></i>
-     	 			Edit this card
-    			</a>
-			<div class="extra content">
-      			<div class="ui two buttons tiny" ng-show="isEditing(pitchIn)">
-        			<div class="ui basic green button tiny" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">Save</div>
-        			<div class="ui basic red button tiny" ng-click="cancelEditComment(pitchIn)">Dismiss</div>
-      			</div>
-    		</div>
-
-        </div>
-        </div>
-        </div>
-        <div class="ui floating message container yellow" ng-hide="pitchIns.length > 0" style="    width: 50%;">No contributors yet - time for <em>you</em>  to be the trend setter.</div>
-    </div>
-    <div ng-show="secondsLeft <= 0 || campaignComplete()" class="ui container grid aligned center centered vertical top large">
-        <a href="#" ng-click="toPDFPage()" class="ui button icon labeled right">
-            <i class="pdf icon red right"></i> View Card
-        </a>
-    </div>
-</div>
