@@ -18,7 +18,8 @@
             <div class="content">
                 <div class="header">
                     <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">
-			{{giftStart.product_title}}
+			{{giftStart.product_title | limitTo: 90}}
+						
 		</a>
                 </div>
             </div>
@@ -188,9 +189,10 @@
             <h2 class="title__name">Group Card</h2>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
         </div>
-        <div ng-repeat-start="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide"></div>
+		<div class="ui three stackable cards">
+        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide ui card">
         <div class="contributors {{randomColor($index)}}">
-            <div class="contributors__titleblock {{randomColor($index)}}"></div>
+            <div class="block {{randomColor($index)}}"></div>
             <div class="contributors__figure">
                 <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
                     <img class="contributors__img" ng-src="{{pitchIn.img}}" />
@@ -199,31 +201,33 @@
                 <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
                 <a class="userprofile__imagesave button" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</a>
             </div>
-            <div class="contributors__info">
-                <h4 class="contributors__name" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
-                <input type="text" ng-model="pitchIn.name" ng-show="isEditing(pitchIn)" placeholder="Name" />
-                <p class="contributors__info" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
-                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment" />
-                <p id="textcount" ng-show="isEditing(pitchIn)">{{230 - pitchIn.note.length}}</p>
+            <div class="content ui form">
+                <h4 class="" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
+                <div class="ui field" ng-show="isEditing(pitchIn)"><input type="text" ng-model="pitchIn.name" placeholder="Name" /></div>
+                <p class="content" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
+                <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment" /></div>
+                <div class="ui field" ng-show="isEditing(pitchIn)"><p id="textcount">{{230 - pitchIn.note.length}}</p>
             </div>
-            <div class="contributors__edit">
-                <a class="contributors__edit__button button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
-					Edit
-				</a>
-                <a class="contributors__edit__button button" ng-show="isEditing(pitchIn)" ng-click="cancelEditComment(pitchIn)">
-					Cancel
-				</a>
-                <button class="contributors__edit__button savebtn red" ng-show="isEditing(pitchIn)" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">
-                    Save
-                </button>
-            </div>
+
+                <a class="contributors__edit__button ui bottom attached button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
+      				<i class="edit icon"></i>
+     	 			Edit this card
+    			</a>
+			<div class="extra content">
+      			<div class="ui two buttons tiny" ng-show="isEditing(pitchIn)">
+        			<div class="ui basic green button tiny" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">Save</div>
+        			<div class="ui basic red button tiny" ng-click="cancelEditComment(pitchIn)">Dismiss</div>
+      			</div>
+    		</div>
+
         </div>
-        <div ng-repeat-end class="h--hide"></div>
-        <p class="ui floating message container yellow" ng-hide="pitchIns.length > 0">No contributors yet - time for <em>you</em>  to be the trend setter.</p>
+        </div>
+        </div>
+        <div class="ui floating message container yellow" ng-hide="pitchIns.length > 0" style="    width: 50%;">No contributors yet - time for <em>you</em>  to be the trend setter.</div>
     </div>
-    <div ng-show="secondsLeft <= 0 || campaignComplete()" class="btn btn--pdf ui container">
-        <a href="" ng-click="toPDFPage()" class="ui button icon labeled">
-            <i class="pdf icon red"></i> View Card
+    <div ng-show="secondsLeft <= 0 || campaignComplete()" class="ui container grid aligned center centered vertical top large">
+        <a href="#" ng-click="toPDFPage()" class="ui button icon labeled right">
+            <i class="pdf icon red right"></i> View Card
         </a>
     </div>
 </div>
