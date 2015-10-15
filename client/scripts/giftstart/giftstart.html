@@ -60,9 +60,9 @@
                         <h4 class="purchase-total header">Purchase Total: </h4>
                         <p class="purchase-note meta">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>
                     </div>
-					<div class="extra content">
-     				 	<h2 class="total-price aligned center ui"><i class="dollar icon green"></i>{{giftStart.totalSelection / 100 | number : 2}}</h2>
-  					</div>
+                    <div class="extra content">
+                        <h2 class="total-price aligned center ui"><i class="dollar icon green"></i>{{giftStart.totalSelection / 100 | number : 2}}</h2>
+                    </div>
                 </div>
             </div>
         </div>
@@ -84,10 +84,11 @@
         <div class="share-box" ng-show="showShareBox">
             <h2>Share with Friends:</h2>
             <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
-            <a class="pitch-in ui button icon">
-                <i class="friends icon"></i> Invite friends to pitchin
-            </a>
-            <a href="" ng-click="shareBox(false)">Skip this step</a>
+            <button class="ui invite-friends button blue large fluid icon">
+                <i class="users right icon"></i>
+                Invite Friends
+            </button>
+            <a href="" class="linky" ng-click="shareBox(false)">Skip this step</a>
         </div>
 
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
@@ -104,7 +105,7 @@
                 </div>
                 <h4> Pitch In</h4>
             </div>
-            <button class="ui pitch-in button huge teal icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
+            <button class="ui pitch-in button huge icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
                 <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
             </button>
 
@@ -145,30 +146,30 @@
         </div>
     </div>
 
-<div class="container ui vertical stripe quote segment">
-    <div class="ui equal width stackable internally celled grid">
-	<div class="center aligned row ui grid stackable">
-        <div class="prices block column ui">
-            <gs-funding-bar></gs-funding-bar>
-            <div class="price funded column">
-                <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
-                <h4>Gifted</h4>
-            </div>
-            <div class="block column ui">
-                <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
-                <h4>Remaining</h4>
+    <div class="container ui vertical stripe quote segment">
+        <div class="ui equal width stackable internally celled grid">
+            <div class="center aligned row ui grid stackable">
+                <div class="prices block column ui">
+                    <gs-funding-bar></gs-funding-bar>
+                    <div class="price funded column">
+                        <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
+                        <h4>Gifted</h4>
+                    </div>
+                    <div class="block column ui">
+                        <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
+                        <h4>Remaining</h4>
+                    </div>
+                </div>
+                <div class="completion block">
+                    <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
+                    <div>
+                        <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
+                        <h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="completion block">
-            <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
-            <div>
-                <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
-                <h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4>
-            </div>
-        </div>
-	</div>
     </div>
-</div>
 
     <div id="share-panel">
         <a id="closebtn" href="" ng-show="showShare" ng-click="showSharePanel(false)">Close</a>
@@ -213,7 +214,7 @@
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
-        <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - time for <em>you</em>  to be the trend setter.</p>
+        <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - time for <em>you</em> to be the trend setter.</p>
     </div>
     <div ng-show="secondsLeft <= 0 || campaignComplete()" class="btn btn--pdf ui container">
         <a href="" ng-click="toPDFPage()" class="ui button icon labeled">
