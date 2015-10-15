@@ -38,7 +38,7 @@
 
     <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
 
-    <div ng-show="loggedIn()" id="share-block" class="content">
+    <div ng-show="loggedIn()" id="share-block" class="content ui form">
         <div id="content" class="ui grid">
             <div class="column wide six block message">
                 <h3>Your Message</h3>
@@ -76,7 +76,7 @@
         </div>
 
         <div class="share-buttons ui middle aligned center aligned content">
-            <p ng-show="shareSuccess">That was a success!</p>
+            <p ng-show="shareSuccess">That was successful!</p>
             <p class="twitter-note" ng-show="selectedSocials['twitter'] && message.length>118">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>
             <button class="ui button large icon fluid" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">
                 <i class="share external icon"></i> Share
@@ -88,7 +88,7 @@
         </div>
 
         <div class="share-buttons ui middle aligned center aligned content share-where-link form segment">
-            <p style="text-align:center">Use this link to invite friends and family to GiftStarter through any means you'd like:</p>
+            <p style="text-align:center">Use this link to invite friends and family</p>
             <input value="{{campaignUrl()}}" gs-copy-url readonly/>
         </div>
 

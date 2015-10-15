@@ -1,15 +1,20 @@
 <div class="giftstart wrapper ui container main pad" ng-controller="GiftStartController">
 
-    <div class="fullwidth block">
-        <div class="title">
-            <h1 class="title campaign-title" ng-hide="editMode">{{giftStart.title}}</h1>
-            <input class="title" ng-model="newTitle" ng-show="editMode" />
-            <span class="title edit"></span>
+    <div class="ui container aligned center centered teal" ng-class="{segment: editMode}">
+        <div class="ui form">
+            <h2 class="title campaign-title ui center aligned icon header bottom medium vertical" ng-hide="editMode">
+				<i class="gift icon teal"></i> {{giftStart.title}}
+			</h2>
+            <div class="ui huge left icon input fluid" ng-show="editMode">
+				<input class="title" ng-model="newTitle" style="text-align: center;"/>
+				<i class="quote left icon"></i>
+ 			</div>
+			<span class="title edit"></span>
         </div>
     </div>
 
-    <div class="fullwidth block">
-        <div class="col2 ui card block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;">
+    <div class="ui container  ">
+        <div class="col2 ui card block teal" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="segment: editMode">
             <div class="content">
                 <div class="header">
                     <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">
@@ -18,16 +23,17 @@
                 </div>
             </div>
             <div class="content">
-                <div class="ui dscription">
+                <div class="ui form">
                     <div class="description">
                         <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
                         <span class="description makelinks" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
                     </div>
-                    <div class="meta">
+                    <div class="meta ui left icon fluid huge input">
                         <p class="name" ng-show="!editMode">
                             <span class="signature__title" ng-show=" giftStart.gc_name "> {{ giftStart.gc_name }} </span>
                         </p>
-                        <input class="gc-name" ng-model="newGcName" ng-show="editMode" />
+                        <input class="ui form input" ng-model="newGcName" ng-show="editMode" />
+						<i class="user icon" ng-show="editMode"></i>
                     </div>
 
                 </div>
@@ -42,7 +48,7 @@
 
 
         <div class="gs-overlay block" Xng-class="{shrunk: showPayBox}">
-            <div class="image-upload" ng-show="editMode">
+            <div class="image-upload ui form segment teal" ng-show="editMode">
                 <label>Upload New Image:</label>
                 <input id="campaign-image-input" type="file" capture="camera" accept="image/*" />
             </div>
@@ -94,11 +100,11 @@
 
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ordinal_circle">
+                <div class="ui ">
+				<div class="ordinal_circle">
                     <span class="ordinal">1</span>
                 </div>
                 <h4>Click the pieces you want to buy</h4>
-                <br/>
                 <div class="ordinal_circle">
                     <span class="ordinal">2</span>
                 </div>
@@ -145,7 +151,7 @@
         </div>
     </div>
 
-<div class="container ui vertical stripe quote segment">
+<div class="container ui vertical stripe quote segment" style="display: -webkit-inline-box;">
     <div class="ui equal width stackable internally celled grid">
 	<div class="center aligned row ui grid stackable">
         <div class="prices block column ui">
@@ -154,12 +160,12 @@
                 <h2><span class="giftstart product contribution">{{giftStart.nBought}}</span> Pieces</h2>
                 <h4>Gifted</h4>
             </div>
-            <div class="block column ui">
+            <div class="price column ui">
                 <h2><span class="giftstart product remaining">{{giftStart.nTotal-giftStart.nBought}}</span> Pieces</h2>
                 <h4>Remaining</h4>
             </div>
         </div>
-        <div class="completion block">
+        <div class="price block column ui">
             <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
             <div>
                 <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
@@ -177,7 +183,7 @@
 
 
     <gs-thanks></gs-thanks>
-    <div class="groupcard">
+    <div class="ui container groupcard" ng-hide="pitchIns.length > 0">
         <div class="title title--groupcard">
             <h2 class="title__name">Group Card</h2>
             <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
@@ -213,7 +219,7 @@
             </div>
         </div>
         <div ng-repeat-end class="h--hide"></div>
-        <p class="nocontributors" ng-hide="pitchIns.length > 0">No contributors yet - time for <em>you</em>  to be the trend setter.</p>
+        <p class="ui floating message container yellow" ng-hide="pitchIns.length > 0">No contributors yet - time for <em>you</em>  to be the trend setter.</p>
     </div>
     <div ng-show="secondsLeft <= 0 || campaignComplete()" class="btn btn--pdf ui container">
         <a href="" ng-click="toPDFPage()" class="ui button icon labeled">
