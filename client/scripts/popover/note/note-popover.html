@@ -1,7 +1,7 @@
 <div class="note-popover" ng-init="stateClass = ''" ng-controller="NotePopoverController" >
     <div class="note-wrapper">
         <div class="profile-picture-wrapper">
-            <img class="profile-picture" ng-src="{{profilePicture}}">
+            <img class="profile-picture" ng-src="{{profilePicture || '/assets/noUserImage.png'}}">
             <a class="edit-picture-button button" ng-click="editPhoto()">Edit Photo</a>
         </div>
         <div class="note">

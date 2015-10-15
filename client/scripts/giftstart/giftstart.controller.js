@@ -47,16 +47,12 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
         $scope.showShareBox = false;
         $scope.showShare = show;
     };
-	jQuery('.invite-friends').click(function() {
-		jQuery('.pitchin')				
-			.modal({
-    				inverted: true,
-					blurring: true
-  			})
-		.modal('show');
-	});
-	
-	
+    jQuery('.invite-friends').click(function () {
+        jQuery('.pitchin').modal({
+            inverted: true,
+            blurring: true
+        }).modal('show');
+    });
     $scope.editingComment = function (comment, editing) {
         if(editing) { //edit mode on
             $scope.commentEditing.push(comment);

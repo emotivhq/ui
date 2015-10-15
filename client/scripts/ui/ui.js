@@ -6,7 +6,6 @@
  * To change this template use Tools | Templates.
  */
 $(document).ready(function () {
-
     // overlay
     $('.overlay').visibility({
         type: 'fixed',
@@ -31,85 +30,24 @@ $(document).ready(function () {
     $('.message .close').on('click', function () {
         $(this).closest('.message').transition('fade');
     });
-    // search results logged in user menu
-    var content = [
-        {
-            title: 'Apple'
-        },
-        {
-            title: 'Bose'
-        },
-        {
-            title: 'butter LONDON'
-        },
-        {
-            title: 'Cuisinart'
-        },
-        {
-            title: 'Dyson'
-        },
-        {
-            title: 'Fat Cork'
-        },
-        {
-            title: 'Frends'
-        },
-        {
-            title: 'iCPooch'
-        },
-        {
-            title: 'Samsung'
-        },
-        {
-            title: 'Sturtevant\'s Sports'
-        },
-        {
-            title: 'Baby Crib'
-        },
-        {
-            title: 'Bassinet'
-        },
-        {
-            title: 'Cradle'
-        },
-        {
-            title: 'Crib Bedding'
-        },
-        {
-            title: 'Diaper Bag'
-        },
-        {
-            title: 'High Chair'
-        },
-        {
-            title: 'Playard'
-        },
-        {
-            title: 'Rocking Chair'
-        },
-        {
-            title: 'Stroller'
-        }
-    ];
-    $('.ui.search').search({
-        source: content
-    });
+    // TODO: replace 'content' with real search results
+    //     $('.ui.search').search({
+    //         source: content
+    //     });
     Pace.once('done', function () {
         $('.icon.notification').transition({
             animation: 'tada',
             duration: '2s'
         });
     })
-	/* Semantic mdal initial globals
+    /* Semantic mdal initial globals
 		Even though these get fired off from the controller or directive, 
 		we're setting some globals after since bugginess was found in testing semantic ui's modal.
 	    Frankly it sucks, and will be replaced with something more native and less websity. Meantime, 
 		let's hack some style into it.
     */
-	$('.modal')
-  		.modal({
-    		inverted: true,
-			blurring: true
-  		})
-	;
+    $('.modal').modal({
+        inverted: true,
+        blurring: true
+    });
 });

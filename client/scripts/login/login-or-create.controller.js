@@ -3,21 +3,20 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
-(function(app) {
-    var LoginOrCreateController = function($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService, FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
+(function (app) {
+    var LoginOrCreateController = function ($scope, $rootScope, $location, $routeParams, $timeout, $http, AppStateService, UserService, TwitterService, FacebookService, LinkedInService, GooglePlusService, emailLoginService, Analytics) {
         var self = this;
-		var loggingin = $location.path().indexOf('/login') === 0;
-
-		$scope.showWelcome = false;
-		$scope.greybg = true;
+        var loggingin = $location.path().indexOf('/login') === 0;
+        $scope.showWelcome = false;
+        $scope.greybg = true;
         $scope.working = false;
         $scope.showCreate = true;
-        if(typeof($scope.showCreate) == 'undefined') {
+        if(typeof ($scope.showCreate) == 'undefined') {
             $scope.showCreate = true; //override via ng-repeat="showCreate in [true]" during ng-include
         }
         $scope.showForgot = false;
         $scope.showReset = false;
-        if(typeof($scope.showSocials) == 'undefined') {
+        if(typeof ($scope.showSocials) == 'undefined') {
             $scope.showSocials = true; //override via ng-repeat="showSocials in [true]" during ng-include
         }
         $scope.name;
@@ -29,7 +28,7 @@
         //$scope.reenterpassword;
         $scope.message;
         $scope.resetCode;
-        $scope.resetForm = function() {
+        $scope.resetForm = function () {
             $scope.name = '';
             $scope.surname = '';
             $scope.email = '';
@@ -54,13 +53,13 @@
                 display: "none"
             });
         }
-        jQuery('.button.social.join').click(function() {
+        jQuery('.button.social.join').click(function () {
             jQuery('.ui.social.join.modal').modal({
                 inverted: true,
                 blurring: true
             }).modal('show');
         });
-        jQuery('.button.social.create').click(function() {
+        jQuery('.button.social.create').click(function () {
             jQuery('.ui.social.create.modal').modal({
                 inverted: true,
                 blurring: true
@@ -81,27 +80,27 @@
             }
         });
         // Wizard work
-        $scope.emailValidation = function(context) {
+        $scope.emailValidation = function (context) {
             return context.firstName === $scope.email;
         }
-        $scope.nameValidation = function(context) {
+        $scope.nameValidation = function (context) {
             return context.firstName === $scope.name;
             return context.lastName === $scope.surname;
         }
-        $scope.passwordValidation = function(context) {
+        $scope.passwordValidation = function (context) {
             return context.password === $scope.password;
         }
+        // social login
 
-		// social login
         function doSocialLogin(successFunction, maxRetries) {
             maxRetries = typeof maxRetries !== 'undefined' ? maxRetries : 3;
             if(AppStateService.get('staged_giftstart')) {
                 console && console.log && console.log("staged-create: " + AppStateService.get('staged_giftstart')['staging_uuid']);
-                $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart')).success(function(response) {
+                $http.post('/giftstart/create.json', AppStateService.get('staged_giftstart')).success(function (response) {
                     AppStateService.remove('staged_giftstart');
                     AppStateService.setPath($location.path());
                     successFunction();
-                }).error(function() {
+                }).error(function () {
                     if(maxRetries > 0) console && console.log && console.log("Error while staging GiftStart; retrying...");
                     doSocialLogin(successFunction, maxRetries - 1);
                 });
@@ -109,73 +108,69 @@
                 successFunction();
             }
         }
-        $scope.doLoginFacebook = function() {
+        $scope.doLoginFacebook = function () {
             doSocialLogin(FacebookService.login);
         };
-        $scope.doLoginTwitter = function() {
-            doSocialLogin(function() {
-                TwitterService.getAuthUrl().then(function(url) {
+        $scope.doLoginTwitter = function () {
+            doSocialLogin(function () {
+                TwitterService.getAuthUrl().then(function (url) {
                     TwitterService.login();
                 });
             });
         };
-        $scope.doLoginGoogleplus = function() {
+        $scope.doLoginGoogleplus = function () {
             doSocialLogin(GooglePlusService.login);
         };
-        $scope.doLoginLinkedin = function() {
+        $scope.doLoginLinkedin = function () {
             doSocialLogin(LinkedInService.login);
         };
-        
-        $scope.doLoginEmail = function() {
+        $scope.doLoginEmail = function () {
             Analytics.track('user', 'login attempt with email');
             $scope.working = true;
             emailLoginService.login('login', '', $scope.email, $scope.password, '').
-            then(function(okMsg) {
+            then(function (okMsg) {
                 //reset handled by $scope.$on('login-success')
-            }, function(errMsg) {
+            }, function (errMsg) {
                 $scope.working = false;
                 $scope.message = errMsg;
             });
         };
-
         $scope.loginUserSucces = function () {
             var fromJoin = true;
             $scope.doCreateEmail(fromJoin);
         }
-        
-        $scope.saveEmail = function(email) {
+        $scope.saveEmail = function (email) {
             $scope.email = email;
         }
-        $scope.saveNameSurName = function(name, surname) {
+        $scope.saveNameSurName = function (name, surname) {
             $scope.name = name;
             $scope.surname = surname;
         }
-        $scope.savePass = function(pass) {
+        $scope.savePass = function (pass) {
             $scope.password = pass;
         }
-        
-        function redirectUserFronJoin () {
+
+        function redirectUserFronJoin() {
             $location.path('/users/' + UserService.uid);
         }
-        
-        function redirectUserFronJoinError (msgErr) {
+
+        function redirectUserFronJoinError(msgErr) {
             console.log(msgErr + 'error, after loging the user from join page')
         }
 
-        function loginUserEmailRedirect () {
+        function loginUserEmailRedirect() {
             emailLoginService.login('login', '', $scope.email, $scope.password, '').then(redirectUserFronJoin, redirectUserFronJoinError);
         }
-        
-        function loginUserEmail () {
-            emailLoginService.login('login', '', $scope.email, $scope.password, '');   
+
+        function loginUserEmail() {
+            emailLoginService.login('login', '', $scope.email, $scope.password, '');
         }
-        
+
         function loginUserEmailError(errMsg) {
-                $scope.working = false;
-                $scope.message = errMsg;
+            $scope.working = false;
+            $scope.message = errMsg;
         }
-        
-        $scope.doCreateEmail = function(isjoin) {
+        $scope.doCreateEmail = function (isjoin) {
             Analytics.track('user', 'create email login');
             //if ($scope.email.trim()!=$scope.reenteremail.trim()) {
             //    $scope.message="Your email addresses do not match";
@@ -186,27 +181,26 @@
             //    return;
             //}
             $scope.working = true;
-            if (isjoin) {
+            if(isjoin) {
                 emailLoginService.login('create', $scope.name + ' ' + $scope.surname, $scope.email, $scope.password, '').then(loginUserEmailRedirect, loginUserEmailError);
             } else {
                 emailLoginService.login('create', $scope.name + ' ' + $scope.surname, $scope.email, $scope.password, '').then(loginUserEmail, loginUserEmailError);
             }
-            
         };
-        $scope.doForgotPassword = function() {
+        $scope.doForgotPassword = function () {
             Analytics.track('user', 'forgot login password');
             $scope.working = true;
             emailLoginService.login('forgotPassword', '', $scope.email, '', '').
-            then(function(okMsg) {
+            then(function (okMsg) {
                 $scope.message = okMsg;
                 $scope.showForgot = false;
                 $scope.working = false;
-            }, function(errMsg) {
+            }, function (errMsg) {
                 $scope.message = errMsg;
                 $scope.working = false;
             });
         };
-        $scope.doResetPassword = function() {
+        $scope.doResetPassword = function () {
             //if ($scope.password.trim()!=$scope.reenterpassword.trim()) {
             //    $scope.message="Your passwords do not match";
             //    return;
@@ -214,7 +208,7 @@
             Analytics.track('user', 'reset login password');
             $scope.working = true;
             emailLoginService.login('reset', '', $scope.email, $scope.password, $scope.resetCode).
-            then(function(okMsg) {
+            then(function (okMsg) {
                 $scope.message = okMsg;
                 $scope.showForgot = false;
                 $scope.working = false;
@@ -222,41 +216,41 @@
                 //jQuery('.userlogin').fadeOut(3000);
                 //jQuery('.userlogin').fadeIn(1500);
                 $scope.doLoginEmail();
-            }, function(errMsg) {
+            }, function (errMsg) {
                 $scope.message = errMsg;
                 $scope.working = false;
             });
         };
-        $scope.$on('logout-success', function() {
+        $scope.$on('logout-success', function () {
             jQuery('.userlogin').fadeIn(1500);
             $scope.resetForm();
-			$location.path('/'); // redirect to home
+            $location.path('/'); // redirect to home
         });
-        $scope.$on('hide-login-socials', function() {
+        $scope.$on('hide-login-socials', function () {
             $scope.showSocials = false;
         });
-        $scope.$on('login-success', function() {
+        $scope.$on('login-success', function () {
             $scope.resetForm();
             $scope.message = UserService.name ? ("Welcome, " + UserService.name + "!") : "Welcome!";
-            $timeout(function() {
+            $timeout(function () {
                 $rootScope.$broadcast('header-close-login')
             }, 3000);
             jQuery('.userlogin').fadeOut(3000);
             $scope.working = false;
-			// @fedora - if a user logs in from /login, then redircet the, to their profile
-			if(loggingin) {
-				$location.path('/users/' + UserService.uid);
-			}
+            // @fedora - if a user logs in from /login, then redircet the, to their profile
+            if(loggingin) {
+                $location.path('/users/' + UserService.uid);
+            }
         });
-        $rootScope.$on('loginbox-show-login', function() {
+        $rootScope.$on('loginbox-show-login', function () {
             $scope.resetForm();
             $scope.showCreate = false;
             $scope.showReset = false;
-            setTimeout(function() {
+            setTimeout(function () {
                 jQuery('.loginwrapper .userlogin__email').focus();
             }, 0);
         });
-        $rootScope.$on('loginbox-show-reset', function() {
+        $rootScope.$on('loginbox-show-reset', function () {
             $scope.resetForm();
             $scope.resetCode = $routeParams.resetCode;
             $scope.showCreate = false;

@@ -3,61 +3,31 @@
         <ng-include src="'/scripts/login/login.html'"></ng-include>
         <div class="userlogin__createacc">
             <span>Don't have an account? </span>
-			<a ng-click="showCreate=true; resetForm();" class="userlogin__createacclink ui label">
-  				<i class="add user icon"></i>
-  				Join
-			</a>
+            <a ng-click="showCreate=true; resetForm();" class="userlogin__createacclink ui label">
+                <i class="add user icon"></i>
+                Join
+            </a>
         </div>
     </div>
     <div class="userlogin__emaillogin login-block" ng-show="showCreate">
         <ng-include src="'/scripts/login/create-account.html'"></ng-include>
         <div class="userlogin__createacc">
             <span>Already have an account? </span>
- 			<a ng-click="showCreate=false; resetForm();" class="userlogin__createacclink ui label">
-  				<i class="right arrow icon"></i>
-  				Login
-			</a>
-       </div>
+            <a ng-click="showCreate=false; resetForm();" class="userlogin__createacclink ui label">
+                <i class="right arrow icon"></i>
+                Login
+            </a>
+        </div>
     </div>
     <div class="ui icon message vertical medium">
-                        <i class="facebook icon blue"></i>
-                        <div class="content column two">
-                            <div class="header">
-                                Rather use social media?
-                            </div>
-                        </div>
-                        <div class="column three">
-                            <a href="#" class="ui blue basic button social create">Login</a>
-                        </div>
-    </div>
-
-    <div class="ui social create basic modal middle aligned center aligned">
-        <i class="close icon"></i>
-        <div class="ui middle center aligned header">
-            <h2>Login or create an account</h2>
-        </div>
-        <div class="middle center aligned grid">
-            <div class="image content container">
-                <div class="userlogin__sociallogin login-block" ng-show="showSocials">
-                    <div class="social">
-                        <a class="social__link linky" ng-click="doLoginFacebook()">
-                            <img class="social__icons" src="/assets/login/facebook.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginTwitter()">
-                            <img class="social__icons" src="/assets/login/twitter.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginLinkedin()">
-                            <img class="social__icons" src="/assets/login/linkedin.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginGoogleplus()">
-                            <img class="social__icons" src="/assets/login/google.png">
-                        </a>
-                    </div>
-                </div>
+        <i class="facebook icon blue"></i>
+        <div class="content column two">
+            <div class="header">
+                Rather use social media?
             </div>
+        </div>
+        <div class="column three">
+            <button class="ui blue basic button social create">Login</button>
         </div>
     </div>
 </div>
