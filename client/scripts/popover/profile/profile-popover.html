@@ -11,12 +11,12 @@
                 </div>
             </div>
             <div class="column">
-                <div class="profile-wrapper">
-                    <div id="profile-image-container" ng-class="{edit: editMode}">
-                        <img id="profile-image" ng-src="{{profilePicture  || '/assets/noUserImage.png'}}" ng-hide="editMode" src="" />
+                <div class="profile-wrapper ui grid centered">
+                    <div ng-class="{edit: editMode}">
+                        <img ng-src="{{profilePicture  || '/assets/noUserImage.png'}}" ng-hide="editMode" src="" />
                         <gs-image-upload ng-show="editMode" on-image-updated="imageUpdated"></gs-image-upload>
-                        <button class="cancel" ng-show="editMode" ng-click="editMode = false;">X</button>
-                        <a class="edit button" ng-show="!editMode" ng-click="editMode=true;" onclick="$('#profile-image-container gs-image-upload div div button.image').click()">EDIT</a>
+                        <button class="cancel button ui fluid" ng-show="editMode" ng-click="editMode = false;">X</button>
+                        <a class="edit button ui fluid" ng-show="!editMode" ng-click="editMode=true;" onclick="$('#profile-image-container gs-image-upload div div button.image').click()">EDIT</a>
                     </div>
                 </div>
                 <div>

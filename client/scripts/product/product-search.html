@@ -84,7 +84,7 @@
         <a ng-click="decrementPage()" class="icon item">
           <i class="left chevron icon"></i>
         </a>
-        <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item">{{pageNumber}}</a>
+        <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item" ng-class="{active: pageNumber == $index }" >{{pageNumber}}</a>
         <a ng-click="incrementPage()" class="icon item">
           <i class="right chevron icon"></i>
         </a>

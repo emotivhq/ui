@@ -1,19 +1,21 @@
-<div class="note-popover" ng-init="stateClass = ''" ng-controller="NotePopoverController" >
-    <div class="note-wrapper">
+<div class="note-popover" ng-init="stateClass = ''" ng-controller="NotePopoverController" ng-hide="showEditPhoto">
+    <div class="note-wrapper ui form">
         <div class="profile-picture-wrapper">
             <img class="profile-picture" ng-src="{{profilePicture || '/assets/noUserImage.png'}}">
-            <a class="edit-picture-button button" ng-click="editPhoto()">Edit Photo</a>
+            <a class="edit-picture-button button ui fluid basic hidden" ng-click="editPhoto()">Edit Photo</a>
         </div>
         <div class="note">
             <input id="name-box" type="text" ng-model="name" placeholder="Name" />
-            <textarea class="note" ng-model="noteText" ng-disabled="skipNote" placeholder="Comment"></textarea>
+            <textarea class="note" ng-model="noteText" ng-disabled="skipNote" placeholder="Comment" style="height: auto;"></textarea>
             <p class="chars-left" ng-show="noteText.length > 0" ng-class="{warning: (noteText.length > 214)}">{{230 - noteText.length}}</p>
         </div>
     </div>
-    <div class="note-skipbox">
+    <div class="note-skipbox ui checkbox vertical top bottom small">
         <input id="skipNote" type="checkbox" ng-model="skipNote">
         <label for="skipNote">No thanks, just put my name on the card.</label>
     </div>
-    <button class="ui button large" ng-click="action.submit()" ng-disabled="!skipNote && !noteText || noteText.length > 250 " ng-class="{disabled: !skipNote && !noteText, primary: skipNote || noteText}">Sign it!</button>
+    <div class="ui form field">
+		<button class="ui button large" ng-click="action.submit()" ng-disabled="!skipNote && !noteText || noteText.length > 250 " ng-class="{disabled: !skipNote && !noteText, teal: skipNote || noteText}">Sign it!</button>
+	</div>
     <!-- div class="cancel-button"><p class="cancel-button" ng-click="hidePopover()">Cancel</p></div -->
 </div>
