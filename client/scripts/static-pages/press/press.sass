@@ -1,6 +1,6 @@
 @import "../static-pages"
 
-div.presspage
+.presspage
 
   .headerwrap
     background: url("/assets/press/press-bg.png") no-repeat center top
@@ -12,6 +12,19 @@ div.presspage
   .main
     padding: 0 30px 50px 30px
     text-align: left
+    .image
+      max-height: 35px
+        
+      img
+        top: 50%
+        -webkit-transform: translateY(-50%)
+        -ms-transform: translateY(-50%)
+        transform: translateY(-50%)
+    
+    .header
+      &:empty
+        display: none !important
+
     h2
       text-align: center
     .press-item
