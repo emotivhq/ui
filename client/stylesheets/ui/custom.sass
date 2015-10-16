@@ -27,8 +27,16 @@ h1, h2, h3, h4, h5
 
 // bgs
 
+body.dimmable
+    position: initial
+    
+    &.blurring
+        > :not(.dimmer)
+            filter: initial
+            transition: initial
+
 body.pushable > .pusher.grey
-  background: #90A4AE
+    background: #90A4AE
 
 // header
 

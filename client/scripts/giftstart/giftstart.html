@@ -1,5 +1,4 @@
 <div class="giftstart wrapper ui container main pad" ng-controller="GiftStartController">
-
     <div class="ui container aligned center centered teal" ng-class="{segment: editMode}">
         <div class="ui form">
             <h2 class="title campaign-title ui center aligned icon header bottom medium vertical" ng-hide="editMode">
@@ -13,14 +12,13 @@
         </div>
     </div>
 
-    <div class="ui container  ">
-        <div class="col2 ui card block teal" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="{segment, editMode}">
+    <div class="ui container">
+        <div class="col2 ui card block teal" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="segment: editMode">
             <div class="content">
                 <div class="header">
                     <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">
-			{{giftStart.product_title | limitTo: 90}}
-						
-		</a>
+                        {{giftStart.product_title | limitTo: 90}}
+                    </a>
                 </div>
             </div>
             <div class="content">
@@ -46,8 +44,6 @@
                 <i class="save icon"></i>Save
             </a>
         </div>
-
-
         <div class="gs-overlay block" Xng-class="{shrunk: showPayBox}">
             <div class="image-upload ui form segment teal" ng-show="editMode">
                 <label>Upload New Image:</label>
@@ -98,9 +94,7 @@
             </button>
             <a href="" class="linky" ng-click="shareBox(false)">Skip this step</a>
         </div>
-
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
-
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <div class="ui divided selection list">
@@ -150,9 +144,8 @@
             </div-->
             </div>
         </div>
-
-
-        <div class="container ui vertical stripe quote segment" style="display: -webkit-inline-box;">
+    </div>
+    <div class="ui container vertical stripe quote segment" style="display: -webkit-inline-box;">
             <div class="ui equal width stackable internally celled grid">
                 <div class="center aligned row ui grid stackable">
                     <div class="prices block column ui">
@@ -236,3 +229,5 @@
                     </a>
                 </div>
             </div>
+        </div>
+</div>
