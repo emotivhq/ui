@@ -121,9 +121,9 @@
         function isYourVillageMenu() {
             return($location.path() === '/yourvillage') ? true : false;
         }
-        
+
         function isYourVillageSubPage() {
-            return ($scope.yourVillageMenu && $location.path() !== '/yourvillage') ? true : false;
+            return($scope.yourVillageMenu && $location.path() !== '/yourvillage') ? true : false;
         }
 
         function isUserMenu() {

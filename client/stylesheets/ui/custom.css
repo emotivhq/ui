@@ -23,6 +23,12 @@ h1, h2, h3, h4, h5 {
 .ui.checkbox .box, .ui.checkbox label {
   cursor: pointer; }
 
+body.dimmable {
+  position: initial; }
+  body.dimmable.blurring > :not(.dimmer) {
+    filter: initial;
+    transition: initial; }
+
 body.pushable > .pusher.grey {
   background: #90A4AE; }
 

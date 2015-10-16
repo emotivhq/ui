@@ -55,16 +55,10 @@
             });
         }
         jQuery('.button.social.join').click(function () {
-            jQuery('.ui.social.join.modal').modal({
-                inverted: true,
-                blurring: true
-            }).modal('show');
+            jQuery('.ui.social.join.modal').modal('show');
         });
         jQuery('.button.social.create').click(function () {
-            jQuery('.ui.social.create.modal').modal({
-                inverted: true,
-                blurring: true
-            }).modal('show');
+            jQuery('.ui.social.create.modal').modal('show');
         });
         jQuery('.create_action.ui.form').form({
             fields: {
