@@ -50,7 +50,8 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
     jQuery('.invite-friends').click(function () {
         jQuery('.pitchin').modal({
             inverted: true,
-            blurring: true
+            blurring: true,
+			observeChanges: true
         }).modal('show');
     });
     $scope.editingComment = function (comment, editing) {
