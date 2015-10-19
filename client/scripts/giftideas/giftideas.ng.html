@@ -60,6 +60,11 @@
 		    </h2>
         </div>
 
+        <div class="clear"></div>
+        <h2 class="ui center aligned header" ng-show="!product">
+			{{category.categoryName}} Gift Ideas
+		</h2>
+
         <ul rn-carousel class="ui segment carousel" rn-carousel-index="carouselIndex">
             <li ng-repeat="group in groups" class="ui centered stackable grid">
                 <div ng-repeat="product in group" class="four wide column">
@@ -71,6 +76,7 @@
                             <a class="header" ng-bind-html="product.productNameShort" href="{{categoryPath}}/{{product.productSlug}}"></a>
                             <div class="meta">
                                 <a href="{{categoryPath}}/{{product.productSlug}}">${{product.productPrice}}</a>
+
                             </div>
                         </div>
                     </div>

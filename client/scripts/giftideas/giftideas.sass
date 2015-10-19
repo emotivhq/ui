@@ -1,5 +1,8 @@
 @import ../base
 
+.giftideas 
+    .grid
+        margin: 0        
 #giftideas
   text-align: center
   margin: 0 auto
@@ -10,11 +13,11 @@
       .titles
         padding-top: 15px
     .carousel
-        padding-top: 16px
-        background: #f9f9f9
-        min-height: 410px
-        @media screen and (max-width: 767px)
-          min-height: 960px
+      padding-top: 16px
+      background: #f9f9f9
+      min-height: 410px
+      @media screen and (max-width: 767px)
+        min-height: 960px
   .main.pad
     margin-top: 7em !important
   .singleproduct
@@ -25,12 +28,9 @@
       .titles
         width: 50%
   .products, .singleproduct
-    display: block
-    clear: both
-    width: 95%
-    margin-left: auto !important
-    margin-right: auto !important
     padding-bottom: 25px
+    @media screen and (max-width: $phone-boundary)
+        padding-bottom: 0
     .saveforlater
       .product-message
         text-align: center
