@@ -194,75 +194,103 @@ div.rn-carousel-indicator span.active
     transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
 
 // home masthead
-.ui.masthead.home
-    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
-    background-size: cover
-    background-position: center top
-    box-shadow: inset 0 0 4rem rgba(0,0,0,.35)
-    position: relative;
-    min-height: 350px
-    padding: 1em 0em 
-    -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
-    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
-        
-    .desktop
-        display: none
+.ui.masthead.segment
+  background-size: cover
+  background-position: center top
+  box-shadow: inset 0 0 4rem rgba(0,0,0,.35)
+  position: relative
+  padding: 1em 0em
+  -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
+  
+  .desktop
+    display: none
     
-    .ui.container
-        min-height: 77vh
+  h1, h2, p
+      text-shadow: 0 0 5px rgba(0,0,0,.25)
+  
+  h1.ui.header
+    margin-bottom: .5em
+    font-size: 2.5em
+    margin-top: 2.5em
+  
+  h2
+    font-size: 1.3em
+    margin-bottom: 2rem
+    display: none;
+    
+  .ui.message
+    text-shadow: none
+    
+    &.black
+        background: rgba(0,0,0,.65)
+    
+    &.secondary
+        background: rgba(248,248,249,.85)
         
-        h1, h2, p
-        text-shadow: 0 0 5px rgba(0,0,0,.25)
+    .mobile 
+        .ui.button
+            margin-bottom: 0.75em;
+        
+    .ui.form
+        padding-bottom: .5em;
+  
+  @media only screen and (min-width: 700px)
+    .desktop
+        display: block
+    
+    .mobile
+        display: none
+        
+    .ui.container
+        height: auto
     
         h1.ui.header
-            margin-top: 2.5em
-            margin-bottom: .5em
-            font-size: 2.5em
-            
+            margin-bottom: 0em
+            font-size: 3em
+        
         h2
-            font-size: 1.3em
-            margin-top: 20px
-            margin-bottom: 2rem
-            display: none;
-        
-        .ui.message
-            text-shadow: none
-            
-            &.black
-                background: rgba(0,0,0,.65)
-            
-            &.secondary
-                background: rgba(248,248,249,.85)
-                
-            .mobile 
-                .ui.button
-                    margin-bottom: 0.75em;
-                
-            .ui.form
-                padding-bottom: .5em;
-                
-        
-@media only screen and (min-width: 700px)
-    .ui.masthead.home
-        background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
-        min-height: 700px
-        
-        .desktop
             display: block
-            
-        .mobile
-            display: none
+    
+  &.is
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
+    background-position: center top
+    min-height: 350px
+    margin-bottom: 50px
+    
+    .ui.container
+        min-height: 40vh
+    
+    h2
+        margin-top:15px
         
-        .ui.container
-            height: auto
-        
-            h1.ui.header
-                margin-top: 3em
-                margin-bottom: 0em
-                font-size: 3em
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift@2x.jpg),url(/assets/bg/man-wrapping-gift.jpg)
+      min-height: 350px
+      background-position: center 19%
+      
+      .ui.container
+          h1.ui.header
+              margin-top: 1.5em
             
-            h2
-                display: block
+  &.home
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
+    min-height: 350px
+        
+    .ui.container
+        min-height: 77vh
+            
+    h2
+        margin-top: 20px
+    
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
+      min-height: 700px
+      
+      .ui.container
+          h1.ui.header
+              margin-top: 3em
+                
             
 // statistics
 
