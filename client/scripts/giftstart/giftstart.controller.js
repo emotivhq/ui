@@ -54,8 +54,8 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
             inverted: true,
             blurring: true
         }).modal('show');
-		.sidebar('setting', 'transition', 'overlay')
-        .sidebar('toggle');
+		//.sidebar('setting', 'transition', 'overlay')
+        //.sidebar('toggle');
     });
 	
     $scope.editingComment = function (comment, editing) {

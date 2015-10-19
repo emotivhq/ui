@@ -176,6 +176,9 @@
                 'background-position-y': self.subliminalOffset + 'px'
             };
         }
+        $scope.goBack = function () {
+            $window.history.back()
+        }
         self.toggleMobileMenu = function () {
             $scope.menu = !$scope.menu;
         };
