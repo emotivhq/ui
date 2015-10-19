@@ -1,4 +1,5 @@
 <div id="giftideas" class="ui container">
+
     <div ng-show="product" class="singleproduct main pad">
         <div class="head">
             <div class="hero">
@@ -38,46 +39,36 @@
     </div>
 
     <div ng-show="category" class="products">
-        <div class="main pad" ng-show="!product">
-            <div class="ui stackable four column grid">
-                <div class="eight wide column">
-                    <h2 class="ui center aligned header">
+        <div class="ui stackable four column grid" ng-show="!product">
+            <div class="eight wide column">
+                <h2 class="ui center aligned header">
   					<img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
 				</h2>
-                </div>
-                <div class="eight wide column" ng-show="!product">
-                    <div class="ui piled segment padded left aligned secondary">
-                        <h2 class="header">
+            </div>
+            <div class="eight wide column" ng-show="!product">
+                <div class="ui piled segment padded left aligned secondary">
+                    <h2 class="header">
                         {{category.categoryName}}
                     </h2>
-                        <span ng-bind-html="category.categoryBlurb"></span>
-                    </div>
+                    <span ng-bind-html="category.categoryBlurb"></span>
                 </div>
             </div>
-            <div class="clear"></div>
-            <h2 class="ui center aligned header">
-			    {{category.categoryName}} Gift Ideas
-		    </h2>
         </div>
-
         <div class="clear"></div>
         <h2 class="ui center aligned header" ng-show="!product">
 			{{category.categoryName}} Gift Ideas
 		</h2>
-
-        <ul rn-carousel class="ui segment carousel" rn-carousel-index="carouselIndex">
-            <li ng-repeat="group in groups" class="ui centered stackable grid">
-                <div ng-repeat="product in group" class="four wide column">
-                    <div class="ui fluid card">
-                        <a class="image" href="{{categoryPath}}/{{product.productSlug}}">
-                            <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
-                        </a>
-                        <div class="content">
-                            <a class="header" ng-bind-html="product.productNameShort" href="{{categoryPath}}/{{product.productSlug}}"></a>
-                            <div class="meta">
-                                <a href="{{categoryPath}}/{{product.productSlug}}">${{product.productPrice}}</a>
-
-                            </div>
+        <ul class="grid ui segment" rn-carousel rn-carousel-index="carouselIndex" style="min-height: 430px; padding-top: 16px; background: #f9f9f9;">
+            <li ng-repeat="group in groups" class="ui stackable cards">
+                
+                <div class="ui card" ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" title="{{product.productNameStripped}}" style="display: inline-block;">
+                    <a class="image" href="{{categoryPath}}/{{product.productSlug}}">
+                        <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
+                    </a>
+                    <div class="content">
+                        <a class="header" ng-bind-html="product.productNameShort"></a>
+                        <div class="meta">
+                            <a>${{product.productPrice}}</a>
                         </div>
                     </div>
                 </div>
