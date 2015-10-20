@@ -13,7 +13,7 @@
     </div>
 
     <div class="ui container column grid">
-        <div class="gs-overlay eight wide computer sixteen wide mobile column" Xng-class="{shrunk: showPayBox}">
+        <div class="gs-overlay ui eight wide computer sixteen wide mobile column" Xng-class="{shrunk: showPayBox}">
             <div class="image-upload ui form segment teal" ng-show="editMode">
                 <label>Upload New Image:</label>
                 <input id="campaign-image-input" type="file" capture="camera" accept="image/*" />
@@ -38,21 +38,22 @@
                 </div>
             </div>
         </div>
-        <div class="ui card block eight wide computer sixteen wide mobile column" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="segment: editMode">
-            <div class="content">
+        <div class="ui eight wide computer sixteen wide mobile column" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="segment: editMode">
+			<div class="ui fluid card" style="min-height:227px;">
+				<div class="content">
                 <div class="header">
                     <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">
                         {{giftStart.product_title | limitTo: 90}}
                     </a>
                 </div>
             </div>
-            <div class="content">
+            	<div class="content">
                 <div class="ui form">
                     <div class="description">
                         <span class="description edit"><textarea class="description" ng-model="newDescription" ng-show="editMode"></textarea></span>
                         <span class="description makelinks" ng-hide="editMode" style="white-space: pre-line;">{{giftStart.description}}</span>
                     </div>
-                    <div class="meta ui left icon fluid huge input">
+                    <div class="meta ui left icon fluid huge input vertical top small">
                         <p class="name" ng-show="!editMode">
                             <span class="signature__title" ng-show=" giftStart.gc_name "> {{ giftStart.gc_name }} </span>
                         </p>
@@ -62,15 +63,8 @@
 
                 </div>
             </div>
-            <a class="ui bottom attached button icon" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">
-                <i class="edit icon"></i> Edit
-            </a>
-            <a class="save ui bottom attached button icon" ng-click="updateCampaign();" ng-show="editMode">
-                <i class="save icon"></i>Save
-            </a>
-        
-			<div class="ui" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
-            <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
+				<div class="extra content" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
+            		<div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <div class="ui divided selection list">
 					<a class="item">
   						<div class="ui red horizontal label">Tip</div>
@@ -78,7 +72,7 @@
 					</a>
 	
                 </div>
-                <button class="ui pitch-in button huge icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
+                <button class="ui pitch-in button huge icon fluid" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
                     <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
                 </button>
 
@@ -117,7 +111,14 @@
                 <input id="share-url" type="text" value="{{campaignUrl()}}" gs-copy-url readonly/>
             </div-->
             </div>
-        </div>
+        		</div>
+            	<a class="ui bottom attached button icon" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">
+                <i class="edit icon"></i> Edit
+            </a>
+            	<a class="save ui bottom attached button icon" ng-click="updateCampaign();" ng-show="editMode">
+                <i class="save icon"></i>Save
+            </a>
+ 			</div>       
 		
         </div>
         <div class="login-box ui aligned centered center grid" ng-show="showLoginBox">
@@ -126,11 +127,11 @@
             </a>
             <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
         </div>
-        <div class="pay-box eight wide computer sixteen wide mobile column" ng-show="showPayBox">
+        <div class="pay-box ui eight wide computer sixteen wide mobile column" ng-show="showPayBox">
             <p>Your payments are secure and processed by PayPal.</p>
             <ng-include src="'/scripts/pay/pay.html'"></ng-include>
         </div>
-        <div class="sign-box ui segment piled eight wide computer sixteen wide mobile columnn" ng-show="showSignBox" style="    margin-top: 0;">
+        <div class="sign-box ui segment piled eight wide computer sixteen wide mobile column" ng-show="showSignBox" style="    margin-top: 0;">
 			<a class="ui right ribbon label" ng-click="switchSignBox(false)">Go Back</a>
             <h2>Sign the Card:</h2>
             <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you - giving credit where credit is due.</p>
@@ -147,7 +148,7 @@
         </div>
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
     </div>
-    <div class="ui container vertical stripe quote segment" style="">
+    <div class="ui container vertical top medium stripe quote segment" style="">
             <div class="ui equal width stackable internally celled grid">
                 <div class="center aligned row ui grid stackable">
                     <div class="prices block column ui">
