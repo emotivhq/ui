@@ -21,9 +21,17 @@
         $scope.editPhoto = function () {
             noteText = $scope.noteText;
             skipNote = $scope.skipNote;
+			$rootScope.showEditPhoto = true;
+			$scope.showEditPhoto = true;
             PopoverService.setPopover('profile');
         };
-        $scope.action = {
+        $scope.editPhoto = function () {
+            noteText = $scope.noteText;
+            skipNote = $scope.skipNote;
+            //PopoverService.setPopover('profile');
+			$rootScope.showEditPhoto = true;
+			$scope.showEditPhoto = true;
+        };        $scope.action = {
             submit: function () {
                 if($scope.skipNote) {
                     Analytics.track('pitchin', 'no note submitted');

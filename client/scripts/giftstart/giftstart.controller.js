@@ -39,6 +39,8 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
     $scope.showSignBox = false;
     $scope.showShareBox = false;
     $scope.showShare = UserService.loggedIn && $location.hash() == "share-panel";
+	$rootScope.showEditPhoto = false;
+	$scope.showEditPhoto = false;
 
     function imageUpdated(data) {
         imageData = data;
@@ -50,10 +52,12 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
     jQuery('.invite-friends').click(function () {
         jQuery('.pitchin').modal({
             inverted: true,
-            blurring: true,
-			observeChanges: true
+            blurring: true
         }).modal('show');
+		.sidebar('setting', 'transition', 'overlay')
+        .sidebar('toggle');
     });
+	
     $scope.editingComment = function (comment, editing) {
         if(editing) { //edit mode on
             $scope.commentEditing.push(comment);
@@ -131,6 +135,9 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
     };
     $scope.switchLoginBox = function (show) {
         $scope.showLoginBox = show;
+    };    
+	$scope.switchSignBox = function (show) {
+        $scope.showSignBox = show;
     };
     if($scope.giftStart.gc_name) {
         $scope.newGcName = $scope.giftStart.gc_name;

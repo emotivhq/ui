@@ -11,6 +11,7 @@
             <span class="title edit"></span>
         </div>
     </div>
+
     <div class="ui container">
         <div class="col2 ui card block teal" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="segment: editMode">
             <div class="content">
@@ -78,9 +79,10 @@
             <p>Your payments are secure and processed by PayPal.</p>
             <ng-include src="'/scripts/pay/pay.html'"></ng-include>
         </div>
-        <div class="sign-box" ng-show="showSignBox">
+        <div class="sign-box ui segment piled" ng-show="showSignBox" style="    margin-top: 0;">
+			<a class="ui right ribbon label" ng-click="switchSignBox(false)">Go Back</a>
             <h2>Sign the Card:</h2>
-            <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you. You know, giving credit where credit is due. We’re all about that.</p>
+            <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you - giving credit where credit is due.</p>
             <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
         </div>
         <div class="share-box" ng-show="showShareBox">
@@ -95,15 +97,12 @@
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
         <div class="col2 block" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
             <div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ui ">
-                    <div class="ordinal_circle">
-                        <span class="ordinal">1</span>
-                    </div>
-                    <h4>Click the pieces you want to buy</h4>
-                    <div class="ordinal_circle">
-                        <span class="ordinal">2</span>
-                    </div>
-                    <h4> Pitch In</h4>
+                <div class="ui divided selection list">
+					<a class="item">
+  						<div class="ui red horizontal label">Tip</div>
+  						Click the pieces you want to buy then pitch in.
+					</a>
+	
                 </div>
                 <button class="ui pitch-in button huge icon" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
                     <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
@@ -177,14 +176,14 @@
 
 
                 <gs-thanks></gs-thanks>
-                <div class="ui container groupcard" ng-hide="pitchIns.length > 0">
+                <div class="ui container groupcard" ng-show="pitchIns.length > 0">
                     <div class="title title--groupcard">
                         <h2 class="title__name">Group Card</h2>
                         <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
                     </div>
                     <div class="ui three stackable cards">
-                        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="h--hide ui card">
-                            <div class="contributors {{randomColor($index)}}">
+                        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="ui card">
+                            <div class="contributors segment ui {{randomColor($index)}}">
                                 <div class="block {{randomColor($index)}}"></div>
                                 <div class="contributors__figure">
                                     <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
@@ -194,7 +193,7 @@
                                     <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
                                     <a class="userprofile__imagesave button" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</a>
                                 </div>
-                                <div class="content ui form">
+                                <div class="ui form segment inverted {{randomColor($index)}}">
                                     <h4 class="" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
                                     <div class="ui field" ng-show="isEditing(pitchIn)">
                                         <input type="text" ng-model="pitchIn.name" placeholder="Name" />
@@ -203,17 +202,17 @@
                                     <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment" />
                                 </div>
                                 <div class="ui field" ng-show="isEditing(pitchIn)">
-                                    <p id="textcount">{{230 - pitchIn.note.length}}</p>
+                                    <p id="textcount">{{230 - pitchIn.note.length}} characters</p>
                                 </div>
 
-                                <a class="contributors__edit__button ui bottom attached button" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
+                                <a class="ui top bottom attached button inverted" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
                                     <i class="edit icon"></i>
                                     Edit this card
                                 </a>
-                                <div class="extra content">
-                                    <div class="ui two buttons tiny" ng-show="isEditing(pitchIn)">
-                                        <div class="ui basic green button tiny" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">Save</div>
-                                        <div class="ui basic red button tiny" ng-click="cancelEditComment(pitchIn)">Dismiss</div>
+                                <div class="extra content" ng-show="isEditing(pitchIn)">
+                                    <div class="ui two buttons tiny">
+                                        <div class="ui button tiny" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">Save</div>
+                                        <div class="ui secondary button tiny" ng-click="cancelEditComment(pitchIn)">Dismiss</div>
                                     </div>
                                 </div>
 
