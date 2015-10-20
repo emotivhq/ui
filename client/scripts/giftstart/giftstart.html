@@ -121,7 +121,7 @@
  			</div>       
 		
         </div>
-        <div class="login-box ui aligned centered center grid" ng-show="showLoginBox">
+        <div class="login-box ui aligned centered center grid " ng-show="showLoginBox">
             <a class="label basic ui icon aligned center middle" ng-click="switchLoginBox(false)">
                 <i class="cancel icon"></i> Cancel - take me back
             </a>
@@ -163,7 +163,7 @@
                         </div>
                     </div>
                     <div class="price block column ui">
-                        <p>This campaign ends {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
+                        <p>This campaign <span ng-hide="secondsLeft <= 0 || campaignComplete()">ended</span><span ng-show="secondsLeft <= 0 || campaignComplete()">ends</span> {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
                         <div>
                             <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
                             <h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4>

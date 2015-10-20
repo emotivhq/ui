@@ -80,11 +80,12 @@
   		</div>
     </div>
     <div class="page-buttons ui vertical medium top bottom middle aligned center aligned grid" ng-show="products.length > 10">
-    <div class="ui pagination menu stackable">
+    <div class="ui pagination menu">
         <a ng-click="decrementPage()" class="icon item">
           <i class="left chevron icon"></i>
         </a>
-        <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item" ng-class="{active: pageNumber == $index }" >{{pageNumber}}</a>
+        <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item desktop only">{{pageNumber}}</a>
+        <a ng-repeat="pageNumber in pageNumbers | limitTo : 5 : begin" ng-class="{active: selectedPage === pageNumber}" ng-click="selectPage(pageNumber)" class="item mobile tablet only">{{pageNumber}}</a>
         <a ng-click="incrementPage()" class="icon item">
           <i class="right chevron icon"></i>
         </a>

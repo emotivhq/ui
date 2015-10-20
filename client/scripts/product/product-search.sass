@@ -4,6 +4,17 @@ gs-product-search
   @media screen and (max-width: 37.5em)
     h1
       font-size: 2.5em
+  .ui.pagination.menu
+    padding-left: 0
+    padding-right: 0
+    .mobile.only, .tablet.only
+        display: none
+        @media screen and (max-width: $phone-tablet-boundary)
+            display: flex
+    .desktop.only
+        display: flex
+        @media screen and (max-width: $phone-tablet-boundary)
+            display: none
 
   div.product-link
     /*  PRODUCT LINK INPUT  */
