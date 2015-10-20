@@ -49,6 +49,11 @@
                 modestbranding: 1
             }
         });
+        
+        if(UserService.loggedIn && $location.path() === '/join') {
+            $location.path('/users/' + UserService.uid);
+        }
+        
         if(UserService.loggedIn) {
             jQuery('.userlogin').css({
                 display: "none"

@@ -46,8 +46,8 @@ $(document).ready(function () {
 	    Frankly it sucks, and will be replaced with something more native and less websity. Meantime, 
 		let's hack some style into it.
     */
-    $('.modal').modal({
+    /*$('.modal').modal({
         inverted: true,
         blurring: true
-    });
+    });*/
 });

@@ -18,10 +18,12 @@
                 </button>
                 <div class="scrollbox ui segment card attached">
                     <div class="content">
-                        <div class="header"><span ng-bind-html="product.productName"></span>
+                        <div class="header">
+                            <span ng-bind-html="product.productName"></span>
                         </div>
                         <div class="meta">${{product.productPrice}}</div>
-                        <div class="description"><span ng-bind-html="product.productDescription"></span>
+                        <div class="description">
+                            <span ng-bind-html="product.productDescription"></span>
                         </div>
                     </div>
                 </div>
@@ -38,44 +40,50 @@
         <div class="clear"></div>
     </div>
 
-    <div ng-show="category" class="products main pad">
-        <div class="ui stackable four column grid">
-            <div class="eight wide column">
-            	<h2 class="ui center aligned header" ng-show="!product">
-  					<img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
-				</h2>
-            </div>
-            <div class="eight wide column" ng-show="!product">
-                <div class="ui piled segment padded left aligned secondary">
-                    <h2 class="header">
-  			{{category.categoryName}}
-		</h2>
-                    <span ng-bind-html="category.categoryBlurb"></span>
+    <div ng-show="category" class="products">
+        <div class="main pad" ng-show="!product">
+            <div class="ui stackable four column grid">
+                <div class="eight wide column">
+                    <h2 class="ui center aligned header">
+  					    <img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
+				    </h2>
+                </div>
+                <div class="eight wide column">
+                    <div class="ui piled segment padded left aligned secondary">
+                        <h2 class="header">
+                            {{category.categoryName}}
+                        </h2>
+                        <p ng-bind-html="category.categoryBlurb"></p>
+                    </div>
                 </div>
             </div>
+            <div class="clear"></div>
+            <h2 class="ui center aligned header">
+			    {{category.categoryName}}
+		    </h2>
         </div>
-        <div class="clear"></div>
-        <h2 class="ui center aligned header" ng-show="!product">
-			{{category.categoryName}} Gift Ideas
-		</h2>
-        <ul class="grid ui segment" rn-carousel rn-carousel-index="carouselIndex" style="min-height: 430px; padding-top: 16px; background: #f9f9f9;">
-            <li ng-repeat="group in groups" class="ui stackable cards" >
-                <div ng-repeat="product in group" ng-class="{'last':product==lastProduct&&group.length==1}" class='ui link card tile column wide eight' title="{{product.productNameStripped}}" style="display: inline-block;">
-                    <a href="{{categoryPath}}/{{product.productSlug}}" class="image">
-                        <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
+        <ul rn-carousel class="ui segment carousel" rn-carousel-index="carouselIndex">
+            <li ng-repeat="group in groups" class="ui centered stackable grid">
+                <div ng-repeat="product in group" class="four wide column">
+                    <div class="ui fluid card">
+                        <a class="image" href="{{categoryPath}}/{{product.productSlug}}">
+                            <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
+                        </a>
                         <div class="content">
-                            <a class="header" ng-bind-html="product.productNameShort"></a>
-                            <div class="meta">${{product.productPrice}}</div>
+                            <a class="header" ng-bind-html="product.productNameShort" href="{{categoryPath}}/{{product.productSlug}}"></a>
+                            <div class="meta">
+                                <a href="{{categoryPath}}/{{product.productSlug}}">${{product.productPrice}}</a>
+                            </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </li>
         </ul>
-		<div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
-		<div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
+        <div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
+        <div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
         <div class="clear"></div>
     </div>
-	
+
     <h1 class="vertical medium top bottom">What’s popular</h1>
     <div class="categories ui three stackable link cards">
 
@@ -127,38 +135,39 @@
                 </a>
             </div>
         </div>
-    <div class="card">
-        <a class="image" href="/giftideas/outdoors">
-            <img src="/assets/giftideas/category/outdoors.jpg" alt="Outdoors" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/outdoors">Outdoors</a>
-            <div class="description">
-                ...
+        <div class="card">
+            <a class="image" href="/giftideas/outdoors">
+                <img src="/assets/giftideas/category/outdoors.jpg" alt="Outdoors" class="load" />
+            </a>
+            <div class="content">
+                <a class="header" href="/giftideas/outdoors">Outdoors</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/outdoors">
+                    <i class="unhide icon"></i> View Outdoors
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/outdoors">
-                <i class="unhide icon"></i> View Outdoors
+        <div class="card">
+            <a class="image" href="/giftideas/green">
+                <img src="/assets/giftideas/category/green.jpg" alt="Green" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/green">
-            <img src="/assets/giftideas/category/green.jpg" alt="Green" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/green">Green</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/green">Green</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/green">
+                    <i class="unhide icon"></i> View Green
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/green">
-                <i class="unhide icon"></i> View Green
-            </a>
-        </div>
-    </div>        <div class="card">
+        <div class="card">
             <a class="image" href="/giftideas/home">
                 <img src="/assets/giftideas/category/home.jpg" alt="Home" class="load" />
             </a>
@@ -174,39 +183,39 @@
                 </a>
             </div>
         </div>
-    <div class="card">
-        <a class="image" href="/giftideas/cute">
-            <img src="/assets/giftideas/category/cute.jpg" alt="Cute" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/cute">Cute</a>
-            <div class="description">
-                Know someone who absolutely loves cute things? This is the place for that kind of stuff.
+        <div class="card">
+            <a class="image" href="/giftideas/cute">
+                <img src="/assets/giftideas/category/cute.jpg" alt="Cute" class="load" />
+            </a>
+            <div class="content">
+                <a class="header" href="/giftideas/cute">Cute</a>
+                <div class="description">
+                    Know someone who absolutely loves cute things? This is the place for that kind of stuff.
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/cute">
+                    <i class="unhide icon"></i> View Cute
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/cute">
-                <i class="unhide icon"></i> View Cute
+        <div class="card">
+            <a class="image" href="/giftideas/baby">
+                <img src="/assets/giftideas/category/Baby.jpg" alt="Baby" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/baby">
-            <img src="/assets/giftideas/category/Baby.jpg" alt="Baby" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/baby">Baby</a>
-            <div class="description">
-                Hand picked and curated by moms all over for the best experience for both baby & mom.
+            <div class="content">
+                <a class="header" href="/giftideas/baby">Baby</a>
+                <div class="description">
+                    Hand picked and curated by moms all over for the best experience for both baby & mom.
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/baby">
+                    <i class="unhide icon"></i> View Baby
+                </a>
+
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/baby">
-                <i class="unhide icon"></i> View Baby
-            </a>
-           
-        </div>
-    </div>
         <div class="card">
             <a class="image" href="/giftideas/forher">
                 <img src="/assets/giftideas/category/forHer.jpg" alt="For Her" class="load" />
@@ -239,312 +248,312 @@
                 </a>
             </div>
         </div>
-    <div class="card">
-        <a class="image" href="/giftideas/cool">
-            <img src="/assets/giftideas/category/cool.jpg" alt="Cool" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/cool">Cool</a>
-            <div class="description">
-                ...
+        <div class="card">
+            <a class="image" href="/giftideas/cool">
+                <img src="/assets/giftideas/category/cool.jpg" alt="Cool" class="load" />
+            </a>
+            <div class="content">
+                <a class="header" href="/giftideas/cool">Cool</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/cool">
+                    <i class="unhide icon"></i> View Cool
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/cool">
-                <i class="unhide icon"></i> View Cool
+        <div class="card">
+            <a class="image" href="/giftideas/office">
+                <img src="/assets/giftideas/category/office.jpg" alt="Office" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/office">
-            <img src="/assets/giftideas/category/office.jpg" alt="Office" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/office">Office</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/office">Office</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/office">
+                    <i class="unhide icon"></i> View Office
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/office">
-                <i class="unhide icon"></i> View Office
+        <div class="card">
+            <a class="image" href="/giftideas/farewell">
+                <img src="/assets/giftideas/category/Farewell.jpg" alt="Farewell" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/farewell">
-            <img src="/assets/giftideas/category/Farewell.jpg" alt="Farewell" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/farewell">Farewell</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/farewell">Farewell</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/farewell">
+                    <i class="unhide icon"></i> View Farewell
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/farewell">
-                <i class="unhide icon"></i> View Farewell
+        <div class="card">
+            <a class="image" href="/giftideas/sympathy">
+                <img src="/assets/giftideas/category/sympathy.jpg" alt="Sympathy" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/sympathy">
-            <img src="/assets/giftideas/category/sympathy.jpg" alt="Sympathy" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/sympathy">Sympathy</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/sympathy">Sympathy</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/sympathy">
+                    <i class="unhide icon"></i> View Sympathy
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/sympathy">
-                <i class="unhide icon"></i> View Sympathy
+        <div class="card">
+            <a class="image" href="/giftideas/beauty">
+                <img src="/assets/giftideas/category/beauty.jpg" alt="Beauty" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/beauty">
-            <img src="/assets/giftideas/category/beauty.jpg" alt="Beauty" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/beauty">Beauty</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/beauty">Beauty</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/beauty">
+                    <i class="unhide icon"></i> View Beauty
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/beauty">
-                <i class="unhide icon"></i> View Beauty
+        <div class="card">
+            <a class="image" href="/giftideas/wine">
+                <img src="/assets/giftideas/category/wine.jpg" alt="Wine" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/wine">
-            <img src="/assets/giftideas/category/wine.jpg" alt="Wine" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/wine">Wine</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/wine">Wine</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/wine">
+                    <i class="unhide icon"></i> View Wine
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/wine">
-                <i class="unhide icon"></i> View Wine
+        <div class="card">
+            <a class="image" href="/giftideas/butterlondon">
+                <img src="/assets/giftideas/category/butterLONDON.jpg" alt="Butter LONDON" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/butterlondon">
-            <img src="/assets/giftideas/category/butterLONDON.jpg" alt="Butter LONDON" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/butterlondon">Butter LONDON</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/butterlondon">Butter LONDON</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/butterlondon">
+                    <i class="unhide icon"></i> View Butter LONDON
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/butterlondon">
-                <i class="unhide icon"></i> View Butter LONDON
+        <div class="card">
+            <a class="image" href="/giftideas/petlovers">
+                <img src="/assets/giftideas/category/pet-lovers.jpg" alt="Pet Lovers" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/petlovers">
-            <img src="/assets/giftideas/category/pet-lovers.jpg" alt="Pet Lovers" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/petlovers">Pet Lovers</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/petlovers">Pet Lovers</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/petlovers">
+                    <i class="unhide icon"></i> View Pet Lovers
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/petlovers">
-                <i class="unhide icon"></i> View Pet Lovers
+        <div class="card">
+            <a class="image" href="/giftideas/wedding">
+                <img src="/assets/giftideas/category/Wedding.jpg" alt="Wedding" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/wedding">
-            <img src="/assets/giftideas/category/Wedding.jpg" alt="Wedding" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/wedding">Wedding</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/wedding">Wedding</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/wedding">
+                    <i class="unhide icon"></i> View Wedding
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/wedding">
-                <i class="unhide icon"></i> View Wedding
+        <div class="card">
+            <a class="image" href="/giftideas/graduation">
+                <img src="/assets/giftideas/category/graduation.jpg" alt="Graduation" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/graduation">
-            <img src="/assets/giftideas/category/graduation.jpg" alt="Graduation" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/graduation">Graduation</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/graduation">Graduation</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/graduation">
+                    <i class="unhide icon"></i> View Graduation
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/graduation">
-                <i class="unhide icon"></i> View Graduation
+        <div class="card">
+            <a class="image" href="/giftideas/red">
+                <img src="/assets/giftideas/category/red.jpg" alt="Wear Red" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/red">
-            <img src="/assets/giftideas/category/red.jpg" alt="Wear Red" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/red">Wear Red</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/red">Wear Red</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/red">
+                    <i class="unhide icon"></i> View Wear Red
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/red">
-                <i class="unhide icon"></i> View Wear Red
+        <div class="card">
+            <a class="image" href="/giftideas/patriots">
+                <img src="/assets/giftideas/category/Patriots.jpg" alt="Patriots" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/patriots">
-            <img src="/assets/giftideas/category/Patriots.jpg" alt="Patriots" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/patriots">Patriots</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/patriots">Patriots</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/patriots">
+                    <i class="unhide icon"></i> View Patriots
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/patriots">
-                <i class="unhide icon"></i> View Patriots
+        <div class="card">
+            <a class="image" href="/giftideas/seahawks">
+                <img src="/assets/giftideas/category/Seahawks.jpg" alt="Seahawks" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/seahawks">
-            <img src="/assets/giftideas/category/Seahawks.jpg" alt="Seahawks" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/seahawks">Seahawks</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/seahawks">Seahawks</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/seahawks">
+                    <i class="unhide icon"></i> View Seahawks
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/seahawks">
-                <i class="unhide icon"></i> View Seahawks
+        <div class="card">
+            <a class="image" href="/giftideas/employee">
+                <img src="/assets/giftideas/category/employee.jpg" alt="Employee" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/employee">
-            <img src="/assets/giftideas/category/employee.jpg" alt="Employee" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/employee">Employee</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/employee">Employee</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/employee">
+                    <i class="unhide icon"></i> View Employee
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/employee">
-                <i class="unhide icon"></i> View Employee
+        <div class="card">
+            <a class="image" href="/giftideas/boss">
+                <img src="/assets/giftideas/category/Boss.jpg" alt="Boss" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/boss">
-            <img src="/assets/giftideas/category/Boss.jpg" alt="Boss" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/boss">Boss</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/boss">Boss</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/boss">
+                    <i class="unhide icon"></i> View Boss
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/boss">
-                <i class="unhide icon"></i> View Boss
+        <div class="card">
+            <a class="image" href="/giftideas/teacher">
+                <img src="/assets/giftideas/category/teacher.jpg" alt="Teacher" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/teacher">
-            <img src="/assets/giftideas/category/teacher.jpg" alt="Teacher" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/teacher">Teacher</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/teacher">Teacher</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/teacher">
+                    <i class="unhide icon"></i> View Teacher
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/teacher">
-                <i class="unhide icon"></i> View Teacher
+        <div class="card">
+            <a class="image" href="/giftideas/electronics">
+                <img src="/assets/giftideas/category/electronics.jpg" alt="Electronics" class="load" />
             </a>
-        </div>
-    </div>
-    <div class="card">
-        <a class="image" href="/giftideas/electronics">
-            <img src="/assets/giftideas/category/electronics.jpg" alt="Electronics" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/electronics">Electronics</a>
-            <div class="description">
-                ...
+            <div class="content">
+                <a class="header" href="/giftideas/electronics">Electronics</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/electronics">
+                    <i class="unhide icon"></i> View Electronics
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/electronics">
-                <i class="unhide icon"></i> View Electronics
-            </a>
-        </div>
-    </div>
 
-    <div class="card">
-        <a class="image" href="/giftideas/military">
-            <img src="/assets/giftideas/category/Military.jpg" alt="Military" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/military">Military</a>
-            <div class="description">
-                ...
+        <div class="card">
+            <a class="image" href="/giftideas/military">
+                <img src="/assets/giftideas/category/Military.jpg" alt="Military" class="load" />
+            </a>
+            <div class="content">
+                <a class="header" href="/giftideas/military">Military</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/military">
+                    <i class="unhide icon"></i> View Military
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/military">
-                <i class="unhide icon"></i> View Military
-            </a>
-        </div>
-    </div>
 
-    <div class="card">
-        <a class="image" href="/giftideas/giftcard">
-            <img src="/assets/giftideas/category/giftcard.jpg" alt="Gift Cards" class="load" />
-        </a>
-        <div class="content">
-            <a class="header" href="/giftideas/giftcard">Gift Cards</a>
-            <div class="description">
-                ...
+        <div class="card">
+            <a class="image" href="/giftideas/giftcard">
+                <img src="/assets/giftideas/category/giftcard.jpg" alt="Gift Cards" class="load" />
+            </a>
+            <div class="content">
+                <a class="header" href="/giftideas/giftcard">Gift Cards</a>
+                <div class="description">
+                    ...
+                </div>
+            </div>
+            <div class="extra content bottom button attached">
+                <a class="center" href="/giftideas/giftcard">
+                    <i class="unhide icon"></i> View Gift Cards
+                </a>
             </div>
         </div>
-        <div class="extra content bottom button attached">
-            <a class="center" href="/giftideas/giftcard">
-                <i class="unhide icon"></i> View Gift Cards
-            </a>
-        </div>
-    </div>
     </div>
 
     <div class="clear"></div>
