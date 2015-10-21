@@ -33,6 +33,11 @@ function ShareController($scope, $rootScope, GiftStartService,  $location,  $int
     ensuring["facebook"] = false;
     ensuring["twitter"] = false;
     ensuring["linkedin"] = false;
+	
+	/* semantic ui triggers */
+	jQuery('.close-share').click(function () {
+		jQuery('.pitchin').sidebar('toggle');
+    });	
 
     $scope.refreshPermissionsStatus = function() {
         //check to see if user has permission to post

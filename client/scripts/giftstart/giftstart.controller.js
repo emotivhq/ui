@@ -49,15 +49,17 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
         $scope.showShareBox = false;
         $scope.showShare = show;
     };
-    jQuery('.invite-friends').click(function () {
-        jQuery('.pitchin').modal({
-            inverted: true,
-            blurring: true
-        }).modal('show');
-		//.sidebar('setting', 'transition', 'overlay')
-        //.sidebar('toggle');
+    
+	/* semantic ui triggers */
+	jQuery('.invite-friends').click(function () {
+		jQuery('.pitchin').sidebar({
+      		dimPage          : true,
+      		transition       : 'overlay',
+      		mobileTransition : 'overlay'
+    	})
+        .sidebar('toggle');
     });
-	
+
     $scope.editingComment = function (comment, editing) {
         if(editing) { //edit mode on
             $scope.commentEditing.push(comment);
