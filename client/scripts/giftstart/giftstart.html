@@ -38,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="ui eight wide computer sixteen wide mobile column" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="segment: editMode">
+        <div class="ui eight wide computer sixteen wide mobile column" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="{segment: editMode}">
 			<div class="ui fluid card" style="min-height:227px;">
 				<div class="content">
                 <div class="header">
@@ -63,15 +63,8 @@
 
                 </div>
             </div>
-				<div class="extra content" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox||secondsLeft >= 0||!campaignComplete()">
-            		<div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
-                <div class="ui divided selection list">
-					<a class="item">
-  						<div class="ui red horizontal label">Tip</div>
-  						Click the pieces you want to buy then pitch in.
-					</a>
-	
-                </div>
+				<div class="extra content" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox||secondsLeft <= 0||campaignComplete()">
+            	<div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <button class="ui pitch-in button huge icon fluid" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
                     <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
                 </button>
@@ -90,7 +83,6 @@
                         <div class="product-message" ng-bind-html="productMessage"></div>
                     </div>
                 </div>
-
                 <button class="ui invite-friends button blue large fluid icon">
                     <span ng-hide="secondsLeft <= 0 || campaignComplete()">
 						<i class="users right icon"></i>
@@ -101,7 +93,13 @@
 						Share This Campaign
 					</span>
                 </button>
-                <!--div class="invite block">
+                <div class="ui divided selection list">
+					<a class="item">
+  						<div class="ui red horizontal label">Tip</div>
+  						Click the pieces you want to buy then pitch in.
+					</a>
+                </div>
+				<!--div class="invite block">
                 <h3 class="black invite-friends">Share This Campaign With Friends!</h3>
                 <img class="share" src="/assets/envelope.png" ng-click="emailShare();" />
                 <img class="share" src="/assets/facebookicon.png" ng-click="facebookShare();"/>
@@ -121,14 +119,14 @@
  			</div>       
 		
         </div>
-        <div class="login-box ui aligned centered center grid " ng-show="showLoginBox">
+        <div class="login-box ui aligned centered center grid eight wide computer sixteen wide mobile column" ng-show="showLoginBox">
             <a class="label basic ui icon aligned center middle" ng-click="switchLoginBox(false)">
                 <i class="cancel icon"></i> Cancel - take me back
             </a>
             <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
         </div>
         <div class="pay-box ui eight wide computer sixteen wide mobile column" ng-show="showPayBox">
-            <p>Your payments are secure and processed by PayPal.</p>
+            <p>Your payments are securely processed by PayPal.</p>
             <ng-include src="'/scripts/pay/pay.html'"></ng-include>
         </div>
         <div class="sign-box ui segment piled eight wide computer sixteen wide mobile column" ng-show="showSignBox" style="    margin-top: 0;">
@@ -163,7 +161,7 @@
                         </div>
                     </div>
                     <div class="price block column ui">
-                        <p>This campaign <span ng-hide="secondsLeft <= 0 || campaignComplete()">ended</span><span ng-show="secondsLeft <= 0 || campaignComplete()">ends</span> {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
+                        <p>This campaign <span ng-hide="secondsLeft <= 0 || campaignComplete()">ends</span><span ng-show="secondsLeft <= 0 || campaignComplete()">ended</span> {{giftStart.deadline*1000 | date:"MMMM d 'at' ha PST" : 'PST'}}</p>
                         <div>
                             <h2 class="countdown" ng-class="{danger: (secondsLeft < 86400) && (secondsLeft <= 0)}">{{countdown}}</h2>
                             <h4 ng-hide="secondsLeft <= 0 || campaignComplete()">Left for Pitch-ins</h4>

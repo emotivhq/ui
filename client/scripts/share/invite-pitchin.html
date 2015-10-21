@@ -1,36 +1,6 @@
-<div class="ui social create basic sidebar menu middle aligned center aligned" ng-controller="LoginOrCreateController" data-direction="bottom" data-transition="scale down">
-    <i class="close icon"></i>
-    <div class="ui middle center aligned header">
-        <h2>Login or create an account</h2>
-    </div>
-    <div class="middle center aligned grid">
-        <div class="image content container">
-            <div class="userlogin__sociallogin login-block" ng-show="showSocials">
-                <div class="social">
-                    <a class="social__link linky" ng-click="doLoginFacebook()">
-                        <img class="social__icons" src="/assets/login/facebook.png">
-                    </a>
-                    <br/>
-                    <a class="social__link linky" ng-click="doLoginTwitter()">
-                        <img class="social__icons" src="/assets/login/twitter.png">
-                    </a>
-                    <br/>
-                    <a class="social__link linky" ng-click="doLoginLinkedin()">
-                        <img class="social__icons" src="/assets/login/linkedin.png">
-                    </a>
-                    <br/>
-                    <a class="social__link linky" ng-click="doLoginGoogleplus()">
-                        <img class="social__icons" src="/assets/login/google.png">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="shareControllerWrapper" class="ui modal share pitchin inverted" ng-controller="ShareController">
-    <i class="close icon"></i>
-    <div class="header">
+<div id="shareControllerWrapper" class="ui bottom sidebar middle aligned center aligned share pitchin segment" ng-controller="ShareController">
+    <a href="#" class="close-share"><i class="large close icon"></i></a>
+    <div class="ui header">
         <h1>Invite Friends to Pitch-in</h1>
         <!--p>Your GiftStarter campaign is successfully set up! Invite friends to help pitch-in
         and increase your chances of fully funding the gift!</p-->
@@ -38,15 +8,15 @@
 
     <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
 
-    <div ng-show="loggedIn()" id="share-block" class="content ui form">
-        <div id="content" class="ui grid">
-            <div class="column wide six block message">
+    <div ng-show="loggedIn()" id="share-block" class="content ui form container">
+        <div id="content" class="ui horizontal segments">
+            <div class="ui segment" style="min-width:45%;">
                 <h3>Your Message</h3>
-                <textarea id="shareMessage" ng-model="message"></textarea>
+                <textarea id="shareMessage" ng-model="message" style="min-height: 22rem;"></textarea>
             </div>
-            <div>
+            <div class="ui segment">
                 <div class="row">
-                    <h4>Share on Social Media</h4>
+                    <h3>Share on Social Media</h3>
                     <p>Select which networks you would like to post on:</p>
                 </div>
                 <div class="row" id="social-icons-container">
@@ -65,8 +35,8 @@
                     <!--<a class="social__link linky" ng-click="selectedSocials['google']=false"><img class="social__icons" src="/assets/share/google.png" ng-hide="!sharePermission['google'] || !selectedSocials['google']"></a>-->
                     <!--<img class="social__icons linky" src=/assets/share/google-share-unselected.png ng-show="!selectedSocials['google']" ng-click="selectSocial('google')"/>-->
                 </div>
-                <div class="row">
-                    <h4>Send an Email</h4>
+                <div class="row vertical top small">
+                    <h3>Send an Email</h3>
                     <p>Enter email addresses separated by a comma
                         <!--, or import gmail contacts to select email addresses-->:</p>
                     <!--a href=""><h4>IMPORT GMAIL CONTACTS</h4></a-->
@@ -78,7 +48,7 @@
         <div class="share-buttons ui middle aligned center aligned content">
             <p ng-show="shareSuccess">That was successful!</p>
             <p class="twitter-note" ng-show="selectedSocials['twitter'] && message.length>118">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>
-            <button class="ui button large icon fluid" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">
+            <button class="ui button large icon fluid teal" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">
                 <i class="share external icon"></i> Share
             </button>
             <button class="ui button large" ng-show="shareSuccess" ng-click="shareReset()">
@@ -95,9 +65,6 @@
         <!--a href=""><h4>SKIP AND SHARE LATER</h4></a>
         <p>You can share your campaign at any time from your profile page or the campaign page!</p-->
         <div class="actions">
-            <div class="ui deny button">
-                Cancel
-            </div>
             <div class="ui blue right labeled icon button" ng-show="shareSuccess" ng-click="shareReset()">
                 Finish Up
                 <i class="checkmark icon"></i>

@@ -41,6 +41,7 @@
             $scope.resetCode = '';
         };
         $scope.resetForm();
+		
         /* semantic ui triggers */
         jQuery('.youtube .ui.embed').embed({
             parameters: {
@@ -59,11 +60,21 @@
                 display: "none"
             });
         }
-        jQuery('.button.social.join').click(function () {
-            jQuery('.ui.social.join.modal').modal('show');
+        // fires from views/join/join.html
+		jQuery('.button.social.join').click(function () {
+            jQuery('.ui.social.join.modal').modal({
+    			inverted: true
+  			})
+			.modal('show');
+			jQuery('.sidebar').sidebar('hide'); // close any open sidebars
         });
+		// fires from scripts/login/login-or-create.html
         jQuery('.button.social.create').click(function () {
-            jQuery('.ui.social.create.modal').modal('show');
+            jQuery('.ui.social.create.modal').modal({
+    			inverted: true
+  			})
+			.modal('show');
+			jQuery('.sidebar').sidebar('hide'); // close any open sidebars
         });
         jQuery('.create_action.ui.form').form({
             fields: {
