@@ -63,7 +63,7 @@
 
                 </div>
             </div>
-				<div class="extra content" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox">
+				<div class="extra content" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox||secondsLeft >= 0||!campaignComplete()">
             		<div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <div class="ui divided selection list">
 					<a class="item">
