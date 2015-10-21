@@ -55,7 +55,7 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
 		jQuery('.pitchin').sidebar({
       		dimPage          : true,
       		transition       : 'overlay',
-      		mobileTransition : 'uncover'
+      		mobileTransition : 'overlay'
     	})
         .sidebar('toggle');
     });
