@@ -27,40 +27,29 @@
             </div>
         </div>
         <div class="column three">
-            <button class="ui blue basic button social create">Login</button>
+			<a class="ui blue basic button social create again">Login</a>
         </div>
     </div>
+	
+	<div class="ui social create popup flowing top left transition visible">
+  <div class="ui three column divided center aligned grid">
+    <div class="column">
+      <a class="social__link linky" ng-click="doLoginFacebook()"><img class="social__icons" src="/assets/login/facebook.png"></a>
+    </div>
+    <div class="column">
+      <a class="social__link linky" ng-click="doLoginTwitter()"><img class="social__icons" src="/assets/login/twitter.png"></a>
+    </div>
+    <div class="column">
+      <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/login/linkedin.png"></a>
+    </div>
+    <div class="column">
+      <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/login/google.png"></a>
+    </div>
+  </div>
+</div>
+	
 </div>
 
-<div class="ui social create basic inverted modal middle aligned center aligned transition">
-        <i class="close icon"></i>
-        <div class="ui middle center aligned header">
-            Join or Login
-        </div>
-        <div class="middle center aligned grid">
-            <div class="image content container">
-                <div class="userlogin__sociallogin login-block">
-                    <div class="social">
-                        <a class="social__link linky" ng-click="doLoginFacebook()">
-                            <img class="social__icons" src="/assets/login/facebook.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginTwitter()">
-                            <img class="social__icons" src="/assets/login/twitter.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginLinkedin()">
-                            <img class="social__icons" src="/assets/login/linkedin.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginGoogleplus()">
-                            <img class="social__icons" src="/assets/login/google.png">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 <script>
     function handlePopupClosed() {

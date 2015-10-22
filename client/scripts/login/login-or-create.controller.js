@@ -62,19 +62,14 @@
         }
         // fires from views/join/join.html
 		jQuery('.button.social.join').click(function () {
-            jQuery('.ui.social.join.modal').modal({
-    			inverted: true
-  			})
-			.modal('show');
-			jQuery('.sidebar').sidebar('hide'); // close any open sidebars
+			//jQuery('.pitchin').sidebar('hide'); // close any open sidebars
+			jQuery('.ui.social.join.popup').popup({inline: true})
+
         });
 		// fires from scripts/login/login-or-create.html
         jQuery('.button.social.create').click(function () {
-            jQuery('.ui.social.create.modal').modal({
-    			inverted: true
-  			})
-			.modal('show');
-			jQuery('.sidebar').sidebar('hide'); // close any open sidebars
+			//jQuery('.pitchin').sidebar('hide'); // close any open sidebars
+			jQuery('.ui.social.join.popup').popup({inline: true})
         });
         jQuery('.create_action.ui.form').form({
             fields: {
