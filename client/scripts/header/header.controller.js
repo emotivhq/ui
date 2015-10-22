@@ -157,7 +157,15 @@
         }
         updateMenuType();
 
-        function routeChangeListener(event, next) {
+        function routeChangeListener(event, next, current) {
+            /* jshint ignore:start */
+            if(next && next.params && next.params.path === 'blog') {
+                event.preventDefault();
+                $rootScope.$evalAsync(function () {
+                    $window.location.href = next.params.path;
+                });
+            }
+            /* jshint ignore:end */
             updateMenuType();
             self.creating = $location.path().indexOf('/create') === 0;
             self.portaling = $location.path().indexOf('/portal') === 0;
