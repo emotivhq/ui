@@ -22,9 +22,9 @@ $(document).ready(function () {
         on: 'click'
     });
     // create mobile menu sidebar and attach to menu open
-    $('.ui.sidebar').sidebar('attach events', '.toc.item', 'overlay');
-    $('.ui.sidebar a.item').on('click', function () {
-        $('.ui.sidebar').sidebar('hide');
+    $('.ui.menu.sidebar').sidebar('attach events', '.toc.item', 'overlay');
+    $('.ui.menu.sidebar a.item').on('click', function () {
+        $('.ui.menu.sidebar').sidebar('hide');
     });
     // close message container
     $('.message .close').on('click', function () {
