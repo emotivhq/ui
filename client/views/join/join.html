@@ -23,42 +23,26 @@
                             </div>
                         </div>
                         <div class="column three">
-                            <a href="#" class="ui blue basic button social join">Start Here</a>
+                            <button class="ui circular facebook icon button" ng-click="doLoginFacebook()" style="width: inherit;">
+                                <i class="facebook icon"></i>
+                            </button>
+                            <button class="ui circular twitter icon button" ng-click="doLoginTwitter()" style="width: inherit;">
+                                <i class="twitter icon"></i>
+                            </button>
+                            <button class="ui circular linkedin icon button" ng-click="doLoginLinkedin()" style="width: inherit;">
+                                <i class="linkedin icon"></i>
+                            </button>
+                            <button class="ui circular google plus icon button" ng-click="doLoginGoogleplus()" style="width: inherit;">
+                                <i class="google plus icon"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-    <div class="ui social join basic modal middle aligned center aligned">
-        <i class="close icon"></i>
-        <div class="ui middle center aligned header">
-            Create Your Account
-        </div>
-        <div class="middle center aligned grid">
-            <div class="image content container">
-                <div class="userlogin__sociallogin login-block" ng-show="showSocials">
-                    <div class="social">
-                        <a class="social__link linky" ng-click="doLoginFacebook()">
-                            <img class="social__icons" src="/assets/login/facebook.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginTwitter()">
-                            <img class="social__icons" src="/assets/login/twitter.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginLinkedin()">
-                            <img class="social__icons" src="/assets/login/linkedin.png">
-                        </a>
-                        <br/>
-                        <a class="social__link linky" ng-click="doLoginGoogleplus()">
-                            <img class="social__icons" src="/assets/login/google.png">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
 </div>
 

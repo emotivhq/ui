@@ -60,17 +60,7 @@
                 display: "none"
             });
         }
-        // fires from views/join/join.html
-		jQuery('.button.social.join').click(function () {
-			//jQuery('.pitchin').sidebar('hide'); // close any open sidebars
-			jQuery('.ui.social.join.popup').popup({inline: true})
 
-        });
-		// fires from scripts/login/login-or-create.html
-        jQuery('.button.social.create').click(function () {
-			//jQuery('.pitchin').sidebar('hide'); // close any open sidebars
-			jQuery('.ui.social.join.popup').popup({inline: true})
-        });
         jQuery('.create_action.ui.form').form({
             fields: {
                 email: {

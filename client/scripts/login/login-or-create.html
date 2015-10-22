@@ -27,27 +27,23 @@
             </div>
         </div>
         <div class="column three">
-			<a class="ui blue basic button social create again">Login</a>
+            <button class="ui circular facebook icon button" ng-click="doLoginFacebook()" style="width: inherit;">
+                <i class="facebook icon"></i>
+            </button>
+            <button class="ui circular twitter icon button" ng-click="doLoginTwitter()" style="width: inherit;">
+                <i class="twitter icon"></i>
+            </button>
+            <button class="ui circular linkedin icon button" ng-click="doLoginLinkedin()" style="width: inherit;">
+                <i class="linkedin icon"></i>
+            </button>
+            <button class="ui circular google plus icon button" ng-click="doLoginGoogleplus()" style="width: inherit;">
+                <i class="google plus icon"></i>
+            </button>
         </div>
     </div>
-	
-	<div class="ui social create popup flowing top left transition visible">
-  <div class="ui three column divided center aligned grid">
-    <div class="column">
-      <a class="social__link linky" ng-click="doLoginFacebook()"><img class="social__icons" src="/assets/login/facebook.png"></a>
-    </div>
-    <div class="column">
-      <a class="social__link linky" ng-click="doLoginTwitter()"><img class="social__icons" src="/assets/login/twitter.png"></a>
-    </div>
-    <div class="column">
-      <a class="social__link linky" ng-click="doLoginLinkedin()"><img class="social__icons" src="/assets/login/linkedin.png"></a>
-    </div>
-    <div class="column">
-      <a class="social__link linky" ng-click="doLoginGoogleplus()"><img class="social__icons" src="/assets/login/google.png"></a>
-    </div>
-  </div>
-</div>
-	
+
+
+
 </div>
 
 
