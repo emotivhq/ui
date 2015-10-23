@@ -183,13 +183,13 @@
 
                 <gs-thanks></gs-thanks>
                 <div class="ui container groupcard" ng-show="pitchIns.length > 0">
-                    <div class="title title--groupcard">
+                    <div class="title vertical bottom medium">
                         <h2 class="title__name">Group Card</h2>
                         <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
                     </div>
                     <div class="ui three stackable cards">
                         <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="ui card">
-                            <div class="contributors segment ui {{randomColor($index)}}">
+                            <div class="contributors ui vertical segment {{randomColor($index)}}">
                                 <div class="block {{randomColor($index)}}"></div>
                                 <div class="contributors__figure">
                                     <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
@@ -204,7 +204,7 @@
                                     <div class="ui field" ng-show="isEditing(pitchIn)">
                                         <input type="text" ng-model="pitchIn.name" placeholder="Name" />
                                     </div>
-                                    <p class="content" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
+                                    <p class="content break" ng-show="!isEditing(pitchIn)">{{pitchIn.note}}</p>
                                     <textarea ng-model="pitchIn.note" ng-show="isEditing(pitchIn)" placeholder="Comment" />
                                 </div>
                                 <div class="ui field" ng-show="isEditing(pitchIn)">
@@ -230,8 +230,8 @@
 
                 </div>
                 <div ng-show="secondsLeft <= 0 || campaignComplete()" class="ui container grid aligned center centered vertical top large">
-                    <a href="#" ng-click="toPDFPage()" class="ui button icon labeled right">
-                        <i class="pdf icon red right"></i> View Card
+                    <a href="#" ng-click="toPDFPage()" class="ui button icon labeled right large">
+                        <i class="file icon red right"></i> View The Card
                     </a>
                 </div>
             </div>
