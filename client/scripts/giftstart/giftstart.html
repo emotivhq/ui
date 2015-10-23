@@ -64,25 +64,10 @@
                 </div>
             </div>
 				<div class="extra content" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox||secondsLeft <= 0||campaignComplete()">
-            	<div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
+            		<div class="pitch-instructions" ng-show="secondsLeft > 0 && !campaignComplete()">
                 <button class="ui pitch-in button huge icon fluid" ng-show="secondsLeft > 0 && !campaignComplete()" ng-class="{disabled: giftStart.totalSelection == 0, teal: giftStart.totalSelection > 0}" ng-click="pitchIn()" ng-mouseover="pitchInHoverCallback()" title="{{pitchinButtonHoverMessage}}">
                     <i class="gift right icon"></i> Pitch In <span class="hidden">${{giftStart.totalSelection / 100 | number : 2}}</span>
                 </button>
-
-                <div class="giftstart-this" ng-show="secondsLeft <= 0 || campaignComplete()">
-                    Would you like to give this gift to someone you know? Click the button below to start your own campaign for this gift.
-                    <br/>
-                    <a class="giftstart-this-link" target="_self" href="{{giftstartThisUrl()}}">
-                        <button class="pitch-in ui button teal">GiftStart It</button>
-                    </a>
-                    <div class="saveforlater">
-                        <button class="ui pitch-in button ico large" ng-click="saveProdForLater();">
-                            <i class="bookmark icon"></i> Save For Later
-                            <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
-                        </button>
-                        <div class="product-message" ng-bind-html="productMessage"></div>
-                    </div>
-                </div>
                 <button class="ui invite-friends button blue large fluid icon">
                     <span ng-hide="secondsLeft <= 0 || campaignComplete()">
 						<i class="users right icon"></i>
@@ -110,6 +95,24 @@
             </div-->
             </div>
         		</div>
+				<div class="giftstart-this ui bottom attached warning message" ng-show="secondsLeft <= 0 || campaignComplete()">
+                    <h3 class="ui header aligned center centered">
+						This campaign has ended, but you can still give it to someone you know.
+						Click the button below to start your own campaign.
+                    </h3>
+                    <a class="giftstart-this-link large teal ui button icon fluid vertical top small" target="_self" href="{{giftstartThisUrl()}}">
+						<i class="gift left icon" class="computer only ui"></i>
+						GiftStart It
+                    </a>
+                    <div class="saveforlater hidden">
+                        <button class="ui pitch-in button ico large" ng-click="saveProdForLater();">
+                            <i class="bookmark icon"></i> Save For Later
+                            <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+                        </button>
+                        <div class="product-message" ng-bind-html="productMessage"></div>
+                    </div>
+                </div>
+
             	<a class="ui bottom attached button icon" ng-show="campaignEditable && !editMode && secondsLeft > 0 && !campaignComplete()" ng-click="editMode=true;">
                 <i class="edit icon"></i> Edit
             </a>
@@ -146,7 +149,9 @@
         </div>
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
     </div>
-    <div class="ui container vertical top medium stripe quote segment" style="">
+    
+
+	<div class="ui container vertical top medium stripe quote segment">
             <div class="ui equal width stackable internally celled grid">
                 <div class="center aligned row ui grid stackable">
                     <div class="prices block column ui">
