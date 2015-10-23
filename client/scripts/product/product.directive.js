@@ -245,9 +245,9 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         link: link,
         templateUrl: '/scripts/product/product-search.html',
 		scope: {
-        	searchMenu: '=menu',
-        	homeMenu: '=home',
-        	searchResults: '=results'
+        	searchMenu: '@?menu',
+        	homeMenu: '@?home',
+        	searchResults: '@?results'
       	}
     }
 }
