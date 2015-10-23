@@ -242,7 +242,6 @@ module.exports = function(grunt) {
                     '../client/bower_components/angulartics/dist/angulartics-gtm.min.js',
                     '../client/bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
                     '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
-                    '../client/bower_components/angulartics-segment/dist/angulartics-segment.min.js',
 //					'../client/bower_components/angular-chosen-localytics/chosen.js',
 //					'../client/bower_components/angular-flexslider/angular-flexslider.js',
 //					'../client/bower_components/angular-aria/angular-aria.min.js',
