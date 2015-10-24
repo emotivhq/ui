@@ -1,4 +1,4 @@
-<div class="thank-you block" ng-show="thanks.editable || thanks.edit || thanks.message">
+<div class="thank-you block ui container segment piled tertiary main full" ng-show="thanks.editable || thanks.edit || thanks.message">
     <!--<div class="thank-you block">-->
     <div class="message">
         <div class="show-message" ng-hide="thanks.edit">
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="image">
-        <img ng-src="{{thanks.imgUrl}}" ng-show="thanks.imgUrl && !thanks.edit"/>
+        <img class="ui image rounded centered" ng-src="{{thanks.imgUrl}}" ng-show="thanks.imgUrl && !thanks.edit"/>
         <gs-image-upload class="white-buttons" ng-show="thanks.edit" on-image-updated="thanks.imageUpdated"></gs-image-upload>
     </div>
     <div class="buttons">
