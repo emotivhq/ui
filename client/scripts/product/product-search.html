@@ -21,15 +21,17 @@
         <div class="ui loader"></div>
     </div>
 
-    <div class="failed" ng-show="failed && searchMenu !== 'true'">
-        <img src="/assets/failed.png" />
-        <div>
-            <p>Looks like that search term didn’t find any results.</p>
+	<div class="ui active dimmer" ng-show="loading" style="position: fixed;margin-top: 78px;">
+    	<div class="ui loader"></div>
+ 	</div>
+    <section id="search-products-section" class="products ui" ng-class="{hidden: products.length == 0, grid: products.length > 0}" style="margin-top: 3em;" ng-show="searchResults === 'true'">
+        <div class="ui container text message middle center aligned" ng-show="results_empty">
+            <img src="/assets/failed.png"/>
+            <div class="header">
+                Oh no! We can't find that...
+            </div>
             <p>Please try a more specific term, or email our gift concierge at <a href="mailto:giftconcierge@giftstarter.com" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>
         </div>
-    </div>
-
-    <section id="search-products-section" class="products ui" ng-class="{hidden: products.length == 0, grid: products.length > 0}" style="margin-top: 3em;" ng-hide="searchResults !== 'true'">
         <div class="ui container">
             <div class="ui cards stackable four link vertical bottom medium">
                 <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
@@ -41,7 +43,7 @@
                         <div class="product-details ui aligned middle grid">
                             <h2 class="ui header">
                                 <div class="content">{{product.title | limitTo: 50}}</div>
-				            </h2>
+                            </h2>
                             <p class="description ui raised segment" ng-bind-html="product.description"></p>
                             <div class="ui buttons vertical" style="margin-top: 2rem; width: 100%;">
                                 <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon">
@@ -72,23 +74,23 @@
                     </div>
                     <div class="extra content">
                         <span class="right floated">
-      			            <i class="dollar teal icon"></i>{{product.price / 100 | number : 2}}
-    		            </span>
+                            <i class="dollar teal icon"></i>{{product.price / 100 | number : 2}}
+                        </span>
                     </div>
                 </div>
                 <div class="page-buttons ui vertical medium top bottom middle aligned center aligned grid" ng-show="products.length > 10">
                     <div class="ui pagination menu">
                         <a ng-click="decrementPage()" class="icon item">
-                            <i class="left chevron icon"></i>
+                          <i class="left chevron icon"></i>
                         </a>
                         <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item desktop only">{{pageNumber}}</a>
                         <a ng-repeat="pageNumber in pageNumbers | limitTo : 5 : begin" ng-class="{active: selectedPage === pageNumber}" ng-click="selectPage(pageNumber)" class="item mobile tablet only">{{pageNumber}}</a>
                         <a ng-click="incrementPage()" class="icon item">
-                            <i class="right chevron icon"></i>
+                          <i class="right chevron icon"></i>
                         </a>
                     </div>
                 </div>
             </div>
-        </div>
+    	</div>
     </section>
 </div>

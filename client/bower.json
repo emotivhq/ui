@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "1.2.32",
+  "version": "1.2.33",
   "authors": [
     "GiftStarter <admin@giftstarter.com>"
   ],
@@ -47,6 +47,7 @@
     "masonry": "~3.3.2",
     "jquery.steps": "~1.1.0",
     "mobile-angular-ui": "~1.2.0-rc.3",
+    "angulartics-segment": "~0.1.1",
     "angulartics-google-analytics": "~0.1.1",
     "semantic-ui": "~2.1.4",
     "angular-material": "~0.11.2",
