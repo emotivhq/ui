@@ -5,7 +5,7 @@
  */
 GiftStarterApp.directive('gsProductSearch', gsProductSearch);
 
-function gsProductSearch(UserService, ProductService, $location, Analytics, UserService, $window, $timeout, $rootScope) {
+function gsProductSearch(UserService, ProductService, $location, Analytics, UserService, $window, $timeout, $rootScope, $routeParams) {
     function link(scope, element, attrs) {
         scope.loading = false;
         scope.failed = false;
@@ -21,8 +21,9 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
 		scope.homeMenu = scope.$eval(attrs.home) || false;
 		scope.searchResults = scope.$eval(attrs.results) || false;
 
-        scope.giftConciergeClicked = function() {Analytics.track('client',
-            'gift concierge email clicked')};
+        scope.giftConciergeClicked = function() {
+            Analytics.track('client', 'gift concierge email clicked')
+        };
 
         function onSuccess(product) {
             Analytics.track('product', 'link submission succeeded');
@@ -38,14 +39,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             scope.failed = true;
         }
         scope.submit = function () {
-            // Determine if url or search term
-            var isUrl = (scope.product_url.indexOf('http://') == 0) | (scope.product_url.indexOf('https://') == 0);
-            if(isUrl) {
-                scope.submitLink();
-            } else {
-                scope.submitSearch();
-            }
-            //Close any semantic ui elements
+            (scope.product_url) ? scope.submitSearch() : scope.submitFromUrl();
             jQuery('.ui.sidebar').sidebar('hide');
         };
         scope.submitSearch = function () {
@@ -56,6 +50,21 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             scope.results_empty = false;
             scope.selectedProducts = [];
         };
+        scope.submitFromUrl = function () {
+            Analytics.track('product', 'search on load');
+            scope.selectedProducts = [];
+            scope.failed = false;
+            if ($routeParams.searchTerm) {
+                scope.loading = true;
+                scope.product_url = $routeParams.searchTerm
+                ProductService.searchProducts(scope.product_url);
+                scope.results_empty = false;
+            } else {
+                console.log('no search');
+                scope.loading = false;
+                scope.results_empty = true;    
+            }
+        }
         scope.submitLink = function () {
             Analytics.track('product', 'link submitted');
             // Fix urls if they don't start with http://
@@ -68,6 +77,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             ProductService.product.product_url = scope.product_url;
             ProductService.submitLink(scope.product_url, onSuccess, onFailure);
         };
+        scope.submit();
         scope.$on('products-fetched', function () {
             scope.loading = false;
             scope.failed = false;
