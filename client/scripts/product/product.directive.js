@@ -20,6 +20,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
 		scope.searchMenu = scope.$eval(attrs.menu) || false;
 		scope.homeMenu = scope.$eval(attrs.home) || false;
 		scope.searchResults = scope.$eval(attrs.results) || false;
+        scope.searchQueryExists = ($routeParams.searchTerm ? true : false);
 
         scope.giftConciergeClicked = function() {
             Analytics.track('client', 'gift concierge email clicked')

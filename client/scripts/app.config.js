@@ -3,8 +3,7 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
-GiftStarterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
-    appConfig]);
+GiftStarterApp.config(['$routeProvider', '$locationProvider', '$httpProvider', appConfig]);
 GiftStarterApp.config(['ezfbProvider', '$httpProvider', facebookConfig]);
 
 function appConfig($routeProvider, $locationProvider, $httpProvider) {
@@ -92,10 +91,10 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/search/', {
-        templateUrl: '/scripts/static-pages/giftideas/giftideas.html',
+        templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/discover', {
-        templateUrl: '/views/discover/discover.html',
+        templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/discover/:searchTerm', {
         templateUrl: '/views/search/search.html',
