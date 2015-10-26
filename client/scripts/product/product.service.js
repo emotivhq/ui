@@ -3,12 +3,9 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
+GiftStarterApp.service('ProductService', ['$http', '$rootScope', 'Analytics', 'UserService', 'PopoverService', '$location', ProductService]);
 
-GiftStarterApp.service('ProductService', ['$http','$rootScope','Analytics',
-    'UserService', 'PopoverService', '$location', ProductService]);
-
-function ProductService($http,  $rootScope,  Analytics, UserService, PopoverService, $location) {
-
+function ProductService($http, $rootScope, Analytics, UserService, PopoverService, $location) {
     this.product = {
         product_url: '',
         imgs: [],
@@ -17,17 +14,14 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
         imageWidth: 0,
         imageHeight: 0
     };
-
     this.products = [];
-
     var self = this;
-
-    this.submitLink = function(url, onSuccess, onFail) {
+    this.submitLink = function (url, onSuccess, onFail) {
         $http({
             method: 'GET',
             url: '/products/urls/' + encodeURIComponent(url) + '.json'
-        }).success(function(data) {
-            if (data.error) {
+        }).success(function (data) {
+            if(data.error) {
                 console && console.log && console.log("Fetched failed!");
                 onFail(data);
             } else {
@@ -37,13 +31,12 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
                 self.logo = data.product.logo;
                 onSuccess(self.product);
             }
-        }).error(function(data) {
+        }).error(function (data) {
             console && console.log && console.log("Fetched failed!");
             onFail(data);
         });
     };
-
-    this.createCampaignFromProduct = function(url, price, title, imgUrl) {
+    this.createCampaignFromProduct = function (url, price, title, imgUrl) {
         Analytics.track('product', 'campaign create from search');
         self.product.product_url = url;
         self.product.price = price;
@@ -52,8 +45,7 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
         self.product.imgs = [imgUrl];
         $location.path("create");
     };
-
-    this.saveForLater = function(retailer, url, price, title, description, imgUrl) {
+    this.saveForLater = function (retailer, url, price, title, description, imgUrl) {
         if(!UserService.loggedIn) {
             $rootScope.$broadcast('header-show-login');
         } else {
@@ -70,19 +62,20 @@ function ProductService($http,  $rootScope,  Analytics, UserService, PopoverServ
             });
         }
     };
-
-    this.searchProducts = function(search) {
-        if(window.history) {window.history.replaceState({},'GiftStarter Search: '+search,'/discover/'+encodeURIComponent(search));}
+    this.searchProducts = function (search) {
+        if(window.history) {
+            window.history.replaceState({}, 'GiftStarter Search: ' + search, '/discover/' + encodeURIComponent(search));
+        }
         Analytics.track('product', 'search submitted');
-        $http({method: 'GET',
-            url: '/products/' + encodeURIComponent(search) + '.json'})
-            .success(self.fetchSuccess);
+        $http({
+            method: 'GET',
+            url: '/products/' + encodeURIComponent(search) + '.json'
+        }).success(self.fetchSuccess);
     };
-
     this.fetchSuccess = function (result) {
         Analytics.track('product', 'search succeeded');
         self.products = result;
-        if (self.products.length) {
+        if(self.products.length) {
             $rootScope.$broadcast('products-fetched');
         } else {
             $rootScope.$broadcast('products-empty');
