@@ -60,26 +60,20 @@
                     </div>
                     <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
                 </div>
-                <div class="extra content">
-                    <span class="right floated">
-                        <i class="dollar teal icon"></i>{{product.price / 100 | number : 2}}
-                    </span>
-                </div>
             </div>
-            <div class="page-buttons ui vertical medium top bottom middle aligned center aligned grid" ng-show="products.length > 10">
+            <div class="page-buttons ui vertical medium top bottom middle aligned center aligned container" ng-show="products.length > 10">
                 <div class="ui pagination menu">
                     <a ng-click="decrementPage()" class="icon item">
                       <i class="left chevron icon"></i>
                     </a>
-                    <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item desktop only">{{pageNumber}}</a>
+                    <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" ng-class="{active: selectedPage === pageNumber}" class="item desktop only">{{pageNumber}}</a>
                     <a ng-repeat="pageNumber in pageNumbers | limitTo : 5 : begin" ng-class="{active: selectedPage === pageNumber}" ng-click="selectPage(pageNumber)" class="item mobile tablet only">{{pageNumber}}</a>
                     <a ng-click="incrementPage()" class="icon item">
                       <i class="right chevron icon"></i>
                     </a>
                 </div>
             </div>
-        </div>
-    	
+    	</div>
     </section>
     
     <div class="ui container" ng-show="searchResults && results_empty && searchQueryExists">

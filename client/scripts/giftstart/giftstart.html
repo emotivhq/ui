@@ -32,18 +32,19 @@
                         <h4 class="purchase-total header">Purchase Total: </h4>
                         <p class="purchase-note meta">Includes our gift concierge service, taxes, shipping, handling, and handmade card.</p>
                     </div>
-                    <div class="extra content">
+                    <div class="extra content ui aligned centered">
                         <h2 class="total-price aligned center ui"><i class="dollar icon green"></i>{{giftStart.totalSelection / 100 | number : 2}}</h2>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="ui eight wide computer sixteen wide mobile column" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial;" ng-class="{segment: editMode}">
+        <div class="ui eight wide computer sixteen wide mobile column" ng-hide="showLoginBox||showPayBox||showSignBox||showShareBox" style="padding: initial; padding-top: 1.2rem;" ng-class="{segment: editMode}">
 			<div class="ui fluid card" style="min-height:227px;">
 				<div class="content">
                 <div class="header">
-                    <a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title">
-                        {{giftStart.product_title | limitTo: 90}}
+                    {{giftStart.product_title | limitTo: 90}}
+					<a ng-href="{{giftStart.product_url}}" rel="nofollow" class="title linkage" target="_blank" ng-click="productLinkClicked();" ng-mouseover="hideOverlay();" ng-mouseleave="showOverlay();" ng-show="giftStart.product_title" data-content="Visit the product's website">
+                        <i class="external share icon"></i>
                     </a>
                 </div>
             </div>
@@ -95,8 +96,8 @@
             </div-->
             </div>
         		</div>
-				<div class="giftstart-this ui bottom attached warning message" ng-show="secondsLeft <= 0 || campaignComplete()">
-                    <h3 class="ui header aligned center centered">
+				<div class="giftstart-this ui bottom attached warning message" ng-show="secondsLeft <= 0 || campaignComplete()" style="margin-bottom:0">
+                    <h3 class="ui header aligned left">
 						This campaign has ended, but you can still give it to someone you know.
 						Click the button below to start your own campaign.
                     </h3>
@@ -151,7 +152,7 @@
     </div>
     
 
-	<div class="ui container vertical top medium stripe quote segment">
+	<div class="ui container vertical top large stripe quote segment">
             <div class="ui equal width stackable internally celled grid">
                 <div class="center aligned row ui grid stackable">
                     <div class="prices block column ui">
@@ -188,8 +189,8 @@
                         <span class="title__catchline">To sign the card, first pitch-in by purchasing some pieces above</span>
                     </div>
                     <div class="ui three stackable cards">
-                        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="ui card">
-                            <div class="contributors ui vertical segment {{randomColor($index)}}">
+                        <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="ui card {{randomColor($index)}}">
+                            <div class="contributors ui content {{randomColor($index)}}">
                                 <div class="block {{randomColor($index)}}"></div>
                                 <div class="contributors__figure">
                                     <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
@@ -229,7 +230,7 @@
                     <div class="ui floating message container yellow" ng-hide="pitchIns.length > 0" style="    width: 50%;">No contributors yet - time for <em>you</em> to be the trend setter.</div>
 
                 </div>
-                <div ng-show="secondsLeft <= 0 || campaignComplete()" class="ui container grid aligned center centered vertical top large">
+                <div ng-show="secondsLeft <= 0 || campaignComplete()" class="ui container grid aligned center centered vertical top large hidden">
                     <a href="#" ng-click="toPDFPage()" class="ui button icon labeled right large">
                         <i class="file icon red right"></i> View The Card
                     </a>
