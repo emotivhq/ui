@@ -1,14 +1,9 @@
 <div id="shareControllerWrapper" class="ui bottom sidebar middle share pitchin segment" ng-controller="ShareController">
     <a href="#" class="close-share"><i class="large close icon"></i></a>
-    <div class="ui header">
-        <h1 class="ui header aligned center">Invite Friends to Pitch-in</h1>
-        <!--p>Your GiftStarter campaign is successfully set up! Invite friends to help pitch-in
-        and increase your chances of fully funding the gift!</p-->
-    </div>
-
-    <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
-
-	<div id="share-block" class="content ui form container">
+    <div class="ui center aligned attached column grid vertical top medium">
+		<ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
+	</div>
+	<div ng-show="loggedIn()" id="share-block" class="content ui form container vertical top medium">
 		<div class="ui three top attached steps">
 		  <div class="step">
 			<i class="comment icon"></i>
@@ -40,7 +35,7 @@
 				<div class="ui divided selection list">
 					<a class="item">
   						<div class="ui red horizontal label">Tip</div>
-  						Select the social network to share with
+  						Select the social networks to share with
 					</a>
 				</div>
 				<a class="social__link linky" ng-click="selectedSocials['facebook']=false">
@@ -57,24 +52,26 @@
 				<img class="social__icons linky" src=/assets/share/linkedin-share-unselected.png ng-hide="selectedSocials['linkedin']" ng-click="selectSocial('linkedin')" />
 				<!--<a class="social__link linky" ng-click="selectedSocials['google']=false"><img class="social__icons" src="/assets/share/google.png" ng-hide="!sharePermission['google'] || !selectedSocials['google']"></a>-->
 				<!--<img class="social__icons linky" src=/assets/share/google-share-unselected.png ng-show="!selectedSocials['google']" ng-click="selectSocial('google')"/>-->
+            	<p class="twitter-note ui message info" ng-show="selectedSocials['twitter'] && message.length>118">Only the first 118 characters of your Twitter message and a link to this campaign will be posted.</p>
 			</div>
 			<div class="column">				
             	<textarea ng-model="emailRecipients" placeholder="Enter email addresses, separated by commas"></textarea>
 			</div>
 		</div>	
-		<div class="share-buttons ui middle aligned center aligned content">
-            <p ng-show="shareSuccess">That was successful!</p>
-            <p class="twitter-note" ng-show="selectedSocials['twitter'] && message.length>118">Note: For Twitter, only the first 118 characters of your message and a link to this campaign will be posted.</p>
-            <button class="ui button large icon fluid teal" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">
-                <i class="share external icon"></i> Share
-            </button>
-            <button class="ui button large" ng-show="shareSuccess" ng-click="shareReset()">
-                Share again
-            </button>
+		<div class="share-buttons ui middle aligned center content">
+            <div class="ui aligned center centered">
+				<button class="ui button huge icon blue" ng-hide="shareSuccess" ng-disabled="!selectedSocials['facebook']&&!selectedSocials['twitter']&&!selectedSocials['linkedin']&&!selectedSocials['google']&&emailRecipients.length==0" ng-click="shareClick()">
+					<i class="share external icon"></i> Share Now
+				</button>
+            	<p ng-show="shareSuccess" class="ui message positive">That was successful!</p>
+				<button class="ui button large" ng-show="shareSuccess" ng-click="shareReset()">
+					Share again
+				</button>
+			</div>
 
         </div>
         <div class="share-buttons ui middle aligned center aligned content share-where-link form segment">
-            <p style="text-align:center">Use this link to invite friends and family</p>
+            <p style="text-align:center">Copy this link to invite friends and family</p>
             <input value="{{campaignUrl()}}" gs-copy-url readonly/>
         </div>
         <!--a href=""><h4>SKIP AND SHARE LATER</h4></a>
@@ -86,7 +83,6 @@
             </div>
         </div>
 	</div>
-	
     <div ng-show="loggedIn()" id="share-block" class="content ui form container hidden">
         <div id="content" class="ui horizontal segments">
             <div class="ui segment" style="min-width:45%;">
