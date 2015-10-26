@@ -235,7 +235,7 @@
             $timeout(function () {
                 $rootScope.$broadcast('header-close-login')
             }, 3000);
-            jQuery('.userlogin').fadeOut(3000);
+            jQuery('.userlogin').fadeOut(1500);
             $scope.working = false;
             // @fedora - if a user logs in from /login, then redircet the, to their profile
             // @yaboi - if a user is resetting their password (/reset on login view) redirect them to their profile
