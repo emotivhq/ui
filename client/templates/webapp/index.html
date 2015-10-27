@@ -18,6 +18,24 @@
 	<script src="/scripts/webapp/angular.js"></script>
 	<script src="/scripts/webapp/app.js"></script>
 	<script src="/scripts/utilities/browser-specific-css.js"></script>
+	<link rel="manifest" href="/manifest.json">
+	<script> 
+    window.addEventListener('load', function() {
+      var outputElement = document.getElementById('output');
+      navigator.serviceWorker.register('/service-worker.js', { scope: './' })
+        .then(function(r) {
+          console.log('Registered GiftStarter Service Worker');
+        })
+        .catch(function(whut) {
+          console.error('Uh oh... ');
+          console.error(whut);
+        });
+       
+      window.addEventListener('beforeinstallprompt', function(e) {
+        outputElement.textContent = 'beforeinstallprompt Event fired';
+      });
+    });
+    </script>	
 	<!-- browser detect -->
 	<script type="text/javascript">
 

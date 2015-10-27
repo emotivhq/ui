@@ -139,14 +139,14 @@
             <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you - giving credit where credit is due.</p>
             <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
         </div>
-        <div class="share-box" ng-show="showShareBox">
+        <div class="share-box ui segment eight wide computer sixteen wide mobile column" ng-show="showShareBox" style="margin-top: 0;">
             <h2>Share with Friends:</h2>
             <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
             <button class="ui invite-friends button blue large fluid icon">
                 <i class="users right icon"></i>
                 Invite Friends
             </button>
-            <a href="" class="linky" ng-click="shareBox(false)">Skip this step</a>
+            <a href="#" class="linky" ng-click="shareBox(false)">Skip this step</a>
         </div>
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
     </div>
