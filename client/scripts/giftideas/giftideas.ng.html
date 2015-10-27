@@ -84,16 +84,19 @@
         
         <div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
         <div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
-        <div class="clear"></div>
     </div>
 
-    <div>
-        <div class="ui container text">
-            <h1 class="ui header">What’s popular</h1>
-            <p>We've curated lists of our most popular gifts. Not sure what to give? That's alright, we've already found the perfect gift.</p>
+    <div class="ui container text">
+        <div class="ui basic segment">
+        <h1 class="ui huge header">
+          What’s popular
+          <div class="sub header">We've curated lists of our most popular gifts. Not sure what to give? That's alright, we've already found the perfect gift.</div>
+        </h1>
         </div>
-        <div class="ui five stackable cards">
-            <div ng-repeat="idea in giftideas" class="card">
+    </div>
+    <div class="ui segment basic">
+        <div class="ui five doubling cards">
+            <div ng-repeat="idea in giftideas" class="giftidea card">
                 <a class="image" href="{{idea.url}}">
                     <img data-src="{{idea.img}}" src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
                 </a>
@@ -109,6 +112,6 @@
                     </a>
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 </div>
