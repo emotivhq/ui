@@ -33,8 +33,9 @@
         }
 
         function makeUrl(url, title, price, img, source) {
-            if (source === '') {
-                alert("oops!  need a referrer!  just put any tracking string, like 'mancrate_coffee'.");
+            var a = document.querySelector('.link-create');
+            if (source === '' || !a.url.validity.valid) {
+                alert("Put any tracking string - 'mancrate_coffee'. Please, check url (should contain http or https)");
                 return '';
             }
             return 'https://www.giftstarter.com/create?' + urlSerialize({
@@ -311,22 +312,24 @@
 
     </script>
     <div style=" display:inline-block; float:left; min-width:750px; white-space: nowrap">
-        <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required="" value="" placeholder="teacher"/><br>
-        <label for="url">Product URL</label> <input type="text" id="url" required="" size="80"/><br>
-        <label for="title">Product Title</label> <input type="text" id="title" required="" size="80" onchange="setShortTitle()"/><br>
-        <label style="color:#999999" for="titleshort">Short Title*</label> <input type="text" id="titleshort" required="" size="40" maxlength="28" onchange="setProductSlug()"/> (max 28 chars)<br>
-        <label style="color:#999999" for="slug">Product Slug*</label> <input type="text" id="slug" required="" size="40"/><br>
-        <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="40" value="" placeholder="/teacher/visa-gift-card.png"/><br>
-        <label for="imagethumb" style="color:#999999">Product Thumbnail URL</label> <input type="text" id="imagethumb" required="" size="40" value=""/><br>
-        <label style="color:#999999" for="alttext">Image ALT text*</label> <input type="text" id="alttext" required="" size="40" /><br>
-        <label for="price">Product Price</label> <input type="text" id="price" required="" placeholder="e.g. 299.67 for $299.67"/><br>
-        <label style="color:#999999;vertical-align:top" for="description">Description*</label> <textarea type="text" id="description" required="" rows="5" cols="60"> </textarea><br>
-        <label style="color:#999999;vertical-align:top" for="metadescription">Meta Description*</label> <textarea type="text" id="metadescription" required="" rows="3" cols="60"> </textarea><br>
-        <label for="source">Referrer (a tracking string)</label> <input type="text" id="source" required="" /><br><br>
-        <label style="color:#999999">*only required for JSON</label> &nbsp; &nbsp; <button id="submit" onclick="formSubmit()">Create Link</button><br><br>
-        <label for="result">Result </label><input id="result" size="40"/> &nbsp;
-        <label for="shortlink">Short </label><input id="shortlink"/><br>
-        <textarea id="json" rows="10" cols="80"></textarea>
+        <form class="link-create">
+            <label style="color:#999999" for="catslug">Category Slug*</label> <input type="text" id="catslug" required value="" placeholder="teacher"/><br>
+            <label for="url">Product URL</label> <input type="text" id="url" required title="Please, use correct url http://www.example.com" pattern="(http|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?" /><br>
+            <label for="title">Product Title</label> <input type="text" id="title" required="" size="80" onchange="setShortTitle()"/><br>
+            <label style="color:#999999" for="titleshort">Short Title*</label> <input type="text" id="titleshort" required size="40" maxlength="28" onchange="setProductSlug()"/> (max 28 chars)<br>
+            <label style="color:#999999" for="slug">Product Slug*</label> <input type="text" id="slug" required size="40"/><br>
+            <label for="image">Product Image URL</label> <input type="text" id="image" required="" size="40" value="" placeholder="/teacher/visa-gift-card.png"/><br>
+            <label for="imagethumb" style="color:#999999">Product Thumbnail URL</label> <input type="text" id="imagethumb" required size="40" value=""/><br>
+            <label style="color:#999999" for="alttext">Image ALT text*</label> <input type="text" id="alttext" required="" size="40" /><br>
+            <label for="price">Product Price</label> <input type="text" id="price" required placeholder="e.g. 299.67 for $299.67"/><br>
+            <label style="color:#999999;vertical-align:top" for="description">Description*</label> <textarea type="text" id="description" required rows="5" cols="60"> </textarea><br>
+            <label style="color:#999999;vertical-align:top" for="metadescription">Meta Description*</label> <textarea type="text" id="metadescription" required rows="3" cols="60"> </textarea><br>
+            <label for="source">Referrer (a tracking string)</label> <input type="text" id="source" required /><br><br>
+            <label style="color:#999999">*only required for JSON</label> &nbsp; &nbsp; <button id="submit" onclick="formSubmit()">Create Link</button><br><br>
+            <label for="result">Result </label><input id="result" size="40"/> &nbsp;
+            <label for="shortlink">Short </label><input id="shortlink"/><br>
+            <textarea id="json" rows="10" cols="80"></textarea>
+        </form>
     </div>
     <div><a id="prodimglink" href="/assets/link_create_preview.png" target="prodimg"><img id="prodimg" style="display:inline-block; float:left; width:480px; border: 0px;" src="/assets/link_create_preview.png"></a></div>
 
