@@ -134,9 +134,10 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     }
     
     $http.get('/assets/giftideas/giftideas.json').then( function (response) {
-        console.log(response);
         $scope.giftideas = [];
-        $scope.giftideas = response.data;
+        angular.forEach(response.data, function(value, key) {
+            if (value.enabled) $scope.giftideas.push(value);
+        });
     });
 
     $scope.goToLink = function(destination) {

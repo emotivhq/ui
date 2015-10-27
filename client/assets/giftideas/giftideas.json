@@ -1,18 +1,263 @@
 [
     {
         "title": "Music",
-        "description": "Put a jingle in their step with a music gift",
+        "description": "Put a jingle in their step with a music gift.",
         "img": "/assets/giftideas/category/music.jpg",
         "alt": "Music",
         "url": "/giftideas/music",
-        "button": "View Music"
+        "button": "View Music",
+        "enabled": true
     },
     {
-        "title": "Music",
-        "description": "Put a jingle in their step with a music gift",
-        "img": "/assets/giftideas/category/music.jpg",
-        "alt": "Music",
-        "url": "/giftideas/music",
-        "button": "View Music"
+        "title": "Luma Diamonds",
+        "description": "Beautiful jewelry for the beauty in your life.",
+        "img": "/assets/giftideas/category/luma-diamonds.jpg",
+        "alt": "Luma Diamonds",
+        "url": "/giftideas/luma",
+        "button": "View Luma",
+        "enabled": true
+    },
+    {
+        "title": "Kids",
+        "description": "Kid friendly choices for the younger crowd.",
+        "img": "/assets/giftideas/category/kids.jpg",
+        "alt": "Kids",
+        "url": "/giftideas/kids",
+        "button": "View Kids",
+        "enabled": true
+    },
+    {
+        "title": "Outdoors",
+        "description": "Prepare them for their next outdoor adventure.",
+        "img": "/assets/giftideas/category/outdoors.jpg",
+        "alt": "Outdoors",
+        "url": "/giftideas/outdoors",
+        "button": "View Outdoors",
+        "enabled": true
+    },
+    {
+        "title": "Green",
+        "description": "The world is important, help them do their part.",
+        "img": "/assets/giftideas/category/green.jpg",
+        "alt": "Green",
+        "url": "/giftideas/Green",
+        "button": "View Green",
+        "enabled": true
+    },
+    {
+        "title": "Home",
+        "description": "Make any house feel like a home.",
+        "img": "/assets/giftideas/category/home.jpg",
+        "alt": "Home",
+        "url": "/giftideas/Home",
+        "button": "View Home",
+        "enabled": true
+    },
+    {
+        "title": "Cute",
+        "description": "Absolutely the cutest things on the internet.",
+        "img": "/assets/giftideas/category/cute.jpg",
+        "alt": "Cute",
+        "url": "/giftideas/Cute",
+        "button": "View Cute",
+        "enabled": true
+    },
+    {
+        "title": "Baby",
+        "description": "Curated by moms for moms.",
+        "img": "/assets/giftideas/category/baby.jpg",
+        "alt": "Baby",
+        "url": "/giftideas/Baby",
+        "button": "View Baby",
+        "enabled": true
+    },
+    {
+        "title": "For Her",
+        "description": "Treat the women in your life to something special.",
+        "img": "/assets/giftideas/category/for-her.jpg",
+        "alt": "For Her",
+        "url": "/giftideas/forHer",
+        "button": "View For Her",
+        "enabled": true
+    },
+    {
+        "title": "For Him",
+        "description": "The best handcrafted gifts for him.",
+        "img": "/assets/giftideas/category/for-him.jpg",
+        "alt": "For Him",
+        "url": "/giftideas/forhim",
+        "button": "View For Him",
+        "enabled": true
+    },
+    {
+        "title": "Cool",
+        "description": "Don't be a fool... make your next gift Cool.",
+        "img": "/assets/giftideas/category/cool.jpg",
+        "alt": "Cool",
+        "url": "/giftideas/Cool",
+        "button": "View Cool",
+        "enabled": true
+    },
+    {
+        "title": "Office",
+        "description": "Their coworkers will be jealous on Monday!",
+        "img": "/assets/giftideas/category/office.jpg",
+        "alt": "Office",
+        "url": "/giftideas/Office",
+        "button": "View Office",
+        "enabled": true
+    },
+    {
+        "title": "Farewell",
+        "description": "Get them something to remember you by.",
+        "img": "/assets/giftideas/category/farewell.jpg",
+        "alt": "Farewell",
+        "url": "/giftideas/Farewell",
+        "button": "View Farewell",
+        "enabled": true
+    },
+    {
+        "title": "Sympathy",
+        "description": "Let them know you truly care.",
+        "img": "/assets/giftideas/category/sympathy.jpg",
+        "alt": "Sympathy",
+        "url": "/giftideas/Sympathy",
+        "button": "View Sympathy",
+        "enabled": true
+    },
+    {
+        "title": "Beauty",
+        "description": "Natural, popular beauty gifts for healthy skin.",
+        "img": "/assets/giftideas/category/beauty.jpg",
+        "alt": "Beauty",
+        "url": "/giftideas/Beauty",
+        "button": "View Beauty",
+        "enabled": true
+    },
+    {
+        "title": "Wine",
+        "description": "Wine that nourishes the stomach and soul.",
+        "img": "/assets/giftideas/category/wine.jpg",
+        "alt": "Wine",
+        "url": "/giftideas/Wine",
+        "button": "View Wine",
+        "enabled": true
+    },
+    {
+        "title": "Butter LONDON",
+        "description": "Color, creativity, &amp; self-expression.",
+        "img": "/assets/giftideas/category/butter-london.jpg",
+        "alt": "Butter LONDON",
+        "url": "/giftideas/butterlondon",
+        "button": "View Butter LONDON",
+        "enabled": true
+    },
+    {
+        "title": "Pet Lovers",
+        "description": "For furred friends as well their \"parents.\"",
+        "img": "/assets/giftideas/category/pet-lovers.jpg",
+        "alt": "Pet Lovers",
+        "url": "/giftideas/petlovers",
+        "button": "View Pet Lovers",
+        "enabled": true
+    },
+    {
+        "title": "Wedding",
+        "description": "Give a bigger and better wedding gift.",
+        "img": "/assets/giftideas/category/wedding.jpg",
+        "alt": "Wedding",
+        "url": "/giftideas/Wedding",
+        "button": "View Wedding",
+        "enabled": true
+    },
+    {
+        "title": "Graduation",
+        "description": "Help them open the next chapter with love.",
+        "img": "/assets/giftideas/category/graduation.jpg",
+        "alt": "Graduation",
+        "url": "/giftideas/graduation",
+        "button": "View Graduation",
+        "enabled": true
+    },
+    {
+        "title": "Wear Red",
+        "description": "Honor the women in your life.",
+        "img": "/assets/giftideas/category/red.jpg",
+        "alt": "Wear Red",
+        "url": "/giftideas/red",
+        "button": "View Wear Red",
+        "enabled": true
+    },
+    {
+        "title": "Patriots",
+        "description": "",
+        "img": "/assets/giftideas/category/patriots.jpg",
+        "alt": "Patriots",
+        "url": "/giftideas/Patriots",
+        "button": "View Patriots",
+        "enabled": false
+    },
+    {
+        "title": "Seahawks",
+        "description": "...",
+        "img": "/assets/giftideas/category/seahawks.jpg",
+        "alt": "Seahawks",
+        "url": "/giftideas/Seahawks",
+        "button": "View Seahawks",
+        "enabled": false
+    },
+    {
+        "title": "Employee",
+        "description": "Let your employees know you truly care.",
+        "img": "/assets/giftideas/category/employee.jpg",
+        "alt": "Employee",
+        "url": "/giftideas/Employee",
+        "button": "View Employee",
+        "enabled": true
+    },
+    {
+        "title": "Boss",
+        "description": "Show that the team really cares.",
+        "img": "/assets/giftideas/category/boss.jpg",
+        "alt": "Boss",
+        "url": "/giftideas/Boss",
+        "button": "View Boss",
+        "enabled": true
+    },
+    {
+        "title": "Teacher",
+        "description": "Show them how grateful you are for all they do.",
+        "img": "/assets/giftideas/category/teacher.jpg",
+        "alt": "Teacher",
+        "url": "/giftideas/Teacher",
+        "button": "View Teacher",
+        "enabled": true
+    },
+    {
+        "title": "Electronics",
+        "description": "These gifts will surely be a win in their book.",
+        "img": "/assets/giftideas/category/electronics.jpg",
+        "alt": "Electronics",
+        "url": "/giftideas/Electronics",
+        "button": "View Electronics",
+        "enabled": true
+    },
+    {
+        "title": "Military",
+        "description": "Support the soldier in your life.",
+        "img": "/assets/giftideas/category/military.jpg",
+        "alt": "Military",
+        "url": "/giftideas/Military",
+        "button": "View Military",
+        "enabled": true
+    },
+    {
+        "title": "Gift Cards",
+        "description": "It is always the right size and the right color.",
+        "img": "/assets/giftideas/category/giftcard.jpg",
+        "alt": "Gift Cards",
+        "url": "/giftideas/giftcard",
+        "button": "View Gift Cards",
+        "enabled": true
     }
 ]

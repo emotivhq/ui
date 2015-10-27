@@ -61,7 +61,6 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
                 ProductService.searchProducts(scope.product_url);
                 scope.results_empty = false;
             } else {
-                console.log('no search');
                 scope.loading = false;
                 scope.results_empty = true;    
             }
