@@ -44,7 +44,7 @@
             <div class="ui stackable four column grid">
                 <div class="eight wide column">
                     <h2 class="ui center aligned header">
-  					    <img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
+  					    <img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="display: block; margin: 0 auto .5rem;width: 57%;">
 				    </h2>
                 </div>
                 <div class="eight wide column">
@@ -61,12 +61,14 @@
 			    {{category.categoryName}}
 		    </h2>
         </div>
+        
+        
         <ul rn-carousel class="ui segment carousel" rn-carousel-index="carouselIndex">
             <li ng-repeat="group in groups" class="ui centered stackable grid">
                 <div ng-repeat="product in group" class="four wide column">
                     <div class="ui fluid card">
                         <a class="image" href="{{categoryPath}}/{{product.productSlug}}">
-                            <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
+                            <img ng-src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
                         </a>
                         <div class="content">
                             <a class="header" ng-bind-html="product.productNameShort" href="{{categoryPath}}/{{product.productSlug}}"></a>
@@ -78,29 +80,35 @@
                 </div>
             </li>
         </ul>
+        
+        
         <div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
         <div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
         <div class="clear"></div>
     </div>
 
-    <h1 class="ui header">What’s popular</h1>
-    
-    <div class="ui five stackable cards">
-        <div ng-repeat="idea in giftideas|orderBy:'title'" class="card">
-            <a class="image" href="{{idea.url}}">
-                <img data-src="{{idea.img}}" src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="{{idea.url}}">{{idea.title || '...'}}</a>
-                <div class="description">
-                    {{idea.description || '...' }}
+    <div ng-show="!category && !product">
+        <div class="ui container text">
+            <h1 class="ui header">What’s popular</h1>
+            <p>We've curated lists of our most popular gifts. Not sure what to give? That's alright, we've already found the perfect gift.</p>
+        </div>
+        <div class="ui five stackable cards">
+            <div ng-repeat="idea in giftideas|orderBy:'title'" class="card">
+                <a class="image" href="{{idea.url}}">
+                    <img data-src="{{idea.img}}" src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
+                </a>
+                <div class="content">
+                    <a class="header" href="{{idea.url}}">{{idea.title || '...'}}</a>
+                    <div class="description">
+                        {{idea.description || '...' }}
+                    </div>
+                </div>
+                <div class="extra content">
+                    <a class="center" href="{{idea.url}}">
+                        <i class="unhide icon"></i> {{idea.button}}
+                    </a>
                 </div>
             </div>
-            <div class="extra content">
-                <a class="center" href="{{idea.url}}">
-                    <i class="unhide icon"></i> {{idea.button}}
-                </a>
-            </div>
-        </div>
-    </div> 
+        </div> 
+    </div>
 </div>
