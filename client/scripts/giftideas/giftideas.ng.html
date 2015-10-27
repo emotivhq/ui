@@ -87,13 +87,13 @@
         <div class="clear"></div>
     </div>
 
-    <div ng-show="!category && !product">
+    <div>
         <div class="ui container text">
             <h1 class="ui header">What’s popular</h1>
             <p>We've curated lists of our most popular gifts. Not sure what to give? That's alright, we've already found the perfect gift.</p>
         </div>
         <div class="ui five stackable cards">
-            <div ng-repeat="idea in giftideas|orderBy:'title'" class="card">
+            <div ng-repeat="idea in giftideas" class="card">
                 <a class="image" href="{{idea.url}}">
                     <img data-src="{{idea.img}}" src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
                 </a>

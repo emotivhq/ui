@@ -15,6 +15,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.isSavingForLater = false;
     var pathParts = $scope.path.replace('//', '/').split('/');
     $scope.basePath = pathParts[1];
+    var discover = pathParts.length > 2 && pathParts[1] === 'discover' ? true : false;
     var category = pathParts.length > 2 ? pathParts[2] : false;
     var product = pathParts.length > 3 ? pathParts[3] : false;
 	// lazy load images
@@ -113,7 +114,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
       return groupsArr;
     }
 
-    if(category) {
+    if(category && !discover) {
         category = angular.lowercase(category);
         $http.get('/assets/giftideas/' + category + '.json').then( function (response) {
             $scope.groups = [];
@@ -132,14 +133,15 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
                 $scope.groups.push([prior]);
             }
         });
-    } else {
-        $http.get('/assets/giftideas/giftideas.json').then( function (response) {
-            $scope.giftideas = [];
-            angular.forEach(response.data, function(value, key) {
-                if (value.enabled) $scope.giftideas.push(value);
-            });
-        });
     }
+    
+    $http.get('/assets/giftideas/giftideas.json').then( function (response) {
+        $scope.giftideas = [];
+        angular.forEach(response.data, function(value, key) {
+            if (value.enabled) $scope.giftideas.push(value);
+        });
+        shuffle($scope.giftideas);
+    });
     
     $scope.goToLink = function(destination) {
         window.location.href = destination;

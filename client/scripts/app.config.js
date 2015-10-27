@@ -87,23 +87,23 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
     }).when('/reset/:resetCode', {
         templateUrl: '/views/login/login.html',
         reloadOnSearch: false
-    }).when('/search/:searchTerm', {
-        templateUrl: '/views/search/search.html',
-        reloadOnSearch: false
     }).when('/search/', {
         templateUrl: '/views/search/search.html',
         reloadOnSearch: false
-    }).when('/discover', {
+    }).when('/search/:searchTerm', {
         templateUrl: '/views/search/search.html',
+        reloadOnSearch: false
+    }).when('/discover', {
+        templateUrl: '/views/discover/discover.html',
         reloadOnSearch: false
     }).when('/discover/:searchTerm', {
         templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/giftideas', {
-        templateUrl: '/scripts/static-pages/giftideas/giftideas.html',
+        templateUrl: '/views/giftideas/giftideas.html',
         reloadOnSearch: false
     }).when('/giftideas/:term*', {
-        templateUrl: '/scripts/static-pages/giftideas/giftideas.html',
+        templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/:path*', {
         controller: 'ContentRouteController',
