@@ -1,5 +1,4 @@
 <div id="giftideas" class="ui container">
-
     <div ng-show="product" class="singleproduct main pad">
         <div class="head">
             <div class="hero">
@@ -84,25 +83,29 @@
         <div class="clear"></div>
     </div>
 
-    <h1 class="vertical medium top bottom">What’s popular</h1>
-    <div class="categories ui three stackable link cards">
-
-        <div class="card">
-            <a class="image" href="/giftideas/music">
-                <img src="/assets/giftideas/category/music.jpg" alt="Music" class="load" />
+    <h1 class="ui header">What’s popular</h1>
+    
+    <div class="ui five stackable cards">
+        <!-- TODO : Tyler Goelz @yaboi 26 Oct 15
+            Move all hardcoded HTML data to /client/assets/giftideas/giftideas.json
+        -->     
+        <div ng-repeat="idea in giftideas" class="card">
+            <a class="image" href="{{idea.url}}">
+                <img src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
             </a>
             <div class="content">
-                <a class="header" href="/giftideas/music">Music</a>
+                <a class="header" href="{{idea.url}}">{{idea.title}}</a>
                 <div class="description">
-                    Looking for the perfect gift for someone who has everything or loves the gift of music?
+                    {{idea.description}}
                 </div>
             </div>
             <div class="extra content">
-                <a class="center" href="/giftideas/music">
-                    <i class="unhide icon"></i> View Music
+                <a class="center" href="{{idea.url}}">
+                    <i class="unhide icon"></i> {{idea.button}}
                 </a>
             </div>
         </div>
+        
         <div class="card">
             <a class="image" href="/giftideas/luma">
                 <img src="/assets/giftideas/category/luma-diamonds.jpg" alt="Luma Diamonds" class="load" />
@@ -110,7 +113,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/luma">Luma Diamonds</a>
                 <div class="description">
-                    With such a variety of beautiful pieces, there is sure to be one perfect for the deserving individual in your life.
+                    Beautiful jewelry for the beauty in your life.
                 </div>
             </div>
             <div class="extra content">
@@ -126,7 +129,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/kids">Kids</a>
                 <div class="description">
-                    We've picked out some of the very best kid gifts that are sure to delight a little one in your life.
+                    Kid friendly choices for the younger crowd.                  
                 </div>
             </div>
             <div class="extra content">
@@ -142,7 +145,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/outdoors">Outdoors</a>
                 <div class="description">
-                    ...
+                    Prepare them for their next outdoor adventure.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -158,7 +161,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/green">Green</a>
                 <div class="description">
-                    ...
+                    The world is important, help them do their part.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -174,7 +177,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/home">Home</a>
                 <div class="content">
-                    These gift ideas will help to make any house feel more like a home!
+                    Make any house feel like a home.
                 </div>
             </div>
             <div class="extra content">
@@ -190,7 +193,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/cute">Cute</a>
                 <div class="description">
-                    Know someone who absolutely loves cute things? This is the place for that kind of stuff.
+                    Absolutely the cutest things on the internet.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -206,7 +209,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/baby">Baby</a>
                 <div class="description">
-                    Hand picked and curated by moms all over for the best experience for both baby & mom.
+                    Curated by moms for moms.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -223,7 +226,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/forher">For Her</a>
                 <div class="description">
-                    Sisters. Grandmas. Moms. Aunts. Cousins. Friends. Colleagues. We have our own tastes, and here are some favorites.
+                    Treat the women in your life to something special.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -239,7 +242,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/forhim">For Him</a>
                 <div class="description">
-                    The best damm handcrafted gift list for guys.
+                    The best handcrafted gifts for him.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -255,7 +258,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/cool">Cool</a>
                 <div class="description">
-                    ...
+                    Don't be a fool... make your next gift Cool.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -271,7 +274,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/office">Office</a>
                 <div class="description">
-                    ...
+                    Their coworkers will be jealous on Monday!
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -287,7 +290,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/farewell">Farewell</a>
                 <div class="description">
-                    ...
+                    Get them something to remember you by.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -303,7 +306,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/sympathy">Sympathy</a>
                 <div class="description">
-                    ...
+                    Let them know you truly care.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -319,7 +322,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/beauty">Beauty</a>
                 <div class="description">
-                    ...
+                    Natural, popular beauty gifts for healthy skin.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -335,7 +338,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/wine">Wine</a>
                 <div class="description">
-                    ...
+                    Wine that nourishes the stomach and soul.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -351,7 +354,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/butterlondon">Butter LONDON</a>
                 <div class="description">
-                    ...
+                    Color, creativity, &amp; self-expression.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -367,7 +370,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/petlovers">Pet Lovers</a>
                 <div class="description">
-                    ...
+                    For furred friends as well their “parents.”
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -383,7 +386,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/wedding">Wedding</a>
                 <div class="description">
-                    ...
+                    Give a bigger and better wedding gift.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -399,7 +402,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/graduation">Graduation</a>
                 <div class="description">
-                    ...
+                    Help them open the next chapter with love
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -415,7 +418,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/red">Wear Red</a>
                 <div class="description">
-                    ...
+                    Honor the women in your life.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -424,7 +427,7 @@
                 </a>
             </div>
         </div>
-        <div class="card">
+<!--         <div class="card">
             <a class="image" href="/giftideas/patriots">
                 <img src="/assets/giftideas/category/Patriots.jpg" alt="Patriots" class="load" />
             </a>
@@ -455,7 +458,7 @@
                     <i class="unhide icon"></i> View Seahawks
                 </a>
             </div>
-        </div>
+        </div> -->
         <div class="card">
             <a class="image" href="/giftideas/employee">
                 <img src="/assets/giftideas/category/employee.jpg" alt="Employee" class="load" />
@@ -463,7 +466,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/employee">Employee</a>
                 <div class="description">
-                    ...
+                    Let your employees know you truly care.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -479,7 +482,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/boss">Boss</a>
                 <div class="description">
-                    ...
+                    Show that the team really cares.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -495,7 +498,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/teacher">Teacher</a>
                 <div class="description">
-                    ...
+                    Show them how grateful you are for all they do.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -511,7 +514,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/electronics">Electronics</a>
                 <div class="description">
-                    ...
+                    These gifts will surely be a win in their book.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -528,7 +531,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/military">Military</a>
                 <div class="description">
-                    ...
+                    Support the soldier in your life.
                 </div>
             </div>
             <div class="extra content bottom button attached">
@@ -545,7 +548,7 @@
             <div class="content">
                 <a class="header" href="/giftideas/giftcard">Gift Cards</a>
                 <div class="description">
-                    ...
+                    It is always the right size and the right color.
                 </div>
             </div>
             <div class="extra content bottom button attached">

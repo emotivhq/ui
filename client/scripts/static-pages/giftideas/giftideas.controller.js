@@ -132,6 +132,12 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
             }
         });
     }
+    
+    $http.get('/assets/giftideas/giftideas.json').then( function (response) {
+        console.log(response);
+        $scope.giftideas = [];
+        $scope.giftideas = response.data;
+    });
 
     $scope.goToLink = function(destination) {
         window.location.href = destination;
