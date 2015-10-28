@@ -63,6 +63,7 @@
                             $scope.numNotificationsUnseen++;
                         }
                     }
+                    $scope.numNotificationsUnseen =1;
                 }).error(function (response) {
                     console && console.log && console.log(response)
                 });
