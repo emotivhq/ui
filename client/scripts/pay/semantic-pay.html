@@ -327,8 +327,9 @@
                 </div>
             </div>
         </div>
-        <div class="ui error message field" ng-show="errorMessage.length > 0">
-            <div class="header">Action Forbidden</div>
+        <div class="ui icon negative message field" ng-show="errorMessage.length > 0">
+			<i class="info icon"></i>
+			<i class="close icon"></i>
             <p>{{errorMessage}}</p>
         </div>
         <div class="ui buttons" style="width:100%">

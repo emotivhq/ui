@@ -248,7 +248,9 @@ module.exports = function(grunt) {
 					'../client/bower_components/angular-animate/angular-animate.min.js',
 //					'../client/bower_components/angular-material/angular-material.min.js',
 					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js',
-					'../client/bower_components/angular-carousel/dist/angular-carousel.min.js'
+					'../client/bower_components/angular-carousel/dist/angular-carousel.min.js',
+					'../client/bower_components/angular-toastr/dist/angular-toastr.min.js',
+					'../client/bower_components/angular-toastr/dist/angular-toastr.tpls.min.js'
 				],
                 dest: '../client/scripts/webapp/angular.js'
             },			
@@ -390,7 +392,14 @@ module.exports = function(grunt) {
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css', '../client/bower_components/angular-carousel/dist/angular-carousel.min.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css'],
+                src: [
+					'../client/stylesheets/trashy/**/*.css', 
+					'../client/bower_components/angucomplete/angucomplete.css', 
+					'../client/bower_components/angular-wizard/dist/angular-wizard.min.css', 
+					'../client/bower_components/angular-carousel/dist/angular-carousel.min.css', 
+					'../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css',
+					'../client/bower_components/angular-toastr/dist/angular-toastr.min.css'
+				],
                 dest: '../client/stylesheets/compiled.css'
             },
             sassyvendor: {

@@ -5,11 +5,11 @@
  */
 
 GiftStarterApp.controller('PayPopoverController', ['$scope','$rootScope','GiftStartService',
-    'PopoverService','UserService','Analytics','CardService','$timeout',
+    'PopoverService','UserService','Analytics','CardService','$timeout', 'toastr',
     PayPopoverController]);
 
 function PayPopoverController($scope, $rootScope, GiftStartService, PopoverService,
-                              UserService,  Analytics, CardService, $timeout) {
+                              UserService,  Analytics, CardService, $timeout, toastr) {
 
     $scope.initialize = function() {
 
@@ -114,7 +114,10 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
                     if (data['payment-error']) {
-                        $scope.errorMessage = data['payment-error'];
+                        //$scope.errorMessage = data['payment-error'];
+						toastr.error(data['payment-error'], 'Whoops!', {
+  							positionClass: 'toast-bottom-right'
+						});
                     } else {
                         $scope.trackConversion();
                     }
@@ -140,7 +143,10 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 if (data['payment-error']) {
-                    $scope.errorMessage = data['payment-error'];
+                    //$scope.errorMessage = data['payment-error'];
+						toastr.error(data['payment-error'], 'Whoops!', {
+  							positionClass: 'toast-bottom-right'
+						});
                 } else {
                     $scope.trackConversion();
                 }
@@ -168,7 +174,10 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                     $scope.pitchingIn = false;
                     if (data['payment-error']) {
                         console&&console.log&&console.log(data['payment-error']);
-                        $scope.errorMessage = data['payment-error'];
+                        //$scope.errorMessage = data['payment-error'];
+						toastr.error(data['payment-error'], 'Whoops!', {
+  							positionClass: 'toast-bottom-right'
+						});
                     } else {
                         $scope.trackConversion();
                         $rootScope.$broadcast('paybox-hidden');
@@ -196,7 +205,10 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                 $scope.pitchingIn = false;
                 if (data['payment-error']) {
                     console&&console.log&&console.log(data['payment-error']);
-                    $scope.errorMessage = data['payment-error'];
+                    //$scope.errorMessage = data['payment-error'];
+						toastr.error(data['payment-error'], 'Whoops!', {
+  							positionClass: 'toast-bottom-right'
+						});
                 } else {
                     $scope.trackConversion();
                     $rootScope.$broadcast('paybox-hidden');
