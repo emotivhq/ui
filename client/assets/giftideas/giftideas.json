@@ -6,7 +6,8 @@
         "alt": "Music",
         "url": "/giftideas/music",
         "button": "View Music",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Luma Diamonds",
@@ -15,7 +16,8 @@
         "alt": "Luma Diamonds",
         "url": "/giftideas/luma",
         "button": "View Luma",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Kids",
@@ -24,16 +26,18 @@
         "alt": "Kids",
         "url": "/giftideas/kids",
         "button": "View Kids",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Outdoors",
-        "description": "Prepare them for their next outdoor adventure.",
+        "description": "Prepare them for their outdoor adventures.",
         "img": "/assets/giftideas/category/outdoors.jpg",
         "alt": "Outdoors",
         "url": "/giftideas/outdoors",
         "button": "View Outdoors",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Green",
@@ -42,7 +46,8 @@
         "alt": "Green",
         "url": "/giftideas/Green",
         "button": "View Green",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Home",
@@ -51,7 +56,8 @@
         "alt": "Home",
         "url": "/giftideas/Home",
         "button": "View Home",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Cute",
@@ -60,7 +66,8 @@
         "alt": "Cute",
         "url": "/giftideas/Cute",
         "button": "View Cute",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Baby",
@@ -69,16 +76,18 @@
         "alt": "Baby",
         "url": "/giftideas/Baby",
         "button": "View Baby",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "For Her",
-        "description": "Treat the women in your life to something special.",
+        "description": "Treat the women in your life special.",
         "img": "/assets/giftideas/category/for-her.jpg",
         "alt": "For Her",
         "url": "/giftideas/forHer",
         "button": "View For Her",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "For Him",
@@ -87,7 +96,8 @@
         "alt": "For Him",
         "url": "/giftideas/forhim",
         "button": "View For Him",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Cool",
@@ -96,7 +106,8 @@
         "alt": "Cool",
         "url": "/giftideas/Cool",
         "button": "View Cool",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Office",
@@ -105,7 +116,8 @@
         "alt": "Office",
         "url": "/giftideas/Office",
         "button": "View Office",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Farewell",
@@ -114,7 +126,8 @@
         "alt": "Farewell",
         "url": "/giftideas/Farewell",
         "button": "View Farewell",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Sympathy",
@@ -123,7 +136,8 @@
         "alt": "Sympathy",
         "url": "/giftideas/Sympathy",
         "button": "View Sympathy",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Beauty",
@@ -132,7 +146,8 @@
         "alt": "Beauty",
         "url": "/giftideas/Beauty",
         "button": "View Beauty",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Wine",
@@ -141,7 +156,8 @@
         "alt": "Wine",
         "url": "/giftideas/Wine",
         "button": "View Wine",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Butter LONDON",
@@ -150,7 +166,8 @@
         "alt": "Butter LONDON",
         "url": "/giftideas/butterlondon",
         "button": "ButterLONDON",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Pet Lovers",
@@ -159,7 +176,8 @@
         "alt": "Pet Lovers",
         "url": "/giftideas/petlovers",
         "button": "View Pet Lovers",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Wedding",
@@ -168,7 +186,8 @@
         "alt": "Wedding",
         "url": "/giftideas/Wedding",
         "button": "View Wedding",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Graduation",
@@ -177,7 +196,8 @@
         "alt": "Graduation",
         "url": "/giftideas/graduation",
         "button": "View Graduation",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Wear Red",
@@ -186,7 +206,8 @@
         "alt": "Wear Red",
         "url": "/giftideas/red",
         "button": "View Wear Red",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Patriots",
@@ -195,7 +216,8 @@
         "alt": "Patriots",
         "url": "/giftideas/Patriots",
         "button": "View Patriots",
-        "enabled": false
+        "isEnabled": false,
+        "isNew": false
     },
     {
         "title": "Seahawks",
@@ -204,7 +226,8 @@
         "alt": "Seahawks",
         "url": "/giftideas/Seahawks",
         "button": "View Seahawks",
-        "enabled": false
+        "isEnabled": false,
+        "isNew": false
     },
     {
         "title": "Employee",
@@ -213,7 +236,8 @@
         "alt": "Employee",
         "url": "/giftideas/Employee",
         "button": "View Employee",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Boss",
@@ -222,16 +246,18 @@
         "alt": "Boss",
         "url": "/giftideas/Boss",
         "button": "View Boss",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Teacher",
-        "description": "Show them how grateful you are for all they do.",
+        "description": "Show them how grateful you are.",
         "img": "/assets/giftideas/category/teacher.jpg",
         "alt": "Teacher",
         "url": "/giftideas/Teacher",
         "button": "View Teacher",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Electronics",
@@ -240,7 +266,8 @@
         "alt": "Electronics",
         "url": "/giftideas/Electronics",
         "button": "View Electronics",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Military",
@@ -249,7 +276,8 @@
         "alt": "Military",
         "url": "/giftideas/Military",
         "button": "View Military",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     },
     {
         "title": "Gift Cards",
@@ -258,6 +286,7 @@
         "alt": "Gift Cards",
         "url": "/giftideas/giftcard",
         "button": "View Gift Cards",
-        "enabled": true
+        "isEnabled": true,
+        "isNew": false
     }
 ]

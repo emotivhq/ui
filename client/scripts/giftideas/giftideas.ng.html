@@ -96,8 +96,11 @@
     </div>
     <div class="ui segment basic">
         <div class="ui five doubling cards">
-            <div ng-repeat="idea in giftideas" class="giftidea card">
-                <a class="image" href="{{idea.url}}">
+            <div ng-repeat="idea in giftideas|orderBy:'isNew':true" class="giftidea card">
+                <a class="ui image" href="{{idea.url}}">
+                    <div class="ui red ribbon label" ng-show="{{idea.isNew}}">
+                          <i class="gift icon"></i> New
+                    </div>
                     <img data-src="{{idea.img}}" src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
                 </a>
                 <div class="content">

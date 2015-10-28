@@ -138,7 +138,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $http.get('/assets/giftideas/giftideas.json').then( function (response) {
         $scope.giftideas = [];
         angular.forEach(response.data, function(value, key) {
-            if (value.enabled) $scope.giftideas.push(value);
+            if (value.isEnabled) $scope.giftideas.push(value);
         });
         shuffle($scope.giftideas);
     });
