@@ -12,7 +12,8 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         scope.results_empty = false;
         scope.product_url = "";
         scope.currentProductLink = '';
-        scope.selectedProduct = -1;
+        scope.selectedProduct = [];
+        scope.products = [];
         scope.productMessage = '';
         scope.isSavingForLater = false;
 		scope.loggedIn = UserService.loggedIn;
@@ -21,6 +22,20 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
 		scope.homeMenu = scope.$eval(attrs.home) || false;
 		scope.searchResults = scope.$eval(attrs.results) || false;
         scope.searchQueryExists = ($routeParams.searchTerm ? true : false);
+        var page = $("html, body");
+        var scrollToTop = function() {
+            page.on("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove", function(){
+                page.stop();
+            });
+            page.animate({
+                scrollTop: $('#search-products-section').offset().top - 300
+                }, 200, function() {
+                    page.off("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove");
+                }
+            );
+            
+            return false;
+        }
 
         scope.giftConciergeClicked = function() {
             Analytics.track('client', 'gift concierge email clicked')
@@ -45,15 +60,13 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         };
         scope.submitSearch = function () {
             Analytics.track('product', 'search submitted');
-            ProductService.searchProducts(scope.product_url);
             scope.loading = true;
             scope.failed = false;
             scope.results_empty = false;
-            scope.selectedProducts = [];
+            ProductService.searchProducts(scope.product_url);
         };
         scope.submitFromUrl = function () {
             Analytics.track('product', 'search on load');
-            scope.selectedProducts = [];
             scope.failed = false;
             if ($routeParams.searchTerm) {
                 scope.loading = true;
@@ -120,10 +133,10 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             scope.selectedProducts = scope.products.slice(
                 (scope.selectedPage - 1) * scope.pageSize, scope.selectedPage * scope.pageSize);
             scope.hideProductDetails();
-            $('html, body').animate({
-                scrollTop: $('#search-products-section').offset().top - 300
-                //$('#product-search-anchor').offset().top
-            }, 200);
+            
+            scrollToTop();
+            
+            
         };
         scope.showProductDetails = function (index) {
             Analytics.track('product', 'show product details');
@@ -187,10 +200,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
         };
         var performHeadSearch = function () {
             scope.submit();
-            $('html, body').animate({
-                scrollTop: $('#search-products-section').offset().top - 300
-                //$('#product-search-anchor').offset().top
-            }, 200);
+            scrollToTop();
             $window.sessionStorage.setItem('fromSearch', null);
         };
         $rootScope.$on('performSearchFromHeader', function () {

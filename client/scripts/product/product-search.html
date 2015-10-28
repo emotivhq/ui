@@ -1,4 +1,4 @@
-<div id="product-search-anchor" class="ui middle aligned center aligned">
+<div id="product-search-anchor" class="giftideas">
     <div ng-hide="searchMenu || searchResults" ng-class="{container: !homeMenu}">
         <div class="ui action input large" ng-class="{fluid: homeMenu}">
             <input id="product-search-input" class="text-input" type="text" name="product-link" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null" />
@@ -16,12 +16,19 @@
         </div>
         <div class="results"></div>
     </div>
-	<div class="ui active dimmer" ng-show="loading" style="position: fixed;margin-top: 78px;">
-    	<div class="ui loader"></div>
- 	</div>
+
+    <div class="ui container text" ng-show="searchResults && loading">
+        <div class="ui segment basic">
+            <div class="ui active loader text centered large inline">Gift wrapping search results...</div>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+    </div>
     
-    <section id="search-products-section" class="ui container products" ng-class="{hidden: products.length == 0, grid: products.length > 0}" style="margin-top: 3em;" ng-show="searchResults">
-        <div class="ui cards stackable four link vertical bottom medium">
+    <section id="search-products-section" class="ui container products" ng-class="{hidden: products.length == 0, grid: products.length > 0}" ng-show="searchResults">
+
+        <div class="ui cards stackable four link vertical bottom medium" ng-hide="loading">
             <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
                 <div class="product content">
                     <div class="image-container">
