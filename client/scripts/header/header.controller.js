@@ -143,7 +143,7 @@
         }
 
         function updateMenuType() {
-            if(!$scope.yourVillageMenu) {
+            if(!$scope.yourVillageMenu) {                
                 $scope.slimMenu = isSlimMenu();
                 $scope.mainMenu = isMainMenu();
                 $scope.userMenu = isUserMenu();
@@ -151,6 +151,11 @@
                 $scope.createMenu = isCreateMenu();
                 $scope.yourVillageMenu = isYourVillageMenu()
                 $scope.yourVillageSubPage = isYourVillageSubPage();
+                $timeout(function() {
+                    if ($('.toc.item').length > 0) {
+                        $('.ui.menu.sidebar').sidebar('attach events', '.toc.item', 'overlay');   
+                    }
+                })
             } else {
                 $scope.yourVillageSubPage = isYourVillageSubPage();
             }
