@@ -1,4 +1,34 @@
-<form class="userprofile__info" name="userprofileInfo">
+<div class="ui inverted masthead aligned vertical segment user slim">
+    <form class="userprofile__info" name="userprofileInfo">
+        <div class="ui text container">
+            <div class="ui grid">
+                <div class="five wide column">
+                    <!-- <img class="ui medium circular bordered image userprofile__userimage" src="/assets/noUserImage.png" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked"> -->
+                    <img class="ui circular fluid bordered image userprofile__userimage" src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked">
+                </div>
+                <div class="eleven wide column">
+                    <h1 class="ui inverted header">
+                        {{ user.name }}
+                    </h1>
+                    <button class="ui circular facebook icon button" ng-click="doLoginFacebook()">
+                        <i class="facebook icon"></i>
+                    </button>
+                    <button class="ui circular twitter icon button" ng-click="doLoginTwitter()">
+                        <i class="twitter icon"></i>
+                    </button>
+                    <button class="ui circular linkedin icon button" ng-click="doLoginLinkedin()">
+                        <i class="linkedin icon"></i>
+                    </button>
+                    <button class="ui circular google plus icon button" ng-click="doLoginGoogleplus()">
+                        <i class="google plus icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<form class="userprofile__info hidden" name="userprofileInfo">
     <div class="userprofile__image" ng-class="{true: 'userprofile__image--edit'}[editMode]">
         <button class="userprofile__imagecancel tooltip--right" data-tooltip="Close" ng-show="editMode && !blocked" ng-click="editMode = false;">x</button>
         <img class="userprofile__userimage" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" />
@@ -54,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="calendar" ng-show="(user.birth_month&&user.birth_day)||editable">
+    <div class="calendar hidden" ng-show="(user.birth_month&&user.birth_day)||editable">
         <p class="calendar__calendartext">Birth Date</p>
         <div class="calendar__monthwrap">
             <select ng-disabled="blocked" class="calendar__month" ng-model="user.birth_month" ng-options="month.value as month.label for month in months">
