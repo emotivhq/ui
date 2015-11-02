@@ -21,8 +21,6 @@ $(document).ready(function () {
     $('.main.menu  .ui.dropdown').dropdown({
         on: 'click'
     });
-    // create mobile menu sidebar and attach to menu open
-    $('.ui.menu.sidebar').sidebar('attach events', '.toc.item', 'overlay');
     $('.ui.menu.sidebar a.item').on('click', function () {
         $('.ui.menu.sidebar').sidebar('hide');
     });

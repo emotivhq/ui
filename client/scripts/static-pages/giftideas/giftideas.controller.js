@@ -15,14 +15,15 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.isSavingForLater = false;
     var pathParts = $scope.path.replace('//', '/').split('/');
     $scope.basePath = pathParts[1];
+    var discover = pathParts.length > 2 && pathParts[1] === 'discover' ? true : false;
     var category = pathParts.length > 2 ? pathParts[2] : false;
     var product = pathParts.length > 3 ? pathParts[3] : false;
 	// lazy load images
-     jQuery('.load').visibility({
-        type: 'image',
-        transition: 'vertical flip in',
-        duration: 500
-      });
+//      jQuery('.load').visibility({
+//         type: 'image',
+//         transition: 'vertical flip in',
+//         duration: 500
+//       });
 
     // hack for mailing list error where we linked to the wrong category
     if(category && !product && (category === 'lunarnewyear' || category === 'farewell' || category === 'pisces') && $location.search()['utm_campaign'] === '18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015') {
@@ -113,7 +114,8 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
       return groupsArr;
     }
 
-    if(category) {
+    if(category && !discover) {
+        category = angular.lowercase(category);
         $http.get('/assets/giftideas/' + category + '.json').then( function (response) {
             $scope.groups = [];
             $scope.category = response.data;
@@ -132,7 +134,15 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
             }
         });
     }
-
+    
+    $http.get('/assets/giftideas/giftideas.json').then( function (response) {
+        $scope.giftideas = [];
+        angular.forEach(response.data, function(value, key) {
+            if (value.isEnabled) $scope.giftideas.push(value);
+        });
+        shuffle($scope.giftideas);
+    });
+    
     $scope.goToLink = function(destination) {
         window.location.href = destination;
     };

@@ -19,15 +19,18 @@ function ConciergeController($scope, $http) {
 
     resetForm();
 
-    var validateForm = function() {
-        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-        return re.test($scope.email);
+    $scope.validateForm = function() {
+        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
+            isValid = re.test($scope.email);
+        $scope.msg = isValid ? '' : $scope.msg;
+        
+        return isValid;
     }
 	// Semantic ui
 	jQuery('.menu .item').tab();
 
     $scope.sendMsg = function() {
-        if (validateForm()) {
+        if ($scope.validateForm()) {
             $http.put('/email/contactus.json',{
                 "from_email": $scope.email,
                 "title": $scope.title,
@@ -36,13 +39,13 @@ function ConciergeController($scope, $http) {
             })
             .success(function (res) {
                 resetForm();
-                $scope.msg = "Thank you! We'll do our best to respond on the same day, definitely within 24 hours. Please add giftconcierge@giftstarter.com to your address book to make sure you'll receive the reply."
+                $scope.msg = "We'll do our best to respond today, definitely within 24 hours."
             })
             .error(function (res) {
                 $scope.msg = res['error'];
             });
         } else {
-            $scope.msg = "Please enter a valid email address.";
+            $scope.msg = "Before we proceed, please enter a valid email address.";
         }
     }
 }
