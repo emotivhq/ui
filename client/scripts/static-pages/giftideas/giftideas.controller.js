@@ -12,6 +12,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.productMessage = '';
     $scope.location = $location;
     $scope.path = $location.path();
+    $scope.products = [];
     $scope.isSavingForLater = false;
     var pathParts = $scope.path.replace('//', '/').split('/');
     $scope.basePath = pathParts[1];
@@ -83,6 +84,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
 
         if(prior != null) {
             $scope.groups.push([prior, productValue]);
+            $scope.products.push(prior, productValue);
             prior = null;
         } else {
             prior = productValue;

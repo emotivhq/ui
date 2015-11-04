@@ -14,39 +14,39 @@ function ConciergeController($scope, $http) {
         $scope.title = "";
         $scope.budget = "";
         $scope.url = "";
-        $scope.msg = "";
+        $scope.comments = ""; 
+        $scope.conciergeform.$setUntouched();
     };
 
-    resetForm();
-
-    $scope.validateForm = function() {
-        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
-            isValid = re.test($scope.email);
-        $scope.msg = isValid ? '' : $scope.msg;
-        
-        return isValid;
-    }
-	// Semantic ui
 	jQuery('.menu .item').tab();
 
     $scope.sendMsg = function() {
-        if ($scope.validateForm()) {
-            $http.put('/email/contactus.json',{
-                "from_email": $scope.email,
-                "title": $scope.title,
-                "budget": $scope.budget,
-                "url": $scope.url
-            })
-            .success(function (res) {
+
+        $http({
+            method: "POST",
+            dataType: 'jsonp',
+            url: 'https://docs.google.com/forms/d/13cnJDPtW0plkxXi3cgBu844ETrtzbw9JgWWaeqj-0UY/formResponse',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            params: {
+                'entry_1538055563': $scope.email,
+                'entry_1003504959': $scope.title, 
+                'entry_727663111': $scope.budget, 
+                'entry_1647489740': $scope.url, 
+                'entry_1284484267': $scope.comments
+            }
+        })
+        .then(function () {
+        },        
+        function (res) {
+            if (res.status === 0) {
                 resetForm();
-                $scope.msg = "We'll do our best to respond today, definitely within 24 hours."
-            })
-            .error(function (res) {
+                $scope.msg = "Thank you! We'll do our best to respond on the same day, definitely within 24 hours. Please add giftconcierge@giftstarter.com to your address book to make sure you'll receive the reply."
+            } else {
                 $scope.msg = res['error'];
-            });
-        } else {
-            $scope.msg = "Before we proceed, please enter a valid email address.";
-        }
+            }
+        });
     }
 }
 
