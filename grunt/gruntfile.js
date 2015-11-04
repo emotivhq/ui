@@ -108,8 +108,9 @@ module.exports = function(grunt) {
                     '../client/bower_components/angular-resource/angular-resource.min.js',
                     '../client/bower_components/devicejs/lib/device.min.js',
                     '../client/bower_components/angular-ui-date/src/date.js',
- 					'../client/bower_components/angular-carousel/dist/angular-carousel.min.js',
 					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js',
+                    '../client/bower_components/angular-slick/dist/slick.min.js',
+                    '../client/bower_components/slick-carousel/slick/slick.min.js',
                    '../client/scripts/utilities/ng-ab/ng-ab.module.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.service.js',
                     '../client/scripts/utilities/ng-ab/ng-ab.factory.js',
@@ -203,7 +204,6 @@ module.exports = function(grunt) {
                     '../client/bower_components/jquery/dist/jquery.min.js',
 					'../client/scripts/vendor/jquery.ui.js',
 					'../client/scripts/vendor/jquery.validation.js',
-//					'../client/bower_components/pace/pace.min.js',
 					'../client/bower_components/jquery-ui/jquery-ui.min.js',
 //					'../client/bower_components/excanvas/excanvas.js',
 //					'../client/bower_components/Respond/dest/respond.min.js',
@@ -211,8 +211,6 @@ module.exports = function(grunt) {
 					'../client/bower_components/bootstrap/dist/js/bootstrap.min.js',
 //					'../client/bower_components/uikit/js/uikit.min.js',
                     '../client/bower_components/devicejs/lib/device.min.js',
-//					'../client/bower_components/OwlCarousel2/dist/owl.carousel.min.js',
-//					'../client/bower_components/flexslider/jquery.flexslider-min.js',
                     '../client/bower_components/imagesloaded/imagesloaded.pkgd.min.js',
 //					'../client/bower_components/masonry/dist/masonry.pkgd.min.js',
 //					'../client/bower_components/sequencejs/scripts/sequence.min.js',
@@ -248,7 +246,8 @@ module.exports = function(grunt) {
 					'../client/bower_components/angular-animate/angular-animate.min.js',
 //					'../client/bower_components/angular-material/angular-material.min.js',
 					'../client/bower_components/angular-wizard/dist/angular-wizard.min.js',
-					'../client/bower_components/angular-carousel/dist/angular-carousel.min.js'
+                    '../client/bower_components/angular-slick/dist/slick.min.js',
+                    '../client/bower_components/slick-carousel/slick/slick.min.js'
 				],
                 dest: '../client/scripts/webapp/angular.js'
             },			
@@ -390,7 +389,7 @@ module.exports = function(grunt) {
                     sourceMapName: '../client/stylesheets/compiled.css.map',
                     sourceMapStyle: 'link'
                 },
-                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css', '../client/bower_components/angular-carousel/dist/angular-carousel.min.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css'],
+                src: ['../client/stylesheets/trashy/**/*.css', '../client/bower_components/angucomplete/angucomplete.css', '../client/bower_components/angular-wizard/dist/angular-wizard.min.css', '../client/bower_components/slick-carousel/slick/slick.css', '../client/bower_components/slick-carousel/slick/slick-theme.css', '../client/bower_components/jquery-ui/themes/smoothness/jquery-ui.min.css'],
                 dest: '../client/stylesheets/compiled.css'
             },
             sassyvendor: {
@@ -400,9 +399,6 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
-					'../client/bower_components/OwlCarousel2/assets/owl.carousel.min.css', 
-					'../client/bower_components/OwlCarousel2/assets/owl.theme.default.min.css', 
-					'../client/bower_components/flexslider/flexslider.css', 
 					'../client/bower_components/chosen/chosen.css'
 					],
                 dest: '../client/stylesheets/app-main/vendor.css'
