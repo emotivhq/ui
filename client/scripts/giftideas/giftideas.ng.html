@@ -61,11 +61,9 @@
 			    {{category.categoryName}}
 		    </h2>
         </div>
-        
-        
-        <ul rn-carousel class="ui segment carousel" rn-carousel-index="carouselIndex">
-            <li ng-repeat="group in groups" class="ui centered stackable grid">
-                <div ng-repeat="product in group" class="four wide column">
+        <slick ng-if="products.length" data="products" class="ui segment"  lazy-load="ondemand" slides-to-show="4" slides-to-scroll="4" >
+            <div ng-repeat="product in products" class="ui centered stackable grid">
+                <div class="column">
                     <div class="ui fluid card">
                         <a class="image" href="{{categoryPath}}/{{product.productSlug}}">
                             <img ng-src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
@@ -78,12 +76,9 @@
                         </div>
                     </div>
                 </div>
-            </li>
-        </ul>
-        
-        
-        <div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
-        <div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
+            </div>
+        </slick>
+        <div class="clear"></div>
     </div>
 
     <div class="ui container text">
