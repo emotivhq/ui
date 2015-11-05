@@ -26,9 +26,8 @@
         </div>
     </div>
     
-    <section id="search-products-section" class="ui container products" ng-class="{hidden: products.length == 0, grid: products.length > 0}" ng-show="searchResults">
-
-        <div class="ui cards stackable four link vertical bottom medium" ng-hide="loading">
+    <section id="search-products-section" class="ui container products" ng-show="searchResults && products.length !== 0">
+        <div class="ui cards stackable four vertical bottom medium" ng-hide="loading">
             <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
                 <div class="product content">
                     <div class="image-container">
