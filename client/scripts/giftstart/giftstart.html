@@ -13,7 +13,7 @@
     </div>
 
     <div class="ui container column grid">
-        <div class="gs-overlay ui eight wide computer sixteen wide mobile column" Xng-class="{shrunk: showPayBox}">
+        <div class="gs-overlay ui eight wide computer sixteen wide mobile column vertical bottom small" Xng-class="{shrunk: showPayBox}">
             <div class="image-upload ui form segment teal" ng-show="editMode">
                 <label>Upload New Image:</label>
                 <input id="campaign-image-input" type="file" capture="camera" accept="image/*" />
@@ -24,8 +24,8 @@
                     <div class="receipt-tiles content">
                         <div class="img-wrap image" style="background-image:url('{{giftStart.product_img_url}}')"></div>
                         <div class="info-tiles">
-                            <h2 class="num-tiles">{{giftStart.nSelected}} Pieces</h2>
-                            <h4 class="cost-tiles">at  ${{getTileCost() / 100 | number : 2}} Each</h4>
+							<h2 class="num-tiles"><a class="ui circular label">{{giftStart.nSelected}}</a> Piece<span ng-show="giftStart.nSelected > 1">s</span></h2>
+							<h4 class="cost-tiles">at  ${{getTileCost() / 100 | number : 2}} <span ng-show="giftStart.nSelected > 1">Each</span></h4>
                         </div>
                     </div>
                     <div class="receipt-total">
@@ -129,9 +129,8 @@
             </a>
             <ng-include src="'/scripts/login/login-or-create.html'"></ng-include>
         </div>
-        <div class="pay-box ui eight wide computer sixteen wide mobile column" ng-show="showPayBox">
-            <p>Your payments are securely processed by PayPal.</p>
-            <ng-include src="'/scripts/pay/pay.html'"></ng-include>
+        <div class="pay-box ui eight wide computer sixteen wide mobile column" ng-show="showPayBox" style="padding-top:0">
+            <ng-include src="'/scripts/pay/semantic-pay.html'"></ng-include>
         </div>
         <div class="sign-box ui segment piled eight wide computer sixteen wide mobile column" ng-show="showSignBox" style="    margin-top: 0;">
 			<a class="ui right ribbon label" ng-click="switchSignBox(false)">Go Back</a>
@@ -139,14 +138,14 @@
             <p>Write a message to the recipient and we'll include it on the group card so they'll know part of this gift came from you - giving credit where credit is due.</p>
             <ng-include src="'/scripts/popover/note/note-popover.html'"></ng-include>
         </div>
-        <div class="share-box" ng-show="showShareBox">
+        <div class="share-box ui segment eight wide computer sixteen wide mobile column" ng-show="showShareBox" style="margin-top: 0;">
             <h2>Share with Friends:</h2>
             <p>Your payment was successful! Thank you. You will receive an email shorty. In the meantime, you can invite friends to pitch in just like you did.</p>
             <button class="ui invite-friends button blue large fluid icon">
                 <i class="users right icon"></i>
                 Invite Friends
             </button>
-            <a href="" class="linky" ng-click="shareBox(false)">Skip this step</a>
+            <a href="#" class="linky" ng-click="shareBox(false)">Skip this step</a>
         </div>
         <!--ng-include src="'/scripts/share/invite-pitchin.html'"></ng-include-->
     </div>

@@ -6,7 +6,8 @@
 
 var GiftStarterApp = angular.module('GiftStarterApp',
     ['ngRoute', 'ezfb', 'angularPayments', 'ngCookies',  'ngTouch',
-        'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 'mgo-angular-wizard', 'angular-carousel']);
+     	'ngSanitize', 'ngAB', 'ngResource', 'ui.date', 'gsAngulartics', 
+	 	'mgo-angular-wizard', 'slick', 'toastr']);
 
 angular.module('GiftStarterApp').service('AppStateService', [
             '$location','$window','$rootScope',
