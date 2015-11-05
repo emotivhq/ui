@@ -131,7 +131,6 @@ class GiftStartCreateHandler(webapp2.RequestHandler):
                 giftstart['product_img_url'] = app_url+'/'+giftstart['product_img_url']
             gs.product_img_url = storage.image_cache.cache_product_image(
                 giftstart['product_img_url'], gs.gsid)
-
         if giftstart_core.does_user_exist(uid, token):
             logging.info("Found user, completing campaign creation")
             complete_campaign_creation(uid, gs)
@@ -216,7 +215,7 @@ def complete_campaign_creation(uid, gs):
     gs.gc_name = user.name
     gs.gift_champion_uid = uid
     gs.put()
-    logging.info("Saved {0}: {1} for user {2}: {3}".format(gs.gsid,gs.giftstart_title,gs.gc_name,gs.gift_champion_uid))
+    logging.info("Saved {0}: {1} for user {2}".format(gs.gsid,gs.giftstart_title,gs.gift_champion_uid))
 
     try:
         giftstart_comm.send_create_notification(gs)
