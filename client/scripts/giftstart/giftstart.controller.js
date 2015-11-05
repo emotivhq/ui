@@ -59,6 +59,9 @@ function GiftStartController($scope, $rootScope, GiftStartService, $location, $i
     	})
         .sidebar('toggle');
     });
+	jQuery('.title.linkage')
+  		.popup()
+	;
 
     $scope.editingComment = function (comment, editing) {
         if(editing) { //edit mode on

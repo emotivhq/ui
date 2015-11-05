@@ -3,8 +3,7 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited.
  * Proprietary and confidential.
  */
-GiftStarterApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
-    appConfig]);
+GiftStarterApp.config(['$routeProvider', '$locationProvider', '$httpProvider', appConfig]);
 GiftStarterApp.config(['ezfbProvider', '$httpProvider', facebookConfig]);
 
 function appConfig($routeProvider, $locationProvider, $httpProvider) {
@@ -88,11 +87,11 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
     }).when('/reset/:resetCode', {
         templateUrl: '/views/login/login.html',
         reloadOnSearch: false
-    }).when('/search/:searchTerm', {
+    }).when('/search/', {
         templateUrl: '/views/search/search.html',
         reloadOnSearch: false
-    }).when('/search/', {
-        templateUrl: '/scripts/static-pages/giftideas/giftideas.html',
+    }).when('/search/:searchTerm', {
+        templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/discover', {
         templateUrl: '/views/discover/discover.html',
@@ -101,10 +100,10 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/giftideas', {
-        templateUrl: '/scripts/static-pages/giftideas/giftideas.html',
+        templateUrl: '/views/giftideas/giftideas.html',
         reloadOnSearch: false
     }).when('/giftideas/:term*', {
-        templateUrl: '/scripts/static-pages/giftideas/giftideas.html',
+        templateUrl: '/views/search/search.html',
         reloadOnSearch: false
     }).when('/:path*', {
         controller: 'ContentRouteController',

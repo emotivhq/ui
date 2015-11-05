@@ -1,8 +1,5 @@
-
-
 @import "../base"
 @import "../frame/column"
-
 
 div.giftstart.wrapper
   margin: 0 auto
@@ -11,11 +8,8 @@ div.giftstart.wrapper
     margin-left: 0
 
   .giftstart-this
-    background-color: #ccc
     text-align: center
-    padding: 10px 5px
-    @media screen and (max-width: $phone-tablet-boundary)
-      padding-top: 2px
+    margin-bottom: 0px
 
   button.share
     width: 4em
@@ -134,7 +128,6 @@ div.giftstart.wrapper
             margin: 0 auto
             float: none
       .receipt-total
-        height: 40%
         background-color: $gs-lightgray
         padding: 50px
         vertical-align: top
@@ -465,19 +458,20 @@ div.giftstart.wrapper
       //position: relative
       //margin: 17px
       //height: $box-size
+	
       @include apply-at-size("phone")
         height: auto
       //width: $box-size
       //max-width: calc(100% - 34px)
       //vertical-align: top
       &.orange
-        background-color: $gs-orange
+        background-color: $orange
       &.teal
-        background-color: $gs-teal
+        background-color: $teal
       &.green
-        background-color: $gs-lime
+        background-color: $green
       &.red
-        background-color: $gs-red
+        background-color: $red
 
       &:nth-child
         position: relative
@@ -510,13 +504,23 @@ div.giftstart.wrapper
         width: 100%
         z-index: 1
         &.orange
-          background-color: $gs-orange
+          background-color: $orange
         &.teal
-          background-color: $gs-teal
+          background-color: $teal
         &.green
-          background-color: $gs-lightlime
+          background-color: $green
         &.red
-          background-color: $gs-lightred
+          background-color: $red
+
+      .card
+        &.orange
+          background-color: $orange
+        &.teal
+          background-color: $teal
+        &.green
+          background-color: $green
+        &.red
+          background-color: $red
 
       &__img
         width: 80%

@@ -1,10 +1,13 @@
-<div class="giftideas wrapper ui container main full" ng-controller="GiftideasController as search">
-    <div class="headerwrap" name="home" title="Discover" style="margin-bottom: 0;padding-bottom: 40px;}">
-        <h1>Find The Perfect Gift</h1>
-        <h4>It's that easy. What's on your mind?</h4>
-    	<gs-product-search home="false" results="false" menu="false"></gs-product-search>
-	</div>
-
-	<gs-product-search home="false" results="true" menu="false"></gs-product-search>
-
+<div ng-controller="GiftideasController as search"> 
+    <div class="ui inverted masthead slim center aligned vertical segment search" ng-show="!category">
+        <div class="ui text container">
+            <h1 class="ui inverted header">Find The Perfect Gift</h1>
+            <h2>It's that easy. What's on your mind?</h2>
+            <gs-product-search home="false" results="false" menu="false"></gs-product-search>
+        </div>
+    </div>
+    
+    <div class="ui container">
+        <gs-product-search home="false" results="true" menu="false"></gs-product-search>
+    </div>
 </div>

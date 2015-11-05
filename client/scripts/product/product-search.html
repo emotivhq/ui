@@ -1,98 +1,97 @@
-<!--<div class="product-link wrapper" ng-controller="ProductLinkController">-->
-<div id="product-search-anchor" class="product-link ui middle aligned center aligned">
-    <div class="search wrapper ui form" ng-hide="searchMenu || searchResults" ng-class="{container: !homeMenu}">
+<div id="product-search-anchor" class="giftideas">
+    <div ng-hide="searchMenu || searchResults" ng-class="{container: !homeMenu}">
         <div class="ui action input large" ng-class="{fluid: homeMenu}">
-            <input id="product-search-input" class="text-input" type="text" name="product-link" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null"/>
-			<button id="product-search-button" class="ui button icon teal huge" ng-click="submit()">
-				<i class="search icon"></i>
-			</button>
+            <input id="product-search-input" class="text-input" type="text" name="product-link" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null" />
+            <button id="product-search-button" class="ui button icon teal huge" ng-click="submit()">
+                <i class="search icon"></i>
+            </button>
         </div>
     </div>
-	<div class="ui search" ng-show="searchMenu">
-            <div class="ui transparent left icon input">
-                <a href="#" id="product-search-button" ng-click="submit()">
-					<i class="teal search icon"></i>
-				</a>
-                <input id="product-search-input" class="prompt" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null" style="padding-left: 0.2em !important;">
-            </div>
-            <div class="results"></div>
+    <div class="ui search" ng-show="searchMenu">
+        <div class="ui transparent left icon input">
+            <a href="#" id="product-search-button" ng-click="submit()">
+                <i class="teal search icon"></i>
+            </a>
+            <input id="product-search-input" class="prompt" type="text" name="product-link" placeholder="Search Gifts Ideas" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null" style="padding-left: 0.2em !important;">
         </div>
-
-
-	<div class="ui active dimmer" ng-show="loading" style="position: fixed;margin-top: 78px;">
-    	<div class="ui loader"></div>
- 	</div>
-
-    <div class="failed" ng-show="failed && !searchMenu">
-        <img src="/assets/failed.png"/>
-        <div>
-            <p>Looks like that search term didn’t find any results.</p><p>Please try a more specific term, or email our gift concierge at <a href="mailto:giftconcierge@giftstarter.com" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>
-        </div>
+        <div class="results"></div>
     </div>
 
-<section id="search-products-section" class="products ui" ng-class="{hidden: products.length == 0, grid: products.length > 0}" style="margin-top: 3em;" ng-show="searchResults">
-	<div class="ui container">
-		<div class="ui cards stackable four link vertical bottom medium">
-	<div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
-        <div class="product content">
-            <div class="image-container">
-                <span class="vert-align-helper"></span>
-                <img class="ui image medium" ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
-            </div>
-            <div class="product-details ui aligned middle grid">
-				<h2 class="ui header">
-  				<div class="content">
-   				 {{product.title | limitTo: 50}}
- 				 </div>
-				</h2>
-                <p class="description ui raised segment" ng-bind-html="product.description"></p>
-                <div class="ui buttons vertical" style="margin-top: 2rem; width: 100%;">
-                    <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon">
-                        <i class="gift left icon" class="computer only ui"></i>
-                        GiftStart It
-                    </button>
-                    <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui icon button">
-                        <i class="bookmark right icon" class="computer only ui"></i>
-                        Save for Later
-                        <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
-                    </button>
+    <div class="ui container text" ng-show="searchResults && loading">
+        <div class="ui segment basic">
+            <div class="ui active loader text centered large inline">Gift wrapping search results...</div>
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+    
+    <section id="search-products-section" class="ui container products" ng-class="{hidden: products.length == 0, grid: products.length > 0}" ng-show="searchResults">
+
+        <div class="ui cards stackable four link vertical bottom medium" ng-hide="loading">
+            <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
+                <div class="product content">
+                    <div class="image-container">
+                        <span class="vert-align-helper"></span>
+                        <img class="ui image medium" ng-click="goToProduct($index);" ng-src="{{product.imgUrl}}" onerror="angular.element($(this)).scope().fixImage(this);" index="{{$index}}" />
+                    </div>
+                    <div class="product-details ui aligned middle grid">
+                        <h2 class="ui header">
+                            <div class="content">{{product.title | limitTo: 50}}</div>
+                        </h2>
+                        <p class="description ui raised segment" ng-bind-html="product.description"></p>
+                        <div class="ui buttons vertical" style="margin-top: 2rem; width: 100%;">
+                            <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon">
+                                <i class="gift left icon" class="computer only ui"></i>
+                                GiftStart It
+                            </button>
+                            <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui icon button">
+                                <i class="bookmark right icon" class="computer only ui"></i>
+                                Save for Later
+                                <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+                            </button>
+                        </div>
+                        <div class="ui buttons two hidden" style="margin-top: 2rem">
+                            <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon labeled">
+                                <i class="gift left icon" class="computer only ui"></i>
+                                GiftStart It
+                            </button>
+                            <div class="or"></div>
+                            <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui huge icon labeled button">
+                                <i class="bookmark right icon" class="computer only ui"></i>
+                                Save for Later
+                                <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
+                            </button>
+                        </div>
+                        <div class="product-message" ng-show="product.selected" ng-bind-html="productMessage"></div>
+                    </div>
+                    <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
                 </div>
-                <div class="ui buttons two hidden" style="margin-top: 2rem">
-                    <button ng-click="startCampaignFrom($index);$event.stopPropagation();" target="_self" class="giftstart huge teal ui button icon labeled">
-                        <i class="gift left icon" class="computer only ui"></i>
-                        GiftStart It
-                    </button>
-                    <div class="or"></div>
-                    <button ng-click="saveForLater($index);$event.stopPropagation();" class="giftstart ui huge icon labeled button">
-                        <i class="bookmark right icon" class="computer only ui"></i>
-                        Save for Later
-                        <img ng-show="isSavingForLater" class="loader" src="/assets/loading_transparent.gif">
-                    </button>
-                </div>
-                <div class="product-message" ng-show="product.selected" ng-bind-html="productMessage"></div>
             </div>
-            <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
+            <div class="page-buttons ui vertical medium top bottom middle aligned center aligned container" ng-show="products.length > 10">
+                <div class="ui pagination menu">
+                    <a ng-click="decrementPage()" class="icon item">
+                      <i class="left chevron icon"></i>
+                    </a>
+                    <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" ng-class="{active: selectedPage === pageNumber}" class="item desktop only">{{pageNumber}}</a>
+                    <a ng-repeat="pageNumber in pageNumbers | limitTo : 5 : begin" ng-class="{active: selectedPage === pageNumber}" ng-click="selectPage(pageNumber)" class="item mobile tablet only">{{pageNumber}}</a>
+                    <a ng-click="incrementPage()" class="icon item">
+                      <i class="right chevron icon"></i>
+                    </a>
+                </div>
+            </div>
+    	</div>
+    </section>
+    
+    <div class="ui container" ng-show="searchResults && results_empty && searchQueryExists">
+        <div class="ui message container text center aligned">
+            <img src="/assets/failed.png"/>
+            <div class="header">
+                Oh no! We can't find that...
+            </div>
+            <p>Please try a more specific term, or email our gift concierge at <a href="mailto:giftconcierge@giftstarter.com" ng-click="giftConciergeClicked()">giftconcierge@giftstarter.com</a> for help finding the perfect gift!</p>    
         </div>
-		<div class="extra content">
-    		<span class="right floated">
-      			<i class="dollar teal icon"></i>{{product.price / 100 | number : 2}}
-    		</span>
-  		</div>
+        <ng-include src="'/scripts/giftideas/giftideas.ng.html'"></ng-include>
     </div>
-    <div class="page-buttons ui vertical medium top bottom middle aligned center aligned grid" ng-show="products.length > 10">
-    <div class="ui pagination menu">
-        <a ng-click="decrementPage()" class="icon item">
-          <i class="left chevron icon"></i>
-        </a>
-        <a ng-repeat="pageNumber in pageNumbers" ng-click="selectPage(pageNumber)" class="item desktop only">{{pageNumber}}</a>
-        <a ng-repeat="pageNumber in pageNumbers | limitTo : 5 : begin" ng-class="{active: selectedPage === pageNumber}" ng-click="selectPage(pageNumber)" class="item mobile tablet only">{{pageNumber}}</a>
-        <a ng-click="incrementPage()" class="icon item">
-          <i class="right chevron icon"></i>
-        </a>
-    </div>
-    </div>
-
-</div>
-	</div>
-</section>
+    <ng-include src="'/scripts/giftideas/giftideas.ng.html'" ng-show="searchResults && !searchQueryExists"></ng-include>
 </div>

@@ -8,7 +8,7 @@ GiftStarterApp.directive('gsToast', gsToast);
 
 function gsToast(ToastService, $timeout) {
     function link(scope, element, attr) {
-        scope.toastText = 'Het this is my test toast!';
+        scope.toastText = 'Hey this is my test toast!';
         scope.hide = true;
         scope.displayed = false;
         scope.toastP = element[0].children[0].children[0];

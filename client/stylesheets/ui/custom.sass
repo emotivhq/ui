@@ -28,6 +28,9 @@ h1, h2, h3, h4, h5
   &.large.top
     margin-top: 3em
 
+.break
+  word-wrap: break-word
+
 .ui.checkbox
   .box, label
     cursor: pointer
@@ -133,7 +136,7 @@ header.slim
   &.pad
     margin-top: 7em !important
   &.red
-    background-image: url("/images/bg/5-compressor.jpg")
+    background-image: url("/assets/bg/5-compressor.jpg")
 
 .fade
   opacity: 1
@@ -147,6 +150,13 @@ header.slim
   &.ng-leave-active
     opacity: 0
 
+.ui.cards > .card
+  -moz-transition: none !important
+  -webkit-transition: none !important
+  transition: none !important
+  z-index: 1 !important
+  
+    
 /* modal hacks */
 .ui.dimmer
   z-index: 5
@@ -160,6 +170,11 @@ header.slim
     .close
        color: #333
 
+.ui.secondary.inverted.menu .dropdown.item
+.ui.secondary.inverted.menu .link.item
+.ui.secondary.inverted.menu a.item
+  &:hover
+    background: transparent
 
 // mobile menus
 
@@ -167,6 +182,34 @@ header.slim
 
 .long
   width: 100%
+
+.slick-slider .grid + .grid
+    margin-top: 0
+
+.slick-next,
+.slick-prev
+  background: #00B5AD
+  width: 45px
+  height: 45px
+  border-radius: 2px
+  
+  &:before
+    font-size: 25px
+    opacity: 1
+
+  &:focus
+    background: #009c95
+  
+  &:hover
+    background: #009c95
+
+// media queries
+@media only screen and (min-width : 320px) and (max-width : 736px)
+  .slick-track
+    width: 90000px !important  
+  
+  .slick-slide    
+    width: 255px !important
 
 // media queries
 @media only screen and (min-width: 723px)
@@ -210,12 +253,15 @@ div.rn-carousel-indicator span.active
   padding: 1em 0em
   -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .3))
+  min-height: 350px
+  >.ui.container
+    min-height: 77vh
   
   .desktop
     display: none
     
   h1, h2, p
-      text-shadow: 0 0 5px rgba(0,0,0,.25)
+    text-shadow: 0 0 5px rgba(0,0,0,.25)
   
   h1.ui.header
     margin-bottom: .5em
@@ -225,80 +271,72 @@ div.rn-carousel-indicator span.active
   h2
     font-size: 1.3em
     margin-bottom: 2rem
-    display: none;
+    display: none
+    margin-top: 20px
     
   .ui.message
     text-shadow: none
     
     &.black
-        background: rgba(0,0,0,.65)
+      background: rgba(0,0,0,.65)
     
     &.secondary
-        background: rgba(248,248,249,.85)
+      background: rgba(248,248,249,.85)
         
     .mobile 
-        .ui.button
-            margin-bottom: 0.75em;
+      .ui.button
+          margin-bottom: 0.75em;
         
     .ui.form
-        padding-bottom: .5em;
+      padding-bottom: .5em;
   
   @media only screen and (min-width: 700px)
+    min-height: 700px
     .desktop
         display: block
-    
     .mobile
         display: none
-        
     .ui.container
         height: auto
-    
         h1.ui.header
-            margin-bottom: 0em
-            font-size: 3em
-        
+          margin-bottom: 0em
+          font-size: 3em
+          margin-top: 3em
         h2
-            display: block
-    
-  &.is
-    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
-    background-position: center top
+          display: block
+  &.slim
     min-height: 350px
     margin-bottom: 50px
-    
-    .ui.container
-        min-height: 40vh
-    
+    >.ui.container
+      min-height: 40vh
     h2
-        margin-top:15px
-        
+      margin-top:15px
     @media only screen and (min-width: 700px)
-      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift@2x.jpg),url(/assets/bg/man-wrapping-gift.jpg)
-      min-height: 350px
-      background-position: center 19%
-      
-      .ui.container
+        min-height: 350px
+        background-position: center 19%
+        .ui.container
           h1.ui.header
             margin-top: 1.5em
             
+  &.search, &.discover, &.giftideas
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink-mobile.jpg)
+    background-position: center top
+        
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink@2x.jpg),url(/assets/bg/binary-blue-and-pink.jpg)         
+            
+  &.is
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
+    background-position: center top
+
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift@2x.jpg),url(/assets/bg/man-wrapping-gift.jpg)
+            
   &.home
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
-    min-height: 350px
-        
-    .ui.container
-        min-height: 77vh
-            
-    h2
-        margin-top: 20px
     
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
-      min-height: 700px
-      
-      .ui.container
-          h1.ui.header
-              margin-top: 3em
-                
             
 // statistics
 
@@ -321,12 +359,12 @@ div.rn-carousel-indicator span.active
 //yourvillage
 
 .yourvillage
-    .ui.header .sub.header
-        line-height: 1.4em
-        padding-top: .8rem
+  .ui.header .sub.header
+    line-height: 1.4em
+    padding-top: .8rem
             
-    .hidden.divider 
-        display: block !important
+  .hidden.divider 
+    display: block !important
 
 // footer
 
@@ -336,6 +374,11 @@ div.rn-carousel-indicator span.active
 // buttons
 .ui.buttons .or 
   height: 3.571429em
+
+.ui.search
+  .action
+    &:hover
+      background: transparent
 
 // datepicker
 div.ui-datepicker
