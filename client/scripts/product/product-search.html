@@ -66,6 +66,21 @@
                     </div>
                     <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
                 </div>
+                <div class="extra content">
+                    <a class="left floated">
+                        <span ng-show="!product.selected">
+                            <i class="unhide icon"></i>
+                            View More
+                        </span>
+                        <span ng-show="product.selected" ng-click="hideProductDetails();$event.stopPropagation();">
+                            <i class="hide icon"></i>
+                            View Less
+                        </span>
+                    </a>
+                    <span class="right floated author">
+                        <i class="teal dollar icon"></i>{{product.price / 100 | number : 2}}
+                    </span>
+                </div>
             </div>
             <div class="page-buttons ui vertical medium top bottom middle aligned center aligned container" ng-show="products.length > 10">
                 <div class="ui pagination menu">
