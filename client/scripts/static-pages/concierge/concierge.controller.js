@@ -10,7 +10,7 @@ GiftStarterApp.controller('ConciergeController', ['$scope', '$http',
 function ConciergeController($scope, $http) {
 
     var resetForm = function() {
-        $scope.email = "";
+        $scope.fromemail = "";
         $scope.title = "";
         $scope.budget = "";
         $scope.url = "";
@@ -30,7 +30,7 @@ function ConciergeController($scope, $http) {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
             params: {
-                'entry_1538055563': $scope.email,
+                'entry_1538055563': $scope.fromemail,
                 'entry_1003504959': $scope.title, 
                 'entry_727663111': $scope.budget, 
                 'entry_1647489740': $scope.url, 
