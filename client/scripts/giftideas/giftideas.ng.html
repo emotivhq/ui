@@ -122,49 +122,49 @@
                 </div>
             </h1>
             <div class="ui piled segment">
-                <form ng-submit="sendMsg()" class="ui form" ng-class="{error: !validateForm()}">
+                <form name="conciergeform" ng-submit="sendMsg()" class="ui form" ng-class="{error: !validForm, success: validForm}">
                     <h4 class="ui dividing header">Provide a few details below to contact the Gift Concierge.</h4>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="calendar icon"></i>
-                         <input type="text" name="title" ng-model="title" placeholder="What event is the gift for?" />
-                     </div>
-                  </div>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="dollar icon"></i>
-                         <input type="text" name="budget" ng-model="budget" placeholder="Is there a budget you want to stay within?" />
-                     </div>
-                  </div>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="gift icon"></i>
-                         <input type="text" name="url" ng-model="url" placeholder="URL to the gift you're thinking of" />
-                     </div>
-                  </div>
-                  <div class="field">
-                      <div class="ui left icon input">
-                          <i class="mail icon"></i>
-                          <input type="email" name="email" ng-model="email" placeholder="Your email address (required)" />
-                      </div>
-                  </div>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="comment icon"></i>
-                         <input type="text" name="comments" ng-model="comments" placeholder="Additional comments" />
-                     </div>
-                  </div>
-                  <button type="submit" class="button ui teal icon fluid">
-                      <i class="send icon"></i>
-                      Make your request
-                  </button>
-                  <div class="ui message" ng-class="{hidden: msg.length === 0, error: !validateForm(), success: validateForm()}">
-                      <div class="header" >
-                          <span ng-hide="validateForm()">One last thing...</span>
-                          <span ng-show="validateForm()">Thank you!</span>
-                      </div>
-                      <p>{{msg}}</p>
-                  </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="calendar icon"></i>
+                           <input type="text" name="title" ng-model="title" placeholder="What event is the gift for?" />
+                       </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="dollar icon"></i>
+                           <input type="text" name="budget" ng-model="budget" placeholder="Is there a budget you want to stay within?" />
+                       </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="gift icon"></i>
+                           <input type="text" name="url" ng-model="url" placeholder="URL to the gift you're thinking of" />
+                       </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input type="email" name="email" ng-model="email" placeholder="Your email address (required)"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="comment icon"></i>
+                           <input type="text" name="comments" ng-model="comments" placeholder="Additional comments" />
+                       </div>
+                    </div>
+                    <button type="submit" class="button ui teal icon fluid">
+                        <i class="send icon"></i>
+                        Make your request
+                    </button>
+                    <div class="ui message" ng-show="msg.length > 0" ng-class="{error: !validForm, success: validForm}">
+                        <div class="header" >
+                            <span ng-show="!validForm">One last thing...</span>
+                            <span ng-show="validForm">Your message is being processed.</span>
+                        </div>
+                        <p>{{msg}}</p>
+                    </div>
                 </form>
             </div>
         </div>
