@@ -25,6 +25,7 @@
                 </div>
             </div>
         </div>
+        <gs-user-edit ng-show="editable" fieldisable="fieldisable" inverted="true" section-title="Profile" blocked="blocked" user="user" userinfo="true" loading="loading"></gs-user-edit>
     </form>
 </div>
 
@@ -94,7 +95,5 @@
         <input type="number" name="date" min="1" max="31" class="calendar__date" ng-disabled="blocked" ng-model="user.birth_day" />
     </div>
     <div class="userprofile__errors">{{user.error_message}}</div>
-    <div ng-show="editable" class="editlink editlink--white">
-        <gs-user-edit fieldisable="fieldisable" blocked="blocked" user="user" userinfo="true" loading="loading"></gs-user-edit>
-    </div>
+    <gs-user-edit ng-show="editable" fieldisable="fieldisable" inverted="false" section-title="Contact" blocked="blocked" user="user" userinfo="true" loading="loading"></gs-user-edit>
 </form>

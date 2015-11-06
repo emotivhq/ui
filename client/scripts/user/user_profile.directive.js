@@ -100,7 +100,9 @@ var gsUserEdit = function ($http, UserService, Analytics) {
             user: "=",
             userinfo: "=",
             blocked: "=",
-            loading: "="
+            loading: "=",
+            inverted: "=",
+            sectionTitle: "@"
         },
         require: '^form',
         link: link,

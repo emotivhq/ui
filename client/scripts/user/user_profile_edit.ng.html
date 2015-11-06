@@ -1,12 +1,13 @@
 <div class="userprofile__loading" ng-show="loading">
     <img class="userprofile__loadingimg" src="/assets/loading.gif" alt="preloader" title="preloader">
 </div>
-<a ng-show="canEdit" class="editlink__edit button linky" ng-click="editUserFields();">
-    Edit
-</a>
-<a ng-hide="canEdit" class="editlink__save button linky"  ng-click="saveInput()">
-    Save
-</a>
-<a ng-hide="canEdit" class="editlink__cancel button linky" ng-click="cancelEdit();">
-    Cancel
-</a>
+<button class="ui button" ng-class="{inverted: inverted}" ng-show="canEdit" ng-click="editUserFields();">
+  Edit {{sectionTitle}}
+</button>
+<button class="ui grey button" ng-class="{inverted: inverted}" ng-hide="canEdit" ng-click="cancelEdit();">
+  Cancel
+</button>
+<button class="ui button positive" ng-hide="canEdit" ng-click="saveInput();">
+  <i class="icon check"></i>
+  Save {{sectionTitle}}
+</button>
