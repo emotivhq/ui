@@ -2,6 +2,7 @@
 /client/_public/ 
 /client/stylesheets/*.css
 client/stylesheets/ui/*.css
+client/stylesheets/app-main/*.css
 /client/bower_components/
 /client/client.iml
 /client/.sass-cache/

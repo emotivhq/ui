@@ -1,5 +1,4 @@
 <div id="giftideas" class="ui container">
-
     <div ng-show="product" class="singleproduct main pad">
         <div class="head">
             <div class="hero">
@@ -45,7 +44,7 @@
             <div class="ui stackable four column grid">
                 <div class="eight wide column">
                     <h2 class="ui center aligned header">
-  					    <img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="    display: block; margin: 0 auto .5rem;width: 57%;">
+  					    <img class="ui circular image" src="/assets/giftideas/category/{{category.categorySlug}}.jpg" alt="{{category.categorySlug}}" style="display: block; margin: 0 auto .5rem;width: 57%;">
 				    </h2>
                 </div>
                 <div class="eight wide column">
@@ -62,12 +61,12 @@
 			    {{category.categoryName}}
 		    </h2>
         </div>
-        <ul rn-carousel class="ui segment carousel" rn-carousel-index="carouselIndex">
-            <li ng-repeat="group in groups" class="ui centered stackable grid">
-                <div ng-repeat="product in group" class="four wide column">
+        <slick ng-if="products.length" data="products" class="ui segment"  lazy-load="ondemand" slides-to-show="4" slides-to-scroll="4" >
+            <div ng-repeat="product in products" class="ui centered stackable grid">
+                <div class="column">
                     <div class="ui fluid card">
                         <a class="image" href="{{categoryPath}}/{{product.productSlug}}">
-                            <img src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
+                            <img ng-src="/assets/giftideas/category{{product.productThumb}}" alt="{{product.imageAltText}}" class="load" />
                         </a>
                         <div class="content">
                             <a class="header" ng-bind-html="product.productNameShort" href="{{categoryPath}}/{{product.productSlug}}"></a>
@@ -77,484 +76,97 @@
                         </div>
                     </div>
                 </div>
-            </li>
-        </ul>
-        <div rn-carousel-indicators ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex" style="font-size: 2em;"></div>
-        <div rn-carousel-controls ng-if="groups.length > 1" slides="groups" rn-carousel-index="carouselIndex"></div>
+            </div>
+        </slick>
         <div class="clear"></div>
     </div>
 
-    <h1 class="vertical medium top bottom">What’s popular</h1>
-    <div class="categories ui three stackable link cards">
-
-        <div class="card">
-            <a class="image" href="/giftideas/music">
-                <img src="/assets/giftideas/category/music.jpg" alt="Music" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/music">Music</a>
-                <div class="description">
-                    Looking for the perfect gift for someone who has everything or loves the gift of music?
-                </div>
-            </div>
-            <div class="extra content">
-                <a class="center" href="/giftideas/music">
-                    <i class="unhide icon"></i> View Music
-                </a>
-            </div>
+    <div class="ui container text">
+        <div class="ui basic segment">
+        <h1 class="ui huge header">
+          What’s popular
+          <div class="sub header">We've curated lists of our most popular gifts. Not sure what to give? That's alright, we've already found the perfect gift.</div>
+        </h1>
         </div>
-        <div class="card">
-            <a class="image" href="/giftideas/luma">
-                <img src="/assets/giftideas/category/luma-diamonds.jpg" alt="Luma Diamonds" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/luma">Luma Diamonds</a>
-                <div class="description">
-                    With such a variety of beautiful pieces, there is sure to be one perfect for the deserving individual in your life.
-                </div>
-            </div>
-            <div class="extra content">
-                <a class="center" href="/giftideas/luma">
-                    <i class="unhide icon"></i> View Luma
+    </div>
+    <div class="ui segment basic">
+        <div class="ui five doubling cards">
+            <div ng-repeat="idea in giftideas|orderBy:'isNew':true" class="giftidea card">
+                <a class="ui image" href="{{idea.url}}">
+                    <div class="ui red ribbon label" ng-show="{{idea.isNew}}">
+                          <i class="gift icon"></i> New
+                    </div>
+                    <img data-src="{{idea.img}}" src="{{idea.img}}" alt="{{idea.alt}}" class="load" />
                 </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/kids">
-                <img src="/assets/giftideas/category/kids.jpg" alt="Kids" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/kids">Kids</a>
-                <div class="description">
-                    We've picked out some of the very best kid gifts that are sure to delight a little one in your life.
-                </div>
-            </div>
-            <div class="extra content">
-                <a class="center" href="/giftideas/kids">
-                    <i class="unhide icon"></i> View Kids
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/outdoors">
-                <img src="/assets/giftideas/category/outdoors.jpg" alt="Outdoors" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/outdoors">Outdoors</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/outdoors">
-                    <i class="unhide icon"></i> View Outdoors
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/green">
-                <img src="/assets/giftideas/category/green.jpg" alt="Green" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/green">Green</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/green">
-                    <i class="unhide icon"></i> View Green
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/home">
-                <img src="/assets/giftideas/category/home.jpg" alt="Home" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/home">Home</a>
                 <div class="content">
-                    These gift ideas will help to make any house feel more like a home!
+                    <a class="header" href="{{idea.url}}">{{idea.title || '...'}}</a>
+                    <div class="description">
+                        {{idea.description || '...' }}
+                    </div>
                 </div>
-            </div>
-            <div class="extra content">
-                <a class="center" href="/giftideas/home">
-                    <i class="unhide icon"></i> View Home
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/cute">
-                <img src="/assets/giftideas/category/cute.jpg" alt="Cute" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/cute">Cute</a>
-                <div class="description">
-                    Know someone who absolutely loves cute things? This is the place for that kind of stuff.
+                <div class="extra content">
+                    <a class="center" href="{{idea.url}}">
+                        <i class="unhide icon"></i> {{idea.button}}
+                    </a>
                 </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/cute">
-                    <i class="unhide icon"></i> View Cute
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/baby">
-                <img src="/assets/giftideas/category/Baby.jpg" alt="Baby" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/baby">Baby</a>
-                <div class="description">
-                    Hand picked and curated by moms all over for the best experience for both baby & mom.
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/baby">
-                    <i class="unhide icon"></i> View Baby
-                </a>
-
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/forher">
-                <img src="/assets/giftideas/category/forHer.jpg" alt="For Her" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/forher">For Her</a>
-                <div class="description">
-                    Sisters. Grandmas. Moms. Aunts. Cousins. Friends. Colleagues. We have our own tastes, and here are some favorites.
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/forher">
-                    <i class="unhide icon"></i> View For Her
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/forhim">
-                <img src="/assets/giftideas/category/forHim.jpg" alt="For Him" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/forhim">For Him</a>
-                <div class="description">
-                    The best damm handcrafted gift list for guys.
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/forhim">
-                    <i class="unhide icon"></i> View Him
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/cool">
-                <img src="/assets/giftideas/category/cool.jpg" alt="Cool" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/cool">Cool</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/cool">
-                    <i class="unhide icon"></i> View Cool
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/office">
-                <img src="/assets/giftideas/category/office.jpg" alt="Office" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/office">Office</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/office">
-                    <i class="unhide icon"></i> View Office
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/farewell">
-                <img src="/assets/giftideas/category/Farewell.jpg" alt="Farewell" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/farewell">Farewell</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/farewell">
-                    <i class="unhide icon"></i> View Farewell
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/sympathy">
-                <img src="/assets/giftideas/category/sympathy.jpg" alt="Sympathy" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/sympathy">Sympathy</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/sympathy">
-                    <i class="unhide icon"></i> View Sympathy
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/beauty">
-                <img src="/assets/giftideas/category/beauty.jpg" alt="Beauty" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/beauty">Beauty</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/beauty">
-                    <i class="unhide icon"></i> View Beauty
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/wine">
-                <img src="/assets/giftideas/category/wine.jpg" alt="Wine" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/wine">Wine</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/wine">
-                    <i class="unhide icon"></i> View Wine
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/butterlondon">
-                <img src="/assets/giftideas/category/butterLONDON.jpg" alt="Butter LONDON" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/butterlondon">Butter LONDON</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/butterlondon">
-                    <i class="unhide icon"></i> View Butter LONDON
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/petlovers">
-                <img src="/assets/giftideas/category/pet-lovers.jpg" alt="Pet Lovers" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/petlovers">Pet Lovers</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/petlovers">
-                    <i class="unhide icon"></i> View Pet Lovers
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/wedding">
-                <img src="/assets/giftideas/category/Wedding.jpg" alt="Wedding" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/wedding">Wedding</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/wedding">
-                    <i class="unhide icon"></i> View Wedding
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/graduation">
-                <img src="/assets/giftideas/category/graduation.jpg" alt="Graduation" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/graduation">Graduation</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/graduation">
-                    <i class="unhide icon"></i> View Graduation
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/red">
-                <img src="/assets/giftideas/category/red.jpg" alt="Wear Red" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/red">Wear Red</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/red">
-                    <i class="unhide icon"></i> View Wear Red
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/patriots">
-                <img src="/assets/giftideas/category/Patriots.jpg" alt="Patriots" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/patriots">Patriots</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/patriots">
-                    <i class="unhide icon"></i> View Patriots
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/seahawks">
-                <img src="/assets/giftideas/category/Seahawks.jpg" alt="Seahawks" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/seahawks">Seahawks</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/seahawks">
-                    <i class="unhide icon"></i> View Seahawks
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/employee">
-                <img src="/assets/giftideas/category/employee.jpg" alt="Employee" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/employee">Employee</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/employee">
-                    <i class="unhide icon"></i> View Employee
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/boss">
-                <img src="/assets/giftideas/category/Boss.jpg" alt="Boss" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/boss">Boss</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/boss">
-                    <i class="unhide icon"></i> View Boss
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/teacher">
-                <img src="/assets/giftideas/category/teacher.jpg" alt="Teacher" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/teacher">Teacher</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/teacher">
-                    <i class="unhide icon"></i> View Teacher
-                </a>
-            </div>
-        </div>
-        <div class="card">
-            <a class="image" href="/giftideas/electronics">
-                <img src="/assets/giftideas/category/electronics.jpg" alt="Electronics" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/electronics">Electronics</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/electronics">
-                    <i class="unhide icon"></i> View Electronics
-                </a>
-            </div>
-        </div>
-
-        <div class="card">
-            <a class="image" href="/giftideas/military">
-                <img src="/assets/giftideas/category/Military.jpg" alt="Military" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/military">Military</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/military">
-                    <i class="unhide icon"></i> View Military
-                </a>
-            </div>
-        </div>
-
-        <div class="card">
-            <a class="image" href="/giftideas/giftcard">
-                <img src="/assets/giftideas/category/giftcard.jpg" alt="Gift Cards" class="load" />
-            </a>
-            <div class="content">
-                <a class="header" href="/giftideas/giftcard">Gift Cards</a>
-                <div class="description">
-                    ...
-                </div>
-            </div>
-            <div class="extra content bottom button attached">
-                <a class="center" href="/giftideas/giftcard">
-                    <i class="unhide icon"></i> View Gift Cards
-                </a>
             </div>
         </div>
     </div>
-
-    <div class="clear"></div>
+    <div class="ui section divider"></div>
+    <div class="ui container text" ng-controller="ConciergeController">
+        <div class="ui segment basic">
+            <h1 class="ui header">
+                Give any gift with the Gift Concierge
+                <div class="sub header">
+                    Need help coming up with a gift idea? We are here to help.
+                </div>
+            </h1>
+            <div class="ui piled segment">
+                <form name="conciergeform" ng-submit="sendMsg()" class="ui form" ng-class="{error: !validForm, success: validForm}">
+                    <h4 class="ui dividing header">Provide a few details below to contact the Gift Concierge.</h4>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="calendar icon"></i>
+                           <input type="text" name="title" ng-model="title" placeholder="What event is the gift for?" />
+                       </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="dollar icon"></i>
+                           <input type="text" name="budget" ng-model="budget" placeholder="Is there a budget you want to stay within?" />
+                       </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="gift icon"></i>
+                           <input type="text" name="url" ng-model="url" placeholder="URL to the gift you're thinking of" />
+                       </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="mail icon"></i>
+                            <input type="email" name="email" ng-model="email" placeholder="Your email address (required)"/>
+                        </div>
+                    </div>
+                    <div class="field">
+                       <div class="ui left icon input">
+                           <i class="comment icon"></i>
+                           <input type="text" name="comments" ng-model="comments" placeholder="Additional comments" />
+                       </div>
+                    </div>
+                    <button type="submit" class="button ui teal icon fluid">
+                        <i class="send icon"></i>
+                        Make your request
+                    </button>
+                    <div class="ui message" ng-show="msg.length > 0" ng-class="{error: !validForm, success: validForm}">
+                        <div class="header" >
+                            <span ng-show="!validForm">One last thing...</span>
+                            <span ng-show="validForm">Your message is being processed.</span>
+                        </div>
+                        <p>{{msg}}</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
