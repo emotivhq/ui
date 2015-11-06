@@ -26,9 +26,8 @@
         </div>
     </div>
     
-    <section id="search-products-section" class="ui container products" ng-class="{hidden: products.length == 0, grid: products.length > 0}" ng-show="searchResults">
-
-        <div class="ui cards stackable four link vertical bottom medium" ng-hide="loading">
+    <section id="search-products-section" class="ui container products" ng-show="searchResults && products.length !== 0">
+        <div class="ui cards stackable four vertical bottom medium" ng-hide="loading">
             <div class="product-container ui card" ng-class="{selected: product.selected}" ng-repeat="product in selectedProducts" ng-hide="!product.imgUrl" ng-click="showProductDetails({{$index}})">
                 <div class="product content">
                     <div class="image-container">
@@ -66,6 +65,21 @@
                         <div class="product-message" ng-show="product.selected" ng-bind-html="productMessage"></div>
                     </div>
                     <button class="cancel" ng-click="hideProductDetails();$event.stopPropagation();">X</button>
+                </div>
+                <div class="extra content">
+                    <a class="left floated">
+                        <span ng-show="!product.selected">
+                            <i class="unhide icon"></i>
+                            View More
+                        </span>
+                        <span ng-show="product.selected" ng-click="hideProductDetails();$event.stopPropagation();">
+                            <i class="hide icon"></i>
+                            View Less
+                        </span>
+                    </a>
+                    <span class="right floated author">
+                        <i class="teal dollar icon"></i>{{product.price / 100 | number : 2}}
+                    </span>
                 </div>
             </div>
             <div class="page-buttons ui vertical medium top bottom middle aligned center aligned container" ng-show="products.length > 10">

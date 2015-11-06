@@ -33,7 +33,6 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
                     page.off("scroll mousedown wheel DOMMouseScroll mousewheel keyup touchmove");
                 }
             );
-            
             return false;
         }
 
@@ -133,10 +132,7 @@ function gsProductSearch(UserService, ProductService, $location, Analytics, User
             scope.selectedProducts = scope.products.slice(
                 (scope.selectedPage - 1) * scope.pageSize, scope.selectedPage * scope.pageSize);
             scope.hideProductDetails();
-            
             scrollToTop();
-            
-            
         };
         scope.showProductDetails = function (index) {
             Analytics.track('product', 'show product details');
