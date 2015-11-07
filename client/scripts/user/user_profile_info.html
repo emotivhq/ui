@@ -1,10 +1,18 @@
 <div class="ui inverted masthead aligned vertical segment user slim">
     <form class="userprofile__info" name="userprofileInfo">
         <div class="ui text container">
-            <div class="ui grid">
+            <div class="ui stackable grid">
                 <div class="five wide column">
+                    <!-- 
+                         Tyler Goelz @yaboi - 7 Nov 2015
+                         BEFORE THIS IS PUSHED...
+                         Uncomment line directly underneath this comment becuase it
+                         is the correct code to work in production.
+                         Remove second line, it's only a placeholder to make the
+                         the cross-domain image issue work.
+                    -->
                     <!-- <img class="ui medium circular bordered image userprofile__userimage" src="/assets/noUserImage.png" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked"> -->
-                    <img class="ui circular fluid bordered image userprofile__userimage" src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked">
+                    <img class="ui circular fluid bordered image" src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked">
                 </div>
                 <div class="eleven wide column">
                     <h1 class="ui inverted header">
@@ -13,18 +21,51 @@
                             <input type="text" ng-model="user.name" ng-disabled="blocked" name="username" ng-value="user.name" placeholder="{{ user.name }}" autocomplete="off" />
                         </div>                        
                     </h1>
-                    <button class="ui circular facebook icon button" ng-click="doLoginFacebook()">
-                        <i class="facebook icon"></i>
-                    </button>
-                    <button class="ui circular twitter icon button" ng-click="doLoginTwitter()">
-                        <i class="twitter icon"></i>
-                    </button>
-                    <button class="ui circular linkedin icon button" ng-click="doLoginLinkedin()">
-                        <i class="linkedin icon"></i>
-                    </button>
-                    <button class="ui circular google plus icon button" ng-click="doLoginGoogleplus()">
-                        <i class="google plus icon"></i>
-                    </button>
+                    <div class="ui grid">
+                        <div class="two wide column">
+                            <div ng-class="{'ui fade reveal': !blocked}">
+                                <button class="ui circular facebook icon button visible content" ng-click="doLoginFacebook()">
+                                    <i class="facebook icon"></i>
+                                </button>
+                                <button ng-show="!blocked" class="ui circular facebook icon button hidden content" ng-click="doLoginFacebook()">
+                                    <i class="write icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="two wide column">
+                            <div ng-class="{'ui fade reveal': !blocked}">
+                                <button class="ui circular twitter icon button visible content" ng-click="doLoginFacebook()">
+                                    <i class="twitter icon"></i>
+                                </button>
+                                <button ng-show="!blocked" class="ui circular twitter icon button hidden content" ng-click="doLoginFacebook()">
+                                    <i class="write icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="two wide column">
+                            <div ng-class="{'ui fade reveal': !blocked}">
+                                <button class="ui circular linkedin icon button visible content" ng-click="doLoginFacebook()">
+                                    <i class="linkedin icon"></i>
+                                </button>
+                                <button ng-show="!blocked" class="ui circular linkedin icon button hidden content" ng-click="doLoginFacebook()">
+                                    <i class="write icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="two wide column">
+                            <div ng-class="{'ui fade reveal': !blocked}">
+                                <button class="ui circular google plus icon button visible content" ng-click="doLoginFacebook()">
+                                    <i class="google plus icon"></i>
+                                </button>
+                                <button ng-show="!blocked" class="ui circular google plus icon button hidden content" ng-click="doLoginFacebook()">
+                                    <i class="write icon"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="eight wide column vertical middle aligned" ng-show="!blocked">
+                            <p><small>&#8592; click a button to update it.</small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -32,10 +73,10 @@
     </form>
 </div>
 
-<form class="userprofile__info hidden" name="userprofileInfo">
+<form class="userprofile__info ng-hide" name="userprofileInfo">
     <div class="userprofile__image" ng-class="{true: 'userprofile__image--edit'}[editMode]">
         <button class="userprofile__imagecancel tooltip--right" data-tooltip="Close" ng-show="editMode && !blocked" ng-click="editMode = false;">x</button>
-        <img class="userprofile__userimage" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" />
+<!--         <img class="userprofile__userimage" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" /> -->
         <gs-image-upload ng-show="editMode && !blocked" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
         <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="imgloading">
         <button class="userprofile__imageedit" ng-hide="editMode || blocked" ng-click="editMode=true;">Change photo</button>
@@ -88,7 +129,7 @@
             </div>
         </div>
     </div>
-    <div class="calendar hidden" ng-show="(user.birth_month&&user.birth_day)||editable">
+    <div class="calendar ng-hide" ng-show="(user.birth_month&&user.birth_day)||editable">
         <p class="calendar__calendartext">Birth Date</p>
         <div class="calendar__monthwrap">
             <select ng-disabled="blocked" class="calendar__month" ng-model="user.birth_month" ng-options="month.value as month.label for month in months">
