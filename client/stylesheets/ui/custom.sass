@@ -264,7 +264,7 @@ div.rn-carousel-indicator span.active
     text-shadow: 0 0 5px rgba(0,0,0,.25)
   
   h1.ui.header
-    margin-bottom: .5em
+    margin-bottom: .25em
     font-size: 2.5em
     margin-top: 2.5em
   
@@ -299,7 +299,6 @@ div.rn-carousel-indicator span.active
     .ui.container
         height: auto
         h1.ui.header
-            margin-bottom: 0em
             font-size: 3em
             margin-top: 3em
         h2
@@ -319,7 +318,7 @@ div.rn-carousel-indicator span.active
         background-position: center 19%
         .ui.container
           h1.ui.header
-            margin-top: 1.5em
+            margin-top: 2em
             
   &.search, &.discover, &.giftideas
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink-mobile.jpg)
@@ -331,6 +330,15 @@ div.rn-carousel-indicator span.active
   &.user
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift-mobile.jpg)
     background-position: center 62%
+
+    h1.ui.header
+        .ui.input
+            font-weight: inherit
+            border-bottom: 1px dashed white
+            background-color: rgba(0,0,0,.15);
+            padding-left: 10px;
+            margin-left: -10px;
+            border-radius: .28571429rem;
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift@2x.jpg),url(/assets/bg/computer-and-gift.jpg)

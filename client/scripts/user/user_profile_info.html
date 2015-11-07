@@ -8,7 +8,10 @@
                 </div>
                 <div class="eleven wide column">
                     <h1 class="ui inverted header">
-                        {{ user.name }}
+                        <span ng-show="blocked">{{ user.name }}</span>
+                        <div class="ui inverted transparent input" ng-hide="blocked">
+                            <input type="text" ng-model="user.name" ng-disabled="blocked" name="username" ng-value="user.name" placeholder="{{ user.name }}" autocomplete="off" />
+                        </div>                        
                     </h1>
                     <button class="ui circular facebook icon button" ng-click="doLoginFacebook()">
                         <i class="facebook icon"></i>
