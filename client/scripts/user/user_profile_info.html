@@ -13,6 +13,10 @@
                     -->
                     <!-- <img class="ui medium circular bordered image userprofile__userimage" src="/assets/noUserImage.png" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked"> -->
                     <img class="ui circular fluid bordered image" src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked">
+                    <button class="ui button" ng-show="!blocked" ng-click="openImageDialogGlobal();">
+                        <i class="camera icon"></i>
+                        Upload Photo
+                    </button>
                 </div>
                 <div class="eleven wide column">
                     <h1 class="ui inverted header">
