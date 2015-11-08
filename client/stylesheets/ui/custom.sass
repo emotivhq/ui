@@ -328,17 +328,9 @@ div.rn-carousel-indicator span.active
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink@2x.jpg),url(/assets/bg/binary-blue-and-pink.jpg)         
 
   &.user
+    padding: 1em 0 4em
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift-mobile.jpg)
     background-position: center 62%
-
-    h1.ui.header
-        .ui.input
-            font-weight: inherit
-            border-bottom: 1px dashed white
-            background-color: rgba(0,0,0,.3);
-            padding-left: 10px;
-            margin-left: -10px;
-            border-radius: .28571429rem;
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift@2x.jpg),url(/assets/bg/computer-and-gift.jpg)
@@ -356,8 +348,37 @@ div.rn-carousel-indicator span.active
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
 
+// user
+.ui.user
+    &.masthead.segment
+        .column.row
+            padding: 1rem 0 0 6px
+            
+        .ui.inverted.input
+            font-weight: inherit
+            border-bottom: 1px dashed white
+            background-color: rgba(0,0,0,.3)
+            border-radius: .28571429rem
+                            
+            &.social
+                width: 80%
+                padding: 0 1em
+                
+            &.in.place
+                padding-left: 10px
+                margin-left: -10px
+                
+    // TODO: Tyler Goelz @yaboi
+    // 8 Nov 2015
+    // Add pretty transition from non-edit to edit
+    // for social link inputs
+    //.ui.grid.transition
+    //    -moz-transition: all 2s ease-in
+    //    -o-transition: all 2s ease-in
+    //    -webkit-transition: all 2s ease-in
+    //    transition: all 2s ease-in
+    
 // statistics
-
 .ui
   &.statistic > .value, &.statistics .statistic > .value
     font-size: 1.2rem

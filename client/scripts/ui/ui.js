@@ -11,6 +11,7 @@ $(document).ready(function () {
         type: 'fixed',
         offset: 80
     });
+    
     // lazy load images
     $('.load').visibility({
         type: 'image',
