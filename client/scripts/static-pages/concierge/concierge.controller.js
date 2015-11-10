@@ -4,15 +4,13 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('ConciergeController', ['$scope', '$http', '$timeout',
+GiftStarterApp.controller('ConciergeController', ['$scope', '$http',
     ConciergeController]);
 
-function ConciergeController($scope, $http, $timeout) {
-    $scope.msg = "";
-    $scope.validForm = true;
-    
+function ConciergeController($scope, $http) {
+
     var resetForm = function() {
-        $scope.email = "";
+        $scope.fromemail = "";
         $scope.title = "";
         $scope.budget = "";
         $scope.url = "";
@@ -20,51 +18,34 @@ function ConciergeController($scope, $http, $timeout) {
         $scope.conciergeform.$setUntouched();
     };
 
-    $scope.validateForm = function() {
-        var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i,
-            isValid = re.test($scope.email);
-        return isValid;
-    }
-    
-    // Semantic ui
-	//jQuery('.menu .item').tab();
-    
+	jQuery('.menu .item').tab();
+
     $scope.sendMsg = function() {
-        if ($scope.validateForm()) {
-            $http({
-                method: "POST",
-                dataType: 'jsonp',
-                url: 'https://docs.google.com/forms/d/13cnJDPtW0plkxXi3cgBu844ETrtzbw9JgWWaeqj-0UY/formResponse',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-                params: {
-                    'entry_1538055563': $scope.email,
-                    'entry_1003504959': $scope.title, 
-                    'entry_727663111': $scope.budget, 
-                    'entry_1647489740': $scope.url, 
-                    'entry_1284484267': $scope.comments
-                }
-            })
-            .then(function () {
+
+        $http({
+            method: "POST",
+            dataType: 'jsonp',
+            url: 'https://docs.google.com/forms/d/13cnJDPtW0plkxXi3cgBu844ETrtzbw9JgWWaeqj-0UY/formResponse',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
             },
-            function (res) {
-                if (res.status === 0) {
-                    resetForm();
-                    $scope.validForm = true;
-                    $scope.msg = "We will do our best to respond today, definitely within 24 hours.";
-                    $timeout(function() {
-                        $scope.msg = "";
-                    }, 6000);
-                } else {
-                    $scope.validForm = false;
-                    $scope.msg = "An error has occured. Please try again later."
-                }
-            });
-        } else {
-            $scope.validForm = false;
-            $scope.msg = "Before we proceed, please enter a valid email address.";
-        }
+            params: {
+                'entry_1538055563': $scope.fromemail,
+                'entry_1003504959': $scope.title, 
+                'entry_727663111': $scope.budget, 
+                'entry_1647489740': $scope.url, 
+                'entry_1284484267': $scope.comments
+            }
+        })
+        .then(function () {
+        },        
+        function (res) {
+            if (res.status === 0) {
+                resetForm();
+                $scope.msg = "Thank you! We'll do our best to respond on the same day, definitely within 24 hours. Please add giftconcierge@giftstarter.com to your address book to make sure you'll receive the reply."
+            } else {
+                $scope.msg = res['error'];
+            }
+        });
     }
 }
-
