@@ -11,15 +11,15 @@
                          Remove second line, it's only a placeholder to make the
                          the cross-domain image issue work.
                     -->
-<!--                     <img class="ui circular fluid bordered image" ng-src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked" /> -->
-                    <img class="ui circular fluid bordered image" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" />
+                    <img class="ui circular fluid bordered image" ng-src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked" />
+<!--                     <img class="ui circular fluid bordered image" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" /> -->
                     <button class="ui fluid teal button" ng-hide="editMode || blocked" ng-click="editMode=true;">Change photo</button>
                     <gs-image-upload ng-show="editMode && !blocked" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
                     <button class="ui fluid teal button" ng-click="submit(); editMode = false;" ng-show="editMode && !blocked && imageSet" ng-class="{disabled: !imageSet}">Save</button>
                     <button class="ui fluid teal button" ng-show="editMode && !blocked" ng-click="openImageDialogGlobal();"><span ng-show="!imageSet">Upload</span><span ng-show="imageSet">Change</span></button>
                     <button class="ui fluid button" ng-show="editMode && !blocked" ng-click="editMode = false;">Close</button>                    
                 </div>
-                <div class="eleven wide column">
+                <div class="eleven wide column profile info">
                     <h1 class="ui inverted header">
                         <span ng-show="blocked">{{ user.name }}</span>
                         <div class="ui inverted transparent in place fluid input" ng-hide="blocked">
@@ -27,40 +27,40 @@
                         </div>                        
                     </h1>
                     <div class="ui grid" ng-show="user.link_facebook||user.link_twitter||user.link_linkedin||user.link_googleplus||user.link_website||editable">
-                        <div class="column" ng-class="blocked ? 'two wide' : 'row'" ng-show="user.link_facebook||editable">
-                            <a class="ui circular icon button" ng-disabled="!user.link_facebook" ng-class="{facebook: user.link_facebook}" ng-href="{{user.link_facebook}}" target="_blank">
+                        <div class="column" ng-class="blocked ? 'three wide' : 'row'" ng-show="user.link_facebook||editable">
+                            <a class="ui circular icon big button" ng-disabled="!user.link_facebook" ng-class="{facebook: user.link_facebook}" ng-href="{{user.link_facebook}}" target="_blank">
                                 <i class="facebook icon"></i>
                             </a>
                             <div class="ui inverted transparent social input" ng-show="!blocked">
                                 <input type="text" ng-model="user.link_facebook" ng-disabled="blocked" name="linkfacebook" placeholder="http://www.facebook.com/example" autocomplete="off" ng-blur="validateLinks()" />
                             </div>
                         </div>
-                        <div class="column" ng-class="blocked ? 'two wide' : 'row'" ng-show="user.link_twitter||editable">
-                            <a class="ui circular icon button" ng-disabled="!user.link_twitter" ng-class="{twitter: user.link_twitter}" ng-href="{{user.link_twitter}}" target="_blank">
+                        <div class="column" ng-class="blocked ? 'three wide' : 'row'" ng-show="user.link_twitter||editable">
+                            <a class="ui circular icon big button" ng-disabled="!user.link_twitter" ng-class="{twitter: user.link_twitter}" ng-href="{{user.link_twitter}}" target="_blank">
                                 <i class="twitter icon"></i>
                             </a>
                             <div class="ui inverted transparent social input" ng-show="!blocked">
                                 <input type="text" ng-model="user.link_twitter" ng-disabled="blocked" name="linktwitter" placeholder="http://www.twitter.com/example" autocomplete="off" ng-blur="validateLinks()" />
                             </div>
                         </div>
-                        <div class="column" ng-class="blocked ? 'two wide' : 'row'" ng-show="user.link_linkedin||editable">
-                            <a class="ui circular icon button" ng-disabled="!user.link_linkedin" ng-class="{linkedin: user.link_linkedin}" ng-href="{{user.link_linkedin}}" target="_blank">
+                        <div class="column" ng-class="blocked ? 'three wide' : 'row'" ng-show="user.link_linkedin||editable">
+                            <a class="ui circular icon big button" ng-disabled="!user.link_linkedin" ng-class="{linkedin: user.link_linkedin}" ng-href="{{user.link_linkedin}}" target="_blank">
                                 <i class="linkedin icon"></i>
                             </a>
                             <div class="ui inverted transparent social input" ng-hide="blocked">
                                 <input type="text" ng-model="user.link_linkedin" ng-disabled="blocked" name="linklinkedin" placeholder="https://www.linkedin.com/in/example" autocomplete="off" ng-blur="validateLinks()" />
                             </div>
                         </div>
-                        <div class="column" ng-class="blocked ? 'two wide' : 'row'" ng-show="user.link_googleplus||editable">
-                            <a class="ui circular icon button" ng-disabled="!user.link_googleplus" ng-class="{'google plus': user.link_googleplus}" ng-href="{{user.link_googleplus}}" target="_blank">
+                        <div class="column" ng-class="blocked ? 'three wide' : 'row'" ng-show="user.link_googleplus||editable">
+                            <a class="ui circular icon big button" ng-disabled="!user.link_googleplus" ng-class="{'google plus': user.link_googleplus}" ng-href="{{user.link_googleplus}}" target="_blank">
                                 <i class="google plus icon"></i>
                             </a>
                             <div class="ui inverted transparent social input" ng-hide="blocked">
                                 <input type="text" ng-model="user.link_googleplus" ng-disabled="blocked" name="linkgoogleplus" placeholder="http://plus.google.com/+example" autocomplete="off" ng-blur="validateLinks()" />
                             </div>
                         </div>
-                        <div class="column" ng-class="blocked ? 'two wide' : 'row'" ng-show="user.link_website||editable">
-                            <a class="ui circular icon button" ng-disabled="!user.link_website" ng-class="{green: user.link_website}" ng-href="{{user.link_website}}" target="_blank">
+                        <div class="column" ng-class="blocked ? 'three wide' : 'row'" ng-show="user.link_website||editable">
+                            <a class="ui circular icon big button" ng-disabled="!user.link_website" ng-class="{green: user.link_website}" ng-href="{{user.link_website}}" target="_blank">
                                 <i class="world icon"></i>
                             </a>
                             <div class="ui inverted transparent social input" ng-hide="blocked">

@@ -349,26 +349,49 @@ div.rn-carousel-indicator span.active
 // user
 .ui.user
     &.masthead.segment
+        .ui.container
+            margin-bottom: 2em
+            
+            @media only screen and (min-width: 700px)
+                margin-bottom: 0
+                
         .column
             &.row
                 padding: 1rem 0 0 6px
             &.avatar
                 .ui.button
                     margin-top: 15px
+            &.profile.info
+                h1.ui.header
+                    margin-top: 1.7em
+                    font-size: 3.5em
                     
-        .ui.inverted.input
-            font-weight: inherit
-            border-bottom: 1px dashed white
-            background-color: rgba(0,0,0,.3)
-            border-radius: .28571429rem
+                    @media only screen and (max-width: 700px)
+                        margin-top: 0
+                        font-size: 2.5em 
+            
+                .ui.inverted.input
+                    font-weight: inherit
+                    border-bottom: 1px dashed white
+                    background-color: rgba(0,0,0,.3)
+                    border-radius: .28571429rem
+                                    
+                    &.social
+                        width: 80%
+                        padding: 0 1em
+                        
+                    &.in.place
+                        padding-left: 10px
+                        
+                        @media only screen and (min-width: 700px)
+                            margin-left: -10px
+                    input 
+                        text-align: center
+                        @media only screen and (min-width: 700px)
+                            text-align: left
                             
-            &.social
-                width: 80%
-                padding: 0 1em
-                
-            &.in.place
-                padding-left: 10px
-                margin-left: -10px
+                @media only screen and (max-width: 700px)
+                    text-align: center
         
         img.ui.image, gs-image-upload
             margin-top: 5em
