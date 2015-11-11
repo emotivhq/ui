@@ -303,9 +303,7 @@ div.rn-carousel-indicator span.active
             margin-top: 3em
         h2
             display: block
-        img.ui.image.bordered
-            margin-top: 5em
-            border: 3px solid white
+        
   &.slim
     min-height: 350px
     margin-bottom: 50px
@@ -351,9 +349,13 @@ div.rn-carousel-indicator span.active
 // user
 .ui.user
     &.masthead.segment
-        .column.row
-            padding: 1rem 0 0 6px
-            
+        .column
+            &.row
+                padding: 1rem 0 0 6px
+            &.avatar
+                .ui.button
+                    margin-top: 15px
+                    
         .ui.inverted.input
             font-weight: inherit
             border-bottom: 1px dashed white
@@ -367,7 +369,12 @@ div.rn-carousel-indicator span.active
             &.in.place
                 padding-left: 10px
                 margin-left: -10px
-                
+        
+        img.ui.image.bordered, gs-image-upload
+            margin-top: 5em
+            border: 3px solid white
+            position: relative
+            
     // TODO: Tyler Goelz @yaboi
     // 8 Nov 2015
     // Add pretty transition from non-edit to edit
