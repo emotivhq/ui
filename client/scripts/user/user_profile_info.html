@@ -11,13 +11,12 @@
                          Remove second line, it's only a placeholder to make the
                          the cross-domain image issue work.
                     -->
-                    <img class="ui circular fluid bordered image" ng-src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked" />
-                    <!-- <img class="ui circular fluid bordered image" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" /> -->
+<!--                     <img class="ui circular fluid bordered image" ng-src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png" ng-hide="editMode && !blocked" /> -->
+                    <img class="ui circular fluid bordered image" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" />
                     <button class="ui fluid teal button" ng-hide="editMode || blocked" ng-click="editMode=true;">Change photo</button>
                     <gs-image-upload ng-show="editMode && !blocked" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
-                    <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="imgloading">
                     <button class="ui fluid teal button" ng-click="submit(); editMode = false;" ng-show="editMode && !blocked && imageSet" ng-class="{disabled: !imageSet}">Save</button>
-                    <button class="ui fluid teal button" ng-show="editMode && !blocked" ng-click="openImageDialogGlobal();">Upload <span ng-show="imageSet">New</span></button>
+                    <button class="ui fluid teal button" ng-show="editMode && !blocked" ng-click="openImageDialogGlobal();"><span ng-show="!imageSet">Upload</span><span ng-show="imageSet">Change</span></button>
                     <button class="ui fluid button" ng-show="editMode && !blocked" ng-click="editMode = false;">Close</button>                    
                 </div>
                 <div class="eleven wide column">
@@ -76,10 +75,10 @@
     </form>
 </div>
 
-<form class="userprofile__info ng-hide" name="userprofileInfo">
+<!-- <form class="userprofile__info ng-hide" name="userprofileInfo">
     <div class="userprofile__image" ng-class="{true: 'userprofile__image--edit'}[editMode]">
         <button class="userprofile__imagecancel tooltip--right" data-tooltip="Close" ng-show="editMode && !blocked" ng-click="editMode = false;">x</button>
-<!--         <img class="userprofile__userimage" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" /> -->
+        <img class="userprofile__userimage" ng-src="{{user.img_url || '/assets/noUserImage.png'}}" ng-hide="editMode && !blocked" />
         <gs-image-upload ng-show="editMode && !blocked" ng-class="{disabled: !imageSet}" on-image-updated="imageUpdated"></gs-image-upload>
         <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="imgloading">
         <button class="userprofile__imageedit" ng-hide="editMode || blocked" ng-click="editMode=true;">Change photo</button>
@@ -143,4 +142,4 @@
     </div>
     <div class="userprofile__errors">{{user.error_message}}</div>
     <gs-user-edit ng-show="editable" fieldisable="fieldisable" inverted="false" section-title="Contact" blocked="blocked" user="user" userinfo="true" loading="loading"></gs-user-edit>
-</form>
+</form> -->

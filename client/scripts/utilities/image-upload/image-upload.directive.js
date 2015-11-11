@@ -26,11 +26,12 @@ function gsImageUpload($timeout, $window) {
 
         // Size canvas to container
         function resizeCanvas() {
-            canvasEle.width = gsElement.parentElement.offsetWidth * 2;
+            canvasEle.width = gsElement.offsetWidth;
+            canvasEle.style.width = (gsElement.offsetWidth * 2) + 'px';
             if (aspect) {
                 canvasEle.height = gsElement.offsetWidth * 2 / aspect;
             } else {
-                canvasEle.height = gsElement.offsetHeight * 2;
+                canvasEle.height = gsElement.offsetHeight;
             }
         }
 
