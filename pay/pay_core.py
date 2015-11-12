@@ -124,8 +124,8 @@ def pitch_in(uid, gsid, parts, email_address, firstname, lastname, note, stripe_
         raise KeyError('firstname')
     if(lastname == None or str(lastname).strip()==''):
         raise KeyError('lastname')
-    user = gs_user_core.save_email(uid, email_address).encode('utf8')
-    card_name = str(firstname).encode('utf8').strip()+' '+str(lastname).encode('utf8').strip()
+    user = gs_user_core.save_email(uid, email_address)
+    card_name = str(firstname).strip().encode('utf8') + ' ' + str(lastname).strip().encode('utf8')
     if user.name is None or str(user.name).strip() == '':
         user.name = card_name
         user.put()
