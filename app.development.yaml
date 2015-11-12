@@ -82,6 +82,16 @@ handlers:
   secure: always
 
 # Client static asset urls
+- url: /manifest.json
+  static_files: client/assets/chrome/manifest.json
+  upload: client/assets/chrome/manifest.json
+  secure: always
+  mime_type: application/json
+- url: /service-worker.js
+  static_files: client/assets/chrome/service-worker.js
+  upload: client/assets/chrome/service-worker.js
+  secure: always
+  mime_type: application/javascript
 - url: /favicon\.ico
   static_files: client/assets/favicon.ico
   upload: client/assets/favicon\.ico
