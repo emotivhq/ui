@@ -1,4 +1,28 @@
-<h3 class="usercampaign__header">
+<div class="ui container">
+    <div class="ui section divider"></div>
+    <h1 class="ui header">
+        Gifts You Championed
+    </h1>
+    <div ng-show="userCampaings.giftstarts.length === 0">
+        <p ng-show="editable">You haven't been a Gift Champion yet. Start a gift today! <br />
+            <a href="/giftideas" class="usercampaign__link">Browse Gift Ideas</a>
+            <a href="/search" class="usercampaign__link">Search</a>
+        </p>
+        <p ng-hide="editable" >{{ user.name }} hasn't started any gifts yet</p>
+    </div>
+    <div class="usercampaign__items" ng-repeat-start="giftstart in userCampaings.giftstarts | limitTo:campaingquantity track by $index" ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" ></div>
+    <div class="ui card">
+        <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" class="image">
+            <img class="usercampaign__itemsimages" ng-src="{{ giftstart.product_img_url }}" alt="Championed image"/>
+        </a>
+        <div class="content">
+            <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" class="header">{{ giftstart.title }}</a>
+        </div>
+    </div>    
+    <div ng-repeat-end="" class="h--hide"></div>
+</div>
+
+<!-- <h3 class="usercampaign__header">
     Championed
 </h3>
 <div class="usercampaign__list">
@@ -26,4 +50,4 @@
     <a class="usercampaign__viewmorelink linky" ng-show=" userCampaings.giftstarts.length > 3"  ng-click="campaingquantity=userCampaings.giftstarts.length; showMoreCampaign = false">
         <span class="usercampaign__viewmoretext" >View More</span> <span class="usercampaign__viewmoreicon"></span>
     </a>
-</div>
+</div> -->
