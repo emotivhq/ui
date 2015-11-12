@@ -78,7 +78,7 @@ var gsUserEdit = function ($http, UserService, Analytics) {
                 scope.blocked = true;
             }
             else {
-                scope.user.error_message = "It looks like some of your info is incorrect; please try again.";
+                scope.user.error_message = "It looks like some of your info is incorrect; please try again.";   
                 scope.loading = false;
                 scope.canEdit = false;
                 scope.fieldisable = false;
