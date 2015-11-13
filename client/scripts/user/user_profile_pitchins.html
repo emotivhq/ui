@@ -19,21 +19,37 @@
             <div class="ui stackable four cards">
                 <div class="card" ng-repeat="pitchin in pitchins_unique | limitTo:campaingquantity track by $index">
                     <div class="content">
-                        <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="header">{{ pitchin.gs_title  | limitTo:20 }}<span ng-if="pitchin.gs_title.length > 20">...</span></a>
+                        <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="header">{{ pitchin.gs_title | limitTo:20 }}<span ng-if="pitchin.gs_title.length > 20">...</span></a>
                     </div>
                     <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="image">
                         <img ng-src="{{ pitchin.gs_img }}" alt="{{ pitchin.title }}"/>
                     </a>
-                    <div class="content">
+                    <div class="content" ng-if="pitchin.note.length > 0">
                         <div class="meta">
-                            What you wrote:
+                            <span>You wrote:</span>
                         </div>
                         <div class="description">
-                            "{{ giftstart.note | limitTo:90 }}<span ng-if="giftstart.note.length > 90">...</span>"
+                            "{{ pitchin.note | limitTo:90 }}<span ng-if="pitchin.note.length > 90">...</span>"
                         </div>
                     </div>
-                    <a class="ui bottom attached button" ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
-                        <i class="external icon"></i> Go To Campaign
+                    <div class="content" ng-if="pitchin.note.length <= 0">
+                        <div class="meta">
+                            <span ng-if="pitchin.note.length <= 0">You haven't written anything</span>
+                        </div>
+                        <div class="description">
+                            Make them feel even more special. <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">Write a message today</a>.
+                        </div>
+                    </div>
+                    <a class="ui bottom attached inverted blue animated fade button" ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
+                        <span class="visible content" ng-if="editable">
+                            Pitch In More
+                        </span>
+                        <span class="visible content" ng-if="!editable">
+                            View Campaign
+                        </span>
+                        <span class="hidden content">
+                            <i class="external icon"></i> Go To Campaign
+                        </span>
                     </a>
                 </div>
             </div>

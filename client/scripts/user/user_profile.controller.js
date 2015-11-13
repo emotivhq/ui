@@ -21,7 +21,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;
     });
-
+    
     UserService.getUser(thisUser,
         function (data) {
             $scope.userCampaings = data[Object.keys(data)[0]];
