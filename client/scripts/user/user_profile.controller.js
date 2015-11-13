@@ -54,7 +54,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             source: 'StoredProduct'
         });
     };
-
+    
     $scope.DeleteSavedItem = function(idea) {
         idea.loading = true;
         var index = $scope.userIdea.indexOf(idea);
@@ -87,7 +87,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     $scope.fieldisable = true;
     $scope.blocked = true;
-    $scope.quantity = 10;
+    $scope.quantity = 8;
     $scope.campaingquantity = 4;
     $scope.showMore = true;
     $scope.imgloading = false;

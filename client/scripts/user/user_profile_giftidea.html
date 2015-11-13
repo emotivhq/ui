@@ -1,11 +1,29 @@
-<div class="ui container">
+<div class="ui container saved gifts">
     <div class="ui section hidden divider"></div>
     <div class="ui centered stackable grid">
         <div class="sixteen wide column">
             <h1 class="ui header">
                 <span ng-show="editable">Your Saved Gift Ideas</span>
-                <span ng-show="!editable">Gift Ideas for {{user.name}}</span>
+                <span ng-show="!editable">Gift Ideas by {{user.name}}</span>
             </h1>
+            Filter by
+            <div class="ui inline dropdown">
+                <div class="text">
+                      Price
+                </div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <div class="item" ng-click="priceOrder = '' ">
+                        Price
+                    </div>
+                    <div class="item" ng-click="priceOrder = 'price' ">
+                        Price: Low to High
+                    </div>
+                    <div class="item" ng-click="priceOrder = '-price' ">
+                        Price: High to Low
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="twelve wide column" ng-show="userIdea.length === 0">
             <div class="ui message container text center aligned">
@@ -16,7 +34,7 @@
         </div>
         <div class="sixteen wide column" ng-show="userIdea.length > 0">
             <div class="ui stackable four cards">
-                <div class="card" ng-repeat="idea in userIdea | limitTo:quantity | orderBy:userOrder track by $index">
+                <div class="card" ng-repeat="idea in userIdea | limitTo:quantity | orderBy:priceOrder track by $index">
                     <a ng-href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}" class="image">
                         <img ng-src="{{ idea.img }}" alt="{{ idea.title }}" />
                     </a>
@@ -40,9 +58,12 @@
                 </div>
             </div>
         </div>
-        <div class="six wide column" ng-show="showMore && userIdea.length > 10">
-            <button class="ui fluid basic button" ng-click="quantity=userIdea.length; showMore=false">
+        <div class="column row extra buttons">
+            <button class="ui basic button" ng-click="quantity=userIdea.length; showMore=false" ng-show="showMore && userIdea.length > 8">
                 <i class="unhide icon"></i> View {{userIdea.length - quantity}} More Saved Gifts
+            </button>
+            <button class="ui red button" ng-click="goToLink('giftideas')">
+                <i class="search icon"></i> Find More Gift Ideas
             </button>
         </div>
     </div>
