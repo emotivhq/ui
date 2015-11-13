@@ -33,7 +33,7 @@
                         <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" class="header">{{ giftstart.title  | limitTo:20 }}<span ng-if="giftstart.title.length > 20">...</span></a>
                     </div>
                     <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" class="image">
-                        <img ng-src="{{ giftstart.product_img_url }}" alt="{{ giftstart.giftstart_url_title }}"/>
+                        <img ng-src="{{ giftstart.product_img_url }}" alt="{{ giftstart.title }}"/>
                     </a>
                     <div class="content">
                         <div class="meta">
@@ -44,7 +44,7 @@
                             "{{ giftstart.description | limitTo:60 }}<span ng-if="giftstart.description.length > 50">...</span>"
                         </div>
                     </div>
-                    <a class="ui animated fade bottom attached button" ng-class="{green: isActive(giftstart)}" ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
+                    <a class="ui bottom attached animated fade button" ng-class="{'inverted green': isActive(giftstart)}" ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
                         <span class="visible content" ng-if="isActive(giftstart)">
                             Campaign Is Active
                         </span>
