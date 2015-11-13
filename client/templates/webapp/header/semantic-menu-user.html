@@ -28,16 +28,7 @@
         <div class="right item menu">
             <div class="ui dropdown item" tabindex="0">
                 <i class="alarm teal icon notification" ng-hide="numNotificationsUnseen === 0"></i>
-                <!-- 
-                     Tyler Goelz @yaboi - 7 Nov 2015
-                     BEFORE THIS IS PUSHED...
-                     Uncomment line directly underneath this comment becuase it
-                     is the correct code to work in production.
-                     Remove second line, it's only a placeholder to make the
-                     the cross-domain image issue work.
-                -->
-                <!-- <img class="ui avatar image" data-ng-src="{{header.userImageUrl || '/assets/noUserImage.png' }}"> -->
-                <img class="ui avatar image" src="https://storage.googleapis.com/giftstarter-pictures/u/fe4a68d6-4d27-4f7e-80c1-99801116ee2c.png">
+                <img class="ui avatar image" data-ng-src="{{header.userImageUrl || '/assets/noUserImage.png' }}">
                 <span><i class="dropdown icon"></i></span>
                 <div class="ui vertical menu transition hidden" tabindex="-1">
                     <a class="item" data-ng-href="{{header.userProfileUrl}}">Activity <span class="ui teal empty circular label" ng-hide="numNotificationsUnseen === 0"></span></a>
