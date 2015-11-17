@@ -114,7 +114,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
                     if (data['payment-error']) {
-                        //$scope.errorMessage = data['payment-error'];
+                        $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
@@ -143,7 +143,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 if (data['payment-error']) {
-                    //$scope.errorMessage = data['payment-error'];
+                    $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
@@ -174,7 +174,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                     $scope.pitchingIn = false;
                     if (data['payment-error']) {
                         console&&console.log&&console.log(data['payment-error']);
-                        //$scope.errorMessage = data['payment-error'];
+                        $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
@@ -205,7 +205,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                 $scope.pitchingIn = false;
                 if (data['payment-error']) {
                     console&&console.log&&console.log(data['payment-error']);
-                    //$scope.errorMessage = data['payment-error'];
+                    $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});

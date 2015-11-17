@@ -1,15 +1,14 @@
 <div class="html ui top segment" ng-controller="PayPopoverController">
-    <div class="ui top attached label">Payments processed by PayPal.</div>
     <form class="ui form" xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" Xng-submit="pitchingIn = stripeForm.$valid;">
         <h4 class="ui dividing header">Your Information</h4>
         <div class="field">
             <label>Name</label>
             <div class="two fields">
                 <div class="field">
-                    <input type="text" id="card-firstname" ng-disabled="!putNew" ng-model="firstname" placeholder="First Name" ng-change="updateFormValidity()" name="firstname" />
+                    <input type="text" id="card-firstname" ng-model="firstname" placeholder="First Name" ng-change="updateFormValidity()" name="firstname" />
                 </div>
                 <div class="field">
-                    <input type="text" id="card-lastname" ng-disabled="!putNew" ng-model="lastname" placeholder="Last Name" ng-change="updateFormValidity()" name="lastname" />
+                    <input type="text" id="card-lastname" ng-model="lastname" placeholder="Last Name" ng-change="updateFormValidity()" name="lastname" />
                 </div>
             </div>
         </div>
@@ -297,37 +296,37 @@
         <div class="fields">
             <div class="eleven wide field">
                 <label>Card Number</label>
-                <input type="text" id="card-number" ng-disabled="!putNew" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" name="cc-number" />
+                <input type="text" id="card-number" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" name="cc-number" />
             </div>
             <div class="five wide field">
             	<label>Expiration</label>
-				<input type="text" id="card-expiry" ng-disabled="!putNew" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM/YY" ng-change="updateFormValidity()" name="expiry" />
+				<input type="text" id="card-expiry" ng-model="expiry" payments-validate="expiry" payments-format="expiry" placeholder="MM/YY" ng-change="updateFormValidity()" name="expiry" />
 			</div>
         </div>
 		<div class="fields">
             <div class="six wide field">
             	<label>Zip</label>
-				<input type="text" id="card-zip" ng-disabled="!putNew" ng-model="addressZip" maxlength="5" placeholder="Zip" ng-change="updateFormValidity()" name="zip" />
+				<input type="text" id="card-zip" ng-model="addressZip" maxlength="5" placeholder="Zip" ng-change="updateFormValidity()" name="zip" />
             </div>
             <div class="five wide field">
                 <label>CVC</label>
-                <input type="text" id="card-cvc" ng-disabled="!putNew" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc" />
+                <input type="text" id="card-cvc" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc" />
             </div>			
 		</div>
         <h4 class="ui dividing header">Receipt</h4>
         <div class="field">
             <label>Send Receipt To:</label>
-            <input type="email" id="card-email" ng-disabled="!putNew" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()" name="email" />
+            <input type="email" id="card-email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()" name="email" />
         </div>
         <div class="ui segment hidden">
             <div class="field">
                 <div class="ui toggle checkbox grey">
-                    <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard" tabindex="0" class="hidden" />
+                    <input type="checkbox" id="save-credit-card" ng-model="saveCreditCard" tabindex="0" class="hidden" />
                     <label>Email my receipt</label>
                 </div>
             </div>
         </div>
-        <div class="ui icon negative message field" ng-show="errorMessage.length > 0">
+        <div class="ui icon negative message field hidden" ng-show="errorMessage.length > 0">
 			<i class="info icon"></i>
 			<i class="close icon"></i>
             <p>{{errorMessage}}</p>
