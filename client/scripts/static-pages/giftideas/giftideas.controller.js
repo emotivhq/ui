@@ -12,7 +12,6 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     $scope.productMessage = '';
     $scope.location = $location;
     $scope.path = $location.path();
-    $scope.products = [];
     $scope.isSavingForLater = false;
     var pathParts = $scope.path.replace('//', '/').split('/');
     $scope.basePath = pathParts[1];
@@ -83,9 +82,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         productInit(productValue);
 
         if(prior != null) {
-            $scope.groups.push([prior, productValue]);
-            $scope.products.push(prior, productValue);
-            prior = null;
+            $scope.giftproducts.push(prior, productValue);
         } else {
             prior = productValue;
         }
@@ -101,38 +98,38 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     }
 
     function shuffle(groupsArr) {
-        var currentIndex = groupsArr.length, temporaryValue, randomIndex ;
-
+        var currentIndex = groupsArr.length, 
+            temporaryValue, 
+            randomIndex;
+        
         while (currentIndex !== 0) {
 
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
-
         temporaryValue = groupsArr[currentIndex];
         groupsArr[currentIndex] = groupsArr[randomIndex];
         groupsArr[randomIndex] = temporaryValue;
       }
-
       return groupsArr;
     }
 
     if(category && !discover) {
         category = angular.lowercase(category);
         $http.get('/assets/giftideas/' + category + '.json').then( function (response) {
-            $scope.groups = [];
+            $scope.giftproducts = [];
             $scope.category = response.data;
             $scope.categoryPath = $scope.basePath + '/' + category;
             prior = null;
             setMetaFlag = false;
             angular.forEach(response.data.productList, fillProductData);
-            shuffle($scope.groups)
+            shuffle($scope.giftproducts);
             if(!setMetaFlag) {
                 var metatitle = response.data.categoryName;
                 var metadesc = response.data.categoryMetaDescription && response.data.categoryMetaDescription.trim() !== '' ? response.data.categoryMetaDescription : response.data.categoryBlurb;
                 setMeta(metatitle, metadesc);
             }
             if(prior != null) {
-                $scope.groups.push([prior]);
+                $scope.giftproducts.push(prior);
             }
         });
     }

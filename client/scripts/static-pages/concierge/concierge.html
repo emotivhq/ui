@@ -41,15 +41,15 @@
                             Please, enter a valid URL.
                         </div>
                     </div>
-                    <div class="field" ng-class="{ 'error': conciergeform.email.$error.required && conciergeform.email.$touched || conciergeform.email.$error.pattern || conciergeform.email.$error.pattern}">
+                    <div class="field" ng-class="{ 'error': conciergeform.fromemail.$error.required && conciergeform.fromemail.$touched || conciergeform.fromemail.$error.pattern || conciergeform.fromemail.$error.pattern}">
                         <div class="ui left icon input">
                             <i class="mail icon"></i>
-                            <input type="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" name="email" ng-model="email" required placeholder="Your email address" />
+                            <input type="email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" name="fromemail" ng-model="fromemail" required placeholder="Your email address" />
                         </div>
-                        <div class="ui pointing red basic label" ng-show="conciergeform.email.$error.required && conciergeform.email.$touched">
+                        <div class="ui pointing red basic label" ng-show="conciergeform.fromemail.$error.required && conciergeform.fromemail.$touched">
                             Please enter a value.
                         </div>
-                        <div class="ui pointing red basic label" ng-show="conciergeform.email.$error.pattern && conciergeform.email.$touched">
+                        <div class="ui pointing red basic label" ng-show="conciergeform.fromemail.$error.pattern && conciergeform.fromemail.$touched">
                             Please, enter a valid email.
                         </div>
                     </div>
