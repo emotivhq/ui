@@ -1,6 +1,26 @@
 <div class="html ui top segment" ng-controller="PayPopoverController">
-    <div class="ui top attached label">Payments processed by PayPal.</div>
-    <form class="ui form" xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted}" Xng-submit="pitchingIn = stripeForm.$valid;">
+    <div class="fields saved-cards" ng-show="cards.length > 0" ng-class="{hidden: putNew}">
+        <label class="loading" ng-show="cardsLoading">
+            <img src="../../../assets/loading_transparent.gif" width="14px" height="14px">Unwrapping Saved Cards...
+        </label>
+        <span ng-repeat="card in cards" class="card">
+            	<input ng-attr-id="{{card.fingerprint}}" type="checkbox" ng-checked="card.selected" value="{{card.fingerprint}}" ng-click="selectCard()"/>
+            	<label ng-attr-for="{{card.fingerprint}}">
+                	<div class="selected"><img ng-show="card.selected" src="/assets/green_check.png"/></div>
+                	<img class="brand" ng-src="{{card.brandImage}}">
+                	<span class="last-four">{{card.last_four}}</span>
+        </label>
+        </span>
+    </div>
+    <div class="ui segment">
+		<div class="new-card-switch field">
+			<div class="ui toggle checkbox grey">
+            	<input type="checkbox" id="new-credit-card-cb" ng-model="putNew" ng-change="deselectCards()" tabindex="0" />
+				<label ng-class="{down: putNew && !cardsLoading}">Enter A New Card</label>
+			</div>
+        </div>
+	</div>
+	<form class="ui form" xstripe-form="stripeSubmit" name="stripeForm" ng-class="{submitted: submitted, 'put-new': !putNew}"  Xng-submit="pitchingIn = stripeForm.$valid;">
         <h4 class="ui dividing header">Your Information</h4>
         <div class="field">
             <label>Name</label>
@@ -13,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="two fields hidden">
+        <!-- ******* extra fields ******** --><div class="two fields hidden">
             <div class="field">
                 <label>Card Type</label>
                 <div class="ui selection dropdown">
@@ -292,9 +312,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
         <h4 class="ui dividing header">Billing Information</h4>
-        <div class="fields">
+		<div class="card-entry">
+		<div class="fields">
             <div class="eleven wide field">
                 <label>Card Number</label>
                 <input type="text" id="card-number" ng-disabled="!putNew" ng-model="number" payments-validate="card" payments-type-model="type" payments-format="card" ng-class="type" placeholder="Card Number" ng-change="updateFormValidity()" name="cc-number" />
@@ -314,18 +335,31 @@
                 <input type="text" id="card-cvc" ng-disabled="!putNew" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc" />
             </div>			
 		</div>
-        <h4 class="ui dividing header">Receipt</h4>
+        <div class="ui">
+            <div class="field">
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard" tabindex="0" />
+                    <label>Save for Later</label>
+                </div>
+            </div>
+        </div>
+		</div>
+
+        <div ng-show="selectedCard" class="card-delete field">
+			<div class="ui toggle checkbox grey">
+            	<input type="checkbox" id="delete-credit-card-toggle" ng-model="showDeleteCardDialogue" tabindex="0" />
+				<label ng-class="{down: showDeleteCardDialogue && selectedCard}">Delete This Card</label>
+			</div>
+        </div>		
+        <div class="field delete-credit-card-confirm" ng-show="showDeleteCardDialogue && selectedCard">
+            <button class="ui button negative basic delete-card" ng-click="deleteSelectedCard()">Delete card #{{selectedLastFour}}</button> 
+			<button class="ui button delete-cancel" ng-click="showDeleteCardDialogue = false">Cancel</button>
+        </div>
+		
+		<h4 class="ui dividing header">Receipt</h4>
         <div class="field">
             <label>Send Receipt To:</label>
             <input type="email" id="card-email" ng-disabled="!putNew" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()" name="email" />
-        </div>
-        <div class="ui segment hidden">
-            <div class="field">
-                <div class="ui toggle checkbox grey">
-                    <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard" tabindex="0" class="hidden" />
-                    <label>Email my receipt</label>
-                </div>
-            </div>
         </div>
         <div class="ui icon negative message field" ng-show="errorMessage.length > 0">
 			<i class="info icon"></i>
