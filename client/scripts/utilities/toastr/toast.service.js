@@ -27,7 +27,8 @@ function Toast($rootScope, toastr) {
             tapToDismiss: true,
             timeOut: 5000,
             titleClass: 'toast-title',
-            toastClass: 'toast'
+            toastClass: 'toast',
+			positionClass: 'toast-bottom-right'
         });
     };
 }

@@ -1,6 +1,10 @@
 @import "../../base"
 
 .pay-popover
+  .put-new
+  -webkit-transition: opacity 0.3s ease, -webkit-transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
   h1
     margin-bottom: 0.2em
   div.powered
@@ -90,8 +94,6 @@
       span.arrow.down
         +transform(rotate(0))
 
-    div.card-entry.put-new
-      max-height: 300px
     div.card-entry
       max-height: 0
       +transition(all, 0.2s)

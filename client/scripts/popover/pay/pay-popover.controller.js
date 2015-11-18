@@ -106,7 +106,6 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         // 1. User submits card details in field
         // 4. Client app sends response with card id to server app
         // 5. Server app attempts to charge card, responds with result (success/fail)
-        $scope.submitted = true;
         $scope.pitchingIn = true;
         $scope.updateFormValidity();
         GiftStartService.payment.subscribe = $scope.emailSubscribe;
@@ -114,11 +113,12 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             GiftStartService.payWithFingerprint($scope.selectedCard)
                 .success(function (data) {
                     if (data['payment-error']) {
-                        //$scope.errorMessage = data['payment-error'];
+                        $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
                     } else {
+                        $scope.submitted = true;
                         $scope.trackConversion();
                     }
                     $timeout(function(){
@@ -143,11 +143,12 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
             GiftStartService.payment.saveCreditCard = $scope.saveCreditCard;
             GiftStartService.sendPayment(function (data) {
                 if (data['payment-error']) {
-                    //$scope.errorMessage = data['payment-error'];
+                    $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
                 } else {
+                    $scope.submitted = true;
                     $scope.trackConversion();
                 }
                 $timeout(function(){
@@ -174,7 +175,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                     $scope.pitchingIn = false;
                     if (data['payment-error']) {
                         console&&console.log&&console.log(data['payment-error']);
-                        //$scope.errorMessage = data['payment-error'];
+                        $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
@@ -205,7 +206,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
                 $scope.pitchingIn = false;
                 if (data['payment-error']) {
                     console&&console.log&&console.log(data['payment-error']);
-                    //$scope.errorMessage = data['payment-error'];
+                    $scope.errorMessage = data['payment-error'];
 						toastr.error(data['payment-error'], 'Whoops!', {
   							positionClass: 'toast-bottom-right'
 						});
@@ -275,6 +276,7 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
     };
 
     $scope.selectCard = function(allowToggle) {
+        $scope.putNew = false;
         if (this.card.fingerprint == $scope.selectedCard) {
             deselectCards();
         } else {
