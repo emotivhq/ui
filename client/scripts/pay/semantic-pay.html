@@ -26,8 +26,9 @@
 			</div>
         </div>		
         <div class="ui basic segment delete-credit-card-confirm centered" ng-show="showDeleteCardDialogue && selectedCard">
-            <button class="ui animated fade button negative delete-card" ng-click="deleteSelectedCard()">
+            <button class="ui fade button negative delete-card" ng-click="deleteSelectedCard()">
 				<span class="visible content">
+					<i class="remove circle icon"></i>
 					Confirm Delete
                 </span>
 			</button> 
@@ -349,7 +350,7 @@
                 <input type="text" id="card-cvc" ng-disabled="!putNew" ng-model="cvc" payments-validate="cvc" payments-type-model="type" payments-format="cvc" placeholder="CVC" ng-change="updateFormValidity()" name="cvc" />
             </div>			
 		</div>
-        <div class="ui">
+        <div class="fields">
             <div class="field">
                 <div class="ui slider checkbox">
                     <input type="checkbox" id="save-credit-card" ng-disabled="!putNew" ng-model="saveCreditCard" tabindex="0" />
@@ -359,11 +360,11 @@
         </div>
 		</div>
 		</div>
-		<div ng-show="!showDeleteCardDialogue && !selectedCard || putNew">			
+		<div ng-show="selectedCard || putNew">			
 		<h4 class="ui dividing header">Receipt</h4>
         <div class="field">
             <label>Send Receipt To:</label>
-            <input type="email" id="card-email" ng-disabled="!putNew" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()" name="email" />
+            <input type="email" id="card-email" ng-model="email" placeholder="Email Address" ng-change="updateFormValidity()" name="email" />
         </div>
         <div class="ui icon negative message field" ng-show="errorMessage.length > 0">
 			<i class="info icon"></i>
