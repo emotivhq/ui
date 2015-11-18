@@ -1,6 +1,6 @@
 <div id="product-search-anchor" class="giftideas">
     <div ng-hide="searchMenu || searchResults" ng-class="{container: !homeMenu}">
-        <div class="ui action input large" ng-class="{fluid: homeMenu}">
+        <div class="ui action input" ng-class="{fluid: homeMenu}">
             <input id="product-search-input" class="text-input" type="text" name="product-link" ng-model="product_url" ng-keyup="$event.keyCode == 13 ? submit() : null" />
             <button id="product-search-button" class="ui button icon teal huge" ng-click="submit()">
                 <i class="search icon"></i>

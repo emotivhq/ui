@@ -74,7 +74,6 @@ GiftStarterApp.controller('HomeController', [
             $startMessagePrimaryCTA = $startMessage.find('[data-cta-type=\'primary\']'),
             $startMessageSecondaryCTA = $startMessage.find('[data-cta-type=\secondary\]');
         $startMessagePrimaryCTA.on('click', function () {
-            console.log('$startMessagePrimaryCTA click');
             $startMessage.transition({
                 animation: 'fade down',
                 onComplete: function () {
@@ -83,7 +82,6 @@ GiftStarterApp.controller('HomeController', [
             });
         });
         $startMessageSecondaryCTA.on('click', function () {
-            console.log('$startMessageSecondaryCTA click');
             $startMessage.transition({
                 animation: 'fade up',
                 onComplete: function () {

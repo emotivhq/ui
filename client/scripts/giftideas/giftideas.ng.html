@@ -122,7 +122,7 @@
                 </div>
             </h1>
             <div class="ui piled segment">
-                <form ng-submit="sendMsg()" class="ui form" ng-class="{error: !validateForm()}">
+                <form name="conciergeform" ng-submit="sendMsg()" class="ui form" ng-class="{error: !validForm, success: validForm}">
                     <h4 class="ui dividing header">Provide a few details below to contact the Gift Concierge.</h4>
                   <div class="field">
                      <div class="ui left icon input">
@@ -158,10 +158,10 @@
                       <i class="send icon"></i>
                       Make your request
                   </button>
-                  <div class="ui message" ng-class="{hidden: msg.length === 0, error: !validateForm(), success: validateForm()}">
+                  <div class="ui message" ng-show="msg.length > 0" ng-class="{error: !validForm, success: validForm}">
                       <div class="header" >
-                          <span ng-hide="validateForm()">One last thing...</span>
-                          <span ng-show="validateForm()">Thank you!</span>
+                          <span ng-show="!validForm">One last thing...</span>
+                          <span ng-show="validForm">Your message is being processed.</span>
                       </div>
                       <p>{{msg}}</p>
                   </div>
