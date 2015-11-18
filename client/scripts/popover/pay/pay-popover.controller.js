@@ -231,9 +231,6 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         $scope.cvc = '';
         $scope.expiry = '';
         $scope.addressZip = '';
-		toastr.success('You successfully pitched in.', 'Hooray!', {
-  			positionClass: 'toast-bottom-right'
-		});
     });
 
     $scope.$on('cards-fetch-success', cardsFetched);
