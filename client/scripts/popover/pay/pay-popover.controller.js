@@ -228,6 +228,9 @@ function PayPopoverController($scope, $rootScope, GiftStartService, PopoverServi
         //PopoverService.setPopover('note');
         $scope.pitchingIn = false;
         $rootScope.$broadcast('paybox-hidden');
+		toastr.success('You just pitched in.', 'Hooray!', {
+  			positionClass: 'toast-bottom-right'
+		});
         $scope.number = '';
         $scope.cvc = '';
         $scope.expiry = '';
