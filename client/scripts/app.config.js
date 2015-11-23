@@ -31,6 +31,9 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
     }).when('/giftstart/:title/print', {
         templateUrl: '/scripts/giftstart/print/print.html',
         reloadOnSearch: false
+    }).when('/holidays-2015', {
+        templateUrl: '/views/landing-pages/holidays-2015.html',
+        reloadOnSearch: false
     }).when('/login', {
         templateUrl: '/views/login/login.html',
         reloadOnSearch: false
