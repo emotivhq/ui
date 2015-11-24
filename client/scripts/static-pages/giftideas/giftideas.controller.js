@@ -76,13 +76,13 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
         productValue.productDescription = productValue.productDescription.replace(/&quot;/g, '"');
         productValue.productDescription = productValue.productDescription.replace(/<a /g, '<a target="_new" ');
     }
-
+    
     function fillProductData (productValue, productKey) {
 
         productInit(productValue);
 
         if(prior != null) {
-            $scope.giftproducts.push(prior, productValue);
+            $scope.giftproducts.push(productValue);
         } else {
             prior = productValue;
         }
