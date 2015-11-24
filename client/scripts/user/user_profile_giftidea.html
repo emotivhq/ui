@@ -1,13 +1,85 @@
-<div class="useridea">
+<div class="ui container saved gifts">
+    <div class="ui section hidden divider"></div>
+    <div class="ui centered stackable grid">
+        <div class="sixteen wide column">
+            <h1 class="ui header">
+                <span ng-show="editable">Your Saved Gift Ideas</span>
+                <span ng-show="!editable">Gift Ideas by {{user.name}}</span>
+            </h1>
+            Filter by
+            <div class="ui inline dropdown">
+                <div class="text">
+                      Price
+                </div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <div class="item" ng-click="priceOrder = '' ">
+                        Price
+                    </div>
+                    <div class="item" ng-click="priceOrder = 'price' ">
+                        Price: Low to High
+                    </div>
+                    <div class="item" ng-click="priceOrder = '-price' ">
+                        Price: High to Low
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="twelve wide column" ng-show="userIdea.length === 0">
+            <div class="ui message container text center aligned">
+                <h3 class="ui header">
+                    Did you know you can let your friends and family know exactly what gift you want? Just clicke the "Save It For Later" button on any gift on GiftStarter!
+                </h3>
+            </div>
+        </div>
+        <div class="sixteen wide column" ng-show="userIdea.length > 0">
+            <div class="ui stackable four cards">
+                <div class="card" ng-repeat="idea in userIdea | limitTo:quantity | orderBy:priceOrder track by $index">
+                    <a ng-href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}" class="image">
+                        <img ng-src="{{ idea.img }}" alt="{{ idea.title }}" />
+                    </a>
+                    <div class="content">
+                        <div class="description">
+                            {{ idea.title | limitTo:60 }}<span ng-if="idea.title.length > 60">...</span>
+                        </div>
+                        <div class="meta">
+                            {{ idea.price / 100 | currency }}
+                        </div>
+                    </div>
+                    <a class="ui inverted red bottom attached animated fade button" ng-show="editable" ng-click="DeleteSavedItem(idea)" ng-disabled="idea.loading">
+                        <span class="visible content">
+                            <i class="close icon"></i>
+                            Remove
+                        </span>
+                        <span class="hidden content">
+                            Are you sure?
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="column row extra buttons">
+            <button class="ui basic button" ng-click="quantity=userIdea.length; showMore=false" ng-show="showMore && userIdea.length > 8">
+                <i class="unhide icon"></i> View {{userIdea.length - quantity}} More Saved Gifts
+            </button>
+            <button class="ui red button" ng-click="goToLink('giftideas')">
+                <i class="search icon"></i> Find More Gift Ideas
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="useridea">
     <div class="useridea__wrap">
         <h2 class="useridea__title">Saved Gift Ideas</h2>
         <div class="useridea__filter" ng-hide="userIdea.length == 0">
             <span class="useridea__filterby">
                 Filter by
             </span>
-            <!-- span class="useridea__filtertags">
+            <span class="useridea__filtertags">
                 My tags
-            </span -->
+            </span>
             <span class="useridea__filterdate">
                 Date added
             </span>
@@ -50,4 +122,4 @@
             </a>
         </div>
     </div>
-</div>
+</div> -->

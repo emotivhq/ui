@@ -44,10 +44,10 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: '/views/is/is.html',
         reloadOnSearch: false
     }).when('/users/:uid', {
-        templateUrl: '/scripts/user/user_profile.html',
+        templateUrl: '/views/profile/profile.html',
         reloadOnSearch: false
     }).when('/user/:uid', {
-        templateUrl: '/scripts/user/user_profile.html',
+        templateUrl: '/views/profile/profile.html',
         reloadOnSearch: false
     }).when('/about', {
         templateUrl: '/scripts/static-pages/about/about.html',

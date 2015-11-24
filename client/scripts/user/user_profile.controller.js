@@ -13,7 +13,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.user = {};
     $scope.userIdea = {};
     $scope.pitchins_unique = [];
-
+    $scope.showMoreCampaign = true;
     $http({
         method: 'GET',
         url: '/users/profile/' + thisUser + '.json?ext=giftideas'
@@ -21,13 +21,20 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         $scope.user = response;
         $scope.userIdea = $scope.user.giftideas;
     });
-
+    
     UserService.getUser(thisUser,
         function (data) {
             $scope.userCampaings = data[Object.keys(data)[0]];
             $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
     });
-
+    
+    $scope.isActive= function(campaign) {
+        var secondsLeft = campaign.deadline - (new Date()).getTime() / 1000,
+            isComplete = campaign.funded / campaign.total_price > 0.9975;
+        
+        return secondsLeft > 0 && !isComplete;
+    }
+    
     var getUniquePitchIns = function(pitchins) {
         var flags = [], ret = [], l = pitchins.length, i;
         for( i=0; i<l; i++) {
@@ -47,7 +54,7 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
             source: 'StoredProduct'
         });
     };
-
+    
     $scope.DeleteSavedItem = function(idea) {
         idea.loading = true;
         var index = $scope.userIdea.indexOf(idea);
@@ -80,10 +87,9 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     $scope.fieldisable = true;
     $scope.blocked = true;
-    $scope.quantity = 10;
-    $scope.campaingquantity = 3;
+    $scope.quantity = 8;
+    $scope.campaingquantity = 4;
     $scope.showMore = true;
-    $scope.showMoreCampaign = true;
     $scope.imgloading = false;
     $scope.months = [
         {label: 'Jan', value: 1},
@@ -107,7 +113,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
 
     $scope.imageUpdated = imageUpdated;
     $scope.submit = submit;
-
 
     $scope.validateLinks = function () {
         $scope.user.link_facebook = addProtocol($scope.user.link_facebook);
@@ -151,7 +156,6 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
     $scope.goToLink = function(destination) {
         $location.path("/" + destination);
     };
-
 };
 
 app.controller('UserprofileController', ['$scope','UserService', '$location', '$http', 'Analytics', UserprofileController]);

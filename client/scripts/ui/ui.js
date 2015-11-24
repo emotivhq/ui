@@ -11,6 +11,8 @@ $(document).ready(function () {
         type: 'fixed',
         offset: 80
     });
+    // dropdown
+    $('.ui.dropdown').dropdown();
     // lazy load images
     $('.load').visibility({
         type: 'image',

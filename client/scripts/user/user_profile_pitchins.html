@@ -1,26 +1,63 @@
-<h3 class="usercampaign__header">
-    Pitch Ins
-</h3>
-<div class="usercampaign__list">
-    <div ng-show="userCampaings.pitchins.length === 0">
-        <p ng-show="editable">You haven't pitched-in on any gifts yet.</p>
-        <p ng-hide="editable" >{{ user.name }} hasn't pitched in on any gifts yet. Invite them to pitch-in on one of your campaigns!</p>
-    </div>
-    <div class="usercampaign__items" ng-repeat-start="pitchin in pitchins_unique | limitTo:campaingquantity track by $index " ng-class="{true: 'usercampaign__items--row'}[$index % 3 == 0 && !$first]" ></div>
-    <div class="usercampaign__productlistitem">
-        <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
-            <div class="usercampaign__productimgwrap">
-                <img class="usercampaign__itemsimages" ng-src="{{ pitchin.gs_img }}" alt="Pitch Ins image"/>
+<div class="ui container">
+    <div class="ui section hidden divider"></div>
+    <div class="ui centered stackable grid">
+        <div class="sixteen wide column">
+            <h1 class="ui header">
+                <span ng-show="editable">Campaigns You Pitched In On</span>
+                <span ng-show="!editable">Campaigns Pitched In On by {{user.name}}</span>
+            </h1>
+        </div>
+        <div class="twelve wide column" ng-show="userCampaings.pitchins.length === 0">
+            <div class="ui message container text center aligned">
+                <h3 class="ui header">
+                    <span ng-show="editable">You haven't pitched in on any Gift Campaigns yet.</span>
+                    <span ng-show="!editable">{{ user.name }} hasn't pitched in on any Gift Campaigns yet. Invite them to pitch-in on one of yours!</span>
+                </h3>
             </div>
-            <h4 clamp="2"  class="usercampaign__itemstitle">
-                {{ pitchin.gs_title }}
-            </h4>
-        </a>
+        </div>
+        <div class="sixteen wide column" ng-show="userCampaings.pitchins.length > 0">
+            <div class="ui stackable four cards">
+                <div class="card" ng-repeat="pitchin in pitchins_unique | limitTo:campaingquantity track by $index">
+                    <div class="content">
+                        <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="header">{{ pitchin.gs_title | limitTo:20 }}<span ng-if="pitchin.gs_title.length > 20">...</span></a>
+                    </div>
+                    <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="image">
+                        <img ng-src="{{ pitchin.gs_img }}" alt="{{ pitchin.title }}"/>
+                    </a>
+                    <div class="content" ng-if="pitchin.note.length > 0">
+                        <div class="meta">
+                            <span>You wrote:</span>
+                        </div>
+                        <div class="description">
+                            "{{ pitchin.note | limitTo:90 }}<span ng-if="pitchin.note.length > 90">...</span>"
+                        </div>
+                    </div>
+                    <div class="content" ng-if="pitchin.note.length <= 0">
+                        <div class="meta">
+                            <span ng-if="pitchin.note.length <= 0">You haven't written anything</span>
+                        </div>
+                        <div class="description">
+                            Make them feel even more special. <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">Write a message today</a>.
+                        </div>
+                    </div>
+                    <a class="ui bottom attached inverted blue animated fade button" ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
+                        <span class="visible content" ng-if="editable">
+                            Pitch In More
+                        </span>
+                        <span class="visible content" ng-if="!editable">
+                            View Campaign
+                        </span>
+                        <span class="hidden content">
+                            <i class="external icon"></i> Go To Campaign
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="six wide column" ng-show="showMoreCampaign && userCampaings.pitchins.length > 4">
+            <button class="ui fluid basic button" ng-click="campaingquantity=userCampaings.pitchins.length; showMoreCampaign = false">
+                <i class="unhide icon"></i> View {{userCampaings.pitchins.length - campaingquantity}} More Campaigns
+            </button>
+        </div>
     </div>
-    <div ng-repeat-end="" class="h--hide"></div>
-</div>
-<div class="usercampaign__viewmore" ng-show="showMoreCampaign" >
-    <a class="usercampaign__viewmorelink linky" ng-show=" userCampaings.pitchins.length > 3"  ng-click="campaingquantity=userCampaings.pitchins.length; showMoreCampaign = false">
-        <span class="usercampaign__viewmoretext" >View More</span> <span class="usercampaign__viewmoreicon"></span>
-    </a>
 </div>
