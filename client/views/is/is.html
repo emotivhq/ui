@@ -1,8 +1,12 @@
 <div ng-controller="HowItWorksController">
     <div class="ui inverted masthead slim center aligned vertical segment is">
         <div class="ui text container">
-            <h1 class="ui inverted header">Crowdfunding<br class="mobile" /> for Gifts</h1>
-            <h2>Gift and pay for <em>any</em> product or service <em>to</em> anyone <em>with</em> anyone.</h2>
+            <h1 class="ui inverted header">
+                Crowdfunding<br class="mobile" /> for Gifts
+                <div class="sub header">
+                    Gift and pay for <em>any</em> product or service <em>to</em> anyone <em>with</em> anyone.
+                </div>
+            </h1>
             <a class="ui right labeled icon button purple huge" href="/join" ng-hide="loggedIn">
                 <i class="add user icon"></i>
                 Get Started
@@ -27,11 +31,11 @@
                         Group Gifting
                     </div>
                 </div>
-                <div class="menu-wrapper hidden" ng-click="sectionShown = 'concierge'" ng-class="{selected: sectionShown == 'concierge'}">
+                <!-- <div class="menu-wrapper" ng-click="sectionShown = 'concierge'" ng-class="{selected: sectionShown == 'concierge'}">
                     <div class="menu-item">
                         Gift Concierge
                     </div>
-                </div>
+                </div> -->
                 <div class="menu-wrapper" ng-click="sectionShown = 'glossary'" ng-class="{selected: sectionShown == 'glossary'}">
                     <div class="menu-item">
                         Glossary

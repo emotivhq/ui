@@ -26,11 +26,6 @@
     @include apply-at-size("phone")
       margin-top: 1.5rem
 
-  &__info
-    background: url("/assets/homepage_hero.jpg")
-    background-size: cover
-    padding-top: 6rem
-
   &__image
     text-align: center
     margin: 2rem auto 0.5rem
@@ -59,12 +54,8 @@
     top: 0
     left: 0
     background: #fff
-    padding: 0.625rem
-
-  &__userimage
-    width: 9rem
-    border-radius: 5rem
-    border: 2px solid #fff
+    padding: 2rem
+    width: 100%
 
   &__imageedit
     //position: absolute
@@ -380,16 +371,8 @@
     @include apply-at-size("phone")
       right: 3rem
 
-.editlink--white
-  padding: 1.2rem 0 1.2rem
-
-  .editlink__edit,
-  .editlink__save,
-  .editlink__cancel
-    color: #FFF
-    right: 0.9375rem
-    bottom: 0.9375rem
+gs-user-edit
+    right: 1rem
+    bottom: 1rem
     top: auto
-
-  .editlink__cancel
-    right: 5rem
+    position: absolute

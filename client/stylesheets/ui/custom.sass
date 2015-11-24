@@ -4,8 +4,8 @@ html, body
   font-size: 16px
 h1, h2, h3, h4, h5
   font-weight: 500
-.hidden
-  display:none !important;
+//.hidden
+//  display:none !important;
 
 .centered
   text-align: center
@@ -151,13 +151,13 @@ header.slim
     opacity: 0
 
 .ui.cards > .card
-  -moz-transition: none !important
-  -webkit-transition: none !important
-  transition: none !important
-  z-index: 1 !important
+    -moz-transition: none !important
+    -webkit-transition: none !important
+    transition: none !important
+    z-index: 1 !important
   
     
-/* modal hacks */
+// modal hacks
 .ui.dimmer
   z-index: 5
 .ui.active.dimmer
@@ -244,7 +244,7 @@ div.rn-carousel-indicator span.active
     -webkit-transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
     transition: background 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s, opacity 6s cubic-bezier(0.68, -0.55, 0.265, 1.4) 0s
 
-// home masthead
+// masthead
 .ui.masthead.segment
   background-size: cover
   background-position: center top
@@ -264,7 +264,7 @@ div.rn-carousel-indicator span.active
     text-shadow: 0 0 5px rgba(0,0,0,.25)
   
   h1.ui.header
-    margin-bottom: .5em
+    margin-bottom: .25em
     font-size: 2.5em
     margin-top: 2.5em
   
@@ -299,24 +299,24 @@ div.rn-carousel-indicator span.active
     .ui.container
         height: auto
         h1.ui.header
-          margin-bottom: 0em
-          font-size: 3em
-          margin-top: 3em
+            font-size: 3em
+            margin-top: 3em
         h2
-          display: block
+            display: block
+        
   &.slim
     min-height: 350px
     margin-bottom: 50px
     >.ui.container
-      min-height: 40vh
+        min-height: 40vh
     h2
-      margin-top:15px
+        margin-top:15px
     @media only screen and (min-width: 700px)
         min-height: 350px
         background-position: center 19%
         .ui.container
           h1.ui.header
-            margin-top: 1.5em
+            margin-top: 2em
             
   &.search, &.discover, &.giftideas
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink-mobile.jpg)
@@ -324,7 +324,15 @@ div.rn-carousel-indicator span.active
         
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink@2x.jpg),url(/assets/bg/binary-blue-and-pink.jpg)         
-            
+
+  &.user
+    padding: 1em 0 4em
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift-mobile.jpg)
+    background-position: center 62%
+
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift@2x.jpg),url(/assets/bg/computer-and-gift.jpg)
+
   &.is
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
     background-position: center top
@@ -337,9 +345,82 @@ div.rn-carousel-indicator span.active
     
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
-            
-// statistics
 
+// user
+.ui.user
+    &.masthead.segment
+        .ui.container
+            margin-bottom: 2em
+            
+            @media only screen and (min-width: 700px)
+                margin-bottom: 0
+                
+        .column
+            &.row
+                padding: 1rem 0 0 6px
+            &.avatar
+                .ui.button
+                    margin-top: 15px
+            &.profile.info
+                h1.ui.header
+                    margin-top: 1.7em
+                    font-size: 3.5em
+                    
+                    @media only screen and (max-width: 700px)
+                        margin-top: 0
+                        font-size: 2.5em 
+            
+                .ui.inverted.input
+                    font-weight: inherit
+                    border-bottom: 1px dashed white
+                    background-color: rgba(0,0,0,.3)
+                    border-radius: .28571429rem
+                                    
+                    &.social
+                        width: 80%
+                        padding: 0 1em
+                        
+                    &.in.place
+                        padding-left: 10px
+                        
+                        @media only screen and (min-width: 700px)
+                            margin-left: -10px
+                    input 
+                        text-align: center
+                        @media only screen and (min-width: 700px)
+                            text-align: left
+                            
+                @media only screen and (max-width: 700px)
+                    text-align: center
+                
+        img.ui.image, gs-image-upload
+            margin-top: 5em
+            position: relative
+            
+            &.bordered
+                border: 3px solid white
+    
+    .ui.account.information
+        .ui.form
+            padding-bottom: 4em
+    
+        
+    .ui.saved.gifts
+        .extra.buttons
+            .ui.button
+                margin-bottom: 0.75em
+                
+    // TODO: Tyler Goelz @yaboi
+    // 8 Nov 2015
+    // Add pretty transition from non-edit to edit
+    // for social link inputs
+    //.ui.grid.transition
+    //    -moz-transition: all 2s ease-in
+    //    -o-transition: all 2s ease-in
+    //    -webkit-transition: all 2s ease-in
+    //    transition: all 2s ease-in
+    
+// statistics
 .ui
   &.statistic > .value, &.statistics .statistic > .value
     font-size: 1.2rem
@@ -371,7 +452,7 @@ div.rn-carousel-indicator span.active
 .footer .logo
   width: 55px
 
-// buttons
+// buttons    
 .ui.buttons .or 
   height: 3.571429em
 
