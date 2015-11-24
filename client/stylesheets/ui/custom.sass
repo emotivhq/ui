@@ -67,7 +67,7 @@ header.slim
     border: 0px solid #DDD
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
     z-index: 1000 !important
-    &.home
+    &.home, &.facebook-login
       border: none;
       box-shadow: none;
       position: absolute;
@@ -269,12 +269,13 @@ div.rn-carousel-indicator span.active
     margin-top: 2.5em
   
   h2
-    font-size: 1.3em
-    margin-bottom: 2rem
     display: none
-    margin-top: 20px
-    color: #fff
     
+  p
+    small
+        color: #fff
+        opacity: .7
+        
   .ui.message
     text-shadow: none
     
@@ -293,31 +294,42 @@ div.rn-carousel-indicator span.active
   
   @media only screen and (min-width: 700px)
     min-height: 700px
+    
     .desktop
         display: block
+        
     .mobile
         display: none
+        
     .ui.container
         height: auto
+        
         h1.ui.header
-          margin-bottom: 0em
-          font-size: 3em
-          margin-top: 3em
+            margin-bottom: 0em
+            font-size: 3em
+            margin-top: 3em
         h2
-          display: block
+            display: inherit
+            font-size: 1.3em
+            margin-bottom: 2rem
+            margin-top: 20px
+            color: #fff
   &.slim
     min-height: 350px
     margin-bottom: 50px
+    
     >.ui.container
-      min-height: 40vh
+        min-height: 40vh
     h2
-      margin-top:15px
+        margin-top:15px
+    
     @media only screen and (min-width: 700px)
         min-height: 350px
         background-position: center 19%
+        
         .ui.container
-          h1.ui.header
-            margin-top: 1.5em
+            h1.ui.header
+                margin-top: 1.5em
             
   &.search, &.discover, &.giftideas
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/binary-blue-and-pink-mobile.jpg)
@@ -338,7 +350,21 @@ div.rn-carousel-indicator span.active
     
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
-            
+
+  &.holiday-2015
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
+    
+    h2
+        display: inherit
+        
+    @media only screen and (min-width: 700px)
+        background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
+    
+        .ui.container
+            h1.ui.header
+                margin-top: 2.5em
+
+    
 // statistics
 
 .ui

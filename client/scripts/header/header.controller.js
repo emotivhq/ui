@@ -122,6 +122,10 @@
         function isYourVillageMenu() {
             return($location.path() === '/yourvillage') ? true : false;
         }
+        
+        function isFacebookLoginMenu() {
+            return($location.path() === '/holidays-2015') ? true : false;
+        }
 
         function isYourVillageSubPage() {
             return($scope.yourVillageMenu && $location.path() !== '/yourvillage') ? true : false;
@@ -140,7 +144,7 @@
         }
 
         function isMainMenu() {
-            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu() && !isCreateMenu() && !isYourVillageMenu()) ? true : false;
+            return(!UserService.loggedIn && !isSlimMenu() && !isHomeMenu() && !isCreateMenu() && !isYourVillageMenu() && !isFacebookLoginMenu()) ? true : false;
         }
 
         function updateMenuType() {
@@ -152,6 +156,7 @@
                 $scope.createMenu = isCreateMenu();
                 $scope.yourVillageMenu = isYourVillageMenu()
                 $scope.yourVillageSubPage = isYourVillageSubPage();
+                $scope.facebookLogin = isFacebookLoginMenu();
                 $timeout(function() {
                     if ($('.toc.item').length > 0) {
                         $('.ui.menu.sidebar').sidebar('attach events', '.toc.item', 'overlay');   
