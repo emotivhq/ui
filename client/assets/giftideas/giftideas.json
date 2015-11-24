@@ -2,7 +2,7 @@
     {
         "title": "Music",
         "description": "Put a jingle in their step with a music gift.",
-        "img": "/assets/giftideas/category/music.jpg",
+        "img": "/assets/giftideas/category/musics.png",
         "alt": "Music",
         "url": "/giftideas/music",
         "button": "View Music",
@@ -12,7 +12,7 @@
     {
         "title": "Luma Diamonds",
         "description": "Beautiful jewelry for the beauty in your life.",
-        "img": "/assets/giftideas/category/luma-diamonds.jpg",
+        "img": "/assets/giftideas/category/luma.png",
         "alt": "Luma Diamonds",
         "url": "/giftideas/luma",
         "button": "View Luma",
@@ -22,7 +22,7 @@
     {
         "title": "Kids",
         "description": "Kid friendly choices for the younger crowd.",
-        "img": "/assets/giftideas/category/kids.jpg",
+        "img": "/assets/giftideas/category/kids.png",
         "alt": "Kids",
         "url": "/giftideas/kids",
         "button": "View Kids",
@@ -52,7 +52,7 @@
     {
         "title": "Home",
         "description": "Make any house feel like a home.",
-        "img": "/assets/giftideas/category/home.jpg",
+        "img": "/assets/giftideas/category/home.png",
         "alt": "Home",
         "url": "/giftideas/Home",
         "button": "View Home",

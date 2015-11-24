@@ -32,10 +32,12 @@
                 <span><i class="dropdown icon"></i></span>
                 <div class="ui vertical menu transition hidden" tabindex="-1">
                     <a class="item" data-ng-href="{{header.userProfileUrl}}">Activity <span class="ui teal empty circular label" ng-hide="numNotificationsUnseen === 0"></span></a>
-                    <a class="item" data-ng-href="{{header.userProfileUrl}}#mycampaigns">Campaigns</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}#campaigns">Campaigns</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}#pitchins">Pitch Ins</a>
                     <a class="item" data-ng-href="{{header.userProfileUrl}}#savedgiftideas">Saved Gifts</a>
                     <div class="ui divider"></div>
                     <a class="item" data-ng-href="{{header.userProfileUrl}}">Profile</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}#settings">Account</a>
                     <a class="item logout_action" data-ng-click="header.logout(); actions.menuItemClicked();">Log Out</a>
                 </div>
             </div>
