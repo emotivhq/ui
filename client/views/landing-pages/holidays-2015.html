@@ -2,7 +2,7 @@
     <div class="ui text container">
         <h1 class="ui inverted header">You Love Giving.<br class="desktop" /> We Love Helping.</h1>
         <h2 class="ui inverted header">GiftStarter matches the gifts you give with the thought you put in.</h2>
-        <a class="ui animated vertical button facebook huge fluid">
+        <button class="ui animated vertical button facebook huge fluid" ng-controller="LoginOrCreateController" ng-click="doLoginFacebook()" analytics-on="click" analytics-event="CTA">
             <div class="visible content">
                 <i class="facebook icon"></i>
                 Start Giving Gifts
@@ -11,7 +11,7 @@
                 <i class="facebook icon"></i>
                 Join With Facebook
             </div>
-        </a>
+        </button>
         <p>
             <small>
                 It's the thought that counts.
