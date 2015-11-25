@@ -5,8 +5,8 @@
  */
 GiftStarterApp.controller('HomeController', [
             '$scope', 'Analytics', '$window', '$http', '$timeout', 'AppStateService',
-            '$location', 'ToastService', '$interval', '$routeParams', '$rootScope', 'PopoverService',
-    function ($scope, Analytics, $window, $http, $timeout, AppStateService, $location, ToastService, $interval, $routeParams, $rootScope, PopoverService) {
+            '$location', '$interval', '$routeParams', '$rootScope', 'PopoverService',
+    function ($scope, Analytics, $window, $http, $timeout, AppStateService, $location, $interval, $routeParams, $rootScope, PopoverService) {
         if(new Date().getTime() < 1427871599000 && !device.mobile() && !$window.sessionStorage.getItem('seenSweepsMarch') && !$routeParams.searchTerm && !$window.sessionStorage.getItem('fromSearch')) {
             // Showing per browser session
             PopoverService.setPopover('sweepstakes');
@@ -44,10 +44,6 @@ GiftStarterApp.controller('HomeController', [
         }).error(function (data) {
             Analytics.track("client", "hot campaigns load failed");
         });
-        $scope.reachOutNotReadyYet = function () {
-            Analytics.track("client", "reach out not ready yet");
-            ToastService.setToast("Oops!  Reaching out to friends isn't quite ready yet.<br>Thanks for letting us know you're interested!", 7000);
-        };
         $scope.pitchinIndex = 0;
         $scope.fadedIn = false;
 
