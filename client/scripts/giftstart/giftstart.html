@@ -190,14 +190,17 @@
                     <div class="ui three stackable cards">
                         <div ng-repeat="pitchIn in pitchIns | orderBy:'-timestamp' track by $index" class="ui card {{randomColor($index)}}">
                             <div class="contributors ui content {{randomColor($index)}}">
-                                <div class="block {{randomColor($index)}}"></div>
                                 <div class="contributors__figure">
                                     <a class="contributors__link" ng-href="/users/{{pitchIn.uid}}" ng-hide="isEditing(pitchIn) && picEdit">
                                         <img class="contributors__img" ng-src="{{pitchIn.img}}" />
                                     </a>
-                                    <a class="userprofile__imageedit button hidden" ng-show="isEditing(pitchIn) && !picEdit" ng-click="setPicEdit(true)">Change photo</a>
+									<a class="userprofile__imageedit ui mini compact labeled icon button hidden inverted" ng-show="isEditing(pitchIn) &amp;&amp; !picEdit" ng-click="setPicEdit(true)" style="margin-top: 10px;">
+										<i class="photo icon"></i>Customize
+									</a>
                                     <gs-image-upload ng-show="isEditing(pitchIn) && picEdit" on-image-updated="imageUpdated"></gs-image-upload>
-                                    <a class="userprofile__imagesave button" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit">Save</a>
+									<a class="userprofile__imagesave ui mini compact labeled icon button hidden inverted" ng-click="picSubmit()" ng-show="isEditing(pitchIn) && picEdit" style="margin-top: 10px;">
+										<i class="save icon"></i>Save
+									</a>
                                 </div>
                                 <div class="ui form segment inverted {{randomColor($index)}}">
                                     <h4 class="" ng-show="!isEditing(pitchIn)">{{pitchIn.name}}</h4>
@@ -211,10 +214,6 @@
                                     <p id="textcount">{{230 - pitchIn.note.length}} characters</p>
                                 </div>
 
-                                <a class="ui top bottom attached button inverted" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)">
-                                    <i class="edit icon"></i>
-                                    Edit this card
-                                </a>
                                 <div class="extra content" ng-show="isEditing(pitchIn)">
                                     <div class="ui two buttons tiny">
                                         <div class="ui button tiny" ng-disabled="picUploading || pitchIn.note.length > 230 || pitchIn.name.length > 38 || pitchIn.name.length < 1" ng-click="editingComment(pitchIn, false)">Save</div>
@@ -223,8 +222,17 @@
                                 </div>
 
                             </div>
+                             <a class="ui bottom attached button basic" ng-show="pitchIn.uid == userId && !isEditing(pitchIn) && commentEditing.length == 0" ng-click="editingComment(pitchIn, true)" style="none !important">
+                        			<span class="visible content ng-scope">
+                            			<i class="edit icon"></i> Edit this card
+                        			</span>
+                        		
+							</a>
                         </div>
-                    </div>
+
+					
+					
+					</div>
 
                     <div class="ui floating message container yellow" ng-hide="pitchIns.length > 0" style="    width: 50%;">No contributors yet - time for <em>you</em> to be the trend setter.</div>
 
