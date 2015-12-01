@@ -29,14 +29,12 @@
         <div class="sixteen wide column" ng-show="userCampaings.giftstarts.length > 0">
             <div class="ui stackable four cards">
                 <div class="card" ng-repeat="giftstart in userCampaings.giftstarts | limitTo:campaingquantity track by $index">
-                    <div class="content" ng-if="giftstart.title.length > 0">
-                        <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" class="header">{{ giftstart.title  | limitTo:20 }}<span ng-if="giftstart.title.length > 20">...</span></a>
-                    </div>
-                    <a ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" class="image">
+                    <a class="image fixed height" ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
                         <img ng-src="{{ giftstart.product_img_url }}" alt="{{ giftstart.title }}"/>
                     </a>
                     <div class="content">
-                        <div class="meta" ng-if="giftstart.shipping_name.length  > 0">
+                        <a class="header" ng-href="/giftstart/{{ giftstart.giftstart_url_title }}" ng-if="giftstart.title.length > 0">{{ giftstart.title  | limitTo:20 }}<span ng-if="giftstart.title.length > 20">...</span></a>
+                        <div class="meta" ng-if="giftstart.shipping_name.length > 0">
                             <i class="user icon"></i>
                             For {{ giftstart.shipping_name }}
                         </div>
