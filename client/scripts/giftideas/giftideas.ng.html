@@ -65,7 +65,7 @@
             <div ng-repeat="giftproduct in giftproducts track by $index" class="ui centered stackable grid">
                 <div class="column">
                     <div class="ui fluid card">
-                        <a class="image" href="{{categoryPath}}/{{giftproduct.productSlug}}">
+                        <a class="image fixed height" href="{{categoryPath}}/{{giftproduct.productSlug}}">
                             <img ng-src="/assets/giftideas/category{{giftproduct.productThumb}}" alt="{{giftproduct.imageAltText}}" class="load" />
                         </a>
                         <div class="content">
