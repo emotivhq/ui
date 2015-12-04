@@ -26,15 +26,30 @@ var UserprofileController = function ($scope, UserService, $location, $http) {
         function (data) {
             $scope.userCampaings = data[Object.keys(data)[0]];
             $scope.pitchins_unique = getUniquePitchIns($scope.userCampaings.pitchins);
+            angular.forEach($scope.pitchins_unique, function(pitchin) {
+                $http({
+                    method: 'GET',
+                    url: '/giftstart/' + pitchin.giftstart_url_title + '.json'
+                }).then(
+                    function(res) {
+                        var secLeft = res.data.deadline - (new Date()).getTime() / 1000;
+                        var isComplete = res.data.funded / res.data.total_price > 0.9975;
+                        if (secLeft > 0 && !isComplete) {
+                            pitchin.active = true;
+                        }
+                    }, 
+                    function (error) {
+                        console.log(error);
+                    });
+            });
     });
     
     $scope.isActive= function(campaign) {
         var secondsLeft = campaign.deadline - (new Date()).getTime() / 1000,
             isComplete = campaign.funded / campaign.total_price > 0.9975;
-        
         return secondsLeft > 0 && !isComplete;
     }
-    
+
     var getUniquePitchIns = function(pitchins) {
         var flags = [], ret = [], l = pitchins.length, i;
         for( i=0; i<l; i++) {

@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="sixteen wide column" ng-show="userCampaings.pitchins.length > 0">
-            <div class="ui stackable four cards">
+            <div class="ui stackable four cards" ng-class="userCampaings.giftstarts.length === 1 || userCampaings.giftstarts.length === 2 ? 'centered' : '' ">
                 <div class="card" ng-repeat="pitchin in pitchins_unique | limitTo:campaingquantity track by $index">
                     <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="image fixed height">
                         <img ng-src="{{ pitchin.gs_img }}" alt="{{ pitchin.title }}"/>
@@ -45,17 +45,28 @@
                             </div>
                         </div>
                     </div>
-                    <a class="ui bottom attached inverted blue animated fade button" ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
-                        <span class="visible content" ng-if="editable">
-                            Pitch In More
+                    <a class="ui bottom attached animated fade button" ng-class="{'inverted green': pitchin.active}"  ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
+                        <span class="visible content" ng-if="pitchin.active">
+                            Campaign Is Active
                         </span>
-                        <span class="visible content" ng-if="!editable">
-                            View Campaign
+                        <span class="visible content" ng-if="!pitchin.active">
+                            Campaign Is Not Active
                         </span>
                         <span class="hidden content">
-                            <i class="external icon"></i> Go To Campaign
+                            <i class="external icon"></i> Click To View
                         </span>
                     </a>
+<!--                     <a class="ui bottom attached animated fade button" ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
+                        <span class="visible content" ng-if="isActive(giftstart)">
+                            Campaign Is Active
+                        </span>
+                        <span class="visible content" ng-if="!isActive(giftstart)">
+                            Campaign Is Not Active
+                        </span>
+                        <span class="hidden content">
+                            <i class="external icon"></i> Click To View
+                        </span>
+                    </a> -->
                 </div>
             </div>
         </div>
