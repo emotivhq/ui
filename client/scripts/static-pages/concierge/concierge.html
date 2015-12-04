@@ -62,7 +62,7 @@
                     <button type="submit" class="button ui icon fluid">
                         <i class="send icon"></i> Make your request
                     </button>
-                    <div class="ui" ng-class="message: msg > 0">{{msg}}</div>
+                    <div class="ui" ng-class="{ 'message': msg > 0 }">{{msg}}</div>
                 </form>
             </div>
         </div>
@@ -71,10 +71,10 @@
             <blockquote>
                 <em>"The best thing about the Gift Concierge is that someone will go out of their way to help you find the perfect gift and to craft the perfect experience. It is like recruiting a super hero that will make the impossible possible." - Thibault L.</em>
             </blockquote>
-            <a class="ui tag yellow icon label">
+            <span class="ui tag yellow icon label">
                 <i class="icon gift"></i> The Gift Concierge is here to help you make it happen.
                 <div class="detail">Guaranteed.</div>
-            </a>
+            </span>
             <div class="ui pointing secondary menu">
                 <a class="item active" data-tab="first">Timely</a>
                 <a class="item" data-tab="second">Personal</a>

@@ -157,17 +157,28 @@
                 $scope.yourVillageMenu = isYourVillageMenu()
                 $scope.yourVillageSubPage = isYourVillageSubPage();
                 $scope.facebookLogin = isFacebookLoginMenu();
-                $timeout(function() {
-                    if ($('.toc.item').length > 0) {
-                        $('.ui.menu.sidebar').sidebar('attach events', '.toc.item', 'overlay');   
-                    }
-                })
             } else {
                 $scope.yourVillageSubPage = isYourVillageSubPage();
             }
         }
         updateMenuType();
 
+        window.onload = function () {
+            function showMenu(onevent) {
+                $('.toc').on(onevent, function() {
+                    $('.ui.menu.sidebar').sidebar('show');
+                });   
+            }
+
+            if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+                if (document.cookie.indexOf("iphone_redirect=false") == -1){
+                    showMenu('touchstart');  
+                 }
+            }  else {
+                 showMenu('click');  
+             }
+        }
+        
         function routeChangeListener(event, next, current) {
             /* jshint ignore:start */
             if(next && next.params && next.params.path === 'blog') {

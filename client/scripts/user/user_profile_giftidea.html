@@ -35,13 +35,13 @@
         <div class="sixteen wide column" ng-show="userIdea.length > 0">
             <div class="ui stackable four cards">
                 <div class="card" ng-repeat="idea in userIdea | limitTo:quantity | orderBy:priceOrder track by $index">
-                    <a ng-href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}" class="image">
+                    <a class="image fixed height" ng-href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}">
                         <img ng-src="{{ idea.img }}" alt="{{ idea.title }}" />
                     </a>
                     <div class="content">
-                        <div class="description">
+                        <a class="description" ng-href="{{ giftstartThisUrl(idea.title, idea.price, idea.img, idea.url) }}">
                             {{ idea.title | limitTo:60 }}<span ng-if="idea.title.length > 60">...</span>
-                        </div>
+                        </a>
                         <div class="meta">
                             {{ idea.price / 100 | currency }}
                         </div>

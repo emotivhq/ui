@@ -8,6 +8,10 @@ GiftStarterApp.controller('ConciergeController', ['$scope', '$http', '$timeout',
     ConciergeController]);
 
 function ConciergeController($scope, $http, $timeout) {
+	//Semantic UI
+	// Tabs
+	jQuery('.menu .item').tab();
+	
     $scope.msg = "";
     $scope.validForm = true;
     

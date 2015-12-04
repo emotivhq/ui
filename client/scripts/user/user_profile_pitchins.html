@@ -16,47 +16,63 @@
             </div>
         </div>
         <div class="sixteen wide column" ng-show="userCampaings.pitchins.length > 0">
-            <div class="ui stackable four cards">
+            <div class="ui stackable four cards" ng-class="userCampaings.giftstarts.length === 1 || userCampaings.giftstarts.length === 2 ? 'centered' : '' ">
                 <div class="card" ng-repeat="pitchin in pitchins_unique | limitTo:campaingquantity track by $index">
-                    <div class="content">
-                        <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="header">{{ pitchin.gs_title | limitTo:20 }}<span ng-if="pitchin.gs_title.length > 20">...</span></a>
-                    </div>
-                    <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="image">
+                    <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}" class="image fixed height">
                         <img ng-src="{{ pitchin.gs_img }}" alt="{{ pitchin.title }}"/>
                     </a>
-                    <div class="content" ng-if="pitchin.note.length > 0">
-                        <div class="meta">
-                            <span>You wrote:</span>
+                    <div class="content">
+                        <a class="header" ng-if="pitchin.gs_title.length > 0" ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
+                            {{ pitchin.gs_title | limitTo:20 }}
+                            <span ng-if="pitchin.gs_title.length > 20">
+                                ...
+                            </span>
+                        </a>
+                        <div ng-if="pitchin.note.length <= 0">
+                            <div class="meta">
+                                You haven't written anything
+                            </div>
+                            <div class="description">
+                                Make them feel special. <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">Write a message today</a>.
+                            </div>
                         </div>
-                        <div class="description">
-                            "{{ pitchin.note | limitTo:90 }}<span ng-if="pitchin.note.length > 90">...</span>"
+                        <div ng-if="pitchin.note.length > 0">
+                            <div class="meta">
+                                You wrote:
+                            </div>
+                            <div class="description">
+                                "{{ pitchin.note | limitTo:90 }}<span ng-if="pitchin.note.length > 90">...</span>"
+                            </div>
                         </div>
                     </div>
-                    <div class="content" ng-if="pitchin.note.length <= 0">
-                        <div class="meta">
-                            <span ng-if="pitchin.note.length <= 0">You haven't written anything</span>
-                        </div>
-                        <div class="description">
-                            Make them feel even more special. <a ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">Write a message today</a>.
-                        </div>
-                    </div>
-                    <a class="ui bottom attached inverted blue animated fade button" ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
-                        <span class="visible content" ng-if="editable">
-                            Pitch In More
+                    <a class="ui bottom attached animated fade button" ng-class="{'inverted green': pitchin.active}"  ng-href="/giftstart/{{ pitchin.giftstart_url_title }}">
+                        <span class="visible content" ng-if="pitchin.active">
+                            Campaign Is Active
                         </span>
-                        <span class="visible content" ng-if="!editable">
-                            View Campaign
+                        <span class="visible content" ng-if="!pitchin.active">
+                            Campaign Is Not Active
                         </span>
                         <span class="hidden content">
-                            <i class="external icon"></i> Go To Campaign
+                            <i class="external icon"></i> Click To View
                         </span>
                     </a>
+<!--                     <a class="ui bottom attached animated fade button" ng-href="/giftstart/{{ giftstart.giftstart_url_title }}">
+                        <span class="visible content" ng-if="isActive(giftstart)">
+                            Campaign Is Active
+                        </span>
+                        <span class="visible content" ng-if="!isActive(giftstart)">
+                            Campaign Is Not Active
+                        </span>
+                        <span class="hidden content">
+                            <i class="external icon"></i> Click To View
+                        </span>
+                    </a> -->
                 </div>
             </div>
         </div>
-        <div class="six wide column" ng-show="showMoreCampaign && userCampaings.pitchins.length > 4">
+        <div class="six wide column" ng-show="showMoreCampaign && pitchins_unique > 4">
             <button class="ui fluid basic button" ng-click="campaingquantity=userCampaings.pitchins.length; showMoreCampaign = false">
-                <i class="unhide icon"></i> View {{userCampaings.pitchins.length - campaingquantity}} More Campaigns
+                <i class="unhide icon"></i> View {{pitchins_unique - campaingquantity}} More Campaigns
             </button>
         </div>
     </div>
