@@ -18,8 +18,18 @@
 <wizard> 
 <form ng-submit="loginUserSucces()" name="joinForm" class="create_action ui form">
     <wz-step title="">
-        <h2 class="vertical small bottom">Create a new account</h2>
-        <p>Sign up with your e-mail address.</p>
+        <h2>Create a new account</h2>
+        	<button class="ui animated vertical button facebook large" ng-controller="LoginOrCreateController" ng-click="doLoginFacebook()" analytics-on="click" analytics-event="CTA">
+            	<div class="visible content">
+                	<i class="facebook icon"></i>
+                	Join With Facebook
+            	</div>
+            	<div class="hidden content">
+                	<i class="facebook icon"></i>
+                	Start Giving Gifts
+            	</div>
+        	</button>
+        <p class="vertical small top">Or, sign up with your e-mail address.</p>
 		<div class="field ui left icon input" ng-class="{ 'error': joinForm.email.$error.required && joinForm.email.$touched && joinForm.email.$error.pattern || joinForm.email.$error.pattern}">
 			<i class="mail icon"></i>
 			<input class="userlogin__email joininput" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" type="email" name="email" ng-model="email" placeholder="you@yourdomain.com" required />
@@ -36,7 +46,7 @@
         </div>
 		<div class="ui middle aligned center aligned vertical medium top bottom grid">
             <div class="column six">
-                <div class="inline field">
+                <div class="inline field hide">
                     <div class="ui checkbox checked column wide four">
                         <input type="checkbox" name="public" checked="">
                         <label>It's ok to send me (very occasional) <br />email about the GiftStarter service.</label>

@@ -1,53 +1,26 @@
-<div ng-controller="HowItWorksController">
-    <div class="ui inverted masthead slim center aligned vertical segment is">
-        <div class="ui text container">
-            <h1 class="ui inverted header">
-                Crowdfunding<br class="mobile" /> for Gifts
-                <div class="sub header">
-                    Gift and pay for <em>any</em> product or service <em>to</em> anyone <em>with</em> anyone.
-                </div>
-            </h1>
-            <a class="ui right labeled icon button purple huge" href="/join" ng-hide="loggedIn">
-                <i class="add user icon"></i>
-                Get Started
-            </a>
-            <a class="ui right labeled icon button purple huge" href="/discover" ng-hide="!loggedIn">
-                <i class="gift icon"></i>
-                Start A Campaign
-            </a>
-        </div>
-    </div>
-
-    <div class="howitworks wrapper ui container main static-pages">
-        <div class="ui middle aligned stackable grid container">
-            <div class="menu">
-                <div class="menu-wrapper" ng-click="sectionShown = 'welcome'" ng-class="{selected: sectionShown == 'welcome'}">
-                    <div class="menu-item">
-                        Welcome
-                    </div>
-                </div>
-                <div class="menu-wrapper" ng-click="sectionShown = 'group-gifting'" ng-class="{selected: sectionShown == 'group-gifting'}">
-                    <div class="menu-item">
-                        Group Gifting
-                    </div>
-                </div>
-                <!-- <div class="menu-wrapper" ng-click="sectionShown = 'concierge'" ng-class="{selected: sectionShown == 'concierge'}">
-                    <div class="menu-item">
-                        Gift Concierge
-                    </div>
-                </div> -->
-                <div class="menu-wrapper" ng-click="sectionShown = 'glossary'" ng-class="{selected: sectionShown == 'glossary'}">
-                    <div class="menu-item">
-                        Glossary
-                    </div>
-                </div>
+<div class="ui inverted masthead center aligned vertical segment is" ng-controller="HowItWorksController">
+    <div class="ui text">
+		
+		
+		<div class="ui text container">
+        	<h1 class="ui inverted header">Crowdfunding<br class="mobile" /> for Gifts</h1>
+        	<h2 class="ui inverted header">Gift and pay for <em>any</em> product or service <em>to</em> anyone <em>with</em> anyone.</h2>
+        	<p>
+            	<small class="light">
+                	<em>It's the thought that counts.</em>
+            	</small>
+        	</p>
+		</div>
+        <div class="ui grid column wide sixteen centered top medium vertical" ng-controller="ConciergeController" style="background: #fff;">
+            <div class="ui pointing secondary menu">
+                <a class="item active" data-tab="first"><i class="gift icon"></i> Gift Economy</a>
+                <a class="item" data-tab="second"><i class="comments icon"></i> Group Gifts</a>
+                <a class="item" data-tab="third"><i class="find icon"></i> Examples</a>
             </div>
-
-            <div id="selector-bar"></div>
-
-            <div class="content ui container main full">
-                <div id="welcome" ng-show="sectionShown == 'welcome'">
-                    <div class="ui vertical stripe segment">
+			<div class="ui container">
+            	<div class="ui tab items basic segment active" data-tab="first">
+                <div class="item">
+                    <div class="content">
                         <div class="ui middle aligned stackable grid container">
                             <div class="row">
                                 <div class="seven wide column">
@@ -55,14 +28,6 @@
                                     <p>GiftStarter is the best way to bring family and friends together to give an amazing gift. When it's complete - receive a handmade card with everyone's message and the gift.</p>
                                     <h3 class="ui header">Launch a campaign.</h3>
                                     <p>Share &amp; promote your campaign with friends. We take care of collecting the money.</p>
-                                    <a class="ui right labeled icon button purple huge" href="/join" ng-hide="loggedIn">
-                                        <i class="add user icon"></i>
-                                        Get Started
-                                    </a>
-                                    <a class="ui right labeled icon button purple huge" href="/discover" ng-hide="!loggedIn">
-                                        <i class="gift icon"></i>
-                                        Start A Campaign
-                                    </a>
                                 </div>
                                 <div class="nine wide right floated column youtube">
                                     <div class="ui embed" data-source="youtube" data-id="AKk6Po6csM0"></div>
@@ -71,101 +36,11 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="glossary" ng-show="sectionShown == 'glossary'">
-                    <h2>Giftstarter Glossary</h2>
-                    <table>
-                        <tr>
-                            <td>GiftStarter - n.</td>
-                            <td>That's us! We are here to help you give amazing gifts you are proud to give, and they are happy to get.</td>
-                        </tr>
-                        <tr>
-                            <td>Gift Champion - n.</td>
-                            <td>This is a person (you!) that starts an amazing gift, and invites family and friends to pitch in.</td>
-                        </tr>
-                        <tr>
-                            <td>Contributor - n.</td>
-                            <td>The people invited in by the Gift Champion to pitch in on the amazing gift and sign the card.</td>
-                        </tr>
-                        <tr>
-                            <td>Recipient - n.</td>
-                            <td>The person(s) that receive the amazing gift!</td>
-                        </tr>
-                        <tr>
-                            <td>Gift Concierge - n.</td>
-                            <td>Our Gift Concierge is like your personal shopper who will help you find and give that amazing gift.</td>
-                        </tr>
-                        <tr>
-                            <td>Nudge - n, v.</td>
-                            <td>These are the gentle friendly reminders (nudges) we make in order to help ensure your gifting event is amazing.</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div id="search" ng-show="sectionShown == 'search'">
-                    <h2>Find an Amazing Gift</h2>
-                    <h4>GiftStarter helps you give amazing gifts you are proud to give and they are happy to get.</h4>
-                    <p class="sub">GiftStarter has the tools to help you find those gifts you’re proud to give, and they’re happy to get.</p>
-                    <div class="search-item">
-                        <div class="desc">
-                            <p>Search</p>
-                            <p>Use our search bar located at the top of the page and on the home page to search for products by name or brand. We source our gifts from reliable stores such as:</p>
-                        </div>
-                        <img src="/assets/howitworks/how-it-works-findagift-1.png" />
-                    </div>
-                    <div class="search-item">
-                        <div class="desc">
-                            <p>Gift Concierge</p>
-                            <p>Our Gift Concierge is like you personal shopping assistant who will help you find the perfect gift for the occassion - even if it’s not on our site!</p>
-                        </div>
-                        <div id="search-item-concierge">
-                            <p>You can <a href="mailto:giftconcierge@giftstarter.com">email</a> (giftconcierge@giftstarter.com), contact via <a href="javascript:void(0);" onclick="olark('api.box.expand')">chat</a>, or call 206.486.4849</p>
-                        </div>
-                    </div>
-                    <div class="search-item">
-                        <div class="desc">
-                            <p>Gift Ideas</p>
-                            <p>More of a browser when you shop? Our carefully curated gift ideas are a great place to see what new and exciting products there are to gift.</p>
-                        </div>
-                        <img src="/assets/howitworks/how-it-works-findagift-2.png" />
-                    </div>
-                </div>
-
-                <div id="concierge" ng-show="sectionShown == 'concierge'">
-                    <p class="sub">>Fast, fun, and no pressure personal shopper to help you find that perfect gift.</p>
-                    <div class="ui stackable three column grid">
-                        <div class="column">
-                            <div class="ui segment piled">
-                                <p>Email
-                                    <br/>
-                                    <br/>Send us an email at any time. The more information you include about your need, the more we can help!
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <a href="mailto:giftconcierge@giftstarter.com">giftconcierge@giftstarter.com</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui segment piled secondary ">
-                                <h3>Online Form</h3>
-                                <p>Fill out the quick form about your gifting need and we'll get on it ASAP!</p>
-                                <a href="/concierge" class="ui button icon fluid">
-                                    <i class="gift icon"></i> Gift Concierge
-                                </a>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui segment piled">
-                                <h3>Live Chat</h3>
-                                <p>We'd loe to chat with your during business hours (PST). Look for the Concierge button in the bottom corner.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="group-gifting" ng-show="sectionShown == 'group-gifting'" class="ui items container">
-                    <p class="sub">GiftStarter splits the price of any gift into small pieces, giving family and friends the ability to purchases as many or as few pieces as they wish. From collecting the money to shipping the gift - we even creating a special card with your personal messages.</p>
+            </div>
+            	<div class="ui tab items basic segment" data-tab="second">
+                <div class="">
+                    <div class="content">
+                    <p class="ui raised segment sub" style="margin-bottom: 40px">GiftStarter splits the price of any gift into small pieces, giving family and friends the ability to purchase as many or as few pieces as they wish. From collecting the money to shipping the gift - we even creating a special card with your personal messages.</p>
                     <div class="item ui middle aligned stackable grid container">
                         <div class="row">
                             <div class="six wide column">
@@ -229,36 +104,26 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="ui items container">
-                    <div class="ui section divider"></div>
-                    <div class="ui middle aligned stackable grid container item" ng-hide="loggedIn || sectionShown === 'welcome'">
-                        <div class="row">
-                            <div class="sixteen center aligned wide column">
-                                <h1 class="ui header">Launch a campaign.</h1>
-                                <p>Share &amp; promote your campaign with friends. We take care of collecting the money.</p>
-                                <a class="ui right labeled icon button purple huge" href="/join">
-                                    <i class="add user icon"></i>
-                                    Get Started
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ui middle aligned stackable grid container item" ng-hide="!loggedIn || sectionShown === 'welcome'">
-                        <div class="row">
-                            <div class="sixteen center aligned wide column">
-                                <h1 class="ui header">Let's Get Started.</h1>
-                                <p>Share &amp; promote your campaign with friends. We take care of collecting the money.</p>
-                                <a class="ui right labeled icon button purple huge" href="/discover">
-                                    <i class="gift icon"></i>
-                                    Start A Campaign
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
+				<div class="ui tab items basic segment" data-tab="third">
+					<ng-include src="'/scripts/giftsgivenbar/giftsgivenbar.ng.html'"></ng-include>
+				</div>
+			</div>
         </div>
-    </div>
+		
+		
+	</div>
 </div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

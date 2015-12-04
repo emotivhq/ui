@@ -124,7 +124,7 @@
         }
         
         function isFacebookLoginMenu() {
-            return($location.path() === '/holidays-2015') ? true : false;
+            return($location.path() === '/holidays-2015' || $location.path() === '/bohemian-guitars') ? true : false;
         }
 
         function isYourVillageSubPage() {

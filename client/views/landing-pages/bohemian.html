@@ -1,0 +1,45 @@
+<div class="ui slim inverted masthead center aligned vertical segment bohemian" ng-controller="HomeController as home">
+    <div class="ui text container">
+        <h1 class="ui inverted header">Beautiful and affordable.<br class="desktop" /> Hand crafted music.</h1>
+        <em class="ui inverted header">
+				Bohemian Guitars is a next generation lifestyle brand that's defying standards by crafting unique musical instruments from alternative materials, 
+				building a socially conscious community inspired by music, and doing it in an earth friendly way.
+			</em>
+    </div>
+</div>
+<div class="ui grid column wide sixteen centered top medium vertical" ng-controller="GiftideasController">
+    <div ng-if="giftproducts.length" data="products" class="ui container stackable cards four top bottom vertical medium">
+        <div ng-repeat="giftproduct in giftproducts track by $index" class="ui centered card">
+            <a class="image fixed height" href="/giftideas/{{categoryPath}}/{{giftproduct.productSlug}}">
+                <img ng-src="/assets/giftideas/category{{giftproduct.productThumb}}" alt="{{giftproduct.imageAltText}}" class="load" />
+            </a>
+            <div class="content">
+                <a class="header" ng-bind-html="giftproduct.productNameShort" href="/giftideas/{{categoryPath}}/{{giftproduct.productSlug}}"></a>
+                <div class="meta">
+                    <a href="/giftideas/{{categoryPath}}/{{giftproduct.productSlug}}">${{ giftproduct.productPrice }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui vertical stripe segment">
+        <div class="ui middle aligned stackable grid container">
+            <div class="row">
+                <div class="eight wide column">
+                    <h3 class="ui header">About Bohemian Guitars</h3>
+                    <p>A collaboration between two brothers, Bohemian Guitars was conceived as an alternative to the overpriced and bland musical instruments available today.</p>
+                    <h3 class="ui header">Bring community together through music.</h3>
+                    <p>Music is a universal language. It can inspire, teach and unify. Music can create bonds between people whose paths otherwise might not cross. At Bohemian Guitars, we believe in the unifying power of music, whether we are actively creating it or passively listening.</p>
+                </div>
+                <div class="six wide right floated column">
+                    <img src="assets/partners/img/bohemian-guitars.jpg" class="ui large bordered rounded image">
+                </div>
+            </div>
+            <div class="row">
+                <div class="center aligned column">
+                    <a class="ui huge button labeled icon vertical bottom medium" href="https://www.bohemianguitars.com/?utm_tracker=giftstarter" target="_blank"><i class="forward mail icon"></i> Check Them Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

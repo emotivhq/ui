@@ -61,7 +61,7 @@
 			    {{category.categoryName}}
 		    </h2>
         </div>
-        <slick ng-if="giftproducts.length" data="products" class="ui segment"  lazy-load="ondemand" slides-to-show="4" slides-to-scroll="4" >
+        <slick ng-if="giftproducts.length" data="products" class="ui segment" lazy-load="ondemand" slides-to-show="4" slides-to-scroll="4">
             <div ng-repeat="giftproduct in giftproducts track by $index" class="ui centered stackable grid">
                 <div class="column">
                     <div class="ui fluid card">
@@ -84,8 +84,8 @@
     <div class="ui container text">
         <div class="ui basic segment">
         <h1 class="ui huge header">
-          What’s popular
-          <div class="sub header">We've curated lists of our most popular gifts. Not sure what to give? That's alright, we've already found the perfect gift.</div>
+          Curated Gift Ideas
+          <div class="sub header">Not sure what to give? Explore these hand curated ideas for inspiratio.</div>
         </h1>
         </div>
     </div>
@@ -113,60 +113,4 @@
         </div>
     </div>
     <div class="ui section divider"></div>
-    <div class="ui container text" ng-controller="ConciergeController">
-        <div class="ui segment basic">
-            <h1 class="ui header">
-                Give any gift with the Gift Concierge
-                <div class="sub header">
-                    Need help coming up with a gift idea? We are here to help.
-                </div>
-            </h1>
-            <div class="ui piled segment">
-                <form name="conciergeform" ng-submit="sendMsg()" class="ui form" ng-class="{error: !validForm, success: validForm}">
-                    <h4 class="ui dividing header">Provide a few details below to contact the Gift Concierge.</h4>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="calendar icon"></i>
-                         <input type="text" name="title" ng-model="title" placeholder="What event is the gift for?" />
-                     </div>
-                  </div>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="dollar icon"></i>
-                         <input type="text" name="budget" ng-model="budget" placeholder="Is there a budget you want to stay within?" />
-                     </div>
-                  </div>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="gift icon"></i>
-                         <input type="text" name="url" ng-model="url" placeholder="URL to the gift you're thinking of" />
-                     </div>
-                  </div>
-                  <div class="field">
-                      <div class="ui left icon input">
-                          <i class="mail icon"></i>
-                          <input type="email" name="email" ng-model="email" placeholder="Your email address (required)" />
-                      </div>
-                  </div>
-                  <div class="field">
-                     <div class="ui left icon input">
-                         <i class="comment icon"></i>
-                         <input type="text" name="comments" ng-model="comments" placeholder="Additional comments" />
-                     </div>
-                  </div>
-                  <button type="submit" class="button ui teal icon fluid">
-                      <i class="send icon"></i>
-                      Make your request
-                  </button>
-                  <div class="ui message" ng-show="msg.length > 0" ng-class="{error: !validForm, success: validForm}">
-                      <div class="header" >
-                          <span ng-show="!validForm">One last thing...</span>
-                          <span ng-show="validForm">Your message is being processed.</span>
-                      </div>
-                      <p>{{msg}}</p>
-                  </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>

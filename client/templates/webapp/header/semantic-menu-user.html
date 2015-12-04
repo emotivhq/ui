@@ -2,21 +2,20 @@
 <!-- User Menu -->
 <div class="ui secondary main menu fixed top" ng-if="userMenu">
     <div class="ui container">
-        <div class="header item">
-            <a class="headerLogoWrapper" href="/">
-                <img id="logo" class="logo" src="/assets/logo-mobile.png" />
-                <img id="logo-mobile" class="logo" src="/assets/logo-mobile.png" />
-            </a>
-        </div>
         <a class="toc item">
             <i class="sidebar icon"></i>
         </a>
+        <div class="header item">
+            <a class="headerLogoWrapper" href="/">
+                <img id="logo" class="logo" src="/assets/logo-mobile.png" />
+            </a>
+        </div>
         <a class="item" href="/discover"><i class="gift icon"></i> Start a Group Gift</a>
         <div class="ui dropdown item" tabindex="0">
             Explore
             <span><i class="dropdown icon"></i></span>
             <div class="ui vertical menu transition hidden" tabindex="-1">
-                <a class="item" href="/is"><i class="sidebar icon"></i> How it Works</a>
+                <a class="item" href="/is"><i class="idea icon"></i> How it Works</a>
                 <a class="item" href="/concierge"><i class="comments outline icon"></i> Gift Concierge</a>
                 <a class="item" href="/faq"><i class="help icon"></i>  FAQs</a>
                 <a class="item" href="http://blog.giftstarter.com"><i class="feed icon"></i> Blog</a>
@@ -32,12 +31,11 @@
                 <span><i class="dropdown icon"></i></span>
                 <div class="ui vertical menu transition hidden" tabindex="-1">
                     <a class="item" data-ng-href="{{header.userProfileUrl}}">Activity <span class="ui teal empty circular label" ng-hide="numNotificationsUnseen === 0"></span></a>
-                    <a class="item" data-ng-href="{{header.userProfileUrl}}#campaigns">Campaigns</a>
-                    <a class="item" data-ng-href="{{header.userProfileUrl}}#pitchins">Pitch Ins</a>
-                    <a class="item" data-ng-href="{{header.userProfileUrl}}#savedgiftideas">Saved Gifts</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}#campaigns">Giving</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}#pitchins">Contributing</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}#savedgiftideas">Saved Ideas</a>
                     <div class="ui divider"></div>
-                    <a class="item" data-ng-href="{{header.userProfileUrl}}">Profile</a>
-                    <a class="item" data-ng-href="{{header.userProfileUrl}}#settings">Account</a>
+                    <a class="item" data-ng-href="{{header.userProfileUrl}}">My Profile</a>
                     <a class="item logout_action" data-ng-click="header.logout(); actions.menuItemClicked();">Log Out</a>
                 </div>
             </div>

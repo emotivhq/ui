@@ -18,6 +18,8 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     var discover = pathParts.length > 2 && pathParts[1] === 'discover' ? true : false;
     var category = pathParts.length > 2 ? pathParts[2] : false;
     var product = pathParts.length > 3 ? pathParts[3] : false;
+	var bohemian = pathParts[1] === 'bohemian-guitars' ? true : false;
+	
 	// lazy load images
 //      jQuery('.load').visibility({
 //         type: 'image',
@@ -29,6 +31,9 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     if(category && !product && (category === 'lunarnewyear' || category === 'farewell' || category === 'pisces') && $location.search()['utm_campaign'] === '18f05bc479-Weekly_Email_Lunar_New_Year_Pisces_2_19_2015') {
         category = false;
     }
+	if(bohemian) {
+		category = 'music';
+	}
 
     $scope.saveGiftIdeaForLater = function(product) {
         $scope.isSavingForLater = true;

@@ -2,8 +2,12 @@
     <canvas></canvas>
     <div class="uploader">
         <input class="thanks-image-input" type="file" capture="camera" accept="image/*"/>
-        <button ng-click="openImageDialog()" class="image"></button>
-        <button ng-click="rotateImage()" class="rotate tooltip--left" data-tooltip="Rotate uploaded image"></button>
+		<button ng-click="openImageDialog()" class="circular ui tiny icon button" title="Upload new photo">
+  			<i class="icon photo"></i>
+		</button>
+		<button ng-click="rotateImage()" class="rotate circular ui tiny icon button" title="Rotate photo">
+  			<i class="icon undo"></i>
+		</button>
     </div>
     <img class="userprofile__preload" src="/assets/loading_transparent.gif" alt="image loading" title="image loading" ng-show="$parent.imgloading">
 </div>

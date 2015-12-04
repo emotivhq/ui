@@ -31,20 +31,26 @@ function appConfig($routeProvider, $locationProvider, $httpProvider) {
     }).when('/giftstart/:title/print', {
         templateUrl: '/scripts/giftstart/print/print.html',
         reloadOnSearch: false
+    }).when('/bohemian-guitars', {
+        templateUrl: '/views/landing-pages/bohemian.html',
+        reloadOnSearch: false
     }).when('/holidays-2015', {
         templateUrl: '/views/landing-pages/holidays-2015.html',
         reloadOnSearch: false
-    }).when('/login', {
-        templateUrl: '/views/login/login.html',
+    }).when('/is', {
+        templateUrl: '/views/is/is.html',
+        reloadOnSearch: false
+    }).when('/is/concierge', {
+        templateUrl: '/views/is/concierge.html',
         reloadOnSearch: false
     }).when('/join', {
         templateUrl: '/views/join/join.html',
         reloadOnSearch: false
+    }).when('/login', {
+        templateUrl: '/views/login/login.html',
+        reloadOnSearch: false
     }).when('/signup', {
         templateUrl: '/scripts/login/login-or-create.html',
-        reloadOnSearch: false
-    }).when('/is', {
-        templateUrl: '/views/is/is.html',
         reloadOnSearch: false
     }).when('/users/:uid', {
         templateUrl: '/views/profile/profile.html',

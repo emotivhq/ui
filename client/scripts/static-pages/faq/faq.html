@@ -3,16 +3,8 @@
         <div class="ui container">
 
             <h1>Frequently Asked Questions</h1>
-            <h3>We are here to help in any way we can. Start here if you have questions.</h3>
-            <a ng-click="toggleAll()" class="ui labeled icon button purple huge">
-                <div class="ui visible content">
-                    <span ng-hide="openQuestions.length == questionCount">Expand All</span>
-                    <span ng-show="openQuestions.length == questionCount">Close All</span>
-                </div>
-                <i class="plus icon left" ng-hide="openQuestions.length == questionCount"></i>
-                <i class="minus icon left" ng-show="openQuestions.length == questionCount"></i>
-				<div class="ui hidden content">Super Fun!</div>
-            </a>
+            <h3>Start here if you have questions. 
+			<br /><a href="javascript:void(0);" onclick="olark('api.box.expand')">Let us know</a> if you have more.</h3>
         </div>
     </div>
     <div class="main">
