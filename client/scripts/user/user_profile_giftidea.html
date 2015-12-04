@@ -27,9 +27,9 @@
         </div>
         <div class="twelve wide column" ng-show="userIdea.length === 0">
             <div class="ui message container text center aligned">
-                <h3 class="ui header">
-                    Did you know you can let your friends and family know exactly what gift you want? Just clicke the "Save It For Later" button on any gift on GiftStarter!
-                </h3>
+                <span>
+                    Did you know you can let your friends and family know exactly what gift you want? Just click the "Save It For Later" button on any gift on GiftStarter.
+                </span>
             </div>
         </div>
         <div class="sixteen wide column" ng-show="userIdea.length > 0">
@@ -62,7 +62,7 @@
             <button class="ui basic button" ng-click="quantity=userIdea.length; showMore=false" ng-show="showMore && userIdea.length > 8">
                 <i class="unhide icon"></i> View {{userIdea.length - quantity}} More Saved Gifts
             </button>
-            <button class="ui red button" ng-click="goToLink('giftideas')">
+            <button class="ui teal basic button big" ng-click="goToLink('giftideas')">
                 <i class="search icon"></i> Find More Gift Ideas
             </button>
         </div>

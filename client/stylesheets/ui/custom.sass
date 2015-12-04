@@ -5,7 +5,7 @@ html, body
 h1, h2, h3, h4, h5
   font-weight: 500
 //.hidden
-//  display:none !important;
+//  display:none !important
 
 .centered
   text-align: center
@@ -34,6 +34,8 @@ h1, h2, h3, h4, h5
 .ui.checkbox
   .box, label
     cursor: pointer
+
+.hide {display:none;}
 
 // bgs
 
@@ -68,16 +70,16 @@ header.slim
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2)
     z-index: 1000 !important
     &.home, &.facebook-login
-      border: none;
-      box-shadow: none;
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .4));
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .4));
+      border: none
+      box-shadow: none
+      position: absolute
+      left: 0
+      top: 0
+      right: 0
+      -webkit-filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .4))
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, .4))
       .item img.logo, .item .ui.inverted.button
-        opacity: .7;
+        opacity: .7
     .item, .menu
       display: none
     .item img.logo
@@ -120,7 +122,7 @@ header.slim
             
     &.yourvillage 
         .item>.button.mini
-            font-size: .71428571rem;
+            font-size: .71428571rem
 
 // end top menus
 
@@ -296,10 +298,10 @@ div.rn-carousel-indicator span.active
         
     .mobile 
       .ui.button
-          margin-bottom: 0.75em;
+          margin-bottom: 0.75em
         
     .ui.form
-      padding-bottom: .5em;
+      padding-bottom: .5em
   
   @media only screen and (min-width: 700px)
     min-height: 700px
@@ -356,9 +358,16 @@ div.rn-carousel-indicator span.active
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift@2x.jpg),url(/assets/bg/computer-and-gift.jpg)
 
+  &.concierge
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter.jpg)
+
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter@2x.jpg),url(/assets/bg/gs-concierge-letter.jpg)
+
   &.is
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
     background-position: center top
+    background-size: contain
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift@2x.jpg),url(/assets/bg/man-wrapping-gift.jpg)
@@ -372,12 +381,9 @@ div.rn-carousel-indicator span.active
   &.holiday-2015
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
     
-  &.concierge
-    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter.jpg)
-
     @media only screen and (min-width: 700px)
-      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter@2x.jpg),url(/assets/bg/gs-concierge-letter.jpg)
-
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers@2x.jpg),url(/assets/bg/gift-and-flowers.jpg)
+    
     h2
         display: inherit
         
