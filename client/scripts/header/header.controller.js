@@ -6,7 +6,8 @@
 (function (app) {
     var HeaderController = function ($scope, $location, UserService, Analytics, PopoverService, $rootScope, $interval, $timeout, $window, $http, $anchorScroll) {
         var self = this;
-        jQuery('.discover').popup({
+        //Semantic UI
+		jQuery('.discover').popup({
             inline: true,
             hoverable: true,
             position: 'bottom left',

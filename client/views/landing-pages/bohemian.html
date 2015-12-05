@@ -10,13 +10,13 @@
 <div class="ui grid column wide sixteen centered top medium vertical" ng-controller="GiftideasController">
     <div ng-if="giftproducts.length" data="products" class="ui container stackable cards four top bottom vertical medium">
         <div ng-repeat="giftproduct in giftproducts track by $index" class="ui centered card">
-            <a class="image fixed height" href="/giftideas/{{categoryPath}}/{{giftproduct.productSlug}}">
+            <a class="image fixed height" href="/{{categoryPath}}/{{giftproduct.productSlug}}">
                 <img ng-src="/assets/giftideas/category{{giftproduct.productThumb}}" alt="{{giftproduct.imageAltText}}" class="load" />
             </a>
             <div class="content">
-                <a class="header" ng-bind-html="giftproduct.productNameShort" href="/giftideas/{{categoryPath}}/{{giftproduct.productSlug}}"></a>
+                <a class="header" ng-bind-html="giftproduct.productNameShort" href="/{{categoryPath}}/{{giftproduct.productSlug}}"></a>
                 <div class="meta">
-                    <a href="/giftideas/{{categoryPath}}/{{giftproduct.productSlug}}">${{ giftproduct.productPrice }}</a>
+                    <a href="/{{categoryPath}}/{{giftproduct.productSlug}}">${{ giftproduct.productPrice }}</a>
                 </div>
             </div>
         </div>

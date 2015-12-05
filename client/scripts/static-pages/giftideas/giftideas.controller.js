@@ -33,6 +33,7 @@ function GiftideasController($scope, $http, $location, ProductService, UserServi
     }
 	if(bohemian) {
 		category = 'music';
+		$scope.basePath = 'giftideas';
 	}
 
     $scope.saveGiftIdeaForLater = function(product) {
