@@ -3,7 +3,7 @@
 		<div class="ui text container">
         <h1 class="ui inverted header">You Love Giving.<br class="desktop" /> We Love Helping.</h1>
         <h2 class="ui inverted header">GiftStarter matches the gifts you give with the thought you put in.</h2>
-        <button class="ui animated vertical button facebook huge fluid" ng-controller="LoginOrCreateController" ng-click="doLoginFacebook()" analytics-on="click" analytics-event="CTA">
+		<button class="ui animated vertical button facebook huge fluid" ng-controller="LoginOrCreateController" ng-click="doLoginFacebook()" analytics-on="click" analytics-event="CTA" ng-show="!showConciergeButton">
             <div class="visible content">
                 <i class="facebook icon"></i>
                 Use Gift Concierge
@@ -13,11 +13,15 @@
                 Join With Facebook
             </div>
         </button>
-        <p>
+		<a href="/concierge" class="ui vertical button huge fluid yellow" analytics-on="click" analytics-event="CTA" ng-show="showConciergeButton">
+                <i class="comments icon"></i>
+                Use Gift Concierge
+        </a>
+        <em>
             <small class="light">
                 It's the thought that counts.
             </small>
-        </p>
+        </em>
 		</div>
         <div class="ui grid column wide sixteen centered top medium vertical" ng-controller="ConciergeController" style="background: #fff;">
             <div class="ui pointing secondary menu">

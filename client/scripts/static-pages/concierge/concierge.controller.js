@@ -4,10 +4,20 @@
  * Proprietary and confidential.
  */
 
-GiftStarterApp.controller('ConciergeController', ['$scope', '$http', '$timeout',
+GiftStarterApp.controller('ConciergeController', ['$scope', '$http', '$timeout', '$location', 'UserService', 
     ConciergeController]);
 
-function ConciergeController($scope, $http, $timeout) {
+function ConciergeController($scope, $http, $timeout, $location, UserService) {
+	
+	$scope.showConciergeButton = false;
+	if(!UserService.loggedIn && $location.path() === '/concierge') {
+		$location.path('/is/concierge');
+	}
+	if(UserService.loggedIn && $location.path() === '/is/concierge') {
+		$scope.showConciergeButton = true;
+		$location.path('/concierge');
+	}
+	
 	//Semantic UI
 	// Tabs
 	jQuery('.menu .item').tab();

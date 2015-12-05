@@ -25,7 +25,7 @@
                             <i class="dollar icon"></i>
                             <input type="number" name="budget" ng-model="budget" required placeholder="Is there a budget you want to stay within?" />
                         </div>
-                         <div class="ui pointing red basic label" ng-show="conciergeform.budget.$error.required && conciergeform.budget.$touched">
+                        <div class="ui pointing red basic label" ng-show="conciergeform.budget.$error.required && conciergeform.budget.$touched">
                             Please enter a budget.
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-							<textarea rows="2" name="comments" ng-model="comments" placeholder="Additional comments"></textarea>
+                            <textarea rows="2" name="comments" ng-model="comments" placeholder="Additional comments"></textarea>
                         </div>
                     </div>
                     <button type="submit" class="button ui icon fluid">
@@ -64,6 +64,23 @@
                     <div class="ui" ng-class="{ 'message': msg > 0 }">{{msg}}</div>
                 </form>
             </div>
+        </div>
+        <div class="concierge-item column wide six ui vertical stripe quote segment">
+            <div class="ui equal width stackable segment internally celled grid vertical top large">
+                <div class="center aligned row segment">
+                    <div class="column twelve">
+                        <h3>"It's like recruiting a super hero <br>
+								that will make the impossible, possible."</h3>
+                        <p>
+                            <img src="/assets/avatar/male.png" class="ui avatar image"> <b>Thibault L.</b> 
+                        </p>
+                    </div>
+                </div>
+                    <div class="center aligned centered" style="margin: 3rem auto;">
+                            <img src="/assets/avatar/flash.png" class="ui image">
+                    </div>					
+
+			</div>
         </div>
     </div>
 </div>
