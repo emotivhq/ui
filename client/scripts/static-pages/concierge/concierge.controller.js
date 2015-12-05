@@ -11,7 +11,7 @@ function ConciergeController($scope, $http, $timeout, $location, UserService) {
 	
 	$scope.showConciergeButton = false;
 	if(!UserService.loggedIn && $location.path() === '/concierge') {
-		$location.path('/is/concierge');
+		$location.path('/is/concierge');22
 	}
 	if(UserService.loggedIn && $location.path() === '/is/concierge') {
 		$scope.showConciergeButton = true;

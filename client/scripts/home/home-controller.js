@@ -5,8 +5,8 @@
  */
 GiftStarterApp.controller('HomeController', [
             '$scope', 'Analytics', '$window', '$http', '$timeout', 'AppStateService',
-            '$location', '$interval', '$routeParams', '$rootScope', 'PopoverService',
-    function ($scope, Analytics, $window, $http, $timeout, AppStateService, $location, $interval, $routeParams, $rootScope, PopoverService) {
+            '$location', '$interval', '$routeParams', '$rootScope', 'PopoverService', 'UserService', 
+    function ($scope, Analytics, $window, $http, $timeout, AppStateService, $location, $interval, $routeParams, $rootScope, PopoverService, UserService) {
         if(new Date().getTime() < 1427871599000 && !device.mobile() && !$window.sessionStorage.getItem('seenSweepsMarch') && !$routeParams.searchTerm && !$window.sessionStorage.getItem('fromSearch')) {
             // Showing per browser session
             PopoverService.setPopover('sweepstakes');
@@ -85,5 +85,12 @@ GiftStarterApp.controller('HomeController', [
                 }
             });
         });
+		
+		// show on boarding if logged in 
+		$scope.showOnboarding = false;
+		if(UserService.loggedIn && $location.path() === '/holidays-2015') {
+			$scope.showOnboarding = true;
+		}
+		
     }
 ]);
