@@ -361,9 +361,14 @@ div.rn-carousel-indicator span.active
 
   &.bohemian
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/boho-optimized-homepage.png)
+    background-position: center top
 
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/boho-optimized-homepage.png),url(/assets/bg/boho-optimized-homepage.png)
+    
   &.concierge
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter.jpg)
+    background-position: center top
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter@2x.jpg),url(/assets/bg/gs-concierge-letter.jpg)
@@ -371,11 +376,13 @@ div.rn-carousel-indicator span.active
   &.is
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
     background-position: center top
-    background-size: contain
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift@2x.jpg),url(/assets/bg/man-wrapping-gift.jpg)
-            
+      
+      .ui.container
+        h1.ui.header
+            margin-top: 2em
   &.home
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
     
