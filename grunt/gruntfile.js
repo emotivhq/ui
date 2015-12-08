@@ -275,7 +275,6 @@ module.exports = function(grunt) {
                     '../client/scripts/static-pages/about/about.controller.js',
                     '../client/scripts/static-pages/faq/faq.controller.js',
                     '../client/scripts/static-pages/giftideas/giftideas.controller.js',
-                    '../client/scripts/static-pages/concierge/concierge.controller.js',
                     '../client/scripts/static-pages/howitworks/howitworks.controller.js',
                     '../client/scripts/static-pages/oldbrowser/oldbrowser.controller.js',
                     '../client/scripts/static-pages/partnerportal/partnerportal.controller.js',
@@ -288,8 +287,6 @@ module.exports = function(grunt) {
                     '../client/scripts/giftstart/thanks/thanked-campaigns.directive.js',
                     '../client/scripts/giftstart/print/print.directive.js',
                     '../client/scripts/header/header.controller.js',
-//                    '../client/scripts/utilities/toast.service.js',
-//                    '../client/scripts/utilities/toast.directive.js',
                     '../client/scripts/utilities/analytics.service.js',
                     '../client/scripts/utilities/angulartics.module.js',
                     '../client/scripts/utilities/head.controller.js',
@@ -338,13 +335,8 @@ module.exports = function(grunt) {
                     '../client/scripts/button/campaign-giftstart-it.directive.js',
                     '../client/scripts/header/giftstart-it-header.directive.js',
                     '../client/scripts/header/subscribe-header.directive.js',
-                    '../client/scripts/header/subscribe-header.directive.js',
-					'../client/scripts/directives/**/*.js', 
-					'../client/scripts/decorators/**/*.js', 
-					'../client/scripts/filters/**/*.js',
-					'../client/scripts/directives/**/*.js',
-					'../client/scripts/services/**/*.js',
-					'../client/scripts/controllers/**/*.js'
+                    '../client/scripts/header/subscribe-header.directive.js'
+
 					
 				],
                 dest: '../client/scripts/webapp/app.js'
@@ -383,9 +375,9 @@ module.exports = function(grunt) {
                     sourceMapStyle: 'link'
                 },
                 src: [
-					  '../client/scripts/webapp/vendor.js', 
-					  '../client/scripts/webapp/angular.js', 
-					  '../client/scripts/webapp/app.js'
+					  '../client/scripts/webapp/services.js', 
+					  '../client/scripts/webapp/components.js', 
+					  '../client/scripts/webapp/controllers.js'
 					 ],
 				dest: '../client/scripts/webapp/core.js'
 			},
@@ -524,6 +516,18 @@ module.exports = function(grunt) {
             angular: {
                 src: '../client/scripts/webapp/angular.js',
                 dest: '../client/scripts/webapp/angular.min.js'
+            },
+            controllers: {
+                src: '../client/scripts/webapp/controllers.js',
+                dest: '../client/scripts/webapp/controllers.min.js'
+            },
+            components: {
+                src: '../client/scripts/webapp/components.js',
+                dest: '../client/scripts/webapp/components.min.js'
+            },
+            services: {
+                src: '../client/scripts/webapp/services.js',
+                dest: '../client/scripts/webapp/services.min.js'
             },
             app: {
                 src: '../client/scripts/webapp/app.js',
