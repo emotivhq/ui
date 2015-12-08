@@ -221,7 +221,14 @@ header.slim
     width: 90000px !important  
   
   .slick-slide    
-    width: 255px !important
+    width: 220px !important
+  
+  .is-page .slick-slide    
+    width: 170px !important
+
+  .is-page .slick-track > .ui.stackable.grid
+    margin-left: 0 !important
+    margin-right: 0 !important
 
 // media queries
 @media only screen and (min-width: 723px)
@@ -523,5 +530,22 @@ div.rn-carousel-indicator span.active
       background: transparent
 
 // datepicker
-div.ui-datepicker
+.ui-datepicker
   max-width: 90%
+
+.is-page .grid
+  margin: 0
+
+.is-page div[data-tab='third']
+  display: block !important
+  visibility: hidden
+    
+.is-page div[data-tab='third']
+  display: block !important
+  visibility: hidden
+  height: 0
+
+.tab.active[data-tab='third']
+  visibility: visible
+  height: 100%
+    

@@ -1,13 +1,16 @@
 <div id="giftsgivenbar" ng-controller="GiftsGivenBarController">
-<slick class="ui segment" lazy-load="ondemand" slides-to-show="4" slides-to-scroll="4">
-    <div ng-repeat="campaign in campaigns" class="ui centered stackable grid">
-        <div class="column">
-            <div class="ui fluid card">
-                <a class="image fixed height" ng-href="{{campaign.url}}">
-                    <img ng-src="{{campaign.img}}" alt="{{campaign.title}}" class="load" style="height: 250px;"/>
-                </a>
+    <slick ng-if="campaigns.length" class="ui segment" lazy-load="ondemand" slides-to-show="4" slides-to-scroll="4">
+        <div ng-repeat="campaign in campaigns track by $index" class="ui centered stackable grid">
+            <div class="column">
+                <div class="ui fluid card">
+                    <a class="image fixed height" ng-href="{{campaign.url}}">
+                        <img ng-src="{{campaign.img}}" alt="{{campaign.title}}" class="load"/>
+                    </a>
+                    <div class="content">
+                        <a class="header" ng-bind="campaign.title" ng-href="{{campaign.url}}"></a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</slick>
+    </slick>
 </div>
