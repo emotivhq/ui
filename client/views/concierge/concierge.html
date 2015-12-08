@@ -14,7 +14,7 @@
                     <div class="field" ng-class="{ 'error': conciergeform.title.$error.required && conciergeform.title.$touched}">
                         <div class="ui left icon input">
                             <i class="calendar icon"></i>
-                            <input type="text" name="title" ng-model="title" required placeholder="What event is the gift for?" />
+                            <input type="text" name="title" ng-model="title" required placeholder="What occasion is the gift for?" />
                         </div>
                         <div class="ui pointing red basic label" ng-show="conciergeform.title.$error.required && conciergeform.title.$touched">
                             Please enter an event.
@@ -35,10 +35,10 @@
                             <input type="text" name="url" required pattern="^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-]+\.[a-zA-Z]{2,5}[\.]{0,1}" ng-model="url" placeholder="URL to the gift you're thinking of" />
                         </div>
                         <div class="ui pointing red basic label" ng-show="conciergeform.url.$error.required && conciergeform.url.$touched">
-                            Please enter a URL.
+                            Please enter a web address.
                         </div>
                         <div class="ui pointing red basic label" ng-show="conciergeform.url.$error.pattern && conciergeform.url.$touched">
-                            Please, enter a valid URL.
+                            Please, enter a valid web address.
                         </div>
                     </div>
                     <div class="field" ng-class="{ 'error': conciergeform.fromemail.$error.required && conciergeform.fromemail.$touched || conciergeform.fromemail.$error.pattern || conciergeform.fromemail.$error.pattern}">
@@ -61,9 +61,17 @@
                     <button type="submit" class="button ui icon fluid">
                         <i class="send icon"></i> Send your request
                     </button>
-                    <div class="ui" ng-class="{ 'message': msg > 0 }">{{msg}}</div>
+                    <div class="ui message" ng-show="msg > 0">{{msg}}</div>
                 </form>
             </div>
+			<div class="ui grid">
+				<div class="eight wide column left aligned">
+					<a href="mailto:concierge@giftstarter.com" class="ui mailto" data-content="concierge@giftstarter.com"><i class="ui mail yellow icon"></i> Rather email us?</a>
+				</div>
+				<div class="eight wide column right aligned">
+					<a href="tel:+12064864849" class="ui phoneto" data-content="+1 206-486-4849"><i class="ui phone gray icon"></i> Rather call us?</a>
+				</div>
+			</div>
         </div>
         <div class="concierge-item column wide six ui vertical stripe quote segment">
             <div class="ui equal width stackable segment internally celled grid vertical top large">
