@@ -221,7 +221,14 @@ header.slim
     width: 90000px !important  
   
   .slick-slide    
-    width: 255px !important
+    width: 220px !important
+  
+  .is-page .slick-slide    
+    width: 170px !important
+
+  .is-page .slick-track > .ui.stackable.grid
+    margin-left: 0 !important
+    margin-right: 0 !important
 
 // media queries
 @media only screen and (min-width: 723px)
@@ -360,10 +367,15 @@ div.rn-carousel-indicator span.active
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/computer-and-gift@2x.jpg),url(/assets/bg/computer-and-gift.jpg)
 
   &.bohemian
-    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/boho-optimized-homepage.png)
+    background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/bohemian-guitars-mobile.jpg)
+    background-position: center top
 
+    @media only screen and (min-width: 700px)
+      background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/bohemian-guitars@2x.jpg),url(/assets/bg/bohemian-guitars.jpg)
+    
   &.concierge
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter.jpg)
+    background-position: center top
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gs-concierge-letter@2x.jpg),url(/assets/bg/gs-concierge-letter.jpg)
@@ -371,11 +383,13 @@ div.rn-carousel-indicator span.active
   &.is
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift-mobile.jpg)
     background-position: center top
-    background-size: contain
 
     @media only screen and (min-width: 700px)
       background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/man-wrapping-gift@2x.jpg),url(/assets/bg/man-wrapping-gift.jpg)
-            
+      
+      .ui.container
+        h1.ui.header
+            margin-top: 2em
   &.home
     background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0)),url(/assets/bg/gift-and-flowers-mobile.jpg)
     
@@ -516,5 +530,22 @@ div.rn-carousel-indicator span.active
       background: transparent
 
 // datepicker
-div.ui-datepicker
+.ui-datepicker
   max-width: 90%
+
+.is-page .grid
+  margin: 0
+
+.is-page div[data-tab='third']
+  display: block !important
+  visibility: hidden
+    
+.is-page div[data-tab='third']
+  display: block !important
+  visibility: hidden
+  height: 0
+
+.tab.active[data-tab='third']
+  visibility: visible
+  height: 100%
+    
