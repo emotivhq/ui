@@ -1,5 +1,0 @@
-User-agent: *
-
-Sitemap: https://www.giftstarter.com/sitemap-app.xml
-Sitemap: https://www.giftstarter.com/blog/sitemap.xml
-Sitemap: https://www.giftstarter.com/sitemap-giftideas.xml

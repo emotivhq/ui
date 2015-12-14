@@ -1,1 +1,0 @@
-function addAttribute(t){t.setAttribute("readonly","readonly"),t.setAttribute("onfocus",'this.removeAttribute("readonly")')}if(document.documentElement.classList.contains("chrome")){var inputFields=document.querySelectorAll(".joininput");[].map.call(inputFields,addAttribute)}
