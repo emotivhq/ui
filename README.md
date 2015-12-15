@@ -1,7 +1,4 @@
-## GS UI SDK
-| ![](http://findicons.com/files/icons/2773/pictonic_free/128/angularjs.png) | ![](http://www.semantic-ui.cn/images/logo.png) | ![](https://wordimpress.com/assets/icon-grunt.png) | ![](http://www.codingpedia.org/wp-content/uploads/2014/04/gulp-2x.png) |
-
-## Angular UI SDK Development Workflow
+## UI SDK Development Workflow
 This is the breakdown of common tasks in Grunt & Gulp. Both __Semantic__ and __Angular__, respectively, have their own detailed workflow outlined in the README files contained in each folder.
 
 ### Test Environment:
@@ -45,3 +42,6 @@ This documentation is a work in progress.
 
 ### Help & references for developing
 - The UI documentation [can be found here](https://github.com/giftstarter/giftstarter/wiki).
+
+## GS UI SDK
+| ![](http://findicons.com/files/icons/2773/pictonic_free/128/angularjs.png) | ![](http://www.semantic-ui.cn/images/logo.png) | ![](https://wordimpress.com/assets/icon-grunt.png) | ![](http://www.codingpedia.org/wp-content/uploads/2014/04/gulp-2x.png) |
