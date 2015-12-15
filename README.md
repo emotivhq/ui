@@ -1,6 +1,6 @@
 ## UI SDK Development Workflow
 This is the breakdown of common tasks in Grunt & Gulp. Both __Semantic__ and __Angular__, respectively, have their own detailed workflow outlined in the README files contained in each folder.
-
+ 
 ### Test Environment:
 [ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
 
