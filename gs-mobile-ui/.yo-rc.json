@@ -1,0 +1,13 @@
+{
+  "generator-mcfly": {
+    "filenameCase": "snake",
+    "filenameSuffix": true,
+    "appname": "gsMobileUi",
+    "clientFolder": "client",
+    "ionic": true,
+    "ngCordova": true,
+    "fontawesome": true,
+    "bootstrap": false,
+    "material": true
+  }
+}

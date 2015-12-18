@@ -103,6 +103,7 @@
     	"grunt-contrib-jshint": "~0.11.3",
     	"jshint-stylish": "~2.0.1",
     	"grunt-bump": "git@github.com:giftstarter/grunt-boop.git",
-    	"grunt-contrib-clean": "~0.6.0"
+    	"grunt-contrib-clean": "~0.6.0",
+		"generator-mcfly": "git@github.com:giftstarter/generator-mcfly.git"
     }
 }

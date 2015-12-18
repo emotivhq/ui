@@ -33,6 +33,12 @@ This documentation is a work in progress.
     - `components.min.js` - All of the UI scripts in one file to add into your project
     - `components.min.css` - All of the UI css into one file, minified, to add into your project
     - `[theme].min.js` - All of the theme scripts into one file, minified, to add into your project
+- `gs-mobile-ui` - A boilerplate `--mobile` Angular app to test the mobile UI SDK
+  - `client` - See the [Mcfly Generator](https://github.com/giftstarter/generator-mcfly/blob/master/README.md) docs to see what and how this app is generated
+    - `module_ui_module` - A test module including controllers, directives, services, providers, values, and views
+- `gs-web-ui` - A boilerplate web Angular app to test the mobile UI SDK
+  - `client` - See the [Mcfly Generator](https://github.com/giftstarter/generator-mcfly/blob/master/README.md) docs to see what and how this app is generated
+    - `module_ui_module` - A test module including controllers, directives, services, providers, values, and views
 - `node_modules` - Node dependencies, like Gulp & Semantic UI
 - `.codio` - The master Codio config file
 - `.gitattributes` - The Git attributes file
@@ -42,6 +48,7 @@ This documentation is a work in progress.
 
 ### Help & references for developing
 - The UI documentation [can be found here](https://github.com/giftstarter/giftstarter/wiki).
+- The App Generator [Using Yeoman & Gulp](https://github.com/giftstarter/generator-mcfly/blob/master/README.md)
 
 ## GS UI SDK
 | ![](http://findicons.com/files/icons/2773/pictonic_free/128/angularjs.png) | ![](http://www.semantic-ui.cn/images/logo.png) | ![](https://wordimpress.com/assets/icon-grunt.png) | ![](http://www.codingpedia.org/wp-content/uploads/2014/04/gulp-2x.png) |
