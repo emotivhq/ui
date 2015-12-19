@@ -2,18 +2,18 @@
 This is the breakdown of common tasks in Grunt & Gulp. Both __Semantic__ and __Angular__, respectively, have their own detailed workflow outlined in the README files contained in each folder.
  
 ### Test Environment:
-[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
+[ ![Codeship Status for giftstarter/ui](https://codeship.com/projects/ead28180-84f5-0133-8deb-3ac20bd54ece/status?branch=master)](https://codeship.com/projects/122143)
 
 ## Semantic Build & Dev Tasks
-These are all the current development tasks done at build time. See the [`README`](./_Semantic/REAMDE.md) in __Semantic_. 
+These are all the current development tasks done at build time. See the [`README`](./_Semantic/README.md) in __Semantic_. 
 Uses `gulp`.
 
 ## Angular Build & Dev Tasks
-These are all the current development tasks done at build time. See the [`README`](./_Angular/REAMDE.md) in __Angular_. 
+These are all the current development tasks done at build time. See the [`README`](./_Angular/README.md) in __Angular_. 
 Uses `grunt`.
 
 ## Testing the UI
-Two test apps are included for testing the UI builds, [`gs-mobile-ui`](./gs-mobile-ui) & [`gs-web-ui`](./gs-web-ui). See the [`README`](./test/README.md) in _test_. 
+Two test apps are included for testing the UI builds, [`gs-mobile-ui`](./test/gs-mobile-ui) & [`gs-web-ui`](./test/gs-web-ui). See the [`README`](./test/README.md) in _test_. 
 Uses `gulp`.
 
 ## UI SDK Structure 
@@ -54,7 +54,10 @@ This documentation is a work in progress.
 
 ### Help & references for developing
 - The UI documentation [can be found here](https://github.com/giftstarter/giftstarter/wiki).
-- The App Generator [Using Yeoman & Gulp](https://github.com/giftstarter/generator-mcfly/blob/master/README.md)
+- The Angular UI docs [are here](https://angular-ui.github.io/)
+- Angular Material [documentation](https://material.angularjs.org/latest/getting-started)
+- [Semantic docs](http://semantic-ui.com/introduction/getting-started.html)
+- The test apps [which use Yeoman & Gulp](dev/README.md)
 
 ## GS UI SDK
 | ![](http://findicons.com/files/icons/2773/pictonic_free/128/angularjs.png) | ![](http://www.semantic-ui.cn/images/logo.png) | ![](https://wordimpress.com/assets/icon-grunt.png) | ![](http://www.codingpedia.org/wp-content/uploads/2014/04/gulp-2x.png) |

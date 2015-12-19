@@ -2,7 +2,7 @@
 | ![](http://findicons.com/files/icons/2773/pictonic_free/128/angularjs.png) | ![](https://wordimpress.com/assets/icon-grunt.png) |
 
 ### Test Environment:
-[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
+[ ![Codeship Status for giftstarter/ui](https://codeship.com/projects/ead28180-84f5-0133-8deb-3ac20bd54ece/status?branch=master)](https://codeship.com/projects/122143)
 
 # Angular App Development Workflow
 This is the breakdown of common tasks in Grunt. For more info on [Grunt](http://gruntjs.com), see [their docs](http://gruntjs.com/getting-started).

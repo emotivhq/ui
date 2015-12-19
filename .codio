@@ -4,9 +4,13 @@
 // Run button configuration
  "commands": {
       "-------------App Tasks:-------------": "node --version",
-	 "New Module": "yo mcfly:module new-module",
-	 "Build Release": "cd ~/workspace/grunt ; grunt build",
-     "Start Web App SSL": "dev_appserver.py --port=9500 --host=0.0.0.0 ./",
+     "Angular Watch": "cd _Angular ; gulp watch",
+     "Semantic Watch": "cd _Semantic ; gulp watch",
+     "Start Mobile Test App ": "cd test/gs-mobile-ui ; gulp browsersync",
+     "Start Web Test App ": "cd test/gs-web-ui ; gulp browsersync",
+	 "New Module (web)": "cd test/gs-web-ui ; yo mcfly:module new-module",
+	 "New Controller (web)": "cd test/gs-web-ui ; yo mcfly:controller new-module new-controller",
+	 "New Service (web)": "cd test/gs-web-ui ; yo mcfly:service new-module servicename --servicetype=service",
       "----------------------Generator Tasks:----------------------": "node --version",
 	 "Generate App: Mobile": "yo mcfly --mobile",
 	 "Generate App: Web": "yo mcfly",

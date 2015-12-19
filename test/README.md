@@ -1,7 +1,9 @@
 # The Test Suite
 This test suite uses built-in generators and scaffolding to help us quickly test new UI components, elements, views, and more - all before integrating into a main app.
-
 Essentially, we have two sample, small scale apps available to run, one mobile and one for web. This way, when we make updates to the __Angular or __Semantic_ framework and want to see what the build would look like in a real app, these apps are for you!
+
+### Test Environment:
+[ ![Codeship Status for giftstarter/ui](https://codeship.com/projects/ead28180-84f5-0133-8deb-3ac20bd54ece/status?branch=master)](https://codeship.com/projects/122143)
 
 ## GyShiDo with Mcfly
 To get shit done, here's a quick list of useful info. 

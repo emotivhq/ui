@@ -6,7 +6,7 @@ This is the breakdown of common tasks in Gulp. For more info on [Gulp](http://gu
 Gulp is used to help automate integrations between the the Gulp tasks in __Semantic_ and legacy tasks in __Angular_.
 
 ### Test Environment:
-[ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
+[ ![Codeship Status for giftstarter/ui](https://codeship.com/projects/ead28180-84f5-0133-8deb-3ac20bd54ece/status?branch=master)](https://codeship.com/projects/122143)
 
 ## Gulp UI Dev Workflow
 The GiftStarter App now includes a semantic User Interface library. It is easy to work with, easy to build, and easy to release into an app (Angular web, for example).  If you find yourself working on updating the core UI stack running in an site or application, these tasks are for you.
