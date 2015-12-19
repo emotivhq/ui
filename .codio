@@ -3,24 +3,25 @@
 
 // Run button configuration
  "commands": {
-      "----------------------App Tasks:----------------------": "node --version",
-	 "Build Dev": "cd ~/workspace/grunt ; grunt dev",
+      "-------------App Tasks:-------------": "node --version",
+	 "New Module": "yo mcfly:module new-module",
 	 "Build Release": "cd ~/workspace/grunt ; grunt build",
      "Start Web App SSL": "dev_appserver.py --port=9500 --host=0.0.0.0 ./",
-     "Start Web App": "dev_appserver.py --port=3000 --host=0.0.0.0 ./",  
-	 "Mcfly: Mobile": "yo mcfly --mobile",
-	 "Mcfly: Web": "yo mcfly",
-      "---------------------": "node --version",
-	 "Mcfly: Mobile": "yo mcfly --mobile",
-	 "Mcfly: Web": "yo mcfly",
+      "----------------------Generator Tasks:----------------------": "node --version",
+	 "Generate App: Mobile": "yo mcfly --mobile",
+	 "Generate App: Web": "yo mcfly",
+     "Generate Target: Mobile": "yo mcfly:target gs-mobile-ui --mobile",  
+     "Generate Target: Web": "yo mcfly:target gs-web-ui",  
       "----------------Environment Tasks:----------------": "node --version",
-     "Setup ENV": "export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig", 
+     "Setup ENV": "export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig ; cd gs-mobile-ui/bin ; chmod 700 prepublish.sh ; ./prepublish.sh", 
       "Start SSH agent": "ssh-agent -s",
       "List SSH fingerprints": "ssh-add -l",
       "Test SSH to Github": "ssh -vT git@github.com",
       "Turn on & cache with credential helper": "git config --global credential.helper 'cache --timeout=3600'",  
       "Github oAuth Token": "<enter your own token> (Get Help: http://bit.ly/1Ep65b8)",
-      "Node version": "node --version"
+      "Node version": "node --version",
+      "Npm clean cache": "npm cache clean",
+      "Disk space": "df -h | grep xvdc | head -1"
  },
 
 // Preview button configuration

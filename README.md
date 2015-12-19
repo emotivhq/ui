@@ -5,10 +5,16 @@ This is the breakdown of common tasks in Grunt & Gulp. Both __Semantic__ and __A
 [ ![Codeship Status for giftstarter/giftstarter](https://codeship.com/projects/ca27d580-3295-0133-88e5-7e5270587528/status?branch=dev)](https://codeship.com/projects/99954)
 
 ## Semantic Build & Dev Tasks
-These are all the current development tasks done at build time.
+These are all the current development tasks done at build time. See the [`README`](./_Semantic/REAMDE.md) in __Semantic_. 
+Uses `gulp`.
 
 ## Angular Build & Dev Tasks
-These are all the current development tasks done at build time.
+These are all the current development tasks done at build time. See the [`README`](./_Angular/REAMDE.md) in __Angular_. 
+Uses `grunt`.
+
+## Testing the UI
+Two test apps are included for testing the UI builds, [`gs-mobile-ui`](./gs-mobile-ui) & [`gs-web-ui`](./gs-web-ui). See the [`README`](./test/README.md) in _test_. 
+Uses `gulp`.
 
 ## UI SDK Structure 
 This documentation is a work in progress. 
