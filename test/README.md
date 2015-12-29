@@ -14,9 +14,9 @@ To get shit done, here's a quick list of useful info.
 2. [Typical workflow](#typical-workflow)
 3. Overview of [client folder](#client-folder)
 4. [Gulp tasks](#gulp-tasks)
-1. [Generators](./test/docs/generators.md)
-5. [Ionic](./test/docs/ionic.md)
-6. [Browserify](./test/docs/browserify.md)
+1. [Generators](./docs/generators.md)
+5. [Ionic](./docs/ionic.md)
+6. [Browserify](./docs/browserify.md)
 
 ### Typical workflows
 These are all available in the already provided test apps, or inside any new apps you build in here: `test/gs-app-name`. 
