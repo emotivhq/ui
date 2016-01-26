@@ -1,33 +1,72 @@
-var gulp = require('gulp');
-var bump = require('gulp-bump');
+/*******************************
+            Set-up
+*******************************/
 
-var getPackageJson = function () {
-  return JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-};
+var
+  gulp         = require('gulp-help')(require('gulp')),
 
-// bump versions on package/bower/manifest
-gulp.task('bump', function () {
-  // reget package
-  var pkg = getPackageJson();
-  // increment version
-  var newVer = semver.inc(pkg.version, 'patch');
+  // read user config to know what task to load
+  config       = require('./tasks/config/user'),
 
-  // uses gulp-filter
-  var manifestFilter = tasks.filter(['manifest.json']);
-  var regularJsons = tasks.filter(['!manifest.json']);
+  // watch changes
+  watch        = require('./tasks/watch'),
 
-  return gulp.src(['./bower.json', './package.json', './_Semantic/package.json', '_Angular/bower.json', '_Angular/angular.json'])
-    .pipe(tasks.bump({
-      version: newVer
-    }))
-    .pipe(manifestFilter)
-    .pipe(gulp.dest('./src'))
-    .pipe(manifestFilter.restore())
-    .pipe(regularJsons)
-    .pipe(gulp.dest('./'));
-});
+  // build all files
+  build        = require('./tasks/build'),
+  buildJS      = require('./tasks/build/javascript'),
+  buildCSS     = require('./tasks/build/css'),
+  buildAssets  = require('./tasks/build/assets'),
 
-// Run the gulp tasks
-gulp.task('default', function(){
-  gulp.run('bump');
-});
+  // utility
+  clean        = require('./tasks/clean'),
+  version      = require('./tasks/version'),
+
+  // docs tasks
+  serveDocs    = require('./tasks/docs/serve'),
+  buildDocs    = require('./tasks/docs/build'),
+
+  // rtl
+  buildRTL     = require('./tasks/rtl/build'),
+  watchRTL     = require('./tasks/rtl/watch')
+;
+
+
+/*******************************
+             Tasks
+*******************************/
+
+gulp.task('default', false, [
+  'watch'
+]);
+
+gulp.task('watch', 'Watch for site/theme changes', watch);
+
+gulp.task('build', 'Builds all files from source', build);
+gulp.task('build-javascript', 'Builds all javascript from source', buildJS);
+gulp.task('build-css', 'Builds all css from source', buildCSS);
+gulp.task('build-assets', 'Copies all assets from source', buildAssets);
+
+gulp.task('clean', 'Clean dist folder', clean);
+gulp.task('version', 'Displays current version of Semantic', version);
+
+/*--------------
+      Docs
+---------------*/
+
+/*
+  Lets you serve files to a local documentation instance
+  https://github.com/Semantic-Org/Semantic-UI-Docs/
+*/
+
+gulp.task('serve-docs', 'Serve file changes to SUI Docs', serveDocs);
+gulp.task('build-docs', 'Build all files and add to SUI Docs', buildDocs);
+
+
+/*--------------
+      RTL
+---------------*/
+
+if(config.rtl) {
+  gulp.task('watch-rtl', 'Build all files as RTL', watchRTL);
+  gulp.task('build-rtl', 'Watch files as RTL ', buildRTL);
+}

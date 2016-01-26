@@ -1,8 +1,0 @@
-semantic
-*node_modules
-
-app.iml
-.idea
-*.pyc
-*.DS_Store
-*.xcf

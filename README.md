@@ -1,63 +1,77 @@
-## UI SDK Development Workflow
-This is the breakdown of common tasks in Grunt & Gulp. Both __Semantic__ and __Angular__, respectively, have their own detailed workflow outlined in the README files contained in each folder.
- 
-### Test Environment:
-[ ![Codeship Status for giftstarter/ui](https://codeship.com/projects/ead28180-84f5-0133-8deb-3ac20bd54ece/status?branch=master)](https://codeship.com/projects/122143)
+## UI Structure
+This documentation is a work in progress. Joel Serino, Sept 29, 2015
+To get started with the buid tools in this UI, refer to the [documentation online](http://semantic-ui.com/introduction/build-tools.html), or learn how to add [new recipes](http://semantic-ui.com/introduction/advanced-usage.html).
 
-## Semantic Build & Dev Tasks
-These are all the current development tasks done at build time. See the [`README`](./_Semantic/README.md) in __Semantic_. 
-Uses `gulp`.
-
-## Angular Build & Dev Tasks
-These are all the current development tasks done at build time. See the [`README`](./_Angular/README.md) in __Angular_. 
-Uses `grunt`.
-
-## Testing the UI
-Two test apps are included for testing the UI builds, [`gs-mobile-ui`](./test/gs-mobile-ui) & [`gs-web-ui`](./test/gs-web-ui). See the [`README`](./test/README.md) in _test_. 
-Uses `gulp`.
-
-## UI SDK Structure 
-This documentation is a work in progress. 
-
-- `_Angular`: The Angular UI builder
-  - `_app` - Angular app's main UI framework, including all LESS & JS components, themes, layouts and builder
-    - `fonts` - Duh, thus is WIP
-    - `sass` - An array of sass components, etc
-    - `scripts` - JS components, etc
+- `_ui`: The GS UI builder
+  - `_app` - Our app's main UI framework, including all LESS & JS components, themes, layouts and builder
+    - `definitions` - UI behaviors, collections, elements, globals, modules and views
+    - `mobile` - The specific collection, element, global, module and view overrides for the `mobile` app UI
+    - `site` - The default collection, element, global, module and view overrides for the `site` web app UI
+    - `themes` - An array of stylizations called *themes* that can be applied at the element, global, module or view level
+    - `semantic.less` - The magic `less` config file where you can choose your build
+    - `theme.config` - The magic `theming` config file where you can choose your theme for everything or just an individual element
+    - `theme.less` - A file you shouldn't have to touch, but loads the theme's `less` based on the theme.config values
   - `_dist` - Built & packaged CSS, JS and components for distribution into an app
-    - `ui.angular.min.css` - All of the UI css into one file to add into your project
-    - `components.min.js` - All of the UI scripts in one file to add into your project
-    - `components.min.css` - All of the UI css into one file, minified, to add into your project
-    - `[theme].min.js` - All of the theme scripts into one file, minified, to add into your project
-- `_Semantic`: The Semantic UI builder
-  - `_app` - Semantic's main UI framework, including all LESS & JS components, themes, layouts and builder
-    - `ui` - The default collection, element, global, module and view overrides for the `desktop` app UI
-    - `components` - An array of stylizations called *themes* that can be applied at the element, global, module or view level
+    - `components` - Individual components to add into your project
     - `themes` - Individual theme files to add into your project
-  - `_dist` - Built & packaged CSS, JS and components for distribution into an app
-    - `ui.semantic.min.css` - All of the UI css into one file to add into your project
-    - `components.min.js` - All of the UI scripts in one file to add into your project
-    - `components.min.css` - All of the UI css into one file, minified, to add into your project
-    - `[theme].min.js` - All of the theme scripts into one file, minified, to add into your project
-- `gs-mobile-ui` - A boilerplate `--mobile` Angular app to test the mobile UI SDK
-  - `client` - See the [Mcfly Generator](https://github.com/giftstarter/generator-mcfly/blob/master/README.md) docs to see what and how this app is generated
-    - `module_ui_module` - A test module including controllers, directives, services, providers, values, and views
-- `gs-web-ui` - A boilerplate web Angular app to test the mobile UI SDK
-  - `client` - See the [Mcfly Generator](https://github.com/giftstarter/generator-mcfly/blob/master/README.md) docs to see what and how this app is generated
-    - `module_ui_module` - A test module including controllers, directives, services, providers, values, and views
+    - `semantic.css` - All of the UI css into one file to add into your project
+    - `semantic.js` - All of the UI scripts in one file to add into your project
+    - `semantic.min.css` - All of the UI css into one file, minified, to add into your project
+    - `semantic.min.js` - All of the UI scripts into one file, minified, to add into your project
 - `node_modules` - Node dependencies, like Gulp & Semantic UI
-- `.codio` - The master Codio config file
-- `.gitattributes` - The Git attributes file
-- `.gitignore` - The Git ignore file
-- `.jshintrc` - The Jshint config file
-- `package.json` - The NPM config file for the GS UI SDK project
+- `tasks` - All of the workflow, builder and automation magic happens in here
+  - `admin` - Admin related tasks
+    - `components` - Manage components
+    - `distributions` - Manage distributions
+  - `build` - Build related tasks
+  - `collections` - Collections of tasks that are imported together. See `./collections/README`
+  - `config` - Lots of setup and config.
+  - `docs` - Build related tasks for documentation
+  - `rtl` - Build related tasks for building in Right To Left
+- `gulpfile.js` - The master Gulp file that makes use of all those `tasks`
+- `package.json` - The NPM config file for the GS UI project
+- `semantic.json` - The Semantic UI library's CLI config file.
+
+
+## Gulp UI Dev Workflow
+The GiftStarter App now includes a semantic User Interface library. It is easy to work with, easy to build, and easy to release into an app (Angular web, for example). 
+If you find yourself working on updating the core UI stack running in an site or application, these tasks are for you.
+Below are the dev tasks, first in order for build, then all of them. 
+For a complete up-to-date list,see `./_ui/gulpfile.js`
+
+### Config tasks
+1. `$ gulp config` - Read user config to know what task is to load
+
+### Watch tasks
+1. `$ gulp watch` - Develop on the UI while watching the changes in a local test URL
+
+### Build & Release tasks
+1. `$ gulp build` - Soup to nuts clean, build, release SASS (new site code from `./sass`)
+2. `$ gulp buildJS` - Clean & build dev JS (new site code from `./sass`)
+3. `$ gulp buildCSS` - Clean & release built base CSS from lots of files into one compressed file (new site code from `./sass`)
+4. `$ gulp buildAssets` - Clean & release built compiled app assets (original site code)
+
+### Clean tasks
+1. `$ gulp clean` - Clean the built SASS (all folders in `./_ui/dist/app-main/...`)
+3. `$ gulp version` - Gets the version info so you know what you're cleaning
+
+### Rtl tasks
+1. `$ gulp buildRTL` - Build the `rtl` spec project (Right to Left)
+3. `$ gulp watchRTL` - Starts the `watch` on rtl files during development
+
+### Documentation tasks
+1. `$ gulp serveDocs` - Serves the docs in a local URL
+3. `$ gulp buildDocs` - Build doc files
+
+More in the [_ui/gulpfile.js](gulp/gulpfile.js)
 
 ### Help & references for developing
-- The UI documentation [can be found here](https://github.com/giftstarter/giftstarter/wiki).
-- The Angular UI docs [are here](https://angular-ui.github.io/)
-- Angular Material [documentation](https://material.angularjs.org/latest/getting-started)
-- [Semantic docs](http://semantic-ui.com/introduction/getting-started.html)
-- The test apps [which use Yeoman & Gulp](dev/README.md)
-
-## GS UI SDK
-| ![](http://findicons.com/files/icons/2773/pictonic_free/128/angularjs.png) | ![](http://www.semantic-ui.cn/images/logo.png) | ![](https://wordimpress.com/assets/icon-grunt.png) | ![](http://www.codingpedia.org/wp-content/uploads/2014/04/gulp-2x.png) |
+- The UI glossary [can be found here](http://semantic-ui.com/introduction/glossary.html).
+- Theming help [can be found here](http://semantic-ui.com/usage/theming.html#sitewide-defaults)
+- Help with [Layouts](http://semantic-ui.com/usage/layout.html)
+- [Global resets](http://semantic-ui.com/globals/reset.html)
+- [Site globals](http://semantic-ui.com/globals/site.html)
+- [Form validation](http://semantic-ui.com/behaviors/form.html)
+- [Visibility](http://semantic-ui.com/behaviors/visibility.html)
+- [API](http://semantic-ui.com/behaviors/api.html) and [more](http://semantic-ui.com/elements/button.html)
+- [Where NOT to develop CSS or JS](#)
